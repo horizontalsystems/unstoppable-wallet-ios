@@ -15,7 +15,7 @@ import ZanoKit
 import ZcashLightClientKit
 
 class USwapMultiSwapProvider: IMultiSwapProvider {
-    static let baseUrl = "\(AppConfig.swapApiUrl)/v1"
+    static let baseUrl = "\(AppConfig.swapApiUrl)/v2"
     static var headers: HTTPHeaders? { AppConfig.uswapApiKey.map { HTTPHeaders([HTTPHeader(name: "x-api-key", value: $0)]) } }
 
     private let assetMapExpiration: TimeInterval = 60 * 60
@@ -34,7 +34,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
     // Exolix's shielded Zcash route. Quoted explicitly as a second dry-quote variant
     // alongside ZEC.ZEC whenever either side of the swap is Zcash; the better-priced
-    // route wins (see `swapQuote`).
+    // route wins (see `rateQuote`).
     private static let zcashShieldedAsset = "ZEC.ZECSHIELDED"
 
     // Caches for the destination addresses produced by `resolveDestinations`. When no adapter
@@ -177,20 +177,20 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         let isShielded: Bool
     }
 
-    // On a dry quote for an alternate-route-capable pair (Exolix with ZEC on either side)
-    // this fans out into two parallel `/quote` requests — the transparent variant and the
-    // shielded one — and picks the better-priced route. The winning variant travels back on
-    // the returned `MultiSwapQuote` subclass so a later `confirmationQuote` can replay it:
-    // on a non-dry quote the caller must pass that selection so the exact same
-    // (sellAsset, buyAsset, destination) is requested again.
-    private func swapQuote(
+    // `quote` (dry/compare) hits /v2/rate; `confirmationQuote` (committed) hits /v2/swap.
+    // The two endpoints map 1:1 to these two methods, so there's no `dry` flag threaded
+    // through — the rate path fans out and picks a route, the swap path commits one.
+
+    // /v2/rate — compare routes, create no order. On an alternate-route-capable pair
+    // (Exolix with ZEC on either side) this fans out into two parallel rate requests — the
+    // transparent variant and the shielded one — and picks the better-priced route. The
+    // winning variant travels back on the returned `MultiSwapQuote` subclass so a later
+    // `confirmationQuote` can replay the exact same (sellAsset, buyAsset, destination).
+    private func rateQuote(
         tokenIn: Token,
         tokenOut: Token,
         amountIn: Decimal,
-        slippage: Decimal,
-        recipient: String? = nil,
-        dry: Bool = true,
-        selectedAlternateRoute: SelectedAlternateRoute? = nil
+        slippage: Decimal
     ) async throws -> (quote: Quote, alternateRoute: SelectedAlternateRoute?) {
         guard let assetIn = asset(token: tokenIn) else {
             throw SwapError.unsupportedTokenIn
@@ -201,71 +201,22 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         }
 
         let alternateCapable = supportsAlternateRouteSelection(tokenIn: tokenIn, tokenOut: tokenOut)
-        let destinations = try await resolveDestinations(recipient: recipient, token: tokenOut, includeUnified: alternateCapable)
+        let destinations = try await resolveDestinations(recipient: nil, token: tokenOut, includeUnified: alternateCapable)
 
-        @Sendable func fetchQuote(variant: RouteVariant) async throws -> Quote {
-            var parameters: [String: Any] = [
-                "sellAsset": variant.sellAsset,
-                "buyAsset": variant.buyAsset,
-                "sellAmount": amountIn.description,
-                "slippage": slippage,
-                "destinationAddress": variant.destination,
-                "providers": [provider.rawValue],
-                "dry": dry,
-            ]
-
-            if let chainId = Self.blockchainTypeMap.first(where: { $0.value == tokenIn.blockchainType })?.key {
-                parameters["chainId"] = chainId
-            }
-
-            var refund: String?
-            if !dry {
-                refund = try await refundAddress(tokenIn: tokenIn)
-
-                parameters.appendNotNil(key: "refundAddress", refund)
-                try await parameters.appendNotNil(key: "sourceAddress", quoteSourceAddress(tokenIn: tokenIn))
-            }
-
-            let response: QuoteResponse = try await networkManager.fetch(url: "\(Self.baseUrl)/quote", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
-
-            guard let quote = response.routes.first else {
-                throw SwapError.noRoutes
-            }
-
-            quote.refundAddress = refund
-            return quote
-        }
-
-        guard dry, alternateCapable else {
-            // Single request: either a plain pair, or the non-dry confirmation call. The
-            // confirmation replays the dry call's selected route. An explicit recipient only
-            // replaces the destination address — the selected route stays, since Exolix
-            // accepts both transparent and unified addresses on both the ZEC.ZEC and
-            // ZEC.ZECSHIELDED routes.
-            var variant = RouteVariant(sellAsset: assetIn, buyAsset: assetOut, destination: destinations.primary, isShielded: false)
-
-            if !dry, alternateCapable, let selected = selectedAlternateRoute {
-                variant = RouteVariant(
-                    sellAsset: selected.sellAsset,
-                    buyAsset: selected.buyAsset,
-                    destination: recipient ?? selected.destinationAddress,
-                    isShielded: false
-                )
-            }
-
-            let quote = try await fetchQuote(variant: variant)
+        guard alternateCapable else {
+            // Plain pair — a single rate request.
+            let variant = RouteVariant(sellAsset: assetIn, buyAsset: assetOut, destination: destinations.primary, isShielded: false)
+            let quote = try await fetchRate(variant: variant, amountIn: amountIn, slippage: slippage, tokenIn: tokenIn)
             return (quote, nil)
         }
 
-        // Dry quote on an Exolix ZEC pair: quote the transparent and shielded variants in
-        // parallel. ZEC out delivers the shielded variant to the explicit recipient when one
-        // is set (both Exolix routes accept transparent and unified addresses alike),
-        // otherwise to the wallet's unified address; ZEC in always has a shielded variant
-        // (the deposit address Exolix returns for ZEC.ZECSHIELDED is unified, so the user
-        // pays in from the shielded pool).
+        // Exolix ZEC pair: quote the transparent and shielded variants in parallel. ZEC out
+        // delivers the shielded variant to the wallet's unified address; ZEC in always has a
+        // shielded variant (the deposit address Exolix returns for ZEC.ZECSHIELDED is
+        // unified, so the user pays in from the shielded pool).
         var variants = [RouteVariant(sellAsset: assetIn, buyAsset: assetOut, destination: destinations.primary, isShielded: false)]
 
-        if tokenOut.blockchainType == .zcash, let shieldedDestination = recipient ?? destinations.unified {
+        if tokenOut.blockchainType == .zcash, let shieldedDestination = destinations.unified {
             variants.append(RouteVariant(sellAsset: assetIn, buyAsset: Self.zcashShieldedAsset, destination: shieldedDestination, isShielded: true))
         }
 
@@ -275,7 +226,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
         @Sendable func attempt(_ variant: RouteVariant) async -> Result<Quote, Error> {
             do {
-                let quote = try await fetchQuote(variant: variant)
+                let quote = try await fetchRate(variant: variant, amountIn: amountIn, slippage: slippage, tokenIn: tokenIn)
                 return .success(quote)
             } catch {
                 return .failure(error)
@@ -322,6 +273,115 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         )
 
         return (best.quote, selection)
+    }
+
+    // /v2/swap — create the order with one provider, returning the single executable route.
+    // On an alternate-route pair the dry rate already chose the variant; replay it (only the
+    // destination may change to an explicit recipient).
+    private func commitQuote(
+        tokenIn: Token,
+        tokenOut: Token,
+        amountIn: Decimal,
+        slippage: Decimal,
+        recipient: String?,
+        selectedAlternateRoute: SelectedAlternateRoute?
+    ) async throws -> Quote {
+        guard let assetIn = asset(token: tokenIn) else {
+            throw SwapError.unsupportedTokenIn
+        }
+
+        guard let assetOut = asset(token: tokenOut) else {
+            throw SwapError.unsupportedTokenOut
+        }
+
+        let alternateCapable = supportsAlternateRouteSelection(tokenIn: tokenIn, tokenOut: tokenOut)
+        let destinations = try await resolveDestinations(recipient: recipient, token: tokenOut, includeUnified: false)
+
+        // An explicit recipient only replaces the destination address — the selected route
+        // stays, since Exolix accepts both transparent and unified addresses on both the
+        // ZEC.ZEC and ZEC.ZECSHIELDED routes.
+        var variant = RouteVariant(sellAsset: assetIn, buyAsset: assetOut, destination: destinations.primary, isShielded: false)
+
+        if alternateCapable, let selected = selectedAlternateRoute {
+            variant = RouteVariant(
+                sellAsset: selected.sellAsset,
+                buyAsset: selected.buyAsset,
+                destination: recipient ?? selected.destinationAddress,
+                isShielded: false
+            )
+        }
+
+        return try await fetchSwap(variant: variant, amountIn: amountIn, slippage: slippage, tokenIn: tokenIn)
+    }
+
+    private func baseQuoteParameters(variant: RouteVariant, amountIn: Decimal, slippage: Decimal, tokenIn: Token) -> [String: Any] {
+        var parameters: [String: Any] = [
+            "sellAsset": variant.sellAsset,
+            "buyAsset": variant.buyAsset,
+            "sellAmount": amountIn.description,
+            "slippage": slippage,
+        ]
+
+        if let chainId = Self.blockchainTypeMap.first(where: { $0.value == tokenIn.blockchainType })?.key {
+            parameters["chainId"] = chainId
+        }
+
+        return parameters
+    }
+
+    // The address funds will be delivered to. Always set on a committed /v2/swap —
+    // `commitQuote` stamps the resolved destination onto the quote — with `recipient` as a
+    // belt-and-suspenders fallback. A nil/empty result is a real error, not a blank send,
+    // so fail loudly rather than swallow it.
+    private func deliveryAddress(quote: Quote, recipient: String?) throws -> String {
+        guard let address = quote.destinationAddress ?? recipient, !address.isEmpty else {
+            throw SwapError.missingDestinationAddress
+        }
+        return address
+    }
+
+    // /v2/rate — dry price/route comparison; narrow the fan-out to this provider. Response
+    // is { routes: [...] }; we take the single route for our provider.
+    private func fetchRate(variant: RouteVariant, amountIn: Decimal, slippage: Decimal, tokenIn: Token) async throws -> Quote {
+        var parameters = baseQuoteParameters(variant: variant, amountIn: amountIn, slippage: slippage, tokenIn: tokenIn)
+        parameters["providers"] = [provider.rawValue]
+
+        let response: QuoteResponse = try await networkManager.fetch(url: "\(Self.baseUrl)/rate", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+
+        guard let quote = response.routes.first else {
+            throw SwapError.noRoutes
+        }
+        return quote
+    }
+
+    // /v2/swap — committed against ONE provider; creates the order and returns the single
+    // executable route directly (no { routes } wrapper).
+    private func fetchSwap(variant: RouteVariant, amountIn: Decimal, slippage: Decimal, tokenIn: Token) async throws -> Quote {
+        var parameters = baseQuoteParameters(variant: variant, amountIn: amountIn, slippage: slippage, tokenIn: tokenIn)
+        parameters["provider"] = provider.rawValue
+        parameters["destinationAddress"] = variant.destination
+
+        let refund = try await refundAddress(tokenIn: tokenIn)
+        parameters.appendNotNil(key: "refundAddress", refund)
+
+        // sourceAddress IS the build signal: we send it only for chains whose server-built
+        // tx we actually consume (EVM/Tron/TON/Solana — exactly what `quoteSourceAddress`
+        // resolves a `from` for). For UTXO/Monero/Stellar/Zcash/Zano we omit it and build
+        // the tx locally (better txs, e.g. multi-UTXO) — preserving the pre-v2 behaviour.
+        try await parameters.appendNotNil(key: "sourceAddress", quoteSourceAddress(tokenIn: tokenIn))
+
+        let quote: Quote = try await networkManager.fetch(url: "\(Self.baseUrl)/swap", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+
+        // A committed /v2/swap must carry the tracking handle; the 9 builders forward it as
+        // `providerSwapId`. If the server couldn't record the swap (no `uuid`), it can't be
+        // tracked — fail before the user sends funds rather than create an untrackable swap.
+        guard let uuid = quote.uuid, !uuid.isEmpty else {
+            throw SwapError.invalidTransactionData
+        }
+
+        quote.refundAddress = refund
+        quote.destinationAddress = variant.destination
+        return quote
     }
 
     // Resolves the destination(s) we send to the server. Returns the primary destination
@@ -418,7 +478,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     }
 
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {
-        let (quote, alternateRoute) = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: MultiSwapSlippage.default)
+        let (quote, alternateRoute) = try await rateQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: MultiSwapSlippage.default)
 
         let blockchainType = tokenIn.blockchainType
 
@@ -426,7 +486,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .tron, .base, .zkSync:
             var allowanceState: MultiSwapAllowanceHelper.AllowanceState = .notRequired
 
-            if let approvalAddress = quote.approvalAddress {
+            if let approvalAddress = quote.approvalSpender {
                 allowanceState = await allowanceHelper.allowanceState(
                     spenderAddress: .init(raw: approvalAddress),
                     token: tokenIn,
@@ -448,16 +508,17 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
     func confirmationQuote(multiSwapQuote: MultiSwapQuote, tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote {
         let selectedAlternateRoute = (multiSwapQuote as? AlternateRouteCarrying)?.selectedAlternateRoute
-        let (quote, _) = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient, dry: false, selectedAlternateRoute: selectedAlternateRoute)
+        let quote = try await commitQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient, selectedAlternateRoute: selectedAlternateRoute)
 
         let amountOut = quote.expectedBuyAmount
         let amountOutMin = amountOut - (amountOut * slippage / 100)
 
         let blockchainType = tokenIn.blockchainType
 
+        let finalQuote: SwapFinalQuote
         switch blockchainType {
         case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .base, .zkSync:
-            return try await buildEvmConfirmationQuote(
+            finalQuote = try await buildEvmConfirmationQuote(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 amountIn: amountIn,
@@ -469,7 +530,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 transactionSettings: transactionSettings
             )
         case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash:
-            return try await buildBtcConfirmationQuote(
+            finalQuote = try await buildBtcConfirmationQuote(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 amountIn: amountIn,
@@ -481,7 +542,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 transactionSettings: transactionSettings
             )
         case .tron:
-            return try await buildTronConfirmationQuote(
+            finalQuote = try await buildTronConfirmationQuote(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 amountIn: amountIn,
@@ -492,7 +553,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 recipient: recipient
             )
         case .zcash:
-            return try await buildZcashConfirmationQuote(
+            finalQuote = try await buildZcashConfirmationQuote(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 amountIn: amountIn,
@@ -503,7 +564,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 recipient: recipient,
             )
         case .ton:
-            return try await buildTonConfirmationQuote(
+            finalQuote = try await buildTonConfirmationQuote(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 amountIn: amountIn,
@@ -514,7 +575,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 recipient: recipient
             )
         case .stellar:
-            return try await buildStellarConfirmationQuote(
+            finalQuote = try await buildStellarConfirmationQuote(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 amountIn: amountIn,
@@ -525,7 +586,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 recipient: recipient
             )
         case .monero:
-            return try await buildMoneroConfirmationQuote(
+            finalQuote = try await buildMoneroConfirmationQuote(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 amountIn: amountIn,
@@ -537,7 +598,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 priority: transactionSettings?.moneroPriority ?? .default
             )
         case .zano:
-            return try await buildZanoConfirmationQuote(
+            finalQuote = try await buildZanoConfirmationQuote(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 amountIn: amountIn,
@@ -548,7 +609,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 recipient: recipient
             )
         case .solana:
-            return try await buildSolanaConfirmationQuote(
+            finalQuote = try await buildSolanaConfirmationQuote(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 amountIn: amountIn,
@@ -561,6 +622,9 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         default:
             throw SwapError.unsupportedTokenIn
         }
+
+        finalQuote.refundAddress = quote.refundAddress
+        return finalQuote
     }
 
     func validateTrustedProvider(tokenIn: Token, amountIn: Decimal) async throws -> Bool? {
@@ -578,7 +642,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
         do {
             let response: CheckAddressesResponse = try await networkManager.fetch(
-                url: "\(Self.baseUrl)/quote/check-addresses",
+                url: "\(Self.baseUrl)/check-addresses",
                 parameters: ["addresses": addresses.joined(separator: ",")],
                 headers: headers
             )
@@ -595,24 +659,20 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     }
 
     func track(swap: Swap) async throws -> Swap {
-        let blockchainType = swap.tokenIn.blockchainType
-
-        var parameters: Parameters = [
-            "provider": swap.providerId,
-            "toAddress": swap.toAddress,
-        ]
+        // v2: track by the swap_record `uuid` (carried in `providerSwapId` for USwap swaps).
+        // The server resolves the provider and all swap details from the uuid alone. For
+        // on-chain swaps (BARTER/Circle/THORChain-family) it also needs the broadcast tx as
+        // `inboundTxHash`; sending it for deposit-address swaps (NEAR/P2P) is harmless — the
+        // server already holds their provider id and ignores it.
+        var parameters: Parameters = [:]
 
         func set(_ dict: inout Parameters, _ key: String, _ value: Any?) {
             guard let value else { return }
             dict[key] = value
         }
 
-        set(&parameters, "hash", swap.txHash)
-        set(&parameters, "chainId", Self.blockchainTypeMap.first(where: { $0.value == blockchainType })?.key)
-        set(&parameters, "fromAsset", asset(token: swap.tokenIn))
-        set(&parameters, "toAsset", asset(token: swap.tokenOut))
-        set(&parameters, "depositAddress", swap.depositAddress)
-        set(&parameters, "providerSwapId", swap.providerSwapId)
+        set(&parameters, "uuid", swap.providerSwapId)
+        set(&parameters, "inboundTxHash", swap.txHash)
         return try await Self.track(swap: swap, parameters: parameters, networkManager: networkManager)
     }
 
@@ -621,11 +681,6 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             return nil
         }
         return adapter.receiveAddress.address
-    }
-
-    private func withRefundAddress(_ finalQuote: SwapFinalQuote, quote: Quote) -> SwapFinalQuote {
-        finalQuote.refundAddress = quote.refundAddress
-        return finalQuote
     }
 
     private func buildEvmConfirmationQuote(
@@ -639,9 +694,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         recipient: String?,
         transactionSettings: TransactionSettings?
     ) async throws -> SwapFinalQuote {
-        guard let jsonObject = quote.tx as? [String: Any] else {
+        guard let signable = quote.execution?.primarySignable, signable.kind == "evm" else {
             throw SwapError.noTransactionData
         }
+        let jsonObject = signable.json
 
         guard let to = jsonObject["to"] as? String,
               let valueString = jsonObject["value"] as? String,
@@ -680,7 +736,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             }
         }
 
-        return withRefundAddress(EvmSwapFinalQuote(
+        return EvmSwapFinalQuote(
             expectedBuyAmount: quote.expectedBuyAmount,
             transactionData: transactionData,
             transactionError: transactionError,
@@ -690,10 +746,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             gasPrice: gasPriceData?.userDefined,
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce,
-            toAddress: quote.destinationAddress,
-            depositAddress: quote.inboundAddress,
-            providerSwapId: quote.providerSwapId
-        ), quote: quote)
+            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
+            depositAddress: quote.execution?.depositAddress,
+            providerSwapId: quote.uuid
+        )
     }
 
     private func buildBtcConfirmationQuote(
@@ -711,20 +767,23 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         var sendInfo: SendInfo?
         var params: SendParameters?
 
+        // Native v2 consumption: pull the deposit address + memo straight from the
+        // execution union (no flatten-back through bridge accessors). For UTXO this
+        // is always a `transfer` via USwap (THORChain UTXO uses its own provider).
+        guard let execution = quote.execution else { throw SwapError.noTransactionData }
+        let deposit = try execution.depositInstruction()
+
         if let satoshiPerByte = transactionSettings?.satoshiPerByte,
            let adapter = adapterManager.adapter(for: tokenIn) as? BitcoinBaseAdapter
         {
             do {
                 let value = adapter.convertToSatoshi(value: amountIn)
-                if let dustThreshold = quote.dustThreshold, value <= dustThreshold {
-                    throw BitcoinCoreErrors.SendValueErrors.dust(dustThreshold + 1)
-                }
 
                 let _params = SendParameters(
-                    address: quote.inboundAddress,
+                    address: deposit.address,
                     value: value,
                     feeRate: satoshiPerByte,
-                    memo: quote.memo
+                    memo: deposit.memo
                 )
 
                 sendInfo = try adapter.sendInfo(params: _params)
@@ -734,7 +793,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             }
         }
 
-        return withRefundAddress(UtxoSwapFinalQuote(
+        return UtxoSwapFinalQuote(
             expectedBuyAmount: quote.expectedBuyAmount,
             sendParameters: params,
             slippage: slippage,
@@ -742,10 +801,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             estimatedTime: quote.esimatedTime,
             transactionError: transactionError,
             fee: sendInfo?.fee,
-            toAddress: quote.destinationAddress,
-            depositAddress: quote.inboundAddress,
-            providerSwapId: quote.providerSwapId
-        ), quote: quote)
+            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
+            depositAddress: deposit.address,
+            providerSwapId: quote.uuid
+        )
     }
 
     private func buildZcashConfirmationQuote(
@@ -762,7 +821,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             throw SwapError.noZcashAdapter
         }
 
-        guard let adapterRecipient = adapter.recipient(from: quote.inboundAddress) else {
+        guard let execution = quote.execution else { throw SwapError.noTransactionData }
+        let deposit = try execution.depositInstruction()
+
+        guard let adapterRecipient = adapter.recipient(from: deposit.address) else {
             throw SendTransactionError.invalidAddress
         }
 
@@ -771,21 +833,18 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         var totalFeeRequired: Zatoshi?
 
         do {
-            let memo = quote.memo.flatMap { try? Memo(string: $0) }
+            // Don't swallow a bad memo: for a Maya ZEC swap the memo binds the order, so a
+            // dropped/invalid memo would send unrecoverable funds. Let the error surface into
+            // `transactionError` (the catch below) instead of proposing a memo-less transfer.
+            let memo = try deposit.memo.map { try Memo(string: $0) }
             let output = ZcashAdapter.TransferOutput(amount: amountIn.rounded(decimal: 8), address: adapterRecipient, memo: memo)
             proposal = try await adapter.sendProposal(outputs: [output])
             totalFeeRequired = proposal?.totalFeeRequired()
-
-            if let dustThreshold = quote.dustThreshold,
-               Int(Zatoshi.from(decimal: amountIn).amount) <= dustThreshold
-            {
-                transactionError = BitcoinCoreErrors.SendValueErrors.dust(dustThreshold + 1)
-            }
         } catch {
             transactionError = error
         }
 
-        return withRefundAddress(ZcashSwapFinalQuote(
+        return ZcashSwapFinalQuote(
             expectedBuyAmount: amountOut,
             proposal: proposal,
             slippage: slippage,
@@ -793,10 +852,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             estimatedTime: quote.esimatedTime,
             transactionError: transactionError,
             fee: totalFeeRequired?.decimalValue.decimalValue,
-            toAddress: quote.destinationAddress,
-            depositAddress: quote.inboundAddress,
-            providerSwapId: quote.providerSwapId
-        ), quote: quote)
+            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
+            depositAddress: quote.execution?.depositAddress,
+            providerSwapId: quote.uuid
+        )
     }
 
     private func buildTonConfirmationQuote(
@@ -809,7 +868,9 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         slippage: Decimal,
         recipient: String?
     ) async throws -> SwapFinalQuote {
-        guard let jsonObject = quote.tx else {
+        guard let signable = quote.execution?.primarySignable, signable.kind == "ton",
+              let jsonObject = signable.innerTx
+        else {
             throw SwapError.noTransactionData
         }
 
@@ -850,7 +911,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return withRefundAddress(TonSwapFinalQuote(
+        return TonSwapFinalQuote(
             amountIn: amountIn,
             expectedAmountOut: amountOut,
             recipient: recipient,
@@ -859,10 +920,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionParam: transactionParam,
             fee: fee,
             transactionError: transactionError,
-            toAddress: quote.destinationAddress,
-            depositAddress: quote.inboundAddress,
-            providerSwapId: quote.providerSwapId
-        ), quote: quote)
+            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
+            depositAddress: quote.execution?.depositAddress,
+            providerSwapId: quote.uuid
+        )
     }
 
     private func buildStellarConfirmationQuote(
@@ -881,13 +942,14 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
         let asset = adapter.asset
 
-        let memo: String? = quote.txExtraAttribute?["memo"] as? String
+        guard let execution = quote.execution else { throw SwapError.noTransactionData }
+        let deposit = try execution.depositInstruction()
 
         let transactionData = StellarSendHelper.TransactionData.payment(
             asset: asset,
             amount: amountIn,
-            accountId: quote.inboundAddress,
-            memo: memo
+            accountId: deposit.address,
+            memo: deposit.memo
         )
 
         var transactionError: Error?
@@ -898,7 +960,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 asset: asset,
                 amount: amountIn,
                 adjustNativeBalance: false,
-                accountId: quote.inboundAddress,
+                accountId: deposit.address,
                 stellarKit: adapter.stellarKit
             )
 
@@ -907,7 +969,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return withRefundAddress(StellarSwapFinalQuote(
+        return StellarSwapFinalQuote(
             amountIn: amountIn,
             expectedAmountOut: amountOut,
             recipient: recipient,
@@ -917,10 +979,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             token: tokenIn,
             fee: fee,
             transactionError: transactionError,
-            toAddress: quote.destinationAddress,
-            depositAddress: quote.inboundAddress,
-            providerSwapId: quote.providerSwapId
-        ), quote: quote)
+            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
+            depositAddress: quote.execution?.depositAddress,
+            providerSwapId: quote.uuid
+        )
     }
 
     private func buildTronConfirmationQuote(
@@ -933,7 +995,9 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         slippage: Decimal,
         recipient: String?
     ) async throws -> SwapFinalQuote {
-        guard let jsonObject = quote.tx as? [String: Any] else {
+        guard let signable = quote.execution?.primarySignable, signable.kind == "tron",
+              let jsonObject = signable.innerTx as? [String: Any]
+        else {
             throw SwapError.noTransactionData
         }
 
@@ -958,7 +1022,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             }
         }
 
-        return withRefundAddress(TronSwapFinalQuote(
+        return TronSwapFinalQuote(
             amountIn: amountIn,
             expectedAmountOut: amountOut,
             recipient: recipient,
@@ -967,10 +1031,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             createdTransaction: transaction,
             fees: fees,
             transactionError: transactionError,
-            toAddress: quote.destinationAddress,
-            depositAddress: quote.inboundAddress,
-            providerSwapId: quote.providerSwapId
-        ), quote: quote)
+            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
+            depositAddress: quote.execution?.depositAddress,
+            providerSwapId: quote.uuid
+        )
     }
 
     private func buildMoneroConfirmationQuote(
@@ -988,6 +1052,9 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             throw SwapError.noMoneroAdapter
         }
 
+        guard let execution = quote.execution else { throw SwapError.noTransactionData }
+        let deposit = try execution.depositInstruction()
+
         let amount: MoneroSendAmount = adapter.balanceData.available == amountIn ? .all(amountIn) : .value(amountIn)
         var fee: Decimal?
         var transactionError: Error?
@@ -995,7 +1062,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         do {
             let estimatedFee = try adapter.estimateFee(
                 amount: amount,
-                address: quote.inboundAddress,
+                address: deposit.address,
                 priority: priority,
             )
 
@@ -1007,23 +1074,23 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return withRefundAddress(MoneroSwapFinalQuote(
+        return MoneroSwapFinalQuote(
             amountIn: amountIn,
             expectedAmountOut: amountOut,
             recipient: recipient,
             slippage: slippage,
             estimatedTime: quote.esimatedTime,
             amount: amount,
-            address: quote.inboundAddress,
-            memo: quote.memo,
+            address: deposit.address,
+            memo: deposit.memo,
             token: tokenIn,
             priority: priority,
             fee: fee,
             transactionError: transactionError,
-            toAddress: quote.destinationAddress,
-            depositAddress: quote.inboundAddress,
-            providerSwapId: quote.providerSwapId
-        ), quote: quote)
+            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
+            depositAddress: quote.execution?.depositAddress,
+            providerSwapId: quote.uuid
+        )
     }
 
     private func buildZanoConfirmationQuote(
@@ -1039,6 +1106,9 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? ZanoAdapter else {
             throw SwapError.noZanoAdapter
         }
+
+        guard let execution = quote.execution else { throw SwapError.noTransactionData }
+        let deposit = try execution.depositInstruction()
 
         let amount: ZanoSendAmount = adapter.balanceData.available == amountIn ? .all(amountIn) : .value(amountIn)
         var fee: Decimal?
@@ -1066,20 +1136,20 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return withRefundAddress(ZanoSwapFinalQuote(
+        return ZanoSwapFinalQuote(
             expectedAmountOut: amountOut,
             recipient: recipient,
             slippage: slippage,
             estimatedTime: quote.esimatedTime,
             amount: amount,
-            address: quote.inboundAddress,
-            memo: quote.memo,
+            address: deposit.address,
+            memo: deposit.memo,
             fee: fee,
             transactionError: transactionError,
-            toAddress: quote.destinationAddress,
-            depositAddress: quote.inboundAddress,
-            providerSwapId: quote.providerSwapId
-        ), quote: quote)
+            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
+            depositAddress: quote.execution?.depositAddress,
+            providerSwapId: quote.uuid
+        )
     }
 
     private func buildSolanaConfirmationQuote(
@@ -1096,7 +1166,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             throw SwapError.noSolanaAdapter
         }
 
-        guard let txString = quote.tx as? String,
+        guard let signable = quote.execution?.primarySignable, signable.kind == "solana",
+              let txString = signable.message,
               let rawTransaction = Data(base64Encoded: txString)
         else {
             throw SwapError.noTransactionData
@@ -1117,7 +1188,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return withRefundAddress(SolanaSwapFinalQuote(
+        return SolanaSwapFinalQuote(
             rawTransaction: rawTransaction,
             expectedAmountOut: amountOut,
             recipient: recipient,
@@ -1125,10 +1196,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             estimatedTime: quote.esimatedTime,
             fee: fee,
             transactionError: transactionError,
-            toAddress: quote.destinationAddress,
-            depositAddress: quote.inboundAddress,
-            providerSwapId: quote.providerSwapId
-        ), quote: quote)
+            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
+            depositAddress: quote.execution?.depositAddress,
+            providerSwapId: quote.uuid
+        )
     }
 }
 
@@ -1161,14 +1232,19 @@ extension USwapMultiSwapProvider {
         "zano": .zano,
     ]
 
-    static func track(swap: Swap, parameters: Parameters, networkManager: NetworkManager, isEvm: Bool = false) async throws -> Swap {
+    static func track(swap: Swap, parameters: Parameters, networkManager: NetworkManager, endpoint: String = "track") async throws -> Swap {
         var parameters = parameters
         if AppConfig.showDevTools, Core.shared.localStorage.simulateFailSwap == .server {
             parameters["testActionRequired"] = true
         }
 
+        // Track endpoint by swap origin:
+        //   "track"           — OUR recorded swaps (USwap-mediated), uuid-based, provider-agnostic
+        //   "track/evm"       — native EVM swaps (1inch/Uniswap), stateless on-chain reader
+        //   "track/thorchain" — native THORChain/Maya swaps, stateless reader
+        // The two stateless readers don't touch our swap_records (the swap isn't ours).
         let response: USwapMultiSwapProvider.TrackResponse = try await networkManager.fetch(
-            url: "\(USwapMultiSwapProvider.baseUrl)/track\(isEvm ? "/evm" : "")",
+            url: "\(USwapMultiSwapProvider.baseUrl)/\(endpoint)",
             method: .post,
             parameters: parameters,
             encoding: JSONEncoding.default,
@@ -1305,36 +1381,155 @@ extension USwapMultiSwapProvider {
         }
     }
 
+    // A signable transaction the server built (v2 `SignableTx`). `kind` tags the shape; each
+    // per-chain confirmation builder checks the kind it expects and reads the matching field
+    // (`json` for evm, `innerTx` for tron/ton, `message`/`psbt`/`xdr` for the base64 forms).
+    struct SignableTx: ImmutableMappable {
+        let kind: String
+        let json: [String: Any] // evm (has to/value/data/gas)
+        let innerTx: Any? // tron / ton / cosmos / ripple / near (`tx`)
+        let message: String? // solana (base64)
+        let psbt: String? // utxo (base64)
+        let xdr: String? // stellar (base64)
+
+        init(map: Map) throws {
+            kind = try map.value("kind")
+            json = map.JSON
+            innerTx = try? map.value("tx")
+            message = try? map.value("message")
+            psbt = try? map.value("psbt")
+            xdr = try? map.value("xdr")
+        }
+    }
+
+    struct Approval: ImmutableMappable {
+        let spender: String
+        init(map: Map) throws { spender = try map.value("spender") }
+    }
+
+    // v2 `thorchain_deposit.delivery` — chain-specific memo binding.
+    struct Delivery: ImmutableMappable {
+        let kind: String
+        let router: String?
+        let approval: Approval?
+        let shieldedMemoAddress: String?
+        let unsignedTx: SignableTx?
+
+        init(map: Map) throws {
+            kind = try map.value("kind")
+            router = try? map.value("router")
+            approval = try? map.value("approval")
+            shieldedMemoAddress = try? map.value("shieldedMemoAddress")
+            unsignedTx = try? map.value("unsignedTx")
+        }
+    }
+
+    // v2 `execution` discriminated union. Modeled as a typed enum; the per-chain
+    // builders read what they need through the bridge accessors on `Quote`.
+    enum Execution: ImmutableMappable {
+        case signedTransaction(chain: String, transactions: [SignableTx], approval: Approval?)
+        case transfer(chain: String, depositAddress: String, attachment: [String: Any]?, unsignedTx: SignableTx?)
+        case thorchainDeposit(chain: String, inboundAddress: String, memo: String, delivery: Delivery)
+
+        init(map: Map) throws {
+            let method: String = try map.value("method")
+            switch method {
+            case "signed_transaction":
+                self = try .signedTransaction(
+                    chain: map.value("chain"),
+                    transactions: (try? map.value("transactions")) ?? [],
+                    approval: try? map.value("approval")
+                )
+            case "transfer":
+                self = try .transfer(
+                    chain: map.value("chain"),
+                    depositAddress: map.value("depositAddress"),
+                    attachment: try? map.value("attachment"),
+                    unsignedTx: try? map.value("unsignedTx")
+                )
+            case "thorchain_deposit":
+                self = try .thorchainDeposit(
+                    chain: map.value("chain"),
+                    inboundAddress: map.value("inboundAddress"),
+                    memo: map.value("memo"),
+                    delivery: map.value("delivery")
+                )
+            default:
+                throw SwapError.invalidTransactionData
+            }
+        }
+
+        // The single tx a builder would sign, if any (signed_transaction's first, or the
+        // optional unsignedTx on transfer / thorchain delivery).
+        var primarySignable: SignableTx? {
+            switch self {
+            case let .signedTransaction(_, transactions, _): return transactions.first
+            case let .transfer(_, _, _, unsignedTx): return unsignedTx
+            case let .thorchainDeposit(_, _, _, delivery): return delivery.unsignedTx
+            }
+        }
+
+        var depositAddress: String? {
+            switch self {
+            case .signedTransaction: return nil // tx-only; no deposit address
+            case let .transfer(_, depositAddress, _, _): return depositAddress
+            case let .thorchainDeposit(_, inboundAddress, _, _): return inboundAddress
+            }
+        }
+
+        var approvalSpender: String? {
+            switch self {
+            case let .signedTransaction(_, _, approval): return approval?.spender
+            case let .thorchainDeposit(_, _, _, delivery): return delivery.approval?.spender
+            case .transfer: return nil
+            }
+        }
+
+        // The deposit address + optional binding memo, for chains where the client
+        // builds the transfer itself (UTXO/Monero/Zano/…). `signed_transaction` has
+        // no address-transfer form, so it's a programming error to ask here.
+        func depositInstruction() throws -> (address: String, memo: String?) {
+            switch self {
+            case let .transfer(_, depositAddress, attachment, _):
+                // A text attachment travels as the transfer's memo (e.g. Stellar).
+                let memo = (attachment?["type"] as? String) == "text" ? attachment?["value"] as? String : nil
+                return (depositAddress, memo)
+            case let .thorchainDeposit(_, inboundAddress, memo, _): return (inboundAddress, memo)
+            case .signedTransaction: throw SwapError.invalidTransactionData
+            }
+        }
+    }
+
     class Quote: ImmutableMappable {
         let expectedBuyAmount: Decimal
         let buyAsset: String?
-        let inboundAddress: String
-        let destinationAddress: String
-        let approvalAddress: String?
-        let tx: Any?
-        let txExtraAttribute: [String: Any]?
-        let memo: String?
-        let shieldedMemoAddress: String?
-        let dustThreshold: Int?
-        let providers: [String]?
         let esimatedTime: TimeInterval?
-        let providerSwapId: String?
+        // Optional: a dry (rate-only) quote carries no `execution`; it appears only on a
+        // committed (non-dry) quote, which is what confirmation requests.
+        let execution: Execution?
+        // v2 tracking handle (swap_records.uuid), top-level on the committed /v2/swap response.
+        // We track by it alone — the server resolves the provider + all swap details from the
+        // record; for DEX swaps we additionally send our broadcast tx hash as inboundTxHash.
+        let uuid: String?
+        // The ERC20 approval spender, used to compute the allowance state. Allowance state is
+        // computed on the DRY (/v2/rate) quote — where `execution` is stripped — so the spender
+        // is read from the top-level `approvalSpender` there; on a committed (/v2/swap) quote it
+        // rides `execution.approval.spender`. Reading only `execution` would always miss it on
+        // the rate quote (→ no Approve step → on-chain revert).
+        let approvalSpender: String?
         var refundAddress: String?
+        // Client-set on a committed /v2/swap from the resolved destination we sent. The
+        // server doesn't echo it back (P2P `tracking` carries no `toAddress`), so we keep
+        // the authoritative value here rather than reconstructing it from `recipient`.
+        var destinationAddress: String?
 
         required init(map: Map) throws {
             expectedBuyAmount = try map.value("expectedBuyAmount", using: Transform.stringToDecimalTransform)
             buyAsset = try? map.value("buyAsset")
-            inboundAddress = try map.value("inboundAddress")
-            destinationAddress = try map.value("destinationAddress")
-            approvalAddress = try? map.value("meta.approvalAddress")
-            tx = try? map.value("tx")
-            txExtraAttribute = try? map.value("txExtraAttribute")
-            memo = try? map.value("memo")
-            shieldedMemoAddress = try? map.value("shielded_memo_address")
-            dustThreshold = try? map.value("dustThreshold", using: Transform.stringToIntTransform)
-            providers = try? map.value("providers")
             esimatedTime = try? map.value("estimatedTime.total")
-            providerSwapId = try? map.value("providerSwapId")
+            execution = try? map.value("execution")
+            uuid = try? map.value("uuid")
+            approvalSpender = (try? map.value("approvalSpender")) ?? execution?.approvalSpender
         }
     }
 
@@ -1354,7 +1549,9 @@ extension USwapMultiSwapProvider {
             fromAsset = try map.value("fromAsset")
             toAsset = try map.value("toAsset")
             legs = try map.value("legs")
-            provider = try? map.value("meta.provider")
+            // Provider(s) moved to a top-level `providers` array (mirrors the quote response);
+            // single-provider today, so take the first.
+            provider = (try? map.value("providers") as [String])?.first
             pauseReason = try? map.value("meta.pauseReason")
         }
 
@@ -1383,6 +1580,7 @@ extension USwapMultiSwapProvider {
         case noRoutes
         case noTransactionData
         case invalidTransactionData
+        case missingDestinationAddress
         case noZcashAdapter
         case noTonAdapter
         case noStellarAdapter

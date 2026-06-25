@@ -58,7 +58,7 @@ class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
         set(&parameters, "toAsset", evmAsset(token: swap.tokenOut))
         set(&parameters, "providerSwapId", swap.providerSwapId)
 
-        return try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, networkManager: networkManager, isEvm: true)
+        return try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, networkManager: networkManager, endpoint: "track/evm")
     }
 
     private func evmAsset(token: MarketKit.Token) -> String? {
