@@ -216,11 +216,12 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             dict[key] = value
         }
 
-        set(&parameters, "hash", swap.txHash)
+        set(&parameters, "inboundTxHash", swap.txHash)
         set(&parameters, "fromAsset", assetMap[swap.tokenIn.tokenQuery.id.lowercased()])
         set(&parameters, "toAsset", assetMap[swap.tokenOut.tokenQuery.id.lowercased()])
 
-        return try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, networkManager: networkManager)
+        // Native THORChain/Maya swaps aren't recorded by us → the stateless reader.
+        return try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, networkManager: networkManager, endpoint: "track/thorchain")
     }
 
     func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil, recipient: String? = nil, params: Parameters? = nil) async throws -> SwapQuote {
