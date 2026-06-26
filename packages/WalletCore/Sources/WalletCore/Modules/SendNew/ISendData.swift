@@ -34,16 +34,16 @@ public struct SendDataSection {
         self.isList = isList
     }
 
-    @ViewBuilder var fieldList: some View {
+    @MainActor @ViewBuilder var fieldList: some View {
         ForEach(fields.indices, id: \.self) { index in
-            fields[index].listRow
+            fields[index].listRow()
             if isFlow, index < (fields.count - 1) {
                 flowDivider
             }
         }
     }
 
-    @ViewBuilder private var flowDivider: some View {
+    @MainActor @ViewBuilder private var flowDivider: some View {
         HorizontalDivider()
             .overlay(
                 Circle()
@@ -57,7 +57,7 @@ public struct SendDataSection {
 }
 
 extension [SendDataSection] {
-    @ViewBuilder var sectionViews: some View {
+    @MainActor @ViewBuilder var sectionViews: some View {
         if !isEmpty {
             ForEach(indices, id: \.self) { sectionIndex in
                 let section = self[sectionIndex]
