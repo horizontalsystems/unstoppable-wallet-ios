@@ -1163,7 +1163,7 @@ extension USwapMultiSwapProvider {
 
     static func track(swap: Swap, parameters: Parameters, networkManager: NetworkManager, isEvm: Bool = false) async throws -> Swap {
         var parameters = parameters
-        if AppConfig.showTestSwitchers, Core.shared.localStorage.simulateFailSwap == .server {
+        if AppConfig.showDevTools, Core.shared.localStorage.simulateFailSwap == .server {
             parameters["testActionRequired"] = true
         }
 

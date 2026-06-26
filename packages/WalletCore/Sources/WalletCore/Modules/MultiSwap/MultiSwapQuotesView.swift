@@ -9,7 +9,7 @@ struct MultiSwapQuotesView: View {
             ThemeView(style: .list) {
                 ThemeList {
                     Section {
-                        let isDebug = AppConfig.showTestSwitchers
+                        let isDebug = AppConfig.showDevTools
 
                         ForEach(viewModel.sortedQuotes, id: \.provider.id) { (quote: MultiSwapViewModel.Quote) in
                             VStack(spacing: 0) {
