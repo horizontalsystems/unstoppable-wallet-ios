@@ -8,7 +8,7 @@ public enum AppEnvironment: String {
         current = env
     }
 
-    static var config: Config {
+    public static var config: Config {
         switch current {
         case .dev: return .dev
         case .prod: return .prod
