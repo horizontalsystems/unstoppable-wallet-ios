@@ -70,8 +70,8 @@ enum AppConfig {
         AppEnvironment.config.showBuildNumber
     }
 
-    static var showTestSwitchers: Bool {
-        AppEnvironment.config.showTestSwitchers
+    static var showDevTools: Bool {
+        AppEnvironment.config.showDevTools
     }
 
     static var marketApiUrl: String {

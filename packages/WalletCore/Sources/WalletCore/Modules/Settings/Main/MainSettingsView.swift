@@ -90,7 +90,7 @@ struct MainSettingsView: View {
 
                     footer()
 
-                    if viewModel.showTestSwitchers {
+                    if viewModel.showDevTools {
                         Spacer().frame(height: .margin32)
                         testSwitchersSection()
                     }

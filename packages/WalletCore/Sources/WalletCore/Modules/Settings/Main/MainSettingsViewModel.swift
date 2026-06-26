@@ -33,7 +33,7 @@ class MainSettingsViewModel: ObservableObject {
 
     @Published var debu: String?
 
-    let showTestSwitchers: Bool
+    let showDevTools: Bool
 
     @Published var forceEnableSwap: Bool {
         didSet {
@@ -75,7 +75,7 @@ class MainSettingsViewModel: ObservableObject {
     }
 
     init() {
-        showTestSwitchers = AppConfig.showTestSwitchers
+        showDevTools = AppConfig.showDevTools
         forceEnableSwap = localStorage.forceEnableSwap
         simulateFailSwap = localStorage.simulateFailSwap
         emulatePurchase = localStorage.emulatePurchase
