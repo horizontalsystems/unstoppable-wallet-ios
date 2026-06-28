@@ -13,6 +13,7 @@ public class Core {
         SendHandlerFactory.unstoppableHandlers.forEach { SendHandlerFactory.register($0) }
         SendHandlerFactory.unstoppablePreSendHandlers.forEach { SendHandlerFactory.register($0) }
         TransactionServiceFactory.unstoppableTransactionServices.forEach { TransactionServiceFactory.register($0) }
+        EvmKitConfigFactory.register(UnstoppableEvmKitConfigProvider.self)
     }
 
     public static var shared: Core {

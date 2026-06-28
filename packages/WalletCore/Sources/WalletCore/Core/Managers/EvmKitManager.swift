@@ -4,7 +4,6 @@ import EvmKit
 import Foundation
 import HdWalletKit
 import MarketKit
-import NftKit
 import OneInchKit
 import RxRelay
 import RxSwift
@@ -80,28 +79,8 @@ public class EvmKitManager {
             minLogLevel: .error
         )
 
-        Eip20Kit.Kit.addDecorators(to: evmKit)
-        Eip20Kit.Kit.addTransactionSyncer(to: evmKit)
-
-        var nftKit: NftKit.Kit?
-        let supportedNftTypes = blockchainType.supportedNftTypes
-
-        if !supportedNftTypes.isEmpty {
-            let kit = try NftKit.Kit.instance(evmKit: evmKit)
-
-            for nftType in supportedNftTypes {
-                switch nftType {
-                case .eip721:
-                    kit.addEip721TransactionSyncer()
-                    kit.addEip721Decorators()
-                case .eip1155:
-                    kit.addEip1155TransactionSyncer()
-                    kit.addEip1155Decorators()
-                }
-            }
-
-            nftKit = kit
-        }
+        evmKit.set(syncers: EvmKitConfigFactory.syncers(account: account, evmKit: evmKit))
+        EvmKitConfigFactory.applyDecorators(account: account, evmKit: evmKit)
 
         var merkleTransactionAdapter: MerkleTransactionAdapter?
         if signer != nil,
@@ -120,16 +99,11 @@ public class EvmKitManager {
             merkleTransactionAdapter = merkleAdapter
         }
 
-        UniswapKit.Kit.addDecorators(to: evmKit)
-        try? KitV3.addDecorators(to: evmKit)
-        OneInchKit.Kit.addDecorators(to: evmKit)
-
         evmKit.start()
 
         let wrapper = EvmKitWrapper(
             blockchainType: blockchainType,
             evmKit: evmKit,
-            nftKit: nftKit,
             merkleTransactionAdapter: merkleTransactionAdapter,
             signer: signer
         )
@@ -168,14 +142,12 @@ extension EvmKitManager {
 public class EvmKitWrapper {
     let blockchainType: BlockchainType
     public let evmKit: EvmKit.Kit
-    let nftKit: NftKit.Kit?
     let merkleTransactionAdapter: MerkleTransactionAdapter?
     let signer: Signer?
 
-    init(blockchainType: BlockchainType, evmKit: EvmKit.Kit, nftKit: NftKit.Kit?, merkleTransactionAdapter: MerkleTransactionAdapter?, signer: Signer?) {
+    init(blockchainType: BlockchainType, evmKit: EvmKit.Kit, merkleTransactionAdapter: MerkleTransactionAdapter?, signer: Signer?) {
         self.blockchainType = blockchainType
         self.evmKit = evmKit
-        self.nftKit = nftKit
         self.merkleTransactionAdapter = merkleTransactionAdapter
         self.signer = signer
     }

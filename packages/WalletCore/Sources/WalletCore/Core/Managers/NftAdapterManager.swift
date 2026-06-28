@@ -38,19 +38,7 @@ class NftAdapterManager {
                 continue
             }
 
-            guard !nftKey.blockchainType.supportedNftTypes.isEmpty else {
-                continue
-            }
-
-            if evmBlockchainManager.blockchain(type: nftKey.blockchainType) != nil {
-                let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchainType: nftKey.blockchainType).evmKitWrapper(account: nftKey.account, blockchainType: nftKey.blockchainType)
-
-                if let evmKitWrapper, let nftKit = evmKitWrapper.nftKit {
-                    newAdapterMap[nftKey] = EvmNftAdapter(blockchainType: nftKey.blockchainType, evmKitWrapper: evmKitWrapper, nftKit: nftKit)
-                }
-            } else {
-                // Init other blockchain adapter here (e.g. Solana)
-            }
+            // NFT adapters are not created — NFT support is removed (EvmKitWrapper no longer exposes nftKit).
         }
 
 //        print("NEW ADAPTERS: \(newAdapterMap.keys)")

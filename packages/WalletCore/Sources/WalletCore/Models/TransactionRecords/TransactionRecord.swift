@@ -1,7 +1,7 @@
 import Foundation
 import MarketKit
 
-public class TransactionRecord {
+open class TransactionRecord {
     public let source: TransactionSource
     public let uid: String
     public let transactionHash: String
