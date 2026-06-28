@@ -2,13 +2,13 @@ import EvmKit
 import Foundation
 import MarketKit
 
-public class EvmTransactionRecord: TransactionRecord {
-    let transaction: Transaction
+open class EvmTransactionRecord: TransactionRecord {
+    public let transaction: Transaction
     let ownTransaction: Bool
     let protected: Bool
     let fee: AppValue?
 
-    init(source: TransactionSource, transaction: Transaction, baseToken: Token, ownTransaction: Bool, protected: Bool, spam: Bool = false) {
+    public init(source: TransactionSource, transaction: Transaction, baseToken: Token, ownTransaction: Bool, protected: Bool, spam: Bool = false) {
         self.transaction = transaction
         let txHash = transaction.hash.hs.hexString
         self.ownTransaction = ownTransaction

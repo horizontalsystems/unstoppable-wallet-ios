@@ -108,7 +108,7 @@ extension AdapterFactory {
            let baseToken = evmBlockchainManager.baseToken(blockchainType: blockchainType)
         {
             let syncSource = evmSyncSourceManager.syncSource(blockchainType: blockchainType)
-            return EvmTransactionsAdapter(
+            let adapter = EvmTransactionsAdapter(
                 evmKitWrapper: evmKitWrapper,
                 source: transactionSource,
                 baseToken: baseToken,
@@ -117,6 +117,7 @@ extension AdapterFactory {
                 spamWrapper: spamWrapper,
                 evmLabelManager: evmLabelManager
             )
+            return TransactionsAdapterDecoratorFactory.decorate(adapter: adapter, source: transactionSource)
         }
 
         return nil
