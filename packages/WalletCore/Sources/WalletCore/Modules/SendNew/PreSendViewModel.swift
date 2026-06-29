@@ -97,7 +97,7 @@ public class PreSendViewModel: ObservableObject {
 
     var handler: IPreSendHandler?
     @Published public private(set) var sendData: ExtendedSendData?
-    @Published var cautions = [CautionNew]()
+    @Published public var cautions = [CautionNew]()
 
     public init(wallet: Wallet, handler: IPreSendHandler?, resolvedAddress: ResolvedAddress, amount: Decimal?, memo: String?, customDecimals: Int? = nil) {
         self.wallet = wallet

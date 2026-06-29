@@ -3,7 +3,7 @@ import Foundation
 import MarketKit
 
 public struct EvmDecoration {
-    let type: Type
+    public let type: Type
     let customSendButtonTitle: String?
 
     public var rateCoins: [Coin] {
@@ -126,7 +126,7 @@ public struct EvmDecoration {
     }
 }
 
-extension EvmDecoration {
+public extension EvmDecoration {
     enum `Type` {
         case outgoingEvm(to: EvmKit.Address, value: Decimal)
         case outgoingEip20(to: EvmKit.Address, value: Decimal, token: Token)
