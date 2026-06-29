@@ -34,11 +34,17 @@ public enum EvmKitConfigFactory {
             provider.decorators(account: account, evmKit: evmKit)
         }
     }
+
+    // The default base transaction syncers (ethereum + internal + eip20). Public so an app-side provider can
+    // compose them (e.g. wrap them in its own syncer) instead of re-listing the set.
+    public static func defaultSyncers(evmKit: EvmKit.Kit) -> [ITransactionSyncer] {
+        [evmKit.ethereumSyncer, evmKit.internalSyncer, Eip20Kit.Kit.transactionSyncer(for: evmKit)]
+    }
 }
 
 enum UnstoppableEvmKitConfigProvider: IEvmKitConfigProvider {
     static func syncers(account _: Account, evmKit: EvmKit.Kit) -> [ITransactionSyncer]? {
-        [evmKit.ethereumSyncer, evmKit.internalSyncer, Eip20Kit.Kit.transactionSyncer(for: evmKit)]
+        EvmKitConfigFactory.defaultSyncers(evmKit: evmKit)
     }
 
     static func decorators(account _: Account, evmKit: EvmKit.Kit) {
