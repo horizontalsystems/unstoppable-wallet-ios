@@ -234,7 +234,7 @@ public extension PreSendViewModel {
 
         enteringFiat = false
 
-        amount = (availableBalance * Decimal(percent) / 100).rounded(decimal: customDecimals ?? token.decimals)
+        amount = (availableBalance * Decimal(percent) / 100).roundedDown(decimal: customDecimals ?? token.decimals)
     }
 
     func clearAmountIn() {
