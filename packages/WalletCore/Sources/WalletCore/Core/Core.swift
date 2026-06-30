@@ -13,7 +13,8 @@ public class Core {
         SendHandlerFactory.unstoppableHandlers.forEach { SendHandlerFactory.register($0) }
         SendHandlerFactory.unstoppablePreSendHandlers.forEach { SendHandlerFactory.register($0) }
         TransactionServiceFactory.unstoppableTransactionServices.forEach { TransactionServiceFactory.register($0) }
-        EvmKitConfigFactory.register(UnstoppableEvmKitConfigProvider.self)
+        // EvmKit syncers/decorators are registered by each app (no shared fallback): stable in StableCore, the
+        // unstoppable app in its own initCore (registers a provider over defaultSyncers/defaultDecorators).
     }
 
     public static var shared: Core {
