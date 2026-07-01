@@ -34,7 +34,7 @@ struct UnstoppableApp: App {
             }
         }
     }
-    
+
     private static func initCore() throws {
         try Core.initApp(widgetRefresher: WidgetRefresher())
 
