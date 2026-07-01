@@ -26,7 +26,9 @@ public enum EvmKitConfigFactory {
             }
         }
 
-        return []
+        // An empty set silently disables ALL transaction sync — a misconfiguration, never valid. Every app must
+        // register a provider (EvmKitConfigFactory.register) that returns a non-nil set for every EVM account.
+        fatalError("EvmKitConfigFactory: no registered provider supplied syncers for account \(account.id)")
     }
 
     static func applyDecorators(account: Account, evmKit: EvmKit.Kit) {
