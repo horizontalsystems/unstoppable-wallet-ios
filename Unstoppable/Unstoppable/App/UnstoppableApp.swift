@@ -16,7 +16,7 @@ struct UnstoppableApp: App {
         Theme.updateNavigationBarTheme() // TODO: get rid of this
 
         do {
-            try initCore()
+            try Self.initCore()
 
             initResult = .success(())
         } catch {
@@ -35,7 +35,7 @@ struct UnstoppableApp: App {
         }
     }
     
-    private func initCore() throws {
+    private static func initCore() throws {
         try Core.initApp(widgetRefresher: WidgetRefresher())
 
         EvmKitConfigFactory.register(UnstoppableEvmKitConfigProvider.self)
