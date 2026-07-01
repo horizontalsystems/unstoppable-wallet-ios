@@ -141,11 +141,9 @@ extension WalletViewModel {
         walletService?.disable(wallet: wallet)
     }
 
-    public func refresh() async {
+    public func refresh() {
         walletService?.refresh()
         coinPriceService.refresh()
-
-        try? await Task.sleep(seconds: 1)
     }
 
     func process(scanned: String) {

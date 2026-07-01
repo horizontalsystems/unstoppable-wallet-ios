@@ -96,7 +96,8 @@ struct WalletView: View {
                 }
                 .animation(.default, value: accountWarningViewModel.item)
                 .refreshable {
-                    await viewModel.refresh()
+                    viewModel.refresh()
+                    await Task { try? await Task.sleep(seconds: 1) }.value
                 }
                 .onChange(of: viewModel.sortType) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
                 .themeListScrollHeader()
