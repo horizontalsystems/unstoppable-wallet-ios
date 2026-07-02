@@ -52,6 +52,13 @@ extension MultiSwapSendHandler: ISendHandler {
         15
     }
 
+    // The swap confirm screen holds a committed provider quote (USwap's /v2/swap, and the
+    // equivalent commit call on every other provider). Don't auto re-request it on expiry —
+    // surface a "Refresh" button and let the user pull a fresh quote on demand.
+    var autoRefreshEnabled: Bool {
+        false
+    }
+
     var menuItems: [SendMenuItem] {
         var menuItems = [SendMenuItem]()
 

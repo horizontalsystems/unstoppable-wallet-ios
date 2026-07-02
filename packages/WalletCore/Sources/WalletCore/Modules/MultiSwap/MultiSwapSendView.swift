@@ -23,7 +23,7 @@ struct MultiSwapSendView: View {
                             .disabled(true)
                     }
                 case .success:
-                    if sendViewModel.canSend {
+                    if sendViewModel.canSend, !sendViewModel.expired {
                         SlideButton(
                             styling: .text(start: "swap.confirmation.slide_to_swap".localized, end: "", success: ""),
                             action: {
