@@ -48,7 +48,7 @@ public class MoneroNodeManager {
             return [
                 MoneroNode(
                     name: "unstoppable.money",
-                    node: .init(url: URL(string: "https://xmr.unstoppable.money")!, isTrusted: false)
+                    node: .init(url: URL(string: "https://xmr.unstoppable.money")!, isTrusted: true)
                 ),
                 MoneroNode(
                     name: "xmr.rocks",
