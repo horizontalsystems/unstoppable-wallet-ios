@@ -28,6 +28,10 @@ public class SendViewModel: ObservableObject {
     @Published var sending = false
     @Published var transactionSettingsModified = false
 
+    // Set when a non-auto-refreshing quote (a swap) reaches its expiration. The UI swaps the
+    // send action for a "Refresh" button; cleared on every state change (a fresh sync clears it).
+    @Published public var expired = false
+
     private var nextRefreshTime: Double?
 
     private let errorSubject = PassthroughSubject<String, Never>()
@@ -36,13 +40,14 @@ public class SendViewModel: ObservableObject {
         didSet {
             timer?.invalidate()
             nextRefreshTime = nil
+            expired = false
 
             if case .success = state {
                 let duration = handler?.expirationDuration.map { Double($0) } ?? autoRefreshDuration
                 nextRefreshTime = Date().timeIntervalSince1970 + duration
 
                 timer = Timer.scheduledTimer(withTimeInterval: duration, repeats: false) { [weak self] _ in
-                    self?.sync(silent: true)
+                    self?.onExpiration()
                 }
             }
         }
@@ -148,12 +153,23 @@ public extension SendViewModel {
         let now = Date().timeIntervalSince1970
 
         if now > nextRefreshTime {
-            sync(silent: true)
+            onExpiration()
         } else {
             timer?.invalidate()
             timer = Timer.scheduledTimer(withTimeInterval: nextRefreshTime - now, repeats: false) { [weak self] _ in
-                self?.sync(silent: true)
+                self?.onExpiration()
             }
+        }
+    }
+
+    // Reached when the current quote hits its expiration. Regular sends silently re-quote (fee
+    // refresh); handlers that opt out of auto-refresh (swaps) mark the quote expired instead and
+    // wait for the user to tap "Refresh".
+    internal func onExpiration() {
+        if handler?.autoRefreshEnabled ?? true {
+            sync(silent: true)
+        } else {
+            expired = true
         }
     }
 
