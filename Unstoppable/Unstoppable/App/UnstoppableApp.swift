@@ -36,7 +36,7 @@ struct UnstoppableApp: App {
     }
 
     private static func initCore() throws {
-        try Core.initApp(widgetRefresher: WidgetRefresher())
+        try Core.initApp(config: Core.Config(), widgetRefresher: WidgetRefresher())
 
         EvmKitConfigFactory.register(UnstoppableEvmKitConfigProvider.self)
 

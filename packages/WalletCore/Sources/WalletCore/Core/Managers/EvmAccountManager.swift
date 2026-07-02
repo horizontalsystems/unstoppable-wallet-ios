@@ -237,6 +237,10 @@ class EvmAccountManager {
     private func handle(processedTokenInfos infos: [TokenInfo], account: Account) {
 //        print("Processed Tokens: \(infos.count): \n\(infos.map { $0.type.id }.joined(separator: ", "))")
 
+        guard Core.shared.config.autoEnableTokensOnReceive else {
+            return
+        }
+
         guard !infos.isEmpty else {
             return
         }
