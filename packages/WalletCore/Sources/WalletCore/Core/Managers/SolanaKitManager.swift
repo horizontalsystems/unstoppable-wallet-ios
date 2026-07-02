@@ -96,6 +96,10 @@ public class SolanaKitManager {
     }
 
     private func handle(tokenAccounts: [FullTokenAccount], account: Account) {
+        guard Core.shared.config.autoEnableTokensOnReceive else {
+            return
+        }
+
         guard !tokenAccounts.isEmpty else {
             return
         }

@@ -353,7 +353,7 @@ class TransactionsViewModel: ObservableObject {
 
     private var poolGroupType: PoolGroupFactory.PoolGroupType {
         if let token = transactionFilter.token {
-            return .token(token: token)
+            return .tokens(tokens: [token])
         } else if let blockchain = transactionFilter.blockchain {
             return .blockchain(blockchainType: blockchain.type, wallets: walletManager.activeWallets)
         } else {

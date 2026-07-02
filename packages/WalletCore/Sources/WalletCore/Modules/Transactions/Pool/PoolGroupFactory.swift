@@ -85,23 +85,32 @@ public class PoolGroupFactory {
                 return providers
             }
 
-        case let .token(token):
-            // filter by contact, but contact don't have address for blockchainType
-            let address = contact?.address(blockchainUid: token.blockchainType.uid)?.address
-            if contact != nil, address == nil {
-                return []
+        case let .tokens(tokens):
+            var poolSources = Set<PoolSource>()
+
+            for token in tokens {
+                // filter by contact, but contact don't have address for blockchainType
+                let address = contact?.address(blockchainUid: token.blockchainType.uid)?.address
+                if contact != nil, address == nil {
+                    continue
+                }
+
+                let poolSource = PoolSource(
+                    token: token,
+                    blockchainType: token.blockchainType,
+                    filter: filter,
+                    address: address
+                )
+
+                poolSources.insert(poolSource)
             }
 
-            let poolSource = PoolSource(
-                token: token,
-                blockchainType: token.blockchainType,
-                filter: filter,
-                address: address
-            )
-
-            if let adapter = Core.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
-                let provider = PoolProvider(adapter: adapter, source: poolSource)
-                return [provider]
+            return poolSources.compactMap { poolSource in
+                if let adapter = Core.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
+                    return PoolProvider(adapter: adapter, source: poolSource)
+                } else {
+                    return nil
+                }
             }
         }
 
@@ -123,6 +132,6 @@ public extension PoolGroupFactory {
     enum PoolGroupType {
         case all(wallets: [Wallet])
         case blockchain(blockchainType: BlockchainType, wallets: [Wallet])
-        case token(token: Token)
+        case tokens(tokens: [Token])
     }
 }

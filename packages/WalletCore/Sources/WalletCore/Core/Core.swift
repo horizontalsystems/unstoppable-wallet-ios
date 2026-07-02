@@ -6,8 +6,8 @@ import MarketKit
 public class Core {
     static var instance: Core?
 
-    public static func initApp(widgetRefresher: IWidgetRefresher? = nil) throws {
-        let core = try Core(widgetRefresher: widgetRefresher)
+    public static func initApp(config: Config, widgetRefresher: IWidgetRefresher? = nil) throws {
+        let core = try Core(config: config, widgetRefresher: widgetRefresher)
         instance = core
 
         SendHandlerFactory.unstoppableHandlers.forEach { SendHandlerFactory.register($0) }
@@ -20,6 +20,8 @@ public class Core {
     public static var shared: Core {
         instance!
     }
+
+    let config: Config
 
     public let marketKit: MarketKit.Kit
 
@@ -145,7 +147,9 @@ public class Core {
 
     public let createPasskeyAccountService: CreatePasskeyAccountService
 
-    init(widgetRefresher: IWidgetRefresher?) throws {
+    init(config: Config, widgetRefresher: IWidgetRefresher?) throws {
+        self.config = config
+
         databaseDirectoryURL = try FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         let databaseURL = databaseDirectoryURL.appendingPathComponent("bank.sqlite")
@@ -502,5 +506,15 @@ public class Core {
             accountManager: accountManager,
             walletManager: walletManager
         )
+    }
+}
+
+public extension Core {
+    struct Config {
+        let autoEnableTokensOnReceive: Bool
+
+        public init(autoEnableTokensOnReceive: Bool = true) {
+            self.autoEnableTokensOnReceive = autoEnableTokensOnReceive
+        }
     }
 }

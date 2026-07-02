@@ -61,6 +61,10 @@ public class ZanoKitManager {
     }
 
     private func handle(assets: [AssetInfo]) {
+        guard Core.shared.config.autoEnableTokensOnReceive else {
+            return
+        }
+
         guard let currentAccount else { return }
 
         let nonNativeAssets = assets.filter { !$0.isNative }
