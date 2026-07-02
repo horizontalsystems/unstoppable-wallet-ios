@@ -453,6 +453,12 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         let amountOut = quote.expectedBuyAmount
         let amountOutMin = amountOut - (amountOut * slippage / 100)
 
+        // The server's `minBuyAmount` is the enforced floor; `null` means the route is a floating
+        // P2P estimate — nothing guarantees the amount (or applies our slippage), so the confirm
+        // page must not show the "Guaranteed" (or slippage) rows SwapFinalQuote derives from a
+        // non-nil slippage. Shadow the parameter: every builder below receives nil instead.
+        let slippage: Decimal? = quote.minBuyAmount != nil ? slippage : nil
+
         let blockchainType = tokenIn.blockchainType
 
         switch blockchainType {
@@ -635,7 +641,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut _: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?,
         transactionSettings: TransactionSettings?
     ) async throws -> SwapFinalQuote {
@@ -703,7 +709,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut _: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?,
         transactionSettings: TransactionSettings?
     ) async throws -> SwapFinalQuote {
@@ -755,7 +761,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?
     ) async throws -> SwapFinalQuote {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
@@ -806,7 +812,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?
     ) async throws -> SwapFinalQuote {
         guard let jsonObject = quote.tx else {
@@ -872,7 +878,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?
     ) async throws -> SwapFinalQuote {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? StellarAdapter else {
@@ -930,7 +936,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?
     ) async throws -> SwapFinalQuote {
         guard let jsonObject = quote.tx as? [String: Any] else {
@@ -980,7 +986,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?,
         priority: MoneroKit.SendPriority
     ) async throws -> SwapFinalQuote {
@@ -1033,7 +1039,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?
     ) async throws -> SwapFinalQuote {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? ZanoAdapter else {
@@ -1089,7 +1095,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?
     ) async throws -> SwapFinalQuote {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? ISendSolanaAdapter & IBalanceAdapter else {
@@ -1307,6 +1313,10 @@ extension USwapMultiSwapProvider {
 
     class Quote: ImmutableMappable {
         let expectedBuyAmount: Decimal
+        // The ENFORCED floor the route can deliver (v2 sends an explicit `null` when the amount
+        // is only an estimate — floating-rate P2P, re-priced at deposit). nil ⇒ no guarantee:
+        // the confirm page must not render a "Guaranteed" row.
+        let minBuyAmount: Decimal?
         let buyAsset: String?
         let inboundAddress: String
         let destinationAddress: String
@@ -1323,6 +1333,7 @@ extension USwapMultiSwapProvider {
 
         required init(map: Map) throws {
             expectedBuyAmount = try map.value("expectedBuyAmount", using: Transform.stringToDecimalTransform)
+            minBuyAmount = try? map.value("minBuyAmount", using: Transform.stringToDecimalTransform)
             buyAsset = try? map.value("buyAsset")
             inboundAddress = try map.value("inboundAddress")
             destinationAddress = try map.value("destinationAddress")

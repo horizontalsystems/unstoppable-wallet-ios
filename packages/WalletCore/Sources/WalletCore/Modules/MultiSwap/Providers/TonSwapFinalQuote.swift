@@ -11,7 +11,7 @@ class TonSwapFinalQuote: SwapFinalQuote {
         amountIn: Decimal,
         expectedAmountOut: Decimal,
         recipient: String?,
-        slippage: Decimal,
+        slippage: Decimal?,
         estimatedTime: TimeInterval? = nil,
         transactionParam: SendTransactionParam,
         fee: Decimal?,
