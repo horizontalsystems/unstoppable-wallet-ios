@@ -9,7 +9,7 @@ class UtxoSwapFinalQuote: SwapFinalQuote {
     init(
         expectedBuyAmount: Decimal,
         sendParameters: SendParameters?,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?,
         estimatedTime: TimeInterval? = nil,
         transactionError: Error?,

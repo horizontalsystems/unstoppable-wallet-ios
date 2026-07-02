@@ -10,7 +10,7 @@ class ZcashSwapFinalQuote: SwapFinalQuote {
     init(
         expectedBuyAmount: Decimal,
         proposal: Proposal?,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?,
         estimatedTime: TimeInterval? = nil,
         transactionError: Error?,
