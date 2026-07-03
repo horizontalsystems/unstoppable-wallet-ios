@@ -74,11 +74,11 @@ private struct StubBroadcaster: ISwapBroadcaster {
     let id: String
 
     func prepare(_ executable: ISwapExecutable) async throws -> IPrepared {
-        EoaPrepared(executable: executable)
+        DirectPrepared(executable: executable)
     }
 
     func submit(_: IPrepared) async throws -> BroadcastResult {
-        BroadcastResult(onChainTxHash: nil, trackingHandle: nil)
+        BroadcastResult(txHash: nil, trackingHandle: nil)
     }
 }
 

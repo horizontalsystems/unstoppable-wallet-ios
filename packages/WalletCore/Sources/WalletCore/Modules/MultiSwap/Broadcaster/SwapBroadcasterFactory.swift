@@ -26,3 +26,17 @@ public enum SwapBroadcasterFactory {
         types = []
     }
 }
+
+public extension SwapBroadcasterFactory {
+    static let unstoppableBroadcasters: [ISwapBroadcasterType.Type] = [
+        EvmSwapBroadcaster.self,
+        UtxoSwapBroadcaster.self,
+        ZcashSwapBroadcaster.self,
+        TronSwapBroadcaster.self,
+        TonSwapBroadcaster.self,
+        StellarSwapBroadcaster.self,
+        SolanaSwapBroadcaster.self,
+        MoneroSwapBroadcaster.self,
+        ZanoSwapBroadcaster.self,
+    ]
+}
