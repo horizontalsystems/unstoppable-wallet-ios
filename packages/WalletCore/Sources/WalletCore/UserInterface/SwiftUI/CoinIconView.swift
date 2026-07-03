@@ -63,7 +63,7 @@ public struct CoinIconView: View {
     let coin: Coin?
     let placeholderImage: String?
 
-    init(coin: Coin?, placeholderImage: String? = nil) {
+    public init(coin: Coin?, placeholderImage: String? = nil) {
         self.coin = coin
         self.placeholderImage = placeholderImage
     }
