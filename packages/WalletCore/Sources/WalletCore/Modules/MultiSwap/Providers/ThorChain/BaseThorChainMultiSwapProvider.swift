@@ -124,7 +124,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 throw SwapError.noEvmKit
             }
 
-            if let gasPriceData {
+            if evmKitWrapper.signer != nil, let gasPriceData {
                 do {
                     let _evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData)
                     evmFeeData = _evmFeeData

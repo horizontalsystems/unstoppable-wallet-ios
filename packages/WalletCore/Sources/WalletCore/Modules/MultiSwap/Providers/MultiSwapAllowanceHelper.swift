@@ -26,6 +26,12 @@ class MultiSwapAllowanceHelper {
     }
 
     func allowanceState(spenderAddress: Address, token: Token, amount: Decimal) async -> AllowanceState {
+        if let policyState = await AllowancePolicy.state(spenderAddress: spenderAddress, token: token, amount: amount) {
+            switch policyState {
+            case .notRequired: return .notRequired
+            }
+        }
+
         if token.type.isNative {
             return .notRequired
         }
