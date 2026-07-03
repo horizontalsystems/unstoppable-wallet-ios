@@ -125,6 +125,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             gasPrice: swap.transaction.gasPrice,
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce,
+            mevProtectionAllowed: mevProtectionAllowed(tokenIn: tokenIn, tokenOut: tokenOut),
             toAddress: receiveAddress.eip55
         )
     }

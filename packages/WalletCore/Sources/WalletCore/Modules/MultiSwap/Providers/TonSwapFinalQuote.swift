@@ -40,7 +40,7 @@ class TonSwapFinalQuote: SwapFinalQuote {
         super.canSwap && fee != nil
     }
 
-    override func executable(tokenIn _: Token, privateSend _: Bool) -> ISwapExecutable {
+    override func executable(tokenIn _: Token) -> ISwapExecutable {
         TonExecutable(transactionParam: transactionParam)
     }
 

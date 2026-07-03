@@ -42,7 +42,7 @@ class ZanoSwapFinalQuote: SwapFinalQuote {
         nil
     }
 
-    override func executable(tokenIn: Token, privateSend _: Bool) -> ISwapExecutable {
+    override func executable(tokenIn: Token) -> ISwapExecutable {
         ZanoExecutable(token: tokenIn, address: address, amount: amount, memo: memo)
     }
 

@@ -41,7 +41,7 @@ class UtxoSwapFinalQuote: SwapFinalQuote {
         super.canSwap && fee != nil && sendParameters != nil
     }
 
-    override func executable(tokenIn: Token, privateSend _: Bool) -> ISwapExecutable {
+    override func executable(tokenIn: Token) -> ISwapExecutable {
         UtxoExecutable(token: tokenIn, sendParameters: sendParameters)
     }
 

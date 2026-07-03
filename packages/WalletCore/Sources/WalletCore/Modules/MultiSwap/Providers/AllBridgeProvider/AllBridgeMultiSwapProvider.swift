@@ -370,6 +370,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 gasPrice: gasPriceData?.userDefined,
                 evmFeeData: evmFeeData,
                 nonce: transactionSettings?.nonce,
+                mevProtectionAllowed: mevProtectionAllowed(tokenIn: tokenIn, tokenOut: tokenOut),
                 toAddress: recipient
             )
         } else if tokenIn.blockchainType == .tron {

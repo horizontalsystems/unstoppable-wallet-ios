@@ -47,6 +47,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             gasPrice: gasPriceData?.userDefined,
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce,
+            mevProtectionAllowed: mevProtectionAllowed(tokenIn: tokenIn, tokenOut: tokenOut),
             toAddress: evmKit.receiveAddress.eip55
         )
     }

@@ -10,7 +10,7 @@ import TronKit
 @testable import Unstoppable
 @testable import WalletCore
 
-// build-argument equivalence oracle: executable(tokenIn:privateSend:) must repackage
+// build-argument equivalence oracle: executable(tokenIn:) must repackage
 // exactly the fields MultiSwapSendHandler.send reads from each quote today
 struct SwapExecutableTests {
     private static func token(blockchainType: BlockchainType = .ethereum) -> Token {
@@ -37,20 +37,21 @@ struct SwapExecutableTests {
             gasPrice: gasPrice,
             evmFeeData: EvmFeeData(gasLimit: 100_000, surchargedGasLimit: 110_000),
             nonce: 7,
+            mevProtectionAllowed: true,
             toAddress: "to"
         )
 
-        let executable = try #require(quote.executable(tokenIn: Self.token(), privateSend: true) as? EvmExecutable)
+        let executable = try #require(quote.executable(tokenIn: Self.token()) as? EvmExecutable)
 
         #expect(executable.transactionData == transactionData)
         #expect(executable.gasPrice == gasPrice)
         #expect(executable.gasLimit == 110_000) // surchargedGasLimit, not gasLimit
         #expect(executable.nonce == 7)
-        #expect(executable.privateSend == true)
+        #expect(executable.mevProtectionAllowed == true)
         #expect(executable.approval == nil)
     }
 
-    @Test func evmQuotePreservesNilOptionalsAndPrivateSendOff() throws {
+    @Test func evmQuotePreservesNilOptionalsAndMevDefaultOff() throws {
         let quote = EvmSwapFinalQuote(
             expectedBuyAmount: 1,
             transactionData: nil,
@@ -62,13 +63,13 @@ struct SwapExecutableTests {
             toAddress: "to"
         )
 
-        let executable = try #require(quote.executable(tokenIn: Self.token(), privateSend: false) as? EvmExecutable)
+        let executable = try #require(quote.executable(tokenIn: Self.token()) as? EvmExecutable)
 
         #expect(executable.transactionData == nil)
         #expect(executable.gasPrice == nil)
         #expect(executable.gasLimit == nil)
         #expect(executable.nonce == nil)
-        #expect(executable.privateSend == false)
+        #expect(executable.mevProtectionAllowed == false)
     }
 
     @Test func utxoQuoteCarriesTokenAndSendParameters() throws {
@@ -84,7 +85,7 @@ struct SwapExecutableTests {
         )
         let token = Self.token(blockchainType: .bitcoin)
 
-        let executable = try #require(quote.executable(tokenIn: token, privateSend: false) as? UtxoExecutable)
+        let executable = try #require(quote.executable(tokenIn: token) as? UtxoExecutable)
 
         #expect(executable.token == token)
         #expect(executable.sendParameters === sendParameters)
@@ -103,7 +104,7 @@ struct SwapExecutableTests {
         )
         let token = Self.token(blockchainType: .zcash)
 
-        let executable = try #require(quote.executable(tokenIn: token, privateSend: false) as? ZcashExecutable)
+        let executable = try #require(quote.executable(tokenIn: token) as? ZcashExecutable)
 
         #expect(executable.token == token)
         #expect(executable.proposal == nil)
@@ -125,7 +126,7 @@ struct SwapExecutableTests {
             toAddress: "to"
         )
 
-        let executable = try #require(quote.executable(tokenIn: Self.token(blockchainType: .ton), privateSend: false) as? TonExecutable)
+        let executable = try #require(quote.executable(tokenIn: Self.token(blockchainType: .ton)) as? TonExecutable)
 
         #expect(executable.transactionParam.validUntil == 123)
         #expect(executable.transactionParam.messages.isEmpty)
@@ -155,7 +156,7 @@ struct SwapExecutableTests {
             toAddress: "to"
         )
 
-        let executable = try #require(quote.executable(tokenIn: Self.token(blockchainType: .tron), privateSend: false) as? TronExecutable)
+        let executable = try #require(quote.executable(tokenIn: Self.token(blockchainType: .tron)) as? TronExecutable)
 
         #expect(executable.created.txID == created.txID)
         #expect(executable.created.rawDataHex == created.rawDataHex)
@@ -183,7 +184,7 @@ struct SwapExecutableTests {
             toAddress: "to"
         )
 
-        let executable = try #require(quote.executable(tokenIn: tokenIn, privateSend: false) as? StellarExecutable)
+        let executable = try #require(quote.executable(tokenIn: tokenIn) as? StellarExecutable)
 
         #expect(executable.token == tokenIn)
         guard case let .envelope(envelope) = executable.transactionData else {
@@ -210,7 +211,7 @@ struct SwapExecutableTests {
         )
         let token = Self.token(blockchainType: .monero)
 
-        let executable = try #require(quote.executable(tokenIn: token, privateSend: false) as? MoneroExecutable)
+        let executable = try #require(quote.executable(tokenIn: token) as? MoneroExecutable)
 
         #expect(executable.token == token)
         #expect(executable.address == "monero-addr")
@@ -233,7 +234,7 @@ struct SwapExecutableTests {
         )
         let token = Self.token(blockchainType: .zano)
 
-        let executable = try #require(quote.executable(tokenIn: token, privateSend: false) as? ZanoExecutable)
+        let executable = try #require(quote.executable(tokenIn: token) as? ZanoExecutable)
 
         #expect(executable.token == token)
         #expect(executable.address == "zano-addr")
@@ -256,7 +257,7 @@ struct SwapExecutableTests {
         )
         let token = Self.token(blockchainType: .solana)
 
-        let executable = try #require(quote.executable(tokenIn: token, privateSend: false) as? SolanaExecutable)
+        let executable = try #require(quote.executable(tokenIn: token) as? SolanaExecutable)
 
         #expect(executable.token == token)
         #expect(executable.rawTransaction == rawTransaction)
@@ -271,7 +272,7 @@ struct SwapExecutableTests {
             toAddress: "to"
         )
 
-        let executable = quote.executable(tokenIn: Self.token(), privateSend: false)
+        let executable = quote.executable(tokenIn: Self.token())
 
         #expect(executable is UnsupportedExecutable)
     }

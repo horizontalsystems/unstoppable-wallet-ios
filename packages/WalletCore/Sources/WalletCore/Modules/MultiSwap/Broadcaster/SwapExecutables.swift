@@ -15,7 +15,7 @@ public struct EvmExecutable: ISwapExecutable {
     public let gasPrice: GasPrice?
     public let gasLimit: Int?
     public let nonce: Int?
-    public let privateSend: Bool
+    public let mevProtectionAllowed: Bool
     public let approval: SwapApproval?
 }
 
