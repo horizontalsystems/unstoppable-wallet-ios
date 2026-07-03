@@ -7,6 +7,7 @@ import TronKit
 class TronSwapFinalQuote: SwapFinalQuote {
     private let amountIn: Decimal
     let createdTransaction: CreatedTransactionResponse
+    let transferIntent: TronTransferIntent?
     private let fees: [Fee]
 
     init(
@@ -16,6 +17,7 @@ class TronSwapFinalQuote: SwapFinalQuote {
         slippage: Decimal?,
         estimatedTime: TimeInterval? = nil,
         createdTransaction: CreatedTransactionResponse,
+        transferIntent: TronTransferIntent? = nil,
         fees: [Fee],
         transactionError: Error?,
         toAddress: String,
@@ -24,6 +26,7 @@ class TronSwapFinalQuote: SwapFinalQuote {
     ) {
         self.amountIn = amountIn
         self.createdTransaction = createdTransaction
+        self.transferIntent = transferIntent
         self.fees = fees
 
         super.init(
@@ -43,7 +46,7 @@ class TronSwapFinalQuote: SwapFinalQuote {
     }
 
     override func executable(tokenIn _: Token) -> ISwapExecutable {
-        TronExecutable(created: createdTransaction, transferIntent: nil)
+        TronExecutable(created: createdTransaction, transferIntent: transferIntent)
     }
 
     override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {

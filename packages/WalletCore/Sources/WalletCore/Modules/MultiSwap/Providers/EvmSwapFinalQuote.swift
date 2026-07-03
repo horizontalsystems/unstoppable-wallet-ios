@@ -8,6 +8,7 @@ class EvmSwapFinalQuote: SwapFinalQuote {
     let evmFeeData: EvmFeeData?
     let nonce: Int?
     let mevProtectionAllowed: Bool
+    let approval: SwapApproval?
 
     init(
         expectedBuyAmount: Decimal,
@@ -20,6 +21,7 @@ class EvmSwapFinalQuote: SwapFinalQuote {
         evmFeeData: EvmFeeData?,
         nonce: Int?,
         mevProtectionAllowed: Bool = false,
+        approval: SwapApproval? = nil,
         toAddress: String,
         depositAddress: String? = nil,
         providerSwapId: String? = nil
@@ -29,6 +31,7 @@ class EvmSwapFinalQuote: SwapFinalQuote {
         self.evmFeeData = evmFeeData
         self.nonce = nonce
         self.mevProtectionAllowed = mevProtectionAllowed
+        self.approval = approval
 
         super.init(
             expectedBuyAmount: expectedBuyAmount,
@@ -57,7 +60,7 @@ class EvmSwapFinalQuote: SwapFinalQuote {
             gasLimit: evmFeeData?.surchargedGasLimit,
             nonce: nonce,
             mevProtectionAllowed: mevProtectionAllowed,
-            approval: nil
+            approval: approval
         )
     }
 
