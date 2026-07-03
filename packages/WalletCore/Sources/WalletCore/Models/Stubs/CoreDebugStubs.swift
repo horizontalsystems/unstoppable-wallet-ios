@@ -10,6 +10,7 @@ enum CoreDebugStubs {
         return Swap(
             uid: swap.uid,
             txHash: Constants.txHash,
+            trackingHandle: nil,
             accountId: swap.accountId,
             providerId: Constants.providerId,
             status: .actionRequired,

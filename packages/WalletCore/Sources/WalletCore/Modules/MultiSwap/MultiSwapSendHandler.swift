@@ -143,6 +143,7 @@ extension MultiSwapSendHandler: ISendHandler {
             let swap = Swap(
                 uid: UUID().uuidString,
                 txHash: txHash,
+                trackingHandle: result.trackingHandle,
                 accountId: account.id,
                 providerId: provider.id,
                 status: .pending,

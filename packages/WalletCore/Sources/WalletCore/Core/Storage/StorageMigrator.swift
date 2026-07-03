@@ -958,6 +958,12 @@ public enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Add trackingHandle to SwapRecord") { db in
+            try db.alter(table: SwapRecord.databaseTableName) { t in
+                t.add(column: SwapRecord.Columns.trackingHandle.name, .text)
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 
