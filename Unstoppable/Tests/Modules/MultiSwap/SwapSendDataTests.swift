@@ -74,6 +74,35 @@ struct SwapSendDataTests {
         #expect(data.rateCoins.map(\.uid) == ["in", "out", "fee-coin"])
     }
 
+    @Test func directSectionsAppendQuoteFeeFields() {
+        let quote = Self.evmQuote()
+        let data = Self.sendData(quote: quote, prepared: DirectPrepared(executable: StubExecutable()))
+        let baseToken = Self.token(uid: "base")
+        let currency = Currency(code: "USD", symbol: "$", decimal: 2)
+
+        let sections = data.sections(baseToken: baseToken, currency: currency, rates: [:])
+        let quoteFields = quote.fields(tokenIn: data.tokenIn, tokenOut: data.tokenOut, baseToken: baseToken, currency: currency, tokenInRate: nil, tokenOutRate: nil, baseTokenRate: nil)
+        let feeFields = quote.feeFields(baseToken: baseToken, currency: currency, baseTokenRate: nil)
+
+        #expect(sections.count == 2) // flow + info(+fee), no otherSections
+        #expect(feeFields.isEmpty == false) // populated EVM quote produces fee rows
+        #expect(sections[1].fields.count == 1 + quoteFields.count + feeFields.count) // price + quote + fee
+    }
+
+    @Test func displaySectionsReplaceQuoteFeeRowsWithFeeSections() {
+        let quote = Self.evmQuote()
+        let prepared = StubDisplayPrepared(canSend: true, extraRateCoins: [], stubFeeSections: [SendDataSection([])])
+        let data = Self.sendData(quote: quote, prepared: prepared)
+        let baseToken = Self.token(uid: "base")
+        let currency = Currency(code: "USD", symbol: "$", decimal: 2)
+
+        let sections = data.sections(baseToken: baseToken, currency: currency, rates: [:])
+        let quoteFields = quote.fields(tokenIn: data.tokenIn, tokenOut: data.tokenOut, baseToken: baseToken, currency: currency, tokenInRate: nil, tokenOutRate: nil, baseTokenRate: nil)
+
+        #expect(sections.count == 3) // flow + info + the display fee section
+        #expect(sections[1].fields.count == 1 + quoteFields.count) // price + quote, NO quote fee rows
+    }
+
     @Test func displayPreparedSuppressesQuoteFeeData() {
         let prepared = StubDisplayPrepared(canSend: false, extraRateCoins: [])
         // quote CAN swap and has feeData — display prepared must suppress it (no "Edit Fee")
@@ -89,9 +118,10 @@ private struct StubExecutable: ISwapExecutable {}
 private struct StubDisplayPrepared: IPreparedDisplay {
     let canSend: Bool
     let extraRateCoins: [Coin]
+    var stubFeeSections: [SendDataSection] = []
 
     func feeSections(baseToken _: Token, currency _: Currency, rates _: [String: Decimal]) -> [SendDataSection] {
-        []
+        stubFeeSections
     }
 }
 

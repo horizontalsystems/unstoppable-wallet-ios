@@ -52,21 +52,19 @@ class SolanaSwapFinalQuote: SwapFinalQuote {
         return CautionNew(title: title, text: text, type: .error)
     }
 
-    override func fields(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
-        var fields = super.fields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
-
-        if let fee {
-            let appValue = AppValue(token: baseToken, value: fee)
-            let currencyValue = baseTokenRate.map { CurrencyValue(currency: currency, value: fee * $0) }
-
-            fields.append(
-                .fee(
-                    title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
-                    amountData: .init(appValue: appValue, currencyValue: currencyValue)
-                )
-            )
+    override func feeFields(baseToken: Token, currency: Currency, baseTokenRate: Decimal?) -> [SendField] {
+        guard let fee else {
+            return []
         }
 
-        return fields
+        let appValue = AppValue(token: baseToken, value: fee)
+        let currencyValue = baseTokenRate.map { CurrencyValue(currency: currency, value: fee * $0) }
+
+        return [
+            .fee(
+                title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
+                amountData: .init(appValue: appValue, currencyValue: currencyValue)
+            ),
+        ]
     }
 }

@@ -74,8 +74,10 @@ class EvmSwapFinalQuote: SwapFinalQuote {
             )
         }
 
-        fields.append(contentsOf: EvmSendHelper.feeFields(evmFeeData: evmFeeData, gasPrice: gasPrice, feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate))
-
         return fields
+    }
+
+    override func feeFields(baseToken: Token, currency: Currency, baseTokenRate: Decimal?) -> [SendField] {
+        EvmSendHelper.feeFields(evmFeeData: evmFeeData, gasPrice: gasPrice, feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate)
     }
 }

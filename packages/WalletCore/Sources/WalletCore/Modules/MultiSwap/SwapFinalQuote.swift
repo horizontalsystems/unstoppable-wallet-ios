@@ -51,6 +51,10 @@ public class SwapFinalQuote {
         UnsupportedExecutable()
     }
 
+    func feeFields(baseToken _: Token, currency _: Currency, baseTokenRate _: Decimal?) -> [SendField] {
+        []
+    }
+
     func cautions(baseToken: Token) -> [CautionNew] {
         var cautions = [CautionNew]()
 
