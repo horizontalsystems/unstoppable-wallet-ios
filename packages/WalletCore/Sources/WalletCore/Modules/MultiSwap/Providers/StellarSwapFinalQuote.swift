@@ -38,6 +38,10 @@ class StellarSwapFinalQuote: SwapFinalQuote {
         )
     }
 
+    override func executable(tokenIn: Token, privateSend _: Bool) -> ISwapExecutable {
+        StellarExecutable(token: tokenIn, transactionData: transactionData)
+    }
+
     override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {
         StellarSendHelper.caution(transactionError: transactionError, feeToken: baseToken)
     }

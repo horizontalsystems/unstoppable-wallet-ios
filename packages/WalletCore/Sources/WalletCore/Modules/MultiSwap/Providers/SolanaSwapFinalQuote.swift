@@ -27,6 +27,10 @@ class SolanaSwapFinalQuote: SwapFinalQuote {
         super.canSwap && fee != nil
     }
 
+    override func executable(tokenIn: Token, privateSend _: Bool) -> ISwapExecutable {
+        SolanaExecutable(token: tokenIn, rawTransaction: rawTransaction)
+    }
+
     override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {
         let title: String
         let text: String

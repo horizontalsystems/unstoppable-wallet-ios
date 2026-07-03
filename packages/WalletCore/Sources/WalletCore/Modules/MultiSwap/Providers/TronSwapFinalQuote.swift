@@ -42,6 +42,10 @@ class TronSwapFinalQuote: SwapFinalQuote {
         .tron(fees: fees)
     }
 
+    override func executable(tokenIn _: Token, privateSend _: Bool) -> ISwapExecutable {
+        TronExecutable(created: createdTransaction, transferIntent: nil)
+    }
+
     override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {
         TronSendHelper.caution(transactionError: transactionError, feeToken: baseToken)
     }

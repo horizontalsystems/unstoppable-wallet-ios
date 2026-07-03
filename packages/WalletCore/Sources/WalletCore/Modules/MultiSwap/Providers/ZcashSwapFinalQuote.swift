@@ -42,6 +42,10 @@ class ZcashSwapFinalQuote: SwapFinalQuote {
         super.canSwap && proposal != nil && fee != nil
     }
 
+    override func executable(tokenIn: Token, privateSend _: Bool) -> ISwapExecutable {
+        ZcashExecutable(token: tokenIn, proposal: proposal)
+    }
+
     override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {
         UtxoSendHelper.caution(transactionError: transactionError, feeToken: baseToken)
     }

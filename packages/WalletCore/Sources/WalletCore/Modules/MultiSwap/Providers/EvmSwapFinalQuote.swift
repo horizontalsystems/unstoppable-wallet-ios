@@ -47,6 +47,17 @@ class EvmSwapFinalQuote: SwapFinalQuote {
         super.canSwap && gasPrice != nil && evmFeeData != nil && transactionData != nil
     }
 
+    override func executable(tokenIn _: Token, privateSend: Bool) -> ISwapExecutable {
+        EvmExecutable(
+            transactionData: transactionData,
+            gasPrice: gasPrice,
+            gasLimit: evmFeeData?.surchargedGasLimit,
+            nonce: nonce,
+            privateSend: privateSend,
+            approval: nil
+        )
+    }
+
     override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {
         EvmSendHelper.caution(transactionError: transactionError, feeToken: baseToken)
     }
