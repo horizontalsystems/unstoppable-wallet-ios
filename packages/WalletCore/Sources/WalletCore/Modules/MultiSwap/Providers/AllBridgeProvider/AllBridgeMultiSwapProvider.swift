@@ -347,7 +347,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
             var evmFeeData: EvmFeeData?
             var transactionError: Error?
 
-            if let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPriceData {
+            if let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, evmKitWrapper.signer != nil, let gasPriceData {
                 do {
                     let _evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData)
                     evmFeeData = _evmFeeData

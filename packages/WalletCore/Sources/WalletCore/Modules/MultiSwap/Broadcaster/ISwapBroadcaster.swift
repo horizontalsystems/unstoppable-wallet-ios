@@ -20,8 +20,14 @@ public struct BroadcastResult {
 }
 
 public protocol ISwapBroadcaster {
+    // how often the confirm screen may re-run prepare; nil = handler default
+    var expirationDuration: Int? { get }
     func prepare(_ executable: ISwapExecutable) async throws -> IPrepared
     func submit(_ prepared: IPrepared) async throws -> BroadcastResult
+}
+
+public extension ISwapBroadcaster {
+    var expirationDuration: Int? { nil }
 }
 
 public protocol ISwapBroadcasterType {

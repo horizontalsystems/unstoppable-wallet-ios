@@ -28,6 +28,11 @@ class MultiSwapSendHandler: SendHandler {
     private var slippage = MultiSwapSlippage.default
     private var recipient: String?
 
+    // resolved once per confirmation: the mechanism is fixed by (chain, account)
+    private lazy var broadcaster: ISwapBroadcaster? = accountManager.activeAccount.flatMap {
+        try? SwapBroadcasterFactory.broadcaster(blockchainType: tokenIn.blockchainType, account: $0)
+    }
+
     private let refreshSubject = PassthroughSubject<Void, Never>()
 
     init(baseToken: Token, tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, multiSwapQuote: MultiSwapQuote) {
@@ -46,7 +51,7 @@ extension MultiSwapSendHandler: ISendHandler {
     }
 
     var expirationDuration: Int? {
-        15
+        broadcaster?.expirationDuration ?? 15
     }
 
     // The swap confirm screen holds a committed provider quote (USwap's /v2/swap, and the
@@ -109,15 +114,18 @@ extension MultiSwapSendHandler: ISendHandler {
             transactionSettings: transactionSettings
         )
 
-        guard let account = accountManager.activeAccount else {
+        guard accountManager.activeAccount != nil else {
             throw SendError.noActiveAccount
+        }
+
+        guard let broadcaster else {
+            throw SwapBroadcasterError.noBroadcaster
         }
 
         // MEV eligibility rides on the EVM quote (set by the provider); the toggle itself
         // is read live at submit-time by the broadcaster (routing flag, not tx content)
         let otherSections = provider.mevProtectionAllowed(tokenIn: tokenIn, tokenOut: tokenOut) ? [mevProtectionHelper.section()] : []
 
-        let broadcaster = try SwapBroadcasterFactory.broadcaster(blockchainType: tokenIn.blockchainType, account: account)
         let prepared = try await broadcaster.prepare(quote.executable(tokenIn: tokenIn))
 
         return SendData(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote, prepared: prepared, broadcaster: broadcaster, otherSections: otherSections)

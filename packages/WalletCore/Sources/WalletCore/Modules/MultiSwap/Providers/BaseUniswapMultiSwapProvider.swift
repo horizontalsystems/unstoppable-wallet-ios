@@ -28,7 +28,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
 
         let evmKit = evmKitWrapper.evmKit
 
-        if let gasPriceData {
+        if evmKitWrapper.signer != nil, let gasPriceData {
             do {
                 let transactionData = try transactionData(receiveAddress: evmKit.receiveAddress, chain: evmKit.chain, trade: quote.trade, tradeOptions: quote.tradeOptions)
                 txData = transactionData
