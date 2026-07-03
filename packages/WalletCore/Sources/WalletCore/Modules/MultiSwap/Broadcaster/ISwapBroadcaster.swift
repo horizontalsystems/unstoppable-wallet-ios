@@ -5,16 +5,16 @@ public protocol ISwapExecutable {}
 
 public protocol IPrepared {}
 
-public struct EoaPrepared: IPrepared {
+public struct DirectPrepared: IPrepared {
     let executable: ISwapExecutable
 }
 
 public struct BroadcastResult {
-    public let onChainTxHash: String?
+    public let txHash: String?
     public let trackingHandle: String?
 
-    public init(onChainTxHash: String?, trackingHandle: String?) {
-        self.onChainTxHash = onChainTxHash
+    public init(txHash: String?, trackingHandle: String?) {
+        self.txHash = txHash
         self.trackingHandle = trackingHandle
     }
 }
@@ -43,4 +43,5 @@ public struct SwapBroadcasterError: Error, Equatable, RawRepresentable {
     }
 
     public static var noBroadcaster: Self { .init(rawValue: "noBroadcaster") }
+    public static var dataMismatch: Self { .init(rawValue: "dataMismatch") }
 }
