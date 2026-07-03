@@ -40,6 +40,10 @@ class TonSwapFinalQuote: SwapFinalQuote {
         super.canSwap && fee != nil
     }
 
+    override func executable(tokenIn _: Token, privateSend _: Bool) -> ISwapExecutable {
+        TonExecutable(transactionParam: transactionParam)
+    }
+
     override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {
         TonSendHelper.caution(transactionError: transactionError, feeToken: baseToken)
     }

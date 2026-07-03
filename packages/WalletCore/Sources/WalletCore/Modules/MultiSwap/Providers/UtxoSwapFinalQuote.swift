@@ -41,6 +41,10 @@ class UtxoSwapFinalQuote: SwapFinalQuote {
         super.canSwap && fee != nil && sendParameters != nil
     }
 
+    override func executable(tokenIn: Token, privateSend _: Bool) -> ISwapExecutable {
+        UtxoExecutable(token: tokenIn, sendParameters: sendParameters)
+    }
+
     override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {
         UtxoSendHelper.caution(transactionError: transactionError, feeToken: baseToken)
     }

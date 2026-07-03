@@ -42,6 +42,10 @@ class ZanoSwapFinalQuote: SwapFinalQuote {
         nil
     }
 
+    override func executable(tokenIn: Token, privateSend _: Bool) -> ISwapExecutable {
+        ZanoExecutable(token: tokenIn, address: address, amount: amount, memo: memo)
+    }
+
     override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {
         ZanoSendHelper.caution(transactionError: transactionError, feeToken: baseToken)
     }

@@ -52,6 +52,10 @@ class MoneroSwapFinalQuote: SwapFinalQuote {
         .monero(amount: amount, address: address)
     }
 
+    override func executable(tokenIn: Token, privateSend _: Bool) -> ISwapExecutable {
+        MoneroExecutable(token: tokenIn, address: address, amount: amount, priority: priority, memo: memo)
+    }
+
     override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {
         MoneroSendHelper.caution(transactionError: transactionError, feeToken: baseToken)
     }

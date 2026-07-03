@@ -47,6 +47,10 @@ public class SwapFinalQuote {
         transactionError == nil
     }
 
+    func executable(tokenIn _: Token, privateSend _: Bool) -> ISwapExecutable {
+        UnsupportedExecutable()
+    }
+
     func cautions(baseToken: Token) -> [CautionNew] {
         var cautions = [CautionNew]()
 
