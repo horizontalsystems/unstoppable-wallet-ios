@@ -15,8 +15,8 @@ struct SwapRequestRefundTests {
             "fromAsset": "btc",
             "toAsset": "eth",
             "toAmount": "1.23",
+            "providers": ["PEGASUS"],
             "meta": [
-                "provider": "PEGASUS",
                 "pauseReason": "aml",
             ],
             "legs": [
