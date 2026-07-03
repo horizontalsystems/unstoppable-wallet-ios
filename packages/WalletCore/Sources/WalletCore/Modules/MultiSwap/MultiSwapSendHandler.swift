@@ -291,6 +291,17 @@ extension MultiSwapSendHandler {
                 baseTokenRate: rates[baseToken.coin.uid]
             ))
 
+            // a self-rendering prepared (IPreparedDisplay) supplies its own fee sections;
+            // the quote's fee rows are shown only on the direct path
+            if let display = prepared as? IPreparedDisplay {
+                return [
+                    flowSection(baseToken: baseToken, currency: currency, rates: rates),
+                    .init(fields, isMain: false),
+                ] + display.feeSections(baseToken: baseToken, currency: currency, rates: rates) + otherSections
+            }
+
+            fields.append(contentsOf: quote.feeFields(baseToken: baseToken, currency: currency, baseTokenRate: rates[baseToken.coin.uid]))
+
             return [
                 flowSection(baseToken: baseToken, currency: currency, rates: rates),
                 .init(fields, isMain: false),
