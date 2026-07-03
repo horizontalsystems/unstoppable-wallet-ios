@@ -1,7 +1,7 @@
 import Combine
 import Foundation
 
-class SwapHistoryManager {
+public class SwapHistoryManager {
     private let accountManager: AccountManager
     private let storage: SwapStorage
     private var cancellables = Set<AnyCancellable>()
@@ -31,6 +31,14 @@ class SwapHistoryManager {
         var hasStillPendingSwaps = false
 
         for swap in pendingSwaps {
+            // mechanism-pending: there is no on-chain hash to track by yet; resolve() will supply it.
+            // Swaps without a trackingHandle keep today's behaviour even with a nil txHash
+            // (deposit-based providers track by providerSwapId alone)
+            if Self.isAwaitingTxHash(swap) {
+                hasStillPendingSwaps = true
+                continue
+            }
+
             guard let provider = SwapProviderFactory.provider(id: swap.providerId) else {
                 continue
             }
@@ -108,5 +116,23 @@ extension SwapHistoryManager {
         } catch {
             print(error)
         }
+    }
+
+    // mechanism-agnostic hook: attaches the on-chain txHash to the swap saved with
+    // this trackingHandle and starts tracking it
+    public func resolve(trackingHandle: String, txHash: String) {
+        do {
+            guard try storage.setTxHash(txHash, trackingHandle: trackingHandle) else {
+                return
+            }
+
+            sync()
+        } catch {
+            print(error)
+        }
+    }
+
+    static func isAwaitingTxHash(_ swap: Swap) -> Bool {
+        swap.trackingHandle != nil && swap.txHash == nil
     }
 }

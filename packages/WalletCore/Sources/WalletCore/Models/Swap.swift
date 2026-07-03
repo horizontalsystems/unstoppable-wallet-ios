@@ -6,6 +6,9 @@ import SwiftUI
 public struct Swap: Hashable {
     let uid: String
     let txHash: String?
+    // opaque mechanism handle (set by the broadcaster) used by resolve() to attach
+    // the on-chain txHash later; nil for directly-broadcast swaps
+    let trackingHandle: String?
     let accountId: String
     let providerId: String
     var status: Status
@@ -82,6 +85,7 @@ extension Swap {
 struct SwapRecord: Codable {
     let uid: String
     let txHash: String?
+    let trackingHandle: String?
     let accountId: String
     let providerId: String
     let status: String
@@ -121,6 +125,7 @@ extension SwapRecord: FetchableRecord, PersistableRecord {
     enum Columns {
         static let uid = Column(CodingKeys.uid)
         static let txHash = Column(CodingKeys.txHash)
+        static let trackingHandle = Column(CodingKeys.trackingHandle)
         static let accountId = Column(CodingKeys.accountId)
         static let providerId = Column(CodingKeys.providerId)
         static let status = Column(CodingKeys.status)

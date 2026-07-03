@@ -144,7 +144,7 @@ public class Core {
     let swapAssetStorage: SwapAssetStorage
     let swapProviderManager: MultiSwapProviderManager
     let swapProviderInfoManager: SwapProviderInfoManager
-    let swapHistoryManager: SwapHistoryManager
+    public let swapHistoryManager: SwapHistoryManager
 
     public let createPasskeyAccountService: CreatePasskeyAccountService
 

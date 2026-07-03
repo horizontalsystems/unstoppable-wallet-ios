@@ -31,6 +31,7 @@ class SwapStorage {
             return Swap(
                 uid: record.uid,
                 txHash: record.txHash,
+                trackingHandle: record.trackingHandle,
                 accountId: record.accountId,
                 providerId: record.providerId,
                 status: Swap.Status(rawValue: record.status) ?? .unknown,
@@ -66,6 +67,7 @@ class SwapStorage {
         SwapRecord(
             uid: swap.uid,
             txHash: swap.txHash,
+            trackingHandle: swap.trackingHandle,
             accountId: swap.accountId,
             providerId: swap.providerId,
             status: swap.status.rawValue,
@@ -148,6 +150,16 @@ extension SwapStorage {
     func save(swap: Swap) throws {
         _ = try dbPool.write { db in
             try record(swap: swap).insert(db)
+        }
+    }
+
+    // attaches the on-chain hash to a mechanism-pending swap; returns false when
+    // the handle is unknown or the hash is already set
+    func setTxHash(_ txHash: String, trackingHandle: String) throws -> Bool {
+        try dbPool.write { db in
+            try SwapRecord
+                .filter(SwapRecord.Columns.trackingHandle == trackingHandle && SwapRecord.Columns.txHash == nil)
+                .updateAll(db, SwapRecord.Columns.txHash.set(to: txHash)) > 0
         }
     }
 }
