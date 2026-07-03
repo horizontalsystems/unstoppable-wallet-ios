@@ -7,6 +7,7 @@ class EvmSwapFinalQuote: SwapFinalQuote {
     let gasPrice: GasPrice?
     let evmFeeData: EvmFeeData?
     let nonce: Int?
+    let mevProtectionAllowed: Bool
 
     init(
         expectedBuyAmount: Decimal,
@@ -18,6 +19,7 @@ class EvmSwapFinalQuote: SwapFinalQuote {
         gasPrice: GasPrice?,
         evmFeeData: EvmFeeData?,
         nonce: Int?,
+        mevProtectionAllowed: Bool = false,
         toAddress: String,
         depositAddress: String? = nil,
         providerSwapId: String? = nil
@@ -26,6 +28,7 @@ class EvmSwapFinalQuote: SwapFinalQuote {
         self.gasPrice = gasPrice
         self.evmFeeData = evmFeeData
         self.nonce = nonce
+        self.mevProtectionAllowed = mevProtectionAllowed
 
         super.init(
             expectedBuyAmount: expectedBuyAmount,
@@ -47,13 +50,13 @@ class EvmSwapFinalQuote: SwapFinalQuote {
         super.canSwap && gasPrice != nil && evmFeeData != nil && transactionData != nil
     }
 
-    override func executable(tokenIn _: Token, privateSend: Bool) -> ISwapExecutable {
+    override func executable(tokenIn _: Token) -> ISwapExecutable {
         EvmExecutable(
             transactionData: transactionData,
             gasPrice: gasPrice,
             gasLimit: evmFeeData?.surchargedGasLimit,
             nonce: nonce,
-            privateSend: privateSend,
+            mevProtectionAllowed: mevProtectionAllowed,
             approval: nil
         )
     }

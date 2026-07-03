@@ -1,11 +1,6 @@
-import BigInt
 import Combine
-import Eip20Kit
-import EvmKit
 import Foundation
 import MarketKit
-import SolanaKit
-import ZanoKit
 
 class MultiSwapSendHandler: SendHandler {
     override class func instance(sendData: WalletCore.SendData) -> ISendHandler? {
@@ -17,9 +12,6 @@ class MultiSwapSendHandler: SendHandler {
     private let marketKit = Core.shared.marketKit
     private let accountManager = Core.shared.accountManager
     private let walletManager = Core.shared.walletManager
-    private let evmBlockchainManager = Core.shared.evmBlockchainManager
-    private let adapterManager = Core.shared.adapterManager
-    private let tronKitManager = Core.shared.tronAccountManager.tronKitManager
     private let swapHistoryManager = Core.shared.swapHistoryManager
     private let mevProtectionHelper = MevProtectionHelper()
 
@@ -117,9 +109,18 @@ extension MultiSwapSendHandler: ISendHandler {
             transactionSettings: transactionSettings
         )
 
+        guard let account = accountManager.activeAccount else {
+            throw SendError.noActiveAccount
+        }
+
+        // MEV eligibility rides on the EVM quote (set by the provider); the toggle itself
+        // is read live at submit-time by the broadcaster (routing flag, not tx content)
         let otherSections = provider.mevProtectionAllowed(tokenIn: tokenIn, tokenOut: tokenOut) ? [mevProtectionHelper.section()] : []
 
-        return SendData(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote, otherSections: otherSections)
+        let broadcaster = try SwapBroadcasterFactory.broadcaster(blockchainType: tokenIn.blockchainType, account: account)
+        let prepared = try await broadcaster.prepare(quote.executable(tokenIn: tokenIn))
+
+        return SendData(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote, prepared: prepared, broadcaster: broadcaster, otherSections: otherSections)
     }
 
     func send(data: ISendData) async throws {
@@ -127,125 +128,8 @@ extension MultiSwapSendHandler: ISendHandler {
             throw SendError.invalidData
         }
 
-        var txHash: String?
-
-        if let quote = data.quote as? EvmSwapFinalQuote {
-            guard let transactionData = quote.transactionData else {
-                throw SendError.invalidTransactionData
-            }
-
-            guard let gasLimit = quote.evmFeeData?.surchargedGasLimit else {
-                throw SendError.noGasLimit
-            }
-
-            guard let gasPrice = quote.gasPrice else {
-                throw SendError.noGasPrice
-            }
-
-            guard let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: tokenIn.blockchainType).evmKitWrapper else {
-                throw SendError.noEvmKitWrapper
-            }
-
-            let fullTransaction = try await evmKitWrapper.send(
-                transactionData: transactionData,
-                gasPrice: gasPrice,
-                gasLimit: gasLimit,
-                privateSend: provider.mevProtectionAllowed(tokenIn: tokenIn, tokenOut: tokenOut) && mevProtectionHelper.isActive,
-                nonce: quote.nonce
-            )
-
-            txHash = fullTransaction.transaction.hash.hs.hexString
-        } else if let quote = data.quote as? UtxoSwapFinalQuote {
-            guard let adapter = adapterManager.adapter(for: tokenIn) as? BitcoinBaseAdapter else {
-                throw SendError.noBitcoinAdapter
-            }
-
-            guard let sendParameters = quote.sendParameters else {
-                throw SendError.noSendParameters
-            }
-
-            let fullTransaction = try adapter.send(params: sendParameters)
-
-            txHash = fullTransaction.header.dataHash.hs.reversedHex
-        } else if let quote = data.quote as? ZcashSwapFinalQuote {
-            guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
-                throw SendError.noZcashAdapter
-            }
-
-            guard let proposal = quote.proposal else {
-                throw SendError.noProposal
-            }
-
-            let hash = try await adapter.send(proposal: proposal)
-
-            txHash = hash
-        } else if let quote = data.quote as? TonSwapFinalQuote {
-            guard let account = Core.shared.accountManager.activeAccount else {
-                throw SendError.noTonAdapter
-            }
-
-            let (publicKey, secretKey) = try TonKitManager.keyPair(accountType: account.type)
-            let contract = TonKitManager.contract(publicKey: publicKey)
-
-            let transferData = try TonSendHelper.transferData(
-                param: quote.transactionParam,
-                contract: contract
-            )
-
-            _ = try await TonSendHelper.send(
-                transferData: transferData,
-                contract: contract,
-                secretKey: secretKey
-            )
-        } else if let quote = data.quote as? TronSwapFinalQuote {
-            guard let tronKitWrapper = tronKitManager.tronKitWrapper else {
-                throw SendError.noTronKitWrapper
-            }
-
-            _ = try await tronKitWrapper.send(createdTranaction: quote.createdTransaction)
-        } else if let quote = data.quote as? StellarSwapFinalQuote {
-            guard let account = accountManager.activeAccount else {
-                throw SendError.noActiveAccount
-            }
-
-            let keyPair = try StellarKitManager.keyPair(accountType: account.type)
-            try await StellarSendHelper.send(
-                transactionData: quote.transactionData,
-                token: tokenIn,
-                adjustNativeBalance: false,
-                keyPair: keyPair
-            )
-        } else if let quote = data.quote as? MoneroSwapFinalQuote {
-            guard let adapter = adapterManager.adapter(for: tokenIn) as? MoneroAdapter else {
-                throw SendError.noMoneroAdapter
-            }
-
-            try adapter.send(
-                to: quote.address,
-                amount: quote.amount,
-                priority: quote.priority,
-                memo: quote.memo
-            )
-        } else if let quote = data.quote as? ZanoSwapFinalQuote {
-            guard let adapter = adapterManager.adapter(for: tokenIn) as? ZanoAdapter else {
-                throw SendError.noZanoAdapter
-            }
-
-            try adapter.send(to: quote.address, amount: quote.amount, memo: quote.memo)
-        } else if let quote = data.quote as? SolanaSwapFinalQuote {
-            guard let account = accountManager.activeAccount else {
-                throw SendError.noActiveAccount
-            }
-
-            let signer = try SolanaKitManager.signer(accountType: account.type)
-
-            guard let adapter = adapterManager.adapter(for: tokenIn) as? ISendSolanaAdapter else {
-                throw SendError.noSolanaAdapter
-            }
-
-            let fullTransaction = try await adapter.sendRawTransaction(rawTransaction: quote.rawTransaction, signer: signer)
-            txHash = fullTransaction.transaction.hash
-        }
+        let result = try await data.broadcaster.submit(data.prepared)
+        let txHash = result.txHash
 
         if let account = accountManager.activeAccount {
             let swap = Swap(
@@ -287,26 +171,32 @@ extension MultiSwapSendHandler {
         let tokenOut: Token
         let amountIn: Decimal
         let quote: SwapFinalQuote
+        let prepared: IPrepared
+        let broadcaster: ISwapBroadcaster
         let otherSections: [SendDataSection]
 
-        init(tokenIn: Token, tokenOut: Token, amountIn: Decimal, quote: SwapFinalQuote, otherSections: [SendDataSection]) {
+        init(tokenIn: Token, tokenOut: Token, amountIn: Decimal, quote: SwapFinalQuote, prepared: IPrepared, broadcaster: ISwapBroadcaster, otherSections: [SendDataSection]) {
             self.tokenIn = tokenIn
             self.tokenOut = tokenOut
             self.amountIn = amountIn
             self.quote = quote
+            self.prepared = prepared
+            self.broadcaster = broadcaster
             self.otherSections = otherSections
         }
 
+        // fee and canSend are type-selected: a prepared that renders itself (IPreparedDisplay)
+        // is the source of truth; DirectPrepared keeps the quote-based behaviour
         var feeData: FeeData? {
-            quote.feeData
+            prepared is IPreparedDisplay ? nil : quote.feeData
         }
 
         var canSend: Bool {
-            quote.canSwap
+            (prepared as? IPreparedDisplay)?.canSend ?? quote.canSwap
         }
 
         var rateCoins: [Coin] {
-            [tokenIn.coin, tokenOut.coin]
+            [tokenIn.coin, tokenOut.coin] + ((prepared as? IPreparedDisplay)?.extraRateCoins ?? [])
         }
 
         var customSendButtonTitle: String? {
@@ -413,15 +303,12 @@ extension MultiSwapSendHandler {
         case invalidTransactionData
         case noGasLimit
         case noGasPrice
-        case noEvmKitWrapper
-        case noTronKitWrapper
         case noBitcoinAdapter
         case noSendParameters
         case noZcashAdapter
         case noMoneroAdapter
         case noZanoAdapter
         case noProposal
-        case noTonAdapter
         case noActiveAccount
         case noSolanaAdapter
 

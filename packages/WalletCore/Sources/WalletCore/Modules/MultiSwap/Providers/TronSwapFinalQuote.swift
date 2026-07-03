@@ -42,7 +42,7 @@ class TronSwapFinalQuote: SwapFinalQuote {
         .tron(fees: fees)
     }
 
-    override func executable(tokenIn _: Token, privateSend _: Bool) -> ISwapExecutable {
+    override func executable(tokenIn _: Token) -> ISwapExecutable {
         TronExecutable(created: createdTransaction, transferIntent: nil)
     }
 

@@ -4,9 +4,11 @@ import MarketKit
 
 class EvmSwapBroadcaster: ISwapBroadcaster {
     private let evmKitWrapper: EvmKitWrapper
+    private let securityManager: SecurityManager
 
-    init(evmKitWrapper: EvmKitWrapper) {
+    init(evmKitWrapper: EvmKitWrapper, securityManager: SecurityManager) {
         self.evmKitWrapper = evmKitWrapper
+        self.securityManager = securityManager
     }
 
     func prepare(_ executable: ISwapExecutable) async throws -> IPrepared {
@@ -27,11 +29,12 @@ class EvmSwapBroadcaster: ISwapBroadcaster {
             throw MultiSwapSendHandler.SendError.noGasPrice
         }
 
+        // routing flag read live at send-tap: MEV toggle state is the persisted setting
         let fullTransaction = try await evmKitWrapper.send(
             transactionData: transactionData,
             gasPrice: gasPrice,
             gasLimit: gasLimit,
-            privateSend: executable.privateSend,
+            privateSend: executable.mevProtectionAllowed && securityManager.swapProtectionEnabled,
             nonce: executable.nonce
         )
 
@@ -47,6 +50,6 @@ extension EvmSwapBroadcaster: ISwapBroadcasterType {
             return nil
         }
 
-        return EvmSwapBroadcaster(evmKitWrapper: evmKitWrapper)
+        return EvmSwapBroadcaster(evmKitWrapper: evmKitWrapper, securityManager: Core.shared.securityManager)
     }
 }
