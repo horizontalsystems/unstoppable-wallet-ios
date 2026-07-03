@@ -62,19 +62,22 @@ struct BalanceCoinIconView: View {
 public struct CoinIconView: View {
     let coin: Coin?
     let placeholderImage: String?
+    let size: CGFloat
 
-    public init(coin: Coin?, placeholderImage: String? = nil) {
+    public init(coin: Coin?, placeholderImage: String? = nil, size: CGFloat = .iconSize32) {
         self.coin = coin
         self.placeholderImage = placeholderImage
+        self.size = size
     }
 
-    public init(token: Token) {
+    public init(token: Token, size: CGFloat = .iconSize32) {
         coin = token.coin
         placeholderImage = token.placeholderImageName
+        self.size = size
     }
 
     public var body: some View {
-        IconView(url: coin?.imageUrl, alternativeUrl: coin?.image, placeholderImage: placeholderImage, type: .circle)
+        IconView(url: coin?.imageUrl, alternativeUrl: coin?.image, placeholderImage: placeholderImage, type: .circle, size: size)
     }
 }
 
