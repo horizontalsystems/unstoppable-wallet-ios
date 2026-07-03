@@ -692,7 +692,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private func buildEvmConfirmationQuote(
         tokenIn: Token,
         tokenOut _: Token,
-        amountIn _: Decimal,
+        amountIn: Decimal,
         amountOut _: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
@@ -742,7 +742,19 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             }
         }
 
-        return EvmSwapFinalQuote(
+        // router-approve intent for broadcasters that batch the approve themselves;
+        // the direct broadcaster ignores it (approve happens in the pre-swap step)
+        var approval: SwapApproval?
+        if let approvalSpender = quote.approvalSpender,
+           case let .eip20(tokenAddress) = tokenIn.type,
+           let spender = try? EvmKit.Address(hex: approvalSpender),
+           let token = try? EvmKit.Address(hex: tokenAddress),
+           let amount = tokenIn.rawAmount(amountIn)
+        {
+            approval = SwapApproval(spender: spender, token: token, amount: amount)
+        }
+
+        return try EvmSwapFinalQuote(
             expectedBuyAmount: quote.expectedBuyAmount,
             transactionData: transactionData,
             transactionError: transactionError,
@@ -752,7 +764,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             gasPrice: gasPriceData?.userDefined,
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce,
-            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
+            approval: approval,
+            toAddress: deliveryAddress(quote: quote, recipient: recipient),
             depositAddress: quote.execution?.depositAddress,
             providerSwapId: quote.uuid
         )
@@ -1028,13 +1041,26 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             }
         }
 
-        return TronSwapFinalQuote(
+        // plain-transfer description for broadcasters that deliver the transfer
+        // themselves; the direct broadcaster uses createdTransaction as before
+        var transferIntent: TronTransferIntent?
+        if let depositAddress = quote.execution?.depositAddress,
+           case let .eip20(tokenAddress) = tokenIn.type,
+           let token = try? TronKit.Address(address: tokenAddress),
+           let receiver = try? TronKit.Address(address: depositAddress),
+           let value = tokenIn.rawAmount(amountIn)
+        {
+            transferIntent = TronTransferIntent(token: token, receiver: receiver, value: value)
+        }
+
+        return try TronSwapFinalQuote(
             amountIn: amountIn,
             expectedAmountOut: amountOut,
             recipient: recipient,
             slippage: slippage,
             estimatedTime: quote.esimatedTime,
             createdTransaction: transaction,
+            transferIntent: transferIntent,
             fees: fees,
             transactionError: transactionError,
             toAddress: try deliveryAddress(quote: quote, recipient: recipient),

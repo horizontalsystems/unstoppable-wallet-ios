@@ -72,6 +72,31 @@ struct SwapExecutableTests {
         #expect(executable.mevProtectionAllowed == false)
     }
 
+    @Test func evmQuoteCarriesApprovalIntent() throws {
+        let approval = try SwapApproval(
+            spender: EvmKit.Address(hex: "0x1111111111111111111111111111111111111111"),
+            token: EvmKit.Address(hex: "0x2222222222222222222222222222222222222222"),
+            amount: BigUInt(500)
+        )
+        let quote = EvmSwapFinalQuote(
+            expectedBuyAmount: 1,
+            transactionData: nil,
+            slippage: nil,
+            recipient: nil,
+            gasPrice: nil,
+            evmFeeData: nil,
+            nonce: nil,
+            approval: approval,
+            toAddress: "to"
+        )
+
+        let executable = try #require(quote.executable(tokenIn: Self.token()) as? EvmExecutable)
+
+        #expect(executable.approval?.spender == approval.spender)
+        #expect(executable.approval?.token == approval.token)
+        #expect(executable.approval?.amount == approval.amount)
+    }
+
     @Test func utxoQuoteCarriesTokenAndSendParameters() throws {
         let sendParameters = SendParameters(address: "addr", value: 1000, feeRate: 10, memo: "m")
         let quote = UtxoSwapFinalQuote(
@@ -161,6 +186,43 @@ struct SwapExecutableTests {
         #expect(executable.created.txID == created.txID)
         #expect(executable.created.rawDataHex == created.rawDataHex)
         #expect(executable.transferIntent == nil)
+    }
+
+    @Test func tronQuoteCarriesTransferIntent() throws {
+        let created = try Mapper<CreatedTransactionResponse>().map(JSON: [
+            "visible": false,
+            "txID": "aabbcc",
+            "raw_data": [
+                "ref_block_bytes": "0000",
+                "ref_block_hash": "1122",
+                "expiration": 1,
+                "fee_limit": 1000,
+                "timestamp": 2,
+            ],
+            "raw_data_hex": "deadbeef",
+        ])
+        let intent = try TronTransferIntent(
+            token: TronKit.Address(address: "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"),
+            receiver: TronKit.Address(address: "TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9"),
+            value: BigUInt(1000)
+        )
+        let quote = TronSwapFinalQuote(
+            amountIn: 1,
+            expectedAmountOut: 2,
+            recipient: nil,
+            slippage: nil,
+            createdTransaction: created,
+            transferIntent: intent,
+            fees: [],
+            transactionError: nil,
+            toAddress: "to"
+        )
+
+        let executable = try #require(quote.executable(tokenIn: Self.token(blockchainType: .tron)) as? TronExecutable)
+
+        #expect(executable.transferIntent?.token == intent.token)
+        #expect(executable.transferIntent?.receiver == intent.receiver)
+        #expect(executable.transferIntent?.value == intent.value)
     }
 
     @Test func stellarQuoteCarriesTokenInAndTransactionData() throws {
