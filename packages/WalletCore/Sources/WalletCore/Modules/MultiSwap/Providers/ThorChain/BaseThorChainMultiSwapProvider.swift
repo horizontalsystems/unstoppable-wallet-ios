@@ -124,7 +124,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 throw SwapError.noEvmKit
             }
 
-            if evmKitWrapper.signer != nil, let gasPriceData {
+            if let gasPriceData {
                 do {
                     let _evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData)
                     evmFeeData = _evmFeeData
@@ -134,6 +134,11 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                     transactionError = error
                 }
             }
+
+            // router-approve intent for the AA broadcaster: eip20 deposits pull via the router's transferFrom
+            // (native deposits transfer directly to the inbound address and carry no approval)
+            NSLog("[AASWAP] ThorChain confirmationQuote: router=\(router) tokenIn.type=\(tokenIn.type)")
+            let approval = (try? EvmKit.Address(hex: router)).flatMap { SwapApproval.build(spender: $0, tokenIn: tokenIn, amountIn: amountIn) }
 
             return EvmSwapFinalQuote(
                 expectedBuyAmount: swapQuote.expectedAmountOut,
@@ -145,6 +150,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 gasPrice: gasPriceData?.userDefined,
                 evmFeeData: evmFeeData,
                 nonce: transactionSettings?.nonce,
+                approval: approval,
                 toAddress: toAddress
             )
         case .bitcoin, .bitcoinCash, .dash, .litecoin:

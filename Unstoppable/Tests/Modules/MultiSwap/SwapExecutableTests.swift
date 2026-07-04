@@ -41,8 +41,10 @@ struct SwapExecutableTests {
             toAddress: "to"
         )
 
-        let executable = try #require(quote.executable(tokenIn: Self.token()) as? EvmExecutable)
+        let token = Self.token()
+        let executable = try #require(quote.executable(tokenIn: token) as? EvmExecutable)
 
+        #expect(executable.token == token)
         #expect(executable.transactionData == transactionData)
         #expect(executable.gasPrice == gasPrice)
         #expect(executable.gasLimit == 110_000) // surchargedGasLimit, not gasLimit

@@ -104,6 +104,7 @@ extension MultiSwapSendHandler: ISendHandler {
     }
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
+        NSLog("[AASWAP] sendData ENTRY: provider=\(provider.id) tokenIn=\(tokenIn.coin.code)/\(tokenIn.type) tokenOut=\(tokenOut.coin.code) broadcaster=\(broadcaster.map { String(describing: type(of: $0)) } ?? "nil")")
         let quote = try await provider.confirmationQuote(
             multiSwapQuote: multiSwapQuote,
             tokenIn: tokenIn,
@@ -119,6 +120,7 @@ extension MultiSwapSendHandler: ISendHandler {
         }
 
         guard let broadcaster else {
+            NSLog("[AASWAP] sendData: no broadcaster resolved -> noBroadcaster")
             throw SwapBroadcasterError.noBroadcaster
         }
 
@@ -126,7 +128,9 @@ extension MultiSwapSendHandler: ISendHandler {
         // is read live at submit-time by the broadcaster (routing flag, not tx content)
         let otherSections = provider.mevProtectionAllowed(tokenIn: tokenIn, tokenOut: tokenOut) ? [mevProtectionHelper.section()] : []
 
-        let prepared = try await broadcaster.prepare(quote.executable(tokenIn: tokenIn))
+        let executable = quote.executable(tokenIn: tokenIn)
+        NSLog("[AASWAP] sendData: provider=\(provider.id) quote=\(type(of: quote)) broadcaster=\(type(of: broadcaster)) executable=\(type(of: executable))")
+        let prepared = try await broadcaster.prepare(executable)
 
         return SendData(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote, prepared: prepared, broadcaster: broadcaster, otherSections: otherSections)
     }
@@ -213,7 +217,14 @@ extension MultiSwapSendHandler {
         }
 
         func cautions(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [CautionNew] {
-            quote.cautions(baseToken: baseToken) + priceImpactCautions(baseToken: baseToken, currency: currency, rates: rates)
+            // a self-rendering prepared owns the payment view including its validity cautions; the quote's
+            // transactionError cautions describe the native path it does not use. price-impact cautions
+            // are swap-level and shared by both paths
+            if let display = prepared as? IPreparedDisplay {
+                return display.cautions(baseToken: baseToken) + priceImpactCautions(baseToken: baseToken, currency: currency, rates: rates)
+            }
+
+            return quote.cautions(baseToken: baseToken) + priceImpactCautions(baseToken: baseToken, currency: currency, rates: rates)
         }
 
         private func priceImpact(baseToken _: Token, currency _: Currency, rates: [String: Decimal]) -> Decimal? {

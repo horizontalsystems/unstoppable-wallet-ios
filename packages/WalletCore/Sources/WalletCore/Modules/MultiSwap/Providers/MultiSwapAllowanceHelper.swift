@@ -5,10 +5,6 @@ import SwiftUI
 
 class MultiSwapAllowanceHelper {
     private let adapterManager = Core.shared.adapterManager
-    private let addressesForRevoke: [BlockchainType: String] = [
-        .ethereum: "0xdac17f958d2ee523a2206206994597c13d831ec7",
-        .tron: "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
-    ]
 
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
         switch step {
@@ -75,13 +71,7 @@ class MultiSwapAllowanceHelper {
     }
 
     private func mustBeRevoked(token: Token) -> Bool {
-        for (blockchainType, addressToRevoke) in addressesForRevoke {
-            if blockchainType == token.blockchainType, case let .eip20(address) = token.type, address.lowercased() == addressToRevoke.lowercased() {
-                return true
-            }
-        }
-
-        return false
+        ApprovalReset.required(token: token)
     }
 }
 

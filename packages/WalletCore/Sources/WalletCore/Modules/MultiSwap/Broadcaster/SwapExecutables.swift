@@ -11,6 +11,7 @@ import ZcashLightClientKit
 struct UnsupportedExecutable: ISwapExecutable {}
 
 public struct EvmExecutable: ISwapExecutable {
+    public let token: Token
     public let transactionData: TransactionData?
     public let gasPrice: GasPrice?
     public let gasLimit: Int?
@@ -25,6 +26,28 @@ public struct SwapApproval {
     public let spender: EvmKit.Address
     public let token: EvmKit.Address
     public let amount: BigUInt
+}
+
+public extension SwapApproval {
+    // eip20 router-approve intent for the exact swap input; nil for a native tokenIn (no approve needed,
+    // and not AA-eligible since the paymaster fee token must be an eip20).
+    static func build(spender: EvmKit.Address, tokenIn: Token, amountIn: Decimal) -> SwapApproval? {
+        guard case let .eip20(tokenAddress) = tokenIn.type else {
+            NSLog("[AASWAP] SwapApproval.build: tokenIn NOT eip20 (type=\(tokenIn.type)) -> nil approval")
+            return nil
+        }
+        guard let token = try? EvmKit.Address(hex: tokenAddress) else {
+            NSLog("[AASWAP] SwapApproval.build: bad token address \(tokenAddress) -> nil approval")
+            return nil
+        }
+        guard let amount = tokenIn.rawAmount(amountIn) else {
+            NSLog("[AASWAP] SwapApproval.build: rawAmount(\(amountIn)) nil -> nil approval")
+            return nil
+        }
+
+        NSLog("[AASWAP] SwapApproval.build: OK spender=\(spender.eip55) amount=\(amount)")
+        return SwapApproval(spender: spender, token: token, amount: amount)
+    }
 }
 
 public struct TronExecutable: ISwapExecutable {
