@@ -28,7 +28,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
 
         let evmKit = evmKitWrapper.evmKit
 
-        if evmKitWrapper.signer != nil, let gasPriceData {
+        if let gasPriceData {
             do {
                 let transactionData = try transactionData(receiveAddress: evmKit.receiveAddress, chain: evmKit.chain, trade: quote.trade, tradeOptions: quote.tradeOptions)
                 txData = transactionData
@@ -37,6 +37,11 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
                 transactionError = error
             }
         }
+
+        // router-approve intent for the AA broadcaster (ignored by the EOA direct broadcaster)
+        let spender = try? spenderAddress(chain: evmKit.chain)
+        NSLog("[AASWAP] BaseUniswap confirmationQuote: spender=\(spender?.eip55 ?? "nil") tokenIn.type=\(tokenIn.type) txData=\(txData != nil)")
+        let approval = spender.flatMap { SwapApproval.build(spender: $0, tokenIn: tokenIn, amountIn: amountIn) }
 
         return EvmSwapFinalQuote(
             expectedBuyAmount: quote.trade.amountOut ?? 0,
@@ -48,6 +53,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce,
             mevProtectionAllowed: mevProtectionAllowed(tokenIn: tokenIn, tokenOut: tokenOut),
+            approval: approval,
             toAddress: evmKit.receiveAddress.eip55
         )
     }

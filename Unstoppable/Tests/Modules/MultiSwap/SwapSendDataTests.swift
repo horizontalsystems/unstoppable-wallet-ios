@@ -18,7 +18,7 @@ struct SwapSendDataTests {
         )
     }
 
-    private static func evmQuote(canSwap: Bool = true) -> EvmSwapFinalQuote {
+    private static func evmQuote(canSwap: Bool = true, transactionError: Error? = nil) -> EvmSwapFinalQuote {
         EvmSwapFinalQuote(
             expectedBuyAmount: 1,
             transactionData: canSwap ? try? TransactionData(
@@ -26,6 +26,7 @@ struct SwapSendDataTests {
                 value: 100,
                 input: Data()
             ) : nil,
+            transactionError: transactionError,
             slippage: nil,
             recipient: nil,
             gasPrice: canSwap ? .legacy(gasPrice: 1_000_000_000) : nil,
@@ -33,6 +34,10 @@ struct SwapSendDataTests {
             nonce: nil,
             toAddress: "to"
         )
+    }
+
+    private enum TestError: Error {
+        case estimateFailed
     }
 
     private static func sendData(quote: SwapFinalQuote, prepared: IPrepared) -> MultiSwapSendHandler.SendData {
@@ -103,6 +108,36 @@ struct SwapSendDataTests {
         #expect(sections[1].fields.count == 1 + quoteFields.count) // price + quote, NO quote fee rows
     }
 
+    @Test func directPreparedKeepsQuoteTransactionErrorCaution() {
+        let quote = Self.evmQuote(canSwap: false, transactionError: TestError.estimateFailed)
+        let data = Self.sendData(quote: quote, prepared: DirectPrepared(executable: StubExecutable()))
+
+        let cautions = data.cautions(baseToken: Self.token(uid: "base"), currency: Currency(code: "USD", symbol: "$", decimal: 2), rates: [:])
+
+        #expect(cautions.isEmpty == false) // native-path caution rendered for EOA
+    }
+
+    @Test func displayPreparedDropsQuoteTransactionErrorCaution() {
+        let quote = Self.evmQuote(canSwap: false, transactionError: TestError.estimateFailed)
+        let prepared = StubDisplayPrepared(canSend: true, extraRateCoins: [])
+        let data = Self.sendData(quote: quote, prepared: prepared)
+
+        let cautions = data.cautions(baseToken: Self.token(uid: "base"), currency: Currency(code: "USD", symbol: "$", decimal: 2), rates: [:])
+
+        #expect(cautions.isEmpty) // the prepared owns the payment view; quote's native caution not rendered
+    }
+
+    @Test func displayPreparedSurfacesItsOwnCautions() {
+        let quote = Self.evmQuote(canSwap: false, transactionError: TestError.estimateFailed)
+        let prepared = StubDisplayPrepared(canSend: false, extraRateCoins: [], stubCautions: [CautionNew(title: "Reserve", text: "not enough", type: .error)])
+        let data = Self.sendData(quote: quote, prepared: prepared)
+
+        let cautions = data.cautions(baseToken: Self.token(uid: "base"), currency: Currency(code: "USD", symbol: "$", decimal: 2), rates: [:])
+
+        #expect(cautions.count == 1)
+        #expect(cautions[0].title == "Reserve")
+    }
+
     @Test func displayPreparedSuppressesQuoteFeeData() {
         let prepared = StubDisplayPrepared(canSend: false, extraRateCoins: [])
         // quote CAN swap and has feeData — display prepared must suppress it (no "Edit Fee")
@@ -119,9 +154,14 @@ private struct StubDisplayPrepared: IPreparedDisplay {
     let canSend: Bool
     let extraRateCoins: [Coin]
     var stubFeeSections: [SendDataSection] = []
+    var stubCautions: [CautionNew] = []
 
     func feeSections(baseToken _: Token, currency _: Currency, rates _: [String: Decimal]) -> [SendDataSection] {
         stubFeeSections
+    }
+
+    func cautions(baseToken _: Token) -> [CautionNew] {
+        stubCautions
     }
 }
 

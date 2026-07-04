@@ -22,8 +22,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private var headers: HTTPHeaders?
 
     private let provider: Provider
-    private let networkManager = Core.shared.networkManager
-//    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
+//    private let networkManager = Core.shared.networkManager
+    private let networkManager = NetworkManager(logger: nil)
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let adapterManager = Core.shared.adapterManager
     private let swapAssetStorage = Core.shared.swapAssetStorage
@@ -361,16 +361,28 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         parameters["provider"] = provider.rawValue
         parameters["destinationAddress"] = variant.destination
 
-        let refund = try await refundAddress(tokenIn: tokenIn)
-        parameters.appendNotNil(key: "refundAddress", refund)
-
         // sourceAddress IS the build signal: we send it only for chains whose server-built
         // tx we actually consume (EVM/Tron/TON/Solana — exactly what `quoteSourceAddress`
         // resolves a `from` for). For UTXO/Monero/Stellar/Zcash/Zano we omit it and build
         // the tx locally (better txs, e.g. multi-UTXO) — preserving the pre-v2 behaviour.
-        try await parameters.appendNotNil(key: "sourceAddress", quoteSourceAddress(tokenIn: tokenIn))
+        let sourceAddress = try await quoteSourceAddress(tokenIn: tokenIn)
+        parameters.appendNotNil(key: "sourceAddress", sourceAddress)
 
-        let quote: Quote = try await networkManager.fetch(url: "\(Self.baseUrl)/swap", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+        let refund = try await refundAddress(tokenIn: tokenIn)
+        parameters.appendNotNil(key: "refundAddress", refund)
+
+        NSLog("[AASWAP] USwap(\(provider.rawValue)) /swap REQUEST: tokenIn=\(tokenIn.coin.code)/\(tokenIn.type) chain=\(tokenIn.blockchainType.uid) sourceAddress=\(String(describing: parameters["sourceAddress"] ?? "nil")) destinationAddress=\(String(describing: parameters["destinationAddress"] ?? "nil")) refundAddress=\(String(describing: parameters["refundAddress"] ?? "nil")) parameterKeys=\(parameters.keys.sorted())")
+
+        let quote: Quote
+        do {
+            quote = try await networkManager.fetch(url: "\(Self.baseUrl)/swap", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+        } catch {
+            let nsError = error as NSError
+            NSLog("[AASWAP] USwap(\(provider.rawValue)) /swap ERROR: sourceAddress=\(String(describing: parameters["sourceAddress"] ?? "nil")) domain=\(nsError.domain) code=\(nsError.code) message=\(nsError.localizedDescription)")
+            throw error
+        }
+
+        NSLog("[AASWAP] USwap(\(provider.rawValue)) /swap RESPONSE: uuid=\(quote.uuid ?? "nil") approvalSpender=\(quote.approvalSpender ?? "nil") execution=\(quote.execution != nil) primarySignable=\(quote.execution?.primarySignable?.kind ?? "nil") depositAddress=\(quote.execution?.depositAddress ?? "nil")")
 
         // A committed /v2/swap must carry the tracking handle; the 9 builders forward it as
         // `providerSwapId`. If the server couldn't record the swap (no `uuid`), it can't be
@@ -453,13 +465,14 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     }
 
     private func quoteSourceAddress(tokenIn: Token) async throws -> String? {
-        // must provide address for calculate tx-data
         if tokenIn.blockchain.type.isEvm ||
             tokenIn.blockchainType == .tron ||
             tokenIn.blockchainType == .ton ||
             tokenIn.blockchainType == .solana
         {
-            return try await DestinationHelper.resolveDestination(token: tokenIn).address
+            let address = try await DestinationHelper.resolveDestination(token: tokenIn).address
+            NSLog("[AASWAP] quoteSourceAddress: \(tokenIn.blockchainType.uid) -> \(address)")
+            return address
         }
 
         return nil
@@ -731,7 +744,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         var evmFeeData: EvmFeeData?
         var transactionError: Error?
 
-        if let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, evmKitWrapper.signer != nil, let gasPriceData {
+        if let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPriceData {
             do {
                 let _evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData, predefinedGasLimit: gasLimitData)
                 evmFeeData = _evmFeeData
@@ -744,15 +757,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
         // router-approve intent for broadcasters that batch the approve themselves;
         // the direct broadcaster ignores it (approve happens in the pre-swap step)
-        var approval: SwapApproval?
-        if let approvalSpender = quote.approvalSpender,
-           case let .eip20(tokenAddress) = tokenIn.type,
-           let spender = try? EvmKit.Address(hex: approvalSpender),
-           let token = try? EvmKit.Address(hex: tokenAddress),
-           let amount = tokenIn.rawAmount(amountIn)
-        {
-            approval = SwapApproval(spender: spender, token: token, amount: amount)
-        }
+        NSLog("[AASWAP] USwap(\(provider.rawValue)) buildEvm: approvalSpender=\(quote.approvalSpender ?? "nil") tokenIn.type=\(tokenIn.type)")
+        let approval = quote.approvalSpender
+            .flatMap { try? EvmKit.Address(hex: $0) }
+            .flatMap { SwapApproval.build(spender: $0, tokenIn: tokenIn, amountIn: amountIn) }
 
         return try EvmSwapFinalQuote(
             expectedBuyAmount: quote.expectedBuyAmount,

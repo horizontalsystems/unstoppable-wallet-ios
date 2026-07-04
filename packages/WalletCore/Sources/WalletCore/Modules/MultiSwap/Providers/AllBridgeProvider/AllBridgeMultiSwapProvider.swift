@@ -347,7 +347,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
             var evmFeeData: EvmFeeData?
             var transactionError: Error?
 
-            if let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, evmKitWrapper.signer != nil, let gasPriceData {
+            if let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPriceData {
                 do {
                     let _evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData)
                     evmFeeData = _evmFeeData
@@ -360,6 +360,10 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 }
             }
 
+            // router-approve intent for the AA broadcaster: the bridge router pulls eip20 via transferFrom
+            NSLog("[AASWAP] AllBridge confirmationQuote: router=\(router) tokenIn.type=\(tokenIn.type)")
+            let approval = (try? EvmKit.Address(hex: router)).flatMap { SwapApproval.build(spender: $0, tokenIn: tokenIn, amountIn: amountIn) }
+
             return EvmSwapFinalQuote(
                 expectedBuyAmount: amountOut,
                 transactionData: transactionData,
@@ -371,6 +375,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 evmFeeData: evmFeeData,
                 nonce: transactionSettings?.nonce,
                 mevProtectionAllowed: mevProtectionAllowed(tokenIn: tokenIn, tokenOut: tokenOut),
+                approval: approval,
                 toAddress: recipient
             )
         } else if tokenIn.blockchainType == .tron {
