@@ -74,6 +74,8 @@ enum DestinationHelper {
             address = MoneroAdapter.address(accountType: account.type)
         case .zano:
             address = ZanoAdapter.address(accountType: account.type)
+        case .solana:
+            address = try SolanaKitManager.address(accountType: account.type)
         default:
             throw SwapError.noDestinationAddress
         }

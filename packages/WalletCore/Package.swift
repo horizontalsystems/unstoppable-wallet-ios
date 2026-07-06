@@ -34,7 +34,7 @@ let package = Package(
         .package(url: "https://github.com/onevcat/Kingfisher.git", from: "8.6.2"),
         .package(url: "https://github.com/horizontalsystems/LitecoinKit.Swift", exact: "3.0.2"),
         .package(url: "https://github.com/horizontalsystems/MarketKit.Swift", exact: "3.6.12"),
-        .package(url: "https://github.com/horizontalsystems/MoneroKit.Swift", exact: "0.2.8"),
+        .package(url: "https://github.com/horizontalsystems/MoneroKit.Swift", exact: "0.2.9"),
         .package(url: "https://github.com/horizontalsystems/NftKit.Swift", exact: "2.0.2"),
         .package(url: "https://github.com/tristanhimmelman/ObjectMapper", exact: "4.2.0"),
         .package(url: "https://github.com/horizontalsystems/OneInchKit.Swift", exact: "3.0.4"),

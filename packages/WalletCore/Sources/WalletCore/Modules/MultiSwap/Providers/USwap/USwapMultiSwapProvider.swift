@@ -513,6 +513,12 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         let amountOut = quote.expectedBuyAmount
         let amountOutMin = amountOut - (amountOut * slippage / 100)
 
+        // The server's `minBuyAmount` is the enforced floor; `null` means the route is a floating
+        // P2P estimate — nothing guarantees the amount (or applies our slippage), so the confirm
+        // page must not show the "Guaranteed" (or slippage) rows SwapFinalQuote derives from a
+        // non-nil slippage. Shadow the parameter: every builder below receives nil instead.
+        let slippage: Decimal? = quote.minBuyAmount != nil ? slippage : nil
+
         let blockchainType = tokenIn.blockchainType
 
         let finalQuote: SwapFinalQuote
@@ -690,7 +696,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut _: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?,
         transactionSettings: TransactionSettings?
     ) async throws -> SwapFinalQuote {
@@ -736,7 +742,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             }
         }
 
-        return try EvmSwapFinalQuote(
+        return EvmSwapFinalQuote(
             expectedBuyAmount: quote.expectedBuyAmount,
             transactionData: transactionData,
             transactionError: transactionError,
@@ -746,7 +752,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             gasPrice: gasPriceData?.userDefined,
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce,
-            toAddress: deliveryAddress(quote: quote, recipient: recipient),
+            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
             depositAddress: quote.execution?.depositAddress,
             providerSwapId: quote.uuid
         )
@@ -759,7 +765,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut _: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?,
         transactionSettings: TransactionSettings?
     ) async throws -> SwapFinalQuote {
@@ -814,7 +820,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?
     ) async throws -> SwapFinalQuote {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
@@ -844,7 +850,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return try ZcashSwapFinalQuote(
+        return ZcashSwapFinalQuote(
             expectedBuyAmount: amountOut,
             proposal: proposal,
             slippage: slippage,
@@ -852,7 +858,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             estimatedTime: quote.esimatedTime,
             transactionError: transactionError,
             fee: totalFeeRequired?.decimalValue.decimalValue,
-            toAddress: deliveryAddress(quote: quote, recipient: recipient),
+            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
             depositAddress: quote.execution?.depositAddress,
             providerSwapId: quote.uuid
         )
@@ -865,7 +871,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?
     ) async throws -> SwapFinalQuote {
         guard let signable = quote.execution?.primarySignable, signable.kind == "ton",
@@ -920,7 +926,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionParam: transactionParam,
             fee: fee,
             transactionError: transactionError,
-            toAddress: deliveryAddress(quote: quote, recipient: recipient),
+            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
             depositAddress: quote.execution?.depositAddress,
             providerSwapId: quote.uuid
         )
@@ -933,7 +939,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?
     ) async throws -> SwapFinalQuote {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? StellarAdapter else {
@@ -979,7 +985,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             token: tokenIn,
             fee: fee,
             transactionError: transactionError,
-            toAddress: deliveryAddress(quote: quote, recipient: recipient),
+            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
             depositAddress: quote.execution?.depositAddress,
             providerSwapId: quote.uuid
         )
@@ -992,7 +998,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?
     ) async throws -> SwapFinalQuote {
         guard let signable = quote.execution?.primarySignable, signable.kind == "tron",
@@ -1022,7 +1028,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             }
         }
 
-        return try TronSwapFinalQuote(
+        return TronSwapFinalQuote(
             amountIn: amountIn,
             expectedAmountOut: amountOut,
             recipient: recipient,
@@ -1031,7 +1037,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             createdTransaction: transaction,
             fees: fees,
             transactionError: transactionError,
-            toAddress: deliveryAddress(quote: quote, recipient: recipient),
+            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
             depositAddress: quote.execution?.depositAddress,
             providerSwapId: quote.uuid
         )
@@ -1044,7 +1050,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?,
         priority: MoneroKit.SendPriority
     ) async throws -> SwapFinalQuote {
@@ -1074,7 +1080,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return try MoneroSwapFinalQuote(
+        return MoneroSwapFinalQuote(
             amountIn: amountIn,
             expectedAmountOut: amountOut,
             recipient: recipient,
@@ -1087,7 +1093,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             priority: priority,
             fee: fee,
             transactionError: transactionError,
-            toAddress: deliveryAddress(quote: quote, recipient: recipient),
+            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
             depositAddress: quote.execution?.depositAddress,
             providerSwapId: quote.uuid
         )
@@ -1100,7 +1106,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?
     ) async throws -> SwapFinalQuote {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? ZanoAdapter else {
@@ -1136,7 +1142,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return try ZanoSwapFinalQuote(
+        return ZanoSwapFinalQuote(
             expectedAmountOut: amountOut,
             recipient: recipient,
             slippage: slippage,
@@ -1146,7 +1152,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             memo: deposit.memo,
             fee: fee,
             transactionError: transactionError,
-            toAddress: deliveryAddress(quote: quote, recipient: recipient),
+            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
             depositAddress: quote.execution?.depositAddress,
             providerSwapId: quote.uuid
         )
@@ -1159,7 +1165,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOut: Decimal,
         amountOutMin _: Decimal,
         quote: Quote,
-        slippage: Decimal,
+        slippage: Decimal?,
         recipient: String?
     ) async throws -> SwapFinalQuote {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? ISendSolanaAdapter & IBalanceAdapter else {
@@ -1188,7 +1194,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return try SolanaSwapFinalQuote(
+        return SolanaSwapFinalQuote(
             rawTransaction: rawTransaction,
             expectedAmountOut: amountOut,
             recipient: recipient,
@@ -1196,7 +1202,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             estimatedTime: quote.esimatedTime,
             fee: fee,
             transactionError: transactionError,
-            toAddress: deliveryAddress(quote: quote, recipient: recipient),
+            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
             depositAddress: quote.execution?.depositAddress,
             providerSwapId: quote.uuid
         )
@@ -1502,6 +1508,10 @@ extension USwapMultiSwapProvider {
 
     class Quote: ImmutableMappable {
         let expectedBuyAmount: Decimal
+        // The ENFORCED floor the route can deliver (v2 sends an explicit `null` when the amount
+        // is only an estimate — floating-rate P2P, re-priced at deposit). nil ⇒ no guarantee:
+        // the confirm page must not render a "Guaranteed" row.
+        let minBuyAmount: Decimal?
         let buyAsset: String?
         let esimatedTime: TimeInterval?
         // Optional: a dry (rate-only) quote carries no `execution`; it appears only on a
@@ -1525,6 +1535,7 @@ extension USwapMultiSwapProvider {
 
         required init(map: Map) throws {
             expectedBuyAmount = try map.value("expectedBuyAmount", using: Transform.stringToDecimalTransform)
+            minBuyAmount = try? map.value("minBuyAmount", using: Transform.stringToDecimalTransform)
             buyAsset = try? map.value("buyAsset")
             esimatedTime = try? map.value("estimatedTime.total")
             execution = try? map.value("execution")
