@@ -871,7 +871,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return ZcashSwapFinalQuote(
+        return try ZcashSwapFinalQuote(
             expectedBuyAmount: amountOut,
             proposal: proposal,
             slippage: slippage,
@@ -879,7 +879,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             estimatedTime: quote.esimatedTime,
             transactionError: transactionError,
             fee: totalFeeRequired?.decimalValue.decimalValue,
-            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
+            toAddress: deliveryAddress(quote: quote, recipient: recipient),
             depositAddress: quote.execution?.depositAddress,
             providerSwapId: quote.uuid
         )
@@ -947,7 +947,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionParam: transactionParam,
             fee: fee,
             transactionError: transactionError,
-            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
+            toAddress: deliveryAddress(quote: quote, recipient: recipient),
             depositAddress: quote.execution?.depositAddress,
             providerSwapId: quote.uuid
         )
@@ -1006,7 +1006,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             token: tokenIn,
             fee: fee,
             transactionError: transactionError,
-            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
+            toAddress: deliveryAddress(quote: quote, recipient: recipient),
             depositAddress: quote.execution?.depositAddress,
             providerSwapId: quote.uuid
         )
@@ -1071,7 +1071,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transferIntent: transferIntent,
             fees: fees,
             transactionError: transactionError,
-            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
+            toAddress: deliveryAddress(quote: quote, recipient: recipient),
             depositAddress: quote.execution?.depositAddress,
             providerSwapId: quote.uuid
         )
@@ -1114,7 +1114,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return MoneroSwapFinalQuote(
+        return try MoneroSwapFinalQuote(
             amountIn: amountIn,
             expectedAmountOut: amountOut,
             recipient: recipient,
@@ -1127,7 +1127,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             priority: priority,
             fee: fee,
             transactionError: transactionError,
-            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
+            toAddress: deliveryAddress(quote: quote, recipient: recipient),
             depositAddress: quote.execution?.depositAddress,
             providerSwapId: quote.uuid
         )
@@ -1176,7 +1176,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return ZanoSwapFinalQuote(
+        return try ZanoSwapFinalQuote(
             expectedAmountOut: amountOut,
             recipient: recipient,
             slippage: slippage,
@@ -1186,7 +1186,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             memo: deposit.memo,
             fee: fee,
             transactionError: transactionError,
-            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
+            toAddress: deliveryAddress(quote: quote, recipient: recipient),
             depositAddress: quote.execution?.depositAddress,
             providerSwapId: quote.uuid
         )
@@ -1228,7 +1228,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return SolanaSwapFinalQuote(
+        return try SolanaSwapFinalQuote(
             rawTransaction: rawTransaction,
             expectedAmountOut: amountOut,
             recipient: recipient,
@@ -1236,7 +1236,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             estimatedTime: quote.esimatedTime,
             fee: fee,
             transactionError: transactionError,
-            toAddress: try deliveryAddress(quote: quote, recipient: recipient),
+            toAddress: deliveryAddress(quote: quote, recipient: recipient),
             depositAddress: quote.execution?.depositAddress,
             providerSwapId: quote.uuid
         )
