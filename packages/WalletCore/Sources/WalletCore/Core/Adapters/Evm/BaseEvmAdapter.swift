@@ -4,7 +4,7 @@ import Foundation
 import HsToolKit
 import RxSwift
 
-class BaseEvmAdapter {
+public class BaseEvmAdapter {
     static let confirmationsThreshold = 12
 
     let evmKitWrapper: EvmKitWrapper
@@ -39,7 +39,7 @@ class BaseEvmAdapter {
         }
     }
 
-    var isMainNet: Bool {
+    public var isMainNet: Bool {
         evmKitWrapper.evmKit.chain.isMainNet
     }
 
@@ -49,7 +49,7 @@ class BaseEvmAdapter {
 }
 
 // IAdapter
-extension BaseEvmAdapter {
+public extension BaseEvmAdapter {
     var statusInfo: [(String, Any)] {
         evmKit.statusInfo()
     }
@@ -71,7 +71,7 @@ extension BaseEvmAdapter {
 }
 
 extension BaseEvmAdapter: IDepositAdapter {
-    var receiveAddress: DepositAddress {
+    public var receiveAddress: DepositAddress {
         DepositAddress(evmKit.receiveAddress.eip55)
     }
 }

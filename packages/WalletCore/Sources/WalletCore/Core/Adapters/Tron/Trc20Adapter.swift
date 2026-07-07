@@ -5,7 +5,7 @@ import MarketKit
 import RxSwift
 import TronKit
 
-class Trc20Adapter: BaseTronAdapter {
+public class Trc20Adapter: BaseTronAdapter {
     private let contractAddress: TronKit.Address
 
     private let transactionConverter: TronTransactionConverter
@@ -30,55 +30,59 @@ class Trc20Adapter: BaseTronAdapter {
         let spender = try TronKit.Address(address: spenderAddress.raw)
         return tronKit.approveTrc20TriggerSmartContract(contractAddress: contractAddress, spender: spender, amount: amount)
     }
+
+    public var rawBalance: BigUInt {
+        tronKit.trc20Balance(contractAddress: contractAddress)
+    }
 }
 
 // IAdapter
 extension Trc20Adapter: IAdapter {
-    func start() {
+    public func start() {
         // started via TronKitManager
     }
 
-    func stop() {
+    public func stop() {
         // stopped via TronKitManager
     }
 
-    func refresh() {
+    public func refresh() {
         // refreshed via TronKitManager
     }
 }
 
 extension Trc20Adapter: IBalanceAdapter {
-    var balanceState: AdapterState {
+    public var balanceState: AdapterState {
         convertToAdapterState(tronSyncState: tronKit.syncState)
     }
 
-    var balanceStateUpdatedObservable: Observable<AdapterState> {
+    public var balanceStateUpdatedObservable: Observable<AdapterState> {
         tronKit.syncStatePublisher.asObservable().map { [weak self] in
             self?.convertToAdapterState(tronSyncState: $0) ?? .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
         }
     }
 
-    var balanceData: BalanceData {
-        balanceData(balance: tronKit.trc20Balance(contractAddress: contractAddress))
+    public var balanceData: BalanceData {
+        balanceData(balance: rawBalance)
     }
 
-    var balanceDataUpdatedObservable: Observable<BalanceData> {
+    public var balanceDataUpdatedObservable: Observable<BalanceData> {
         tronKit.trc20BalancePublisher(contractAddress: contractAddress).asObservable().map { [weak self] in
             self?.balanceData(balance: $0) ?? BalanceData(balance: 0)
         }
     }
 
-    var caution: CautionNew? {
+    public var caution: CautionNew? {
         balanceCaution(active: effectiveAccountActive)
     }
 
-    var cautionUpdatedObservable: Observable<CautionNew?> {
+    public var cautionUpdatedObservable: Observable<CautionNew?> {
         effectiveAccountActivePublisher.asObservable().map { [weak self] in self?.balanceCaution(active: $0) }
     }
 }
 
 extension Trc20Adapter: ISendTronAdapter {
-    func contract(amount: BigUInt, address: TronKit.Address, memo _: String?) -> Contract {
+    public func contract(amount: BigUInt, address: TronKit.Address, memo _: String?) -> Contract {
         tronKit.transferTrc20TriggerSmartContract(contractAddress: contractAddress, toAddress: address, amount: amount)
     }
 }

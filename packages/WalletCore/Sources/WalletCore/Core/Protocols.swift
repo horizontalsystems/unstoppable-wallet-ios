@@ -43,7 +43,7 @@ public protocol IBalanceAdapter: IBaseAdapter {
     var cautionUpdatedObservable: Observable<CautionNew?> { get }
 }
 
-extension IBalanceAdapter {
+public extension IBalanceAdapter {
     var caution: CautionNew? {
         nil
     }
@@ -81,7 +81,7 @@ protocol IHDDepositAdapter: IDepositAdapter {
     func usedAddresses(change: Bool) -> [UsedAddress]
 }
 
-extension IDepositAdapter {
+public extension IDepositAdapter {
     var receiveAddressStatus: DataStatus<DepositAddress> {
         .completed(receiveAddress)
     }
