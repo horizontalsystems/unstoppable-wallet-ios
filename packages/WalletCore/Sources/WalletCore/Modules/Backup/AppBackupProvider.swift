@@ -384,7 +384,7 @@ extension AppBackupProvider {
     }
 
     static func encrypt(account: Account, wallets: [WalletBackup.EnabledWallet], passphrase: String) throws -> WalletBackup {
-        // Passkey/AA accounts aren't portable-backup-able (device-bound credential + separate aa.sqlite);
+        // Passkey accounts aren't portable-backup-able (device-bound credential + separate local storage);
         // the UI must not offer backup for them. Data-layer guard (moved off AccountType.Abstract).
         if case .passkeyOwned = account.type {
             throw CodingError.unsupportedAccountType

@@ -374,7 +374,7 @@ extension AccountType {
         case .stellarSecretKey:
             return AccountType.stellarSecretKey(secretSeed: string)
         case .passkeyOwned:
-            return nil // device-bound passkey + separate aa.sqlite: not restorable from a portable backup
+            return nil // device-bound passkey + separate local storage: not restorable from a portable backup
         case .hdExtendedKey:
             do {
                 return try AccountType.hdExtendedKey(key: HDExtendedKey(data: uniqueId))

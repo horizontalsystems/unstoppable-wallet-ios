@@ -5,7 +5,7 @@ import Testing
 @testable import WalletCore
 
 // requiresApprovalReset: canonical USDT (ETH/Tron) reverts on non-zero -> non-zero approve;
-// other eip20 tokens and native coins don't. Shared by EOA pre-swap and the AA swap broadcaster.
+// other eip20 tokens and native coins don't. Shared by swap flows that build approvals.
 struct ApprovalResetTests {
     private static func eip20(_ address: String, blockchainType: BlockchainType) -> Token {
         Token(

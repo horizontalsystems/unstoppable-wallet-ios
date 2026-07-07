@@ -133,7 +133,7 @@ extension TronKitManager {
 public class TronKitWrapper {
     let tronKit: TronKit.Kit
     let signer: Signer?
-    /// True when this wrapper serves a gas-token-payment account (currently passkey-AA / GasFree).
+    /// True when this wrapper serves a gas-token-payment account (currently passkey / GasFree).
     /// UI uses it to bypass on-chain `accountActive == false` cosmetic ("not activated") for accounts
     /// whose wallet is a CREATE2 BeaconProxy not yet deployed on chain.
     let gasTokenPayment: Bool

@@ -20,7 +20,7 @@ public class BaseTronAdapter {
         tronKitWrapper.tronKit
     }
 
-    /// `true` for on-chain-active accounts AND for gas-token-payment accounts (passkey-AA / GasFree)
+    /// `true` for on-chain-active accounts AND for gas-token-payment accounts (passkey / GasFree)
     /// whose wallet may not be on-chain yet but still semantically usable for receive/send via the
     /// abstraction layer. Use this for UI activation cues, not raw `tronKit.accountActive`.
     var effectiveAccountActive: Bool {

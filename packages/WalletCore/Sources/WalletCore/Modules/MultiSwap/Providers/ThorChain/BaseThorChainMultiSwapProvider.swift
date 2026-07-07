@@ -135,7 +135,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 }
             }
 
-            // router-approve intent for the AA broadcaster: eip20 deposits pull via the router's transferFrom
+            // router-approve intent: eip20 deposits pull via the router's transferFrom
             // (native deposits transfer directly to the inbound address and carry no approval)
             let approval = (try? EvmKit.Address(hex: router)).flatMap { SwapApproval.build(spender: $0, tokenIn: tokenIn, amountIn: amountIn) }
 

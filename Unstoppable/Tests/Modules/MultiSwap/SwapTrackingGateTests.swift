@@ -42,12 +42,12 @@ struct SwapTrackingGateTests {
     }
 
     @Test func mechanismPendingIsGated() {
-        let awaiting = SwapHistoryManager.isAwaitingTxHash(Self.swap(txHash: nil, trackingHandle: "userOpHash"))
+        let awaiting = SwapHistoryManager.isAwaitingTxHash(Self.swap(txHash: nil, trackingHandle: "tracking-handle"))
         #expect(awaiting == true)
     }
 
     @Test func resolvedMechanismSwapIsTracked() {
-        let awaiting = SwapHistoryManager.isAwaitingTxHash(Self.swap(txHash: "0xabc", trackingHandle: "userOpHash"))
+        let awaiting = SwapHistoryManager.isAwaitingTxHash(Self.swap(txHash: "0xabc", trackingHandle: "tracking-handle"))
         #expect(awaiting == false)
     }
 
