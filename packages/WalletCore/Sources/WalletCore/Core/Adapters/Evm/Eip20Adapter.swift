@@ -6,9 +6,9 @@ import HsToolKit
 import MarketKit
 import RxSwift
 
-class Eip20Adapter: BaseEvmAdapter {
+public class Eip20Adapter: BaseEvmAdapter {
     private static let approveConfirmationsThreshold: Int? = nil
-    let eip20Kit: Eip20Kit.Kit
+    public let eip20Kit: Eip20Kit.Kit
     private let contractAddress: EvmKit.Address
     private let transactionConverter: EvmTransactionConverter
 
@@ -29,33 +29,33 @@ class Eip20Adapter: BaseEvmAdapter {
 // IAdapter
 
 extension Eip20Adapter: IAdapter {
-    func start() {
+    public func start() {
         eip20Kit.start()
     }
 
-    func stop() {
+    public func stop() {
         eip20Kit.stop()
     }
 
-    func refresh() {}
+    public func refresh() {}
 }
 
 extension Eip20Adapter: IBalanceAdapter {
-    var balanceState: AdapterState {
+    public var balanceState: AdapterState {
         convertToAdapterState(evmSyncState: eip20Kit.syncState)
     }
 
-    var balanceStateUpdatedObservable: Observable<AdapterState> {
+    public var balanceStateUpdatedObservable: Observable<AdapterState> {
         eip20Kit.syncStateObservable.map { [weak self] in
             self?.convertToAdapterState(evmSyncState: $0) ?? .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
         }
     }
 
-    var balanceData: BalanceData {
+    public var balanceData: BalanceData {
         balanceData(balance: eip20Kit.balance)
     }
 
-    var balanceDataUpdatedObservable: Observable<BalanceData> {
+    public var balanceDataUpdatedObservable: Observable<BalanceData> {
         eip20Kit.balanceObservable.map { [weak self] in
             self?.balanceData(balance: $0) ?? BalanceData(balance: 0)
         }

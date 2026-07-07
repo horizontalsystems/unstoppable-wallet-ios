@@ -5,10 +5,10 @@ import HsToolKit
 import RxSwift
 import TronKit
 
-class BaseTronAdapter {
+public class BaseTronAdapter {
     static let confirmationsThreshold = 18
 
-    let tronKitWrapper: TronKitWrapper
+    public let tronKitWrapper: TronKitWrapper
     let decimals: Int
 
     init(tronKitWrapper: TronKitWrapper, decimals: Int) {
@@ -54,7 +54,7 @@ class BaseTronAdapter {
         }
     }
 
-    var isMainNet: Bool {
+    public var isMainNet: Bool {
         tronKitWrapper.tronKit.network == .mainNet
     }
 
@@ -62,7 +62,7 @@ class BaseTronAdapter {
         BalanceData(balance: balanceDecimal(kitBalance: balance, decimals: decimals))
     }
 
-    func accountActive(address: TronKit.Address) async -> Bool {
+    public func accountActive(address: TronKit.Address) async -> Bool {
         await (try? tronKit.accountActive(address: address)) ?? true
     }
 
@@ -76,7 +76,7 @@ class BaseTronAdapter {
 }
 
 // IAdapter
-extension BaseTronAdapter {
+public extension BaseTronAdapter {
     var statusInfo: [(String, Any)] {
         []
     }
@@ -87,7 +87,7 @@ extension BaseTronAdapter {
 }
 
 // ITransactionsAdapter
-extension BaseTronAdapter {
+public extension BaseTronAdapter {
     var lastBlockInfo: LastBlockInfo? {
         tronKit.lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }
     }
@@ -98,7 +98,7 @@ extension BaseTronAdapter {
 }
 
 extension BaseTronAdapter: IDepositAdapter {
-    var receiveAddress: DepositAddress {
+    public var receiveAddress: DepositAddress {
         ActivatedDepositAddress(
             receiveAddress: tronKit.receiveAddress.base58,
             isActive: effectiveAccountActive
