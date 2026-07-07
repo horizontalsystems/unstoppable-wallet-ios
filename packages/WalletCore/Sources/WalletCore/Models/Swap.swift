@@ -5,7 +5,7 @@ import SwiftUI
 
 public struct Swap: Hashable {
     let uid: String
-    let txHash: String?
+    public let txHash: String?
     // opaque mechanism handle (set by the broadcaster) used by resolve() to attach
     // the on-chain txHash later; nil for directly-broadcast swaps
     let trackingHandle: String?
@@ -19,7 +19,7 @@ public struct Swap: Hashable {
     let recipient: String?
     let toAddress: String
     let depositAddress: String?
-    let providerSwapId: String?
+    public let providerSwapId: String?
     let sourceAddress: String?
     let refundAddress: String?
     let date: Date

@@ -1,15 +1,21 @@
 import MarketKit
+import UniswapKit
 
-class UniswapV3MultiSwapProvider: BaseUniswapV3MultiSwapProvider {
-    static let id = "UNISWAP_V3"
-    static let name = "Uniswap v.3"
-    override var id: String { Self.id }
-    override var name: String { Self.name }
+public class UniswapV3MultiSwapProvider: BaseUniswapV3MultiSwapProvider {
+    public static let id = "UNISWAP_V3"
+    public static let name = "Uniswap v.3"
 
-    override var type: SwapProviderType { .excellent }
-    override var icon: String { "swap_provider_uniswap" }
+    public init() throws {
+        try super.init(kit: UniswapKit.KitV3.instance(dexType: .uniswap))
+    }
 
-    override func supports(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Bool {
+    override public var id: String { Self.id }
+    override public var name: String { Self.name }
+
+    override public var type: SwapProviderType { .excellent }
+    override public var icon: String { "swap_provider_uniswap" }
+
+    override public func supports(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Bool {
         guard tokenIn.blockchainType == tokenOut.blockchainType else {
             return false
         }

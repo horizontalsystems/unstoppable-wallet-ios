@@ -21,7 +21,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private let assetMapExpiration: TimeInterval = 60 * 60
     private var headers: HTTPHeaders?
 
-    private let provider: Provider
+    private let provider: USwapProvider
 //    private let networkManager = Core.shared.networkManager
     private let networkManager = NetworkManager(logger: nil)
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
@@ -49,7 +49,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private var temporaryDestinationAddresses = [DestinationCacheKey: String]() // primary (transparent for ZEC)
     private var temporaryUnifiedDestinationAddresses = [DestinationCacheKey: String]() // unified (ZEC only)
 
-    init(provider: Provider) {
+    init(provider: USwapProvider) {
         self.provider = provider
         headers = Self.headers
 
@@ -371,18 +371,12 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         let refund = try await refundAddress(tokenIn: tokenIn)
         parameters.appendNotNil(key: "refundAddress", refund)
 
-        NSLog("[AASWAP] USwap(\(provider.rawValue)) /swap REQUEST: tokenIn=\(tokenIn.coin.code)/\(tokenIn.type) chain=\(tokenIn.blockchainType.uid) sourceAddress=\(String(describing: parameters["sourceAddress"] ?? "nil")) destinationAddress=\(String(describing: parameters["destinationAddress"] ?? "nil")) refundAddress=\(String(describing: parameters["refundAddress"] ?? "nil")) parameterKeys=\(parameters.keys.sorted())")
-
         let quote: Quote
         do {
             quote = try await networkManager.fetch(url: "\(Self.baseUrl)/swap", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
         } catch {
-            let nsError = error as NSError
-            NSLog("[AASWAP] USwap(\(provider.rawValue)) /swap ERROR: sourceAddress=\(String(describing: parameters["sourceAddress"] ?? "nil")) domain=\(nsError.domain) code=\(nsError.code) message=\(nsError.localizedDescription)")
             throw error
         }
-
-        NSLog("[AASWAP] USwap(\(provider.rawValue)) /swap RESPONSE: uuid=\(quote.uuid ?? "nil") approvalSpender=\(quote.approvalSpender ?? "nil") execution=\(quote.execution != nil) primarySignable=\(quote.execution?.primarySignable?.kind ?? "nil") depositAddress=\(quote.execution?.depositAddress ?? "nil")")
 
         // A committed /v2/swap must carry the tracking handle; the 9 builders forward it as
         // `providerSwapId`. If the server couldn't record the swap (no `uuid`), it can't be
@@ -471,7 +465,6 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             tokenIn.blockchainType == .solana
         {
             let address = try await DestinationHelper.resolveDestination(token: tokenIn).address
-            NSLog("[AASWAP] quoteSourceAddress: \(tokenIn.blockchainType.uid) -> \(address)")
             return address
         }
 
@@ -757,7 +750,6 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
         // router-approve intent for broadcasters that batch the approve themselves;
         // the direct broadcaster ignores it (approve happens in the pre-swap step)
-        NSLog("[AASWAP] USwap(\(provider.rawValue)) buildEvm: approvalSpender=\(quote.approvalSpender ?? "nil") tokenIn.type=\(tokenIn.type)")
         let approval = quote.approvalSpender
             .flatMap { try? EvmKit.Address(hex: $0) }
             .flatMap { SwapApproval.build(spender: $0, tokenIn: tokenIn, amountIn: amountIn) }
@@ -1315,72 +1307,18 @@ extension USwapMultiSwapProvider {
     }
 }
 
+public enum USwapTracker {
+    public static func track(swap: Swap, parameters: Parameters, networkManager: NetworkManager, endpoint: String = "track") async throws -> Swap {
+        try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, networkManager: networkManager, endpoint: endpoint)
+    }
+}
+
 extension USwapMultiSwapProvider {
+    static let supportedProviders: [USwapProvider] = USwapProvider.allCases
+
     struct Asset {
         let identifier: String
         let token: Token
-    }
-
-    enum Provider: String {
-        case near = "NEAR"
-        case quickEx = "QUICKEX"
-        case letsExchange = "LETSEXCHANGE"
-        case stealthex = "STEALTHEX"
-        case swapuz = "SWAPUZ"
-        case exolix = "EXOLIX"
-        case cce = "CCE"
-        case barter = "BARTER"
-        case pegasus = "PEGASUS"
-        case circle = "CIRCLE"
-
-        var icon: String {
-            switch self {
-            case .near: return "swap_provider_near"
-            case .quickEx: return "swap_provider_quickex"
-            case .letsExchange: return "swap_provider_letsexchange"
-            case .stealthex: return "swap_provider_stealthex"
-            case .swapuz: return "swap_provider_swapuz"
-            case .exolix: return "swap_provider_exolix"
-            case .cce: return "swap_provider_cce"
-            case .barter: return "swap_provider_barter"
-            case .pegasus: return "swap_provider_pegasus"
-            case .circle: return "swap_provider_circle"
-            }
-        }
-
-        var title: String {
-            switch self {
-            case .near: return "Near"
-            case .quickEx: return "QuickEx"
-            case .letsExchange: return "LetsExchange"
-            case .stealthex: return "StealthEX"
-            case .swapuz: return "Swapuz"
-            case .exolix: return "Exolix"
-            case .cce: return "CCE Cash"
-            case .barter: return "Barter"
-            case .pegasus: return "PegasusSwap"
-            case .circle: return "Circle CCTP"
-            }
-        }
-
-        var type: SwapProviderType {
-            switch self {
-            case .barter, .circle: return .excellent
-            case .quickEx, .exolix, .swapuz, .letsExchange, .cce, .pegasus: return .good
-            case .stealthex, .near: return .fair
-            }
-        }
-
-        var requireTerms: Bool {
-            true
-        }
-
-        var isEvm: Bool {
-            switch self {
-            case .barter: return true
-            default: return false
-            }
-        }
     }
 
     struct ProviderResponse: ImmutableMappable {
@@ -1642,6 +1580,72 @@ extension USwapMultiSwapProvider {
         let sellAsset: String
         let buyAsset: String
         let destinationAddress: String
+    }
+}
+
+public enum USwapProvider: String, CaseIterable {
+    case near = "NEAR"
+    case quickEx = "QUICKEX"
+    case letsExchange = "LETSEXCHANGE"
+    case stealthex = "STEALTHEX"
+    case swapuz = "SWAPUZ"
+    case exolix = "EXOLIX"
+    case cce = "CCE"
+    case barter = "BARTER"
+    case pegasus = "PEGASUS"
+    case circle = "CIRCLE"
+
+    public var icon: String {
+        switch self {
+        case .near: return "swap_provider_near"
+        case .quickEx: return "swap_provider_quickex"
+        case .letsExchange: return "swap_provider_letsexchange"
+        case .stealthex: return "swap_provider_stealthex"
+        case .swapuz: return "swap_provider_swapuz"
+        case .exolix: return "swap_provider_exolix"
+        case .cce: return "swap_provider_cce"
+        case .barter: return "swap_provider_barter"
+        case .pegasus: return "swap_provider_pegasus"
+        case .circle: return "swap_provider_circle"
+        }
+    }
+
+    public var title: String {
+        switch self {
+        case .near: return "Near"
+        case .quickEx: return "QuickEx"
+        case .letsExchange: return "LetsExchange"
+        case .stealthex: return "StealthEX"
+        case .swapuz: return "Swapuz"
+        case .exolix: return "Exolix"
+        case .cce: return "CCE Cash"
+        case .barter: return "Barter"
+        case .pegasus: return "PegasusSwap"
+        case .circle: return "Circle CCTP"
+        }
+    }
+
+    public var type: SwapProviderType {
+        switch self {
+        case .barter, .circle: return .excellent
+        case .quickEx, .exolix, .swapuz, .letsExchange, .cce, .pegasus: return .good
+        case .stealthex, .near: return .fair
+        }
+    }
+
+    public var requireTerms: Bool {
+        true
+    }
+
+    public var isEvm: Bool {
+        switch self {
+        case .barter: return true
+        default: return false
+        }
+    }
+
+    public var requiresSourceAddress: Bool {
+        self == .barter
     }
 }
 

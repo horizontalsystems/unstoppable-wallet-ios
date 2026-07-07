@@ -104,7 +104,6 @@ extension MultiSwapSendHandler: ISendHandler {
     }
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
-        NSLog("[AASWAP] sendData ENTRY: provider=\(provider.id) tokenIn=\(tokenIn.coin.code)/\(tokenIn.type) tokenOut=\(tokenOut.coin.code) broadcaster=\(broadcaster.map { String(describing: type(of: $0)) } ?? "nil")")
         let quote = try await provider.confirmationQuote(
             multiSwapQuote: multiSwapQuote,
             tokenIn: tokenIn,
@@ -120,7 +119,6 @@ extension MultiSwapSendHandler: ISendHandler {
         }
 
         guard let broadcaster else {
-            NSLog("[AASWAP] sendData: no broadcaster resolved -> noBroadcaster")
             throw SwapBroadcasterError.noBroadcaster
         }
 
@@ -129,7 +127,6 @@ extension MultiSwapSendHandler: ISendHandler {
         let otherSections = provider.mevProtectionAllowed(tokenIn: tokenIn, tokenOut: tokenOut) ? [mevProtectionHelper.section()] : []
 
         let executable = quote.executable(tokenIn: tokenIn)
-        NSLog("[AASWAP] sendData: provider=\(provider.id) quote=\(type(of: quote)) broadcaster=\(type(of: broadcaster)) executable=\(type(of: executable))")
         let prepared = try await broadcaster.prepare(executable)
 
         return SendData(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote, prepared: prepared, broadcaster: broadcaster, otherSections: otherSections)

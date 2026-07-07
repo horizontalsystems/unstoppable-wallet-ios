@@ -1,8 +1,8 @@
 import Foundation
 import MarketKit
 
-class MultiSwapHelpers {
-    static func estimate(tokenIn: Token, tokenOut: Token) -> TimeInterval? {
+public class MultiSwapHelpers {
+    public static func estimate(tokenIn: Token, tokenOut: Token) -> TimeInterval? {
         if tokenIn.blockchainType == tokenOut.blockchainType {
             return tokenIn.blockchainType.blockTime
         }

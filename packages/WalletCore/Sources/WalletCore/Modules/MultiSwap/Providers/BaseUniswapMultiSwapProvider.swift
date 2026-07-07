@@ -4,16 +4,16 @@ import MarketKit
 import SwiftUI
 import UniswapKit
 
-class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
+public class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
     let marketKit = Core.shared.marketKit
     let evmSyncSourceManager = Core.shared.evmSyncSourceManager
     let evmFeeEstimator = EvmFeeEstimator()
 
-    override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> MultiSwapQuote {
+    override public func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> MultiSwapQuote {
         try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: MultiSwapSlippage.default)
     }
 
-    override func confirmationQuote(multiSwapQuote _: MultiSwapQuote, tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote {
+    override public func confirmationQuote(multiSwapQuote _: MultiSwapQuote, tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote {
         let quote = try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient)
 
         let blockchainType = tokenIn.blockchainType
@@ -40,7 +40,6 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
 
         // router-approve intent for the AA broadcaster (ignored by the EOA direct broadcaster)
         let spender = try? spenderAddress(chain: evmKit.chain)
-        NSLog("[AASWAP] BaseUniswap confirmationQuote: spender=\(spender?.eip55 ?? "nil") tokenIn.type=\(tokenIn.type) txData=\(txData != nil)")
         let approval = spender.flatMap { SwapApproval.build(spender: $0, tokenIn: tokenIn, amountIn: amountIn) }
 
         return EvmSwapFinalQuote(

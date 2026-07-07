@@ -1,7 +1,7 @@
 import Foundation
 import GRDB
 
-class SwapAssetStorage {
+public class SwapAssetStorage {
     private let dbPool: DatabasePool
 
     init(dbPool: DatabasePool) {
@@ -9,7 +9,7 @@ class SwapAssetStorage {
     }
 }
 
-extension SwapAssetStorage {
+public extension SwapAssetStorage {
     func swapAssetMap<T: Decodable>(provider: String, as type: T.Type) throws -> [String: T] {
         let swapAssets: [SwapAsset] = try dbPool.read { db in
             try SwapAsset.filter(SwapAsset.Columns.provider == provider).fetchAll(db)

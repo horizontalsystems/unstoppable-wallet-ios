@@ -2,7 +2,7 @@ import EvmKit
 import Foundation
 import MarketKit
 
-class EvmSwapFinalQuote: SwapFinalQuote {
+public class EvmSwapFinalQuote: SwapFinalQuote {
     let transactionData: TransactionData?
     let gasPrice: GasPrice?
     let evmFeeData: EvmFeeData?
@@ -10,7 +10,7 @@ class EvmSwapFinalQuote: SwapFinalQuote {
     let mevProtectionAllowed: Bool
     let approval: SwapApproval?
 
-    init(
+    public init(
         expectedBuyAmount: Decimal,
         transactionData: TransactionData?,
         transactionError: Error? = nil,
