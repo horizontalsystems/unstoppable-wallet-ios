@@ -7,9 +7,9 @@ import MarketKit
 import OneInchKit
 import SwiftUI
 
-class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
-    static let id = "ONEINCH"
-    static let name = "1Inch"
+public class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
+    public static let id = "ONEINCH"
+    public static let name = "1Inch"
 
     private let networkManager = Core.shared.networkManager
 //    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
@@ -20,18 +20,22 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     private let commission: Decimal? = AppConfig.oneInchCommission
     private let commissionAddress: String? = AppConfig.oneInchCommissionAddress
 
-    init(kit: OneInchKit.Kit) {
+    public init(kit: OneInchKit.Kit) {
         self.kit = kit
 
         super.init()
     }
 
-    override var id: String { Self.id }
-    override var name: String { Self.name }
-    override var type: SwapProviderType { .excellent }
-    override var icon: String { "swap_provider_1inch" }
+    public convenience init(apiKey: String) {
+        self.init(kit: OneInchKit.Kit.instance(apiKey: apiKey))
+    }
 
-    override func supports(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Bool {
+    override public var id: String { Self.id }
+    override public var name: String { Self.name }
+    override public var type: SwapProviderType { .excellent }
+    override public var icon: String { "swap_provider_1inch" }
+
+    override public func supports(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Bool {
         guard tokenIn.blockchainType == tokenOut.blockchainType else {
             return false
         }
@@ -42,7 +46,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         }
     }
 
-    override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> MultiSwapQuote {
+    override public func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> MultiSwapQuote {
         let blockchainType = tokenIn.blockchainType
         let chain = try evmBlockchainManager.chain(blockchainType: blockchainType)
 
@@ -69,7 +73,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         )
     }
 
-    override func confirmationQuote(multiSwapQuote _: MultiSwapQuote, tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote {
+    override public func confirmationQuote(multiSwapQuote _: MultiSwapQuote, tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote {
         let blockchainType = tokenIn.blockchainType
 
         guard let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
@@ -117,7 +121,6 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
 
         // router-approve intent for the AA broadcaster (ignored by the EOA direct broadcaster)
         let spender = try? spenderAddress(chain: evmKit.chain)
-        NSLog("[AASWAP] OneInch confirmationQuote: spender=\(spender?.eip55 ?? "nil") tokenIn.type=\(tokenIn.type)")
         let approval = spender.flatMap { SwapApproval.build(spender: $0, tokenIn: tokenIn, amountIn: amountIn) }
 
         return EvmSwapFinalQuote(
@@ -136,7 +139,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         )
     }
 
-    override func track(swap: Swap) async throws -> Swap {
+    override public func track(swap: Swap) async throws -> Swap {
         let blockchainType = swap.tokenIn.blockchainType
 
         var parameters: Parameters = try [

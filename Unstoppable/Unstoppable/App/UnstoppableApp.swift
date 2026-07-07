@@ -36,6 +36,8 @@ struct UnstoppableApp: App {
     }
 
     private static func initCore() throws {
+        SwapProviderFactory.register([DefaultSwapProviderResolver.self])
+
         try Core.initApp(config: Core.Config(), widgetRefresher: WidgetRefresher())
 
         EvmKitConfigFactory.register(UnstoppableEvmKitConfigProvider.self)

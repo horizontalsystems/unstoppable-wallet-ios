@@ -4,11 +4,11 @@ import Foundation
 import MarketKit
 import UniswapKit
 
-class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
+public class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
     private let networkManager = Core.shared.networkManager
     private let kit: UniswapKit.KitV3
 
-    init(kit: UniswapKit.KitV3) {
+    public init(kit: UniswapKit.KitV3) {
         self.kit = kit
 
         super.init()
@@ -39,7 +39,7 @@ class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
         return try kit.transactionData(receiveAddress: receiveAddress, chain: chain, bestTrade: bestTrade, tradeOptions: tradeOptions)
     }
 
-    override func track(swap: Swap) async throws -> Swap {
+    override public func track(swap: Swap) async throws -> Swap {
         let blockchainType = swap.tokenIn.blockchainType
 
         var parameters: Parameters = [

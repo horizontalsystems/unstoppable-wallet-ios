@@ -141,7 +141,7 @@ public class Core {
 
     let valueFormatter: CurrencyValueFormatter
 
-    let swapAssetStorage: SwapAssetStorage
+    public let swapAssetStorage: SwapAssetStorage
     let swapProviderManager: MultiSwapProviderManager
     let swapProviderInfoManager: SwapProviderInfoManager
     public let swapHistoryManager: SwapHistoryManager

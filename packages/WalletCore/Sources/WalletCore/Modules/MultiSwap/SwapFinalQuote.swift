@@ -11,7 +11,7 @@ public class SwapFinalQuote {
     let toAddress: String
     let depositAddress: String?
     let providerSwapId: String?
-    var refundAddress: String?
+    public var refundAddress: String?
 
     public init(
         expectedBuyAmount: Decimal,
