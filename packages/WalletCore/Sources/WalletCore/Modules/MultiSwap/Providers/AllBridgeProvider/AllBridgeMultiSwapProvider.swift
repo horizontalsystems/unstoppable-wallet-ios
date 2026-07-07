@@ -360,7 +360,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 }
             }
 
-            // router-approve intent for the AA broadcaster: the bridge router pulls eip20 via transferFrom
+            // router-approve intent: the bridge router pulls eip20 via transferFrom
             let approval = (try? EvmKit.Address(hex: router)).flatMap { SwapApproval.build(spender: $0, tokenIn: tokenIn, amountIn: amountIn) }
 
             return EvmSwapFinalQuote(

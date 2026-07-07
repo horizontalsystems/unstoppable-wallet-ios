@@ -119,7 +119,7 @@ public class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             predefinedGasLimit: swap.transaction.gasLimit
         )
 
-        // router-approve intent for the AA broadcaster (ignored by the EOA direct broadcaster)
+        // router-approve intent for broadcasters that submit approvals with the swap
         let spender = try? spenderAddress(chain: evmKit.chain)
         let approval = spender.flatMap { SwapApproval.build(spender: $0, tokenIn: tokenIn, amountIn: amountIn) }
 

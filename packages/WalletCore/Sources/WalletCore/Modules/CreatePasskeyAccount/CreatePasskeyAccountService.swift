@@ -4,7 +4,7 @@ import MarketKit
 
 // Credential material handed to a provisioner: a fresh registration's attestation (which carries the
 // credential's public key) on create, or nothing on restore (the provisioner recovers the public key
-// out-of-band). Neutral WebAuthn/account-creation type — no AA specifics.
+// out-of-band). Neutral WebAuthn/account-creation type.
 public enum ProvisioningCredentials {
     case create(attestation: Data)
     case restore

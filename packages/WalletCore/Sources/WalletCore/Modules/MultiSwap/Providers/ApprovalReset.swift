@@ -1,8 +1,7 @@
 import MarketKit
 
 // Tokens that revert on a non-zero -> non-zero approve (canonical USDT): such an approve must be
-// preceded by an approve(0). Pure domain rule, shared by the EOA pre-swap flow (MultiSwapAllowanceHelper)
-// and the AA swap broadcaster.
+// preceded by an approve(0). Pure domain rule, shared by swap flows that build approvals.
 public enum ApprovalReset {
     private static let addressesForRevoke: [BlockchainType: String] = [
         .ethereum: "0xdac17f958d2ee523a2206206994597c13d831ec7",

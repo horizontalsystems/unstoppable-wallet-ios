@@ -29,8 +29,7 @@ public struct SwapApproval {
 }
 
 public extension SwapApproval {
-    // eip20 router-approve intent for the exact swap input; nil for a native tokenIn (no approve needed,
-    // and not AA-eligible since the paymaster fee token must be an eip20).
+    // eip20 router-approve intent for the exact swap input; nil for a native tokenIn (no approve needed).
     static func build(spender: EvmKit.Address, tokenIn: Token, amountIn: Decimal) -> SwapApproval? {
         guard case let .eip20(tokenAddress) = tokenIn.type else {
             return nil
