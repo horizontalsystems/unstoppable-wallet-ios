@@ -1,7 +1,7 @@
 import Foundation
 import MarketKit
 
-open class TransactionRecord {
+open class TransactionRecord: Identifiable {
     public let source: TransactionSource
     public let uid: String
     public let transactionHash: String
@@ -52,10 +52,8 @@ open class TransactionRecord {
     open var mainValue: AppValue? {
         nil
     }
-}
 
-extension TransactionRecord: Identifiable {
-    public var id: String {
+    open var id: String {
         uid
     }
 }
@@ -76,7 +74,11 @@ extension TransactionRecord: Comparable {
             return lhs.transactionIndex > rhs.transactionIndex
         }
 
-        return lhs.paginationRaw > rhs.paginationRaw
+        guard lhs.paginationRaw == rhs.paginationRaw else {
+            return lhs.paginationRaw > rhs.paginationRaw
+        }
+
+        return lhs.id > rhs.id
     }
 
     public static func == (lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
