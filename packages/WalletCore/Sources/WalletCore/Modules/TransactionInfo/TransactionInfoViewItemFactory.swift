@@ -745,6 +745,41 @@ class TransactionInfoViewItemFactory {
                 feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(appValue: fee, rate: _rate(fee.coin)))
             }
 
+        case let record as SolanaSwapTransactionRecord:
+            var amountViewItems = [TransactionInfoModule.ViewItem]()
+
+            if let valueIn = record.valueIn {
+                amountViewItems.append(amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(appValue: valueIn), appValue: valueIn, rate: _rate(valueIn.coin), type: type(appValue: valueIn, .outgoing), balanceHidden: balanceHidden))
+            }
+
+            if let valueOut = record.valueOut {
+                amountViewItems.append(amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(appValue: valueOut), appValue: valueOut, rate: _rate(valueOut.coin), type: type(appValue: valueOut, .incoming), balanceHidden: balanceHidden))
+            }
+
+            if !amountViewItems.isEmpty {
+                sections.append(.init(amountViewItems))
+            }
+
+            var serviceViewItems: [TransactionInfoModule.ViewItem] = [
+                .service(value: record.exchangeName),
+            ]
+
+            if let valueIn = record.valueIn, let valueOut = record.valueOut {
+                switch status {
+                case .pending, .processing, .completed:
+                    if let priceString = priceString(valueIn: valueIn, valueOut: valueOut, coinPriceIn: _rate(valueIn.coin)) {
+                        serviceViewItems.append(.price(price: priceString))
+                    }
+                default: ()
+                }
+            }
+
+            sections.append(.init(serviceViewItems))
+
+            if let fee = record.fee {
+                feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(appValue: fee, rate: _rate(fee.coin)))
+            }
+
         case let record as SolanaUnknownTransactionRecord:
             for transfer in record.outgoingTransfers {
                 sections.append(.init(sendSection(source: record.source, appValue: transfer.value, to: transfer.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))

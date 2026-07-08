@@ -53,7 +53,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         self.provider = provider
         headers = Self.headers
 
-        if !provider.isEvm {
+        if provider.usesAssetMap {
             assetMap = (try? swapAssetStorage.swapAssetMap(provider: id, as: String.self)) ?? [:]
             syncAssets()
         }
@@ -439,13 +439,31 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     }
 
     private func asset(token: Token) -> String? {
-        if provider.isEvm {
+        switch provider {
+        case .barter:
+            // Raw EVM address encoding (BARTER's server adapter expects addresses, not identifiers).
             switch token.type {
             case .native: return "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
             case let .eip20(address): return address
             default: return nil
             }
-        } else {
+        case .jupiter:
+            // Solana-only: raw SPL mint encoding, case-sensitive base58 — pass verbatim, never
+            // re-cased. The wSOL mint means native SOL server-side. The .solana guard also makes
+            // `supports()` reject non-Solana pairs (`.native` alone would match any chain).
+            guard token.blockchainType == .solana else { return nil }
+            let wsolMint = "So11111111111111111111111111111111111111112"
+            switch token.type {
+            case .native: return wsolMint
+            case let .spl(address):
+                // The wSOL TOKEN is not swappable here: the server reads the wSOL mint as native
+                // SOL, so SOL→wSOL degenerates to "same asset" (wrapping is not a swap) and
+                // X→wSOL would deliver native SOL while the user watches the wSOL token balance.
+                guard address != wsolMint else { return nil }
+                return address
+            default: return nil
+            }
+        default:
             return assetMap[token.tokenQuery.id.lowercased()]
         }
     }
@@ -1594,6 +1612,7 @@ public enum USwapProvider: String, CaseIterable {
     case barter = "BARTER"
     case pegasus = "PEGASUS"
     case circle = "CIRCLE"
+    case jupiter = "JUPITER"
 
     public var icon: String {
         switch self {
@@ -1607,6 +1626,7 @@ public enum USwapProvider: String, CaseIterable {
         case .barter: return "swap_provider_barter"
         case .pegasus: return "swap_provider_pegasus"
         case .circle: return "swap_provider_circle"
+        case .jupiter: return "swap_provider_jupiter"
         }
     }
 
@@ -1622,12 +1642,13 @@ public enum USwapProvider: String, CaseIterable {
         case .barter: return "Barter"
         case .pegasus: return "PegasusSwap"
         case .circle: return "Circle CCTP"
+        case .jupiter: return "Jupiter"
         }
     }
 
     public var type: SwapProviderType {
         switch self {
-        case .barter, .circle: return .excellent
+        case .barter, .circle, .jupiter: return .excellent
         case .quickEx, .exolix, .swapuz, .letsExchange, .cce, .pegasus: return .good
         case .stealthex, .near: return .fair
         }
@@ -1641,6 +1662,16 @@ public enum USwapProvider: String, CaseIterable {
         switch self {
         case .barter: return true
         default: return false
+        }
+    }
+
+    // Providers that sync no token list from the server — assets are encoded as raw
+    // chain addresses in `asset(token:)` instead of resolved through the asset map
+    // (BARTER: EIP-20 address; JUPITER: SPL mint).
+    public var usesAssetMap: Bool {
+        switch self {
+        case .barter, .jupiter: return false
+        default: return true
         }
     }
 
