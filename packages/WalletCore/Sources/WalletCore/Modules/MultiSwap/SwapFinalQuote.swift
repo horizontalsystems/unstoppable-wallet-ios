@@ -5,7 +5,7 @@ public class SwapFinalQuote {
     private let expectedBuyAmount: Decimal
     private let slippage: Decimal?
     public let recipient: String?
-    private let estimatedTime: TimeInterval?
+    public let estimatedTime: TimeInterval?
     private let transactionError: Error?
 
     public let toAddress: String

@@ -72,7 +72,7 @@ public class SwapHistoryManager {
     }
 }
 
-extension SwapHistoryManager {
+public extension SwapHistoryManager {
     var swapUpdatePublisher: AnyPublisher<Swap, Never> {
         swapUpdateSubject.eraseToAnyPublisher()
     }
@@ -97,7 +97,7 @@ extension SwapHistoryManager {
         }
     }
 
-    func lastSwap(accountId: String) -> Swap? {
+    internal func lastSwap(accountId: String) -> Swap? {
         try? storage.lastSwap(accountId: accountId)
     }
 
@@ -109,7 +109,7 @@ extension SwapHistoryManager {
         }
     }
 
-    public func save(swap: Swap) {
+    func save(swap: Swap) {
         do {
             try storage.save(swap: swap)
             sync()
@@ -120,7 +120,7 @@ extension SwapHistoryManager {
 
     // mechanism-agnostic hook: attaches the on-chain txHash to the swap saved with
     // this trackingHandle and starts tracking it
-    public func resolve(trackingHandle: String, txHash: String) {
+    func resolve(trackingHandle: String, txHash: String) {
         do {
             guard try storage.setTxHash(txHash, trackingHandle: trackingHandle) else {
                 return
@@ -132,7 +132,7 @@ extension SwapHistoryManager {
         }
     }
 
-    static func isAwaitingTxHash(_ swap: Swap) -> Bool {
+    internal static func isAwaitingTxHash(_ swap: Swap) -> Bool {
         swap.trackingHandle != nil && swap.txHash == nil
     }
 }

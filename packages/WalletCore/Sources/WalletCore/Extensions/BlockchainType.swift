@@ -157,7 +157,7 @@ extension BlockchainType {
         }
     }
 
-    var isEvm: Bool {
+    public var isEvm: Bool {
         switch self {
         case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum, .fantom, .gnosis, .optimism, .polygon, .zkSync: return true
         default: return false

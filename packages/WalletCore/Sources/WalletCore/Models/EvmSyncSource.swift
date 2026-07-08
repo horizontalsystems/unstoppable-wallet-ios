@@ -4,7 +4,7 @@ import Foundation
 public class EvmSyncSource: Identifiable {
     let name: String
     public let rpcSource: RpcSource
-    let transactionSource: EvmKit.TransactionSource
+    public let transactionSource: EvmKit.TransactionSource
 
     init(name: String, rpcSource: RpcSource, transactionSource: EvmKit.TransactionSource) {
         self.name = name
