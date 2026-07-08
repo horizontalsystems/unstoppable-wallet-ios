@@ -591,7 +591,7 @@ public extension MultiSwapViewModel {
 
         enteringFiat = false
 
-        amountIn = (availableBalance * Decimal(percent) / 100).rounded(decimal: customDecimals ?? tokenIn.decimals)
+        amountIn = (availableBalance * Decimal(percent) / 100).roundedDown(decimal: customDecimals ?? tokenIn.decimals)
     }
 
     func clearAmountIn() {

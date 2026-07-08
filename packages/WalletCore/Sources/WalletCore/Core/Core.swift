@@ -33,7 +33,7 @@ public class Core {
 
     public let coverManager: CoverManager
     let pasteboardManager: PasteboardManager
-    let reachabilityManager: ReachabilityManager
+    public let reachabilityManager: ReachabilityManager
     let appIconManager: AppIconManager
     let biometryManager: BiometryManager
     let passcodeManager: PasscodeManager
@@ -143,7 +143,7 @@ public class Core {
 
     public let swapAssetStorage: SwapAssetStorage
     let swapProviderManager: MultiSwapProviderManager
-    let swapProviderInfoManager: SwapProviderInfoManager
+    public let swapProviderInfoManager: SwapProviderInfoManager
     public let swapHistoryManager: SwapHistoryManager
 
     public let createPasskeyAccountService: CreatePasskeyAccountService

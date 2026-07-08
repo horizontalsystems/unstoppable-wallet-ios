@@ -4,28 +4,28 @@ import MarketKit
 import SwiftUI
 
 public struct Swap: Hashable {
-    let uid: String
+    public let uid: String
     public let txHash: String?
     // opaque mechanism handle (set by the broadcaster) used by resolve() to attach
     // the on-chain txHash later; nil for directly-broadcast swaps
     let trackingHandle: String?
     let accountId: String
-    let providerId: String
-    var status: Status
-    let tokenIn: Token
-    let tokenOut: Token
-    let amountIn: Decimal
-    var amountOut: Decimal
-    let recipient: String?
+    public let providerId: String
+    public var status: Status
+    public let tokenIn: Token
+    public let tokenOut: Token
+    public let amountIn: Decimal
+    public var amountOut: Decimal
+    public let recipient: String?
     let toAddress: String
     let depositAddress: String?
     public let providerSwapId: String?
     let sourceAddress: String?
     let refundAddress: String?
-    let date: Date
-    var fromAsset: String?
-    var toAsset: String?
-    var legs: [Leg]?
+    public let date: Date
+    public var fromAsset: String?
+    public var toAsset: String?
+    public var legs: [Leg]?
     var pauseReason: String?
 
     var isPending: Bool {
@@ -74,7 +74,7 @@ public struct Swap: Hashable {
             "swap_info.status.\(rawValue)".localized
         }
 
-        var isExpected: Bool {
+        public var isExpected: Bool {
             switch self {
             case .notStarted, .pending, .swapping, .completed: true
             default: false
@@ -97,12 +97,12 @@ public struct Swap: Hashable {
 
 public extension Swap {
     struct Leg: Hashable {
-        let status: Status
-        let type: String
-        let chainId: String
-        let txHash: String
-        let fromAsset: String
-        let toAsset: String
+        public let status: Status
+        public let type: String
+        public let chainId: String
+        public let txHash: String
+        public let fromAsset: String
+        public let toAsset: String
     }
 }
 
