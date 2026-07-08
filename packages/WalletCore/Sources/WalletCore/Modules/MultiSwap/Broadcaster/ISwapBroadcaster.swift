@@ -34,23 +34,6 @@ public protocol ISwapBroadcasterType {
     static func make(blockchainType: BlockchainType, account: Account) -> ISwapBroadcaster?
 }
 
-// A self-rendering prepared owns the payment view wholesale: fee, canSend, fee rows AND validity
-// cautions (the quote's transactionError cautions describe the native path it does not use).
-// CONTRACT: since the quote's cautions are fully replaced, a conformer MUST re-validate the swap
-// input itself (canSend and/or cautions) — e.g. a balance/reserve check in the fee token.
-public protocol IPreparedDisplay: IPrepared {
-    var canSend: Bool { get }
-    var extraRateCoins: [Coin] { get }
-    func feeSections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection]
-    func cautions(baseToken: Token) -> [CautionNew]
-}
-
-public extension IPreparedDisplay {
-    func cautions(baseToken _: Token) -> [CautionNew] {
-        []
-    }
-}
-
 // extensible: downstream apps add errors via `extension SwapBroadcasterError { static var ... }`
 public struct SwapBroadcasterError: Error, Equatable, RawRepresentable {
     public let rawValue: String

@@ -1,7 +1,7 @@
 import MarketKit
 import SwiftUI
 
-struct MultiSwapSlippageView: View {
+public struct MultiSwapSlippageView: View {
     @StateObject var viewModel: MultiSwapSlippageViewModel
     @Environment(\.presentationMode) private var presentationMode
 
@@ -9,12 +9,12 @@ struct MultiSwapSlippageView: View {
 
     @FocusState private var isFocused: Bool
 
-    init(slippage: Decimal, onChange: @escaping (Decimal) -> Void) {
+    public init(slippage: Decimal, onChange: @escaping (Decimal) -> Void) {
         _viewModel = .init(wrappedValue: MultiSwapSlippageViewModel(initialSlippage: slippage))
         self.onChange = onChange
     }
 
-    var body: some View {
+    public var body: some View {
         ThemeNavigationStack {
             ThemeView {
                 BottomGradientWrapper {

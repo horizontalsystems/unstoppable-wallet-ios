@@ -49,11 +49,11 @@ public class EvmSwapFinalQuote: SwapFinalQuote {
         evmFeeData.map { .evm(evmFeeData: $0) }
     }
 
-    override var canSwap: Bool {
+    override public var canSwap: Bool {
         super.canSwap && gasPrice != nil && evmFeeData != nil && transactionData != nil
     }
 
-    override func executable(tokenIn: Token) -> ISwapExecutable {
+    override public func executable(tokenIn: Token) -> ISwapExecutable {
         EvmExecutable(
             token: tokenIn,
             transactionData: transactionData,
@@ -69,7 +69,7 @@ public class EvmSwapFinalQuote: SwapFinalQuote {
         EvmSendHelper.caution(transactionError: transactionError, feeToken: baseToken)
     }
 
-    override func fields(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
+    override public func fields(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
         var fields = super.fields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
 
         if let nonce {

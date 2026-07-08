@@ -109,7 +109,7 @@ extension SwapHistoryManager {
         }
     }
 
-    func save(swap: Swap) {
+    public func save(swap: Swap) {
         do {
             try storage.save(swap: swap)
             sync()

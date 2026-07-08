@@ -195,18 +195,16 @@ extension MultiSwapSendHandler {
             self.otherSections = otherSections
         }
 
-        // fee and canSend are type-selected: a prepared that renders itself (IPreparedDisplay)
-        // is the source of truth; DirectPrepared keeps the quote-based behaviour
         var feeData: FeeData? {
-            prepared is IPreparedDisplay ? nil : quote.feeData
+            quote.feeData
         }
 
         var canSend: Bool {
-            (prepared as? IPreparedDisplay)?.canSend ?? quote.canSwap
+            quote.canSwap
         }
 
         var rateCoins: [Coin] {
-            [tokenIn.coin, tokenOut.coin] + ((prepared as? IPreparedDisplay)?.extraRateCoins ?? [])
+            [tokenIn.coin, tokenOut.coin]
         }
 
         var customSendButtonTitle: String? {
@@ -214,14 +212,7 @@ extension MultiSwapSendHandler {
         }
 
         func cautions(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [CautionNew] {
-            // a self-rendering prepared owns the payment view including its validity cautions; the quote's
-            // transactionError cautions describe the native path it does not use. price-impact cautions
-            // are swap-level and shared by both paths
-            if let display = prepared as? IPreparedDisplay {
-                return display.cautions(baseToken: baseToken) + priceImpactCautions(baseToken: baseToken, currency: currency, rates: rates)
-            }
-
-            return quote.cautions(baseToken: baseToken) + priceImpactCautions(baseToken: baseToken, currency: currency, rates: rates)
+            quote.cautions(baseToken: baseToken) + priceImpactCautions(baseToken: baseToken, currency: currency, rates: rates)
         }
 
         private func priceImpact(baseToken _: Token, currency _: Currency, rates: [String: Decimal]) -> Decimal? {
@@ -307,15 +298,6 @@ extension MultiSwapSendHandler {
                 tokenOutRate: rates[tokenOut.coin.uid],
                 baseTokenRate: rates[baseToken.coin.uid]
             ))
-
-            // a self-rendering prepared (IPreparedDisplay) supplies its own fee sections;
-            // the quote's fee rows are shown only on the direct path
-            if let display = prepared as? IPreparedDisplay {
-                return [
-                    flowSection(baseToken: baseToken, currency: currency, rates: rates),
-                    .init(fields, isMain: false),
-                ] + display.feeSections(baseToken: baseToken, currency: currency, rates: rates) + otherSections
-            }
 
             fields.append(contentsOf: quote.feeFields(baseToken: baseToken, currency: currency, baseTokenRate: rates[baseToken.coin.uid]))
 

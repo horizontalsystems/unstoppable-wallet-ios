@@ -94,7 +94,7 @@ extension WalletManager {
         reloadWallets()
     }
 
-    func save(wallets: [Wallet]) {
+    public func save(wallets: [Wallet]) {
         handle(newWallets: wallets, deletedWallets: [])
     }
 
