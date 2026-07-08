@@ -46,8 +46,9 @@ public extension SwapApproval {
 }
 
 public struct TronExecutable: ISwapExecutable {
-    public let created: CreatedTransactionResponse
+    public let created: CreatedTransactionResponse?
     public let transferIntent: TronTransferIntent?
+    public let token: Token
 }
 
 // plain p2p transfer description for routes that are a single token transfer;
@@ -56,6 +57,12 @@ public struct TronTransferIntent {
     public let token: TronKit.Address
     public let receiver: TronKit.Address
     public let value: BigUInt
+
+    public init(token: TronKit.Address, receiver: TronKit.Address, value: BigUInt) {
+        self.token = token
+        self.receiver = receiver
+        self.value = value
+    }
 }
 
 public struct UtxoExecutable: ISwapExecutable {

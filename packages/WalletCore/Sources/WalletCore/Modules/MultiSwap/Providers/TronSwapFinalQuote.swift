@@ -4,19 +4,19 @@ import Foundation
 import MarketKit
 import TronKit
 
-class TronSwapFinalQuote: SwapFinalQuote {
+public class TronSwapFinalQuote: SwapFinalQuote {
     private let amountIn: Decimal
-    let createdTransaction: CreatedTransactionResponse
+    let createdTransaction: CreatedTransactionResponse?
     let transferIntent: TronTransferIntent?
     private let fees: [Fee]
 
-    init(
+    public init(
         amountIn: Decimal,
         expectedAmountOut: Decimal,
         recipient: String?,
         slippage: Decimal?,
         estimatedTime: TimeInterval? = nil,
-        createdTransaction: CreatedTransactionResponse,
+        createdTransaction: CreatedTransactionResponse?,
         transferIntent: TronTransferIntent? = nil,
         fees: [Fee],
         transactionError: Error?,
@@ -45,8 +45,12 @@ class TronSwapFinalQuote: SwapFinalQuote {
         .tron(fees: fees)
     }
 
-    override func executable(tokenIn _: Token) -> ISwapExecutable {
-        TronExecutable(created: createdTransaction, transferIntent: transferIntent)
+    override public var canSwap: Bool {
+        super.canSwap && createdTransaction != nil
+    }
+
+    override public func executable(tokenIn: Token) -> ISwapExecutable {
+        TronExecutable(created: createdTransaction, transferIntent: transferIntent, token: tokenIn)
     }
 
     override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {

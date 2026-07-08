@@ -37,7 +37,7 @@ let package = Package(
         .package(url: "https://github.com/horizontalsystems/MoneroKit.Swift", exact: "0.2.9"),
         .package(url: "https://github.com/horizontalsystems/NftKit.Swift", exact: "2.0.2"),
         .package(url: "https://github.com/tristanhimmelman/ObjectMapper", exact: "4.2.0"),
-        .package(url: "https://github.com/horizontalsystems/OneInchKit.Swift", exact: "3.0.4"),
+        .package(url: "https://github.com/horizontalsystems/OneInchKit.Swift", exact: "3.1.0"),
         .package(url: "https://github.com/reown-com/reown-swift", exact: "2.0.0"),
         .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "5.1.3"),
         .package(url: "https://github.com/horizontalsystems/SectionsTableView.Swift", exact: "1.0.0"),

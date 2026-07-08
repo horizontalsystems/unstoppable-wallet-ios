@@ -19,15 +19,19 @@ public class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     private let evmFeeEstimator = EvmFeeEstimator()
     private let commission: Decimal? = AppConfig.oneInchCommission
     private let commissionAddress: String? = AppConfig.oneInchCommissionAddress
+    // when true, 1inch skips its own on-chain allowance/balance simulation and returns the swap tx
+    // regardless — the caller validates itself; nil omits the query param entirely (1inch default)
+    private let disableEstimate: Bool?
 
-    public init(kit: OneInchKit.Kit) {
+    public init(kit: OneInchKit.Kit, disableEstimate: Bool? = nil) {
         self.kit = kit
+        self.disableEstimate = disableEstimate
 
         super.init()
     }
 
-    public convenience init(apiKey: String) {
-        self.init(kit: OneInchKit.Kit.instance(apiKey: apiKey))
+    public convenience init(apiKey: String, disableEstimate: Bool? = nil) {
+        self.init(kit: OneInchKit.Kit.instance(apiKey: apiKey), disableEstimate: disableEstimate)
     }
 
     override public var id: String { Self.id }
@@ -103,7 +107,8 @@ public class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             referrer: commissionAddress,
             fee: commission,
             recipient: recipientAddress,
-            gasPrice: gasPriceData.userDefined
+            gasPrice: gasPriceData.userDefined,
+            disableEstimate: disableEstimate
         )
 
         let evmBalance = evmKit.accountState?.balance ?? 0
