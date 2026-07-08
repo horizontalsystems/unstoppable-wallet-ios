@@ -442,6 +442,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         switch provider {
         case .barter:
             // Raw EVM address encoding (BARTER's server adapter expects addresses, not identifiers).
+            guard token.blockchainType.isEvm else { return nil }
             switch token.type {
             case .native: return "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
             case let .eip20(address): return address
