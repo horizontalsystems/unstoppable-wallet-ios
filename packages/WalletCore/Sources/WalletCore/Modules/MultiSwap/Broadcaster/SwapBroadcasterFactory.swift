@@ -11,7 +11,7 @@ public enum SwapBroadcasterFactory {
         types.insert(type, at: 0)
     }
 
-    static func broadcaster(blockchainType: BlockchainType, account: Account) throws -> ISwapBroadcaster {
+    public static func broadcaster(blockchainType: BlockchainType, account: Account) throws -> ISwapBroadcaster {
         for type in types {
             if let broadcaster = type.make(blockchainType: blockchainType, account: account) {
                 return broadcaster

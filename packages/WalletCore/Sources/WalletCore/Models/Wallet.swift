@@ -4,7 +4,7 @@ public struct Wallet {
     public let token: Token
     public let account: Account
 
-    init(token: Token, account: Account) {
+    public init(token: Token, account: Account) {
         self.token = token
         self.account = account
     }

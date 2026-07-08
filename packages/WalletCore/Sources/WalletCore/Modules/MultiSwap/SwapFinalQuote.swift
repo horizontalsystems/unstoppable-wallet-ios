@@ -4,13 +4,13 @@ import MarketKit
 public class SwapFinalQuote {
     private let expectedBuyAmount: Decimal
     private let slippage: Decimal?
-    let recipient: String?
+    public let recipient: String?
     private let estimatedTime: TimeInterval?
     private let transactionError: Error?
 
-    let toAddress: String
-    let depositAddress: String?
-    let providerSwapId: String?
+    public let toAddress: String
+    public let depositAddress: String?
+    public let providerSwapId: String?
     public var refundAddress: String?
 
     public init(
@@ -35,7 +35,7 @@ public class SwapFinalQuote {
         self.refundAddress = refundAddress
     }
 
-    var amountOut: Decimal {
+    public var amountOut: Decimal {
         expectedBuyAmount
     }
 
@@ -43,11 +43,11 @@ public class SwapFinalQuote {
         nil
     }
 
-    var canSwap: Bool {
+    public var canSwap: Bool {
         transactionError == nil
     }
 
-    func executable(tokenIn _: Token) -> ISwapExecutable {
+    public func executable(tokenIn _: Token) -> ISwapExecutable {
         UnsupportedExecutable()
     }
 
@@ -69,7 +69,7 @@ public class SwapFinalQuote {
         nil
     }
 
-    func fields(tokenIn _: Token, tokenOut: Token, baseToken _: Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate _: Decimal?) -> [SendField] {
+    public func fields(tokenIn _: Token, tokenOut: Token, baseToken _: Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate _: Decimal?) -> [SendField] {
         var fields = [SendField]()
 
         if let slippage {

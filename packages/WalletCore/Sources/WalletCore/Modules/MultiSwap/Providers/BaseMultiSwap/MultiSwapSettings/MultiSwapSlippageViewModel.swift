@@ -65,8 +65,8 @@ extension MultiSwapSlippageViewModel {
     }
 }
 
-enum MultiSwapSlippage {
-    static let `default`: Decimal = 1
+public enum MultiSwapSlippage {
+    public static let `default`: Decimal = 1
     static var limitBounds: ClosedRange<Decimal> { 0.01 ... 50 }
     static let usualHighest: Decimal = 5
 

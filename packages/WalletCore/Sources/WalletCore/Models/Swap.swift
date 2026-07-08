@@ -36,7 +36,31 @@ public struct Swap: Hashable {
         [.notStarted, .pending, .swapping, .unknown, .actionRequired]
     }
 
-    enum Status: String {
+    public init(uid: String, txHash: String?, trackingHandle: String?, accountId: String, providerId: String, status: Status, tokenIn: Token, tokenOut: Token, amountIn: Decimal, amountOut: Decimal, recipient: String?, toAddress: String, depositAddress: String?, providerSwapId: String?, sourceAddress: String?, refundAddress: String?, date: Date, fromAsset: String? = nil, toAsset: String? = nil, legs: [Leg]? = nil, pauseReason: String? = nil) {
+        self.uid = uid
+        self.txHash = txHash
+        self.trackingHandle = trackingHandle
+        self.accountId = accountId
+        self.providerId = providerId
+        self.status = status
+        self.tokenIn = tokenIn
+        self.tokenOut = tokenOut
+        self.amountIn = amountIn
+        self.amountOut = amountOut
+        self.recipient = recipient
+        self.toAddress = toAddress
+        self.depositAddress = depositAddress
+        self.providerSwapId = providerSwapId
+        self.sourceAddress = sourceAddress
+        self.refundAddress = refundAddress
+        self.date = date
+        self.fromAsset = fromAsset
+        self.toAsset = toAsset
+        self.legs = legs
+        self.pauseReason = pauseReason
+    }
+
+    public enum Status: String {
         case notStarted = "not_started"
         case pending
         case swapping
@@ -71,7 +95,7 @@ public struct Swap: Hashable {
     }
 }
 
-extension Swap {
+public extension Swap {
     struct Leg: Hashable {
         let status: Status
         let type: String
