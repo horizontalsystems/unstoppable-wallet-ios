@@ -84,3 +84,25 @@ class SolanaUnknownTransactionRecord: SolanaTransactionRecord {
         super.init(transaction: transaction, baseToken: baseToken, source: source)
     }
 }
+
+// A DEX swap detected via the transaction's recognized program ids (SolanaKit `KnownPrograms`,
+// e.g. Jupiter) — the Solana counterpart of the EVM `SwapTransactionRecord`. `valueIn` (paid) /
+// `valueOut` (received) are nil while the transaction is still pending: the kit's pending record
+// carries no balance changes yet, but the program id is known at send time, so the row can already
+// render as "Swapped / <exchange>" instead of an unknown transaction.
+class SolanaSwapTransactionRecord: SolanaTransactionRecord {
+    let exchangeName: String
+    let valueIn: AppValue?
+    let valueOut: AppValue?
+
+    init(transaction: SolanaKit.Transaction, baseToken: Token, source: TransactionSource, exchangeName: String, valueIn: AppValue?, valueOut: AppValue?) {
+        self.exchangeName = exchangeName
+        self.valueIn = valueIn
+        self.valueOut = valueOut
+        super.init(transaction: transaction, baseToken: baseToken, source: source)
+    }
+
+    override var mainValue: AppValue? {
+        valueOut
+    }
+}

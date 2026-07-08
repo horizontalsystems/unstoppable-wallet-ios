@@ -624,6 +624,18 @@ class TransactionsViewItemFactory {
 
             sentToSelf = record.sentToSelf
 
+        case let record as SolanaSwapTransactionRecord:
+            iconType = doubleValueIconType(source: record.source, primaryValue: record.valueOut, secondaryValue: record.valueIn)
+            title = "transactions.swap".localized
+            subTitle = record.exchangeName
+
+            if let valueOut = record.valueOut {
+                primaryValue = TransactionsViewModel.Value(text: coinString(from: valueOut), type: type(value: valueOut, .incoming))
+            }
+            if let valueIn = record.valueIn {
+                secondaryValue = TransactionsViewModel.Value(text: coinString(from: valueIn), type: type(value: valueIn, .outgoing))
+            }
+
         case let record as SolanaUnknownTransactionRecord:
             let incomingValues = record.incomingTransfers.map(\.value)
             let outgoingValues = record.outgoingTransfers.map(\.value)

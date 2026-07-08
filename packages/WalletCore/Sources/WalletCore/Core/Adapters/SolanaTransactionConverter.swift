@@ -3,6 +3,12 @@ import MarketKit
 import SolanaKit
 
 class SolanaTransactionConverter {
+    // Display labels for the swap programs SolanaKit recognizes (`Transaction.programIds`).
+    // Mirrors the EVM flow, where the exchange contract address maps to a label ("1inch v5").
+    private static let swapProgramLabels: [String: String] = [
+        KnownPrograms.jupiterV6: "Jupiter",
+    ]
+
     private let userAddress: String
     private let source: TransactionSource
     private let baseToken: Token
@@ -13,6 +19,18 @@ class SolanaTransactionConverter {
         self.source = source
         self.baseToken = baseToken
         self.coinManager = coinManager
+    }
+
+    // The display label of the first recognized swap program this transaction invoked, or nil.
+    private func swapExchangeName(transaction: SolanaKit.Transaction) -> String? {
+        guard let programIds = transaction.programIds else { return nil }
+        return programIds.split(separator: " ").lazy.compactMap { Self.swapProgramLabels[String($0)] }.first
+    }
+
+    // The swap-relevant leg of one side: the SPL transfer when a native-SOL leg rides along
+    // (token-account rent), otherwise the single/first leg (a genuinely-SOL swap side).
+    private func primaryTransfer(among transfers: [SolanaTransactionRecord.Transfer]) -> SolanaTransactionRecord.Transfer? {
+        transfers.first { $0.value.token != baseToken } ?? transfers.first
     }
 
     private func convertAmount(rawAmount: Decimal, decimals: Int, sign: FloatingPointSign) -> Decimal {
@@ -68,6 +86,24 @@ class SolanaTransactionConverter {
             } else {
                 outgoingTransfers.append(SolanaTransactionRecord.Transfer(address: transaction.to, value: appValue))
             }
+        }
+
+        // A recognized DEX interaction (via SolanaKit KnownPrograms) renders as a swap when it has
+        // legs on both sides, or no legs yet (pending — the kit stores no balance changes until
+        // confirmation, but the program id is known at send time). A side can carry a spurious SOL
+        // leg next to the real SPL one (token-account rent when the swap created the output ATA),
+        // so each side prefers its non-SOL leg over a bare `count == 1` match.
+        if let exchangeName = swapExchangeName(transaction: transaction),
+           (!incomingTransfers.isEmpty && !outgoingTransfers.isEmpty) || (incomingTransfers.isEmpty && outgoingTransfers.isEmpty)
+        {
+            return SolanaSwapTransactionRecord(
+                transaction: transaction,
+                baseToken: baseToken,
+                source: source,
+                exchangeName: exchangeName,
+                valueIn: primaryTransfer(among: outgoingTransfers)?.value,
+                valueOut: primaryTransfer(among: incomingTransfers)?.value
+            )
         }
 
         // Classify the transaction
