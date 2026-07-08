@@ -16,8 +16,11 @@ class TronSwapBroadcaster: ISwapBroadcaster {
         guard let prepared = prepared as? DirectPrepared, let executable = prepared.executable as? TronExecutable else {
             throw SwapBroadcasterError.dataMismatch
         }
+        guard let created = executable.created else {
+            throw MultiSwapSendHandler.SendError.invalidTransactionData
+        }
 
-        _ = try await tronKitWrapper.send(createdTranaction: executable.created)
+        _ = try await tronKitWrapper.send(createdTranaction: created)
 
         return BroadcastResult(txHash: nil, trackingHandle: nil)
     }
