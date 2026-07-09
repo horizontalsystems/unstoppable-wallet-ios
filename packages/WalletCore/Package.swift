@@ -42,7 +42,7 @@ let package = Package(
         .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "5.1.3"),
         .package(url: "https://github.com/horizontalsystems/SectionsTableView.Swift", exact: "1.0.0"),
         .package(url: "https://github.com/SnapKit/SnapKit.git", from: "5.7.1"),
-        .package(url: "https://github.com/horizontalsystems/solana-kit-ios.git", exact: "1.0.3"),
+        .package(url: "https://github.com/horizontalsystems/solana-kit-ios.git", exact: "1.0.4"),
         .package(url: "https://github.com/daltoniam/Starscream", from: "3.1.2"),
         .package(url: "https://github.com/horizontalsystems/StellarKit.Swift", exact: "1.2.0"),
         .package(url: "https://github.com/horizontalsystems/TonConnectAPI", exact: "1.0.0"),

@@ -7,6 +7,7 @@ class SolanaTransactionConverter {
     // Mirrors the EVM flow, where the exchange contract address maps to a label ("1inch v5").
     private static let swapProgramLabels: [String: String] = [
         KnownPrograms.jupiterV6: "Jupiter",
+        KnownPrograms.lifi: "LI.FI",
     ]
 
     private let userAddress: String
@@ -88,14 +89,14 @@ class SolanaTransactionConverter {
             }
         }
 
-        // A recognized DEX interaction (via SolanaKit KnownPrograms) renders as a swap when it has
-        // legs on both sides, or no legs yet (pending — the kit stores no balance changes until
-        // confirmation, but the program id is known at send time). A side can carry a spurious SOL
-        // leg next to the real SPL one (token-account rent when the swap created the output ATA),
-        // so each side prefers its non-SOL leg over a bare `count == 1` match.
-        if let exchangeName = swapExchangeName(transaction: transaction),
-           (!incomingTransfers.isEmpty && !outgoingTransfers.isEmpty) || (incomingTransfers.isEmpty && outgoingTransfers.isEmpty)
-        {
+        // A recognized DEX interaction (via SolanaKit KnownPrograms) renders as a swap — we key purely
+        // on the invoked program. Same-chain swaps (Jupiter) carry legs on both sides; a CROSS-CHAIN
+        // LI.FI swap FROM Solana carries only the OUTGOING side (the bought asset lands on another
+        // chain); a pending swap carries no legs yet (the kit stores no balance changes until
+        // confirmation) — all are swaps. A side can carry a spurious SOL leg next to the real SPL one
+        // (tx fee / token-account rent), so each side prefers its non-SOL leg via `primaryTransfer`
+        // (`valueIn`/`valueOut` are nil when that side has no leg).
+        if let exchangeName = swapExchangeName(transaction: transaction) {
             return SolanaSwapTransactionRecord(
                 transaction: transaction,
                 baseToken: baseToken,
