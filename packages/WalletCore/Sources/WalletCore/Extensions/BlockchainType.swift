@@ -268,10 +268,10 @@ extension BlockchainType {
         }
     }
 
-    var blockTime: TimeInterval? {
+    public var blockTime: TimeInterval? {
         switch self {
         case .ethereum: return 12
-        case .binanceSmartChain, .tron: return 3
+        case .tron: return 3
         case .polygon, .avalanche, .optimism, .fantom, .base, .zkSync: return 2
         case .gnosis, .stellar, .ton: return 5
         case .bitcoin, .bitcoinCash, .ecash: return 600
@@ -279,7 +279,7 @@ extension BlockchainType {
         case .zcash: return 75
         case .monero: return 120
         case .zano: return 60
-        case .arbitrumOne: return 1
+        case .binanceSmartChain, .arbitrumOne: return 1
         case .solana, .unsupported: return nil
         }
     }
