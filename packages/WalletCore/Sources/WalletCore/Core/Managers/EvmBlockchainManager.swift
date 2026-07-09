@@ -60,7 +60,7 @@ public class EvmBlockchainManager {
 }
 
 extension EvmBlockchainManager {
-    func blockchain(chainId: Int) -> Blockchain? {
+    public func blockchain(chainId: Int) -> Blockchain? {
         allBlockchains.first(where: { (try? chain(blockchainType: $0.type).id) == chainId })
     }
 
