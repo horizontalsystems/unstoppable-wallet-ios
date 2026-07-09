@@ -464,6 +464,27 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 return address
             default: return nil
             }
+        case .lifi:
+            // No token list (BARTER-style), but LI.FI is CROSS-CHAIN, so each side must be
+            // self-describing — the chain travels with the asset so the server resolves a
+            // cross-chain pair without a shared `chainId` hint. EVM token → `<CHAIN>.<contract>`,
+            // EVM native → `<CHAIN>.<0xeee…>` sentinel, Solana → `SOL.<mint>` (wSOL = native SOL).
+            if token.blockchainType == .solana {
+                let wsolMint = "So11111111111111111111111111111111111111112"
+                switch token.type {
+                case .native: return "SOL.\(wsolMint)"
+                case let .spl(address):
+                    guard address != wsolMint else { return nil }
+                    return "SOL.\(address)"
+                default: return nil
+                }
+            }
+            guard let code = Self.lifiChainCode[token.blockchainType] else { return nil }
+            switch token.type {
+            case .native: return "\(code).0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            case let .eip20(address): return "\(code).\(address)"
+            default: return nil
+            }
         default:
             return assetMap[token.tokenQuery.id.lowercased()]
         }
@@ -1283,6 +1304,19 @@ extension USwapMultiSwapProvider {
         "zano": .zano,
     ]
 
+    // LI.FI has no token list, so assets are encoded self-describingly as `<CHAIN>.<address>`
+    // (see `asset(token:)`). This maps each supported EVM chain to the server's chain code — the
+    // prefix the server's LI.FI resolver expects. Solana is handled inline via the `SOL.` prefix.
+    static let lifiChainCode: [BlockchainType: String] = [
+        .ethereum: "ETH",
+        .polygon: "POL",
+        .arbitrumOne: "ARB",
+        .optimism: "OP",
+        .base: "BASE",
+        .avalanche: "AVAX",
+        .binanceSmartChain: "BSC",
+    ]
+
     static func track(swap: Swap, parameters: Parameters, networkManager: NetworkManager, endpoint: String = "track") async throws -> Swap {
         var parameters = parameters
         if AppConfig.showDevTools, Core.shared.localStorage.simulateFailSwap == .server {
@@ -1614,6 +1648,7 @@ public enum USwapProvider: String, CaseIterable {
     case pegasus = "PEGASUS"
     case circle = "CIRCLE"
     case jupiter = "JUPITER"
+    case lifi = "LIFI"
 
     public var icon: String {
         switch self {
@@ -1628,6 +1663,7 @@ public enum USwapProvider: String, CaseIterable {
         case .pegasus: return "swap_provider_pegasus"
         case .circle: return "swap_provider_circle"
         case .jupiter: return "swap_provider_jupiter"
+        case .lifi: return "swap_provider_lifi"
         }
     }
 
@@ -1644,12 +1680,13 @@ public enum USwapProvider: String, CaseIterable {
         case .pegasus: return "PegasusSwap"
         case .circle: return "Circle CCTP"
         case .jupiter: return "Jupiter"
+        case .lifi: return "LI.FI"
         }
     }
 
     public var type: SwapProviderType {
         switch self {
-        case .barter, .circle, .jupiter: return .excellent
+        case .barter, .circle, .jupiter, .lifi: return .excellent
         case .quickEx, .exolix, .swapuz, .letsExchange, .cce, .pegasus: return .good
         case .stealthex, .near: return .fair
         }
@@ -1666,12 +1703,12 @@ public enum USwapProvider: String, CaseIterable {
         }
     }
 
-    // Providers that sync no token list from the server — assets are encoded as raw
-    // chain addresses in `asset(token:)` instead of resolved through the asset map
-    // (BARTER: EIP-20 address; JUPITER: SPL mint).
+    // Providers that sync no token list from the server — assets are encoded directly from the
+    // wallet token in `asset(token:)` instead of resolved through the asset map (BARTER: EIP-20
+    // address; JUPITER: SPL mint; LIFI: self-describing `<CHAIN>.<address>` for cross-chain).
     public var usesAssetMap: Bool {
         switch self {
-        case .barter, .jupiter: return false
+        case .barter, .jupiter, .lifi: return false
         default: return true
         }
     }
