@@ -22,7 +22,11 @@ class TronSwapBroadcaster: ISwapBroadcaster {
 
         _ = try await tronKitWrapper.send(createdTranaction: created)
 
-        return BroadcastResult(txHash: nil, trackingHandle: nil)
+        // The Tron tx hash IS the created transaction's `txID` (sha256 of raw_data — the value we
+        // sign, which becomes the on-chain hash). Surface it as the broadcast hash so USwap swaps
+        // (e.g. LI.FI Tron-source) can track by `inboundTxHash`; without it the track call would
+        // omit the hash and the server can't poll the provider's status.
+        return BroadcastResult(txHash: created.txID.hs.hex, trackingHandle: nil)
     }
 }
 
