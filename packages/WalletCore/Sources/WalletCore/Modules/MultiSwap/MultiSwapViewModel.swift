@@ -487,8 +487,13 @@ public class MultiSwapViewModel: ObservableObject {
                                 try await provider.quote(tokenIn: internalTokenIn, tokenOut: internalTokenOut, amountIn: amountIn)
                             }
 
+                            // Per-provider quote timeout. Must exceed uswap-server's own budget
+                            // (12s per provider / 15s overall) or slow-but-valid cross-chain
+                            // aggregators — LI.FI, Jupiter — get cancelled mid-quote and surface as
+                            // `explicitlyCancelled` (e.g. an ETH→Tron TRC-20 route that legitimately
+                            // takes several seconds). 5s was cutting those off.
                             let timeoutTask = Task {
-                                try await Task.sleep(seconds: 5)
+                                try await Task.sleep(seconds: 15)
                                 quoteTask.cancel()
                             }
 
