@@ -468,7 +468,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             // No token list (BARTER-style), but LI.FI is CROSS-CHAIN, so each side must be
             // self-describing — the chain travels with the asset so the server resolves a
             // cross-chain pair without a shared `chainId` hint. EVM token → `<CHAIN>.<contract>`,
-            // EVM native → `<CHAIN>.<0xeee…>` sentinel, Solana → `SOL.<mint>` (wSOL = native SOL).
+            // EVM native → `<CHAIN>.<0xeee…>` sentinel, Solana → `SOL.<mint>` (wSOL = native SOL),
+            // Tron → `TRON.TRX` (native) / `TRON.<contract>` (TRC20).
             if token.blockchainType == .solana {
                 let wsolMint = "So11111111111111111111111111111111111111112"
                 switch token.type {
@@ -476,6 +477,16 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 case let .spl(address):
                     guard address != wsolMint else { return nil }
                     return "SOL.\(address)"
+                default: return nil
+                }
+            }
+            if token.blockchainType == .tron {
+                // Tron is TVM (base58 addresses, not `0x`): the server resolves `TRON.TRX` as native
+                // and `TRON.<contract>` as a TRC20 — the EVM `0xeee…` native sentinel does not apply.
+                // TRC20 contracts ride the `.eip20` case with a base58 address (see buildTronConfirmationQuote).
+                switch token.type {
+                case .native: return "TRON.TRX"
+                case let .eip20(address): return "TRON.\(address)"
                 default: return nil
                 }
             }
@@ -1306,7 +1317,8 @@ extension USwapMultiSwapProvider {
 
     // LI.FI has no token list, so assets are encoded self-describingly as `<CHAIN>.<address>`
     // (see `asset(token:)`). This maps each supported EVM chain to the server's chain code — the
-    // prefix the server's LI.FI resolver expects. Solana is handled inline via the `SOL.` prefix.
+    // prefix the server's LI.FI resolver expects. Solana and Tron are handled inline (`SOL.` /
+    // `TRON.` prefixes) since their address formats aren't the EVM `0xeee…`/contract shape.
     static let lifiChainCode: [BlockchainType: String] = [
         .ethereum: "ETH",
         .polygon: "POL",
