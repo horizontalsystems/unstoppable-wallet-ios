@@ -1,27 +1,25 @@
 import Foundation
 
 struct AmountDecimalParser {
-    private static let formatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.usesGroupingSeparator = false
-        return formatter
-    }()
-
     func parseAnyDecimal(from string: String?) -> Decimal? {
-        if let string {
-            for localeIdentifier in Locale.availableIdentifiers {
-                Self.formatter.locale = Locale(identifier: localeIdentifier)
-                if Self.formatter.number(from: "0\(string)") == nil {
-                    continue
-                }
-
-                let string = string.replacingOccurrences(of: Self.formatter.decimalSeparator, with: ".")
-                if let decimal = Decimal(string: string) {
-                    return decimal
-                }
-            }
+        guard let string, !string.isEmpty else {
+            return nil
         }
-        return nil
+
+        // Normalize the current locale's decimal separator to "." so keypad input parses.
+        // "." is also accepted directly (e.g. pasted values), since Decimal(string:) uses it natively.
+        let separator = Locale.current.decimalSeparator ?? "."
+        let normalized = string.replacingOccurrences(of: separator, with: ".")
+
+        return Decimal(string: normalized)
+    }
+
+    func string(from decimal: Decimal?) -> String {
+        guard let decimal else {
+            return ""
+        }
+
+        let separator = Locale.current.decimalSeparator ?? "."
+        return decimal.description.replacingOccurrences(of: ".", with: separator)
     }
 }
