@@ -42,6 +42,7 @@ struct SwapRequestRefundBottomSheetView: View {
         items.append(.buttonGroup(.init(buttons: [
             .init(style: .yellow, title: "swap_info.copy_details".localized) {
                 viewModel.copyBody()
+                HudHelper.instance.show(banner: .copied)
             },
         ])))
 
@@ -84,11 +85,40 @@ struct SwapRequestRefundBottomSheetView: View {
             if MFMailComposeViewController.canSendMail() {
                 mailRecipient = link.rawValue
                 mailPresented = true
-            } else {
-                viewModel.open(contactLink: link)
+                return
             }
-        case .telegram, .twitter, .website:
-            viewModel.open(contactLink: link)
+
+            let fallbackText = SwapRequestRefundBuilder.shareText(email: link.rawValue, subject: viewModel.details.emailSubject, body: viewModel.details.emailBody)
+
+            guard let url = SwapRequestRefundBuilder.mailtoURL(email: link.rawValue, subject: viewModel.details.emailSubject, body: viewModel.details.emailBody) else {
+                Coordinator.shared.present { _ in ActivityView(activityItems: [fallbackText]) }
+                return
+            }
+
+            UIApplication.shared.open(url, options: [:]) { opened in
+                guard !opened else {
+                    return
+                }
+                Coordinator.shared.present { _ in ActivityView(activityItems: [fallbackText]) }
+            }
+
+        case .telegram:
+            viewModel.copyBody()
+
+            guard let urls = SwapRequestRefundBuilder.telegramURLs(contactLink: link) else {
+                return
+            }
+
+            if let appURL = urls.appURL, UIApplication.shared.canOpenURL(appURL) {
+                UIApplication.shared.open(appURL)
+            } else {
+                Coordinator.shared.present(url: urls.webURL)
+            }
+
+        case .twitter, .website:
+            if let url = SwapRequestRefundBuilder.safeURL(contactLink: link) {
+                Coordinator.shared.present(url: url)
+            }
         }
     }
 }

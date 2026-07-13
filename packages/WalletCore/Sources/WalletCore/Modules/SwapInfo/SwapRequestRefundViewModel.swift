@@ -4,15 +4,15 @@ import SwiftUI
 import UIKit
 
 @MainActor
-class SwapRequestRefundViewModel: ObservableObject {
+public class SwapRequestRefundViewModel: ObservableObject {
     private let swap: Swap
     private let providerInfoManager: SwapProviderInfoManager
     private var cancellables = Set<AnyCancellable>()
 
-    let details: SwapRequestRefundBuilder.Details
-    @Published private(set) var contactLinks = [SwapRequestRefundBuilder.ContactLink]()
+    public let details: SwapRequestRefundBuilder.Details
+    @Published public private(set) var contactLinks = [SwapRequestRefundBuilder.ContactLink]()
 
-    init(swap: Swap, providerInfoManager: SwapProviderInfoManager = Core.shared.swapProviderInfoManager) {
+    public init(swap: Swap, providerInfoManager: SwapProviderInfoManager = Core.shared.swapProviderInfoManager) {
         self.swap = swap
         self.providerInfoManager = providerInfoManager
         details = SwapRequestRefundBuilder.details(swap: swap)
@@ -28,44 +28,8 @@ class SwapRequestRefundViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    func copyBody() {
+    public func copyBody() {
         SwapRequestRefundBuilder.copyBody(details.emailBody)
-    }
-
-    func open(contactLink: SwapRequestRefundBuilder.ContactLink) {
-        switch contactLink.type {
-        case .email:
-            let fallbackText = SwapRequestRefundBuilder.shareText(email: contactLink.rawValue, subject: details.emailSubject, body: details.emailBody)
-
-            guard let url = SwapRequestRefundBuilder.mailtoURL(email: contactLink.rawValue, subject: details.emailSubject, body: details.emailBody) else {
-                Coordinator.shared.present { _ in ActivityView(activityItems: [fallbackText]) }
-                return
-            }
-
-            UIApplication.shared.open(url, options: [:]) { opened in
-                guard !opened else {
-                    return
-                }
-                Coordinator.shared.present { _ in ActivityView(activityItems: [fallbackText]) }
-            }
-
-        case .telegram:
-            copyBody()
-            guard let urls = SwapRequestRefundBuilder.telegramURLs(contactLink: contactLink) else {
-                return
-            }
-
-            if let appURL = urls.appURL, UIApplication.shared.canOpenURL(appURL) {
-                UIApplication.shared.open(appURL)
-            } else {
-                Coordinator.shared.present(url: urls.webURL)
-            }
-
-        case .twitter, .website:
-            if let url = SwapRequestRefundBuilder.safeURL(contactLink: contactLink) {
-                Coordinator.shared.present(url: url)
-            }
-        }
     }
 
     private func syncContactLinks() {
@@ -73,7 +37,7 @@ class SwapRequestRefundViewModel: ObservableObject {
     }
 }
 
-enum SwapRequestRefundBuilder {
+public enum SwapRequestRefundBuilder {
     static func details(swap: Swap) -> Details {
         let swapId = firstNonEmpty([swap.providerSwapId, swap.txHash, swap.uid])
         let amount = AppValue(token: swap.tokenIn, value: swap.amountIn).formattedFull() ?? "\(swap.amountIn) \(swap.tokenIn.coin.code)"
@@ -137,7 +101,7 @@ enum SwapRequestRefundBuilder {
         return links
     }
 
-    static func safeURL(contactLink: ContactLink) -> URL? {
+    public static func safeURL(contactLink: ContactLink) -> URL? {
         switch contactLink.type {
         case .email:
             return nil
@@ -150,7 +114,7 @@ enum SwapRequestRefundBuilder {
         }
     }
 
-    static func telegramURLs(contactLink: ContactLink) -> TelegramURLs? {
+    public static func telegramURLs(contactLink: ContactLink) -> TelegramURLs? {
         guard contactLink.type == .telegram else {
             return nil
         }
@@ -158,7 +122,7 @@ enum SwapRequestRefundBuilder {
         return safeTelegramURLs(contactLink.rawValue)
     }
 
-    static func mailtoURL(email: String, subject: String, body: String) -> URL? {
+    public static func mailtoURL(email: String, subject: String, body: String) -> URL? {
         guard isValidEmail(email) else {
             return nil
         }
@@ -173,7 +137,7 @@ enum SwapRequestRefundBuilder {
         return components.url
     }
 
-    static func shareText(email: String, subject: String, body: String) -> String {
+    public static func shareText(email: String, subject: String, body: String) -> String {
         """
         To: \(email)
         Subject: \(subject)
@@ -187,7 +151,6 @@ enum SwapRequestRefundBuilder {
             [["public.utf8-plain-text": body]],
             options: [.expirationDate: Date().addingTimeInterval(10 * 60)]
         )
-        HudHelper.instance.show(banner: .copied)
     }
 
     private static func firstNonEmpty(_ values: [String?]) -> String {
@@ -267,32 +230,32 @@ enum SwapRequestRefundBuilder {
     }
 }
 
-extension SwapRequestRefundBuilder {
+public extension SwapRequestRefundBuilder {
     struct Details {
-        let swapId: String
-        let swapIdShort: String
-        let amount: String
-        let refundAddress: String
-        let refundAddressShort: String
-        let emailSubject: String
-        let emailBody: String
+        public let swapId: String
+        public let swapIdShort: String
+        public let amount: String
+        public let refundAddress: String
+        public let refundAddressShort: String
+        public let emailSubject: String
+        public let emailBody: String
     }
 
     struct ContactLink: Identifiable, Equatable {
-        let type: ContactType
-        let label: String
-        let value: String
-        let rawValue: String
-        let icon: String
+        public let type: ContactType
+        public let label: String
+        public let value: String
+        public let rawValue: String
+        public let icon: String
 
-        var id: String {
+        public var id: String {
             "\(type)-\(rawValue)"
         }
     }
 
     struct TelegramURLs: Equatable {
-        let appURL: URL?
-        let webURL: URL
+        public let appURL: URL?
+        public let webURL: URL
     }
 
     enum ContactType {
