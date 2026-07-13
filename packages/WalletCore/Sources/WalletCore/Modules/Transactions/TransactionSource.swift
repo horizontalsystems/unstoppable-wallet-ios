@@ -1,7 +1,7 @@
 import MarketKit
 
 public struct TransactionSource: Hashable {
-    let blockchainType: BlockchainType
+    public let blockchainType: BlockchainType
     let meta: String?
 
     public func hash(into hasher: inout Hasher) {

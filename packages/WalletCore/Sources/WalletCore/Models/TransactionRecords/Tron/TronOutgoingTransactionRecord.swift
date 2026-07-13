@@ -2,10 +2,10 @@ import Foundation
 import MarketKit
 import TronKit
 
-class TronOutgoingTransactionRecord: TronTransactionRecord {
-    let to: String
-    let value: AppValue
-    let sentToSelf: Bool
+public class TronOutgoingTransactionRecord: TronTransactionRecord {
+    public let to: String
+    public let value: AppValue
+    public let sentToSelf: Bool
 
     init(source: TransactionSource, transaction: Transaction, baseToken: Token, to: String, value: AppValue, sentToSelf: Bool) {
         self.to = to
@@ -15,7 +15,7 @@ class TronOutgoingTransactionRecord: TronTransactionRecord {
         super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: true)
     }
 
-    override var mainValue: AppValue? {
+    override public var mainValue: AppValue? {
         value
     }
 }

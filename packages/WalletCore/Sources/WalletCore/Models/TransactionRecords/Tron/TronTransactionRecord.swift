@@ -2,13 +2,13 @@ import Foundation
 import MarketKit
 import TronKit
 
-public class TronTransactionRecord: TransactionRecord {
-    let transaction: Transaction
+open class TronTransactionRecord: TransactionRecord {
+    public let transaction: Transaction
     let confirmed: Bool
     let ownTransaction: Bool
     let fee: AppValue?
 
-    init(source: TransactionSource, transaction: Transaction, baseToken: Token, ownTransaction: Bool, spam: Bool = false) {
+    public init(source: TransactionSource, transaction: Transaction, baseToken: Token, ownTransaction: Bool, spam: Bool = false) {
         self.transaction = transaction
         confirmed = transaction.confirmed
         let txHash = transaction.hash.hs.hex

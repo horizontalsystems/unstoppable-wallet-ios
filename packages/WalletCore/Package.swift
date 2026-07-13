@@ -47,7 +47,7 @@ let package = Package(
         .package(url: "https://github.com/horizontalsystems/StellarKit.Swift", exact: "1.2.0"),
         .package(url: "https://github.com/horizontalsystems/TonConnectAPI", exact: "1.0.0"),
         .package(url: "https://github.com/horizontalsystems/TonKit.Swift", exact: "1.2.1"),
-        .package(url: "https://github.com/horizontalsystems/TronKit.Swift.git", exact: "1.5.1"),
+        .package(url: "https://github.com/horizontalsystems/TronKit.Swift.git", exact: "1.5.2"),
         .package(url: "https://github.com/horizontalsystems/UIExtensions.Swift", exact: "1.0.2"),
         .package(url: "https://github.com/horizontalsystems/UniswapKit.Swift", exact: "3.2.0"),
         .package(url: "https://github.com/horizontalsystems/ZcashLightClientKit", exact: "2.6.0-alpha.4-hs.1"),
