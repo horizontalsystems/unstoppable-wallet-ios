@@ -28,7 +28,7 @@ public class PreSendViewModel: ObservableObject {
             }
 
             if amount != self.amount {
-                amountString = self.amount?.description ?? ""
+                amountString = decimalParser.string(from: self.amount)
             }
         }
     }
@@ -58,7 +58,7 @@ public class PreSendViewModel: ObservableObject {
             let amount = decimalParser.parseAnyDecimal(from: fiatAmountString)?.rounded(decimal: 2)
 
             if amount != fiatAmount {
-                fiatAmountString = fiatAmount?.description ?? ""
+                fiatAmountString = decimalParser.string(from: fiatAmount)
             }
         }
     }

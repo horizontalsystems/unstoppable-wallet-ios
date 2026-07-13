@@ -162,7 +162,7 @@ public class MultiSwapViewModel: ObservableObject {
             let amount = decimalParser.parseAnyDecimal(from: amountString)
 
             if amount != amountIn {
-                amountString = amountIn?.description ?? ""
+                amountString = decimalParser.string(from: amountIn)
             }
         }
     }
@@ -188,7 +188,7 @@ public class MultiSwapViewModel: ObservableObject {
             let amount = decimalParser.parseAnyDecimal(from: fiatAmountString)?.rounded(decimal: 2)
 
             if amount != fiatAmountIn {
-                fiatAmountString = fiatAmountIn?.description ?? ""
+                fiatAmountString = decimalParser.string(from: fiatAmountIn)
             }
         }
     }
