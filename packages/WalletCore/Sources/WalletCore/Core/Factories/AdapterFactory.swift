@@ -127,7 +127,7 @@ extension AdapterFactory {
         let query = TokenQuery(blockchainType: .tron, tokenType: .native)
 
         if let tronKitWrapper = tronKitManager.tronKitWrapper, let baseToken = try? coinManager.token(query: query) {
-            return TronTransactionsAdapter(
+            let adapter = TronTransactionsAdapter(
                 tronKitWrapper: tronKitWrapper,
                 source: transactionSource,
                 baseToken: baseToken,
@@ -135,6 +135,7 @@ extension AdapterFactory {
                 spamWrapper: spamWrapper,
                 evmLabelManager: evmLabelManager
             )
+            return TransactionsAdapterDecoratorFactory.decorate(adapter: adapter, source: transactionSource)
         }
 
         return nil
