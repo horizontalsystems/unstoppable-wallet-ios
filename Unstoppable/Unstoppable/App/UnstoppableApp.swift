@@ -38,7 +38,9 @@ struct UnstoppableApp: App {
     private static func initCore() throws {
         SwapProviderFactory.register([DefaultSwapProviderResolver.self])
 
-        [DeepLinkRoute.walletConnect, .tonConnect, .tonTransfer, .coin, .referral, .openCryptoPay, .transfer]
+        // .tonConnect is not registered: TonConnectEventHandler is disabled, a parsed link would
+        // only die in the handler chain. Register it together with re-enabling the handler.
+        [DeepLinkRoute.walletConnect, .tonTransfer, .coin, .referral, .openCryptoPay, .transfer]
             .forEach { DeepLinkRouteFactory.register($0) }
         [AppEventHandlerKind.walletConnect, .widgetCoin, .address, .telegramUser, .openCryptoPay]
             .forEach { AppEventHandlerFactory.register($0) }
