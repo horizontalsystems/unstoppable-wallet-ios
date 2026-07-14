@@ -41,8 +41,9 @@ public enum DeepLinkRouteFactory {
     }
 
     // Routes and handler kinds are registered independently, but a route without its consuming
-    // handler is a silent no-op (EventHandler reports .handled without any UI). Catch the mismatch in debug.
-    // DeepLinkRoute.tonConnect is intentionally dangling: TonConnectEventHandler is disabled in Core.
+    // handler is a dead parse (the link only dies in the handler chain). Catch the mismatch in debug.
+    // DeepLinkRoute.tonConnect has no entry: TonConnectEventHandler is disabled in Core, so the route
+    // must not be registered until the handler is re-enabled (and mapped here).
     static func assertCoherence(handlerKinds: Set<AppEventHandlerKind>) {
         let consumers: [DeepLinkRoute: AppEventHandlerKind] = [
             .walletConnect: .walletConnect,
