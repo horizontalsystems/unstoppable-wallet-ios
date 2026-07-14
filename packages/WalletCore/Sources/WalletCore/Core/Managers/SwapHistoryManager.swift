@@ -65,7 +65,7 @@ public class SwapHistoryManager {
     private func scheduleTimer() {
         syncTimer?.cancel()
         syncTimer = Just(())
-            .delay(for: .seconds(30), scheduler: RunLoop.main)
+            .delay(for: .seconds(15), scheduler: RunLoop.main)
             .sink { [weak self] _ in
                 self?.sync()
             }
@@ -75,6 +75,18 @@ public class SwapHistoryManager {
 public extension SwapHistoryManager {
     var swapUpdatePublisher: AnyPublisher<Swap, Never> {
         swapUpdateSubject.eraseToAnyPublisher()
+    }
+
+    var pendingSwaps: [Swap] {
+        guard let account = accountManager.activeAccount else {
+            return []
+        }
+
+        do {
+            return try storage.pendingSwaps(accountId: account.id)
+        } catch {
+            return []
+        }
     }
 
     func sync() {
@@ -112,6 +124,7 @@ public extension SwapHistoryManager {
     func save(swap: Swap) {
         do {
             try storage.save(swap: swap)
+            swapUpdateSubject.send(swap)
             sync()
         } catch {
             print(error)

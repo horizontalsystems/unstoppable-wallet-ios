@@ -33,7 +33,7 @@ public struct Swap: Hashable {
     }
 
     static var pendingStatuses: [Status] {
-        [.notStarted, .pending, .swapping, .unknown, .actionRequired]
+        [.notStarted, .pending, .swapping]
     }
 
     public init(uid: String, txHash: String?, trackingHandle: String?, accountId: String, providerId: String, status: Status, tokenIn: Token, tokenOut: Token, amountIn: Decimal, amountOut: Decimal, recipient: String?, toAddress: String, depositAddress: String?, providerSwapId: String?, sourceAddress: String?, refundAddress: String?, date: Date, fromAsset: String? = nil, toAsset: String? = nil, legs: [Leg]? = nil, pauseReason: String? = nil) {

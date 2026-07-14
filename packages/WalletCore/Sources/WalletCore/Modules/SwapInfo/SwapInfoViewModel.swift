@@ -137,7 +137,11 @@ class SwapInfoViewModel: ObservableObject {
                 title = "swap_info.swap".localized
             }
 
-            return Leg(title: title, status: leg.status, url: explorerUrl(chainId: leg.chainId, hash: leg.txHash))
+            return Leg(
+                title: title,
+                status: leg.status,
+                url: leg.txHash.isEmpty ? nil : explorerUrl(chainId: leg.chainId, hash: leg.txHash)
+            )
         }
     }
 
