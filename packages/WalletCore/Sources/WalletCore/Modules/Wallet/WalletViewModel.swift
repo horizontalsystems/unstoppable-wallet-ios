@@ -146,7 +146,7 @@ extension WalletViewModel {
         coinPriceService.refresh()
     }
 
-    func process(scanned: String) {
+    public func process(scanned: String) {
         Task { [eventHandler] in
             try await eventHandler.handle(source: StatPage.balance, event: scanned.trimmingCharacters(in: .whitespacesAndNewlines), eventType: [.walletConnectUri, .address])
         }

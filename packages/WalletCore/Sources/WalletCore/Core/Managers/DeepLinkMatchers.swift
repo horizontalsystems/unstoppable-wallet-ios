@@ -119,6 +119,31 @@ class OpenCryptoPayDeepLinkMatcher: IDeepLinkMatcher {
     }
 }
 
+// App-scheme transfer link: <scheme>://send?uri=<percent-encoded transfer uri>, e.g. myapp://send?uri=tron:TXyz?amount=5.
+// The scheme is app-provided at registration (DeepLinkRouteFactory.register(appTransferScheme:)), mirroring
+// the wc-host pattern of WalletConnectDeepLinkMatcher.
+class AppSchemeTransferDeepLinkMatcher: IDeepLinkMatcher {
+    let route: DeepLinkRoute = .appTransfer
+
+    private let scheme: String
+    private let addressUriParser = AddressUriParser(blockchainType: nil, tokenType: nil)
+
+    init(scheme: String) {
+        self.scheme = scheme
+    }
+
+    func match(urlComponents: URLComponents, url _: URL) -> DeepLinkMatchResult? {
+        guard urlComponents.scheme == scheme, urlComponents.host == "send",
+              let transferUri = urlComponents.queryItems?.first(where: { $0.name == "uri" })?.value,
+              let uri = try? addressUriParser.parse(url: transferUri)
+        else {
+            return nil
+        }
+
+        return .deepLink(.transfer(addressUri: uri))
+    }
+}
+
 class TransferDeepLinkMatcher: IDeepLinkMatcher {
     let route: DeepLinkRoute = .transfer
 

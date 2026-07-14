@@ -55,9 +55,15 @@ class DeepLinkViewManager {
         switch signal {
         case let .coinPage(coin): Coordinator.shared.presentCoinPage(coin: coin, page: .deepLink)
         case let .sendPage(options):
-            Coordinator.shared.present { isPresented in
-                SendTokenListView(options: options, isPresented: isPresented)
+            var blockchainTypes: [BlockchainType]?
+            var tokenTypes: [TokenType]?
+            if case let .blockchain(filterBlockchainTypes, filterTokenTypes) = options.filter {
+                blockchainTypes = filterBlockchainTypes
+                tokenTypes = filterTokenTypes
             }
+
+            let link = SendDeepLink(blockchainTypes: blockchainTypes, tokenTypes: tokenTypes, address: options.address, amount: options.amount, memo: options.memo)
+            DeepLinkPresenterFactory.presentSend(link: link)
         case let .cryptoPaySendPage(url):
             Coordinator.shared.present { isPresented in
                 CryptoPaySendTokenListView(url: url, isPresented: isPresented)

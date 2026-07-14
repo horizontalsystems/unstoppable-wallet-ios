@@ -4,7 +4,7 @@ import HsToolKit
 import MarketKit
 
 public class Core {
-    static var instance: Core?
+    public static var instance: Core?
 
     public static func initApp(config: Config, widgetRefresher: IWidgetRefresher? = nil) throws {
         let core = try Core(config: config, widgetRefresher: widgetRefresher)
@@ -33,6 +33,7 @@ public class Core {
         }
 
         DeepLinkRouteFactory.assertCoherence(handlerKinds: AppEventHandlerFactory.resolved())
+        DeepLinkPresenterFactory.assertCoherence(handlerKinds: AppEventHandlerFactory.resolved())
     }
 
     public static var shared: Core {
