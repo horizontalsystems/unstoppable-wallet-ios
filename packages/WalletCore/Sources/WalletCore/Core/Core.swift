@@ -16,6 +16,23 @@ public class Core {
         SwapBroadcasterFactory.register(SwapBroadcasterFactory.unstoppableBroadcasters)
         // EvmKit syncers/decorators are registered by each app (no shared fallback): stable in StableCore, the
         // unstoppable app in its own initCore (registers a provider over defaultSyncers/defaultDecorators).
+
+        // Event handlers attach post-init deliberately: the first event cannot arrive before the UI exists,
+        // and this keeps one attach point for both built-in and future app-registered handlers.
+        let appEventHandlerFactory = AppEventHandlerFactory(
+            marketKit: core.marketKit,
+            walletConnectSessionManager: core.walletConnectSessionManager,
+            walletConnectRequestHandler: core.walletConnectRequestHandler,
+            cloudBackupManager: core.cloudBackupManager,
+            accountManager: core.accountManager,
+            lockManager: core.lockManager
+        )
+
+        for handler in appEventHandlerFactory.handlers() {
+            core.appEventHandler.append(handler: handler)
+        }
+
+        DeepLinkRouteFactory.assertCoherence(handlerKinds: AppEventHandlerFactory.resolved())
     }
 
     public static var shared: Core {
@@ -102,9 +119,12 @@ public class Core {
     let nftAdapterManager: NftAdapterManager
     let nftMetadataSyncer: NftMetadataSyncer
 
-    let walletConnectRequestHandler: WalletConnectRequestChain
-    let walletConnectManager: WalletConnectManager
-    let walletConnectSessionManager: WalletConnectSessionManager
+    // The WC stack is assembled only when AppEventHandlerKind.walletConnect is registered:
+    // WalletConnectService.init configures the relay networking and opens a socket, which
+    // an app without WalletConnect must not do.
+    let walletConnectRequestHandler: WalletConnectRequestChain?
+    let walletConnectManager: WalletConnectManager?
+    let walletConnectSessionManager: WalletConnectSessionManager?
 
     public let adapterManager: AdapterManager
     public let transactionAdapterManager: TransactionAdapterManager
@@ -186,7 +206,7 @@ public class Core {
         themeManager = ThemeManager.shared
         systemInfoManager = SystemInfoManager()
         testNetManager = TestNetManager(userDefaultsStorage: userDefaultsStorage)
-        deepLinkManager = DeepLinkManager()
+        deepLinkManager = DeepLinkManager(matchers: DeepLinkRouteFactory.matchers())
         deeplinkStorage = DeeplinkStorage()
         launchScreenManager = LaunchScreenManager(userDefaultsStorage: userDefaultsStorage)
         appSettingManager = AppSettingManager(userDefaultsStorage: userDefaultsStorage)
@@ -290,31 +310,39 @@ public class Core {
         )
         nftMetadataSyncer = NftMetadataSyncer(nftAdapterManager: nftAdapterManager, nftMetadataManager: nftMetadataManager, nftStorage: nftStorage)
 
-        walletConnectRequestHandler = WalletConnectRequestChain.instance(evmBlockchainManager: evmBlockchainManager, stellarKitManager: stellarKitManager, accountManager: accountManager)
+        if AppEventHandlerFactory.resolved().contains(.walletConnect) {
+            let requestHandler = WalletConnectRequestChain.instance(evmBlockchainManager: evmBlockchainManager, stellarKitManager: stellarKitManager, accountManager: accountManager)
 
-        let walletClientInfo = WalletConnectClientInfo(
-            projectId: AppConfig.walletConnectV2ProjectKey ?? "c4f79cc821944d9680842e34466bfb",
-            relayHost: "relay.walletconnect.com",
-            name: AppConfig.appName,
-            description: "",
-            url: AppConfig.appWebPageLink,
-            icons: ["https://raw.githubusercontent.com/horizontalsystems/HS-Design/master/PressKit/UW-AppIcon-on-light.png"]
-        )
+            let walletClientInfo = WalletConnectClientInfo(
+                projectId: AppConfig.walletConnectV2ProjectKey ?? "c4f79cc821944d9680842e34466bfb",
+                relayHost: "relay.walletconnect.com",
+                name: AppConfig.appName,
+                description: "",
+                url: AppConfig.appWebPageLink,
+                icons: ["https://raw.githubusercontent.com/horizontalsystems/HS-Design/master/PressKit/UW-AppIcon-on-light.png"]
+            )
 
-        let walletConnectService = WalletConnectService(
-            info: walletClientInfo,
-            logger: logger
-        )
-        let walletConnectSessionStorage = WalletConnectSessionStorage(dbPool: dbPool)
-        walletConnectSessionManager = WalletConnectSessionManager(
-            service: walletConnectService,
-            storage: walletConnectSessionStorage,
-            accountManager: accountManager,
-            requestHandler: walletConnectRequestHandler,
-            currentDateProvider: CurrentDateProvider()
-        )
+            let walletConnectService = WalletConnectService(
+                info: walletClientInfo,
+                logger: logger
+            )
+            let walletConnectSessionStorage = WalletConnectSessionStorage(dbPool: dbPool)
+            let sessionManager = WalletConnectSessionManager(
+                service: walletConnectService,
+                storage: walletConnectSessionStorage,
+                accountManager: accountManager,
+                requestHandler: requestHandler,
+                currentDateProvider: CurrentDateProvider()
+            )
 
-        walletConnectManager = WalletConnectManager(walletConnectSessionManager: walletConnectSessionManager)
+            walletConnectRequestHandler = requestHandler
+            walletConnectSessionManager = sessionManager
+            walletConnectManager = WalletConnectManager(walletConnectSessionManager: sessionManager)
+        } else {
+            walletConnectRequestHandler = nil
+            walletConnectSessionManager = nil
+            walletConnectManager = nil
+        }
 
         let scannedTransactionStorage = try ScannedTransactionStorage(dbPool: dbPool)
         spamWrapper = SpamWrapper(
@@ -437,18 +465,6 @@ public class Core {
 
         valueFormatter = CurrencyValueFormatter(amountRoundingManager: amountRoundingManager)
 
-        let walletConnectHandler = WalletConnectHandlerModule.handler(
-            walletConnectManager: walletConnectSessionManager,
-            walletConnectRequestHandler: walletConnectRequestHandler,
-            cloudAccountBackupManager: cloudBackupManager,
-            accountManager: accountManager,
-            lockManager: lockManager
-        )
-        let widgetCoinHandler = WidgetCoinEventHandler(marketKit: marketKit)
-        let sendAddressHandler = AddressEventHandler(marketKit: marketKit)
-        let telegramUserHandler = TelegramUserHandler(marketKit: marketKit)
-        // let tonConnectHandler = TonConnectEventHandler(tonConnectManager: tonConnectManager)
-
         openCryptoPay = OpenCryptoPayModule(
             dbPool: dbPool,
             networkManager: networkManager,
@@ -459,15 +475,6 @@ public class Core {
 
         transactionInfoExtraFactory = TransactionInfoExtraFactory()
         transactionInfoExtraFactory.register(OpenCryptoPayTransactionInfoProvider(manager: openCryptoPay.paymentManager, accountManager: accountManager))
-
-        let openCryptoPayHandler = OpenCryptoPayEventHandler()
-
-        appEventHandler.append(handler: walletConnectHandler)
-        // eventHandler.append(handler: tonConnectHandler)
-        appEventHandler.append(handler: widgetCoinHandler)
-        appEventHandler.append(handler: sendAddressHandler)
-        appEventHandler.append(handler: telegramUserHandler)
-        appEventHandler.append(handler: openCryptoPayHandler)
 
         appManager = AppManager(
             widgetRefresher: widgetRefresher,

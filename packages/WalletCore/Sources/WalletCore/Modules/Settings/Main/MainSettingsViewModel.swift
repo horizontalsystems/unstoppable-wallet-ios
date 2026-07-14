@@ -84,8 +84,10 @@ class MainSettingsViewModel: ObservableObject {
         debuggingAmlResult = localStorage.debuggingAmlCheckResult
 
         subscribe(MainScheduler.instance, disposeBag, backupManager.allBackedUpObservable) { [weak self] _ in self?.syncManageWalletsAlert() }
-        subscribe(MainScheduler.instance, disposeBag, walletConnectSessionManager.sessionsObservable) { [weak self] _ in self?.syncWalletConnectSessionCount() }
-        subscribe(MainScheduler.instance, disposeBag, walletConnectSessionManager.activePendingRequestsObservable) { [weak self] _ in self?.syncWalletConnectPendingRequestCount() }
+        if let walletConnectSessionManager {
+            subscribe(MainScheduler.instance, disposeBag, walletConnectSessionManager.sessionsObservable) { [weak self] _ in self?.syncWalletConnectSessionCount() }
+            subscribe(MainScheduler.instance, disposeBag, walletConnectSessionManager.activePendingRequestsObservable) { [weak self] _ in self?.syncWalletConnectPendingRequestCount() }
+        }
         subscribe(MainScheduler.instance, disposeBag, contactManager.iCloudErrorObservable) { [weak self] error in
             if error != nil, self?.contactManager.remoteSync ?? false {
                 self?.iCloudUnavailable = true
@@ -138,11 +140,11 @@ class MainSettingsViewModel: ObservableObject {
     }
 
     private func syncWalletConnectSessionCount() {
-        walletConnectSessionCount = walletConnectSessionManager.sessions.count
+        walletConnectSessionCount = walletConnectSessionManager?.sessions.count ?? 0
     }
 
     private func syncWalletConnectPendingRequestCount() {
-        walletConnectPendingRequestCount = walletConnectSessionManager.activePendingRequests.count
+        walletConnectPendingRequestCount = walletConnectSessionManager?.activePendingRequests.count ?? 0
     }
 
     private func syncSecurityAlert() {

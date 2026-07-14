@@ -22,7 +22,9 @@ enum WCSendEthereumTransactionRequestModule {
             return nil
         }
 
-        let signService = Core.shared.walletConnectSessionManager.service
+        guard let signService = Core.shared.walletConnectSessionManager?.service else {
+            return nil
+        }
         guard let service = WCSendEthereumTransactionRequestService(request: request, baseService: signService) else {
             return nil
         }

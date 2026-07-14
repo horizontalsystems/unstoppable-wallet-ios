@@ -102,7 +102,9 @@ class WalletConnectListViewController: ThemeViewController {
         guard let account = Core.shared.accountManager.activeAccount else {
             return
         }
-        let viewController = WalletConnectMainModule.viewController(account: account, session: session, sourceViewController: self, viaPushing: true)
+        guard let viewController = WalletConnectMainModule.viewController(account: account, session: session, sourceViewController: self, viaPushing: true) else {
+            return
+        }
 
         stat(page: .walletConnect, event: .open(page: .walletConnectSession))
         navigationController?.pushViewController(viewController, animated: true)

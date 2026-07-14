@@ -5,7 +5,7 @@ import MarketKit
 class WalletConnectEvmSendHandler {
     private let request: WalletConnectRequest
     private let payload: WCEthereumTransactionPayload
-    private let signService: IWalletConnectSignService = Core.shared.walletConnectSessionManager.service
+    private let signService: IWalletConnectSignService
 
     let baseToken: Token
     private let transactionData: TransactionData
@@ -13,12 +13,13 @@ class WalletConnectEvmSendHandler {
     private let decorator = EvmDecorator()
     private let evmFeeEstimator = EvmFeeEstimator()
 
-    init(request: WalletConnectRequest, payload: WCEthereumTransactionPayload, baseToken: Token, transactionData: TransactionData, evmKitWrapper: EvmKitWrapper) {
+    init(request: WalletConnectRequest, payload: WCEthereumTransactionPayload, baseToken: Token, transactionData: TransactionData, evmKitWrapper: EvmKitWrapper, signService: IWalletConnectSignService) {
         self.request = request
         self.payload = payload
         self.baseToken = baseToken
         self.transactionData = transactionData
         self.evmKitWrapper = evmKitWrapper
+        self.signService = signService
     }
 }
 
@@ -128,6 +129,10 @@ extension WalletConnectEvmSendHandler {
             return nil
         }
 
+        guard let signService = Core.shared.walletConnectSessionManager?.service else {
+            return nil
+        }
+
         let transactionData = TransactionData(
             to: payload.transaction.to,
             value: payload.transaction.value,
@@ -139,7 +144,8 @@ extension WalletConnectEvmSendHandler {
             payload: payload,
             baseToken: baseToken,
             transactionData: transactionData,
-            evmKitWrapper: evmKitWrapper
+            evmKitWrapper: evmKitWrapper,
+            signService: signService
         )
     }
 }

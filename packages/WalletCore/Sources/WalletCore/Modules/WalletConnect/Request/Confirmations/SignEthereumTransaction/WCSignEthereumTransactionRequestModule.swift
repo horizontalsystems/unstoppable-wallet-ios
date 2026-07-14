@@ -22,7 +22,9 @@ enum WCSignEthereumTransactionRequestModule {
             return nil
         }
 
-        let wcService = Core.shared.walletConnectSessionManager.service
+        guard let wcService = Core.shared.walletConnectSessionManager?.service else {
+            return nil
+        }
         let viewModel = WCSignEthereumTransactionRequestViewModel(requestId: request.id, payload: payload, evmKitWrapper: evmKitWrapper, wcService: wcService)
 
         let info = SendEvmData.DAppInfo(name: request.payload.dAppName, chainName: request.chain.chainName, address: request.chain.address)

@@ -38,6 +38,11 @@ struct UnstoppableApp: App {
     private static func initCore() throws {
         SwapProviderFactory.register([DefaultSwapProviderResolver.self])
 
+        [DeepLinkRoute.walletConnect, .tonConnect, .tonTransfer, .coin, .referral, .openCryptoPay, .transfer]
+            .forEach { DeepLinkRouteFactory.register($0) }
+        [AppEventHandlerKind.walletConnect, .widgetCoin, .address, .telegramUser, .openCryptoPay]
+            .forEach { AppEventHandlerFactory.register($0) }
+
         try Core.initApp(config: Core.Config(), widgetRefresher: WidgetRefresher())
 
         EvmKitConfigFactory.register(UnstoppableEvmKitConfigProvider.self)

@@ -36,7 +36,7 @@ class MainBadgeViewModel: ObservableObject {
             .sink { [weak self] _ in self?.syncSettingsBadge() }
             .store(in: &cancellables)
 
-        walletConnectSessionManager.activePendingRequestsObservable
+        walletConnectSessionManager?.activePendingRequestsObservable
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .subscribe(onNext: { [weak self] _ in
@@ -56,7 +56,7 @@ class MainBadgeViewModel: ObservableObject {
     }
 
     private var resolvedBadge: String? {
-        let count = walletConnectSessionManager.activePendingRequests.count
+        let count = walletConnectSessionManager?.activePendingRequests.count ?? 0
 
         if count > 0 {
             return count.description
