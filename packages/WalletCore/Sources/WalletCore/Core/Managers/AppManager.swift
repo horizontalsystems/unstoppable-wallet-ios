@@ -137,7 +137,7 @@ public extension AppManager {
         widgetRefresher?.refreshAll()
     }
 
-    internal func didReceive(url: URL) {
+    func didReceive(url: URL) {
         deeplinkStorage.deepLinkUrl = url
     }
 }

@@ -14,4 +14,5 @@ public extension DeepLinkRoute {
     static let referral = DeepLinkRoute(id: "referral")
     static let openCryptoPay = DeepLinkRoute(id: "open_crypto_pay")
     static let transfer = DeepLinkRoute(id: "transfer")
+    static let appTransfer = DeepLinkRoute(id: "app_transfer")
 }

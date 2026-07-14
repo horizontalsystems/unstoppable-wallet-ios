@@ -42,6 +42,7 @@ struct UnstoppableApp: App {
             .forEach { DeepLinkRouteFactory.register($0) }
         [AppEventHandlerKind.walletConnect, .widgetCoin, .address, .telegramUser, .openCryptoPay]
             .forEach { AppEventHandlerFactory.register($0) }
+        DeepLinkPresenterFactory.register(sendPresenter: DeepLinkPresenterFactory.sendPresenter)
 
         try Core.initApp(config: Core.Config(), widgetRefresher: WidgetRefresher())
 
