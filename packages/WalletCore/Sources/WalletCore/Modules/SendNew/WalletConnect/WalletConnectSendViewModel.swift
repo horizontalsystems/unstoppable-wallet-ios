@@ -2,7 +2,9 @@ import Combine
 
 class WalletConnectSendViewModel: ObservableObject {
     private let request: WalletConnectRequest
-    private let signService: IWalletConnectSignService = Core.shared.walletConnectSessionManager.service
+    private var signService: IWalletConnectSignService? {
+        Core.shared.walletConnectSessionManager?.service
+    }
 
     init(request: WalletConnectRequest) {
         self.request = request
@@ -29,6 +31,6 @@ class WalletConnectSendViewModel: ObservableObject {
     }
 
     func reject() {
-        signService.rejectRequest(id: request.id)
+        signService?.rejectRequest(id: request.id)
     }
 }

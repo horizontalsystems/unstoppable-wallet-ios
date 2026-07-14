@@ -7,16 +7,16 @@ enum WCSignMessageRequestModule {
         guard let account = Core.shared.accountManager.activeAccount,
               let chainId = Int(request.chain.id),
               let evmWrapper = Core.shared.evmBlockchainManager.kitWrapper(chainId: chainId, account: account),
-              let signer = evmWrapper.signer
+              let signer = evmWrapper.signer,
+              let signService = Core.shared.walletConnectSessionManager?.service
         else {
             return nil
         }
 
-        return viewController(account: account, evmWrapper: evmWrapper, signer: signer, request: request)
+        return viewController(account: account, evmWrapper: evmWrapper, signer: signer, request: request, signService: signService)
     }
 
-    static func viewController(account _: Account, evmWrapper _: EvmKitWrapper, signer: Signer, request: WalletConnectRequest) -> UIViewController {
-        let signService = Core.shared.walletConnectSessionManager.service
+    static func viewController(account _: Account, evmWrapper _: EvmKitWrapper, signer: Signer, request: WalletConnectRequest, signService: IWalletConnectSignService) -> UIViewController {
         let service = WCSignMessageRequestService(request: request, signService: signService, signer: signer)
         let viewModel = WCSignMessageRequestViewModel(service: service)
 

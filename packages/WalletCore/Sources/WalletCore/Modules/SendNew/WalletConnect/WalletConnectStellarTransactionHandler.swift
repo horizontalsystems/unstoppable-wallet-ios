@@ -7,18 +7,19 @@ import stellarsdk
 class WalletConnectStellarTransactionHandler {
     private let request: WalletConnectRequest
     private let payload: WCStellarTransactionPayload
-    private let signService: IWalletConnectSignService = Core.shared.walletConnectSessionManager.service
+    private let signService: IWalletConnectSignService
 
     let baseToken: Token
     private let stellarKit: StellarKit.Kit
     private let keyPair: KeyPair
 
-    init(request: WalletConnectRequest, payload: WCStellarTransactionPayload, baseToken: Token, keyPair: KeyPair, stellarKit: StellarKit.Kit) {
+    init(request: WalletConnectRequest, payload: WCStellarTransactionPayload, baseToken: Token, keyPair: KeyPair, stellarKit: StellarKit.Kit, signService: IWalletConnectSignService) {
         self.request = request
         self.payload = payload
         self.baseToken = baseToken
         self.keyPair = keyPair
         self.stellarKit = stellarKit
+        self.signService = signService
     }
 }
 
@@ -262,12 +263,17 @@ extension WalletConnectStellarTransactionHandler {
             return nil
         }
 
+        guard let signService = Core.shared.walletConnectSessionManager?.service else {
+            return nil
+        }
+
         return WalletConnectStellarTransactionHandler(
             request: request,
             payload: payload,
             baseToken: baseToken,
             keyPair: keyPair,
             stellarKit: stellarKit,
+            signService: signService
         )
     }
 }

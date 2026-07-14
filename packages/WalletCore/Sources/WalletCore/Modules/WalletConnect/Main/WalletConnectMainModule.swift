@@ -7,11 +7,16 @@ import WalletConnectSign
 import WalletConnectUtils
 
 enum WalletConnectMainModule {
-    static func viewController(account: Account, session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, sourceViewController: UIViewController?, viaPushing: Bool = false) -> UIViewController {
-        let service = Core.shared.walletConnectSessionManager.service
+    static func viewController(account: Account, session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, sourceViewController: UIViewController?, viaPushing: Bool = false) -> UIViewController? {
+        guard let sessionManager = Core.shared.walletConnectSessionManager,
+              let walletConnectRequestHandler = Core.shared.walletConnectRequestHandler
+        else {
+            return nil
+        }
+
+        let service = sessionManager.service
 
         let chain = ProposalChain()
-        let walletConnectRequestHandler = Core.shared.walletConnectRequestHandler
         chain.append(handler: Eip155ProposalHandler(evmBlockchainManager: Core.shared.evmBlockchainManager, account: account, supportedMethods: walletConnectRequestHandler.supportedMethodsBy(namespace: Eip155ProposalHandler.namespace)))
 
         chain.append(handler: StellarProposalHandler(stellarKitManager: Core.shared.stellarKitManager, account: account, supportedMethods: walletConnectRequestHandler.supportedMethodsBy(namespace: StellarProposalHandler.namespace)))
@@ -29,11 +34,17 @@ enum WalletConnectMainModule {
         return viewController(service: mainService, sourceViewController: sourceViewController, viaPushing: viaPushing)
     }
 
-    static func viewController(service: WalletConnectMainService, sourceViewController: UIViewController?, viaPushing: Bool = false) -> UIViewController {
+    static func viewController(service: WalletConnectMainService, sourceViewController: UIViewController?, viaPushing: Bool = false) -> UIViewController? {
+        guard let sessionManager = Core.shared.walletConnectSessionManager,
+              let requestHandler = Core.shared.walletConnectRequestHandler
+        else {
+            return nil
+        }
+
         let viewModel = WalletConnectMainViewModel(service: service)
         let viewController = WalletConnectMainViewController(
             viewModel: viewModel,
-            requestViewFactory: Core.shared.walletConnectRequestHandler,
+            requestViewFactory: requestHandler,
             sourceViewController: sourceViewController,
             viaPushing: viaPushing
         )
@@ -41,10 +52,10 @@ enum WalletConnectMainModule {
         let pendingRequestService = WalletConnectMainPendingRequestService(
             service: service,
             accountManager: Core.shared.accountManager,
-            sessionManager: Core.shared.walletConnectSessionManager,
-            requestHandler: Core.shared.walletConnectRequestHandler,
+            sessionManager: sessionManager,
+            requestHandler: requestHandler,
             evmBlockchainManager: Core.shared.evmBlockchainManager,
-            signService: Core.shared.walletConnectSessionManager.service
+            signService: sessionManager.service
         )
         let pendingRequestViewModel = WalletConnectMainPendingRequestViewModel(service: pendingRequestService)
         viewController.pendingRequestViewModel = pendingRequestViewModel
@@ -65,6 +76,7 @@ struct WalletConnectMainView: UIViewControllerRepresentable {
 
     func makeUIViewController(context _: Context) -> UIViewController {
         WalletConnectMainModule.viewController(account: account, session: session, proposal: proposal, sourceViewController: nil)
+            ?? ErrorViewController(text: AppError.unknownError.localizedDescription)
     }
 
     func updateUIViewController(_: UIViewController, context _: Context) {}

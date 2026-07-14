@@ -10,9 +10,9 @@ class DeepLinkViewManager {
     let walletConnectVerificationModel: WalletConnectVerificationModel
 
     private let eventHandler: EventHandler
-    private let walletConnectManager: WalletConnectManager
+    private let walletConnectManager: WalletConnectManager?
 
-    init(eventHandler: EventHandler, walletConnectManager: WalletConnectManager, accountManager: AccountManager, cloudBackupManager: CloudBackupManager) {
+    init(eventHandler: EventHandler, walletConnectManager: WalletConnectManager?, accountManager: AccountManager, cloudBackupManager: CloudBackupManager) {
         self.eventHandler = eventHandler
         self.walletConnectManager = walletConnectManager
 
@@ -26,21 +26,23 @@ class DeepLinkViewManager {
             }
             .store(in: &cancellables)
 
-        walletConnectManager.$isWaitingForSession
-            .subscribe(on: DispatchQueue.global(qos: .userInitiated))
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] waitingForSession in
-                self?.showWaitingForSession(waitingForSession)
-            }
-            .store(in: &cancellables)
+        if let walletConnectManager {
+            walletConnectManager.$isWaitingForSession
+                .subscribe(on: DispatchQueue.global(qos: .userInitiated))
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] waitingForSession in
+                    self?.showWaitingForSession(waitingForSession)
+                }
+                .store(in: &cancellables)
 
-        walletConnectManager.errorPublisher
-            .subscribe(on: DispatchQueue.global(qos: .userInitiated))
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] error in
-                self?.show(error: error)
-            }
-            .store(in: &cancellables)
+            walletConnectManager.errorPublisher
+                .subscribe(on: DispatchQueue.global(qos: .userInitiated))
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] error in
+                    self?.show(error: error)
+                }
+                .store(in: &cancellables)
+        }
     }
 
     private func handleAsync(_ signal: EventHandlerSignal) {
@@ -120,6 +122,6 @@ class DeepLinkViewManager {
     }
 
     private func handleWalletConnect(url: String) {
-        walletConnectManager.pair(url: url)
+        walletConnectManager?.pair(url: url)
     }
 }
