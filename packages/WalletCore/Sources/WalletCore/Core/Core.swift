@@ -428,7 +428,7 @@ public class Core {
         recentAddressStorage = try RecentAddressStorage(dbPool: dbPool)
 
         let statStorage = StatStorage(dbPool: dbPool)
-        statManager = StatManager(marketKit: marketKit, storage: statStorage, userDefaultsStorage: userDefaultsStorage)
+        statManager = StatManager(marketKit: marketKit, storage: statStorage, userDefaultsStorage: userDefaultsStorage, autoEnableStats: config.autoEnableStats)
 
         let tonConnectStorage = try TonConnectStorage(dbPool: dbPool)
         tonConnectManager = TonConnectManager(storage: tonConnectStorage, accountManager: accountManager)
@@ -521,9 +521,11 @@ public class Core {
 public extension Core {
     struct Config {
         let autoEnableTokensOnReceive: Bool
+        let autoEnableStats: Bool
 
-        public init(autoEnableTokensOnReceive: Bool = true) {
+        public init(autoEnableTokensOnReceive: Bool = true, autoEnableStats: Bool = true) {
             self.autoEnableTokensOnReceive = autoEnableTokensOnReceive
+            self.autoEnableStats = autoEnableStats
         }
     }
 }

@@ -37,14 +37,14 @@ class StatManager {
         allowedSubject.eraseToAnyPublisher()
     }
 
-    init(marketKit: MarketKit.Kit, storage: StatStorage, userDefaultsStorage: UserDefaultsStorage) {
+    init(marketKit: MarketKit.Kit, storage: StatStorage, userDefaultsStorage: UserDefaultsStorage, autoEnableStats: Bool) {
         self.marketKit = marketKit
         self.storage = storage
         self.userDefaultsStorage = userDefaultsStorage
 
         appVersion = AppConfig.appVersion
         appId = AppConfig.appId
-        allowed = userDefaultsStorage.value(for: StatManager.keySendingAllowed) ?? true
+        allowed = userDefaultsStorage.value(for: StatManager.keySendingAllowed) ?? autoEnableStats
     }
 
     func logStat(eventPage: StatPage, eventSection: StatSection? = nil, event: StatEvent) {
