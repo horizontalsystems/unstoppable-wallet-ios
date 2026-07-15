@@ -2,7 +2,7 @@ import EvmKit
 import Foundation
 import MarketKit
 
-class ContractCallTransactionRecord: EvmTransactionRecord {
+public class ContractCallTransactionRecord: EvmTransactionRecord {
     let contractAddress: String
     let method: String?
     let incomingEvents: [TransferEvent]
@@ -23,7 +23,7 @@ class ContractCallTransactionRecord: EvmTransactionRecord {
         combined(incomingEvents: incomingEvents, outgoingEvents: outgoingEvents)
     }
 
-    override var mainValue: AppValue? {
+    override public var mainValue: AppValue? {
         let (incomingValues, outgoingValues) = combinedValues
 
         if incomingValues.count == 1, outgoingValues.isEmpty {
