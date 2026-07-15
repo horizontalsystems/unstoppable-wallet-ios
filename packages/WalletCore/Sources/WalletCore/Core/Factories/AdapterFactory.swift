@@ -53,7 +53,7 @@ public class AdapterFactory {
         return EvmAdapter(evmKitWrapper: evmKitWrapper)
     }
 
-    private func eip20Adapter(address: String, wallet: Wallet, coinManager: CoinManager) -> IAdapter? {
+    private func eip20Adapter(address: String, wallet: Wallet) -> IAdapter? {
         guard let blockchainType = evmBlockchainManager.blockchain(token: wallet.token)?.type else {
             return nil
         }
@@ -68,9 +68,7 @@ public class AdapterFactory {
             evmKitWrapper: evmKitWrapper,
             contractAddress: address,
             wallet: wallet,
-            baseToken: baseToken,
-            coinManager: coinManager,
-            evmLabelManager: evmLabelManager
+            baseToken: baseToken
         )
     }
 
@@ -113,9 +111,7 @@ extension AdapterFactory {
                 source: transactionSource,
                 baseToken: baseToken,
                 evmTransactionSource: syncSource.transactionSource,
-                coinManager: coinManager,
-                spamWrapper: spamWrapper,
-                evmLabelManager: evmLabelManager
+                spamWrapper: spamWrapper
             )
             return TransactionsAdapterDecoratorFactory.decorate(adapter: adapter, source: transactionSource)
         }
@@ -226,7 +222,7 @@ extension AdapterFactory {
             return evmAdapter(wallet: wallet)
 
         case let (.eip20(address), .ethereum), let (.eip20(address), .binanceSmartChain), let (.eip20(address), .polygon), let (.eip20(address), .avalanche), let (.eip20(address), .optimism), let (.eip20(address), .arbitrumOne), let (.eip20(address), .gnosis), let (.eip20(address), .fantom), let (.eip20(address), .base), let (.eip20(address), .zkSync):
-            return eip20Adapter(address: address, wallet: wallet, coinManager: coinManager)
+            return eip20Adapter(address: address, wallet: wallet)
 
         case (.native, .tron):
             return tronAdapter(wallet: wallet)
