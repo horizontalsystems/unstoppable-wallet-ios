@@ -1,4 +1,5 @@
 import EvmKit
+import MarketKit
 import WalletCore
 
 // App-side default EVM config for the Unstoppable app. Moved out of WalletCore (which now registers no provider
@@ -10,5 +11,11 @@ enum UnstoppableEvmKitConfigProvider: IEvmKitConfigProvider {
 
     static func decorators(account _: Account, evmKit: EvmKit.Kit) {
         EvmKitConfigFactory.defaultDecorators(evmKit: evmKit)
+    }
+}
+
+enum UnstoppableEvmTransactionConverterProvider: IEvmTransactionConverterProvider {
+    static func converters(baseToken: MarketKit.Token, userAddress: EvmKit.Address) -> [IEvmTransactionConverter]? {
+        EvmTransactionConverterFactory.defaultConverters(baseToken: baseToken, userAddress: userAddress)
     }
 }

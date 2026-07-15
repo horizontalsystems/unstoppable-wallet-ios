@@ -46,9 +46,12 @@ struct UnstoppableApp: App {
             .forEach { AppEventHandlerFactory.register($0) }
         DeepLinkPresenterFactory.register(sendPresenter: DeepLinkPresenterFactory.sendPresenter)
 
-        try Core.initApp(config: Core.Config(), widgetRefresher: WidgetRefresher())
-
+        // Registered BEFORE Core.initApp: adapters/kits are created asynchronously on wallet events, and their
+        // factories fatalError on a missing provider — registration must deterministically precede any creation.
         EvmKitConfigFactory.register(UnstoppableEvmKitConfigProvider.self)
+        EvmTransactionConverterFactory.register(UnstoppableEvmTransactionConverterProvider.self)
+
+        try Core.initApp(config: Core.Config(), widgetRefresher: WidgetRefresher())
 
         Core.shared.appManager.didFinishLaunching()
     }

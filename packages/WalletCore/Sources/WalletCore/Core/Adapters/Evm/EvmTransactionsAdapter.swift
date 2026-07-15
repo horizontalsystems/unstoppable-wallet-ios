@@ -11,25 +11,28 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
     static let decimal = 18
 
     private let evmTransactionSource: EvmKit.TransactionSource
-    private let transactionConverter: EvmTransactionConverter
+    private let converters: [IEvmTransactionConverter]
     private let spamManager: SpamManager?
 
-    init(evmKitWrapper: EvmKitWrapper, source: TransactionSource, baseToken: MarketKit.Token, evmTransactionSource: EvmKit.TransactionSource, coinManager: CoinManager, spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager) {
+    init(evmKitWrapper: EvmKitWrapper, source: TransactionSource, baseToken: MarketKit.Token, evmTransactionSource: EvmKit.TransactionSource, spamWrapper: SpamWrapper) {
         self.evmTransactionSource = evmTransactionSource
         spamManager = spamWrapper.spamManager(source: source)
 
-        transactionConverter = EvmTransactionConverter(
-            source: source,
-            baseToken: baseToken,
-            coinManager: coinManager,
-            blockchainType: evmKitWrapper.blockchainType,
-            userAddress: evmKitWrapper.evmKit.address,
-            evmLabelManager: evmLabelManager
-        )
-
+        converters = EvmTransactionConverterFactory.converters(baseToken: baseToken, userAddress: evmKitWrapper.evmKit.address)
         super.init(evmKitWrapper: evmKitWrapper, decimals: EvmAdapter.decimals)
 
         initializeSpamManager()
+    }
+
+    private func record(fromTransaction fullTransaction: FullTransaction) -> TransactionRecord? {
+        for converter in converters {
+            if let record = converter.convert(fullTransaction: fullTransaction) {
+                return record
+            }
+        }
+
+        print("EvmTransactionsAdapter: converter chain produced no record for \(fullTransaction.transaction.hash.hs.hexString)")
+        return nil
     }
 
     private func initializeSpamManager() {
@@ -106,7 +109,7 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
 
     private func handleTransactions(_ transactions: [FullTransaction]) -> [TransactionRecord] {
         // Preserve evmKit order (descending — newest first)
-        let records = transactions.map { transactionConverter.transactionRecord(fromTransaction: $0) }
+        let records = transactions.compactMap { record(fromTransaction: $0) }
 
         // Mutates .spam in-place via reference type.
         // Internally sorts ascending for correct detection,
@@ -140,7 +143,7 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
     func allTransactionsAfter(paginationData: String?) -> Single<[TransactionRecord]> {
         let hash = paginationData?.hs.hexData
         let transactions = evmKit.allTransactionsAfter(transactionHash: hash)
-        let records = transactions.compactMap { transactionConverter.transactionRecord(fromTransaction: $0) }
+        let records = transactions.compactMap { record(fromTransaction: $0) }
 
         return Single.just(records)
     }
