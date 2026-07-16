@@ -24,9 +24,9 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
         initializeSpamManager()
     }
 
-    private func record(fromTransaction fullTransaction: FullTransaction) -> TransactionRecord? {
+    private func record(fromTransaction fullTransaction: FullTransaction, token: MarketKit.Token?) -> TransactionRecord? {
         for converter in converters {
-            if let record = converter.convert(fullTransaction: fullTransaction) {
+            if let record = converter.convert(fullTransaction: fullTransaction, token: token) {
                 return record
             }
         }
@@ -107,9 +107,9 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
         evmTransactionSource.transactionUrl(hash: transactionHash)
     }
 
-    private func handleTransactions(_ transactions: [FullTransaction]) -> [TransactionRecord] {
+    private func handleTransactions(_ transactions: [FullTransaction], token: MarketKit.Token?) -> [TransactionRecord] {
         // Preserve evmKit order (descending — newest first)
-        let records = transactions.compactMap { record(fromTransaction: $0) }
+        let records = transactions.compactMap { record(fromTransaction: $0, token: token) }
 
         // Mutates .spam in-place via reference type.
         // Internally sorts ascending for correct detection,
@@ -122,7 +122,7 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
     func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
         evmKit.transactionsObservable(tagQueries: [tagQuery(token: token, filter: filter, address: address?.lowercased())]).map { [weak self] in
 
-            self?.handleTransactions($0) ?? []
+            self?.handleTransactions($0, token: token) ?? []
         }
     }
 
@@ -136,14 +136,14 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
                     return []
                 }
 
-                return self?.handleTransactions(transactions) ?? []
+                return self?.handleTransactions(transactions, token: token) ?? []
             }
     }
 
     func allTransactionsAfter(paginationData: String?) -> Single<[TransactionRecord]> {
         let hash = paginationData?.hs.hexData
         let transactions = evmKit.allTransactionsAfter(transactionHash: hash)
-        let records = transactions.compactMap { record(fromTransaction: $0) }
+        let records = transactions.compactMap { record(fromTransaction: $0, token: nil) }
 
         return Single.just(records)
     }

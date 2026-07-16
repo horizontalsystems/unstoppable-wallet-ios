@@ -2,8 +2,10 @@ import EvmKit
 import MarketKit
 
 // One FullTransaction → TransactionRecord converter in an app-assembled chain. nil → the next converter.
+// `token` is the caller's scope — the pool token for list queries, nil for unscoped consumers
+// (TransactionInfo live updates, SpamManager); a converter may shape the record per scope.
 public protocol IEvmTransactionConverter {
-    func convert(fullTransaction: FullTransaction) -> TransactionRecord?
+    func convert(fullTransaction: FullTransaction, token: MarketKit.Token?) -> TransactionRecord?
 }
 
 // Supplies the converter chain for one adapter instance. Only the truly per-wallet context is passed:

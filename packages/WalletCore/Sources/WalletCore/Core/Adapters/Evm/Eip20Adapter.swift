@@ -10,21 +10,23 @@ public class Eip20Adapter: BaseEvmAdapter {
     private static let approveConfirmationsThreshold: Int? = nil
     public let eip20Kit: Eip20Kit.Kit
     private let contractAddress: EvmKit.Address
+    private let token: Token
     private let converters: [IEvmTransactionConverter]
 
     init(evmKitWrapper: EvmKitWrapper, contractAddress: String, wallet: Wallet, baseToken: Token) throws {
         let address = try EvmKit.Address(hex: contractAddress)
         eip20Kit = try Eip20Kit.Kit.instance(evmKit: evmKitWrapper.evmKit, contractAddress: address)
         self.contractAddress = address
+        token = wallet.token
 
         converters = EvmTransactionConverterFactory.converters(baseToken: baseToken, userAddress: evmKitWrapper.evmKit.address)
 
         super.init(evmKitWrapper: evmKitWrapper, decimals: wallet.decimals)
     }
 
-    private func record(fromTransaction fullTransaction: FullTransaction) -> TransactionRecord? {
+    private func record(fromTransaction fullTransaction: FullTransaction, token: Token?) -> TransactionRecord? {
         for converter in converters {
-            if let record = converter.convert(fullTransaction: fullTransaction) {
+            if let record = converter.convert(fullTransaction: fullTransaction, token: token) {
                 return record
             }
         }
@@ -78,7 +80,7 @@ extension Eip20Adapter: ISendEthereumAdapter {
 
 extension Eip20Adapter: IAllowanceAdapter {
     var pendingTransactions: [TransactionRecord] {
-        eip20Kit.pendingTransactions().compactMap { record(fromTransaction: $0) }
+        eip20Kit.pendingTransactions().compactMap { record(fromTransaction: $0, token: token) }
     }
 
     func allowance(spenderAddress: Address, defaultBlockParameter: BlockParameter) async throws -> Decimal {
