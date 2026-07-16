@@ -229,7 +229,7 @@ public class MultiSwapViewModel: ObservableObject {
         }
     }
 
-    @Published var userSelectedProviderId: String? {
+    @Published public var userSelectedProviderId: String? {
         didSet {
             guard userSelectedProviderId != internalUserSelectedProviderId else {
                 return
@@ -678,7 +678,7 @@ public extension MultiSwapViewModel {
         }
     }
 
-    internal var sortedQuotes: [Quote] {
+    var sortedQuotes: [Quote] {
         switch quoteSortType {
         case .bestRate:
             return quotes.sorted { $0.quote.expectedBuyAmount > $1.quote.expectedBuyAmount }
