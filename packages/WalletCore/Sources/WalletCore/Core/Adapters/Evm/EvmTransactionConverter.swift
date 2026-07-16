@@ -179,7 +179,8 @@ public class EvmTransactionConverter {
 
 extension EvmTransactionConverter: IEvmTransactionConverter {
     // Total: the default case returns a plain EvmTransactionRecord, so the chain always terminates here.
-    public func convert(fullTransaction: FullTransaction) -> TransactionRecord? {
+    // Scope-agnostic: the stock records carry all events; scoping is a custom-converter concern.
+    public func convert(fullTransaction: FullTransaction, token _: MarketKit.Token?) -> TransactionRecord? {
         transactionRecord(fromTransaction: fullTransaction)
     }
 }
