@@ -10,11 +10,11 @@ public class SwapHistoryManager {
 
     private let swapUpdateSubject = PassthroughSubject<Swap, Never>()
 
+    // No work in init: the first sync is kicked by AppManager.didFinishLaunching, once the app
+    // (registries, adapters, host-app context) is assembled.
     init(accountManager: AccountManager, storage: SwapStorage) {
         self.accountManager = accountManager
         self.storage = storage
-
-        sync()
     }
 
     private func _sync() async throws {
@@ -140,6 +140,23 @@ public extension SwapHistoryManager {
             }
 
             sync()
+        } catch {
+            print(error)
+        }
+    }
+
+    // mechanism-agnostic hook: the mechanism itself learned the swap failed (e.g. a reverted /
+    // never-mined userOp) — no server tracking involved. Targeted update scoped to pending
+    // statuses; a settled swap is never downgraded, a re-delivery is a no-op.
+    func markFailed(trackingHandle: String) {
+        do {
+            guard try storage.markFailed(trackingHandle: trackingHandle) else {
+                return
+            }
+
+            if let swap = try storage.swap(trackingHandle: trackingHandle) {
+                swapUpdateSubject.send(swap)
+            }
         } catch {
             print(error)
         }

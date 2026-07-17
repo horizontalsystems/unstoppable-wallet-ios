@@ -162,4 +162,30 @@ extension SwapStorage {
                 .updateAll(db, SwapRecord.Columns.txHash.set(to: txHash)) > 0
         }
     }
+
+    // targeted status update for a swap whose mechanism reported failure; scoped to pending
+    // statuses so a settled swap can never be downgraded and a re-delivery is a no-op
+    func markFailed(trackingHandle: String) throws -> Bool {
+        let pendingStatuses = Swap.pendingStatuses.map(\.rawValue)
+
+        return try dbPool.write { db in
+            try SwapRecord
+                .filter(SwapRecord.Columns.trackingHandle == trackingHandle && pendingStatuses.contains(SwapRecord.Columns.status))
+                .updateAll(db, SwapRecord.Columns.status.set(to: Swap.Status.failed.rawValue)) > 0
+        }
+    }
+
+    func swap(trackingHandle: String) throws -> Swap? {
+        let record = try dbPool.read { db in
+            try SwapRecord
+                .filter(SwapRecord.Columns.trackingHandle == trackingHandle)
+                .fetchOne(db)
+        }
+
+        guard let record else {
+            return nil
+        }
+
+        return try swaps(records: [record]).first
+    }
 }
