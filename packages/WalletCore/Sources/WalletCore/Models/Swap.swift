@@ -8,7 +8,7 @@ public struct Swap: Hashable {
     public let txHash: String?
     // opaque mechanism handle (set by the broadcaster) used by resolve() to attach
     // the on-chain txHash later; nil for directly-broadcast swaps
-    let trackingHandle: String?
+    public let trackingHandle: String?
     let accountId: String
     public let providerId: String
     public var status: Status
