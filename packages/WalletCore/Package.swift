@@ -22,7 +22,7 @@ let package = Package(
         .package(url: "https://github.com/horizontalsystems/DashKit.Swift", exact: "3.1.0"),
         .package(url: "https://github.com/johnxnguyen/Down", from: "0.11.0"),
         .package(url: "https://github.com/horizontalsystems/ECashKit.Swift.git", exact: "3.0.2"),
-        .package(url: "https://github.com/horizontalsystems/Eip20Kit.Swift", exact: "2.1.1"),
+        .package(url: "https://github.com/horizontalsystems/Eip20Kit.Swift", exact: "2.1.2"),
         .package(url: "https://github.com/horizontalsystems/EvmKit.Swift", exact: "2.5.0"),
         .package(url: "https://github.com/horizontalsystems/FeeRateKit.Swift", exact: "2.1.1"),
         .package(url: "https://github.com/horizontalsystems/HCaptcha-ios-sdk.git", exact: "1.0.0"),
