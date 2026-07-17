@@ -24,6 +24,7 @@ public class AppManager {
     private let tonKitManager: TonKitManager
     private let stellarKitManager: StellarKitManager
     private let solanaKitManager: SolanaKitManager
+    private let swapHistoryManager: SwapHistoryManager
 
     private let didBecomeActiveSubjectOld = PublishSubject<Void>()
     private let willEnterForegroundSubjectOld = PublishSubject<Void>()
@@ -40,7 +41,8 @@ public class AppManager {
          logRecordManager: LogRecordManager, deeplinkStorage: DeeplinkStorage,
          evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager, statManager: StatManager,
          nftMetadataSyncer: NftMetadataSyncer, tonKitManager: TonKitManager,
-         stellarKitManager: StellarKitManager, solanaKitManager: SolanaKitManager)
+         stellarKitManager: StellarKitManager, solanaKitManager: SolanaKitManager,
+         swapHistoryManager: SwapHistoryManager)
     {
         self.widgetRefresher = widgetRefresher
         self.accountManager = accountManager
@@ -62,6 +64,7 @@ public class AppManager {
         self.tonKitManager = tonKitManager
         self.stellarKitManager = stellarKitManager
         self.solanaKitManager = solanaKitManager
+        self.swapHistoryManager = swapHistoryManager
     }
 
     private func warmUp() {
@@ -79,6 +82,7 @@ public extension AppManager {
         accountManager.handleLaunch()
         walletManager.preloadWallets()
         kitCleaner.clear()
+        swapHistoryManager.sync()
 
         rateAppManager.onLaunch()
 

@@ -90,7 +90,7 @@ public class Core {
     let backupManager: BackupManager
     let enabledWalletCacheManager: EnabledWalletCacheManager
     public let walletManager: WalletManager
-    let coinManager: CoinManager
+    public let coinManager: CoinManager
     let passcodeLockManager: PasscodeLockManager
     let amountRoundingManager: AmountRoundingManager
     let recentlySentManager: RecentlySentManager
@@ -477,6 +477,9 @@ public class Core {
         transactionInfoExtraFactory = TransactionInfoExtraFactory()
         transactionInfoExtraFactory.register(OpenCryptoPayTransactionInfoProvider(manager: openCryptoPay.paymentManager, accountManager: accountManager))
 
+        let swapStorage = SwapStorage(dbPool: dbPool, marketKit: marketKit)
+        swapHistoryManager = SwapHistoryManager(accountManager: accountManager, storage: swapStorage)
+
         appManager = AppManager(
             widgetRefresher: widgetRefresher,
             accountManager: accountManager,
@@ -497,7 +500,8 @@ public class Core {
             nftMetadataSyncer: nftMetadataSyncer,
             tonKitManager: tonKitManager,
             stellarKitManager: stellarKitManager,
-            solanaKitManager: solanaKitManager
+            solanaKitManager: solanaKitManager,
+            swapHistoryManager: swapHistoryManager
         )
 
         appWorkerRegistry = AppWorkerRegistry(appManager: appManager)
@@ -506,9 +510,6 @@ public class Core {
         swapAssetStorage = SwapAssetStorage(dbPool: dbPool)
         swapProviderManager = MultiSwapProviderManager(localStorage: localStorage, networkManager: networkManager, apiKey: AppConfig.uswapApiKey)
         swapProviderInfoManager = SwapProviderInfoManager(networkManager: networkManager, apiKey: AppConfig.uswapApiKey)
-
-        let swapStorage = SwapStorage(dbPool: dbPool, marketKit: marketKit)
-        swapHistoryManager = SwapHistoryManager(accountManager: accountManager, storage: swapStorage)
 
         createPasskeyAccountService = CreatePasskeyAccountService(
             accountFactory: accountFactory,
