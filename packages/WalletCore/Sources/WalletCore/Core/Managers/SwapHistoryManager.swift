@@ -77,11 +77,7 @@ public extension SwapHistoryManager {
         swapUpdateSubject.eraseToAnyPublisher()
     }
 
-    var pendingSwaps: [Swap] {
-        guard let account = accountManager.activeAccount else {
-            return []
-        }
-
+    func pendingSwaps(account: Account) -> [Swap] {
         do {
             return try storage.pendingSwaps(accountId: account.id)
         } catch {
