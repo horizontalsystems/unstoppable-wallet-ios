@@ -1335,6 +1335,9 @@ extension USwapMultiSwapProvider {
             parameters["testActionRequired"] = true
         }
 
+        // app-registered enrichment only adds — the provider's own parameters always win
+        parameters.merge(SwapTrackParametersFactory.extraParameters(swap: swap)) { current, _ in current }
+
         // Track endpoint by swap origin:
         //   "track"           — OUR recorded swaps (USwap-mediated), uuid-based, provider-agnostic
         //   "track/evm"       — native EVM swaps (1inch/Uniswap), stateless on-chain reader
