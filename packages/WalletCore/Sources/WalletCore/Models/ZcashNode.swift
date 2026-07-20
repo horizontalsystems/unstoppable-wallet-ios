@@ -17,4 +17,8 @@ extension ZcashNode {
         ZcashNode(name: "eu2.zec.stardust.rest", url: URL(string: "https://eu2.zec.stardust.rest:443")!),
         ZcashNode(name: "jp.zec.stardust.rest", url: URL(string: "https://jp.zec.stardust.rest:443")!),
     ]
+
+    static let defaultTestnetNodes = [
+        ZcashNode(name: "testnet.zec.rocks", url: URL(string: "https://testnet.zec.rocks:443")!),
+    ]
 }

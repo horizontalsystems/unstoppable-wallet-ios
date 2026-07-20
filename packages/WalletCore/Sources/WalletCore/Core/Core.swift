@@ -234,7 +234,7 @@ public class Core {
         zanoNodeManager = ZanoNodeManager(blockchainSettingsStorage: blockchainSettingsStorage, zanoNodeStorage: zanoNodeStorage)
 
         let zcashNodeStorage = ZcashNodeStorage(dbPool: dbPool)
-        zcashNodeManager = ZcashNodeManager(blockchainSettingsStorage: blockchainSettingsStorage, zcashNodeStorage: zcashNodeStorage)
+        zcashNodeManager = ZcashNodeManager(testNetManager: testNetManager, blockchainSettingsStorage: blockchainSettingsStorage, zcashNodeStorage: zcashNodeStorage)
 
         let restoreStateStorage = RestoreStateStorage(dbPool: dbPool)
         restoreStateManager = RestoreStateManager(storage: restoreStateStorage)

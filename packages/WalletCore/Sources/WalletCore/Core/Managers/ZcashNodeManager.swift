@@ -4,13 +4,15 @@ import RxRelay
 import RxSwift
 
 public class ZcashNodeManager {
+    private let testNetManager: TestNetManager
     private let blockchainSettingsStorage: BlockchainSettingsStorage
     private let zcashNodeStorage: ZcashNodeStorage
 
     private let nodeRelay = PublishRelay<BlockchainType>()
     private let nodeUpdatedRelay = PublishRelay<BlockchainType>()
 
-    public init(blockchainSettingsStorage: BlockchainSettingsStorage, zcashNodeStorage: ZcashNodeStorage) {
+    public init(testNetManager: TestNetManager, blockchainSettingsStorage: BlockchainSettingsStorage, zcashNodeStorage: ZcashNodeStorage) {
+        self.testNetManager = testNetManager
         self.blockchainSettingsStorage = blockchainSettingsStorage
         self.zcashNodeStorage = zcashNodeStorage
     }
@@ -23,7 +25,7 @@ public class ZcashNodeManager {
     private func defaultNodes(blockchainType: BlockchainType) -> [ZcashNode] {
         switch blockchainType {
         case .zcash:
-            return ZcashNode.defaultNodes
+            return testNetManager.testNetEnabled ? ZcashNode.defaultTestnetNodes : ZcashNode.defaultNodes
         default:
             return []
         }
