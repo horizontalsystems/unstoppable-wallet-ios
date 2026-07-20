@@ -38,11 +38,8 @@ class ZcashTransactionWrapper {
         expiryHeight = tx.expiryHeight
         let sdkState = tx.getState(for: lastBlockHeight)
         failed = sdkState == .expired
-        if failed, tx.minedHeight == nil {
-            timestamp = tx.createdAt ?? tx.blockTime ?? Date().timeIntervalSince1970
-        } else {
-            timestamp = tx.blockTime ?? tx.createdAt ?? Date().timeIntervalSince1970 // need this to update pending transactions and shows on transaction tab
-        }
+        // RESEARCH SHIM: upstream Overview has no createdAt (HS delta, replayed in step 3).
+        timestamp = tx.blockTime ?? Date().timeIntervalSince1970
         totalSpent = tx.totalSpent
         totalReceived = tx.totalReceived
 
