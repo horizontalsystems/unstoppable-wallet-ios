@@ -53,18 +53,9 @@ class FeeSettingsViewFactory {
 
                 return AnyView(view)
             }
-        case let service as ZcashTransactionService:
-            if case let .zcash(fee) = feeData {
-                let view = ZcashFeeSettingsView(
-                    service: service,
-                    fee: fee,
-                    feeToken: feeToken,
-                    currency: currency,
-                    feeTokenRate: feeTokenRate
-                )
-
-                return AnyView(view)
-            }
+        case is ZcashTransactionService:
+            // RESEARCH SHIM: upstream has no custom zip317 fee (HS delta, replayed in step 3).
+            return nil
         default: ()
         }
 
