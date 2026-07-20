@@ -56,7 +56,7 @@ enum RestoreSettingType: String {
         switch self {
         case .birthdayHeight:
             switch blockchainType {
-            case .zcash: return "\(ZcashAdapter.newBirthdayHeight(network: ZcashNetworkBuilder.network(for: .mainnet)))"
+            case .zcash: return "\(ZcashAdapter.newBirthdayHeight(network: ZcashNetworkBuilder.network(for: ZcashAdapter.networkType)))"
             case .monero: return "\(MoneroKit.RestoreHeight.getHeight(date: Date()))"
             case .zano: return "\(ZanoKit.RestoreHeight.getHeight(date: Date()))"
             default: return nil

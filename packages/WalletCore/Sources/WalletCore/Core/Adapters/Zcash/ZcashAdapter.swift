@@ -18,7 +18,13 @@ class ZcashAdapter {
 
     static let defaultTxExpiryHeightDelta: UInt32 = 10
 
-    static let defaultEndpoint = endpoint(url: ZcashNode.defaultNodes[0].url)
+    static var networkType: NetworkType {
+        Core.shared.testNetManager.testNetEnabled ? .testnet : .mainnet
+    }
+
+    static var defaultEndpoint: LightWalletEndpoint {
+        endpoint(url: (networkType == .mainnet ? ZcashNode.defaultNodes : ZcashNode.defaultTestnetNodes)[0].url)
+    }
 
     static func endpoint(url: URL) -> LightWalletEndpoint {
         LightWalletEndpoint(address: url.host ?? "zec.rocks", port: url.port ?? 443, secure: url.scheme != "http", streamingCallTimeoutInMillis: 10 * 60 * 60 * 1000)
@@ -114,7 +120,7 @@ class ZcashAdapter {
             throw AdapterError.unsupportedAccount
         }
 
-        network = ZcashNetworkBuilder.network(for: .mainnet)
+        network = ZcashNetworkBuilder.network(for: Self.networkType)
 
         currentEndpoint = endpoint
         token = wallet.token
@@ -181,7 +187,7 @@ class ZcashAdapter {
             fetchThresholdSeconds: 20,
             nBlocksToFetch: 1,
             kServers: 1,
-            network: .mainnet
+            network: network.networkType
         )
 
         return endpoints.contains {
@@ -213,9 +219,10 @@ class ZcashAdapter {
         state = .preparing
 
         depositAddressSubject.send(.loading)
+        let networkType = network.networkType
         Task { [weak self, synchronizer] in
             do {
-                let tool = DerivationTool(networkType: .mainnet)
+                let tool = DerivationTool(networkType: networkType)
                 guard let unifiedSpendingKey = try? tool.deriveUnifiedSpendingKey(seed: seedData, accountIndex: .zero),
                       let unifiedViewingKey = try? tool.deriveUnifiedFullViewingKey(from: unifiedSpendingKey)
                 else {
@@ -730,11 +737,11 @@ class ZcashAdapter {
 }
 
 extension ZcashAdapter {
-    static func estimateBirthdayHeight(date: Date, isMainnet: Bool = true) -> BlockHeight {
+    static func estimateBirthdayHeight(date: Date, isMainnet: Bool = ZcashAdapter.networkType == .mainnet) -> BlockHeight {
         SDKSynchronizer.estimateBirthdayHeight(for: date, isMainnet: isMainnet)
     }
 
-    public static func estimateBirthdayTime(for height: BlockHeight, isMainnet: Bool = true) -> UInt32 {
+    public static func estimateBirthdayTime(for height: BlockHeight, isMainnet: Bool = ZcashAdapter.networkType == .mainnet) -> UInt32 {
         SDKSynchronizer.birthdayTime(for: height, isMainnet: isMainnet)
     }
 
@@ -786,7 +793,7 @@ extension ZcashAdapter {
     }
 
     static func firstAddress(accountType: AccountType, addressType: AddressType) async throws -> String {
-        let network = ZcashNetworkBuilder.network(for: .mainnet)
+        let network = ZcashNetworkBuilder.network(for: networkType)
         let (uAddress, tAddress) = try await addresses(for: accountType, network: network)
         return addressType == .shielded ? uAddress.stringEncoded : tAddress.stringEncoded
     }

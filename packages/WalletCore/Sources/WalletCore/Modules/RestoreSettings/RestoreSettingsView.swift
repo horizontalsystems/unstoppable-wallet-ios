@@ -71,7 +71,7 @@ enum BirthdayInputProviderFactory {
 
 class ZCashBirthdayInputProvider: IBirthdayInputProvider {
     var lastBlockHeight: Int {
-        ZcashAdapter.newBirthdayHeight(network: ZcashNetworkBuilder.network(for: .mainnet))
+        ZcashAdapter.newBirthdayHeight(network: ZcashNetworkBuilder.network(for: ZcashAdapter.networkType))
     }
 
     func height(date: Date) -> Int {
