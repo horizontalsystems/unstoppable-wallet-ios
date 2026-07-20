@@ -50,7 +50,9 @@ let package = Package(
         .package(url: "https://github.com/horizontalsystems/TronKit.Swift.git", exact: "1.5.1"),
         .package(url: "https://github.com/horizontalsystems/UIExtensions.Swift", exact: "1.0.2"),
         .package(url: "https://github.com/horizontalsystems/UniswapKit.Swift", exact: "3.2.0"),
-        .package(url: "https://github.com/horizontalsystems/ZcashLightClientKit", exact: "2.6.0-alpha.4-hs.1"),
+        // RESEARCH ONLY (Ironwood step 1.5): local upstream e58e14e + locally built FFI.
+        // Revert to: .package(url: "https://github.com/horizontalsystems/ZcashLightClientKit", exact: "2.6.0-alpha.4-hs.1"),
+        .package(path: "../../../zcash-swift-wallet-sdk-ironwood"),
     ],
     targets: [
         .target(
@@ -99,7 +101,7 @@ let package = Package(
                 .product(name: "TronKit", package: "TronKit.Swift"),
                 .product(name: "UIExtensions", package: "UIExtensions.Swift"),
                 .product(name: "UniswapKit", package: "UniswapKit.Swift"),
-                .product(name: "ZcashLightClientKit", package: "ZcashLightClientKit"),
+                .product(name: "ZcashLightClientKit", package: "zcash-swift-wallet-sdk-ironwood"),
             ],
             resources: [
                 .process("Resources/Localizable.xcstrings"),

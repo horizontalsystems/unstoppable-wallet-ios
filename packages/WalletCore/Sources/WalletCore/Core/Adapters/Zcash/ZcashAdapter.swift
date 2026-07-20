@@ -711,8 +711,8 @@ class ZcashAdapter {
             return
         }
 
-        let full = balances.saplingBalance.total() + balances.orchardBalance.total()
-        let available = balances.saplingBalance.spendableValue + balances.orchardBalance.spendableValue
+        let full = balances.shieldedTotal()
+        let available = balances.shieldedSpendableValue
         logger?.log(level: .debug, message: "Full balance from syncer: \(full.decimalValue.decimalValue.description)")
         logger?.log(level: .debug, message: "Available balance from syncer: \(available.decimalValue.decimalValue.description)")
 
@@ -737,12 +737,14 @@ class ZcashAdapter {
 }
 
 extension ZcashAdapter {
-    static func estimateBirthdayHeight(date: Date, isMainnet: Bool = ZcashAdapter.networkType == .mainnet) -> BlockHeight {
-        SDKSynchronizer.estimateBirthdayHeight(for: date, isMainnet: isMainnet)
+    // RESEARCH SHIM: upstream has no static birthday helpers (HS delta, replayed in step 3).
+    // Zero height is clamped to saplingActivationHeight by init, so restore still syncs.
+    static func estimateBirthdayHeight(date _: Date, isMainnet _: Bool = ZcashAdapter.networkType == .mainnet) -> BlockHeight {
+        0
     }
 
-    public static func estimateBirthdayTime(for height: BlockHeight, isMainnet: Bool = ZcashAdapter.networkType == .mainnet) -> UInt32 {
-        SDKSynchronizer.birthdayTime(for: height, isMainnet: isMainnet)
+    public static func estimateBirthdayTime(for _: BlockHeight, isMainnet _: Bool = ZcashAdapter.networkType == .mainnet) -> UInt32 {
+        0
     }
 
     static func addresses(for accountType: AccountType, network: ZcashNetwork) async throws -> (unified: UnifiedAddress, transparent: TransparentAddress) {
@@ -1101,7 +1103,7 @@ extension ZcashAdapter {
         amount: Decimal,
         address: Recipient,
         memo: Memo?,
-        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        zip317MarginalFee _: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) async throws -> Proposal {
         guard let accountId else {
             throw AppError.ZcashError.noAccountId
@@ -1114,8 +1116,7 @@ extension ZcashAdapter {
                 accountUUID: accountId,
                 recipient: address,
                 amount: amountInZatoshi,
-                memo: memo,
-                zip317MarginalFee: zip317MarginalFee
+                memo: memo
             )
         } catch {
             throw ZcashSendHelper.converted(error)
@@ -1124,7 +1125,7 @@ extension ZcashAdapter {
 
     func sendProposal(
         outputs: [TransferOutput],
-        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        zip317MarginalFee _: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) async throws -> Proposal {
         guard let accountId else {
             throw AppError.ZcashError.noAccountId
@@ -1135,8 +1136,7 @@ extension ZcashAdapter {
         do {
             return try await synchronizer.proposefulfillingPaymentURI(
                 paymentURI,
-                accountUUID: accountId,
-                zip317MarginalFee: zip317MarginalFee
+                accountUUID: accountId
             )
         } catch {
             throw ZcashSendHelper.converted(error)
@@ -1186,7 +1186,7 @@ extension ZcashAdapter {
         threshold: Decimal,
         address: Recipient?,
         memo: Memo?,
-        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        zip317MarginalFee _: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) async throws -> Proposal? {
         guard let accountId else {
             throw AppError.ZcashError.noAccountId
@@ -1206,8 +1206,7 @@ extension ZcashAdapter {
             accountUUID: accountId,
             shieldingThreshold: amountInZatoshi,
             memo: requiredMemo,
-            transparentReceiver: transparentAddress,
-            zip317MarginalFee: zip317MarginalFee
+            transparentReceiver: transparentAddress
         )
     }
 
@@ -1275,18 +1274,15 @@ extension ZcashAdapter {
 
     @discardableResult func send(
         proposal: Proposal,
-        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee,
+        zip317MarginalFee _: Zatoshi = ZcashAdapter.defaultZip317MarginalFee,
     ) async throws -> String? {
         guard let spendingKey else {
             throw AppError.ZcashError.noReceiveAddress
         }
 
-        let expiryHeightDelta = Self.defaultTxExpiryHeightDelta
         let stream = try await synchronizer.createProposedTransactions(
             proposal: proposal,
-            spendingKey: spendingKey,
-            expiryHeightDelta: expiryHeightDelta,
-            zip317MarginalFee: zip317MarginalFee
+            spendingKey: spendingKey
         )
 
         let transactionCount = proposal.transactionCount()
