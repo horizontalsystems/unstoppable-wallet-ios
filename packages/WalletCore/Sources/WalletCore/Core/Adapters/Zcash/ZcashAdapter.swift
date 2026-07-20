@@ -13,7 +13,8 @@ import ZcashLightClientKit
 class ZcashAdapter {
     static let minimalThreshold: Decimal = 0.0004 // minimal transparent balance to shielding
 
-    static let defaultZip317MarginalFee = ZcashSDK.defaultZip317MarginalFee // ZCASH_MARGINAL_FEE
+    // RESEARCH SHIM: upstream has no ZcashSDK.defaultZip317MarginalFee (HS delta, replayed in step 3).
+    static let defaultZip317MarginalFee = Zatoshi(5000) // ZCASH_MARGINAL_FEE
     static let zip317MarginalFeeRange = (defaultZip317MarginalFee.amount) ... (defaultZip317MarginalFee.amount * 6)
 
     static let defaultTxExpiryHeightDelta: UInt32 = 10
@@ -1232,7 +1233,7 @@ extension ZcashAdapter {
         amount: Decimal,
         address: Recipient,
         memo: Memo?,
-        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        zip317MarginalFee _: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) -> Single<Void> {
         guard let accountId else {
             return .error(AppError.ZcashError.noAccountId)
@@ -1245,8 +1246,7 @@ extension ZcashAdapter {
                         accountUUID: accountId,
                         recipient: address,
                         amount: Zatoshi.from(decimal: amount),
-                        memo: memo,
-                        zip317MarginalFee: zip317MarginalFee
+                        memo: memo /* , zip317MarginalFee: zip317MarginalFee */
                     ) else {
                         observer(.error(AppError.unknownError))
                         return
