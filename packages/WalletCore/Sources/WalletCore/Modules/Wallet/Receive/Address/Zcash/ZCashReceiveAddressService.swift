@@ -29,11 +29,11 @@ class ZCashReceiveAddressService: BaseReceiveAddressService {
     }
 
     private func updateUnified(adapter: ZcashAdapter) {
-        // Load custom unified address for shielded or fallback on first address
+        // Load custom unified address for shielded; never fall back to transparent (privacy downgrade)
         Task { [weak self, weak adapter] in
             guard let self, let adapter else { return }
 
-            if let unifiedAddress = await (try? adapter.getCustomUnifiedAddress())?.stringEncoded ?? adapter.tAddress?.stringEncoded {
+            if let unifiedAddress = await (try? adapter.getCustomUnifiedAddress())?.stringEncoded {
                 await MainActor.run {
                     self.resolvedAddress = unifiedAddress
                     self.updateState(isMainNet: adapter.isMainNet)
