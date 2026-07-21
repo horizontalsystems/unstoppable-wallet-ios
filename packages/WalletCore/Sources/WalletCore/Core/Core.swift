@@ -113,6 +113,7 @@ public class Core {
     let openCryptoPay: OpenCryptoPayModule
     let transactionInfoExtraFactory: TransactionInfoExtraFactory
     let appWorkerRegistry: AppWorkerRegistry
+    let backgroundTaskManager: BackgroundTaskManager
 
     let purchaseManager: PurchaseManager
 
@@ -460,6 +461,8 @@ public class Core {
         appEventHandler.append(handler: sendAddressHandler)
         appEventHandler.append(handler: telegramUserHandler)
         appEventHandler.append(handler: openCryptoPayHandler)
+
+        backgroundTaskManager = BackgroundTaskManager()
 
         appManager = AppManager(
             widgetRefresher: widgetRefresher,
