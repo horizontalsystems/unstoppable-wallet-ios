@@ -293,6 +293,7 @@
 // Errors
 
 "error.send.self_transfer" = "Sending to yourself is not supported";
+"error.send.in_progress" = "A send is in progress. Try again in a moment.";
 "error.send_binance.memo_required" = "The receiver requires a non-empty memo in the transfer transaction";
 "error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
 
