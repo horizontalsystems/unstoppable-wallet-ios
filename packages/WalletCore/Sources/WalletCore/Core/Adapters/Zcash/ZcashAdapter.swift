@@ -227,6 +227,13 @@ class ZcashAdapter {
             return
         }
 
+        // defense for non-UI callers (backup restore, node deletion): never reconfigure
+        // the synchronizer while background-finishing work is active — "try again later"
+        let busy = await MainActor.run { Core.shared.backgroundTaskManager.isCriticalActive }
+        guard !busy else {
+            throw AppError.zcash(reason: .sendInProgress)
+        }
+
         do {
             try await synchronizer.switchTo(endpoint: endpoint)
             currentEndpoint = endpoint

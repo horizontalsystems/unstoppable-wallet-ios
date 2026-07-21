@@ -7,6 +7,7 @@ public class AdapterManager {
     private enum ZcashEndpointValidationError: Error {
         case noActiveAdapter
         case unavailable
+        case sendInProgress
     }
 
     private let disposeBag = DisposeBag()
@@ -135,18 +136,26 @@ public class AdapterManager {
 
         guard !adapters.isEmpty else { return }
 
+        let requestedURL = zcashNodeManager.node(blockchainType: .zcash).url
+
         Task { [weak self] in
             for adapter in adapters {
                 do {
                     try await adapter.switchEndpoint(endpoint)
                 } catch {
-                    self?.revertZcashSelection(to: adapter)
+                    self?.revertZcashSelection(to: adapter, failedURL: requestedURL)
                 }
             }
         }
     }
 
-    private func revertZcashSelection(to adapter: ZcashAdapter) {
+    private func revertZcashSelection(to adapter: ZcashAdapter, failedURL: URL) {
+        // revert only while the failed target is still the persisted choice —
+        // a newer user selection must not be clobbered by an older failure
+        guard zcashNodeManager.node(blockchainType: .zcash).url == failedURL else {
+            return
+        }
+
         guard let appliedURL = adapter.currentEndpointURL,
               let node = zcashNodeManager.allNodes(blockchainType: .zcash).first(where: { $0.url == appliedURL })
         else {
@@ -229,6 +238,13 @@ extension AdapterManager {
 
         guard let adapter else {
             throw ZcashEndpointValidationError.noActiveAdapter
+        }
+
+        // switching reconfigures the synchronizer under a live broadcast; background-finishing
+        // work is bounded (local proving + 30s gRPC timeout per tx), so the refusal is short-lived
+        let busy = await MainActor.run { Core.shared.backgroundTaskManager.isCriticalActive }
+        guard !busy else {
+            throw ZcashEndpointValidationError.sendInProgress
         }
 
         guard await adapter.isEndpointAvailable(endpoint) else {
