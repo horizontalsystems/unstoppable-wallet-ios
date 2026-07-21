@@ -34,6 +34,8 @@ class ZcashAdapter {
     private let queue = DispatchQueue(label: "\(AppConfig.label).zcash-adapter", qos: .userInitiated)
 
     private var cancellables: [AnyCancellable] = []
+    private var deferredStopCancellable: AnyCancellable?
+    private var resubmitTask: Task<Void, Never>? // main-confined; dedupes concurrent startSynchronizer kicks
 
     private let token: Token
     private let transactionSource: TransactionSource
@@ -174,7 +176,31 @@ class ZcashAdapter {
             .sink(receiveValue: { [weak self] event in self?.sync(event: event) })
             .store(in: &cancellables)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        Core.shared.appManager.didEnterBackgroundPublisher
+            .sink { [weak self] in self?.didEnterBackground() }
+            .store(in: &cancellables)
+    }
+
+    // Pre-warm sapling params unconditionally: the SDK sync-time download is gated by
+    // sapling/transparent balances only, so a wallet with orchard-only funds would pay
+    // the ~50 MB download synchronously inside its first send. Idempotent: validates and
+    // returns when the files are already on disk.
+    private func warmUpSaplingParams() {
+        Task { [logger] in
+            do {
+                try await SaplingParameterDownloader.downloadParamsIfnotPresent(
+                    retryEnabled: true,
+                    spendURL: Self.spendParamsURL(),
+                    spendSourceURL: SaplingParamsSourceURL.default.spendParamFileURL,
+                    outputURL: Self.outputParamsURL(),
+                    outputSourceURL: SaplingParamsSourceURL.default.outputParamFileURL,
+                    logger: OSLogger(logLevel: .error)
+                )
+            } catch {
+                // send path re-downloads just-in-time, so failure here only loses the pre-warm
+                logger?.log(level: .error, message: "Sapling params pre-warm failed: \(error)")
+            }
+        }
     }
 
     // Used by AdapterManager to revert the stored selection on switch failure.
@@ -311,10 +337,31 @@ class ZcashAdapter {
         // (conditionally during sync when balance > 0, and just-in-time before any spend).
         logger?.log(level: .debug, message: "Start syncing kit!")
         syncMain()
+
+        DispatchQueue.main.async { [weak self] in
+            guard let self, resubmitTask == nil else { return }
+
+            resubmitTask = Task { [weak self] in
+                await self?.resubmitPendingTransactions()
+                DispatchQueue.main.async { [weak self] in self?.resubmitTask = nil }
+            }
+        }
     }
 
-    @objc private func didEnterBackground(_: Notification) {
-        stop()
+    private func didEnterBackground() {
+        let backgroundTaskManager = Core.shared.backgroundTaskManager
+
+        // subscribe BEFORE checking activity: a critical section completing in between still triggers stop()
+        deferredStopCancellable = backgroundTaskManager.criticalCompletedPublisher
+            .first()
+            .sink { [weak self] in self?.stop() }
+
+        guard backgroundTaskManager.isCriticalActive else {
+            deferredStopCancellable = nil
+            stop()
+            return
+        }
+        // send in flight: let the critical window finish the broadcast, the sink above stops after it
     }
 
     private func sync(state: SynchronizerState) {
@@ -729,7 +776,6 @@ class ZcashAdapter {
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(self)
         Task { [weak self] in
             self?.synchronizer.stop()
             self?.logger?.log(level: .debug, message: "Synchronizer Was Stopped")
@@ -937,6 +983,8 @@ extension ZcashAdapter: IAdapter {
     }
 
     func start() {
+        cancelDeferredStop()
+        warmUpSaplingParams()
         prepare(seedData: seedData, walletBirthday: birthday, for: initMode)
     }
 
@@ -946,7 +994,16 @@ extension ZcashAdapter: IAdapter {
     }
 
     func refresh() {
+        cancelDeferredStop()
         startSynchronizer()
+    }
+
+    // foreground resume goes through refresh() (start() only on creation) — deferred stop must not kill a live sync.
+    // deferredStopCancellable is main-confined: start()/refresh() arrive on background queues, subscription and fire are on main
+    private func cancelDeferredStop() {
+        DispatchQueue.main.async { [weak self] in
+            self?.deferredStopCancellable = nil
+        }
     }
 
     private func syncMain() {
@@ -1280,6 +1337,12 @@ extension ZcashAdapter {
             throw AppError.ZcashError.noReceiveAddress
         }
 
+        return try await Core.shared.backgroundTaskManager.performCritical(name: "zcash-send") {
+            try await send(proposal: proposal, spendingKey: spendingKey)
+        }
+    }
+
+    private func send(proposal: Proposal, spendingKey: UnifiedSpendingKey) async throws -> String? {
         let stream = try await synchronizer.createProposedTransactions(
             proposal: proposal,
             spendingKey: spendingKey
@@ -1332,6 +1395,60 @@ extension ZcashAdapter {
 
     func recipient(from stringEncodedAddress: String) -> ZcashLightClientKit.Recipient? {
         try? Recipient(stringEncodedAddress, network: network.networkType)
+    }
+
+    // Directly re-broadcasts created-but-undelivered transactions with their original bytes.
+    // Runs on foreground start: the SDK sync-loop resubmission is gated by a 5-minute uptime
+    // threshold, so a short "check the app" session would never deliver without this.
+    // Same-bytes resubmit is safe: an already-delivered transaction comes back as .rejected.
+    func resubmitPendingTransactions() async {
+        let latestHeight = synchronizer.latestState.latestBlockHeight
+        let overviews = await synchronizer.transactions
+
+        let candidates = overviews.filter {
+            Self.isResubmissionCandidate(
+                isSentTransaction: $0.isSentTransaction,
+                minedHeight: $0.minedHeight,
+                hasRaw: $0.raw != nil,
+                expiryHeight: $0.expiryHeight,
+                latestHeight: latestHeight
+            )
+        }
+
+        guard !candidates.isEmpty else {
+            return
+        }
+
+        for overview in candidates {
+            let transaction: CreatedTransaction
+            do {
+                transaction = try CreatedTransaction(overview: overview)
+            } catch {
+                logger?.log(level: .error, message: "Resubmit skip \(overview.rawID.toHexStringTxId()): \(error)")
+                continue
+            }
+
+            let outcome = await synchronizer.broadcaster.submit(transaction: transaction, to: [currentEndpoint])
+
+            switch outcome {
+            case .accepted:
+                logger?.log(level: .debug, message: "Resubmit accepted: \(transaction.txId.toHexStringTxId())")
+            case let .rejected(code, message):
+                // duplicate ("already in block chain") or permanent rejection — retried on next foreground anyway
+                logger?.log(level: .error, message: "Resubmit rejected: \(transaction.txId.toHexStringTxId()) | code: \(code) | \(message)")
+            case .unreachable, .timedOut, .notAttempted, .cancelled:
+                logger?.log(level: .error, message: "Resubmit not delivered: \(transaction.txId.toHexStringTxId()) | \(outcome)")
+            }
+        }
+    }
+
+    static func isResubmissionCandidate(isSentTransaction: Bool, minedHeight: BlockHeight?, hasRaw: Bool, expiryHeight: BlockHeight?, latestHeight: BlockHeight) -> Bool {
+        guard isSentTransaction, minedHeight == nil, hasRaw,
+              let expiryHeight, expiryHeight > 0
+        else {
+            return false
+        }
+        return latestHeight == 0 || expiryHeight > latestHeight
     }
 }
 
