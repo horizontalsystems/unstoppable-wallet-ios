@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import ZcashLightClientKit
 
@@ -7,6 +8,7 @@ protocol IZcashMigrationEngine: AnyObject {
     func signAndStore(schedule: MigrationSchedule) async throws
     func executeNext(options: MigrationNetworkPrivacyOptions) async throws -> MigrationTransferResult?
     func isSyncBlocked() async -> Bool
+    var syncBlockedStream: AnyPublisher<Bool, Never> { get }
     func restart() async throws
 }
 
@@ -41,6 +43,11 @@ class ZcashMigrationEngine: IZcashMigrationEngine {
         await synchronizer.isMigrationSyncBlocked()
     }
 
+    // CurrentValueSubject-backed with an internal SDK ticker: pushes false when the privacy buffer expires
+    var syncBlockedStream: AnyPublisher<Bool, Never> {
+        synchronizer.migrationSyncBlockedStream
+    }
+
     func restart() async throws {
         _ = try await synchronizer.restartCurrentMigrationStep(accountUUID: accountUUID, includeResidual: false)
     }
@@ -52,9 +59,12 @@ class ZcashMigrationEngine: IZcashMigrationEngine {
 
         var orchardSpendable: Zatoshi
         var executeResults: [MigrationTransferResult]
+        var stateOverride: MigrationState?
+        var executeThrowsRecordFailed = false
         private(set) var signedSchedule: MigrationSchedule?
         private(set) var executedTxIds = [String]()
         private var lastExecuteAt: Date?
+        private let blockedSubject: CurrentValueSubject<Bool, Never>
 
         // migratedAt (the latest stored migration row) makes the fake honest across relaunches:
         // migrated → zero balance, gate blocked while inside the privacy window
@@ -62,9 +72,26 @@ class ZcashMigrationEngine: IZcashMigrationEngine {
             self.orchardSpendable = migratedAt == nil ? orchardSpendable : Zatoshi(0)
             self.executeResults = executeResults
             lastExecuteAt = migratedAt
+
+            let remaining = migratedAt.map { ZcashMigrator.bufferInterval - Date().timeIntervalSince($0) } ?? 0
+            blockedSubject = CurrentValueSubject(remaining > 0)
+            if remaining > 0 {
+                scheduleGateRelease(after: remaining)
+            }
+        }
+
+        // mirrors the SDK gate ticker: pushes false when the emulated buffer expires
+        private func scheduleGateRelease(after seconds: TimeInterval) {
+            Task { [weak self] in
+                try? await Task.sleep(seconds: seconds)
+                self?.blockedSubject.send(false)
+            }
         }
 
         func state() async throws -> MigrationState {
+            if let stateOverride {
+                return stateOverride
+            }
             if lastExecuteAt != nil {
                 return .complete
             }
@@ -93,6 +120,11 @@ class ZcashMigrationEngine: IZcashMigrationEngine {
         }
 
         func executeNext(options _: MigrationNetworkPrivacyOptions) async throws -> MigrationTransferResult? {
+            if executeThrowsRecordFailed {
+                lastExecuteAt = Date()
+                signedSchedule = nil
+                throw ZcashError.migrationRecordFailedAfterBroadcast(NSError(domain: "fake", code: 0))
+            }
             guard signedSchedule != nil else {
                 return nil
             }
@@ -103,6 +135,8 @@ class ZcashMigrationEngine: IZcashMigrationEngine {
                 signedSchedule = nil
                 orchardSpendable = Zatoshi(0)
                 lastExecuteAt = Date()
+                blockedSubject.send(true)
+                scheduleGateRelease(after: ZcashMigrator.bufferInterval)
             }
             return result
         }
@@ -116,6 +150,10 @@ class ZcashMigrationEngine: IZcashMigrationEngine {
                 return Date().timeIntervalSince(lastExecuteAt) < ZcashMigrator.bufferInterval
             }
             return false
+        }
+
+        var syncBlockedStream: AnyPublisher<Bool, Never> {
+            blockedSubject.eraseToAnyPublisher()
         }
 
         func restart() async throws {

@@ -148,6 +148,7 @@ struct ZcashMigrationTests {
 
         #expect(thrown)
         #expect(engine.signedSchedule == nil) // restart cleared the schedule
+        #expect(engine.executeResults.isEmpty) // the queued .invalidNote was actually consumed
     }
 
     @Test func dustBalanceThrowsNotEnough() async throws {
@@ -202,6 +203,145 @@ struct ZcashMigrationTests {
         #expect(engine.executedTxIds.isEmpty)
         let storedIds = try storage.migrationTxIds(accountId: "acc-idle")
         #expect(storedIds.isEmpty)
+    }
+
+    @Test func recordFailedAfterBroadcastCountsAsSent() async throws {
+        let (migrator, storage) = try makeMigrator(uniqueId: "acc-recordfail")
+        let engine = FakeZcashMigrationEngine()
+        engine.executeThrowsRecordFailed = true
+        migrator.engine = engine
+
+        let txId = try await migrator.performMigration(currentEndpointHost: "zec.rocks")
+
+        #expect(txId == nil)
+        let timestamp = try #require(migrator.timestamp) // buffer marker row written without txId
+        #expect(abs(timestamp.timeIntervalSinceNow) < 5)
+        let storedIds = try storage.migrationTxIds(accountId: "acc-recordfail")
+        #expect(storedIds.isEmpty)
+    }
+
+    @Test func duplicateBufferMarkerDoesNotExtendWindow() async throws {
+        let (migrator, storage) = try makeMigrator(uniqueId: "acc-dup")
+        let engine = FakeZcashMigrationEngine()
+        engine.executeThrowsRecordFailed = true
+        migrator.engine = engine
+
+        let markerDate = Date().addingTimeInterval(-100)
+        try storage.save(migrationTx: ZcashMigrationTx(txId: nil, accountId: "acc-dup", createdAt: markerDate))
+
+        _ = try await migrator.performMigration(currentEndpointHost: "zec.rocks")
+
+        let timestamp = try #require(migrator.timestamp)
+        #expect(abs(timestamp.timeIntervalSince(markerDate)) < 1) // second nil-marker skipped, window not extended
+    }
+
+    @Test func isMigrationTxMatchesOnlyStoredRecords() async throws {
+        let (migrator, _) = try makeMigrator(uniqueId: "acc-match")
+        migrator.engine = FakeZcashMigrationEngine()
+
+        let txId = try await migrator.performMigration(currentEndpointHost: "zec.rocks")
+
+        let unwrappedTxId = try #require(txId)
+        #expect(migrator.isMigrationTx(hash: unwrappedTxId))
+        #expect(!migrator.isMigrationTx(hash: String(repeating: "0", count: 64)))
+    }
+
+    @Test func reconcileNetworkErrorKeepsTransferPending() async throws {
+        let (migrator, storage) = try makeMigrator(uniqueId: "acc-neterr")
+        let engine = FakeZcashMigrationEngine(executeResults: [.networkError(retryable: false)])
+        migrator.engine = engine
+
+        let schedule = try await engine.proposeImmediate()
+        try await engine.signAndStore(schedule: schedule)
+
+        await migrator.reconcileIfNeeded(currentEndpointHost: "zec.rocks")
+
+        #expect(engine.signedSchedule != nil) // stays pending for the next start
+        let storedIds = try storage.migrationTxIds(accountId: "acc-neterr")
+        #expect(storedIds.isEmpty)
+    }
+
+    @Test func reconcileExpiredTransferRestarts() async throws {
+        let (migrator, storage) = try makeMigrator(uniqueId: "acc-expired")
+        let engine = FakeZcashMigrationEngine(executeResults: [.expired])
+        migrator.engine = engine
+
+        let schedule = try await engine.proposeImmediate()
+        try await engine.signAndStore(schedule: schedule)
+
+        await migrator.reconcileIfNeeded(currentEndpointHost: "zec.rocks")
+
+        #expect(engine.signedSchedule == nil) // restart cleared the schedule
+        #expect(engine.executeResults.isEmpty)
+        let storedIds = try storage.migrationTxIds(accountId: "acc-expired")
+        #expect(storedIds.isEmpty)
+    }
+
+    @Test func reconcileRequiresAttentionRestarts() async throws {
+        let (migrator, _) = try makeMigrator(uniqueId: "acc-attention")
+        let engine = FakeZcashMigrationEngine()
+        migrator.engine = engine
+
+        let schedule = try await engine.proposeImmediate()
+        try await engine.signAndStore(schedule: schedule)
+        engine.stateOverride = .requiresAttention(.transferExpired)
+
+        await migrator.reconcileIfNeeded(currentEndpointHost: "zec.rocks")
+
+        #expect(engine.signedSchedule == nil) // silent restart
+        #expect(engine.executedTxIds.isEmpty)
+    }
+
+    @Test func reconcileRestoresMissingBufferMarker() async throws {
+        let (migrator, storage) = try makeMigrator(uniqueId: "acc-marker")
+        let engine = FakeZcashMigrationEngine()
+        migrator.engine = engine
+
+        // broadcast happened (gate armed) but the local row was never written: killed between execute and save
+        _ = try await engine.signAndStore(schedule: engine.proposeImmediate())
+        _ = try await engine.executeNext(options: MigrationNetworkPrivacyOptions(useTor: false, submissionEndpoint: ZcashAdapter.defaultEndpoint))
+        try storage.deleteMigrationTxs(accountId: "acc-marker")
+
+        await migrator.reconcileIfNeeded(currentEndpointHost: "zec.rocks")
+
+        let timestamp = try #require(migrator.timestamp)
+        #expect(abs(timestamp.timeIntervalSinceNow) < 5)
+    }
+
+    @Test func remainingBufferMinutesEdges() throws {
+        let (migrator, storage) = try makeMigrator(uniqueId: "acc-minutes")
+
+        #expect(migrator.remainingBufferMinutes == nil) // no rows
+
+        try storage.save(migrationTx: ZcashMigrationTx(txId: nil, accountId: "acc-minutes", createdAt: Date().addingTimeInterval(-30)))
+        #expect(migrator.remainingBufferMinutes == 10) // 570s left rounds up
+
+        try storage.deleteMigrationTxs(accountId: "acc-minutes")
+        try storage.save(migrationTx: ZcashMigrationTx(txId: nil, accountId: "acc-minutes", createdAt: Date().addingTimeInterval(-ZcashMigrator.bufferInterval + 30)))
+        #expect(migrator.remainingBufferMinutes == 1)
+
+        try storage.deleteMigrationTxs(accountId: "acc-minutes")
+        try storage.save(migrationTx: ZcashMigrationTx(txId: nil, accountId: "acc-minutes", createdAt: Date().addingTimeInterval(-ZcashMigrator.bufferInterval - 1)))
+        #expect(migrator.remainingBufferMinutes == nil) // window over
+    }
+
+    @Test func ironwoodActivationBoundary() throws {
+        let (migrator, _) = try makeMigrator(networkType: .mainnet)
+        let network = ZcashNetworkBuilder.network(for: .mainnet)
+        let activation = try #require(network.ironwoodActivationHeight)
+
+        #expect(!migrator.ironwoodActive(latestHeight: activation - 1))
+        #expect(migrator.ironwoodActive(latestHeight: activation))
+    }
+
+    @Test func submissionEndpointForCustomSyncNodeStaysInDefaultPool() throws {
+        let (migrator, _) = try makeMigrator(networkType: .mainnet)
+
+        let endpoint = migrator.submissionEndpoint(excludingHost: "my.custom.node")
+
+        let isDefault = ZcashNode.defaultNodes.contains { $0.url.host == endpoint.host }
+        #expect(isDefault)
+        #expect(endpoint.host != "my.custom.node")
     }
 
     // MARK: - Broadcast endpoint
