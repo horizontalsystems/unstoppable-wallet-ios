@@ -4,9 +4,10 @@ import Testing
 @testable import WalletCore
 
 struct SwapRequestRefundTests {
-    @Test func actionRequiredStatusIsPending() {
+    @Test func actionRequiredStatusIsNotPending() {
         #expect(Swap.Status(rawValue: "action_required") == .actionRequired)
-        #expect(Swap.pendingStatuses.contains(.actionRequired))
+        // narrowed deliberately in dc29e7e90 (swap history fixes): action_required is not auto-polled
+        #expect(!Swap.pendingStatuses.contains(.actionRequired))
     }
 
     @Test func trackResponseDecodesActionRequiredAndPauseReason() throws {
