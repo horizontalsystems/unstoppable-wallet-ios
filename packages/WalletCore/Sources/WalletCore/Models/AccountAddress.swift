@@ -1,4 +1,5 @@
 import EvmKit
+import HdWalletKit
 import MarketKit
 import ThorChainKit
 import TronKit

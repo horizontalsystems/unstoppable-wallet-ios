@@ -280,6 +280,7 @@ extension BlockchainType {
         case .monero: return 120
         case .zano: return 60
         case .binanceSmartChain, .arbitrumOne: return 1
+        case .thorChain: return nil
         case .solana, .unsupported: return nil
         }
     }

@@ -182,7 +182,7 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
         }
 
         let baseUnitsDescription = baseUnits.description
-        let significantDigits = baseUnitsDescription.dropLast(while: { $0 == "0" }).count
+        let significantDigits = baseUnitsDescription.reversed().drop(while: { $0 == "0" }).count
         guard significantDigits <= 38 else {
             throw ThorChainAdapterError.balancePrecisionLoss
         }
@@ -191,7 +191,7 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
             throw ThorChainAdapterError.balanceConversionOverflow
         }
         var divisor = Decimal(1)
-        let ten = Decimal(10)
+        var ten = Decimal(10)
         for _ in 0..<decimals {
             var next = Decimal()
             guard NSDecimalMultiply(&next, &divisor, &ten, .plain) == .noError else {

@@ -73,6 +73,8 @@ enum AddressParserFactory {
             return handlers
         case .tron:
             return [TronAddressParser()]
+        case .thorChain:
+            return []
         case .zcash:
             let network = ZcashNetworkBuilder.network(for: .mainnet)
             let validator = ZcashAddressValidator(network: network)
