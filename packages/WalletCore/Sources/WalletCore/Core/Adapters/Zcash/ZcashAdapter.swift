@@ -36,7 +36,8 @@ class ZcashAdapter {
     private var cancellables: [AnyCancellable] = []
     private var deferredStopCancellable: AnyCancellable?
     private var resubmitTask: Task<Void, Never>? // main-confined; dedupes concurrent startSynchronizer kicks
-    private var migrationWatchTask: Task<Void, Never>? // main-confined; dedupes concurrent gate watchers
+    private var migrationGateCancellable: AnyCancellable? // main-confined; releases the migrating state when the SDK gate opens
+    private var migrationTickCancellable: AnyCancellable? // main-confined; countdown refresh + stuck-transfer healing
 
     private let token: Token
     private let transactionSource: TransactionSource
@@ -104,6 +105,10 @@ class ZcashAdapter {
             return true
         }
         return false
+    }
+
+    var isIronwoodActive: Bool {
+        migrator.ironwoodActive(latestHeight: lastBlockHeight)
     }
 
     func getSingleUseTransparentAddress() async throws -> SingleUseTransparentAddress? {
@@ -253,9 +258,9 @@ class ZcashAdapter {
         }
 
         // defense for non-UI callers (backup restore, node deletion): never reconfigure
-        // the synchronizer while background-finishing work is active — "try again later"
+        // the synchronizer while background-finishing work or the migration window is active — "try again later"
         let busy = await MainActor.run { Core.shared.backgroundTaskManager.isCriticalActive }
-        guard !busy else {
+        guard !busy, !isMigrating else {
             throw AppError.zcash(reason: .sendInProgress)
         }
 
@@ -1096,6 +1101,12 @@ extension ZcashAdapter: IAdapter {
     func stop() {
         synchronizer.stop()
         logger?.log(level: .debug, message: "Synchronizer will stop")
+
+        // a live gate subscription would otherwise revive sync after deactivation
+        DispatchQueue.main.async { [weak self] in
+            self?.migrationGateCancellable = nil
+            self?.migrationTickCancellable = nil
+        }
     }
 
     func refresh() {
@@ -1459,35 +1470,70 @@ extension ZcashAdapter {
     }
 
     func performMigration() async throws -> String? {
-        let txId = try await Core.shared.backgroundTaskManager.performCritical(name: "zcash-migration") {
-            // sign/execute throw migrationBroadcastDuringSync while the synchronizer is live
-            stop()
-            return try await migrator.performMigration(currentEndpointHost: currentEndpoint.host)
-        }
+        do {
+            let txId = try await Core.shared.backgroundTaskManager.performCritical(name: "zcash-migration") {
+                // sign/execute throw migrationBroadcastDuringSync while the synchronizer is live
+                stop()
+                await waitUntilSyncStopped()
+                return try await migrator.performMigration(currentEndpointHost: currentEndpoint.host)
+            }
 
-        enterMigratingState()
-        return txId
+            enterMigratingState()
+            return txId
+        } catch {
+            // a failed broadcast can leave the signed transfer holding the sync gate;
+            // surface migrating and let the watcher reconcile it instead of a dead stopped sync
+            if let engine = migrator.engine, await engine.isSyncBlocked() {
+                enterMigratingState()
+            }
+            throw error
+        }
+    }
+
+    // SDK stop() only schedules the teardown; the migration guard throws while status is still .syncing
+    private func waitUntilSyncStopped() async {
+        for _ in 0 ..< 50 {
+            guard case .syncing = synchronizer.latestState.syncStatus else { return }
+            try? await Task.sleep(seconds: 0.1)
+        }
     }
 
     private func enterMigratingState() {
-        areFundsSpendable = false // no spending against a stopped sync; restored by the sync stream after restart
-        state = .migrating(remainingMinutes: migrator.remainingBufferMinutes)
-
         DispatchQueue.main.async { [weak self] in
-            guard let self, migrationWatchTask == nil else { return }
+            guard let self, let engine = migrator.engine else { return }
 
-            migrationWatchTask = Task { [weak self] in
-                await self?.watchMigrationGate()
-                DispatchQueue.main.async { [weak self] in self?.migrationWatchTask = nil }
-            }
+            areFundsSpendable = false // no spending against a stopped sync; restored by the sync stream after restart
+            state = .migrating(remainingMinutes: migrator.remainingBufferMinutes)
+
+            guard migrationGateCancellable == nil else { return }
+
+            // the gate is a CurrentValueSubject with its own expiry ticker: false arrives pushed, no polling
+            migrationGateCancellable = engine.syncBlockedStream
+                .filter { !$0 }
+                .first()
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] _ in
+                    self?.exitMigratingState()
+                }
+
+            // once a minute: refresh the countdown and re-deliver a stuck signed transfer (reconcile is idempotent)
+            migrationTickCancellable = Timer.publish(every: 60, on: .main, in: .common)
+                .autoconnect()
+                .sink { [weak self] _ in
+                    guard let self else { return }
+
+                    state = .migrating(remainingMinutes: migrator.remainingBufferMinutes)
+                    Task { [weak self] in
+                        guard let self else { return }
+                        await migrator.reconcileIfNeeded(currentEndpointHost: currentEndpoint.host)
+                    }
+                }
         }
     }
 
-    private func watchMigrationGate() async {
-        while let engine = migrator.engine, await engine.isSyncBlocked() {
-            state = .migrating(remainingMinutes: migrator.remainingBufferMinutes)
-            try? await Task.sleep(seconds: 15)
-        }
+    private func exitMigratingState() {
+        migrationGateCancellable = nil
+        migrationTickCancellable = nil
 
         logger?.log(level: .debug, message: "Migration gate released, restarting synchronizer")
         startSynchronizer()

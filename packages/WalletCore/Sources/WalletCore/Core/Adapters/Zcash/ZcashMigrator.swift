@@ -53,10 +53,16 @@ class ZcashMigrator {
     }
 
     private func save(txId: String?) {
+        if let txId {
+            guard !isMigrationTx(hash: txId) else { return }
+        } else if let timestamp, Date() < timestamp.addingTimeInterval(Self.bufferInterval) {
+            return // an active buffer marker already exists; a duplicate row would extend the window
+        }
+
         try? storage.save(migrationTx: ZcashMigrationTx(txId: txId, accountId: uniqueId, createdAt: Date()))
     }
 
-    private func ironwoodActive(latestHeight: Int) -> Bool {
+    func ironwoodActive(latestHeight: Int) -> Bool {
         guard let activationHeight = network.ironwoodActivationHeight else {
             return false
         }
@@ -157,7 +163,10 @@ class ZcashMigrator {
                     try await engine.restart() // un-wedge: gate armed but nothing scheduled
                 }
             case .splitPendingConfirmation, .complete:
-                () // nothing to reconcile; a post-broadcast buffer resolves via the migrating state
+                // killed between execute and save: restore the buffer marker so the countdown survives
+                if timestamp == nil, await engine.isSyncBlocked() {
+                    save(txId: nil)
+                }
             }
         } catch {
             logger?.log(level: .error, message: "Migration reconcile failed: \(error)")
@@ -222,7 +231,8 @@ class ZcashMigrator {
         }
     }
 
-    // a broadcast node must differ from the sync node so migration traffic is not correlated with sync traffic;
+    // a broadcast node must differ from the sync node so the two are not linked at the lightwalletd level;
+    // node-level separation only — without Tor both connections still originate from the user's IP.
     // user-added custom nodes are deliberately excluded
     func submissionEndpoint(excludingHost host: String) -> LightWalletEndpoint {
         let nodes = network.networkType == .mainnet ? ZcashNode.defaultNodes : ZcashNode.defaultTestnetNodes
