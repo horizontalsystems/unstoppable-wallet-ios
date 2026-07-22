@@ -15,4 +15,16 @@ struct ThorChainIntegrationTests {
         #expect(token.type == .native)
         #expect(token.decimals == 8)
     }
+
+    @Test func nonNativeThorTokenDoesNotMatchNativeRouteIdentity() {
+        let token = Token(
+            coin: Coin(uid: "thorchain-asset", name: "THORChain asset", code: "ASSET"),
+            blockchain: Blockchain(type: .thorChain, name: "THORChain", explorerUrl: nil),
+            type: .eip20(address: "asset-reference"),
+            decimals: 8
+        )
+
+        #expect(token.blockchainType == .thorChain)
+        #expect(token.type != .native)
+    }
 }
