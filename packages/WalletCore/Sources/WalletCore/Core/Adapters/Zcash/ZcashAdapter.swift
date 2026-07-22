@@ -138,7 +138,6 @@ class ZcashAdapter {
         token = wallet.token
         transactionSource = wallet.transactionSource
         uniqueId = wallet.account.id
-        migrator = ZcashMigrator(uniqueId: uniqueId, threshold: Self.minimalThreshold, network: network, logger: logger)
 
         var existingMode: WalletInitMode?
         if let dbUrl = try? Self.dataDbURL(uniqueId: uniqueId, network: network),
@@ -169,6 +168,7 @@ class ZcashAdapter {
         let dbPool = try DatabasePool(path: databaseURL.path)
         zCashAdapterStorage = try ZcashAdapterStorage(dbPool: dbPool)
         zCashBalanceData = try zCashAdapterStorage.balanceData(id: uniqueId) ?? .empty(id: uniqueId)
+        migrator = ZcashMigrator(uniqueId: uniqueId, threshold: Self.minimalThreshold, network: network, storage: zCashAdapterStorage, logger: logger)
 
         let initializer = try ZcashAdapter.initializer(network: network, uniqueId: uniqueId, endpoint: endpoint)
         synchronizer = SDKSynchronizer(initializer: initializer)
@@ -314,7 +314,7 @@ class ZcashAdapter {
                 // the single engine selection point; the fake branch does not exist in release binaries
                 #if DEBUG
                     if Core.shared.localStorage.emulateZcashMigration {
-                        self?.migrator.engine = FakeZcashMigrationEngine()
+                        self?.migrator.engine = FakeZcashMigrationEngine(migratedAt: self?.migrator.timestamp)
                     } else {
                         self?.migrator.engine = ZcashMigrationEngine(synchronizer: synchronizer, accountUUID: account.id, spendingKey: unifiedSpendingKey)
                     }
@@ -359,7 +359,20 @@ class ZcashAdapter {
         state = .idle
 
         logger?.log(level: .debug, message: "Start kit after finish preparing!")
-        startSynchronizer()
+
+        // one-shot per adapter activation: the sync is not running yet, so a pending
+        // migration transfer can be executed without stopping anything
+        Task { [weak self] in
+            guard let self else { return }
+            await migrator.reconcileIfNeeded(currentEndpointHost: currentEndpoint.host)
+
+            // relaunch inside the privacy window: show migrating and let the watcher restart sync
+            if let engine = migrator.engine, await engine.isSyncBlocked() {
+                enterMigratingState()
+            } else {
+                startSynchronizer()
+            }
+        }
     }
 
     private func startSynchronizer() {
@@ -731,6 +744,7 @@ class ZcashAdapter {
 
     public func wipe() -> AnyPublisher<Void, Error> {
         synchronizer.stop()
+        migrator.clearOnWipe()
 
         let synchronizer = synchronizer
         let uniqueId = uniqueId
@@ -1415,6 +1429,10 @@ extension ZcashAdapter {
 
     func migrationProposal() async throws -> (amount: Decimal, fee: Decimal) {
         try await migrator.migrationProposal(orchardBalance: zCashBalanceData.orchard)
+    }
+
+    func clearMigrationHistory() {
+        migrator.clearOnWipe()
     }
 
     func performMigration() async throws -> String? {
