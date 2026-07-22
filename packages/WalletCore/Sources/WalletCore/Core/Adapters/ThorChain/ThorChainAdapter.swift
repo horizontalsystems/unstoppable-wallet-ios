@@ -10,6 +10,7 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
     private let wallet: Wallet
     private let disposeBag = DisposeBag()
     private let lifecycleLock = NSRecursiveLock()
+    private let kitCallLock = NSRecursiveLock()
     private let balanceStateSubject = PublishSubject<AdapterState>()
     private let balanceDataSubject = PublishSubject<BalanceData>()
     private var stopped = false
@@ -56,27 +57,29 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
     }
 
     func start() {
-        lifecycleLock.lock()
-        defer { lifecycleLock.unlock() }
-        guard !stopped else { return }
-        thorChainKitWrapper.thorChainKit.start()
+        withActiveKitCall {
+            thorChainKitWrapper.thorChainKit.start()
+        }
     }
 
     func stop() {
         lifecycleLock.lock()
-        defer { lifecycleLock.unlock() }
         guard !stopped else {
+            lifecycleLock.unlock()
             return
         }
         stopped = true
+        lifecycleLock.unlock()
+
+        kitCallLock.lock()
         thorChainKitWrapper.thorChainKit.stop()
+        kitCallLock.unlock()
     }
 
     func refresh() {
-        lifecycleLock.lock()
-        defer { lifecycleLock.unlock() }
-        guard !stopped else { return }
-        thorChainKitWrapper.thorChainKit.refresh()
+        withActiveKitCall {
+            thorChainKitWrapper.thorChainKit.refresh()
+        }
     }
 
     var balanceState: AdapterState {
@@ -127,6 +130,26 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
         case let .notSynced(error, cached: _):
             return .notSynced(error: Self.syncErrorCode(error))
         }
+    }
+
+    private func withActiveKitCall(_ body: () -> Void) {
+        lifecycleLock.lock()
+        guard !stopped else {
+            lifecycleLock.unlock()
+            return
+        }
+        lifecycleLock.unlock()
+
+        kitCallLock.lock()
+        lifecycleLock.lock()
+        guard !stopped else {
+            lifecycleLock.unlock()
+            kitCallLock.unlock()
+            return
+        }
+        lifecycleLock.unlock()
+        body()
+        kitCallLock.unlock()
     }
 
     private func publishState() {

@@ -80,7 +80,7 @@ public class AdapterManager {
             }
             if let adapter = adapterFactory.adapter(wallet: wallet) {
                 newAdapterMap[wallet] = adapter
-                adapter.start()
+                Self.performLifecycle(.start, on: adapter)
             }
         }
 
@@ -101,7 +101,7 @@ public class AdapterManager {
         }
 
         for adapter in removedAdapters {
-            adapter.stop()
+            Self.performLifecycle(.stop, on: adapter)
         }
     }
 
@@ -163,7 +163,9 @@ public class AdapterManager {
 
         queue.sync {
             for wallet in wallets {
-                _adapterData.adapterMap[wallet]?.stop()
+                if let adapter = _adapterData.adapterMap[wallet] {
+                    Self.performLifecycle(.stop, on: adapter)
+                }
                 _adapterData.adapterMap[wallet] = nil
             }
         }
@@ -243,7 +245,7 @@ extension AdapterManager {
             }
 
             for (_, adapter) in self._adapterData.adapterMap {
-                adapter.refresh()
+                Self.performLifecycle(.refresh, on: adapter)
             }
 
             self.tronKitManager.tronKitWrapper?.tronKit.refresh()
@@ -271,13 +273,32 @@ extension AdapterManager {
             } else if wallet.token.blockchainType == .zano {
                 self.zanoKitManager.kit?.restart()
             } else {
-                self._adapterData.adapterMap[wallet]?.refresh()
+                if let adapter = self._adapterData.adapterMap[wallet] {
+                    Self.performLifecycle(.refresh, on: adapter)
+                }
             }
         }
     }
 }
 
 extension AdapterManager {
+    enum LifecycleAction {
+        case start
+        case stop
+        case refresh
+    }
+
+    static func performLifecycle(_ action: LifecycleAction, on adapter: IAdapter) {
+        switch action {
+        case .start:
+            adapter.start()
+        case .stop:
+            adapter.stop()
+        case .refresh:
+            adapter.refresh()
+        }
+    }
+
     struct AdapterData {
         var adapterMap: [Wallet: IAdapter]
         let account: Account?

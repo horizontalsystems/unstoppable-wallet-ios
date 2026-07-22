@@ -2,6 +2,7 @@ import BigInt
 import Combine
 import Foundation
 import HdWalletKit
+import HsCryptoKit
 import Testing
 import ThorChainKit
 @testable import WalletCore
@@ -49,6 +50,21 @@ struct ThorChainKitManagerTests {
         #expect(factory.lastAddress == first.thorChainKit.address.raw)
         #expect(factory.lastEndpointFamilyIds == ["test-mainnet"])
         #expect(factory.kit.startCount == 0)
+    }
+
+    @Test func mnemonicDerivationMatchesFrozenVector() throws {
+        let factory = RecordingThorChainKitFactory()
+        let manager = ThorChainKitManager(
+            endpointProvider: StaticThorChainEndpointProvider(),
+            kitFactory: factory
+        )
+        let entropy = Crypto.sha256(Data("THR-104-S1-06-test-seed-v1".utf8))
+        let account = try Self.account(id: "vector-account", entropy: entropy)
+
+        let wrapper = try manager.thorChainKitWrapper(account: account)
+
+        #expect(wrapper.thorChainKit.address.raw == "thor1le9eykyndunax8k24w8fykd8ndx35w2h27c008")
+        #expect(factory.lastAddress == wrapper.thorChainKit.address.raw)
     }
 
     @Test func changedAccountIdentityReplacesCachedWrapper() throws {
@@ -139,12 +155,18 @@ struct ThorChainKitManagerTests {
         #expect(mnemonicFactory.callCount == 0)
     }
 
-    private static func account(id: String) throws -> Account {
+    private static func account(id: String, entropy: Data? = nil) throws -> Account {
+        let words = if let entropy {
+            Mnemonic.generate(entropy: entropy, language: .english)
+        } else {
+            try Mnemonic.generate(wordCount: .twelve, language: .english)
+        }
+
         Account(
             id: id,
             level: 0,
             name: id,
-            type: .mnemonic(words: try Mnemonic.generate(wordCount: .twelve, language: .english), salt: "", bip39Compliant: true),
+            type: .mnemonic(words: words, salt: "", bip39Compliant: true),
             origin: .created,
             backedUp: false,
             fileBackedUp: false
@@ -183,7 +205,7 @@ private final class RecordingThorChainKitFactory: IThorChainKitFactory {
     var lastAddress = ""
     var lastWalletId = ""
     var lastEndpointFamilyIds = [String]()
-    let kit = ManagerThorChainKitSpy()
+    private(set) var kit: ManagerThorChainKitSpy!
 
     func kit(
         address: ThorChainKit.Address,
@@ -194,12 +216,13 @@ private final class RecordingThorChainKitFactory: IThorChainKitFactory {
         lastAddress = address.raw
         lastWalletId = walletId
         lastEndpointFamilyIds = endpoints.families.map(\.id)
+        kit = ManagerThorChainKitSpy(address: address)
         return kit
     }
 }
 
 private final class ManagerThorChainKitSpy: IThorChainKit {
-    let address = try! ThorChainKit.Address("thor1x0jkvqdh2hlpeztd5zyyk70n3efx6mhudkmnn2", network: .mainnet)
+    let address: ThorChainKit.Address
     let syncStateSubject = CurrentValueSubject<ThorChainKit.SyncState, Never>(.idle(cached: false))
     let accountStateSubject = CurrentValueSubject<ThorChainKit.AccountState?, Never>(nil)
     var network: ThorChainKit.Network { address.network }
@@ -212,6 +235,10 @@ private final class ManagerThorChainKitSpy: IThorChainKit {
     var syncStatePublisher: AnyPublisher<ThorChainKit.SyncState, Never> { syncStateSubject.eraseToAnyPublisher() }
     var accountStatePublisher: AnyPublisher<ThorChainKit.AccountState?, Never> { accountStateSubject.eraseToAnyPublisher() }
     var startCount = 0
+
+    init(address: ThorChainKit.Address) {
+        self.address = address
+    }
 
     func start() { startCount += 1 }
     func stop() {}
