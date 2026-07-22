@@ -46,6 +46,12 @@ class ZcashMigrator {
         try? storage.deleteMigrationTxs(accountId: uniqueId)
     }
 
+    // per-call GRDB read, no cache: the table holds a handful of rows, record mapping is paginated,
+    // and dbPool is thread-safe by itself (same pattern as the shielding alertState reads)
+    func isMigrationTx(hash: String) -> Bool {
+        ((try? storage.migrationTxIds(accountId: uniqueId)) ?? []).contains(hash)
+    }
+
     private func save(txId: String?) {
         try? storage.save(migrationTx: ZcashMigrationTx(txId: txId, accountId: uniqueId, createdAt: Date()))
     }
