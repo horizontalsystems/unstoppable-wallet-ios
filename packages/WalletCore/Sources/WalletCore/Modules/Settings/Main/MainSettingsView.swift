@@ -563,6 +563,13 @@ struct MainSettingsView: View {
                 .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
             }
 
+            ListRow {
+                Toggle(isOn: $viewModel.emulateZcashMigration) {
+                    Text("Emulate ZEC Migration").themeBody()
+                }
+                .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+            }
+
             row(
                 title: "AML checking result".localized,
                 subtitle: "Oerride checking result from serer".localized,

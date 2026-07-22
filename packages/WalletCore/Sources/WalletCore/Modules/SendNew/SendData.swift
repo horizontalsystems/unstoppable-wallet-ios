@@ -15,6 +15,7 @@ public enum SendData {
     case zcash(amount: Decimal, recipient: Recipient, memo: String?)
     case zcashResend(amount: Decimal, recipient: Recipient, memo: String?, initialTransactionSettings: InitialTransactionSettings)
     case zcashShield(amount: Decimal, recipient: Recipient?, memo: String?)
+    case zcashMigration
     case tron(token: Token, contract: TronKit.Contract)
     case tronGasFree(token: Token, receiver: TronKit.Address, value: BigUInt)
     case ton(token: Token, amount: Decimal, address: FriendlyAddress, memo: String?)

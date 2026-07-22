@@ -304,7 +304,16 @@ class ZcashAdapter {
                 self?.accountId = account.id
                 self?.uAddress = uAddress
                 self?.tAddress = tAddress
-                self?.migrator.engine = ZcashMigrationEngine(synchronizer: synchronizer, accountUUID: account.id, spendingKey: unifiedSpendingKey)
+                // the single engine selection point; the fake branch does not exist in release binaries
+                #if DEBUG
+                    if Core.shared.localStorage.emulateZcashMigration {
+                        self?.migrator.engine = FakeZcashMigrationEngine()
+                    } else {
+                        self?.migrator.engine = ZcashMigrationEngine(synchronizer: synchronizer, accountUUID: account.id, spendingKey: unifiedSpendingKey)
+                    }
+                #else
+                    self?.migrator.engine = ZcashMigrationEngine(synchronizer: synchronizer, accountUUID: account.id, spendingKey: unifiedSpendingKey)
+                #endif
 
                 self?.depositAddressSubject.send(.completed(DepositAddress(uAddress.stringEncoded)))
 
@@ -808,12 +817,20 @@ class ZcashAdapter {
         logger?.log(level: .debug, message: "Available balance from syncer: \(available.decimalValue.decimalValue.description)")
 
 //        print("BALANCE: t = \(balances.unshielded.decimalValue.decimalValue)")
+        var orchard = balances.orchardBalance.spendableValue.decimalValue.decimalValue
+        #if DEBUG
+            // emulation: the whole migration cycle (cell, alert, screen, zeroing) runs off the fake engine state
+            if let fakeEngine = migrator.engine as? FakeZcashMigrationEngine {
+                orchard = fakeEngine.orchardSpendable.decimalValue.decimalValue
+            }
+        #endif
+
         let zCashBalanceData = ZcashBalanceData(
             id: uniqueId,
             full: full.decimalValue.decimalValue,
             available: available.decimalValue.decimalValue,
             transparent: balances.unshielded.decimalValue.decimalValue,
-            orchard: balances.orchardBalance.spendableValue.decimalValue.decimalValue
+            orchard: orchard
         )
 
         update(balanceData: zCashBalanceData)
@@ -1387,6 +1404,10 @@ extension ZcashAdapter {
         return try await Core.shared.backgroundTaskManager.performCritical(name: "zcash-send") {
             try await send(proposal: proposal, spendingKey: spendingKey)
         }
+    }
+
+    func migrationProposal() async throws -> (amount: Decimal, fee: Decimal) {
+        try await migrator.migrationProposal(orchardBalance: zCashBalanceData.orchard)
     }
 
     func performMigration() async throws -> String? {

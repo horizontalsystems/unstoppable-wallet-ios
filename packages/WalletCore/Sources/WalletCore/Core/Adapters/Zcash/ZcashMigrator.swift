@@ -88,6 +88,21 @@ class ZcashMigrator {
         return true
     }
 
+    // pure read for the confirmation screen; the session re-proposes before signing
+    func migrationProposal(orchardBalance: Decimal) async throws -> (amount: Decimal, fee: Decimal) {
+        guard let engine else {
+            throw AppError.ZcashError.noAccountId
+        }
+
+        let schedule = try await engine.proposeImmediate()
+        guard let transfer = schedule.transfers.first else {
+            throw AppError.ZcashError.notEnough
+        }
+
+        let amount = transfer.amount.decimalValue.decimalValue
+        return (amount: amount, fee: max(0, orchardBalance - amount))
+    }
+
     // must be called with the synchronizer stopped: sign/execute throw migrationBroadcastDuringSync while sync is live.
     // Returns nil when the broadcast landed but the SDK failed to record it (reconciled by the engine later).
     func performMigration(currentEndpointHost: String) async throws -> String? {
@@ -158,6 +173,12 @@ class ZcashMigrator {
                             },
                             .init(style: .yellow, title: "balance.token.migrate".localized) {
                                 isPresented.wrappedValue = false
+
+                                Coordinator.shared.present { _ in
+                                    ThemeNavigationStack {
+                                        MigrationSendView()
+                                    }
+                                }
                             },
                         ],
                         alignment: .horizontal)),
