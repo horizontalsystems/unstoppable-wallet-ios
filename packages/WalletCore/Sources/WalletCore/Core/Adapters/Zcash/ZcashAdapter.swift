@@ -99,6 +99,13 @@ class ZcashAdapter {
         state.adapterState
     }
 
+    var isMigrating: Bool {
+        if case .migrating = state {
+            return true
+        }
+        return false
+    }
+
     func getSingleUseTransparentAddress() async throws -> SingleUseTransparentAddress? {
         guard let account = try await synchronizer.listAccounts().first else {
             throw AppError.ZcashError.noReceiveAddress
