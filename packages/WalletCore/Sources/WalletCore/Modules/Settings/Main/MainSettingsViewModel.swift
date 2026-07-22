@@ -71,6 +71,14 @@ class MainSettingsViewModel: ObservableObject {
     @Published var emulateZcashMigration: Bool {
         didSet {
             localStorage.emulateZcashMigration = emulateZcashMigration
+
+            // turning emulation off resets the fake migration state so the cycle can be re-run
+            if !emulateZcashMigration,
+               let token = try? Core.shared.coinManager.token(query: .init(blockchainType: .zcash, tokenType: .native)),
+               let adapter = Core.shared.adapterManager.adapter(for: token) as? ZcashAdapter
+            {
+                adapter.clearMigrationHistory()
+            }
         }
     }
 

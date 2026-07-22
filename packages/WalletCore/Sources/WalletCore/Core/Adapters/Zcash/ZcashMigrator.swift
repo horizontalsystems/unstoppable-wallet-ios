@@ -9,17 +9,16 @@ class ZcashMigrator {
     private let uniqueId: String
     private let threshold: Decimal
     private let network: ZcashNetwork
+    private let storage: ZcashAdapterStorage
     private let logger: HsToolKit.Logger?
 
     var engine: IZcashMigrationEngine?
 
     private var alertShown = false
 
-    private var timestampKey: String { "zcash-migration-timestamp-\(uniqueId)" }
-
+    // a migration row exists ⟺ a broadcast happened; createdAt of the latest row is the privacy-buffer start
     var timestamp: Date? {
-        get { Core.shared.userDefaultsStorage.value(for: timestampKey) }
-        set { Core.shared.userDefaultsStorage.set(value: newValue, for: timestampKey) }
+        (try? storage.latestMigrationDate(accountId: uniqueId)) ?? nil
     }
 
     // UI countdown only; the authority on whether sync is actually blocked is the SDK gate
@@ -35,11 +34,20 @@ class ZcashMigrator {
         return Int((remaining / 60).rounded(.up))
     }
 
-    init(uniqueId: String, threshold: Decimal, network: ZcashNetwork, logger: HsToolKit.Logger?) {
+    init(uniqueId: String, threshold: Decimal, network: ZcashNetwork, storage: ZcashAdapterStorage, logger: HsToolKit.Logger?) {
         self.uniqueId = uniqueId
         self.threshold = threshold
         self.network = network
+        self.storage = storage
         self.logger = logger
+    }
+
+    func clearOnWipe() {
+        try? storage.deleteMigrationTxs(accountId: uniqueId)
+    }
+
+    private func save(txId: String?) {
+        try? storage.save(migrationTx: ZcashMigrationTx(txId: txId, accountId: uniqueId, createdAt: Date()))
     }
 
     private func ironwoodActive(latestHeight: Int) -> Bool {
@@ -121,9 +129,64 @@ class ZcashMigrator {
         let options = MigrationNetworkPrivacyOptions(useTor: false, submissionEndpoint: submissionEndpoint(excludingHost: currentEndpointHost))
         let txId = try await executeWithRetries(engine: engine, options: options)
 
-        timestamp = Date()
+        save(txId: txId)
         logger?.log(level: .debug, message: "Migration broadcast done, txId: \(txId ?? "unrecorded")")
         return txId
+    }
+
+    // called once per adapter activation, before the synchronizer starts
+    func reconcileIfNeeded(currentEndpointHost: String) async {
+        guard Self.migrationEnabled, let engine else {
+            return
+        }
+
+        do {
+            switch try await engine.state() {
+            case .inProgress:
+                _ = try await resumePendingMigration(currentEndpointHost: currentEndpointHost)
+            case .requiresAttention:
+                try await engine.restart() // silent: the alert will offer migration again
+            case .notStarted, .readyToPropose:
+                if await engine.isSyncBlocked() {
+                    try await engine.restart() // un-wedge: gate armed but nothing scheduled
+                }
+            case .splitPendingConfirmation, .complete:
+                () // nothing to reconcile; a post-broadcast buffer resolves via the migrating state
+            }
+        } catch {
+            logger?.log(level: .error, message: "Migration reconcile failed: \(error)")
+        }
+    }
+
+    // reconcile path for an interrupted session: a signed-but-unexecuted transfer is delivered,
+    // "nothing pending" is a normal outcome (the broadcast already happened before the interruption)
+    private func resumePendingMigration(currentEndpointHost: String) async throws -> String? {
+        guard let engine else {
+            return nil
+        }
+
+        let options = MigrationNetworkPrivacyOptions(useTor: false, submissionEndpoint: submissionEndpoint(excludingHost: currentEndpointHost))
+
+        let result: MigrationTransferResult?
+        do {
+            result = try await engine.executeNext(options: options)
+        } catch ZcashError.migrationRecordFailedAfterBroadcast {
+            save(txId: nil)
+            return nil
+        }
+
+        switch result {
+        case let .success(txId):
+            save(txId: txId)
+            logger?.log(level: .debug, message: "Reconcile delivered pending migration transfer, txId: \(txId)")
+            return txId
+        case nil, .networkError:
+            // networkError: signed transfer stays pending, retried on next adapter start
+            return nil
+        case .invalidNote, .expired:
+            try await engine.restart()
+            return nil
+        }
     }
 
     private func executeWithRetries(engine: IZcashMigrationEngine, options: MigrationNetworkPrivacyOptions) async throws -> String? {

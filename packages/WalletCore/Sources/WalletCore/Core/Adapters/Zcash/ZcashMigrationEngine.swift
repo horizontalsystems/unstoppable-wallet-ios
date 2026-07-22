@@ -56,13 +56,16 @@ class ZcashMigrationEngine: IZcashMigrationEngine {
         private(set) var executedTxIds = [String]()
         private var lastExecuteAt: Date?
 
-        init(orchardSpendable: Zatoshi = Zatoshi(100_000_000), executeResults: [MigrationTransferResult] = []) {
-            self.orchardSpendable = orchardSpendable
+        // migratedAt (the latest stored migration row) makes the fake honest across relaunches:
+        // migrated → zero balance, gate blocked while inside the privacy window
+        init(orchardSpendable: Zatoshi = Zatoshi(100_000_000), executeResults: [MigrationTransferResult] = [], migratedAt: Date? = nil) {
+            self.orchardSpendable = migratedAt == nil ? orchardSpendable : Zatoshi(0)
             self.executeResults = executeResults
+            lastExecuteAt = migratedAt
         }
 
         func state() async throws -> MigrationState {
-            if !executedTxIds.isEmpty {
+            if lastExecuteAt != nil {
                 return .complete
             }
             return signedSchedule == nil ? .readyToPropose : .inProgress(MigrationProgress(
