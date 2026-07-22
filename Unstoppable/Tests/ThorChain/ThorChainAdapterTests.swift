@@ -53,6 +53,21 @@ struct ThorChainAdapterTests {
         #expect(spy.refreshCount == 0)
     }
 
+    @Test func stopCompletesWhenKitPublishesSynchronously() throws {
+        let spy = ThorChainKitSpy()
+        spy.emitStateOnStop = true
+        let adapter = try ThorChainAdapter(thorChainKitWrapper: ThorChainKitWrapper(thorChainKit: spy), wallet: Self.wallet())
+        let stopFinished = DispatchSemaphore(value: 0)
+
+        DispatchQueue.global().async {
+            adapter.stop()
+            stopFinished.signal()
+        }
+
+        #expect(stopFinished.wait(timeout: .now() + 1) == .success)
+        #expect(spy.stopCount == 1)
+    }
+
     @Test func runeConversionUsesEightDecimalsWithoutDouble() throws {
         let oneRune = try ThorChainAdapter.balanceData(baseUnits: 100_000_000, decimals: 8)
         #expect(oneRune.total == 1)
@@ -172,6 +187,7 @@ private final class ThorChainKitSpy: IThorChainKit {
     var refreshCount = 0
     var startEntered: DispatchSemaphore?
     var releaseStart: DispatchSemaphore?
+    var emitStateOnStop = false
 
     var network: ThorChainKit.Network { address.network }
     var lastBlockHeight: Int64? { nil }
@@ -187,6 +203,11 @@ private final class ThorChainKitSpy: IThorChainKit {
         releaseStart?.wait()
         startCount += 1
     }
-    func stop() { stopCount += 1 }
+    func stop() {
+        stopCount += 1
+        if emitStateOnStop {
+            syncStateSubject.send(.idle(cached: false))
+        }
+    }
     func refresh() { refreshCount += 1 }
 }
