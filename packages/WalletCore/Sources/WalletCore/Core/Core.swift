@@ -277,6 +277,10 @@ public class Core {
         evmLabelManager = EvmLabelManager(provider: hsLabelProvider, storage: evmLabelStorage, syncerStateStorage: syncerStateStorage)
 
         let tronKitManager = TronKitManager(testNetManager: testNetManager, evmSyncSourceManager: evmSyncSourceManager)
+        let thorChainKitManager = ThorChainKitManager(
+            endpointProvider: ThorChainEndpointConfigurationProvider(),
+            kitFactory: ThorChainKitFactory()
+        )
         tronAccountManager = TronAccountManager(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, tronKitManager: tronKitManager, restoreStateManager: restoreStateManager)
 
         tonKitManager = TonKitManager(restoreStateManager: restoreStateManager, marketKit: marketKit, walletManager: walletManager)
@@ -360,6 +364,8 @@ public class Core {
             zcashNodeManager: zcashNodeManager,
             btcBlockchainManager: btcBlockchainManager,
             tronKitManager: tronKitManager,
+            thorChainKitManager: thorChainKitManager,
+            diagnosticLogger: ThorChainDiagnosticLogger(logger: logger),
             tonKitManager: tonKitManager,
             stellarKitManager: stellarKitManager,
             zanoKitManager: zanoKitManager,

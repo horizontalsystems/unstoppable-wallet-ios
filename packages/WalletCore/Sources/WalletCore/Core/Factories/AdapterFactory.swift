@@ -12,6 +12,8 @@ public class AdapterFactory {
     private let zcashNodeManager: ZcashNodeManager
     private let btcBlockchainManager: BtcBlockchainManager
     private let tronKitManager: TronKitManager
+    private let thorChainKitManager: ThorChainKitManager
+    private let diagnosticLogger: IThorChainDiagnosticLogger
     private let tonKitManager: TonKitManager
     private let stellarKitManager: StellarKitManager
     private let zanoKitManager: ZanoKitManager
@@ -22,7 +24,7 @@ public class AdapterFactory {
     private let evmLabelManager: EvmLabelManager
 
     public init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zcashNodeManager: ZcashNodeManager,
-                btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
+                btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, thorChainKitManager: ThorChainKitManager, diagnosticLogger: IThorChainDiagnosticLogger, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
                 zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager,
                 spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager)
     {
@@ -32,6 +34,8 @@ public class AdapterFactory {
         self.zcashNodeManager = zcashNodeManager
         self.btcBlockchainManager = btcBlockchainManager
         self.tronKitManager = tronKitManager
+        self.thorChainKitManager = thorChainKitManager
+        self.diagnosticLogger = diagnosticLogger
         self.tonKitManager = tonKitManager
         self.stellarKitManager = stellarKitManager
         self.zanoKitManager = zanoKitManager
@@ -78,6 +82,16 @@ public class AdapterFactory {
         }
 
         return TronAdapter(tronKitWrapper: tronKitWrapper)
+    }
+
+    private func thorChainAdapter(wallet: Wallet) -> IAdapter? {
+        do {
+            let wrapper = try thorChainKitManager.thorChainKitWrapper(account: wallet.account)
+            return try ThorChainAdapter(thorChainKitWrapper: wrapper, wallet: wallet)
+        } catch {
+            diagnosticLogger.log(.constructionFailed)
+            return nil
+        }
     }
 
     private func trc20Adapter(address: String, wallet: Wallet) -> IAdapter? {
@@ -226,6 +240,9 @@ extension AdapterFactory {
 
         case (.native, .tron):
             return tronAdapter(wallet: wallet)
+
+        case (.native, .thorChain):
+            return thorChainAdapter(wallet: wallet)
 
         case let (.eip20(address), .tron):
             return trc20Adapter(address: address, wallet: wallet)
