@@ -27,6 +27,7 @@ enum AppError: Error {
         case notEnough
         case seedRequired
         case sendInProgress
+        case migrationFailed
     }
 
     enum EthereumError: Error {
@@ -64,6 +65,7 @@ extension AppError: LocalizedError {
             case .notEnough: return "fee_settings.errors.insufficient_balance".localized
             case .seedRequired, .cantCreateKeys: return "Seed Required"
             case .sendInProgress: return "error.send.in_progress".localized
+            case .migrationFailed: return "error.zcash.migration_failed".localized
             }
         case let .ethereum(reason):
             switch reason {

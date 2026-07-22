@@ -54,6 +54,7 @@ class ZcashMigrationEngine: IZcashMigrationEngine {
         var executeResults: [MigrationTransferResult]
         private(set) var signedSchedule: MigrationSchedule?
         private(set) var executedTxIds = [String]()
+        private var lastExecuteAt: Date?
 
         init(orchardSpendable: Zatoshi = Zatoshi(100_000_000), executeResults: [MigrationTransferResult] = []) {
             self.orchardSpendable = orchardSpendable
@@ -98,12 +99,20 @@ class ZcashMigrationEngine: IZcashMigrationEngine {
                 executedTxIds.append(txId)
                 signedSchedule = nil
                 orchardSpendable = Zatoshi(0)
+                lastExecuteAt = Date()
             }
             return result
         }
 
+        // mirrors the SDK gate: blocked while a signed transfer is pending or within the privacy buffer after broadcast
         func isSyncBlocked() async -> Bool {
-            false
+            if signedSchedule != nil {
+                return true
+            }
+            if let lastExecuteAt {
+                return Date().timeIntervalSince(lastExecuteAt) < ZcashMigrator.bufferInterval
+            }
+            return false
         }
 
         func restart() async throws {
