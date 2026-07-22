@@ -218,7 +218,7 @@ class ZcashMigrator {
 
     // a broadcast node must differ from the sync node so migration traffic is not correlated with sync traffic;
     // user-added custom nodes are deliberately excluded
-    private func submissionEndpoint(excludingHost host: String) -> LightWalletEndpoint {
+    func submissionEndpoint(excludingHost host: String) -> LightWalletEndpoint {
         let nodes = network.networkType == .mainnet ? ZcashNode.defaultNodes : ZcashNode.defaultTestnetNodes
         let node = nodes.first { $0.url.host != host } ?? nodes[0]
         return ZcashAdapter.endpoint(url: node.url)

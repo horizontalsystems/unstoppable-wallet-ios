@@ -5,6 +5,19 @@ import Testing
 @testable import Unstoppable
 @testable import WalletCore
 
+// deterministic mainnet regardless of the host app's dev testnet toggle in UserDefaults.standard
+private final class EphemeralUserDefaultsStorage: UserDefaultsStorage {
+    private var values = [String: Any]()
+
+    override func value<T>(for key: String) -> T? {
+        values[key] as? T
+    }
+
+    override func set(value: (some Any)?, for key: String) {
+        values[key] = value
+    }
+}
+
 private struct ZcashNodeTestEnvironment {
     let dbPool: DatabasePool
     let manager: ZcashNodeManager
@@ -34,7 +47,7 @@ private struct ZcashNodeTestEnvironment {
         let zcashNodeStorage = ZcashNodeStorage(dbPool: pool)
         let settingRecordStorage = try BlockchainSettingRecordStorage(dbPool: pool)
         let settingsStorage = BlockchainSettingsStorage(storage: settingRecordStorage)
-        manager = ZcashNodeManager(blockchainSettingsStorage: settingsStorage, zcashNodeStorage: zcashNodeStorage)
+        manager = ZcashNodeManager(testNetManager: TestNetManager(userDefaultsStorage: EphemeralUserDefaultsStorage()), blockchainSettingsStorage: settingsStorage, zcashNodeStorage: zcashNodeStorage)
     }
 }
 
