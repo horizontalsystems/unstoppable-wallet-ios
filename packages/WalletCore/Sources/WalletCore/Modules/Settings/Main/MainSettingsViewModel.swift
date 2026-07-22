@@ -68,6 +68,12 @@ class MainSettingsViewModel: ObservableObject {
         }
     }
 
+    @Published var emulateZcashMigration: Bool {
+        didSet {
+            localStorage.emulateZcashMigration = emulateZcashMigration
+        }
+    }
+
     @Published var debuggingAmlResult: MultiSwapViewModel.AmlRiskResult? {
         didSet {
             localStorage.debuggingAmlCheckResult = debuggingAmlResult
@@ -81,6 +87,7 @@ class MainSettingsViewModel: ObservableObject {
         emulatePurchase = localStorage.emulatePurchase
         testNetEnabled = testNetManager.testNetEnabled
         mayaStagenetEnabled = testNetManager.mayaStagenetEnabled
+        emulateZcashMigration = localStorage.emulateZcashMigration
         debuggingAmlResult = localStorage.debuggingAmlCheckResult
 
         subscribe(MainScheduler.instance, disposeBag, backupManager.allBackedUpObservable) { [weak self] _ in self?.syncManageWalletsAlert() }

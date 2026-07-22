@@ -17,6 +17,8 @@ public enum SendHandlerFactory {
             return ZcashSendHandler.instance(amount: amount, recipient: recipient, memo: memo, initialTransactionSettings: initialTransactionSettings)
         case let .zcashShield(amount, recipient, memo):
             return ShieldSendHandler.instance(amount: amount, recipient: recipient, memo: memo)
+        case .zcashMigration:
+            return MigrationSendHandler.instance()
         case let .tron(token, contract):
             return TronSendHandler.instance(token: token, contract: contract)
         case let .tronGasFree(token, receiver, value):
