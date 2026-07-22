@@ -9,7 +9,7 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
     private let thorChainKitWrapper: ThorChainKitWrapper
     private let wallet: Wallet
     private let disposeBag = DisposeBag()
-    private let lifecycleLock = NSLock()
+    private let lifecycleLock = NSRecursiveLock()
     private let balanceStateSubject = PublishSubject<AdapterState>()
     private let balanceDataSubject = PublishSubject<BalanceData>()
     private var stopped = false
@@ -56,23 +56,26 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
     }
 
     func start() {
-        guard admitLifecycleCall() else { return }
+        lifecycleLock.lock()
+        defer { lifecycleLock.unlock() }
+        guard !stopped else { return }
         thorChainKitWrapper.thorChainKit.start()
     }
 
     func stop() {
         lifecycleLock.lock()
+        defer { lifecycleLock.unlock() }
         guard !stopped else {
-            lifecycleLock.unlock()
             return
         }
         stopped = true
-        lifecycleLock.unlock()
         thorChainKitWrapper.thorChainKit.stop()
     }
 
     func refresh() {
-        guard admitLifecycleCall() else { return }
+        lifecycleLock.lock()
+        defer { lifecycleLock.unlock() }
+        guard !stopped else { return }
         thorChainKitWrapper.thorChainKit.refresh()
     }
 
@@ -127,12 +130,16 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
     }
 
     private func publishState() {
-        guard !isStopped else { return }
+        lifecycleLock.lock()
+        defer { lifecycleLock.unlock() }
+        guard !stopped else { return }
         balanceStateSubject.onNext(balanceState)
     }
 
     private func publishBalance() {
-        guard !isStopped else { return }
+        lifecycleLock.lock()
+        defer { lifecycleLock.unlock() }
+        guard !stopped else { return }
         do {
             cachedBalance = try Self.balanceData(
                 baseUnits: thorChainKitWrapper.thorChainKit.runeBalance,
@@ -146,24 +153,18 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
         }
     }
 
-    private func admitLifecycleCall() -> Bool {
-        lifecycleLock.lock()
-        defer { lifecycleLock.unlock() }
-        return !stopped
-    }
-
-    private var isStopped: Bool {
-        lifecycleLock.lock()
-        defer { lifecycleLock.unlock() }
-        return stopped
-    }
-
     static func balanceData(baseUnits: BigUInt, decimals: Int) throws -> BalanceData {
         guard (0...38).contains(decimals) else {
             throw ThorChainAdapterError.invalidDecimals
         }
 
-        guard var raw = Decimal(string: baseUnits.description) else {
+        let baseUnitsDescription = baseUnits.description
+        let significantDigits = baseUnitsDescription.dropLast(while: { $0 == "0" }).count
+        guard significantDigits <= 38 else {
+            throw ThorChainAdapterError.balancePrecisionLoss
+        }
+
+        guard var raw = Decimal(string: baseUnitsDescription) else {
             throw ThorChainAdapterError.balanceConversionOverflow
         }
         var divisor = Decimal(1)
