@@ -17,6 +17,7 @@
 		D368E5BD2FC991E500487B08 /* WalletCore in Frameworks */ = {isa = PBXBuildFile; productRef = D368E5BC2FC991E500487B08 /* WalletCore */; };
 		D368E5C02FC9966B00487B08 /* HsToolKit in Frameworks */ = {isa = PBXBuildFile; productRef = D368E5BF2FC9966B00487B08 /* HsToolKit */; };
 		D368E5C22FC9967500487B08 /* HsToolKit in Frameworks */ = {isa = PBXBuildFile; productRef = D368E5C12FC9967500487B08 /* HsToolKit */; };
+		D4A110000000000000000003 /* ThorChainKit in Frameworks */ = {isa = PBXBuildFile; productRef = D4A110000000000000000002 /* ThorChainKit */; };
 		D3C9F7482FADF57B00C7916F /* AppWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D3E161E02FADAB4E006A73DD /* AppWidget.intentdefinition */; };
 		D3E161E12FADAB4E006A73DD /* AppWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D3E161E02FADAB4E006A73DD /* AppWidget.intentdefinition */; };
 /* End PBXBuildFile section */
@@ -218,6 +219,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4A110000000000000000003 /* ThorChainKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +364,7 @@
 			);
 			name = AppTests;
 			packageProductDependencies = (
+				D4A110000000000000000002 /* ThorChainKit */,
 			);
 			productName = AppTests;
 			productReference = D39BA7EB2F9B3D48005461CB /* AppTests.xctest */;
@@ -402,6 +405,7 @@
 			mainGroup = D3285F3920BD158E00644076;
 			packageReferences = (
 				D368E5BE2FC9966B00487B08 /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */,
+				D4A110000000000000000001 /* XCRemoteSwiftPackageReference "ThorChainKit.Swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
@@ -1414,6 +1418,14 @@
 				version = 2.0.5;
 			};
 		};
+		D4A110000000000000000001 /* XCRemoteSwiftPackageReference "ThorChainKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ant013/ThorChainKit.Swift.git";
+			requirement = {
+				kind = revision;
+				revision = 3f492c8c7f334d69ce0cacb14157ba9846f59c69;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1430,6 +1442,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D368E5BE2FC9966B00487B08 /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */;
 			productName = HsToolKit;
+		};
+		D4A110000000000000000002 /* ThorChainKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D4A110000000000000000001 /* XCRemoteSwiftPackageReference "ThorChainKit.Swift" */;
+			productName = ThorChainKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

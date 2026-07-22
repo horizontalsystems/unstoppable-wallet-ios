@@ -1,5 +1,6 @@
 import EvmKit
 import MarketKit
+import ThorChainKit
 import TronKit
 
 enum AccountAddress {
@@ -55,5 +56,29 @@ enum AccountAddress {
         default:
             throw AdapterError.unsupportedAccount
         }
+    }
+
+    static func thorChainAddress(account: Account) throws -> ThorChainKit.Address {
+        guard let seed = account.type.mnemonicSeed else {
+            throw AdapterError.unsupportedAccount
+        }
+
+        let wallet = HDWallet(
+            seed: seed,
+            coinType: ThorChainKit.Network.mainnet.coinType,
+            xPrivKey: HDExtendedKeyVersion.xprv.rawValue,
+            purpose: .bip44,
+            curve: .secp256k1
+        )
+        let path = ThorChainKit.DerivationPath.defaultAccount.rawValue
+        let compressedPublicKey = try wallet
+            .privateKey(path: path)
+            .publicKey(curve: .secp256k1)
+            .raw
+
+        return try ThorChainKit.AccountAddressFactory.address(
+            compressedPublicKey: compressedPublicKey,
+            network: .mainnet
+        )
     }
 }
