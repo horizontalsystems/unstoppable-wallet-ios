@@ -353,6 +353,7 @@
 "balance.token.migration.detected.title" = "ZEC Pool Migration";
 "balance.token.migration.detected.description" = "Zcash has upgraded to a new shielded pool. Your balance in the old pool must be migrated to remain fully usable in Unstoppable.";
 "balance.token.migrate" = "Migrate";
+"error.zcash.migration_failed" = "Migration could not be completed. No funds were lost — you can try again later.";
 
 "balance.token.receive_address" = "Receive Address";
 "balance.token.account.inactive.description" = "Transactions will appear after activation";
