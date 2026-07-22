@@ -1,10 +1,12 @@
 import BigInt
 import Combine
+import EvmKit
 import Foundation
 import HdWalletKit
 import HsCryptoKit
 import Testing
 import ThorChainKit
+import TronKit
 @testable import WalletCore
 
 struct ThorChainKitManagerTests {
@@ -65,6 +67,28 @@ struct ThorChainKitManagerTests {
 
         #expect(wrapper.thorChainKit.address.raw == "thor1le9eykyndunax8k24w8fykd8ndx35w2h27c008")
         #expect(factory.lastAddress == wrapper.thorChainKit.address.raw)
+    }
+
+    @Test func accountAddressUsesRegisteredThorProvider() throws {
+        let expected = try ThorChainKit.Address("thor1le9eykyndunax8k24w8fykd8ndx35w2h27c008", network: .mainnet)
+        AccountAddress.register(RegisteredThorAddressProvider(address: expected))
+        let account = Account(
+            id: "provider-boundary",
+            level: 0,
+            name: "Provider boundary",
+            type: .tonAddress(address: "unsupported"),
+            origin: .created,
+            backedUp: false,
+            fileBackedUp: false
+        )
+
+        #expect(try AccountAddress.thorChainAddress(account: account) == expected)
+    }
+
+    @Test func accountAddressProviderDefaultsThorToNil() throws {
+        let account = try Self.account(id: "default-provider")
+
+        #expect(try LegacyAddressProvider().thorChainAddress(account: account) == nil)
     }
 
     @Test func changedAccountIdentityReplacesCachedWrapper() throws {
@@ -172,6 +196,21 @@ struct ThorChainKitManagerTests {
             fileBackedUp: false
         )
     }
+}
+
+private struct RegisteredThorAddressProvider: IAccountAddressProvider {
+    let address: ThorChainKit.Address
+
+    func evmAddress(account: Account, blockchainType: BlockchainType) throws -> EvmKit.Address? { nil }
+    func tronAddress(account: Account) throws -> TronKit.Address? { nil }
+    func thorChainAddress(account: Account) throws -> ThorChainKit.Address? {
+        account.id == "provider-boundary" ? address : nil
+    }
+}
+
+private struct LegacyAddressProvider: IAccountAddressProvider {
+    func evmAddress(account: Account, blockchainType: BlockchainType) throws -> EvmKit.Address? { nil }
+    func tronAddress(account: Account) throws -> TronKit.Address? { nil }
 }
 
 private struct StaticThorChainEndpointProvider: IThorChainEndpointConfigurationProvider {

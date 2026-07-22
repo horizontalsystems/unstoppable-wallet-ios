@@ -1,5 +1,7 @@
 import EvmKit
+import HdWalletKit
 import MarketKit
+import ThorChainKit
 import TronKit
 
 class AccountAddressProvider: IAccountAddressProvider {
@@ -40,5 +42,28 @@ class AccountAddressProvider: IAccountAddressProvider {
         default:
             return nil
         }
+    }
+
+    func thorChainAddress(account: Account) throws -> ThorChainKit.Address? {
+        guard let seed = account.type.mnemonicSeed else {
+            return nil
+        }
+
+        let wallet = HDWallet(
+            seed: seed,
+            coinType: ThorChainKit.Network.mainnet.coinType,
+            xPrivKey: HDExtendedKeyVersion.xprv.rawValue,
+            purpose: .bip44,
+            curve: .secp256k1
+        )
+        let compressedPublicKey = try wallet
+            .privateKey(path: ThorChainKit.DerivationPath.defaultAccount.rawValue)
+            .publicKey(curve: .secp256k1)
+            .raw
+
+        return try ThorChainKit.AccountAddressFactory.address(
+            compressedPublicKey: compressedPublicKey,
+            network: .mainnet
+        )
     }
 }
