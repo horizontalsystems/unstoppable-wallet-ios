@@ -209,16 +209,31 @@ class ZcashAdapter {
     }
 
     func isEndpointAvailable(_ endpoint: LightWalletEndpoint) async -> Bool {
-        let endpoints = await synchronizer.evaluateBestOf(
-            endpoints: [endpoint],
-            fetchThresholdSeconds: 20,
-            nBlocksToFetch: 1,
-            kServers: 1,
-            network: network.networkType
-        )
+        // hard cap on the whole check: fetchThresholdSeconds bounds only the fetch phase,
+        // while gRPC connect/TLS retries against a dead host spin far beyond it
+        await withTaskGroup(of: Bool.self) { group in
+            group.addTask { [synchronizer, network] in
+                let endpoints = await synchronizer.evaluateBestOf(
+                    endpoints: [endpoint],
+                    fetchThresholdSeconds: 20,
+                    nBlocksToFetch: 1,
+                    kServers: 1,
+                    network: network.networkType
+                )
 
-        return endpoints.contains {
-            $0.host == endpoint.host && $0.port == endpoint.port && $0.secure == endpoint.secure
+                return endpoints.contains {
+                    $0.host == endpoint.host && $0.port == endpoint.port && $0.secure == endpoint.secure
+                }
+            }
+
+            group.addTask {
+                try? await Task.sleep(seconds: 10)
+                return false
+            }
+
+            let first = await group.next() ?? false
+            group.cancelAll()
+            return first
         }
     }
 
@@ -361,7 +376,9 @@ class ZcashAdapter {
         // subscribe BEFORE checking activity: a critical section completing in between still triggers stop()
         deferredStopCancellable = backgroundTaskManager.criticalCompletedPublisher
             .first()
-            .sink { [weak self] in self?.stop() }
+            .sink { [weak self] in
+                self?.stop()
+            }
 
         guard backgroundTaskManager.isCriticalActive else {
             deferredStopCancellable = nil
@@ -765,6 +782,16 @@ class ZcashAdapter {
             zCashBalanceData = (try? zCashAdapterStorage.balanceData(id: uniqueId)) ?? .empty(id: uniqueId)
             return
         }
+
+        #if DEBUG
+            print(
+                "ZC-SMOKE: pools"
+                    + " | orchard: spendable=\(balances.orchardBalance.spendableValue.decimalValue.decimalValue) total=\(balances.orchardBalance.total().decimalValue.decimalValue)"
+                    + " | ironwood: spendable=\(balances.ironwoodBalance.spendableValue.decimalValue.decimalValue) total=\(balances.ironwoodBalance.total().decimalValue.decimalValue)"
+                    + " | sapling: spendable=\(balances.saplingBalance.spendableValue.decimalValue.decimalValue) total=\(balances.saplingBalance.total().decimalValue.decimalValue)"
+                    + " | transparent=\(balances.unshielded.decimalValue.decimalValue)"
+            )
+        #endif
 
         let full = balances.shieldedTotal()
         let available = balances.shieldedSpendableValue
