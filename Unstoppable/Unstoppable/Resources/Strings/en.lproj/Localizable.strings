@@ -350,6 +350,9 @@
 "balance.token.transparent.detected.title" = "Detected Transparent ZEC";
 "balance.token.transparent.detected.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
 "balance.token.shield" = "Shield";
+"balance.token.migration.detected.title" = "ZEC Pool Migration";
+"balance.token.migration.detected.description" = "Zcash has upgraded to a new shielded pool. Your balance in the old pool must be migrated to remain fully usable in Unstoppable.";
+"balance.token.migrate" = "Migrate";
 
 "balance.token.receive_address" = "Receive Address";
 "balance.token.account.inactive.description" = "Transactions will appear after activation";

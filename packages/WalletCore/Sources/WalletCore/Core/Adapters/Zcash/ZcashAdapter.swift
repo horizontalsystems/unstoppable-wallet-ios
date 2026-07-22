@@ -42,6 +42,7 @@ class ZcashAdapter {
 
     private let synchronizer: Synchronizer
     private let zCashAdapterStorage: ZcashAdapterStorage
+    private let migrator: ZcashMigrator
 
     private var accountId: AccountUUID?
     private(set) var uAddress: UnifiedAddress?
@@ -129,6 +130,7 @@ class ZcashAdapter {
         token = wallet.token
         transactionSource = wallet.transactionSource
         uniqueId = wallet.account.id
+        migrator = ZcashMigrator(uniqueId: uniqueId, threshold: Self.minimalThreshold, network: network, logger: logger)
 
         var existingMode: WalletInitMode?
         if let dbUrl = try? Self.dataDbURL(uniqueId: uniqueId, network: network),
@@ -506,7 +508,12 @@ class ZcashAdapter {
             }
         }
 
-        handleTransparentUpdates(oldBalance: oldTransparent, newBalance: balanceData.transparent)
+        // migration takes precedence over shielding: at most one alert per update
+        let migrationSuggested = migrator.handleCheck(orchardBalance: balanceData.orchard, latestHeight: lastBlockHeight, syncStatus: synchronizerState?.syncStatus)
+
+        if !migrationSuggested {
+            handleTransparentUpdates(oldBalance: oldTransparent, newBalance: balanceData.transparent)
+        }
     }
 
     private func handleTransparentUpdates(oldBalance _: Decimal, newBalance: Decimal) {
@@ -803,7 +810,8 @@ class ZcashAdapter {
             id: uniqueId,
             full: full.decimalValue.decimalValue,
             available: available.decimalValue.decimalValue,
-            transparent: balances.unshielded.decimalValue.decimalValue
+            transparent: balances.unshielded.decimalValue.decimalValue,
+            orchard: balances.orchardBalance.spendableValue.decimalValue.decimalValue
         )
 
         update(balanceData: zCashBalanceData)

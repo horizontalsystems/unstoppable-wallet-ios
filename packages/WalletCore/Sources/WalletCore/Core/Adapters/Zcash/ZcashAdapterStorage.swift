@@ -29,6 +29,12 @@ class ZcashAdapterStorage {
             }
         }
 
+        migrator.registerMigration("add orchard to ZcashBalance") { db in
+            try db.alter(table: ZcashBalanceData.databaseTableName) { t in
+                t.add(column: ZcashBalanceData.Columns.orchard.name, .text).notNull().defaults(to: "0")
+            }
+        }
+
         return migrator
     }
 }
