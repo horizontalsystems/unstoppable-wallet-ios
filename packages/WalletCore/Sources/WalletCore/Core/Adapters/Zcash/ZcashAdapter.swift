@@ -618,6 +618,29 @@ class ZcashAdapter {
     func transactionRecord(fromTransaction transaction: ZcashTransactionWrapper) -> TransactionRecord {
         let showRawTransaction = transaction.minedHeight == nil || transaction.failed
 
+        // a migration tx is an internal fully-shielded self-send: without the txId match
+        // it would fall into the internal branch below and display as Unshield
+        if migrator.isMigrationTx(hash: transaction.transactionHash) {
+            return ZcashShieldingTransactionRecord(
+                token: token,
+                source: transactionSource,
+                uid: transaction.transactionHash,
+                transactionHash: transaction.transactionHash,
+                transactionIndex: transaction.transactionIndex,
+                blockHeight: transaction.minedHeight,
+                confirmationsThreshold: ZcashSDK.defaultRewindDistance,
+                date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+                fee: transaction.fee?.decimalValue.decimalValue,
+                failed: transaction.failed,
+                lockInfo: nil,
+                conflictingHash: nil,
+                showRawTransaction: showRawTransaction,
+                amount: abs(transaction.value.decimalValue.decimalValue),
+                direction: .migrate,
+                memo: transaction.memo
+            )
+        }
+
         // TODO: Should have it's own transactions with memo
         if let direction = transaction.shieldDirection {
             return ZcashShieldingTransactionRecord(
