@@ -2,11 +2,42 @@ import BigInt
 import Combine
 import Foundation
 import MarketKit
+import RxSwift
 import Testing
 import ThorChainKit
 @testable import WalletCore
 
 struct ThorChainAdapterTests {
+    @Test func combinePublishersMapToRxObservables() throws {
+        let spy = ThorChainKitSpy()
+        spy.runeBalance = 100_000_000
+        let adapter = try ThorChainAdapter(thorChainKitWrapper: ThorChainKitWrapper(thorChainKit: spy), wallet: Self.wallet())
+        let disposeBag = DisposeBag()
+        var states = [AdapterState]()
+        var balances = [BalanceData]()
+
+        adapter.balanceStateUpdatedObservable
+            .subscribe(onNext: { states.append($0) })
+            .disposed(by: disposeBag)
+        adapter.balanceDataUpdatedObservable
+            .subscribe(onNext: { balances.append($0) })
+            .disposed(by: disposeBag)
+
+        spy.syncStateSubject.send(.idle(cached: true))
+        spy.syncStateSubject.send(.syncing)
+        spy.syncStateSubject.send(.synced)
+        spy.runeBalance = 200_000_000
+        spy.accountStateSubject.send(nil)
+
+        #expect(states == [
+            .notSynced(error: "idle"),
+            .notSynced(error: "idle_cached"),
+            .syncing(progress: nil, remaining: nil, lastBlockDate: nil),
+            .synced,
+        ])
+        #expect(balances == [BalanceData(balance: 1), BalanceData(balance: 2)])
+    }
+
     @Test func lifecycleForwardsExactlyOnceAndStopIsIdempotent() throws {
         let spy = ThorChainKitSpy()
         let adapter = try ThorChainAdapter(thorChainKitWrapper: ThorChainKitWrapper(thorChainKit: spy), wallet: Self.wallet())
