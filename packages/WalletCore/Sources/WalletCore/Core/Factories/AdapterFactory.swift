@@ -1,5 +1,6 @@
 import BitcoinCore
 import EvmKit
+import HsToolKit
 import MarketKit
 import RxRelay
 import RxSwift
@@ -24,6 +25,34 @@ public class AdapterFactory {
     private let evmLabelManager: EvmLabelManager
 
     public init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zcashNodeManager: ZcashNodeManager,
+                btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
+                zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager,
+                spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager)
+    {
+        self.init(
+            evmBlockchainManager: evmBlockchainManager,
+            evmSyncSourceManager: evmSyncSourceManager,
+            moneroNodeManager: moneroNodeManager,
+            zcashNodeManager: zcashNodeManager,
+            btcBlockchainManager: btcBlockchainManager,
+            tronKitManager: tronKitManager,
+            thorChainKitManager: ThorChainKitManager(
+                endpointProvider: ThorChainEndpointConfigurationProvider(),
+                kitFactory: ThorChainKitFactory()
+            ),
+            diagnosticLogger: ThorChainDiagnosticLogger(logger: Logger(minLogLevel: .error)),
+            tonKitManager: tonKitManager,
+            stellarKitManager: stellarKitManager,
+            zanoKitManager: zanoKitManager,
+            solanaKitManager: solanaKitManager,
+            restoreSettingsManager: restoreSettingsManager,
+            coinManager: coinManager,
+            spamWrapper: spamWrapper,
+            evmLabelManager: evmLabelManager
+        )
+    }
+
+    init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zcashNodeManager: ZcashNodeManager,
                 btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, thorChainKitManager: ThorChainKitManager, diagnosticLogger: IThorChainDiagnosticLogger, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
                 zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager,
                 spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager)
