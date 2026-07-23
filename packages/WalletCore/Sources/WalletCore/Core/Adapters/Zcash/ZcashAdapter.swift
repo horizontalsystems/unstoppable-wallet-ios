@@ -896,14 +896,12 @@ class ZcashAdapter {
 }
 
 extension ZcashAdapter {
-    // RESEARCH SHIM: upstream has no static birthday helpers (HS delta, replayed in step 3).
-    // Zero height is clamped to saplingActivationHeight by init, so restore still syncs.
-    static func estimateBirthdayHeight(date _: Date, isMainnet _: Bool = ZcashAdapter.networkType == .mainnet) -> BlockHeight {
-        0
+    static func estimateBirthdayHeight(date: Date, isMainnet: Bool = ZcashAdapter.networkType == .mainnet) -> BlockHeight {
+        SDKSynchronizer.estimateBirthdayHeight(for: date, isMainnet: isMainnet)
     }
 
-    public static func estimateBirthdayTime(for _: BlockHeight, isMainnet _: Bool = ZcashAdapter.networkType == .mainnet) -> UInt32 {
-        0
+    public static func estimateBirthdayTime(for height: BlockHeight, isMainnet: Bool = ZcashAdapter.networkType == .mainnet) -> UInt32 {
+        SDKSynchronizer.birthdayTime(for: height, isMainnet: isMainnet)
     }
 
     static func addresses(for accountType: AccountType, network: ZcashNetwork) async throws -> (unified: UnifiedAddress, transparent: TransparentAddress) {
