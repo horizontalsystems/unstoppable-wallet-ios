@@ -293,6 +293,7 @@
 // Errors
 
 "error.send.self_transfer" = "자체로 전송이 지원되지 않음";
+"error.send.in_progress" = "전송이 진행 중입니다. 잠시 후 다시 시도하세요.";
 "error.send_binance.memo_required" = "수신자는 송금 내역에 메모 기록을 필요로 합니다";
 "error.send_binance.only_digits_allowed" = "메모에는 숫자만 포함하셔야 합니다";
 
@@ -349,6 +350,15 @@
 "balance.token.transparent.detected.title" = "투명 ZEC 감지됨";
 "balance.token.transparent.detected.description" = "투명 주소에 보유 중인 ZEC 잔액이 있습니다. Unstoppable에서 사용하려면 완전한 프라이버시 보호를 위해 보호(Shield) 처리해야 합니다.";
 "balance.token.shield" = "차폐(Shield)";
+"balance.token.migration.required" = "마이그레이션 필요";
+"transactions.migrate" = "마이그레이션";
+"transactions.migrate.to_ironwood" = "Ironwood로";
+"balance.token.migration.detected.title" = "ZEC 풀 마이그레이션";
+"balance.token.migration.detected.description" = "Zcash가 새로운 차폐 풀로 업그레이드되었습니다. 이전 풀의 잔액을 Unstoppable에서 완전히 사용할 수 있도록 마이그레이션해야 합니다.";
+"balance.token.migrate" = "마이그레이션";
+"error.zcash.migration_failed" = "마이그레이션을 완료할 수 없습니다. 자금 손실은 없습니다 — 나중에 다시 시도할 수 있습니다.";
+"zcash.migration.warning.title" = "공개적으로 표시되는 금액";
+"zcash.migration.warning" = "풀 간 자금 이동 시 마이그레이션된 금액이 블록체인에서 공개적으로 표시됩니다. 발신자, 수신자 및 귀하의 주소는 비공개로 유지됩니다.";
 
 "balance.token.receive_address" = "수신 주소";
 "balance.token.account.inactive.description" = "활성화 후 트랜잭션이 표시됩니다";

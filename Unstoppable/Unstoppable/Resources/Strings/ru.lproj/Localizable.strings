@@ -293,6 +293,7 @@
 // Errors
 
 "error.send.self_transfer" = "Отправка самому себе невозможна";
+"error.send.in_progress" = "Выполняется отправка. Попробуйте снова через некоторое время.";
 "error.send_binance.memo_required" = "При отправке транзакции получателю необходимо заполнить поле мемо";
 "error.send_binance.only_digits_allowed" = "Поле мемо должно содержать только цифры";
 
@@ -349,6 +350,15 @@
 "balance.token.transparent.detected.title" = "Обнаружен Transparent ZEC";
 "balance.token.transparent.detected.description" = "У вас есть ZEC, находящийся на transparent адресе. Чтобы использовать его в Unstoppable, необходимо выполнить shielding для полной приватности.";
 "balance.token.shield" = "Shield";
+"balance.token.migration.required" = "Требуется миграция";
+"transactions.migrate" = "Мигрировать";
+"transactions.migrate.to_ironwood" = "в Ironwood";
+"balance.token.migration.detected.title" = "Миграция пула ZEC";
+"balance.token.migration.detected.description" = "Zcash обновлён до нового защищённого пула. Ваш баланс в старом пуле необходимо мигрировать, чтобы он оставался полностью доступным в Unstoppable.";
+"balance.token.migrate" = "Мигрировать";
+"error.zcash.migration_failed" = "Миграцию не удалось завершить. Средства не были потеряны — вы можете попробовать позже.";
+"zcash.migration.warning.title" = "Публично видимая сумма";
+"zcash.migration.warning" = "Перемещение средств между пулами требует, чтобы мигрируемая сумма была публично видна в блокчейне. Отправитель, получатель и ваши адреса остаются конфиденциальными.";
 
 "balance.token.receive_address" = "Адрес получателя";
 "balance.token.account.inactive.description" = "Транзакции появятся после активации";
