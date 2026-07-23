@@ -91,7 +91,6 @@ class ZcashAdapter {
 
     private var state: ZCashAdapterState = .idle {
         didSet {
-            ZcashLog.log("STATE", "\(oldValue.description) → \(state.description)")
             balanceStateSubject.onNext(balanceState)
             syncing = balanceState.syncing
         }
@@ -262,7 +261,6 @@ class ZcashAdapter {
         // the synchronizer while background-finishing work or the migration window is active — "try again later"
         let busy = await MainActor.run { Core.shared.backgroundTaskManager.isCriticalActive }
         guard !busy, !isMigrating else {
-            ZcashLog.log("GATE", "node switch REFUSED (busy=\(busy) migrating=\(isMigrating))")
             throw AppError.zcash(reason: .sendInProgress)
         }
 
@@ -322,10 +320,8 @@ class ZcashAdapter {
                 #if DEBUG
                     if Core.shared.localStorage.emulateZcashMigration {
                         self?.migrator.engine = FakeZcashMigrationEngine(migratedAt: self?.migrator.timestamp)
-                        ZcashLog.log("MIGRATION", "engine = FAKE (migratedAt: \(self?.migrator.timestamp?.description ?? "nil"))")
                     } else {
                         self?.migrator.engine = ZcashMigrationEngine(synchronizer: synchronizer, accountUUID: account.id, spendingKey: unifiedSpendingKey)
-                        ZcashLog.log("MIGRATION", "engine = REAL")
                     }
                 #else
                     self?.migrator.engine = ZcashMigrationEngine(synchronizer: synchronizer, accountUUID: account.id, spendingKey: unifiedSpendingKey)
@@ -373,15 +369,12 @@ class ZcashAdapter {
         // migration transfer can be executed without stopping anything
         Task { [weak self] in
             guard let self else { return }
-            ZcashLog.log("RECONCILE", "pre-start reconcile begins")
             await migrator.reconcileIfNeeded(currentEndpointHost: currentEndpoint.host)
 
             // relaunch inside the privacy window: show migrating and let the watcher restart sync
             if let engine = migrator.engine, await engine.isSyncBlocked() {
-                ZcashLog.log("GATE", "blocked at startup → entering migrating")
                 enterMigratingState()
             } else {
-                ZcashLog.log("GATE", "open at startup → starting synchronizer")
                 startSynchronizer()
             }
         }
@@ -496,7 +489,6 @@ class ZcashAdapter {
     private func sync(event: SynchronizerEvent) {
         switch event {
         case let .foundTransactions(transactions, inRange):
-            ZcashLog.log("TX", "foundTransactions: \(transactions.count) in \(String(describing: inRange)) | hashes: \(transactions.map { $0.rawID.hs.reversedHex.prefix(12) + "…" }.joined(separator: ", "))")
             logger?.log(level: .debug, message: "found \(transactions.count) mined txs in range: \(String(describing: inRange))")
             for overview in transactions {
                 logger?.log(level: .debug, message: "tx: v =\(overview.value.decimalValue.decimalString) : fee = \(overview.fee?.decimalString() ?? "N/A") : height = \(overview.minedHeight?.description ?? "N/A")")
@@ -546,9 +538,8 @@ class ZcashAdapter {
             zCashBalanceData = balanceData
             do {
                 try zCashAdapterStorage.save(balanceData: balanceData)
-                ZcashLog.log("DB", "balanceData saved: full=\(balanceData.full) available=\(balanceData.available) transparent=\(balanceData.transparent) orchard=\(balanceData.orchard)")
+                logger?.log(level: .debug, message: "Saved balance: transparent=\(balanceData.transparent)")
             } catch {
-                ZcashLog.log("DB", "balanceData save FAILED: \(error)")
                 logger?.log(level: .warning, message: "Failed to save balance to DB: \(error)")
             }
         }
@@ -647,7 +638,6 @@ class ZcashAdapter {
                 migrationFee = transaction.fee?.decimalValue.decimalValue
             }
 
-            ZcashLog.log("TX", "record classified as MIGRATE | hash=\(transaction.transactionHash.prefix(16))… mined=\(transaction.minedHeight?.description ?? "nil") amount=\(migratedAmount) fee=\(migrationFee?.description ?? "nil")")
             return ZcashShieldingTransactionRecord(
                 token: token,
                 source: transactionSource,
@@ -871,15 +861,6 @@ class ZcashAdapter {
             zCashBalanceData = (try? zCashAdapterStorage.balanceData(id: uniqueId)) ?? .empty(id: uniqueId)
             return
         }
-
-        ZcashLog.log(
-            "BALANCE",
-            "pools"
-                + " | orchard: spendable=\(balances.orchardBalance.spendableValue.decimalValue.decimalValue) total=\(balances.orchardBalance.total().decimalValue.decimalValue)"
-                + " | ironwood: spendable=\(balances.ironwoodBalance.spendableValue.decimalValue.decimalValue) total=\(balances.ironwoodBalance.total().decimalValue.decimalValue)"
-                + " | sapling: spendable=\(balances.saplingBalance.spendableValue.decimalValue.decimalValue) total=\(balances.saplingBalance.total().decimalValue.decimalValue)"
-                + " | transparent=\(balances.unshielded.decimalValue.decimalValue)"
-        )
 
         let full = balances.shieldedTotal()
         let available = balances.shieldedSpendableValue
@@ -1125,9 +1106,6 @@ extension ZcashAdapter: IAdapter {
 
         // a live gate subscription would otherwise revive sync after deactivation
         DispatchQueue.main.async { [weak self] in
-            if self?.migrationGateCancellable != nil {
-                ZcashLog.log("GATE", "stop() → dropping gate subscriptions")
-            }
             self?.migrationGateCancellable = nil
             self?.migrationTickCancellable = nil
         }
@@ -1494,7 +1472,6 @@ extension ZcashAdapter {
     }
 
     func performMigration() async throws -> String? {
-        ZcashLog.log("MIGRATION", "session begins | syncStatus=\(synchronizer.latestState.syncStatus)")
         do {
             let txId = try await Core.shared.backgroundTaskManager.performCritical(name: "zcash-migration") {
                 // sign/execute throw migrationBroadcastDuringSync while the synchronizer is live
@@ -1503,15 +1480,12 @@ extension ZcashAdapter {
                 return try await migrator.performMigration(currentEndpointHost: currentEndpoint.host)
             }
 
-            ZcashLog.log("MIGRATION", "session succeeded | txId=\(txId ?? "unrecorded")")
             enterMigratingState()
             return txId
         } catch {
-            ZcashLog.log("MIGRATION", "session FAILED: \(error)")
             // a failed broadcast can leave the signed transfer holding the sync gate;
             // surface migrating and let the watcher reconcile it instead of a dead stopped sync
             if let engine = migrator.engine, await engine.isSyncBlocked() {
-                ZcashLog.log("GATE", "blocked after failed session → entering migrating")
                 enterMigratingState()
             }
             throw error
@@ -1520,14 +1494,12 @@ extension ZcashAdapter {
 
     // SDK stop() only schedules the teardown; the migration guard throws while status is still .syncing
     private func waitUntilSyncStopped() async {
-        for attempt in 0 ..< 50 {
+        for _ in 0 ..< 50 {
             guard case .syncing = synchronizer.latestState.syncStatus else {
-                ZcashLog.log("MIGRATION", "sync stopped after \(attempt * 100)ms")
                 return
             }
             try? await Task.sleep(seconds: 0.1)
         }
-        ZcashLog.log("MIGRATION", "sync STILL syncing after 5s cap — proceeding, SDK guard may throw")
     }
 
     private func enterMigratingState() {
@@ -1538,7 +1510,6 @@ extension ZcashAdapter {
             state = .migrating(remainingMinutes: migrator.remainingBufferMinutes)
 
             guard migrationGateCancellable == nil else { return }
-            ZcashLog.log("GATE", "migrating entered | remaining=\(migrator.remainingBufferMinutes?.description ?? "nil")min, subscribing to gate stream")
 
             // the gate is a CurrentValueSubject with its own expiry ticker: false arrives pushed.
             // the subject's initial value can be stale (the SDK recomputes lazily on subscription),
@@ -1549,7 +1520,6 @@ extension ZcashAdapter {
                     Task { [weak self] in
                         guard let self, let engine = migrator.engine else { return }
                         guard await !engine.isSyncBlocked() else {
-                            ZcashLog.log("GATE", "stream said released but poll says blocked — stale value, staying")
                             return
                         }
                         DispatchQueue.main.async { [weak self] in self?.exitMigratingState() }
@@ -1562,7 +1532,6 @@ extension ZcashAdapter {
                 .sink { [weak self] _ in
                     guard let self else { return }
 
-                    ZcashLog.log("GATE", "tick | remaining=\(migrator.remainingBufferMinutes?.description ?? "nil")min")
                     state = .migrating(remainingMinutes: migrator.remainingBufferMinutes)
                     Task { [weak self] in
                         guard let self else { return }
@@ -1578,7 +1547,6 @@ extension ZcashAdapter {
         migrationGateCancellable = nil
         migrationTickCancellable = nil
 
-        ZcashLog.log("GATE", "released (poll-confirmed) → restarting synchronizer")
         logger?.log(level: .debug, message: "Migration gate released, restarting synchronizer")
         startSynchronizer()
     }

@@ -186,7 +186,7 @@ struct ZcashMigrationTests {
         let schedule = try await engine.proposeImmediate()
         try await engine.signAndStore(schedule: schedule)
 
-        await migrator.reconcileIfNeeded(currentEndpointHost: "zec.rocks")
+        await migrator.reconcileIfNeeded(currentEndpointHost: "zec.rocks", enabled: true)
 
         #expect(engine.executedTxIds.count == 1)
         let storedIds = try storage.migrationTxIds(accountId: "acc-rec")
@@ -198,7 +198,7 @@ struct ZcashMigrationTests {
         let engine = FakeZcashMigrationEngine()
         migrator.engine = engine
 
-        await migrator.reconcileIfNeeded(currentEndpointHost: "zec.rocks")
+        await migrator.reconcileIfNeeded(currentEndpointHost: "zec.rocks", enabled: true)
 
         #expect(engine.executedTxIds.isEmpty)
         let storedIds = try storage.migrationTxIds(accountId: "acc-idle")
@@ -254,7 +254,7 @@ struct ZcashMigrationTests {
         let schedule = try await engine.proposeImmediate()
         try await engine.signAndStore(schedule: schedule)
 
-        await migrator.reconcileIfNeeded(currentEndpointHost: "zec.rocks")
+        await migrator.reconcileIfNeeded(currentEndpointHost: "zec.rocks", enabled: true)
 
         #expect(engine.signedSchedule != nil) // stays pending for the next start
         let storedIds = try storage.migrationTxIds(accountId: "acc-neterr")
@@ -269,7 +269,7 @@ struct ZcashMigrationTests {
         let schedule = try await engine.proposeImmediate()
         try await engine.signAndStore(schedule: schedule)
 
-        await migrator.reconcileIfNeeded(currentEndpointHost: "zec.rocks")
+        await migrator.reconcileIfNeeded(currentEndpointHost: "zec.rocks", enabled: true)
 
         #expect(engine.signedSchedule == nil) // restart cleared the schedule
         #expect(engine.executeResults.isEmpty)
@@ -286,7 +286,7 @@ struct ZcashMigrationTests {
         try await engine.signAndStore(schedule: schedule)
         engine.stateOverride = .requiresAttention(.transferExpired)
 
-        await migrator.reconcileIfNeeded(currentEndpointHost: "zec.rocks")
+        await migrator.reconcileIfNeeded(currentEndpointHost: "zec.rocks", enabled: true)
 
         #expect(engine.signedSchedule == nil) // silent restart
         #expect(engine.executedTxIds.isEmpty)
@@ -302,7 +302,7 @@ struct ZcashMigrationTests {
         _ = try await engine.executeNext(options: MigrationNetworkPrivacyOptions(useTor: false, submissionEndpoint: ZcashAdapter.defaultEndpoint))
         try storage.deleteMigrationTxs(accountId: "acc-marker")
 
-        await migrator.reconcileIfNeeded(currentEndpointHost: "zec.rocks")
+        await migrator.reconcileIfNeeded(currentEndpointHost: "zec.rocks", enabled: true)
 
         let timestamp = try #require(migrator.timestamp)
         #expect(abs(timestamp.timeIntervalSinceNow) < 5)

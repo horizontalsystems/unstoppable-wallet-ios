@@ -3,7 +3,10 @@ import HsToolKit
 import ZcashLightClientKit
 
 class ZcashMigrator {
-    static let migrationEnabled = true // kill-switch for the Orchard → Ironwood migration flow
+    // kill-switch for the Orchard → Ironwood migration flow. OFF for the Ironwood sync/send hotfix:
+    // the UI/session/reconcile infrastructure stays in place but has no entry points; re-enabled
+    // together with the move to the upstream send-max engine (docs/specs/2026-07-23-…-transition)
+    static let migrationEnabled = false
     static let bufferInterval: TimeInterval = 600 // mirrors the SDK-enforced post-broadcast privacy window
 
     private let uniqueId: String
@@ -43,7 +46,6 @@ class ZcashMigrator {
     }
 
     func clearOnWipe() {
-        ZcashLog.log("DB", "migrationTx rows cleared (wipe/emulation reset)")
         try? storage.deleteMigrationTxs(accountId: uniqueId)
     }
 
@@ -56,20 +58,13 @@ class ZcashMigrator {
     private func save(txId: String?) {
         if let txId {
             guard !isMigrationTx(hash: txId) else {
-                ZcashLog.log("DB", "migrationTx save SKIPPED (txId already stored)")
                 return
             }
         } else if let timestamp, Date() < timestamp.addingTimeInterval(Self.bufferInterval) {
-            ZcashLog.log("DB", "migrationTx nil-marker save SKIPPED (window active since \(timestamp))")
             return // an active buffer marker already exists; a duplicate row would extend the window
         }
 
-        do {
-            try storage.save(migrationTx: ZcashMigrationTx(txId: txId, accountId: uniqueId, createdAt: Date()))
-            ZcashLog.log("DB", "migrationTx saved | txId=\(txId ?? "nil") accountId=\(uniqueId.prefix(8))…")
-        } catch {
-            ZcashLog.log("DB", "migrationTx save FAILED: \(error)")
-        }
+        try? storage.save(migrationTx: ZcashMigrationTx(txId: txId, accountId: uniqueId, createdAt: Date()))
     }
 
     func ironwoodActive(latestHeight: Int) -> Bool {
@@ -82,10 +77,6 @@ class ZcashMigrator {
     func handleCheck(orchardBalance: Decimal, latestHeight: Int, syncStatus: SyncStatus?) -> Bool {
         guard let syncStatus else {
             return false
-        }
-
-        if case .upToDate = syncStatus {
-            ZcashLog.log("MIGRATION", "check | orchard=\(orchardBalance) height=\(latestHeight) ironwoodActive=\(ironwoodActive(latestHeight: latestHeight)) alertShown=\(alertShown) timestamp=\(timestamp?.description ?? "nil")")
         }
 
         guard Self.isMigrationSuggestionNeeded(
@@ -102,7 +93,6 @@ class ZcashMigrator {
         }
 
         alertShown = true
-        ZcashLog.log("MIGRATION", "alert SHOWN | orchard=\(orchardBalance)")
         logger?.log(level: .debug, message: "Orchard funds pending migration: \(orchardBalance), showing migration alert")
         showAlert()
         return true
@@ -131,12 +121,10 @@ class ZcashMigrator {
 
         let schedule = try await engine.proposeImmediate()
         guard let transfer = schedule.transfers.first else {
-            ZcashLog.log("MIGRATION", "proposal EMPTY (orchard=\(orchardBalance))")
             throw AppError.ZcashError.notEnough
         }
 
         let amount = transfer.amount.decimalValue.decimalValue
-        ZcashLog.log("MIGRATION", "proposal | amount=\(amount) fee=\(max(0, orchardBalance - amount)) expiry=\(transfer.expiryHeight) anchor=\(transfer.anchorHeight)")
         return (amount: amount, fee: max(0, orchardBalance - amount))
     }
 
@@ -150,53 +138,44 @@ class ZcashMigrator {
         // re-propose: the balance may have changed since the confirmation screen
         let schedule = try await engine.proposeImmediate()
         guard let transfer = schedule.transfers.first else {
-            ZcashLog.log("MIGRATION", "session re-propose EMPTY — aborting")
             throw AppError.ZcashError.notEnough
         }
 
-        ZcashLog.log("MIGRATION", "re-proposed | amount=\(transfer.amount.decimalValue.decimalValue) expiry=\(transfer.expiryHeight)")
         try await engine.signAndStore(schedule: schedule)
-        ZcashLog.log("MIGRATION", "signed and stored (gate armed)")
 
         let options = MigrationNetworkPrivacyOptions(useTor: false, submissionEndpoint: submissionEndpoint(excludingHost: currentEndpointHost))
         let txId = try await executeWithRetries(engine: engine, options: options)
 
         save(txId: txId)
-        ZcashLog.log("MIGRATION", "broadcast done | txId=\(txId ?? "unrecorded")")
         logger?.log(level: .debug, message: "Migration broadcast done, txId: \(txId ?? "unrecorded")")
         return txId
     }
 
     // called once per adapter activation, before the synchronizer starts
-    func reconcileIfNeeded(currentEndpointHost: String) async {
-        guard Self.migrationEnabled, let engine else {
+    func reconcileIfNeeded(currentEndpointHost: String, enabled: Bool = ZcashMigrator.migrationEnabled) async {
+        guard enabled, let engine else {
             return
         }
 
         do {
             let state = try await engine.state()
-            await ZcashLog.log("RECONCILE", "state=\(state) blocked=\(engine.isSyncBlocked())")
 
             switch state {
             case .inProgress:
                 _ = try await resumePendingMigration(currentEndpointHost: currentEndpointHost)
             case .requiresAttention:
                 try await engine.restart() // silent: the alert will offer migration again
-                ZcashLog.log("RECONCILE", "requiresAttention → restarted")
             case .notStarted, .readyToPropose:
                 if await engine.isSyncBlocked() {
                     try await engine.restart() // un-wedge: gate armed but nothing scheduled
-                    ZcashLog.log("RECONCILE", "wedged gate → restarted")
                 }
             case .splitPendingConfirmation, .complete:
                 // killed between execute and save: restore the buffer marker so the countdown survives
                 if timestamp == nil, await engine.isSyncBlocked() {
-                    ZcashLog.log("RECONCILE", "buffer marker missing → restoring")
                     save(txId: nil)
                 }
             }
         } catch {
-            ZcashLog.log("RECONCILE", "FAILED: \(error)")
             logger?.log(level: .error, message: "Migration reconcile failed: \(error)")
         }
     }
@@ -214,12 +193,9 @@ class ZcashMigrator {
         do {
             result = try await engine.executeNext(options: options)
         } catch ZcashError.migrationRecordFailedAfterBroadcast {
-            ZcashLog.log("RECONCILE", "resume: broadcast LANDED, record failed — marker saved")
             save(txId: nil)
             return nil
         }
-
-        ZcashLog.log("RECONCILE", "resume execute result: \(result.map { String(describing: $0) } ?? "nil")")
 
         switch result {
         case let .success(txId):
@@ -243,11 +219,8 @@ class ZcashMigrator {
             do {
                 result = try await engine.executeNext(options: options)
             } catch ZcashError.migrationRecordFailedAfterBroadcast {
-                ZcashLog.log("MIGRATION", "execute: broadcast LANDED but record failed (txId unknown, engine reconciles later)")
                 return nil
             }
-
-            ZcashLog.log("MIGRATION", "execute result: \(result.map { String(describing: $0) } ?? "nil") | attemptsLeft=\(attemptsLeft)")
 
             switch result {
             case let .success(txId):
@@ -260,7 +233,6 @@ class ZcashMigrator {
                 throw AppError.zcash(reason: .migrationFailed)
             case .invalidNote, .expired, nil:
                 try await engine.restart()
-                ZcashLog.log("MIGRATION", "schedule restarted after \(result.map { String(describing: $0) } ?? "nil")")
                 throw AppError.zcash(reason: .migrationFailed)
             }
         }
@@ -272,7 +244,6 @@ class ZcashMigrator {
     func submissionEndpoint(excludingHost host: String) -> LightWalletEndpoint {
         let nodes = network.networkType == .mainnet ? ZcashNode.defaultNodes : ZcashNode.defaultTestnetNodes
         let node = nodes.first { $0.url.host != host } ?? nodes[0]
-        ZcashLog.log("MIGRATION", "broadcast node = \(node.url.host ?? "?") (sync node = \(host))")
         return ZcashAdapter.endpoint(url: node.url)
     }
 
