@@ -4,13 +4,6 @@ import Testing
 @testable import Unstoppable
 @testable import WalletCore
 
-// EVM chainId resolution goes through Core.shared.evmBlockchainManager, whose blockchain list
-// comes from the MarketKit DB — empty on a fresh test host until the first market sync completes.
-// Tests that need `@chainId` resolution are gated instead of failing on such environments.
-private var evmChainRegistryAvailable: Bool {
-    Core.shared.evmBlockchainManager.blockchain(chainId: 1) != nil
-}
-
 struct AddressUriParserBaselineTests {
     private let anyParser = AddressUriParser(blockchainType: nil, tokenType: nil)
     private let decimal = AddressUriFixtures.decimal
@@ -56,7 +49,7 @@ struct AddressUriParserBaselineTests {
         #expect(result.amount == .decimals(Decimal(1)))
     }
 
-    @Test(.enabled(if: evmChainRegistryAvailable))
+    @Test
     func parseEvmWithChainId() throws {
         let result = try anyParser.parse(url: "ethereum:\(AddressUriFixtures.evmRecipient)@1?value=1000000000000000000")
 
@@ -67,7 +60,7 @@ struct AddressUriParserBaselineTests {
         #expect(result.amount == .points(decimal("1000000000000000000")))
     }
 
-    @Test(.enabled(if: evmChainRegistryAvailable))
+    @Test
     func parseEvmBscViaChainId() throws {
         let result = try anyParser.parse(url: "ethereum:\(AddressUriFixtures.evmRecipient)@56?value=10000000000000000")
 
@@ -94,7 +87,7 @@ struct AddressUriParserBaselineTests {
         #expect(result.parameters[.blockchainUid] == nil)
     }
 
-    @Test(.enabled(if: evmChainRegistryAvailable))
+    @Test
     func parseEvmChainIdWithoutQueryStillWritesBlockchainUid() throws {
         let result = try anyParser.parse(url: "ethereum:\(AddressUriFixtures.evmRecipient)@1")
 
@@ -103,7 +96,7 @@ struct AddressUriParserBaselineTests {
         #expect(result.amount == nil)
     }
 
-    @Test(.enabled(if: evmChainRegistryAvailable))
+    @Test
     func parseEvmTransferUriYieldsRecipientAddress() throws {
         let result = try anyParser.parse(url: "ethereum:\(AddressUriFixtures.usdtContract)@1/transfer?address=\(AddressUriFixtures.evmRecipient)&uint256=1500000")
 
@@ -253,7 +246,7 @@ struct AddressUriParserBaselineTests {
         }
     }
 
-    @Test(.enabled(if: evmChainRegistryAvailable))
+    @Test
     func gateRejectsTokenUidMismatch() {
         let parser = AddressUriParser(blockchainType: .ethereum, tokenType: .native)
 
@@ -262,7 +255,7 @@ struct AddressUriParserBaselineTests {
         }
     }
 
-    @Test(.enabled(if: evmChainRegistryAvailable))
+    @Test
     func gateRejectsInvalidTokenUid() {
         let parser = AddressUriParser(blockchainType: .ethereum, tokenType: .native)
 
