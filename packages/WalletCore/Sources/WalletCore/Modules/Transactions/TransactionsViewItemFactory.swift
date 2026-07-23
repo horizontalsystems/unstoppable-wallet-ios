@@ -564,6 +564,12 @@ class TransactionsViewItemFactory {
                 if let currencyValue = item.currencyValue {
                     secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
                 }
+            case let .swap(valueIn, valueOut):
+                iconType = doubleValueIconType(source: record.source, primaryValue: valueOut, secondaryValue: valueIn)
+                title = "transactions.swap".localized
+                subTitle = "\(valueIn.code) → \(valueOut.code)"
+                primaryValue = TransactionsViewModel.Value(text: coinString(from: valueOut), type: type(value: valueOut, .incoming))
+                secondaryValue = TransactionsViewModel.Value(text: coinString(from: valueIn), type: type(value: valueIn, .outgoing))
             case let .changeTrust(value, _, trustee, _):
                 iconType = singleValueIconType(source: record.source, kind: value.kind)
                 title = "Change Trust"

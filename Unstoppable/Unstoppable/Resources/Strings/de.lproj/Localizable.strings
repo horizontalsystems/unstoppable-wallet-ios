@@ -661,6 +661,7 @@
 "swap.pending_allowance" = "Ausstehendes Guthaben";
 "swap.approve" = "Genehmigen";
 "swap.approving" = "Wird bestätigt";
+"swap.activate_asset" = "%@ auf Stellar aktivieren";
 "swap.allowance_error" = "Zulagenfehler";
 "swap.revoke" = "Widerrufen";
 "swap.revoking" = "Widerrufen";

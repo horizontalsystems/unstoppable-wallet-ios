@@ -84,6 +84,13 @@ public struct StellarExecutable: ISwapExecutable {
     let transactionData: StellarSendHelper.TransactionData
 }
 
+// StellarBroker interactive trade — the broadcaster runs the WebSocket session (the broker
+// builds + submits the txs; we sign each one) instead of broadcasting a prepared tx.
+public struct StellarBrokerExecutable: ISwapExecutable {
+    public let token: Token
+    let sessionParams: StellarBrokerSessionClient.Params
+}
+
 public struct MoneroExecutable: ISwapExecutable {
     public let token: Token
     public let address: String

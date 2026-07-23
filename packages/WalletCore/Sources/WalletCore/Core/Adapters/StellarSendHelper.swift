@@ -76,15 +76,17 @@ class StellarSendHelper {
         )
     }
 
-    static func send(
+    /// Returns the submitted transaction's hash — swap flows report it to uswap-server's
+    /// `/v2/track` as `inboundTxHash` (verified on Horizon by the server).
+    @discardableResult static func send(
         transactionData: TransactionData,
         token _: Token,
         adjustNativeBalance: Bool,
         keyPair: KeyPair
-    ) async throws {
+    ) async throws -> String {
         switch transactionData {
         case let .envelope(envelope):
-            _ = try await StellarKit.Kit.send(
+            return try await StellarKit.Kit.send(
                 transactionEnvelope: envelope,
                 keyPair: keyPair,
             )
@@ -104,7 +106,7 @@ class StellarSendHelper {
 
             let memoObject = memo.map { Memo.text($0) } ?? Memo.none
 
-            _ = try await send(
+            return try await send(
                 operations: result.operations,
                 memo: memoObject,
                 keyPair: keyPair

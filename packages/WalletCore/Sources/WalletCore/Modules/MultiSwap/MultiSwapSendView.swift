@@ -23,7 +23,14 @@ struct MultiSwapSendView: View {
                             .disabled(true)
                     }
                 case .success:
-                    if sendViewModel.canSend, !sendViewModel.expired {
+                    if sendViewModel.sending {
+                        // Replaces the SlideButton for the whole send (a StellarBroker session
+                        // can run for minutes). Safe: SlideButton runs its action in an
+                        // unstructured Task that survives the swap, and a disabled button
+                        // here makes a second slide/refresh impossible mid-send.
+                        ThemeButton(text: "send.confirmation.sending".localized, spinner: true, style: .secondary) {}
+                            .disabled(true)
+                    } else if sendViewModel.canSend, !sendViewModel.expired {
                         SlideButton(
                             styling: .text(start: "swap.confirmation.slide_to_swap".localized, end: "", success: ""),
                             action: {

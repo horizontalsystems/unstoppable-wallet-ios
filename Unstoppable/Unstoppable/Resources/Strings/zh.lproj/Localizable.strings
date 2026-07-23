@@ -661,6 +661,7 @@
 "swap.pending_allowance" = "待批准的额度";
 "swap.approve" = "批准";
 "swap.approving" = "审批中";
+"swap.activate_asset" = "在 Stellar 上激活 %@";
 "swap.allowance_error" = "授权错误";
 "swap.revoke" = "撤回";
 "swap.revoking" = "正在取消";

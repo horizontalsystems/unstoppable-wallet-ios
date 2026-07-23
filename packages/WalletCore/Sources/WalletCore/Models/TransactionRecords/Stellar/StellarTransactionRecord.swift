@@ -53,6 +53,9 @@ extension StellarTransactionRecord {
         case accountFunded(startingBalance: AppValue, account: String)
         case sendPayment(value: AppValue, to: String, sentToSelf: Bool)
         case receivePayment(value: AppValue, from: String)
+        // valueIn = what the account spent (negative), valueOut = what it received (positive) —
+        // the TON swap action's naming. Covers path payments and Soroban DEX invocations.
+        case swap(valueIn: AppValue, valueOut: AppValue)
         case changeTrust(value: AppValue, trustor: String, trustee: String?, liquidityPoolId: String?)
         case unsupported(type: String)
     }
