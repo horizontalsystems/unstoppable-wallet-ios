@@ -293,6 +293,7 @@
 // Errors
 
 "error.send.self_transfer" = "不支持发送给自己";
+"error.send.in_progress" = "正在发送中，请稍后重试。";
 "error.send_binance.memo_required" = "收款人要求在转账交易中包含非空的备注";
 "error.send_binance.only_digits_allowed" = "要求备注仅包含数字";
 
@@ -349,6 +350,15 @@
 "balance.token.transparent.detected.title" = "检测到透明 ZEC 地址";
 "balance.token.transparent.detected.description" = "您在透明地址中持有 ZEC 余额。要在 Unstoppable 中使用，必须将其屏蔽（shield）以实现完全隐私。";
 "balance.token.shield" = "屏蔽";
+"balance.token.migration.required" = "需要迁移";
+"transactions.migrate" = "迁移";
+"transactions.migrate.to_ironwood" = "至 Ironwood";
+"balance.token.migration.detected.title" = "ZEC 池迁移";
+"balance.token.migration.detected.description" = "Zcash 已升级到新的屏蔽池。您在旧池中的余额必须进行迁移，才能在 Unstoppable 中继续完全使用。";
+"balance.token.migrate" = "迁移";
+"error.zcash.migration_failed" = "迁移无法完成。没有资金丢失——您可以稍后重试。";
+"zcash.migration.warning.title" = "公开可见金额";
+"zcash.migration.warning" = "在池之间转移资金需要迁移金额在区块链上公开可见。发送方、接收方和您的地址仍然保持私密。";
 
 "balance.token.receive_address" = "收款地址";
 "balance.token.account.inactive.description" = "激活后将显示交易记录";

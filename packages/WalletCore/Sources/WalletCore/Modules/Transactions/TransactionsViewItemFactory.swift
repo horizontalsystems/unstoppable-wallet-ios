@@ -588,7 +588,7 @@ class TransactionsViewItemFactory {
         case let record as ZcashShieldingTransactionRecord:
             iconType = .localIcon(imageName: record.direction.txIconName)
             title = record.direction.txTitle
-            subTitle = "transactions.transfer".localized
+            subTitle = record.direction.txSubtitle
 
             primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, signType: .never), type: .neutral)
 

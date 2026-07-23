@@ -13,12 +13,19 @@ import ZcashLightClientKit
 class ZcashAdapter {
     static let minimalThreshold: Decimal = 0.0004 // minimal transparent balance to shielding
 
-    static let defaultZip317MarginalFee = ZcashSDK.defaultZip317MarginalFee // ZCASH_MARGINAL_FEE
+    // RESEARCH SHIM: upstream has no ZcashSDK.defaultZip317MarginalFee (HS delta, replayed in step 3).
+    static let defaultZip317MarginalFee = Zatoshi(5000) // ZCASH_MARGINAL_FEE
     static let zip317MarginalFeeRange = (defaultZip317MarginalFee.amount) ... (defaultZip317MarginalFee.amount * 6)
 
     static let defaultTxExpiryHeightDelta: UInt32 = 10
 
-    static let defaultEndpoint = endpoint(url: ZcashNode.defaultNodes[0].url)
+    static var networkType: NetworkType {
+        Core.shared.testNetManager.testNetEnabled ? .testnet : .mainnet
+    }
+
+    static var defaultEndpoint: LightWalletEndpoint {
+        endpoint(url: (networkType == .mainnet ? ZcashNode.defaultNodes : ZcashNode.defaultTestnetNodes)[0].url)
+    }
 
     static func endpoint(url: URL) -> LightWalletEndpoint {
         LightWalletEndpoint(address: url.host ?? "zec.rocks", port: url.port ?? 443, secure: url.scheme != "http", streamingCallTimeoutInMillis: 10 * 60 * 60 * 1000)
@@ -27,12 +34,17 @@ class ZcashAdapter {
     private let queue = DispatchQueue(label: "\(AppConfig.label).zcash-adapter", qos: .userInitiated)
 
     private var cancellables: [AnyCancellable] = []
+    private var deferredStopCancellable: AnyCancellable?
+    private var resubmitTask: Task<Void, Never>? // main-confined; dedupes concurrent startSynchronizer kicks
+    private var migrationGateCancellable: AnyCancellable? // main-confined; releases the migrating state when the SDK gate opens
+    private var migrationTickCancellable: AnyCancellable? // main-confined; countdown refresh + stuck-transfer healing
 
     private let token: Token
     private let transactionSource: TransactionSource
 
     private let synchronizer: Synchronizer
     private let zCashAdapterStorage: ZcashAdapterStorage
+    private let migrator: ZcashMigrator
 
     private var accountId: AccountUUID?
     private(set) var uAddress: UnifiedAddress?
@@ -88,6 +100,17 @@ class ZcashAdapter {
         state.adapterState
     }
 
+    var isMigrating: Bool {
+        if case .migrating = state {
+            return true
+        }
+        return false
+    }
+
+    var isIronwoodActive: Bool {
+        migrator.ironwoodActive(latestHeight: lastBlockHeight)
+    }
+
     func getSingleUseTransparentAddress() async throws -> SingleUseTransparentAddress? {
         guard let account = try await synchronizer.listAccounts().first else {
             throw AppError.ZcashError.noReceiveAddress
@@ -114,7 +137,7 @@ class ZcashAdapter {
             throw AdapterError.unsupportedAccount
         }
 
-        network = ZcashNetworkBuilder.network(for: .mainnet)
+        network = ZcashNetworkBuilder.network(for: Self.networkType)
 
         currentEndpoint = endpoint
         token = wallet.token
@@ -150,6 +173,7 @@ class ZcashAdapter {
         let dbPool = try DatabasePool(path: databaseURL.path)
         zCashAdapterStorage = try ZcashAdapterStorage(dbPool: dbPool)
         zCashBalanceData = try zCashAdapterStorage.balanceData(id: uniqueId) ?? .empty(id: uniqueId)
+        migrator = ZcashMigrator(uniqueId: uniqueId, threshold: Self.minimalThreshold, network: network, storage: zCashAdapterStorage, logger: logger)
 
         let initializer = try ZcashAdapter.initializer(network: network, uniqueId: uniqueId, endpoint: endpoint)
         synchronizer = SDKSynchronizer(initializer: initializer)
@@ -167,7 +191,31 @@ class ZcashAdapter {
             .sink(receiveValue: { [weak self] event in self?.sync(event: event) })
             .store(in: &cancellables)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        Core.shared.appManager.didEnterBackgroundPublisher
+            .sink { [weak self] in self?.didEnterBackground() }
+            .store(in: &cancellables)
+    }
+
+    // Pre-warm sapling params unconditionally: the SDK sync-time download is gated by
+    // sapling/transparent balances only, so a wallet with orchard-only funds would pay
+    // the ~50 MB download synchronously inside its first send. Idempotent: validates and
+    // returns when the files are already on disk.
+    private func warmUpSaplingParams() {
+        Task { [logger] in
+            do {
+                try await SaplingParameterDownloader.downloadParamsIfnotPresent(
+                    retryEnabled: true,
+                    spendURL: Self.spendParamsURL(),
+                    spendSourceURL: SaplingParamsSourceURL.default.spendParamFileURL,
+                    outputURL: Self.outputParamsURL(),
+                    outputSourceURL: SaplingParamsSourceURL.default.outputParamFileURL,
+                    logger: OSLogger(logLevel: .error)
+                )
+            } catch {
+                // send path re-downloads just-in-time, so failure here only loses the pre-warm
+                logger?.log(level: .error, message: "Sapling params pre-warm failed: \(error)")
+            }
+        }
     }
 
     // Used by AdapterManager to revert the stored selection on switch failure.
@@ -176,22 +224,44 @@ class ZcashAdapter {
     }
 
     func isEndpointAvailable(_ endpoint: LightWalletEndpoint) async -> Bool {
-        let endpoints = await synchronizer.evaluateBestOf(
-            endpoints: [endpoint],
-            fetchThresholdSeconds: 20,
-            nBlocksToFetch: 1,
-            kServers: 1,
-            network: .mainnet
-        )
+        // hard cap on the whole check: fetchThresholdSeconds bounds only the fetch phase,
+        // while gRPC connect/TLS retries against a dead host spin far beyond it
+        await withTaskGroup(of: Bool.self) { group in
+            group.addTask { [synchronizer, network] in
+                let endpoints = await synchronizer.evaluateBestOf(
+                    endpoints: [endpoint],
+                    fetchThresholdSeconds: 20,
+                    nBlocksToFetch: 1,
+                    kServers: 1,
+                    network: network.networkType
+                )
 
-        return endpoints.contains {
-            $0.host == endpoint.host && $0.port == endpoint.port && $0.secure == endpoint.secure
+                return endpoints.contains {
+                    $0.host == endpoint.host && $0.port == endpoint.port && $0.secure == endpoint.secure
+                }
+            }
+
+            group.addTask {
+                try? await Task.sleep(seconds: 10)
+                return false
+            }
+
+            let first = await group.next() ?? false
+            group.cancelAll()
+            return first
         }
     }
 
     func switchEndpoint(_ endpoint: LightWalletEndpoint) async throws {
         guard endpoint.host != currentEndpoint.host || endpoint.port != currentEndpoint.port || endpoint.secure != currentEndpoint.secure else {
             return
+        }
+
+        // defense for non-UI callers (backup restore, node deletion): never reconfigure
+        // the synchronizer while background-finishing work or the migration window is active — "try again later"
+        let busy = await MainActor.run { Core.shared.backgroundTaskManager.isCriticalActive }
+        guard !busy, !isMigrating else {
+            throw AppError.zcash(reason: .sendInProgress)
         }
 
         do {
@@ -213,9 +283,10 @@ class ZcashAdapter {
         state = .preparing
 
         depositAddressSubject.send(.loading)
+        let networkType = network.networkType
         Task { [weak self, synchronizer] in
             do {
-                let tool = DerivationTool(networkType: .mainnet)
+                let tool = DerivationTool(networkType: networkType)
                 guard let unifiedSpendingKey = try? tool.deriveUnifiedSpendingKey(seed: seedData, accountIndex: .zero),
                       let unifiedViewingKey = try? tool.deriveUnifiedFullViewingKey(from: unifiedSpendingKey)
                 else {
@@ -245,6 +316,16 @@ class ZcashAdapter {
                 self?.accountId = account.id
                 self?.uAddress = uAddress
                 self?.tAddress = tAddress
+                // the single engine selection point; the fake branch does not exist in release binaries
+                #if DEBUG
+                    if Core.shared.localStorage.emulateZcashMigration {
+                        self?.migrator.engine = FakeZcashMigrationEngine(migratedAt: self?.migrator.timestamp)
+                    } else {
+                        self?.migrator.engine = ZcashMigrationEngine(synchronizer: synchronizer, accountUUID: account.id, spendingKey: unifiedSpendingKey)
+                    }
+                #else
+                    self?.migrator.engine = ZcashMigrationEngine(synchronizer: synchronizer, accountUUID: account.id, spendingKey: unifiedSpendingKey)
+                #endif
 
                 self?.depositAddressSubject.send(.completed(DepositAddress(uAddress.stringEncoded)))
 
@@ -283,7 +364,20 @@ class ZcashAdapter {
         state = .idle
 
         logger?.log(level: .debug, message: "Start kit after finish preparing!")
-        startSynchronizer()
+
+        // one-shot per adapter activation: the sync is not running yet, so a pending
+        // migration transfer can be executed without stopping anything
+        Task { [weak self] in
+            guard let self else { return }
+            await migrator.reconcileIfNeeded(currentEndpointHost: currentEndpoint.host)
+
+            // relaunch inside the privacy window: show migrating and let the watcher restart sync
+            if let engine = migrator.engine, await engine.isSyncBlocked() {
+                enterMigratingState()
+            } else {
+                startSynchronizer()
+            }
+        }
     }
 
     private func startSynchronizer() {
@@ -303,10 +397,33 @@ class ZcashAdapter {
         // (conditionally during sync when balance > 0, and just-in-time before any spend).
         logger?.log(level: .debug, message: "Start syncing kit!")
         syncMain()
+
+        DispatchQueue.main.async { [weak self] in
+            guard let self, resubmitTask == nil else { return }
+
+            resubmitTask = Task { [weak self] in
+                await self?.resubmitPendingTransactions()
+                DispatchQueue.main.async { [weak self] in self?.resubmitTask = nil }
+            }
+        }
     }
 
-    @objc private func didEnterBackground(_: Notification) {
-        stop()
+    private func didEnterBackground() {
+        let backgroundTaskManager = Core.shared.backgroundTaskManager
+
+        // subscribe BEFORE checking activity: a critical section completing in between still triggers stop()
+        deferredStopCancellable = backgroundTaskManager.criticalCompletedPublisher
+            .first()
+            .sink { [weak self] in
+                self?.stop()
+            }
+
+        guard backgroundTaskManager.isCriticalActive else {
+            deferredStopCancellable = nil
+            stop()
+            return
+        }
+        // send in flight: let the critical window finish the broadcast, the sink above stops after it
     }
 
     private func sync(state: SynchronizerState) {
@@ -427,7 +544,12 @@ class ZcashAdapter {
             }
         }
 
-        handleTransparentUpdates(oldBalance: oldTransparent, newBalance: balanceData.transparent)
+        // migration takes precedence over shielding: at most one alert per update
+        let migrationSuggested = migrator.handleCheck(orchardBalance: balanceData.orchard, latestHeight: lastBlockHeight, syncStatus: synchronizerState?.syncStatus)
+
+        if !migrationSuggested {
+            handleTransparentUpdates(oldBalance: oldTransparent, newBalance: balanceData.transparent)
+        }
     }
 
     private func handleTransparentUpdates(oldBalance _: Decimal, newBalance: Decimal) {
@@ -500,6 +622,41 @@ class ZcashAdapter {
 
     func transactionRecord(fromTransaction transaction: ZcashTransactionWrapper) -> TransactionRecord {
         let showRawTransaction = transaction.minedHeight == nil || transaction.failed
+
+        // a migration tx is an internal fully-shielded self-send: without the txId match
+        // it would fall into the internal branch below and display as Unshield
+        if migrator.isMigrationTx(hash: transaction.transactionHash) {
+            // the SDK records the migration PCZT without recipients, so the wrapper's internal-branch
+            // math (value = received, fee = spent − received) never triggers; raw tx.value is just −fee
+            let migratedAmount: Decimal
+            let migrationFee: Decimal?
+            if let spent = transaction.totalSpent, let received = transaction.totalReceived, received > .zero {
+                migratedAmount = received.decimalValue.decimalValue
+                migrationFee = (spent - received).decimalValue.decimalValue
+            } else {
+                migratedAmount = abs(transaction.value.decimalValue.decimalValue)
+                migrationFee = transaction.fee?.decimalValue.decimalValue
+            }
+
+            return ZcashShieldingTransactionRecord(
+                token: token,
+                source: transactionSource,
+                uid: transaction.transactionHash,
+                transactionHash: transaction.transactionHash,
+                transactionIndex: transaction.transactionIndex,
+                blockHeight: transaction.minedHeight,
+                confirmationsThreshold: ZcashSDK.defaultRewindDistance,
+                date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+                fee: migrationFee,
+                failed: transaction.failed,
+                lockInfo: nil,
+                conflictingHash: nil,
+                showRawTransaction: showRawTransaction,
+                amount: migratedAmount,
+                direction: .migrate,
+                memo: transaction.memo
+            )
+        }
 
         // TODO: Should have it's own transactions with memo
         if let direction = transaction.shieldDirection {
@@ -627,6 +784,7 @@ class ZcashAdapter {
 
     public func wipe() -> AnyPublisher<Void, Error> {
         synchronizer.stop()
+        migrator.clearOnWipe()
 
         let synchronizer = synchronizer
         let uniqueId = uniqueId
@@ -704,24 +862,32 @@ class ZcashAdapter {
             return
         }
 
-        let full = balances.saplingBalance.total() + balances.orchardBalance.total()
-        let available = balances.saplingBalance.spendableValue + balances.orchardBalance.spendableValue
+        let full = balances.shieldedTotal()
+        let available = balances.shieldedSpendableValue
         logger?.log(level: .debug, message: "Full balance from syncer: \(full.decimalValue.decimalValue.description)")
         logger?.log(level: .debug, message: "Available balance from syncer: \(available.decimalValue.decimalValue.description)")
 
 //        print("BALANCE: t = \(balances.unshielded.decimalValue.decimalValue)")
+        var orchard = balances.orchardBalance.spendableValue.decimalValue.decimalValue
+        #if DEBUG
+            // emulation: the whole migration cycle (cell, alert, screen, zeroing) runs off the fake engine state
+            if let fakeEngine = migrator.engine as? FakeZcashMigrationEngine {
+                orchard = fakeEngine.orchardSpendable.decimalValue.decimalValue
+            }
+        #endif
+
         let zCashBalanceData = ZcashBalanceData(
             id: uniqueId,
             full: full.decimalValue.decimalValue,
             available: available.decimalValue.decimalValue,
-            transparent: balances.unshielded.decimalValue.decimalValue
+            transparent: balances.unshielded.decimalValue.decimalValue,
+            orchard: orchard
         )
 
         update(balanceData: zCashBalanceData)
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(self)
         Task { [weak self] in
             self?.synchronizer.stop()
             self?.logger?.log(level: .debug, message: "Synchronizer Was Stopped")
@@ -730,11 +896,11 @@ class ZcashAdapter {
 }
 
 extension ZcashAdapter {
-    static func estimateBirthdayHeight(date: Date, isMainnet: Bool = true) -> BlockHeight {
+    static func estimateBirthdayHeight(date: Date, isMainnet: Bool = ZcashAdapter.networkType == .mainnet) -> BlockHeight {
         SDKSynchronizer.estimateBirthdayHeight(for: date, isMainnet: isMainnet)
     }
 
-    public static func estimateBirthdayTime(for height: BlockHeight, isMainnet: Bool = true) -> UInt32 {
+    public static func estimateBirthdayTime(for height: BlockHeight, isMainnet: Bool = ZcashAdapter.networkType == .mainnet) -> UInt32 {
         SDKSynchronizer.birthdayTime(for: height, isMainnet: isMainnet)
     }
 
@@ -786,7 +952,7 @@ extension ZcashAdapter {
     }
 
     static func firstAddress(accountType: AccountType, addressType: AddressType) async throws -> String {
-        let network = ZcashNetworkBuilder.network(for: .mainnet)
+        let network = ZcashNetworkBuilder.network(for: networkType)
         let (uAddress, tAddress) = try await addresses(for: accountType, network: network)
         return addressType == .shielded ? uAddress.stringEncoded : tAddress.stringEncoded
     }
@@ -927,16 +1093,33 @@ extension ZcashAdapter: IAdapter {
     }
 
     func start() {
+        cancelDeferredStop()
+        warmUpSaplingParams()
         prepare(seedData: seedData, walletBirthday: birthday, for: initMode)
     }
 
     func stop() {
         synchronizer.stop()
         logger?.log(level: .debug, message: "Synchronizer will stop")
+
+        // a live gate subscription would otherwise revive sync after deactivation
+        DispatchQueue.main.async { [weak self] in
+            self?.migrationGateCancellable = nil
+            self?.migrationTickCancellable = nil
+        }
     }
 
     func refresh() {
+        cancelDeferredStop()
         startSynchronizer()
+    }
+
+    // foreground resume goes through refresh() (start() only on creation) — deferred stop must not kill a live sync.
+    // deferredStopCancellable is main-confined: start()/refresh() arrive on background queues, subscription and fire are on main
+    private func cancelDeferredStop() {
+        DispatchQueue.main.async { [weak self] in
+            self?.deferredStopCancellable = nil
+        }
     }
 
     private func syncMain() {
@@ -953,6 +1136,9 @@ extension ZcashAdapter: IAdapter {
             Task { [weak self] in
                 do {
                     try await self?.synchronizer.start(retry: true)
+                } catch ZcashError.migrationSyncBlocked {
+                    // not an error: the migration privacy gate is holding sync, wait it out
+                    self?.enterMigratingState()
                 } catch {
                     self?.state = .notSynced(error: error)
                 }
@@ -1094,7 +1280,7 @@ extension ZcashAdapter {
         amount: Decimal,
         address: Recipient,
         memo: Memo?,
-        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        zip317MarginalFee _: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) async throws -> Proposal {
         guard let accountId else {
             throw AppError.ZcashError.noAccountId
@@ -1107,8 +1293,7 @@ extension ZcashAdapter {
                 accountUUID: accountId,
                 recipient: address,
                 amount: amountInZatoshi,
-                memo: memo,
-                zip317MarginalFee: zip317MarginalFee
+                memo: memo
             )
         } catch {
             throw ZcashSendHelper.converted(error)
@@ -1117,7 +1302,7 @@ extension ZcashAdapter {
 
     func sendProposal(
         outputs: [TransferOutput],
-        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        zip317MarginalFee _: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) async throws -> Proposal {
         guard let accountId else {
             throw AppError.ZcashError.noAccountId
@@ -1128,8 +1313,7 @@ extension ZcashAdapter {
         do {
             return try await synchronizer.proposefulfillingPaymentURI(
                 paymentURI,
-                accountUUID: accountId,
-                zip317MarginalFee: zip317MarginalFee
+                accountUUID: accountId
             )
         } catch {
             throw ZcashSendHelper.converted(error)
@@ -1179,7 +1363,7 @@ extension ZcashAdapter {
         threshold: Decimal,
         address: Recipient?,
         memo: Memo?,
-        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        zip317MarginalFee _: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) async throws -> Proposal? {
         guard let accountId else {
             throw AppError.ZcashError.noAccountId
@@ -1199,8 +1383,7 @@ extension ZcashAdapter {
             accountUUID: accountId,
             shieldingThreshold: amountInZatoshi,
             memo: requiredMemo,
-            transparentReceiver: transparentAddress,
-            zip317MarginalFee: zip317MarginalFee
+            transparentReceiver: transparentAddress
         )
     }
 
@@ -1226,7 +1409,7 @@ extension ZcashAdapter {
         amount: Decimal,
         address: Recipient,
         memo: Memo?,
-        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        zip317MarginalFee _: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) -> Single<Void> {
         guard let accountId else {
             return .error(AppError.ZcashError.noAccountId)
@@ -1239,8 +1422,7 @@ extension ZcashAdapter {
                         accountUUID: accountId,
                         recipient: address,
                         amount: Zatoshi.from(decimal: amount),
-                        memo: memo,
-                        zip317MarginalFee: zip317MarginalFee
+                        memo: memo /* , zip317MarginalFee: zip317MarginalFee */
                     ) else {
                         observer(.error(AppError.unknownError))
                         return
@@ -1268,18 +1450,109 @@ extension ZcashAdapter {
 
     @discardableResult func send(
         proposal: Proposal,
-        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee,
+        zip317MarginalFee _: Zatoshi = ZcashAdapter.defaultZip317MarginalFee,
     ) async throws -> String? {
         guard let spendingKey else {
             throw AppError.ZcashError.noReceiveAddress
         }
 
-        let expiryHeightDelta = Self.defaultTxExpiryHeightDelta
+        return try await Core.shared.backgroundTaskManager.performCritical(name: "zcash-send") {
+            try await send(proposal: proposal, spendingKey: spendingKey)
+        }
+    }
+
+    func migrationProposal() async throws -> (amount: Decimal, fee: Decimal) {
+        try await migrator.migrationProposal(orchardBalance: zCashBalanceData.orchard)
+    }
+
+    func clearMigrationHistory() {
+        migrator.clearOnWipe()
+    }
+
+    func performMigration() async throws -> String? {
+        do {
+            let txId = try await Core.shared.backgroundTaskManager.performCritical(name: "zcash-migration") {
+                // sign/execute throw migrationBroadcastDuringSync while the synchronizer is live
+                stop()
+                await waitUntilSyncStopped()
+                return try await migrator.performMigration(currentEndpointHost: currentEndpoint.host)
+            }
+
+            enterMigratingState()
+            return txId
+        } catch {
+            // a failed broadcast can leave the signed transfer holding the sync gate;
+            // surface migrating and let the watcher reconcile it instead of a dead stopped sync
+            if let engine = migrator.engine, await engine.isSyncBlocked() {
+                enterMigratingState()
+            }
+            throw error
+        }
+    }
+
+    // SDK stop() only schedules the teardown; the migration guard throws while status is still .syncing
+    private func waitUntilSyncStopped() async {
+        for _ in 0 ..< 50 {
+            guard case .syncing = synchronizer.latestState.syncStatus else {
+                return
+            }
+            try? await Task.sleep(seconds: 0.1)
+        }
+    }
+
+    private func enterMigratingState() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self, let engine = migrator.engine else { return }
+
+            areFundsSpendable = false // no spending against a stopped sync; restored by the sync stream after restart
+            state = .migrating(remainingMinutes: migrator.remainingBufferMinutes)
+
+            guard migrationGateCancellable == nil else { return }
+
+            // the gate is a CurrentValueSubject with its own expiry ticker: false arrives pushed.
+            // the subject's initial value can be stale (the SDK recomputes lazily on subscription),
+            // so every release is confirmed by an authoritative poll before leaving the window
+            migrationGateCancellable = engine.syncBlockedStream
+                .filter { !$0 }
+                .sink { [weak self] _ in
+                    Task { [weak self] in
+                        guard let self, let engine = migrator.engine else { return }
+                        guard await !engine.isSyncBlocked() else {
+                            return
+                        }
+                        DispatchQueue.main.async { [weak self] in self?.exitMigratingState() }
+                    }
+                }
+
+            // once a minute: refresh the countdown and re-deliver a stuck signed transfer (reconcile is idempotent)
+            migrationTickCancellable = Timer.publish(every: 60, on: .main, in: .common)
+                .autoconnect()
+                .sink { [weak self] _ in
+                    guard let self else { return }
+
+                    state = .migrating(remainingMinutes: migrator.remainingBufferMinutes)
+                    Task { [weak self] in
+                        guard let self else { return }
+                        await migrator.reconcileIfNeeded(currentEndpointHost: currentEndpoint.host)
+                    }
+                }
+        }
+    }
+
+    private func exitMigratingState() {
+        guard migrationGateCancellable != nil else { return } // already exited or stopped
+
+        migrationGateCancellable = nil
+        migrationTickCancellable = nil
+
+        logger?.log(level: .debug, message: "Migration gate released, restarting synchronizer")
+        startSynchronizer()
+    }
+
+    private func send(proposal: Proposal, spendingKey: UnifiedSpendingKey) async throws -> String? {
         let stream = try await synchronizer.createProposedTransactions(
             proposal: proposal,
-            spendingKey: spendingKey,
-            expiryHeightDelta: expiryHeightDelta,
-            zip317MarginalFee: zip317MarginalFee
+            spendingKey: spendingKey
         )
 
         let transactionCount = proposal.transactionCount()
@@ -1329,6 +1602,60 @@ extension ZcashAdapter {
 
     func recipient(from stringEncodedAddress: String) -> ZcashLightClientKit.Recipient? {
         try? Recipient(stringEncodedAddress, network: network.networkType)
+    }
+
+    // Directly re-broadcasts created-but-undelivered transactions with their original bytes.
+    // Runs on foreground start: the SDK sync-loop resubmission is gated by a 5-minute uptime
+    // threshold, so a short "check the app" session would never deliver without this.
+    // Same-bytes resubmit is safe: an already-delivered transaction comes back as .rejected.
+    func resubmitPendingTransactions() async {
+        let latestHeight = synchronizer.latestState.latestBlockHeight
+        let overviews = await synchronizer.transactions
+
+        let candidates = overviews.filter {
+            Self.isResubmissionCandidate(
+                isSentTransaction: $0.isSentTransaction,
+                minedHeight: $0.minedHeight,
+                hasRaw: $0.raw != nil,
+                expiryHeight: $0.expiryHeight,
+                latestHeight: latestHeight
+            )
+        }
+
+        guard !candidates.isEmpty else {
+            return
+        }
+
+        for overview in candidates {
+            let transaction: CreatedTransaction
+            do {
+                transaction = try CreatedTransaction(overview: overview)
+            } catch {
+                logger?.log(level: .error, message: "Resubmit skip \(overview.rawID.toHexStringTxId()): \(error)")
+                continue
+            }
+
+            let outcome = await synchronizer.broadcaster.submit(transaction: transaction, to: [currentEndpoint])
+
+            switch outcome {
+            case .accepted:
+                logger?.log(level: .debug, message: "Resubmit accepted: \(transaction.txId.toHexStringTxId())")
+            case let .rejected(code, message):
+                // duplicate ("already in block chain") or permanent rejection — retried on next foreground anyway
+                logger?.log(level: .error, message: "Resubmit rejected: \(transaction.txId.toHexStringTxId()) | code: \(code) | \(message)")
+            case .unreachable, .timedOut, .notAttempted, .cancelled:
+                logger?.log(level: .error, message: "Resubmit not delivered: \(transaction.txId.toHexStringTxId()) | \(outcome)")
+            }
+        }
+    }
+
+    static func isResubmissionCandidate(isSentTransaction: Bool, minedHeight: BlockHeight?, hasRaw: Bool, expiryHeight: BlockHeight?, latestHeight: BlockHeight) -> Bool {
+        guard isSentTransaction, minedHeight == nil, hasRaw,
+              let expiryHeight, expiryHeight > 0
+        else {
+            return false
+        }
+        return latestHeight == 0 || expiryHeight > latestHeight
     }
 }
 
@@ -1380,6 +1707,7 @@ enum ZCashAdapterState: Equatable {
     case preparing
     case synced
     case syncing(progress: Int?, remaining: Int?, lastBlockDate: Date?)
+    case migrating(remainingMinutes: Int?)
     case notSynced(error: Error)
 
     public static func == (lhs: ZCashAdapterState, rhs: ZCashAdapterState) -> Bool {
@@ -1388,6 +1716,7 @@ enum ZCashAdapterState: Equatable {
         case (.preparing, .preparing): return true
         case (.synced, .synced): return true
         case let (.syncing(lProgress, lRemaining, lLastBlockDate), .syncing(rProgress, rRemaining, rLastBlockDate)): return lProgress == rProgress && lRemaining == rRemaining && lLastBlockDate == rLastBlockDate
+        case let (.migrating(lRemaining), .migrating(rRemaining)): return lRemaining == rRemaining
         case (.notSynced, .notSynced): return true
         default: return false
         }
@@ -1399,6 +1728,7 @@ enum ZCashAdapterState: Equatable {
         case .preparing: return .customSyncing(main: "Preparing...", secondary: nil, progress: nil)
         case .synced: return .synced
         case let .syncing(progress, remaining, lastDate): return .syncing(progress: progress, remaining: remaining, lastBlockDate: lastDate)
+        case let .migrating(remainingMinutes): return .customSyncing(main: "Migrating...", secondary: remainingMinutes.map { "~\($0) min" }, progress: nil)
         case let .notSynced(error): return .notSynced(error: error.localizedDescription)
         }
     }
@@ -1409,6 +1739,7 @@ enum ZCashAdapterState: Equatable {
         case .preparing: return "Preparing..."
         case .synced: return "Synced"
         case let .syncing(progress, _, lastDate): return "Syncing: progress = \(progress?.description ?? "N/A"), lastBlockDate: \(lastDate?.description ?? "N/A")"
+        case let .migrating(remainingMinutes): return "Migrating: remaining = \(remainingMinutes?.description ?? "N/A") min"
         case let .notSynced(error): return "Not synced \(error.localizedDescription)"
         }
     }

@@ -50,7 +50,9 @@ let package = Package(
         .package(url: "https://github.com/horizontalsystems/TronKit.Swift.git", exact: "1.5.2"),
         .package(url: "https://github.com/horizontalsystems/UIExtensions.Swift", exact: "1.0.2"),
         .package(url: "https://github.com/horizontalsystems/UniswapKit.Swift", exact: "3.2.0"),
-        .package(url: "https://github.com/horizontalsystems/ZcashLightClientKit", exact: "2.6.0-alpha.4-hs.1"),
+        // Ironwood sync/send hotfix: frozen upstream e58e14e + HS librustzcash pin (81152f63),
+        // binary FFI via the 2.6.0-ironwood-hs.1 release on the fork
+        .package(url: "https://github.com/horizontalsystems/ZcashLightClientKit", exact: "2.6.0-ironwood-hs.2"),
     ],
     targets: [
         .target(

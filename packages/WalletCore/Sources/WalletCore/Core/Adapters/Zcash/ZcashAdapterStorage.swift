@@ -29,6 +29,20 @@ class ZcashAdapterStorage {
             }
         }
 
+        migrator.registerMigration("add orchard to ZcashBalance") { db in
+            try db.alter(table: ZcashBalanceData.databaseTableName) { t in
+                t.add(column: ZcashBalanceData.Columns.orchard.name, .text).notNull().defaults(to: "0")
+            }
+        }
+
+        migrator.registerMigration("create ZcashMigrationTx") { db in
+            try db.create(table: ZcashMigrationTx.databaseTableName) { t in
+                t.column(ZcashMigrationTx.Columns.txId.name, .text)
+                t.column(ZcashMigrationTx.Columns.accountId.name, .text).notNull()
+                t.column(ZcashMigrationTx.Columns.createdAt.name, .datetime).notNull()
+            }
+        }
+
         return migrator
     }
 }
@@ -82,6 +96,41 @@ extension ZcashAdapterStorage {
         _ = try dbPool.write { db in
             try ZcashTransparentAlertState
                 .filter(ZcashTransparentAlertState.Columns.id == id)
+                .deleteAll(db)
+        }
+    }
+}
+
+extension ZcashAdapterStorage {
+    func save(migrationTx: ZcashMigrationTx) throws {
+        try dbPool.write { db in
+            try migrationTx.insert(db)
+        }
+    }
+
+    func migrationTxIds(accountId: String) throws -> [String] {
+        try dbPool.read { db in
+            try ZcashMigrationTx
+                .filter(ZcashMigrationTx.Columns.accountId == accountId)
+                .fetchAll(db)
+                .compactMap(\.txId)
+        }
+    }
+
+    func latestMigrationDate(accountId: String) throws -> Date? {
+        try dbPool.read { db in
+            try ZcashMigrationTx
+                .filter(ZcashMigrationTx.Columns.accountId == accountId)
+                .order(ZcashMigrationTx.Columns.createdAt.desc)
+                .fetchOne(db)?
+                .createdAt
+        }
+    }
+
+    func deleteMigrationTxs(accountId: String) throws {
+        _ = try dbPool.write { db in
+            try ZcashMigrationTx
+                .filter(ZcashMigrationTx.Columns.accountId == accountId)
                 .deleteAll(db)
         }
     }

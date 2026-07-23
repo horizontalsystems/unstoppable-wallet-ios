@@ -142,6 +142,7 @@ public class Core {
     let openCryptoPay: OpenCryptoPayModule
     let transactionInfoExtraFactory: TransactionInfoExtraFactory
     let appWorkerRegistry: AppWorkerRegistry
+    let backgroundTaskManager: BackgroundTaskManager
 
     let purchaseManager: PurchaseManager
 
@@ -263,7 +264,7 @@ public class Core {
         zanoNodeManager = ZanoNodeManager(blockchainSettingsStorage: blockchainSettingsStorage, zanoNodeStorage: zanoNodeStorage)
 
         let zcashNodeStorage = ZcashNodeStorage(dbPool: dbPool)
-        zcashNodeManager = ZcashNodeManager(blockchainSettingsStorage: blockchainSettingsStorage, zcashNodeStorage: zcashNodeStorage)
+        zcashNodeManager = ZcashNodeManager(testNetManager: testNetManager, blockchainSettingsStorage: blockchainSettingsStorage, zcashNodeStorage: zcashNodeStorage)
 
         let restoreStateStorage = RestoreStateStorage(dbPool: dbPool)
         restoreStateManager = RestoreStateManager(storage: restoreStateStorage)
@@ -479,6 +480,8 @@ public class Core {
 
         let swapStorage = SwapStorage(dbPool: dbPool, marketKit: marketKit)
         swapHistoryManager = SwapHistoryManager(accountManager: accountManager, storage: swapStorage)
+
+        backgroundTaskManager = BackgroundTaskManager()
 
         appManager = AppManager(
             widgetRefresher: widgetRefresher,

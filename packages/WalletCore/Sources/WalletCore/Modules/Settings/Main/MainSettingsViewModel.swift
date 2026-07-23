@@ -68,6 +68,20 @@ class MainSettingsViewModel: ObservableObject {
         }
     }
 
+    @Published var emulateZcashMigration: Bool {
+        didSet {
+            localStorage.emulateZcashMigration = emulateZcashMigration
+
+            // turning emulation off resets the fake migration state so the cycle can be re-run
+            if !emulateZcashMigration,
+               let token = try? Core.shared.coinManager.token(query: .init(blockchainType: .zcash, tokenType: .native)),
+               let adapter = Core.shared.adapterManager.adapter(for: token) as? ZcashAdapter
+            {
+                adapter.clearMigrationHistory()
+            }
+        }
+    }
+
     @Published var debuggingAmlResult: MultiSwapViewModel.AmlRiskResult? {
         didSet {
             localStorage.debuggingAmlCheckResult = debuggingAmlResult
@@ -81,6 +95,7 @@ class MainSettingsViewModel: ObservableObject {
         emulatePurchase = localStorage.emulatePurchase
         testNetEnabled = testNetManager.testNetEnabled
         mayaStagenetEnabled = testNetManager.mayaStagenetEnabled
+        emulateZcashMigration = localStorage.emulateZcashMigration
         debuggingAmlResult = localStorage.debuggingAmlCheckResult
 
         subscribe(MainScheduler.instance, disposeBag, backupManager.allBackedUpObservable) { [weak self] _ in self?.syncManageWalletsAlert() }

@@ -24,6 +24,11 @@ struct ZcashWalletTokenView: View {
                             view(transparent: viewModel.zCashBalanceData.transparent)
                             HorizontalDivider()
                         }
+
+                        if ZcashMigrator.migrationEnabled, viewModel.ironwoodActive, !viewModel.migrating, viewModel.zCashBalanceData.orchard > ZcashAdapter.minimalThreshold {
+                            view(orchard: viewModel.zCashBalanceData.orchard)
+                            HorizontalDivider()
+                        }
                     }
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets())
@@ -69,6 +74,51 @@ struct ZcashWalletTokenView: View {
                                         Coordinator.shared.present { _ in
                                             ThemeNavigationStack {
                                                 ShieldSendView(amount: viewModel.zCashBalanceData.transparent, address: viewModel.ownAddress)
+                                            }
+                                        }
+                                    },
+                                ],
+                                alignment: .horizontal)),
+                        ],
+                    )
+                }
+            }
+        )
+    }
+
+    @ViewBuilder private func view(orchard: Decimal) -> some View {
+        Cell(
+            middle: {
+                MiddleTextIcon(text: ComponentText(text: "balance.token.migration.required".localized, colorStyle: .yellow))
+            },
+            right: {
+                RightTextIcon(
+                    text: ComponentText(
+                        text: infoAmount(value: orchard).formatted,
+                        colorStyle: .yellow
+                    ),
+                    icon: ComponentImage("warning_filled", colorStyle: .yellow)
+                )
+            },
+            action: {
+                Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                    BottomSheetView(
+                        items: [
+                            .title(
+                                icon: ThemeImage.warning,
+                                title: "balance.token.migration.detected.title".localized
+                            ),
+                            .text(text: "balance.token.migration.detected.description".localized),
+                            .buttonGroup(.init(buttons: [
+                                    .init(style: .gray, title: "button.cancel".localized) {
+                                        isPresented.wrappedValue = false
+                                    },
+                                    .init(style: .yellow, title: "balance.token.migrate".localized) {
+                                        isPresented.wrappedValue = false
+
+                                        Coordinator.shared.present { _ in
+                                            ThemeNavigationStack {
+                                                MigrationSendView()
                                             }
                                         }
                                     },

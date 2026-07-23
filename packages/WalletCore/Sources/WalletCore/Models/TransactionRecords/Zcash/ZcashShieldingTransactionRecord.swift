@@ -77,7 +77,7 @@ class ZcashShieldingTransactionRecord: BitcoinTransactionRecord {
     }
 
     enum Direction {
-        case shield, unshield
+        case shield, unshield, migrate
 
         init(direction: ZcashTransactionWrapper.Direction) {
             switch direction {
@@ -90,6 +90,14 @@ class ZcashShieldingTransactionRecord: BitcoinTransactionRecord {
             switch self {
             case .shield: return "transactions.shield".localized
             case .unshield: return "transactions.unshield".localized
+            case .migrate: return "transactions.migrate".localized
+            }
+        }
+
+        var txSubtitle: String {
+            switch self {
+            case .shield, .unshield: return "transactions.transfer".localized
+            case .migrate: return "transactions.migrate.to_ironwood".localized
             }
         }
 
@@ -97,6 +105,7 @@ class ZcashShieldingTransactionRecord: BitcoinTransactionRecord {
             switch self {
             case .shield: return "shield_24"
             case .unshield: return "shield_off_24"
+            case .migrate: return "arrow_out"
             }
         }
     }

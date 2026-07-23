@@ -74,7 +74,7 @@ enum AddressParserFactory {
         case .tron:
             return [TronAddressParser()]
         case .zcash:
-            let network = ZcashNetworkBuilder.network(for: .mainnet)
+            let network = ZcashNetworkBuilder.network(for: ZcashAdapter.networkType)
             let validator = ZcashAddressValidator(network: network)
 
             let addressType = filter.flatMap {

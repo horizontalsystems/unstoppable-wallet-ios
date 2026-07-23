@@ -1,18 +1,9 @@
-
-import MarketKit
 import SwiftUI
-import ZcashLightClientKit
 
-struct ShieldSendView: View {
-    private let sendData: SendData
+struct MigrationSendView: View {
+    private let sendData: SendData = .zcashMigration
 
     @Environment(\.presentationMode) private var presentationMode
-
-    init(amount: Decimal, address: String?) {
-        let recipient = address.flatMap { try? Recipient($0, network: ZcashAdapter.networkType) }
-
-        sendData = .zcashShield(amount: amount, recipient: recipient, memo: nil)
-    }
 
     var body: some View {
         ThemeView {
