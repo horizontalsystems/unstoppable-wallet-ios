@@ -293,6 +293,7 @@
 // Errors
 
 "error.send.self_transfer" = "Não é possível enviar para você mesmo";
+"error.send.in_progress" = "Um envio está em andamento. Tente novamente em instantes.";
 "error.send_binance.memo_required" = "O receptor requer uma nota não vazia na transação de transferência";
 "error.send_binance.only_digits_allowed" = "Requer que o memorando contenha apenas dígitos";
 
@@ -349,6 +350,15 @@
 "balance.token.transparent.detected.title" = "ZEC Transparente Detectado";
 "balance.token.transparent.detected.description" = "Você possui um saldo de ZEC em um endereço transparente. Para usá-lo no Unstoppable, é necessário blindá-lo (shield) para garantir total privacidade.";
 "balance.token.shield" = "Blindar";
+"balance.token.migration.required" = "Migração necessária";
+"transactions.migrate" = "Migrar";
+"transactions.migrate.to_ironwood" = "para Ironwood";
+"balance.token.migration.detected.title" = "Migração de pool ZEC";
+"balance.token.migration.detected.description" = "O Zcash foi atualizado para um novo pool blindado. Seu saldo no pool antigo precisa ser migrado para permanecer totalmente utilizável no Unstoppable.";
+"balance.token.migrate" = "Migrar";
+"error.zcash.migration_failed" = "A migração não pôde ser concluída. Nenhum fundo foi perdido — você pode tentar novamente mais tarde.";
+"zcash.migration.warning.title" = "Valor publicamente visível";
+"zcash.migration.warning" = "Mover fundos entre pools exige que o valor migrado seja publicamente visível na blockchain. O remetente, o destinatário e seus endereços permanecem privados.";
 
 "balance.token.receive_address" = "Endereço de Recebimento";
 "balance.token.account.inactive.description" = "As transações aparecerão após a ativação";

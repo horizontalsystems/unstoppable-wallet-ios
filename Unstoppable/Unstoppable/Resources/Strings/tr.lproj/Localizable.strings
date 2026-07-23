@@ -293,6 +293,7 @@
 // Errors
 
 "error.send.self_transfer" = "Kendine gönderme desteklenmiyor";
+"error.send.in_progress" = "Bir gönderim devam ediyor. Bir süre sonra tekrar deneyin.";
 "error.send_binance.memo_required" = "Alıcı, transfer işleminde boş olmayan bir not gerektirmektedir";
 "error.send_binance.only_digits_allowed" = "Notun yalnızca rakam içermesini gerektirir";
 
@@ -349,6 +350,15 @@
 "balance.token.transparent.detected.title" = "Şeffaf ZEC Tespit Edildi";
 "balance.token.transparent.detected.description" = "Şeffaf bir adreste tutulan ZEC bakiyeniz var. Unstoppable’da kullanmak için tam gizlilik amacıyla shield edilmesi gerekir.";
 "balance.token.shield" = "Shield";
+"balance.token.migration.required" = "Geçiş Gerekli";
+"transactions.migrate" = "Geçiş Yap";
+"transactions.migrate.to_ironwood" = "Ironwood'a";
+"balance.token.migration.detected.title" = "ZEC Havuz Geçişi";
+"balance.token.migration.detected.description" = "Zcash yeni bir korumalı havuza yükseltildi. Eski havuzdaki bakiyenizin Unstoppable'da tam olarak kullanılabilir kalması için geçiş yapılması gerekmektedir.";
+"balance.token.migrate" = "Geçiş Yap";
+"error.zcash.migration_failed" = "Geçiş tamamlanamadı. Hiçbir fon kaybedilmedi — daha sonra tekrar deneyebilirsiniz.";
+"zcash.migration.warning.title" = "Herkese Açık Görünür Tutar";
+"zcash.migration.warning" = "Havuzlar arasında fon taşımak, taşınan tutarın blok zincirinde herkese açık olarak görünür olmasını gerektirir. Gönderen, alıcı ve adresleriniz gizli kalır.";
 
 "balance.token.receive_address" = "Alım Adresi";
 "balance.token.account.inactive.description" = "Cüzdan etkinleştirildikten sonra işlemler görünecektir.";
