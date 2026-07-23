@@ -54,6 +54,7 @@ public extension SendHandlerFactory {
         BitcoinSendHandler.self,
         ZcashSendHandler.self,
         ShieldSendHandler.self,
+        MigrationSendHandler.self,
         TronSendHandler.self,
         TonSendHandler.self,
         StellarSendHandler.self,

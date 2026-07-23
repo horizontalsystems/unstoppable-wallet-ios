@@ -1,7 +1,12 @@
 import Foundation
 import MarketKit
 
-class MigrationSendHandler {
+class MigrationSendHandler: SendHandler {
+    override class func instance(sendData: WalletCore.SendData) -> ISendHandler? {
+        guard case .zcashMigration = sendData else { return nil }
+        return instance()
+    }
+
     private let token: Token
     private let adapter: ZcashAdapter
 
