@@ -25,7 +25,23 @@ public class SendViewModel: ObservableObject {
     @Published public var rates = [String: Decimal]()
 
     @Published public var sendData: ISendData?
-    @Published var sending = false
+
+    // A live send owns the screen: the quote-expiry timer is stopped so it can't swap the
+    // send button for "Refresh" mid-send (for broadcast providers the window is 1-3 s, but a
+    // StellarBroker session runs for minutes — a mid-session "Refresh" would allow a second
+    // committed quote and a concurrent double-spending session). On failure the expiry clock
+    // resumes from the ORIGINAL deadline, so an already-stale quote expires immediately;
+    // success dismisses the screen.
+    @Published var sending = false {
+        didSet {
+            if sending {
+                stopAutoQuoting()
+            } else if oldValue {
+                autoQuoteIfRequired()
+            }
+        }
+    }
+
     @Published var transactionSettingsModified = false
 
     // Set when a non-auto-refreshing quote (a swap) reaches its expiration. The UI swaps the
@@ -146,7 +162,7 @@ public extension SendViewModel {
     }
 
     internal func autoQuoteIfRequired() {
-        guard !state.isSyncing, let nextRefreshTime else {
+        guard !sending, !state.isSyncing, let nextRefreshTime else {
             return
         }
 
@@ -166,6 +182,12 @@ public extension SendViewModel {
     // refresh); handlers that opt out of auto-refresh (swaps) mark the quote expired instead and
     // wait for the user to tap "Refresh".
     internal func onExpiration() {
+        // Never expire under a live send — an already-armed timer can still fire after
+        // `sending` flipped true (the didSet only stops FUTURE firings).
+        guard !sending else {
+            return
+        }
+
         if handler?.autoRefreshEnabled ?? true {
             sync(silent: true)
         } else {

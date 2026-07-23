@@ -523,6 +523,7 @@
   "swap.pending_allowance": "Pending Allowance",
   "swap.approve": "Approve",
   "swap.approving": "Approving",
+  "swap.activate_asset": "Activate %@ on Stellar",
   "swap.allowance_error": "Allowance Error",
   "swap.revoke": "Revoke",
   "swap.revoking": "Revoking",

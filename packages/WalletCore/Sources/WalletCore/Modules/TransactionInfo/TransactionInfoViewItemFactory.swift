@@ -696,6 +696,16 @@ class TransactionInfoViewItemFactory {
             case let .receivePayment(value, from):
                 viewItems = receiveSection(source: record.source, appValue: value, from: from, rates: item.rates, balanceHidden: balanceHidden)
 
+            case let .swap(valueIn, valueOut):
+                viewItems = [
+                    amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(appValue: valueIn), appValue: valueIn, rate: _rate(valueIn.coin), type: type(appValue: valueIn, .outgoing), balanceHidden: balanceHidden),
+                    amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(appValue: valueOut), appValue: valueOut, rate: _rate(valueOut.coin), type: type(appValue: valueOut, .incoming), balanceHidden: balanceHidden),
+                ]
+
+                if let priceString = priceString(valueIn: valueIn, valueOut: valueOut, coinPriceIn: _rate(valueIn.coin)) {
+                    viewItems.append(.price(price: priceString))
+                }
+
             case let .changeTrust(value, _, _, _):
                 let rate = _rate(value.coin)
 

@@ -661,6 +661,7 @@
 "swap.pending_allowance" = "Ожидающие разрешения";
 "swap.approve" = "Разрешить";
 "swap.approving" = "Разрешение";
+"swap.activate_asset" = "Активировать %@ в сети Stellar";
 "swap.allowance_error" = "Ошибка разрешения";
 "swap.revoke" = "Отменить";
 "swap.revoking" = "Отмена";

@@ -661,6 +661,7 @@
 "swap.pending_allowance" = "Autorisation en attente";
 "swap.approve" = "Approuver";
 "swap.approving" = "En cours d'approbation";
+"swap.activate_asset" = "Activer %@ sur Stellar";
 "swap.allowance_error" = "Erreur d'autorisation";
 "swap.revoke" = "Révoquer";
 "swap.revoking" = "Révocation en cours";

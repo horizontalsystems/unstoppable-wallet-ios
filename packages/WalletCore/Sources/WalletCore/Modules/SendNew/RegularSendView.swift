@@ -24,7 +24,10 @@ struct RegularSendView: View {
                             .disabled(true)
                     }
                 case .success:
-                    if let sendData = sendViewModel.sendData, sendViewModel.canSend {
+                    if sendViewModel.sending {
+                        ThemeButton(text: "send.confirmation.sending".localized, spinner: true, style: .secondary) {}
+                            .disabled(true)
+                    } else if let sendData = sendViewModel.sendData, sendViewModel.canSend {
                         SlideButton(
                             styling: .text(start: sendData.customSendButtonTitle ?? "send.confirmation.slide_to_send".localized, end: "", success: ""),
                             action: {

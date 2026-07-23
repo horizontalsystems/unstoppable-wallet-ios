@@ -55,7 +55,9 @@ struct SendView: View {
                                 }
                             }
                         }
-                        .disabled(!viewModel.state.isSuccess)
+                        // Also disabled during the send itself — a settings edit mid-send
+                        // triggers a re-quote/re-commit under the running session.
+                        .disabled(!viewModel.state.isSuccess || viewModel.sending)
                     }
                 }
             }

@@ -35,6 +35,7 @@ public class SwapProviderFactory {
             AllBridgeMultiSwapProvider.id: AllBridgeMultiSwapProvider.name,
             UniswapV3MultiSwapProvider.id: UniswapV3MultiSwapProvider.name,
             PancakeV3MultiSwapProvider.id: PancakeV3MultiSwapProvider.name,
+            StellarSwapMultiSwapProvider.id: StellarSwapMultiSwapProvider.name,
         ]
 
         return names[id]
@@ -70,6 +71,13 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
 
         if id == PancakeV3MultiSwapProvider.id, let provider = try? PancakeV3MultiSwapProvider() {
             return provider
+        }
+
+        // Stellar-native swaps: ONE provider card under the server's STELLARBROKER id runs the
+        // SB-first waterfall over all four Stellar sources; the fallback ids (SOROSWAP /
+        // AQUARIUS / STELLAR_DEX) intentionally resolve to nil so they never appear separately.
+        if id == StellarSwapMultiSwapProvider.id {
+            return StellarSwapMultiSwapProvider()
         }
 
         if let provider = USwapProvider(rawValue: id), USwapMultiSwapProvider.supportedProviders.contains(provider) {

@@ -661,6 +661,7 @@
 "swap.pending_allowance" = "보류 중인 허용량";
 "swap.approve" = "승인";
 "swap.approving" = "승인 중";
+"swap.activate_asset" = "Stellar에서 %@ 활성화";
 "swap.allowance_error" = "허용량 오류";
 "swap.revoke" = "취소";
 "swap.revoking" = "철회";

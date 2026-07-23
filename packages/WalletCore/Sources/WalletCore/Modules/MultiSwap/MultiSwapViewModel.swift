@@ -474,6 +474,7 @@ public class MultiSwapViewModel: ObservableObject {
             return
         }
 
+
         if !quoting, !silent {
             quoting = true
         }

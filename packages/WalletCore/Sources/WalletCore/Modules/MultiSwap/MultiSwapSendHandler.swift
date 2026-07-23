@@ -137,7 +137,43 @@ extension MultiSwapSendHandler: ISendHandler {
             throw SendError.invalidData
         }
 
-        let result = try await data.broadcaster.submit(data.prepared)
+        let result: BroadcastResult
+        do {
+            result = try await data.broadcaster.submit(data.prepared)
+        } catch {
+            // Partial execution (e.g. an interactive broker session failing mid-trade after
+            // txs were signed/submitted): value may already have moved on-chain. Persist a
+            // trackable record with the last known hash BEFORE surfacing the error — tracking
+            // then resolves the real outcome (partial fills included) instead of the swap
+            // becoming an invisible ghost while the server record waits forever.
+            if let partial = error as? IPartialExecutionError, let partialTxHash = partial.partialTxHash, let account = accountManager.activeAccount {
+                let swap = Swap(
+                    uid: UUID().uuidString,
+                    txHash: partialTxHash,
+                    trackingHandle: nil,
+                    accountId: account.id,
+                    providerId: provider.id,
+                    status: .pending,
+                    tokenIn: tokenIn,
+                    tokenOut: tokenOut,
+                    amountIn: amountIn,
+                    amountOut: data.quote.amountOut,
+                    recipient: data.quote.recipient,
+                    toAddress: data.quote.recipient ?? data.quote.toAddress,
+                    depositAddress: data.quote.depositAddress,
+                    providerSwapId: data.quote.providerSwapId,
+                    sourceAddress: nil,
+                    refundAddress: data.quote.refundAddress,
+                    date: Date(),
+                    fromAsset: nil,
+                    toAsset: nil,
+                    legs: nil,
+                    pauseReason: nil
+                )
+                swapHistoryManager.save(swap: swap)
+            }
+            throw error
+        }
         let txHash = result.txHash
 
         if let account = accountManager.activeAccount {

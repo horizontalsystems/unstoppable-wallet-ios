@@ -661,6 +661,7 @@
 "swap.pending_allowance" = "Bekleyen İzin";
 "swap.approve" = "Onayla";
 "swap.approving" = "Onaylayan";
+"swap.activate_asset" = "%@ varlığını Stellar'da etkinleştir";
 "swap.allowance_error" = "İzin Hatası";
 "swap.revoke" = "İptal et";
 "swap.revoking" = "İptal ediliyor";
