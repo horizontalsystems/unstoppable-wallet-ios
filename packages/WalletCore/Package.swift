@@ -44,7 +44,10 @@ let package = Package(
         .package(url: "https://github.com/SnapKit/SnapKit.git", from: "5.7.1"),
         .package(url: "https://github.com/horizontalsystems/solana-kit-ios.git", exact: "1.0.4"),
         .package(url: "https://github.com/daltoniam/Starscream", from: "3.1.2"),
-        .package(url: "https://github.com/horizontalsystems/StellarKit.Swift", exact: "1.2.0"),
+        // TEMP: local path override for StellarKit development (pathPayment/invokeHostFunction
+        // operation parsing + tagging). Restore the versioned pin once the changes are released:
+        // .package(url: "https://github.com/horizontalsystems/StellarKit.Swift", exact: "1.3.0"),
+        .package(path: "../../../StellarKit.Swift"),
         .package(url: "https://github.com/horizontalsystems/TonConnectAPI", exact: "1.0.0"),
         .package(url: "https://github.com/horizontalsystems/TonKit.Swift", exact: "1.2.1"),
         .package(url: "https://github.com/horizontalsystems/TronKit.Swift.git", exact: "1.5.2"),
