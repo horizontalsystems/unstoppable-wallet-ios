@@ -1,4 +1,3 @@
-import Alamofire
 import BigInt
 import EvmKit
 import Foundation
@@ -16,7 +15,7 @@ public class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     private let evmSyncSourceManager = Core.shared.evmSyncSourceManager
 
     private let kit: OneInchKit.Kit
-    private let trackingApi: USwapMultiSwapApi
+    private let tracker: USwapTracker
     private let evmFeeEstimator = EvmFeeEstimator()
     private let commission: Decimal? = AppConfig.oneInchCommission
     private let commissionAddress: String? = AppConfig.oneInchCommissionAddress
@@ -24,16 +23,16 @@ public class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     // regardless — the caller validates itself; nil omits the query param entirely (1inch default)
     private let disableEstimate: Bool?
 
-    public init(kit: OneInchKit.Kit, trackingApi: USwapMultiSwapApi, disableEstimate: Bool? = nil) {
+    public init(kit: OneInchKit.Kit, tracker: USwapTracker, disableEstimate: Bool? = nil) {
         self.kit = kit
-        self.trackingApi = trackingApi
+        self.tracker = tracker
         self.disableEstimate = disableEstimate
 
         super.init()
     }
 
-    public convenience init(apiKey: String, trackingApi: USwapMultiSwapApi, disableEstimate: Bool? = nil) {
-        self.init(kit: OneInchKit.Kit.instance(apiKey: apiKey), trackingApi: trackingApi, disableEstimate: disableEstimate)
+    public convenience init(apiKey: String, tracker: USwapTracker, disableEstimate: Bool? = nil) {
+        self.init(kit: OneInchKit.Kit.instance(apiKey: apiKey), tracker: tracker, disableEstimate: disableEstimate)
     }
 
     override public var id: String { Self.id }
@@ -149,19 +148,18 @@ public class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     override public func track(swap: Swap) async throws -> Swap {
         let blockchainType = swap.tokenIn.blockchainType
 
-        var parameters: Parameters = try [
-            "provider": swap.providerId,
-            "chainId": String(evmBlockchainManager.chain(blockchainType: blockchainType).id),
-            "fromAsset": address(token: swap.tokenIn).eip55,
-            "toAsset": address(token: swap.tokenOut).eip55,
-            "toAddress": swap.toAddress,
-        ]
-
-        if let hash = swap.txHash {
-            parameters["hash"] = hash
-        }
-
-        return try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, api: trackingApi, endpoint: "track/evm")
+        return try await tracker.track(
+            swap: swap,
+            request: .evm(
+                providerId: swap.providerId,
+                toAddress: swap.toAddress,
+                transactionHash: swap.txHash,
+                chainId: String(evmBlockchainManager.chain(blockchainType: blockchainType).id),
+                fromAsset: try address(token: swap.tokenIn).eip55,
+                toAsset: try address(token: swap.tokenOut).eip55,
+                providerSwapId: nil
+            )
+        )
     }
 
     override func spenderAddress(chain: Chain) throws -> EvmKit.Address {

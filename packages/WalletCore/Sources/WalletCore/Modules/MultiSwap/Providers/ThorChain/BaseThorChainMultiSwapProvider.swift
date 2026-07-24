@@ -14,7 +14,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
     let networkManager = Core.shared.networkManager
 //    let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
-    private let trackingApi: USwapMultiSwapApi
+    private let tracker: USwapTracker
     let adapterManager = Core.shared.adapterManager
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let swapAssetStorage = Core.shared.swapAssetStorage
@@ -27,8 +27,8 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     private var assetMap = [String: String]()
     private let syncSubject = PassthroughSubject<Void, Never>()
 
-    init(trackingApi: USwapMultiSwapApi) {
-        self.trackingApi = trackingApi
+    init(tracker: USwapTracker) {
+        self.tracker = tracker
         assetMap = (try? swapAssetStorage.swapAssetMap(provider: id, as: String.self)) ?? [:]
         syncAssets()
     }
@@ -213,22 +213,17 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     }
 
     func track(swap: Swap) async throws -> Swap {
-        var parameters: Parameters = [
-            "provider": swap.providerId,
-            "toAddress": swap.toAddress,
-        ]
-
-        func set(_ dict: inout Parameters, _ key: String, _ value: Any?) {
-            guard let value else { return }
-            dict[key] = value
-        }
-
-        set(&parameters, "inboundTxHash", swap.txHash)
-        set(&parameters, "fromAsset", assetMap[swap.tokenIn.tokenQuery.id.lowercased()])
-        set(&parameters, "toAsset", assetMap[swap.tokenOut.tokenQuery.id.lowercased()])
-
         // Native THORChain/Maya swaps aren't recorded by us → the stateless reader.
-        return try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, api: trackingApi, endpoint: "track/thorchain")
+        return try await tracker.track(
+            swap: swap,
+            request: .thorchain(
+                providerId: swap.providerId,
+                toAddress: swap.toAddress,
+                inboundTxHash: swap.txHash,
+                fromAsset: assetMap[swap.tokenIn.tokenQuery.id.lowercased()],
+                toAsset: assetMap[swap.tokenOut.tokenQuery.id.lowercased()]
+            )
+        )
     }
 
     func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil, recipient: String? = nil, params: Parameters? = nil) async throws -> SwapQuote {
