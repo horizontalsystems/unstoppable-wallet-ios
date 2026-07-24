@@ -18,6 +18,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private let api: USwapMultiSwapApi
     private let tracker: USwapTracker
     private let assetRepository: USwapAssetRepository?
+    private let commitRequestBuilder: USwapCommitRequestBuilder
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let adapterManager = Core.shared.adapterManager
     private let allowanceHelper = MultiSwapAllowanceHelper()
@@ -29,23 +30,28 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private static let zcashTransparentAsset = "ZEC.ZEC"
     private static let zcashShieldedAsset = "ZEC.ZECSHIELDED"
 
-    // Caches for the destination addresses produced by `resolveDestinations`. When no adapter
-    // for `tokenOut` is enabled the helpers fall back to deriving an address from the active
-    // account, which is expensive (each call spins up a fresh Zcash synchronizer to read the
-    // unified + transparent addresses). These dicts keep the derived addresses around so
+    // Cache for the unified destination produced by `resolveDestinations`. The ordinary
+    // primary destination cache belongs to `commitRequestBuilder`; Exolix alone resolves
+    // the additional unified Zcash destination here.
     private struct DestinationCacheKey: Hashable {
         let accountId: String
         let blockchainType: BlockchainType
     }
 
-    private var temporaryDestinationAddresses = [DestinationCacheKey: String]() // primary (transparent for ZEC)
-    private var temporaryUnifiedDestinationAddresses = [DestinationCacheKey: String]() // unified (ZEC only)
+    private var temporaryUnifiedDestinationAddresses = [DestinationCacheKey: String]()
 
-    init(info: USwapProviderInfo, api: USwapMultiSwapApi, tracker: USwapTracker, assetRepository: USwapAssetRepository?) {
+    init(
+        info: USwapProviderInfo,
+        api: USwapMultiSwapApi,
+        tracker: USwapTracker,
+        assetRepository: USwapAssetRepository?,
+        commitRequestBuilder: USwapCommitRequestBuilder
+    ) {
         self.info = info
         self.api = api
         self.tracker = tracker
         self.assetRepository = assetRepository
+        self.commitRequestBuilder = commitRequestBuilder
     }
 
     var id: String { info.id }
@@ -200,6 +206,20 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         }
 
         let alternateCapable = supportsAlternateRouteSelection(tokenIn: tokenIn, tokenOut: tokenOut)
+
+        guard alternateCapable else {
+            let request = try await commitRequestBuilder.build(
+                sellAsset: assetIn,
+                buyAsset: assetOut,
+                sellAmount: amountIn,
+                slippage: slippage,
+                tokenIn: tokenIn,
+                tokenOut: tokenOut,
+                recipient: recipient
+            )
+            return try await fetchSwap(request: request)
+        }
+
         let destinations = try await resolveDestinations(recipient: recipient, token: tokenOut, includeUnified: false)
 
         // An explicit recipient only replaces the destination address — the selected route
@@ -216,7 +236,13 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             )
         }
 
-        return try await fetchSwap(variant: variant, amountIn: amountIn, slippage: slippage, tokenIn: tokenIn)
+        let request = try await exolixCommitRequest(
+            variant: variant,
+            amountIn: amountIn,
+            slippage: slippage,
+            tokenIn: tokenIn
+        )
+        return try await fetchSwap(request: request)
     }
 
     // The address funds will be delivered to. Always set on a committed /v2/swap from the
@@ -251,25 +277,35 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
     // /v2/swap — committed against ONE provider; creates the order and returns the single
     // executable route directly (no { routes } wrapper).
-    private func fetchSwap(variant: RouteVariant, amountIn: Decimal, slippage: Decimal, tokenIn: Token) async throws -> CommitResult {
-        // sourceAddress IS the build signal: we send it only for chains whose server-built
-        // tx we actually consume (EVM/Tron/TON/Solana — exactly what `quoteSourceAddress`
-        // resolves a `from` for). For UTXO/Monero/Stellar/Zcash/Zano we omit it and build
-        // the tx locally (better txs, e.g. multi-UTXO) — preserving the pre-v2 behaviour.
-        let sourceAddress = try await quoteSourceAddress(tokenIn: tokenIn)
-        let refund = try await refundAddress(tokenIn: tokenIn)
-        let chainId = USwapAssetRepository.blockchainTypeMap.first(where: { $0.value == tokenIn.blockchainType })?.key
-        let request = USwapMultiSwapApi.SwapRequest(
+    private func exolixCommitRequest(
+        variant: RouteVariant,
+        amountIn: Decimal,
+        slippage: Decimal,
+        tokenIn: Token
+    ) async throws -> USwapMultiSwapApi.SwapRequest {
+        let sourceAddress = try await commitRequestBuilder.sourceAddress(token: tokenIn)
+        let refundAddress: String?
+
+        if tokenIn.blockchain.type == .zcash {
+            refundAddress = sendingAddress(token: tokenIn)
+        } else {
+            refundAddress = try await commitRequestBuilder.refundAddress(token: tokenIn)
+        }
+
+        return USwapMultiSwapApi.SwapRequest(
             sellAsset: variant.sellAsset,
             buyAsset: variant.buyAsset,
             sellAmount: amountIn,
             slippage: slippage,
-            chainId: chainId,
+            chainId: commitRequestBuilder.chainId(token: tokenIn),
             providerId: info.id,
             destinationAddress: variant.destination,
             sourceAddress: sourceAddress,
-            refundAddress: refund
+            refundAddress: refundAddress
         )
+    }
+
+    private func fetchSwap(request: USwapMultiSwapApi.SwapRequest) async throws -> CommitResult {
         let quote = try await api.swap(request)
 
         // A committed /v2/swap must carry the tracking handle; the 9 builders forward it as
@@ -281,8 +317,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
         return CommitResult(
             quote: quote,
-            refundAddress: refund,
-            destinationAddress: variant.destination
+            refundAddress: request.refundAddress,
+            destinationAddress: request.destinationAddress
         )
     }
 
@@ -297,19 +333,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             DestinationCacheKey(accountId: $0.id, blockchainType: token.blockchainType)
         }
 
-        // Primary destination (transparent for ZEC, native otherwise).
-        let primary: String
-        if let recipient {
-            primary = recipient
-        } else {
-            let temporary = cacheKey.flatMap { temporaryDestinationAddresses[$0] }
-                .map { DestinationHelper.Destination(address: $0, type: .nonExisting) }
-            let resolved = try await DestinationHelper.resolveDestination(token: token, temporary: temporary)
-            if resolved.type == .nonExisting, let cacheKey {
-                temporaryDestinationAddresses[cacheKey] = resolved.address
-            }
-            primary = resolved.address
-        }
+        let primary = try await commitRequestBuilder.destinationAddress(recipient: recipient, token: token)
 
         guard includeUnified, token.blockchainType == .zcash, recipient == nil else {
             return (primary, nil)
@@ -399,27 +423,6 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         default:
             return assetRepository?.asset(token: token)
         }
-    }
-
-    private func refundAddress(tokenIn: Token) async throws -> String? {
-        if tokenIn.blockchain.type == .zcash, info.id == USwapProviderInfo.exolix.id {
-            return sendingAddress(token: tokenIn)
-        } else {
-            return try await DestinationHelper.resolveDestination(token: tokenIn).address
-        }
-    }
-
-    private func quoteSourceAddress(tokenIn: Token) async throws -> String? {
-        if tokenIn.blockchain.type.isEvm ||
-            tokenIn.blockchainType == .tron ||
-            tokenIn.blockchainType == .ton ||
-            tokenIn.blockchainType == .solana
-        {
-            let address = try await DestinationHelper.resolveDestination(token: tokenIn).address
-            return address
-        }
-
-        return nil
     }
 
     func supports(tokenIn: Token, tokenOut: Token) -> Bool {
