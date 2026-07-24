@@ -5,8 +5,8 @@ public class PancakeV3MultiSwapProvider: BaseUniswapV3MultiSwapProvider {
     public static let id = "PANCAKESWAP"
     public static let name = "PancakeSwap v.3"
 
-    public init() throws {
-        try super.init(kit: UniswapKit.KitV3.instance(dexType: .pancakeSwap))
+    public init(trackingApi: USwapMultiSwapApi) throws {
+        try super.init(kit: UniswapKit.KitV3.instance(dexType: .pancakeSwap), trackingApi: trackingApi)
     }
 
     override public var id: String { Self.id }

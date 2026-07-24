@@ -14,6 +14,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
     let networkManager = Core.shared.networkManager
 //    let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
+    private let trackingApi: USwapMultiSwapApi
     let adapterManager = Core.shared.adapterManager
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let swapAssetStorage = Core.shared.swapAssetStorage
@@ -26,7 +27,8 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     private var assetMap = [String: String]()
     private let syncSubject = PassthroughSubject<Void, Never>()
 
-    init() {
+    init(trackingApi: USwapMultiSwapApi) {
+        self.trackingApi = trackingApi
         assetMap = (try? swapAssetStorage.swapAssetMap(provider: id, as: String.self)) ?? [:]
         syncAssets()
     }
@@ -226,7 +228,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         set(&parameters, "toAsset", assetMap[swap.tokenOut.tokenQuery.id.lowercased()])
 
         // Native THORChain/Maya swaps aren't recorded by us → the stateless reader.
-        return try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, networkManager: networkManager, endpoint: "track/thorchain")
+        return try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, api: trackingApi, endpoint: "track/thorchain")
     }
 
     func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil, recipient: String? = nil, params: Parameters? = nil) async throws -> SwapQuote {

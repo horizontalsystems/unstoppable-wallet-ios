@@ -16,6 +16,7 @@ public class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     private let evmSyncSourceManager = Core.shared.evmSyncSourceManager
 
     private let kit: OneInchKit.Kit
+    private let trackingApi: USwapMultiSwapApi
     private let evmFeeEstimator = EvmFeeEstimator()
     private let commission: Decimal? = AppConfig.oneInchCommission
     private let commissionAddress: String? = AppConfig.oneInchCommissionAddress
@@ -23,15 +24,16 @@ public class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     // regardless — the caller validates itself; nil omits the query param entirely (1inch default)
     private let disableEstimate: Bool?
 
-    public init(kit: OneInchKit.Kit, disableEstimate: Bool? = nil) {
+    public init(kit: OneInchKit.Kit, trackingApi: USwapMultiSwapApi, disableEstimate: Bool? = nil) {
         self.kit = kit
+        self.trackingApi = trackingApi
         self.disableEstimate = disableEstimate
 
         super.init()
     }
 
-    public convenience init(apiKey: String, disableEstimate: Bool? = nil) {
-        self.init(kit: OneInchKit.Kit.instance(apiKey: apiKey), disableEstimate: disableEstimate)
+    public convenience init(apiKey: String, trackingApi: USwapMultiSwapApi, disableEstimate: Bool? = nil) {
+        self.init(kit: OneInchKit.Kit.instance(apiKey: apiKey), trackingApi: trackingApi, disableEstimate: disableEstimate)
     }
 
     override public var id: String { Self.id }
@@ -159,7 +161,7 @@ public class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             parameters["hash"] = hash
         }
 
-        return try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, networkManager: networkManager, endpoint: "track/evm")
+        return try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, api: trackingApi, endpoint: "track/evm")
     }
 
     override func spenderAddress(chain: Chain) throws -> EvmKit.Address {
