@@ -1,4 +1,3 @@
-import Alamofire
 import EvmKit
 import Foundation
 import MarketKit
@@ -6,11 +5,11 @@ import UniswapKit
 
 public class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
     private let kit: UniswapKit.KitV3
-    private let trackingApi: USwapMultiSwapApi
+    private let tracker: USwapTracker
 
-    public init(kit: UniswapKit.KitV3, trackingApi: USwapMultiSwapApi) {
+    public init(kit: UniswapKit.KitV3, tracker: USwapTracker) {
         self.kit = kit
-        self.trackingApi = trackingApi
+        self.tracker = tracker
 
         super.init()
     }
@@ -43,23 +42,18 @@ public class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
     override public func track(swap: Swap) async throws -> Swap {
         let blockchainType = swap.tokenIn.blockchainType
 
-        var parameters: Parameters = [
-            "provider": swap.providerId,
-            "toAddress": swap.toAddress,
-        ]
-
-        func set(_ dict: inout Parameters, _ key: String, _ value: Any?) {
-            guard let value else { return }
-            dict[key] = value
-        }
-
-        set(&parameters, "hash", swap.txHash)
-        set(&parameters, "chainId", USwapMultiSwapProvider.blockchainTypeMap.first(where: { $0.value == blockchainType })?.key)
-        set(&parameters, "fromAsset", evmAsset(token: swap.tokenIn))
-        set(&parameters, "toAsset", evmAsset(token: swap.tokenOut))
-        set(&parameters, "providerSwapId", swap.providerSwapId)
-
-        return try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, api: trackingApi, endpoint: "track/evm")
+        return try await tracker.track(
+            swap: swap,
+            request: .evm(
+                providerId: swap.providerId,
+                toAddress: swap.toAddress,
+                transactionHash: swap.txHash,
+                chainId: USwapMultiSwapProvider.blockchainTypeMap.first(where: { $0.value == blockchainType })?.key,
+                fromAsset: evmAsset(token: swap.tokenIn),
+                toAsset: evmAsset(token: swap.tokenOut),
+                providerSwapId: swap.providerSwapId
+            )
+        )
     }
 
     private func evmAsset(token: MarketKit.Token) -> String? {

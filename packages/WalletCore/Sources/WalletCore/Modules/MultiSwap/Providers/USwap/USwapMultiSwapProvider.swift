@@ -1,4 +1,3 @@
-import Alamofire
 import BigInt
 import BitcoinCore
 import Combine
@@ -18,6 +17,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private let assetMapExpiration: TimeInterval = 60 * 60
     let info: USwapProviderInfo
     private let api: USwapMultiSwapApi
+    private let tracker: USwapTracker
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let adapterManager = Core.shared.adapterManager
     private let swapAssetStorage = Core.shared.swapAssetStorage
@@ -43,9 +43,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private var temporaryDestinationAddresses = [DestinationCacheKey: String]() // primary (transparent for ZEC)
     private var temporaryUnifiedDestinationAddresses = [DestinationCacheKey: String]() // unified (ZEC only)
 
-    init(info: USwapProviderInfo, api: USwapMultiSwapApi) {
+    init(info: USwapProviderInfo, api: USwapMultiSwapApi, tracker: USwapTracker) {
         self.info = info
         self.api = api
+        self.tracker = tracker
 
         if usesAssetMap {
             assetMap = (try? swapAssetStorage.swapAssetMap(provider: id, as: String.self)) ?? [:]
@@ -728,16 +729,13 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         // on-chain swaps (BARTER/Circle/THORChain-family) it also needs the broadcast tx as
         // `inboundTxHash`; sending it for deposit-address swaps (NEAR/P2P) is harmless — the
         // server already holds their provider id and ignores it.
-        var parameters: Parameters = [:]
-
-        func set(_ dict: inout Parameters, _ key: String, _ value: Any?) {
-            guard let value else { return }
-            dict[key] = value
-        }
-
-        set(&parameters, "uuid", swap.providerSwapId)
-        set(&parameters, "inboundTxHash", swap.txHash)
-        return try await Self.track(swap: swap, parameters: parameters, api: api)
+        return try await tracker.track(
+            swap: swap,
+            request: .swap(
+                uuid: swap.providerSwapId,
+                inboundTxHash: swap.txHash
+            )
+        )
     }
 
     private func sendingAddress(token: Token) -> String? {
@@ -1330,50 +1328,6 @@ extension USwapMultiSwapProvider {
         .binanceSmartChain: "BSC",
     ]
 
-    static func track(swap: Swap, parameters: Parameters, api: USwapMultiSwapApi, endpoint: String = "track") async throws -> Swap {
-        var parameters = parameters
-        if AppConfig.showDevTools, Core.shared.localStorage.simulateFailSwap == .server {
-            parameters["testActionRequired"] = true
-        }
-
-        // app-registered enrichment only adds — the provider's own parameters always win
-        parameters.merge(SwapTrackParametersFactory.extraParameters(swap: swap)) { current, _ in current }
-
-        // Track endpoint by swap origin:
-        //   "track"           — OUR recorded swaps (USwap-mediated), uuid-based, provider-agnostic
-        //   "track/evm"       — native EVM swaps (1inch/Uniswap), stateless on-chain reader
-        //   "track/thorchain" — native THORChain/Maya swaps, stateless reader
-        // The two stateless readers don't touch our swap_records (the swap isn't ours).
-        let response = try await api.track(parameters: parameters, endpoint: endpoint)
-
-        var swap = swap
-        swap.status = Swap.Status(rawValue: response.status) ?? .unknown
-        swap.fromAsset = response.fromAsset
-        swap.toAsset = response.toAsset
-        swap.pauseReason = swap.status == .actionRequired ? response.pauseReason : nil
-        swap.legs = response.legs.map { leg in
-            Swap.Leg(
-                status: Swap.Status(rawValue: leg.status) ?? .unknown,
-                type: leg.type,
-                chainId: leg.chainId,
-                txHash: leg.txHash,
-                fromAsset: leg.fromAsset,
-                toAsset: leg.toAsset
-            )
-        }
-
-        if swap.status == .completed, let toAmount = response.toAmount {
-            swap.amountOut = toAmount
-        }
-
-        return swap
-    }
-}
-
-public enum USwapTracker {
-    public static func track(swap: Swap, parameters: Parameters, api: USwapMultiSwapApi, endpoint: String = "track") async throws -> Swap {
-        try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, api: api, endpoint: endpoint)
-    }
 }
 
 private extension USwapMultiSwapApi.Execution {

@@ -70,11 +70,11 @@ public final class USwapMultiSwapApi {
         return response.response
     }
 
-    public func track(parameters: [String: Any], endpoint: String = "track") async throws -> TrackResponse {
+    func track(_ request: TrackRequest) async throws -> TrackResponse {
         let response: TrackResponseMapping = try await networkManager.fetch(
-            url: self.endpoint(endpoint),
+            url: endpoint(request.path),
             method: .post,
-            parameters: parameters,
+            parameters: request.parameters,
             encoding: JSONEncoding.default,
             headers: headers
         )
@@ -227,6 +227,67 @@ public extension USwapMultiSwapApi {
                 parameters["refundAddress"] = refundAddress
             }
             return parameters
+        }
+    }
+
+    struct TrackRequest {
+        public let path: String
+        public let parameters: [String: Any]
+
+        public init(path: String, parameters: [String: Any]) {
+            self.path = path
+            self.parameters = parameters
+        }
+
+        public static func swap(
+            uuid: String?,
+            inboundTxHash: String?
+        ) -> Self {
+            var parameters = [String: Any]()
+            parameters.appendNotNil(key: "uuid", uuid)
+            parameters.appendNotNil(key: "inboundTxHash", inboundTxHash)
+
+            return .init(path: "track", parameters: parameters)
+        }
+
+        public static func evm(
+            providerId: String,
+            toAddress: String,
+            transactionHash: String?,
+            chainId: String?,
+            fromAsset: String?,
+            toAsset: String?,
+            providerSwapId: String?
+        ) -> Self {
+            var parameters: [String: Any] = [
+                "provider": providerId,
+                "toAddress": toAddress,
+            ]
+            parameters.appendNotNil(key: "hash", transactionHash)
+            parameters.appendNotNil(key: "chainId", chainId)
+            parameters.appendNotNil(key: "fromAsset", fromAsset)
+            parameters.appendNotNil(key: "toAsset", toAsset)
+            parameters.appendNotNil(key: "providerSwapId", providerSwapId)
+
+            return .init(path: "track/evm", parameters: parameters)
+        }
+
+        public static func thorchain(
+            providerId: String,
+            toAddress: String,
+            inboundTxHash: String?,
+            fromAsset: String?,
+            toAsset: String?
+        ) -> Self {
+            var parameters: [String: Any] = [
+                "provider": providerId,
+                "toAddress": toAddress,
+            ]
+            parameters.appendNotNil(key: "inboundTxHash", inboundTxHash)
+            parameters.appendNotNil(key: "fromAsset", fromAsset)
+            parameters.appendNotNil(key: "toAsset", toAsset)
+
+            return .init(path: "track/thorchain", parameters: parameters)
         }
     }
 

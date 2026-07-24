@@ -105,10 +105,25 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
     }
 
     private static func makeUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
-        USwapMultiSwapProvider(
+        let api = makeUSwapApi(networkManager: NetworkManager(logger: nil))
+        return USwapMultiSwapProvider(
             info: info,
-            api: makeUSwapApi(networkManager: NetworkManager(logger: nil))
+            api: api,
+            tracker: makeUSwapTracker(api: api)
         )
+    }
+
+    private static func makeUSwapTracker(api: USwapMultiSwapApi) -> USwapTracker {
+        USwapTracker(
+            api: api,
+            shouldSimulateFailure: {
+                AppConfig.showDevTools && Core.shared.localStorage.simulateFailSwap == .server
+            }
+        )
+    }
+
+    private static func makeUSwapTracker(networkManager: NetworkManager) -> USwapTracker {
+        makeUSwapTracker(api: makeUSwapApi(networkManager: networkManager))
     }
 
     public static func providerInfo(id: String) -> USwapProviderInfo? {
@@ -119,19 +134,19 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
         if id == OneInchMultiSwapProvider.id, let apiKey = AppConfig.oneInchApiKey {
             return OneInchMultiSwapProvider(
                 apiKey: apiKey,
-                trackingApi: makeUSwapApi(networkManager: Core.shared.networkManager)
+                tracker: makeUSwapTracker(networkManager: Core.shared.networkManager)
             )
         }
 
         if id == ThorChainMultiSwapProvider.id {
             return ThorChainMultiSwapProvider(
-                trackingApi: makeUSwapApi(networkManager: Core.shared.networkManager)
+                tracker: makeUSwapTracker(networkManager: Core.shared.networkManager)
             )
         }
 
         if id == MayaMultiSwapProvider.id {
             return MayaMultiSwapProvider(
-                trackingApi: makeUSwapApi(networkManager: Core.shared.networkManager)
+                tracker: makeUSwapTracker(networkManager: Core.shared.networkManager)
             )
         }
 
@@ -141,7 +156,7 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
 
         if id == UniswapV3MultiSwapProvider.id,
            let provider = try? UniswapV3MultiSwapProvider(
-               trackingApi: makeUSwapApi(networkManager: Core.shared.networkManager)
+               tracker: makeUSwapTracker(networkManager: Core.shared.networkManager)
            )
         {
             return provider
@@ -149,7 +164,7 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
 
         if id == PancakeV3MultiSwapProvider.id,
            let provider = try? PancakeV3MultiSwapProvider(
-               trackingApi: makeUSwapApi(networkManager: Core.shared.networkManager)
+               tracker: makeUSwapTracker(networkManager: Core.shared.networkManager)
            )
         {
             return provider
