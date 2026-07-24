@@ -1,5 +1,15 @@
+import Foundation
+import HsToolKit
+
 public protocol ISwapProviderResolver {
+    static func providerInfo(id: String) -> USwapProviderInfo?
     static func provider(id: String) -> IMultiSwapProvider?
+}
+
+public extension ISwapProviderResolver {
+    static func providerInfo(id _: String) -> USwapProviderInfo? {
+        nil
+    }
 }
 
 public class SwapProviderFactory {
@@ -23,9 +33,19 @@ public class SwapProviderFactory {
         return nil
     }
 
+    public static func providerInfo(id: String) -> USwapProviderInfo? {
+        for resolver in resolvers {
+            if let info = resolver.providerInfo(id: id) {
+                return info
+            }
+        }
+
+        return nil
+    }
+
     public static func providerName(id: String) -> String? {
-        if let provider = USwapProvider(rawValue: id) {
-            return provider.title
+        if let info = providerInfo(id: id) {
+            return info.name
         }
 
         let names: [String: String] = [
@@ -48,40 +68,101 @@ public class SwapProviderFactory {
 }
 
 public enum DefaultSwapProviderResolver: ISwapProviderResolver {
+    private struct Entry {
+        let info: USwapProviderInfo
+        let makeProvider: () -> IMultiSwapProvider
+    }
+
+    private static let entries: [String: Entry] = Dictionary(
+        uniqueKeysWithValues: [
+            USwapProviderInfo.near,
+            .quickEx,
+            .letsExchange,
+            .stealthex,
+            .swapuz,
+            .exolix,
+            .cce,
+            .barter,
+            .pegasus,
+            .circle,
+            .jupiter,
+            .lifi,
+        ].map { info in
+            (info.id, Entry(info: info, makeProvider: { makeUSwapProvider(info: info) }))
+        }
+    )
+
+    private static func makeUSwapApi(networkManager: NetworkManager) -> USwapMultiSwapApi {
+        guard let baseURL = URL(string: "\(AppConfig.swapApiUrl)/v2") else {
+            preconditionFailure("Invalid USwap API URL: \(AppConfig.swapApiUrl)")
+        }
+
+        return USwapMultiSwapApi(
+            baseURL: baseURL,
+            apiKey: AppConfig.uswapApiKey,
+            networkManager: networkManager
+        )
+    }
+
+    private static func makeUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
+        USwapMultiSwapProvider(
+            info: info,
+            api: makeUSwapApi(networkManager: NetworkManager(logger: nil))
+        )
+    }
+
+    public static func providerInfo(id: String) -> USwapProviderInfo? {
+        entries[id]?.info
+    }
+
     public static func provider(id: String) -> IMultiSwapProvider? {
         if id == OneInchMultiSwapProvider.id, let apiKey = AppConfig.oneInchApiKey {
-            return OneInchMultiSwapProvider(apiKey: apiKey)
+            return OneInchMultiSwapProvider(
+                apiKey: apiKey,
+                trackingApi: makeUSwapApi(networkManager: Core.shared.networkManager)
+            )
         }
 
         if id == ThorChainMultiSwapProvider.id {
-            return ThorChainMultiSwapProvider()
+            return ThorChainMultiSwapProvider(
+                trackingApi: makeUSwapApi(networkManager: Core.shared.networkManager)
+            )
         }
 
         if id == MayaMultiSwapProvider.id {
-            return MayaMultiSwapProvider()
+            return MayaMultiSwapProvider(
+                trackingApi: makeUSwapApi(networkManager: Core.shared.networkManager)
+            )
         }
 
         if id == AllBridgeMultiSwapProvider.id {
             return AllBridgeMultiSwapProvider()
         }
 
-        if id == UniswapV3MultiSwapProvider.id, let provider = try? UniswapV3MultiSwapProvider() {
+        if id == UniswapV3MultiSwapProvider.id,
+           let provider = try? UniswapV3MultiSwapProvider(
+               trackingApi: makeUSwapApi(networkManager: Core.shared.networkManager)
+           )
+        {
             return provider
         }
 
-        if id == PancakeV3MultiSwapProvider.id, let provider = try? PancakeV3MultiSwapProvider() {
+        if id == PancakeV3MultiSwapProvider.id,
+           let provider = try? PancakeV3MultiSwapProvider(
+               trackingApi: makeUSwapApi(networkManager: Core.shared.networkManager)
+           )
+        {
             return provider
         }
 
-        // Stellar-native swaps: ONE provider card under the server's STELLARBROKER id runs the
-        // SB-first waterfall over all four Stellar sources; the fallback ids (SOROSWAP /
-        // AQUARIUS / STELLAR_DEX) intentionally resolve to nil so they never appear separately.
+        // Stellar-native swaps are exposed as one provider. The fallback route ids stay
+        // internal to StellarSwapMultiSwapProvider and intentionally do not resolve here.
         if id == StellarSwapMultiSwapProvider.id {
             return StellarSwapMultiSwapProvider()
         }
 
-        if let provider = USwapProvider(rawValue: id), USwapMultiSwapProvider.supportedProviders.contains(provider) {
-            return USwapMultiSwapProvider(provider: provider)
+        if let entry = entries[id] {
+            return entry.makeProvider()
         }
 
         return nil

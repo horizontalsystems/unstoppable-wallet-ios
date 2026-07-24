@@ -5,8 +5,8 @@ public class UniswapV3MultiSwapProvider: BaseUniswapV3MultiSwapProvider {
     public static let id = "UNISWAP_V3"
     public static let name = "Uniswap v.3"
 
-    public init() throws {
-        try super.init(kit: UniswapKit.KitV3.instance(dexType: .uniswap))
+    public init(trackingApi: USwapMultiSwapApi) throws {
+        try super.init(kit: UniswapKit.KitV3.instance(dexType: .uniswap), trackingApi: trackingApi)
     }
 
     override public var id: String { Self.id }

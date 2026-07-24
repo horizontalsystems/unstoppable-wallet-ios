@@ -16,8 +16,11 @@ struct SwapProviderFactoryTests {
         SwapProviderFactory.register([MatchingResolver.self])
 
         let provider = try #require(SwapProviderFactory.provider(id: "matching") as? StubProvider)
+        let info = try #require(SwapProviderFactory.providerInfo(id: "matching"))
 
         #expect(provider.id == "matching")
+        #expect(info.id == provider.id)
+        #expect(SwapProviderFactory.providerName(id: "matching") == info.name)
     }
 
     @Test func prependWinsOverRegisteredResolver() throws {
@@ -71,6 +74,12 @@ private struct StubProvider: IMultiSwapProvider {
 }
 
 private enum MatchingResolver: ISwapProviderResolver {
+    static func providerInfo(id: String) -> USwapProviderInfo? {
+        id == "matching"
+            ? USwapProviderInfo(id: "matching", name: "Matching", icon: "matching", type: .good, requireTerms: false)
+            : nil
+    }
+
     static func provider(id: String) -> IMultiSwapProvider? {
         id == "matching" ? StubProvider(id: "matching") : nil
     }

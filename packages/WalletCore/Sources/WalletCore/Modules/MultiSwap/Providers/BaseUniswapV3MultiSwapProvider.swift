@@ -5,11 +5,12 @@ import MarketKit
 import UniswapKit
 
 public class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
-    private let networkManager = Core.shared.networkManager
     private let kit: UniswapKit.KitV3
+    private let trackingApi: USwapMultiSwapApi
 
-    public init(kit: UniswapKit.KitV3) {
+    public init(kit: UniswapKit.KitV3, trackingApi: USwapMultiSwapApi) {
         self.kit = kit
+        self.trackingApi = trackingApi
 
         super.init()
     }
@@ -58,7 +59,7 @@ public class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
         set(&parameters, "toAsset", evmAsset(token: swap.tokenOut))
         set(&parameters, "providerSwapId", swap.providerSwapId)
 
-        return try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, networkManager: networkManager, endpoint: "track/evm")
+        return try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, api: trackingApi, endpoint: "track/evm")
     }
 
     private func evmAsset(token: MarketKit.Token) -> String? {
