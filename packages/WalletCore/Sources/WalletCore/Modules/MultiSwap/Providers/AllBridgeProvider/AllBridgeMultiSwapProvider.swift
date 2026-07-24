@@ -519,8 +519,8 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
 
         let isCrosschain = swap.tokenIn.blockchainType != swap.tokenOut.blockchainType
 
-        let chainIdIn = USwapMultiSwapProvider.blockchainTypeMap.first(where: { $0.value == swap.tokenIn.blockchainType })?.key
-        let chainIdOut = USwapMultiSwapProvider.blockchainTypeMap.first(where: { $0.value == swap.tokenOut.blockchainType })?.key
+        let chainIdIn = USwapAssetRepository.blockchainTypeMap.first(where: { $0.value == swap.tokenIn.blockchainType })?.key
+        let chainIdOut = USwapAssetRepository.blockchainTypeMap.first(where: { $0.value == swap.tokenOut.blockchainType })?.key
 
         let isDepositSuspended = (response?.isSuspended ?? false) && (response?.receive == nil)
         var isDepositCompleted = false

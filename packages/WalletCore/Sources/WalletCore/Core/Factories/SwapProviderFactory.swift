@@ -106,10 +106,24 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
 
     private static func makeUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
         let api = makeUSwapApi(networkManager: NetworkManager(logger: nil))
+        let assetRepository: USwapAssetRepository?
+
+        switch info.id {
+        case USwapProviderInfo.barter.id, USwapProviderInfo.jupiter.id, USwapProviderInfo.lifi.id:
+            assetRepository = nil
+        default:
+            assetRepository = USwapAssetRepository(
+                providerId: info.id,
+                api: api,
+                storage: Core.shared.swapAssetStorage
+            )
+        }
+
         return USwapMultiSwapProvider(
             info: info,
             api: api,
-            tracker: makeUSwapTracker(api: api)
+            tracker: makeUSwapTracker(api: api),
+            assetRepository: assetRepository
         )
     }
 
