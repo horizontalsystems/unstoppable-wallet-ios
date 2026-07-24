@@ -9,6 +9,7 @@ import MarketKit
 import MoneroKit
 import ObjectMapper
 import SolanaKit
+import stellarsdk
 import SwiftUI
 import TronKit
 import ZanoKit
@@ -23,7 +24,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
     private let provider: USwapProvider
 //    private let networkManager = Core.shared.networkManager
-    private let networkManager = NetworkManager(logger: nil)
+    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .verbose))
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let adapterManager = Core.shared.adapterManager
     private let swapAssetStorage = Core.shared.swapAssetStorage
@@ -134,7 +135,18 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
                 tokenQueries = [TokenQuery(blockchainType: blockchainType, tokenType: tokenType)]
 
-            case .bitcoin, .bitcoinCash, .ecash, .dash, .zcash, .monero, .stellar:
+            case .stellar:
+                // Classic Stellar assets (issuer in `address`) map to their `.stellar` token
+                // type; only issuer-less rows are native XLM. Mapping classic rows to the
+                // native query would both lose the asset AND overwrite the real XLM mapping.
+                // The code must come from `ticker` (case-preserving) — `identifier` is uppercased.
+                if let issuer = token.address, !issuer.isEmpty, let code = token.ticker {
+                    tokenQueries = [TokenQuery(blockchainType: .stellar, tokenType: .stellar(code: code, issuer: issuer))]
+                } else {
+                    tokenQueries = blockchainType.nativeTokenQueries
+                }
+
+            case .bitcoin, .bitcoinCash, .ecash, .dash, .zcash, .monero:
                 tokenQueries = blockchainType.nativeTokenQueries
 
             case .zano:
@@ -365,6 +377,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         // tx we actually consume (EVM/Tron/TON/Solana — exactly what `quoteSourceAddress`
         // resolves a `from` for). For UTXO/Monero/Stellar/Zcash/Zano we omit it and build
         // the tx locally (better txs, e.g. multi-UTXO) — preserving the pre-v2 behaviour.
+        // Exception: AXELAR_ITS Stellar sells consume the server-built XDR (see
+        // `quoteSourceAddress`).
         let sourceAddress = try await quoteSourceAddress(tokenIn: tokenIn)
         parameters.appendNotNil(key: "sourceAddress", sourceAddress)
 
@@ -517,6 +531,14 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         {
             let address = try await DestinationHelper.resolveDestination(token: tokenIn).address
             return address
+        }
+
+        // AXELAR_ITS builds the Stellar ITS invocation SERVER-side (`signed_transaction` XDR
+        // simulated against the source account), so a Stellar sell must carry the source —
+        // unlike the P2P transfer flow, where Stellar deliberately omits it (the client
+        // composes its own deposit payment).
+        if provider == .axelarIts, tokenIn.blockchainType == .stellar {
+            return try await DestinationHelper.resolveDestination(token: tokenIn).address
         }
 
         return nil
@@ -1013,6 +1035,31 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         let asset = adapter.asset
 
         guard let execution = quote.execution else { throw SwapError.noTransactionData }
+
+        // Server-built XDR (AXELAR's ITS interchain_transfer invocation; any future Stellar-source
+        // signed_transaction provider): sign the envelope verbatim instead of composing a deposit
+        // payment. The server already simulated it (insufficient balance / bad state fail the
+        // /v2/swap quote), so no client-side preparation runs here.
+        if case .signedTransaction = execution {
+            guard let xdr = execution.primarySignable?.xdr else { throw SwapError.invalidTransactionData }
+            // Fee = the envelope's fee BID (max); the effective on-chain fee is usually lower.
+            let fee = (try? TransactionEnvelopeXDR(fromBase64: xdr)).map { Decimal($0.txFee) / 10_000_000 }
+
+            return try StellarSwapFinalQuote(
+                amountIn: amountIn,
+                expectedAmountOut: amountOut,
+                recipient: recipient,
+                slippage: slippage,
+                estimatedTime: quote.esimatedTime,
+                transactionData: .envelope(xdr),
+                token: tokenIn,
+                fee: fee,
+                transactionError: nil,
+                toAddress: deliveryAddress(quote: quote, recipient: recipient),
+                providerSwapId: quote.uuid
+            )
+        }
+
         let deposit = try execution.depositInstruction()
 
         let transactionData = StellarSendHelper.TransactionData.payment(
@@ -1402,12 +1449,16 @@ extension USwapMultiSwapProvider {
         let chainId: String
         let address: String?
         let identifier: String
+        // Case-preserving asset code — needed for Stellar classic assets, whose codes are
+        // case-sensitive while `identifier` is uppercased.
+        let ticker: String?
 
         init(map: Map) throws {
             chain = try map.value("chain")
             chainId = try map.value("chainId")
             address = try? map.value("address")
             identifier = try map.value("identifier")
+            ticker = try? map.value("ticker")
         }
     }
 
@@ -1664,6 +1715,7 @@ public enum USwapProvider: String, CaseIterable {
     case circle = "CIRCLE"
     case jupiter = "JUPITER"
     case lifi = "LIFI"
+    case axelarIts = "AXELAR_ITS"
 
     public var icon: String {
         switch self {
@@ -1679,6 +1731,7 @@ public enum USwapProvider: String, CaseIterable {
         case .circle: return "swap_provider_circle"
         case .jupiter: return "swap_provider_jupiter"
         case .lifi: return "swap_provider_lifi"
+        case .axelarIts: return "swap_provider_axelar"
         }
     }
 
@@ -1696,12 +1749,13 @@ public enum USwapProvider: String, CaseIterable {
         case .circle: return "Circle CCTP"
         case .jupiter: return "Jupiter"
         case .lifi: return "LI.FI"
+        case .axelarIts: return "Axelar ITS"
         }
     }
 
     public var type: SwapProviderType {
         switch self {
-        case .barter, .circle, .jupiter, .lifi: return .excellent
+        case .barter, .circle, .jupiter, .lifi, .axelarIts: return .excellent
         case .quickEx, .exolix, .swapuz, .letsExchange, .cce, .pegasus: return .good
         case .stealthex, .near: return .fair
         }
