@@ -123,7 +123,8 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
             info: info,
             api: api,
             tracker: makeUSwapTracker(api: api),
-            assetRepository: assetRepository
+            assetRepository: assetRepository,
+            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id)
         )
     }
 
