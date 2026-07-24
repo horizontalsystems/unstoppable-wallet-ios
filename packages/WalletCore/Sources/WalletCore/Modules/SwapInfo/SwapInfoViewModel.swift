@@ -184,7 +184,7 @@ class SwapInfoViewModel: ObservableObject {
         default: ()
         }
 
-        guard let blockchainType = USwapMultiSwapProvider.blockchainTypeMap[chainId] else {
+        guard let blockchainType = USwapAssetRepository.blockchainTypeMap[chainId] else {
             return nil
         }
 

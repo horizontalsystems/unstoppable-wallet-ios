@@ -14,21 +14,19 @@ import ZanoKit
 import ZcashLightClientKit
 
 class USwapMultiSwapProvider: IMultiSwapProvider {
-    private let assetMapExpiration: TimeInterval = 60 * 60
     let info: USwapProviderInfo
     private let api: USwapMultiSwapApi
     private let tracker: USwapTracker
+    private let assetRepository: USwapAssetRepository?
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let adapterManager = Core.shared.adapterManager
-    private let swapAssetStorage = Core.shared.swapAssetStorage
     private let allowanceHelper = MultiSwapAllowanceHelper()
     private let evmFeeEstimator = EvmFeeEstimator()
-    private var assetMap = [String: String]()
-    private let syncSubject = PassthroughSubject<Void, Never>()
 
     // Exolix's shielded Zcash route. Quoted explicitly as a second dry-quote variant
     // alongside ZEC.ZEC whenever either side of the swap is Zcash; the better-priced
     // route wins (see `rateQuote`).
+    private static let zcashTransparentAsset = "ZEC.ZEC"
     private static let zcashShieldedAsset = "ZEC.ZECSHIELDED"
 
     // Caches for the destination addresses produced by `resolveDestinations`. When no adapter
@@ -43,15 +41,11 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private var temporaryDestinationAddresses = [DestinationCacheKey: String]() // primary (transparent for ZEC)
     private var temporaryUnifiedDestinationAddresses = [DestinationCacheKey: String]() // unified (ZEC only)
 
-    init(info: USwapProviderInfo, api: USwapMultiSwapApi, tracker: USwapTracker) {
+    init(info: USwapProviderInfo, api: USwapMultiSwapApi, tracker: USwapTracker, assetRepository: USwapAssetRepository?) {
         self.info = info
         self.api = api
         self.tracker = tracker
-
-        if usesAssetMap {
-            assetMap = (try? swapAssetStorage.swapAssetMap(provider: id, as: String.self)) ?? [:]
-            syncAssets()
-        }
+        self.assetRepository = assetRepository
     }
 
     var id: String { info.id }
@@ -61,112 +55,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     var requireTerms: Bool { info.requireTerms }
     var icon: String { info.icon }
 
-    private var usesAssetMap: Bool {
-        switch info.id {
-        case USwapProviderInfo.barter.id, USwapProviderInfo.jupiter.id, USwapProviderInfo.lifi.id: false
-        default: true
-        }
-    }
-
     var syncPublisher: AnyPublisher<Void, Never>? {
-        syncSubject.eraseToAnyPublisher()
-    }
-
-    private func syncAssets() {
-        let lastSyncTimetamp = try? swapAssetStorage.lastSyncTimetamp(provider: id)
-
-        if let lastSyncTimetamp, Date().timeIntervalSince1970 - lastSyncTimetamp < assetMapExpiration {
-            return
-        }
-
-        Task { [weak self, api, info] in
-            let tokens = try await api.tokens(providerId: info.id)
-            self?.sync(tokens: tokens)
-        }
-    }
-
-    private func sync(tokens: [USwapMultiSwapApi.Token]) {
-        var assetMap = [String: String]()
-
-        for token in tokens {
-            // ZEC.ZECSHIELDED is an Exolix routing variant of ZEC.ZEC. The app quotes it
-            // explicitly as the shielded dry-quote variant, so skip it here to keep the
-            // Zcash native token mapping deterministic.
-            if token.identifier == Self.zcashShieldedAsset {
-                continue
-            }
-
-            guard let blockchainType = Self.blockchainTypeMap[token.chainId] else {
-                continue
-            }
-
-            var tokenQueries: [TokenQuery] = []
-
-            switch blockchainType {
-            case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .tron, .base, .zkSync:
-                let tokenType: TokenType
-
-                if let address = token.address, !address.isEmpty {
-                    tokenType = .eip20(address: address)
-                } else {
-                    tokenType = .native
-                }
-
-                tokenQueries = [TokenQuery(blockchainType: blockchainType, tokenType: tokenType)]
-
-            case .ton:
-                let tokenType: TokenType
-
-                if let address = token.address, !address.isEmpty {
-                    tokenType = .jetton(address: address)
-                } else {
-                    tokenType = .native
-                }
-
-                tokenQueries = [TokenQuery(blockchainType: blockchainType, tokenType: tokenType)]
-
-            case .solana:
-                let tokenType: TokenType
-
-                if let address = token.address, !address.isEmpty {
-                    tokenType = .spl(address: address)
-                } else {
-                    tokenType = .native
-                }
-
-                tokenQueries = [TokenQuery(blockchainType: blockchainType, tokenType: tokenType)]
-
-            case .bitcoin, .bitcoinCash, .ecash, .dash, .zcash, .monero, .stellar:
-                tokenQueries = blockchainType.nativeTokenQueries
-
-            case .zano:
-                if let assetId = token.address, !assetId.isEmpty {
-                    tokenQueries = [TokenQuery(blockchainType: .zano, tokenType: .zanoAsset(id: assetId))]
-                } else {
-                    tokenQueries = blockchainType.nativeTokenQueries
-                }
-
-            case .litecoin:
-                let supportedDerivations: [TokenType.Derivation] = [.bip44, .bip49, .bip84]
-                tokenQueries = supportedDerivations.map {
-                    TokenQuery(blockchainType: .litecoin, tokenType: .derived(derivation: $0))
-                }
-
-            default: ()
-            }
-
-            for tokenQuery in tokenQueries {
-                assetMap[tokenQuery.id.lowercased()] = token.identifier
-            }
-        }
-
-        try? swapAssetStorage.save(swapAssetMap: assetMap, provider: id)
-        try? swapAssetStorage.save(lastSyncTimestamp: Date().timeIntervalSince1970, provider: id)
-
-        DispatchQueue.main.async {
-            self.assetMap = assetMap
-            self.syncSubject.send()
-        }
+        assetRepository?.syncPublisher
     }
 
     // One (sellAsset, buyAsset, destination) combination requested from the server. A plain
@@ -342,7 +232,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     // /v2/rate — dry price/route comparison; narrow the fan-out to this provider. Response
     // is { routes: [...] }; we take the single route for our provider.
     private func fetchRate(variant: RouteVariant, amountIn: Decimal, slippage: Decimal, tokenIn: Token) async throws -> USwapMultiSwapApi.RateQuote {
-        let chainId = Self.blockchainTypeMap.first(where: { $0.value == tokenIn.blockchainType })?.key
+        let chainId = USwapAssetRepository.blockchainTypeMap.first(where: { $0.value == tokenIn.blockchainType })?.key
         let request = USwapMultiSwapApi.RateRequest(
             sellAsset: variant.sellAsset,
             buyAsset: variant.buyAsset,
@@ -368,7 +258,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         // the tx locally (better txs, e.g. multi-UTXO) — preserving the pre-v2 behaviour.
         let sourceAddress = try await quoteSourceAddress(tokenIn: tokenIn)
         let refund = try await refundAddress(tokenIn: tokenIn)
-        let chainId = Self.blockchainTypeMap.first(where: { $0.value == tokenIn.blockchainType })?.key
+        let chainId = USwapAssetRepository.blockchainTypeMap.first(where: { $0.value == tokenIn.blockchainType })?.key
         let request = USwapMultiSwapApi.SwapRequest(
             sellAsset: variant.sellAsset,
             buyAsset: variant.buyAsset,
@@ -445,6 +335,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     }
 
     private func asset(token: Token) -> String? {
+        if info.id == USwapProviderInfo.exolix.id, token.blockchainType == .zcash {
+            return Self.zcashTransparentAsset
+        }
+
         switch info.id {
         case USwapProviderInfo.barter.id:
             // Raw EVM address encoding (BARTER's server adapter expects addresses, not identifiers).
@@ -503,7 +397,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             default: return nil
             }
         default:
-            return assetMap[token.tokenQuery.id.lowercased()]
+            return assetRepository?.asset(token: token)
         }
     }
 
@@ -729,7 +623,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         // on-chain swaps (BARTER/Circle/THORChain-family) it also needs the broadcast tx as
         // `inboundTxHash`; sending it for deposit-address swaps (NEAR/P2P) is harmless — the
         // server already holds their provider id and ignores it.
-        return try await tracker.track(
+        try await tracker.track(
             swap: swap,
             request: .swap(
                 uuid: swap.providerSwapId,
@@ -1289,31 +1183,6 @@ extension USwapMultiSwapProvider {
     static let legTypeNativeSend = "native_send"
     static let legTypeSwap = "swap"
 
-    static let blockchainTypeMap: [String: BlockchainType] = [
-        "bitcoin": .bitcoin,
-        "bitcoincash": .bitcoinCash,
-        "ecash": .ecash,
-        "litecoin": .litecoin,
-        "dash": .dash,
-        "zcash": .zcash,
-        "monero": .monero,
-        "1": .ethereum,
-        "56": .binanceSmartChain,
-        "137": .polygon,
-        "43114": .avalanche,
-        "10": .optimism,
-        "42161": .arbitrumOne,
-        "100": .gnosis,
-        "250": .fantom,
-        "728126428": .tron,
-        "solana": .solana,
-        "ton": .ton,
-        "8453": .base,
-        "324": .zkSync,
-        "stellar": .stellar,
-        "zano": .zano,
-    ]
-
     // LI.FI has no token list, so assets are encoded self-describingly as `<CHAIN>.<address>`
     // (see `asset(token:)`). This maps each supported EVM chain to the server's chain code — the
     // prefix the server's LI.FI resolver expects. Solana and Tron are handled inline (`SOL.` /
@@ -1327,7 +1196,6 @@ extension USwapMultiSwapProvider {
         .avalanche: "AVAX",
         .binanceSmartChain: "BSC",
     ]
-
 }
 
 private extension USwapMultiSwapApi.Execution {

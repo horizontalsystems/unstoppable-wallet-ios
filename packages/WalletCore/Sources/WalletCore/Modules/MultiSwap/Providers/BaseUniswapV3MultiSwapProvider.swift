@@ -48,7 +48,7 @@ public class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
                 providerId: swap.providerId,
                 toAddress: swap.toAddress,
                 transactionHash: swap.txHash,
-                chainId: USwapMultiSwapProvider.blockchainTypeMap.first(where: { $0.value == blockchainType })?.key,
+                chainId: USwapAssetRepository.blockchainTypeMap.first(where: { $0.value == blockchainType })?.key,
                 fromAsset: evmAsset(token: swap.tokenIn),
                 toAsset: evmAsset(token: swap.tokenOut),
                 providerSwapId: swap.providerSwapId
