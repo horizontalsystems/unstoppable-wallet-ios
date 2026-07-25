@@ -33,6 +33,20 @@ final class USwapRateQuoteFactory {
         let amountIn: Decimal
         let response: USwapMultiSwapApi.RateQuote
         let selectedAlternateRoute: USwapMultiSwapProvider.SelectedAlternateRoute?
+
+        init(
+            tokenIn: Token,
+            tokenOut: Token,
+            amountIn: Decimal,
+            response: USwapMultiSwapApi.RateQuote,
+            selectedAlternateRoute: USwapMultiSwapProvider.SelectedAlternateRoute? = nil
+        ) {
+            self.tokenIn = tokenIn
+            self.tokenOut = tokenOut
+            self.amountIn = amountIn
+            self.response = response
+            self.selectedAlternateRoute = selectedAlternateRoute
+        }
     }
 
     enum FactoryError: Error {

@@ -75,20 +75,20 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
 
     private static let entries: [String: Entry] = Dictionary(
         uniqueKeysWithValues: [
-            USwapProviderInfo.near,
-            .quickEx,
-            .letsExchange,
-            .stealthex,
-            .swapuz,
-            .exolix,
-            .cce,
-            .barter,
-            .pegasus,
-            .circle,
-            .jupiter,
-            .lifi,
-        ].map { info in
-            (info.id, Entry(info: info, makeProvider: { makeUSwapProvider(info: info) }))
+            defaultUSwapEntry(info: .near),
+            legacyUSwapEntry(info: .quickEx),
+            defaultUSwapEntry(info: .letsExchange),
+            defaultUSwapEntry(info: .stealthex),
+            defaultUSwapEntry(info: .swapuz),
+            legacyUSwapEntry(info: .exolix),
+            defaultUSwapEntry(info: .cce),
+            legacyUSwapEntry(info: .barter),
+            defaultUSwapEntry(info: .pegasus),
+            defaultUSwapEntry(info: .circle),
+            legacyUSwapEntry(info: .jupiter),
+            legacyUSwapEntry(info: .lifi),
+        ].map { entry in
+            (entry.info.id, entry)
         }
     )
 
@@ -104,7 +104,37 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
         )
     }
 
-    private static func makeUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
+    private static func defaultUSwapEntry(info: USwapProviderInfo) -> Entry {
+        Entry(info: info, makeProvider: { makeDefaultUSwapProvider(info: info) })
+    }
+
+    private static func legacyUSwapEntry(info: USwapProviderInfo) -> Entry {
+        Entry(info: info, makeProvider: { makeLegacyUSwapProvider(info: info) })
+    }
+
+    private static func makeDefaultUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
+        let api = makeUSwapApi(networkManager: NetworkManager(logger: nil))
+        let assetRepository = USwapAssetRepository(
+            providerId: info.id,
+            api: api,
+            storage: Core.shared.swapAssetStorage
+        )
+        let subProvider = DefaultUSwapSubProvider(
+            info: info,
+            api: api,
+            assetRepository: assetRepository,
+            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
+            tracker: makeUSwapTracker(api: api)
+        )
+
+        return USwapMultiSwapProviderNew(
+            subProvider: subProvider,
+            rateQuoteFactory: makeUSwapRateQuoteFactory(),
+            finalQuoteFactory: makeUSwapFinalQuoteFactory()
+        )
+    }
+
+    private static func makeLegacyUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
         let api = makeUSwapApi(networkManager: NetworkManager(logger: nil))
         let assetRepository: USwapAssetRepository?
 
