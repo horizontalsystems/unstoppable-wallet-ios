@@ -10,9 +10,9 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private let tracker: USwapTracker
     private let assetRepository: USwapAssetRepository?
     private let commitRequestBuilder: USwapCommitRequestBuilder
+    private let rateQuoteFactory: USwapRateQuoteFactory
     private let finalQuoteFactory: USwapFinalQuoteFactory
     private let adapterManager = Core.shared.adapterManager
-    private let allowanceHelper = MultiSwapAllowanceHelper()
 
     // Exolix's shielded Zcash route. Quoted explicitly as a second dry-quote variant
     // alongside ZEC.ZEC whenever either side of the swap is Zcash; the better-priced
@@ -36,6 +36,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         tracker: USwapTracker,
         assetRepository: USwapAssetRepository?,
         commitRequestBuilder: USwapCommitRequestBuilder,
+        rateQuoteFactory: USwapRateQuoteFactory,
         finalQuoteFactory: USwapFinalQuoteFactory
     ) {
         self.info = info
@@ -43,6 +44,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         self.tracker = tracker
         self.assetRepository = assetRepository
         self.commitRequestBuilder = commitRequestBuilder
+        self.rateQuoteFactory = rateQuoteFactory
         self.finalQuoteFactory = finalQuoteFactory
     }
 
@@ -432,30 +434,15 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {
         let (quote, alternateRoute) = try await rateQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: MultiSwapSlippage.default)
 
-        let blockchainType = tokenIn.blockchainType
-
-        switch blockchainType {
-        case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .tron, .base, .zkSync:
-            var allowanceState: MultiSwapAllowanceHelper.AllowanceState = .notRequired
-
-            if let approvalAddress = quote.approvalSpender {
-                allowanceState = await allowanceHelper.allowanceState(
-                    spenderAddress: .init(raw: approvalAddress),
-                    token: tokenIn,
-                    amount: amountIn
-                )
-            }
-
-            let estimatedTime = quote.estimatedTime ?? MultiSwapHelpers.estimate(tokenIn: tokenIn, tokenOut: tokenOut)
-            return USwapEvmMultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount, allowanceState: allowanceState, estimatedTime: estimatedTime, selectedAlternateRoute: alternateRoute)
-
-        case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash, .zcash, .monero, .ton, .stellar, .zano, .solana:
-            let estimatedTime = quote.estimatedTime ?? MultiSwapHelpers.estimate(tokenIn: tokenIn, tokenOut: tokenOut)
-            return USwapMultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount, estimatedTime: estimatedTime, selectedAlternateRoute: alternateRoute)
-
-        default:
-            throw SwapError.unsupportedTokenIn
-        }
+        return try await rateQuoteFactory.build(
+            input: .init(
+                tokenIn: tokenIn,
+                tokenOut: tokenOut,
+                amountIn: amountIn,
+                response: quote,
+                selectedAlternateRoute: alternateRoute
+            )
+        )
     }
 
     func confirmationQuote(multiSwapQuote: MultiSwapQuote, tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote {
@@ -513,7 +500,13 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     }
 
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
-        allowanceHelper.preSwapView(step: step, tokenIn: tokenIn, amount: amount, isPresented: isPresented, onSuccess: onSuccess)
+        rateQuoteFactory.preSwapView(
+            step: step,
+            tokenIn: tokenIn,
+            amount: amount,
+            isPresented: isPresented,
+            onSuccess: onSuccess
+        ) ?? AnyView(Text("Invalid Pre Swap Step"))
     }
 
     func track(swap: Swap) async throws -> Swap {
