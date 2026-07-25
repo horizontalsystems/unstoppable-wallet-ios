@@ -1,17 +1,8 @@
-import BigInt
-import BitcoinCore
 import Combine
-import EvmKit
 import Foundation
 import HsToolKit
 import MarketKit
-import MoneroKit
-import ObjectMapper
-import SolanaKit
 import SwiftUI
-import TronKit
-import ZanoKit
-import ZcashLightClientKit
 
 class USwapMultiSwapProvider: IMultiSwapProvider {
     let info: USwapProviderInfo
@@ -19,10 +10,9 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private let tracker: USwapTracker
     private let assetRepository: USwapAssetRepository?
     private let commitRequestBuilder: USwapCommitRequestBuilder
-    private let evmBlockchainManager = Core.shared.evmBlockchainManager
+    private let finalQuoteFactory: USwapFinalQuoteFactory
     private let adapterManager = Core.shared.adapterManager
     private let allowanceHelper = MultiSwapAllowanceHelper()
-    private let evmFeeEstimator = EvmFeeEstimator()
 
     // Exolix's shielded Zcash route. Quoted explicitly as a second dry-quote variant
     // alongside ZEC.ZEC whenever either side of the swap is Zcash; the better-priced
@@ -45,13 +35,15 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         api: USwapMultiSwapApi,
         tracker: USwapTracker,
         assetRepository: USwapAssetRepository?,
-        commitRequestBuilder: USwapCommitRequestBuilder
+        commitRequestBuilder: USwapCommitRequestBuilder,
+        finalQuoteFactory: USwapFinalQuoteFactory
     ) {
         self.info = info
         self.api = api
         self.tracker = tracker
         self.assetRepository = assetRepository
         self.commitRequestBuilder = commitRequestBuilder
+        self.finalQuoteFactory = finalQuoteFactory
     }
 
     var id: String { info.id }
@@ -470,124 +462,28 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         let selectedAlternateRoute = (multiSwapQuote as? AlternateRouteCarrying)?.selectedAlternateRoute
         let quote = try await commitQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient, selectedAlternateRoute: selectedAlternateRoute)
 
-        let amountOut = quote.expectedBuyAmount
-        let amountOutMin = amountOut - (amountOut * slippage / 100)
-
         // The server's `minBuyAmount` is the enforced floor; `null` means the route is a floating
         // P2P estimate — nothing guarantees the amount (or applies our slippage), so the confirm
         // page must not show the "Guaranteed" (or slippage) rows SwapFinalQuote derives from a
         // non-nil slippage. Shadow the parameter: every builder below receives nil instead.
         let slippage: Decimal? = quote.minBuyAmount != nil ? slippage : nil
 
-        let blockchainType = tokenIn.blockchainType
-
-        let finalQuote: SwapFinalQuote
-        switch blockchainType {
-        case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .base, .zkSync:
-            finalQuote = try await buildEvmConfirmationQuote(
-                tokenIn: tokenIn,
-                tokenOut: tokenOut,
-                amountIn: amountIn,
-                amountOut: amountOut,
-                amountOutMin: amountOutMin,
-                quote: quote,
-                slippage: slippage,
-                recipient: recipient,
-                transactionSettings: transactionSettings
-            )
-        case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash:
-            finalQuote = try await buildBtcConfirmationQuote(
-                tokenIn: tokenIn,
-                tokenOut: tokenOut,
-                amountIn: amountIn,
-                amountOut: amountOut,
-                amountOutMin: amountOutMin,
-                quote: quote,
-                slippage: slippage,
-                recipient: recipient,
-                transactionSettings: transactionSettings
-            )
-        case .tron:
-            finalQuote = try await buildTronConfirmationQuote(
-                tokenIn: tokenIn,
-                tokenOut: tokenOut,
-                amountIn: amountIn,
-                amountOut: amountOut,
-                amountOutMin: amountOutMin,
-                quote: quote,
-                slippage: slippage,
-                recipient: recipient
-            )
-        case .zcash:
-            finalQuote = try await buildZcashConfirmationQuote(
-                tokenIn: tokenIn,
-                tokenOut: tokenOut,
-                amountIn: amountIn,
-                amountOut: amountOut,
-                amountOutMin: amountOutMin,
-                quote: quote,
-                slippage: slippage,
-                recipient: recipient,
-            )
-        case .ton:
-            finalQuote = try await buildTonConfirmationQuote(
-                tokenIn: tokenIn,
-                tokenOut: tokenOut,
-                amountIn: amountIn,
-                amountOut: amountOut,
-                amountOutMin: amountOutMin,
-                quote: quote,
-                slippage: slippage,
-                recipient: recipient
-            )
-        case .stellar:
-            finalQuote = try await buildStellarConfirmationQuote(
-                tokenIn: tokenIn,
-                tokenOut: tokenOut,
-                amountIn: amountIn,
-                amountOut: amountOut,
-                amountOutMin: amountOutMin,
-                quote: quote,
-                slippage: slippage,
-                recipient: recipient
-            )
-        case .monero:
-            finalQuote = try await buildMoneroConfirmationQuote(
-                tokenIn: tokenIn,
-                tokenOut: tokenOut,
-                amountIn: amountIn,
-                amountOut: amountOut,
-                amountOutMin: amountOutMin,
-                quote: quote,
-                slippage: slippage,
-                recipient: recipient,
-                priority: transactionSettings?.moneroPriority ?? .default
-            )
-        case .zano:
-            finalQuote = try await buildZanoConfirmationQuote(
-                tokenIn: tokenIn,
-                tokenOut: tokenOut,
-                amountIn: amountIn,
-                amountOut: amountOut,
-                amountOutMin: amountOutMin,
-                quote: quote,
-                slippage: slippage,
-                recipient: recipient
-            )
-        case .solana:
-            finalQuote = try await buildSolanaConfirmationQuote(
-                tokenIn: tokenIn,
-                tokenOut: tokenOut,
-                amountIn: amountIn,
-                amountOut: amountOut,
-                amountOutMin: amountOutMin,
-                quote: quote,
-                slippage: slippage,
-                recipient: recipient
-            )
-        default:
-            throw SwapError.unsupportedTokenIn
+        guard let providerSwapId = quote.uuid, !providerSwapId.isEmpty else {
+            throw SwapError.invalidTransactionData
         }
+
+        let finalQuote = try await finalQuoteFactory.build(
+            input: .init(
+                tokenIn: tokenIn,
+                amountIn: amountIn,
+                response: quote.quote,
+                providerSwapId: providerSwapId,
+                destinationAddress: deliveryAddress(quote: quote, recipient: recipient),
+                slippage: slippage,
+                recipient: recipient,
+                transactionSettings: transactionSettings
+            )
+        )
 
         finalQuote.refundAddress = quote.refundAddress
         return finalQuote
@@ -641,545 +537,6 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         }
         return adapter.receiveAddress.address
     }
-
-    private func buildEvmConfirmationQuote(
-        tokenIn: Token,
-        tokenOut _: Token,
-        amountIn: Decimal,
-        amountOut _: Decimal,
-        amountOutMin _: Decimal,
-        quote: CommitResult,
-        slippage: Decimal?,
-        recipient: String?,
-        transactionSettings: TransactionSettings?
-    ) async throws -> SwapFinalQuote {
-        guard let signable = quote.execution?.primarySignable, signable.kind == "evm" else {
-            throw SwapError.noTransactionData
-        }
-        let jsonObject = signable.json
-
-        guard let to = jsonObject["to"] as? String,
-              let valueString = jsonObject["value"] as? String,
-              let dataString = jsonObject["data"] as? String,
-              let input = dataString.hs.hexData
-        else {
-            throw SwapError.invalidTransactionData
-        }
-
-        let gasLimitData: Int? = (jsonObject["gas"] as? String).flatMap {
-            let hex = $0.stripping(prefix: "0x")
-            return Int(hex, radix: 16)
-        }
-
-        let value = BigUInt(valueString.stripping(prefix: "0x"), radix: 16) ?? BigUInt(0)
-
-        let transactionData = try TransactionData(
-            to: .init(hex: to),
-            value: value,
-            input: input
-        )
-
-        let blockchainType = tokenIn.blockchainType
-        let gasPriceData = transactionSettings?.gasPriceData
-        var evmFeeData: EvmFeeData?
-        var transactionError: Error?
-
-        if let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPriceData {
-            do {
-                let _evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData, predefinedGasLimit: gasLimitData)
-                evmFeeData = _evmFeeData
-
-                try BaseEvmMultiSwapProvider.validateBalance(evmKitWrapper: evmKitWrapper, transactionData: transactionData, evmFeeData: _evmFeeData, gasPriceData: gasPriceData)
-            } catch {
-                transactionError = error
-            }
-        }
-
-        // router-approve intent for broadcasters that batch the approve themselves;
-        // the direct broadcaster ignores it (approve happens in the pre-swap step)
-        let approval = quote.approvalSpender
-            .flatMap { try? EvmKit.Address(hex: $0) }
-            .flatMap { SwapApproval.build(spender: $0, tokenIn: tokenIn, amountIn: amountIn) }
-
-        return try EvmSwapFinalQuote(
-            expectedBuyAmount: quote.expectedBuyAmount,
-            transactionData: transactionData,
-            transactionError: transactionError,
-            slippage: slippage,
-            recipient: recipient,
-            estimatedTime: quote.estimatedTime,
-            gasPrice: gasPriceData?.userDefined,
-            evmFeeData: evmFeeData,
-            nonce: transactionSettings?.nonce,
-            approval: approval,
-            toAddress: deliveryAddress(quote: quote, recipient: recipient),
-            depositAddress: quote.execution?.depositAddress,
-            providerSwapId: quote.uuid
-        )
-    }
-
-    private func buildBtcConfirmationQuote(
-        tokenIn: Token,
-        tokenOut _: Token,
-        amountIn: Decimal,
-        amountOut _: Decimal,
-        amountOutMin _: Decimal,
-        quote: CommitResult,
-        slippage: Decimal?,
-        recipient: String?,
-        transactionSettings: TransactionSettings?
-    ) async throws -> SwapFinalQuote {
-        var transactionError: Error?
-        var sendInfo: SendInfo?
-        var params: SendParameters?
-
-        // Native v2 consumption: pull the deposit address + memo straight from the
-        // execution union (no flatten-back through bridge accessors). For UTXO this
-        // is always a `transfer` via USwap (THORChain UTXO uses its own provider).
-        guard let execution = quote.execution else { throw SwapError.noTransactionData }
-        let deposit = try execution.depositInstruction()
-
-        if let satoshiPerByte = transactionSettings?.satoshiPerByte,
-           let adapter = adapterManager.adapter(for: tokenIn) as? BitcoinBaseAdapter
-        {
-            do {
-                let value = adapter.convertToSatoshi(value: amountIn)
-
-                let _params = SendParameters(
-                    address: deposit.address,
-                    value: value,
-                    feeRate: satoshiPerByte,
-                    memo: deposit.memo
-                )
-
-                sendInfo = try adapter.sendInfo(params: _params)
-                params = _params
-            } catch {
-                transactionError = error
-            }
-        }
-
-        return try UtxoSwapFinalQuote(
-            expectedBuyAmount: quote.expectedBuyAmount,
-            sendParameters: params,
-            slippage: slippage,
-            recipient: recipient,
-            estimatedTime: quote.estimatedTime,
-            transactionError: transactionError,
-            fee: sendInfo?.fee,
-            toAddress: deliveryAddress(quote: quote, recipient: recipient),
-            depositAddress: deposit.address,
-            providerSwapId: quote.uuid
-        )
-    }
-
-    private func buildZcashConfirmationQuote(
-        tokenIn: Token,
-        tokenOut _: Token,
-        amountIn: Decimal,
-        amountOut: Decimal,
-        amountOutMin _: Decimal,
-        quote: CommitResult,
-        slippage: Decimal?,
-        recipient: String?
-    ) async throws -> SwapFinalQuote {
-        guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
-            throw SwapError.noZcashAdapter
-        }
-
-        guard let execution = quote.execution else { throw SwapError.noTransactionData }
-        let deposit = try execution.depositInstruction()
-
-        guard let adapterRecipient = adapter.recipient(from: deposit.address) else {
-            throw SendTransactionError.invalidAddress
-        }
-
-        var transactionError: Error?
-        var proposal: Proposal?
-        var totalFeeRequired: Zatoshi?
-
-        do {
-            // Don't swallow a bad memo: for a Maya ZEC swap the memo binds the order, so a
-            // dropped/invalid memo would send unrecoverable funds. Let the error surface into
-            // `transactionError` (the catch below) instead of proposing a memo-less transfer.
-            let memo = try deposit.memo.map { try Memo(string: $0) }
-            let output = ZcashAdapter.TransferOutput(amount: amountIn.rounded(decimal: 8), address: adapterRecipient, memo: memo)
-            proposal = try await adapter.sendProposal(outputs: [output])
-            totalFeeRequired = proposal?.totalFeeRequired()
-        } catch {
-            transactionError = error
-        }
-
-        return try ZcashSwapFinalQuote(
-            expectedBuyAmount: amountOut,
-            proposal: proposal,
-            slippage: slippage,
-            recipient: recipient,
-            estimatedTime: quote.estimatedTime,
-            transactionError: transactionError,
-            fee: totalFeeRequired?.decimalValue.decimalValue,
-            toAddress: deliveryAddress(quote: quote, recipient: recipient),
-            depositAddress: quote.execution?.depositAddress,
-            providerSwapId: quote.uuid
-        )
-    }
-
-    private func buildTonConfirmationQuote(
-        tokenIn _: Token,
-        tokenOut _: Token,
-        amountIn: Decimal,
-        amountOut: Decimal,
-        amountOutMin _: Decimal,
-        quote: CommitResult,
-        slippage: Decimal?,
-        recipient: String?
-    ) async throws -> SwapFinalQuote {
-        guard let signable = quote.execution?.primarySignable, signable.kind == "ton",
-              let jsonObject = signable.innerTx
-        else {
-            throw SwapError.noTransactionData
-        }
-
-        let jsonData = try JSONSerialization.data(withJSONObject: jsonObject)
-        let transactionParam = try JSONDecoder().decode(SendTransactionParam.self, from: jsonData)
-
-        var transactionError: Error?
-        var fee: Decimal?
-
-        guard let account = Core.shared.accountManager.activeAccount else {
-            throw SwapError.noTonAdapter
-        }
-
-        do {
-            let (publicKey, _) = try TonKitManager.keyPair(accountType: account.type)
-            let contract = TonKitManager.contract(publicKey: publicKey)
-
-            let transferData = try TonSendHelper.transferData(
-                param: transactionParam,
-                contract: contract
-            )
-
-            let emulationResult = try await TonSendHelper.emulate(
-                transferData: transferData,
-                contract: contract,
-                converter: nil
-            )
-
-            fee = emulationResult.fee
-
-            try await TonSendHelper.validateBalance(
-                address: contract.address(),
-                totalValue: emulationResult.totalValue,
-                fee: TonAdapter.kitAmount(amount: emulationResult.fee)
-            )
-
-        } catch {
-            transactionError = error
-        }
-
-        return try TonSwapFinalQuote(
-            amountIn: amountIn,
-            expectedAmountOut: amountOut,
-            recipient: recipient,
-            slippage: slippage,
-            estimatedTime: quote.estimatedTime,
-            transactionParam: transactionParam,
-            fee: fee,
-            transactionError: transactionError,
-            toAddress: deliveryAddress(quote: quote, recipient: recipient),
-            depositAddress: quote.execution?.depositAddress,
-            providerSwapId: quote.uuid
-        )
-    }
-
-    private func buildStellarConfirmationQuote(
-        tokenIn: Token,
-        tokenOut _: Token,
-        amountIn: Decimal,
-        amountOut: Decimal,
-        amountOutMin _: Decimal,
-        quote: CommitResult,
-        slippage: Decimal?,
-        recipient: String?
-    ) async throws -> SwapFinalQuote {
-        guard let adapter = adapterManager.adapter(for: tokenIn) as? StellarAdapter else {
-            throw SwapError.noStellarAdapter
-        }
-
-        let asset = adapter.asset
-
-        guard let execution = quote.execution else { throw SwapError.noTransactionData }
-        let deposit = try execution.depositInstruction()
-
-        let transactionData = StellarSendHelper.TransactionData.payment(
-            asset: asset,
-            amount: amountIn,
-            accountId: deposit.address,
-            memo: deposit.memo
-        )
-
-        var transactionError: Error?
-        var fee: Decimal?
-
-        do {
-            let result = try await StellarSendHelper.preparePayment(
-                asset: asset,
-                amount: amountIn,
-                adjustNativeBalance: false,
-                accountId: deposit.address,
-                stellarKit: adapter.stellarKit
-            )
-
-            fee = result.fee
-        } catch {
-            transactionError = error
-        }
-
-        return try StellarSwapFinalQuote(
-            amountIn: amountIn,
-            expectedAmountOut: amountOut,
-            recipient: recipient,
-            slippage: slippage,
-            estimatedTime: quote.estimatedTime,
-            transactionData: transactionData,
-            token: tokenIn,
-            fee: fee,
-            transactionError: transactionError,
-            toAddress: deliveryAddress(quote: quote, recipient: recipient),
-            depositAddress: quote.execution?.depositAddress,
-            providerSwapId: quote.uuid
-        )
-    }
-
-    private func buildTronConfirmationQuote(
-        tokenIn: Token,
-        tokenOut _: Token,
-        amountIn: Decimal,
-        amountOut: Decimal,
-        amountOutMin _: Decimal,
-        quote: CommitResult,
-        slippage: Decimal?,
-        recipient: String?
-    ) async throws -> SwapFinalQuote {
-        guard let signable = quote.execution?.primarySignable, signable.kind == "tron",
-              let jsonObject = signable.innerTx as? [String: Any]
-        else {
-            throw SwapError.noTransactionData
-        }
-
-        let transaction = try Mapper<CreatedTransactionResponse>().map(JSON: jsonObject)
-
-        var fees: [TronKit.Fee] = []
-        var transactionError: Error?
-
-        if let tronKitWrapper = Core.shared.tronAccountManager.tronKitManager.tronKitWrapper {
-            do {
-                let result = try await TronSendHelper.estimateFees(
-                    createdTransaction: transaction,
-                    tronKit: tronKitWrapper.tronKit,
-                    tokenIn: tokenIn,
-                    amountIn: amountIn
-                )
-
-                fees = result.fees
-                transactionError = result.transactionError
-            } catch {
-                transactionError = error
-            }
-        }
-
-        // plain-transfer description for broadcasters that deliver the transfer
-        // themselves; the direct broadcaster uses createdTransaction as before
-        var transferIntent: TronTransferIntent?
-        if let depositAddress = quote.execution?.depositAddress,
-           case let .eip20(tokenAddress) = tokenIn.type,
-           let token = try? TronKit.Address(address: tokenAddress),
-           let receiver = try? TronKit.Address(address: depositAddress),
-           let value = tokenIn.rawAmount(amountIn)
-        {
-            transferIntent = TronTransferIntent(token: token, receiver: receiver, value: value)
-        }
-
-        return try TronSwapFinalQuote(
-            amountIn: amountIn,
-            expectedAmountOut: amountOut,
-            recipient: recipient,
-            slippage: slippage,
-            estimatedTime: quote.estimatedTime,
-            createdTransaction: transaction,
-            transferIntent: transferIntent,
-            fees: fees,
-            transactionError: transactionError,
-            toAddress: deliveryAddress(quote: quote, recipient: recipient),
-            depositAddress: quote.execution?.depositAddress,
-            providerSwapId: quote.uuid
-        )
-    }
-
-    private func buildMoneroConfirmationQuote(
-        tokenIn: Token,
-        tokenOut _: Token,
-        amountIn: Decimal,
-        amountOut: Decimal,
-        amountOutMin _: Decimal,
-        quote: CommitResult,
-        slippage: Decimal?,
-        recipient: String?,
-        priority: MoneroKit.SendPriority
-    ) async throws -> SwapFinalQuote {
-        guard let adapter = adapterManager.adapter(for: tokenIn) as? MoneroAdapter else {
-            throw SwapError.noMoneroAdapter
-        }
-
-        guard let execution = quote.execution else { throw SwapError.noTransactionData }
-        let deposit = try execution.depositInstruction()
-
-        let amount: MoneroSendAmount = adapter.balanceData.available == amountIn ? .all(amountIn) : .value(amountIn)
-        var fee: Decimal?
-        var transactionError: Error?
-
-        do {
-            let estimatedFee = try adapter.estimateFee(
-                amount: amount,
-                address: deposit.address,
-                priority: priority,
-            )
-
-            fee = estimatedFee
-            if amountIn + estimatedFee > adapter.balanceData.available {
-                throw MoneroKit.MoneroCoreError.insufficientFunds(adapter.balanceData.available.description)
-            }
-        } catch {
-            transactionError = error
-        }
-
-        return try MoneroSwapFinalQuote(
-            amountIn: amountIn,
-            expectedAmountOut: amountOut,
-            recipient: recipient,
-            slippage: slippage,
-            estimatedTime: quote.estimatedTime,
-            amount: amount,
-            address: deposit.address,
-            memo: deposit.memo,
-            token: tokenIn,
-            priority: priority,
-            fee: fee,
-            transactionError: transactionError,
-            toAddress: deliveryAddress(quote: quote, recipient: recipient),
-            depositAddress: quote.execution?.depositAddress,
-            providerSwapId: quote.uuid
-        )
-    }
-
-    private func buildZanoConfirmationQuote(
-        tokenIn: Token,
-        tokenOut _: Token,
-        amountIn: Decimal,
-        amountOut: Decimal,
-        amountOutMin _: Decimal,
-        quote: CommitResult,
-        slippage: Decimal?,
-        recipient: String?
-    ) async throws -> SwapFinalQuote {
-        guard let adapter = adapterManager.adapter(for: tokenIn) as? ZanoAdapter else {
-            throw SwapError.noZanoAdapter
-        }
-
-        guard let execution = quote.execution else { throw SwapError.noTransactionData }
-        let deposit = try execution.depositInstruction()
-
-        let amount: ZanoSendAmount = adapter.balanceData.available == amountIn ? .all(amountIn) : .value(amountIn)
-        var fee: Decimal?
-        var transactionError: Error?
-
-        do {
-            let estimatedFee = adapter.estimateFee()
-            fee = estimatedFee
-
-            if adapter.isNative {
-                if amountIn + estimatedFee > adapter.balanceData.available {
-                    throw ZanoCoreError.insufficientFunds(adapter.balanceData.available.description)
-                }
-            } else {
-                if amountIn > adapter.balanceData.available {
-                    throw ZanoCoreError.insufficientFunds(adapter.balanceData.available.description)
-                }
-                if let nativeAdapter = adapterManager.adapter(for: adapter.baseToken) as? ZanoAdapter,
-                   estimatedFee > nativeAdapter.balanceData.available
-                {
-                    throw ZanoCoreError.insufficientFunds(nativeAdapter.balanceData.available.description)
-                }
-            }
-        } catch {
-            transactionError = error
-        }
-
-        return try ZanoSwapFinalQuote(
-            expectedAmountOut: amountOut,
-            recipient: recipient,
-            slippage: slippage,
-            estimatedTime: quote.estimatedTime,
-            amount: amount,
-            address: deposit.address,
-            memo: deposit.memo,
-            fee: fee,
-            transactionError: transactionError,
-            toAddress: deliveryAddress(quote: quote, recipient: recipient),
-            depositAddress: quote.execution?.depositAddress,
-            providerSwapId: quote.uuid
-        )
-    }
-
-    private func buildSolanaConfirmationQuote(
-        tokenIn: Token,
-        tokenOut _: Token,
-        amountIn: Decimal,
-        amountOut: Decimal,
-        amountOutMin _: Decimal,
-        quote: CommitResult,
-        slippage: Decimal?,
-        recipient: String?
-    ) async throws -> SwapFinalQuote {
-        guard let adapter = adapterManager.adapter(for: tokenIn) as? ISendSolanaAdapter & IBalanceAdapter else {
-            throw SwapError.noSolanaAdapter
-        }
-
-        guard let signable = quote.execution?.primarySignable, signable.kind == "solana",
-              let txString = signable.message,
-              let rawTransaction = Data(base64Encoded: txString)
-        else {
-            throw SwapError.noTransactionData
-        }
-
-        var transactionError: Error?
-        var fee: Decimal?
-
-        do {
-            let estimatedFee = try adapter.estimateFee(rawTransaction: rawTransaction)
-            fee = estimatedFee
-
-            let totalRequired = (tokenIn.type.isNative ? amountIn : 0) + estimatedFee
-            if adapter.balanceData.available < totalRequired {
-                throw SolanaSendHandler.TransactionError.insufficientSolBalance(balance: adapter.balanceData.available)
-            }
-        } catch {
-            transactionError = error
-        }
-
-        return try SolanaSwapFinalQuote(
-            rawTransaction: rawTransaction,
-            expectedAmountOut: amountOut,
-            recipient: recipient,
-            slippage: slippage,
-            estimatedTime: quote.estimatedTime,
-            fee: fee,
-            transactionError: transactionError,
-            toAddress: deliveryAddress(quote: quote, recipient: recipient),
-            depositAddress: quote.execution?.depositAddress,
-            providerSwapId: quote.uuid
-        )
-    }
 }
 
 extension USwapMultiSwapProvider {
@@ -1199,36 +556,6 @@ extension USwapMultiSwapProvider {
         .avalanche: "AVAX",
         .binanceSmartChain: "BSC",
     ]
-}
-
-private extension USwapMultiSwapApi.Execution {
-    var primarySignable: USwapMultiSwapApi.SignableTx? {
-        switch self {
-        case let .signedTransaction(_, transactions, _): transactions.first
-        case let .transfer(_, _, _, unsignedTx): unsignedTx
-        case let .thorchainDeposit(_, _, _, delivery): delivery.unsignedTx
-        }
-    }
-
-    var depositAddress: String? {
-        switch self {
-        case .signedTransaction: nil
-        case let .transfer(_, depositAddress, _, _): depositAddress
-        case let .thorchainDeposit(_, inboundAddress, _, _): inboundAddress
-        }
-    }
-
-    func depositInstruction() throws -> (address: String, memo: String?) {
-        switch self {
-        case let .transfer(_, depositAddress, attachment, _):
-            let memo = (attachment?["type"] as? String) == "text" ? attachment?["value"] as? String : nil
-            return (depositAddress, memo)
-        case let .thorchainDeposit(_, inboundAddress, memo, _):
-            return (inboundAddress, memo)
-        case .signedTransaction:
-            throw USwapMultiSwapProvider.SwapError.invalidTransactionData
-        }
-    }
 }
 
 extension USwapMultiSwapProvider {

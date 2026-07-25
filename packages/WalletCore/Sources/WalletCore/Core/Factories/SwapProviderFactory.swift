@@ -124,7 +124,31 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
             api: api,
             tracker: makeUSwapTracker(api: api),
             assetRepository: assetRepository,
-            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id)
+            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
+            finalQuoteFactory: makeUSwapFinalQuoteFactory()
+        )
+    }
+
+    private static func makeUSwapFinalQuoteFactory() -> USwapFinalQuoteFactory {
+        let adapterManager = Core.shared.adapterManager
+
+        return USwapFinalQuoteFactory(
+            builders: [
+                USwapEvmFinalQuoteBuilder(
+                    evmBlockchainManager: Core.shared.evmBlockchainManager,
+                    evmFeeEstimator: EvmFeeEstimator()
+                ),
+                USwapUtxoFinalQuoteBuilder(adapterManager: adapterManager),
+                USwapTronFinalQuoteBuilder(
+                    tronKitManager: Core.shared.tronAccountManager.tronKitManager
+                ),
+                USwapZcashFinalQuoteBuilder(adapterManager: adapterManager),
+                USwapTonFinalQuoteBuilder(accountManager: Core.shared.accountManager),
+                USwapStellarFinalQuoteBuilder(adapterManager: adapterManager),
+                USwapMoneroFinalQuoteBuilder(adapterManager: adapterManager),
+                USwapZanoFinalQuoteBuilder(adapterManager: adapterManager),
+                USwapSolanaFinalQuoteBuilder(adapterManager: adapterManager),
+            ]
         )
     }
 
