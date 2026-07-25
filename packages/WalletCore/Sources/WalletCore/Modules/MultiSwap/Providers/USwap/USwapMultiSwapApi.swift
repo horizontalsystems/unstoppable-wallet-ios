@@ -323,6 +323,34 @@ public extension USwapMultiSwapApi {
         case signedTransaction(chain: String, transactions: [SignableTx], approval: Approval?)
         case transfer(chain: String, depositAddress: String, attachment: [String: Any]?, unsignedTx: SignableTx?)
         case thorchainDeposit(chain: String, inboundAddress: String, memo: String, delivery: Delivery)
+
+        var primarySignable: SignableTx? {
+            switch self {
+            case let .signedTransaction(_, transactions, _): transactions.first
+            case let .transfer(_, _, _, unsignedTx): unsignedTx
+            case let .thorchainDeposit(_, _, _, delivery): delivery.unsignedTx
+            }
+        }
+
+        var depositAddress: String? {
+            switch self {
+            case .signedTransaction: nil
+            case let .transfer(_, depositAddress, _, _): depositAddress
+            case let .thorchainDeposit(_, inboundAddress, _, _): inboundAddress
+            }
+        }
+
+        func depositInstruction() -> (address: String, memo: String?)? {
+            switch self {
+            case let .transfer(_, depositAddress, attachment, _):
+                let memo = (attachment?["type"] as? String) == "text" ? attachment?["value"] as? String : nil
+                return (depositAddress, memo)
+            case let .thorchainDeposit(_, inboundAddress, memo, _):
+                return (inboundAddress, memo)
+            case .signedTransaction:
+                return nil
+            }
+        }
     }
 
     struct SignableTx {
