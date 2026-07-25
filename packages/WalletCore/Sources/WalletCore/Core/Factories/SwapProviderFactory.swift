@@ -125,7 +125,17 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
             tracker: makeUSwapTracker(api: api),
             assetRepository: assetRepository,
             commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
+            rateQuoteFactory: makeUSwapRateQuoteFactory(),
             finalQuoteFactory: makeUSwapFinalQuoteFactory()
+        )
+    }
+
+    private static func makeUSwapRateQuoteFactory() -> USwapRateQuoteFactory {
+        USwapRateQuoteFactory(
+            builders: [
+                USwapAllowanceRateQuoteBuilder(allowanceHelper: MultiSwapAllowanceHelper()),
+                USwapPlainRateQuoteBuilder(),
+            ]
         )
     }
 
