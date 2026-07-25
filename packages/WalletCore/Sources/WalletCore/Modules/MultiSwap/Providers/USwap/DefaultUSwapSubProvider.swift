@@ -7,7 +7,7 @@ class DefaultUSwapSubProvider: USwapSubProvider {
     let api: USwapMultiSwapApi
 
     private let assetRepository: USwapAssetRepository?
-    private let commitRequestBuilder: USwapCommitRequestBuilder
+    let commitRequestBuilder: USwapCommitRequestBuilder
     private let tracker: USwapTracker
 
     init(
@@ -40,7 +40,7 @@ class DefaultUSwapSubProvider: USwapSubProvider {
         false
     }
 
-    func rate(input: USwapRateInput) async throws -> USwapMultiSwapApi.RateQuote {
+    func rate(input: USwapRateInput) async throws -> USwapRateResult {
         guard let assetIn = asset(token: input.tokenIn) else {
             throw SwapError.unsupportedTokenIn
         }
@@ -67,7 +67,7 @@ class DefaultUSwapSubProvider: USwapSubProvider {
             throw SwapError.noRoutes
         }
 
-        return quote
+        return USwapRateResult(response: quote)
     }
 
     func commit(input: USwapCommitInput) async throws -> USwapCommitResult {

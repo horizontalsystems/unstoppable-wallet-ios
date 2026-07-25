@@ -96,7 +96,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         tokenOut: Token,
         amountIn: Decimal,
         slippage: Decimal
-    ) async throws -> (quote: USwapMultiSwapApi.RateQuote, alternateRoute: SelectedAlternateRoute?) {
+    ) async throws -> (quote: USwapMultiSwapApi.RateQuote, replay: ExolixUSwapSubProvider.Replay?) {
         guard let assetIn = asset(token: tokenIn) else {
             throw SwapError.unsupportedTokenIn
         }
@@ -171,13 +171,13 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             throw SwapError.noRoutes
         }
 
-        let selection = SelectedAlternateRoute(
+        let replay = ExolixUSwapSubProvider.Replay(
             sellAsset: best.variant.sellAsset,
             buyAsset: best.variant.buyAsset,
             destinationAddress: best.variant.destination
         )
 
-        return (best.quote, selection)
+        return (best.quote, replay)
     }
 
     // /v2/swap — create the order with one provider, returning the single executable route.
@@ -189,7 +189,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountIn: Decimal,
         slippage: Decimal,
         recipient: String?,
-        selectedAlternateRoute: SelectedAlternateRoute?
+        replay: ExolixUSwapSubProvider.Replay?
     ) async throws -> CommitResult {
         guard let assetIn = asset(token: tokenIn) else {
             throw SwapError.unsupportedTokenIn
@@ -221,7 +221,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         // ZEC.ZEC and ZEC.ZECSHIELDED routes.
         var variant = RouteVariant(sellAsset: assetIn, buyAsset: assetOut, destination: destinations.primary, isShielded: false)
 
-        if alternateCapable, let selected = selectedAlternateRoute {
+        if alternateCapable, let selected = replay {
             variant = RouteVariant(
                 sellAsset: selected.sellAsset,
                 buyAsset: selected.buyAsset,
@@ -432,7 +432,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     }
 
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {
-        let (quote, alternateRoute) = try await rateQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: MultiSwapSlippage.default)
+        let (quote, replay) = try await rateQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: MultiSwapSlippage.default)
 
         return try await rateQuoteFactory.build(
             input: .init(
@@ -440,14 +440,14 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 tokenOut: tokenOut,
                 amountIn: amountIn,
                 response: quote,
-                selectedAlternateRoute: alternateRoute
+                replay: replay
             )
         )
     }
 
     func confirmationQuote(multiSwapQuote: MultiSwapQuote, tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote {
-        let selectedAlternateRoute = (multiSwapQuote as? AlternateRouteCarrying)?.selectedAlternateRoute
-        let quote = try await commitQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient, selectedAlternateRoute: selectedAlternateRoute)
+        let replay = (multiSwapQuote as? USwapRateResult.Carrying)?.replay as? ExolixUSwapSubProvider.Replay
+        let quote = try await commitQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient, replay: replay)
 
         // The server's `minBuyAmount` is the enforced floor; `null` means the route is a floating
         // P2P estimate — nothing guarantees the amount (or applies our slippage), so the confirm
@@ -571,39 +571,22 @@ extension USwapMultiSwapProvider {
         case noZanoAdapter
         case noSolanaAdapter
     }
-
-    // Selection of (sellAsset, buyAsset, destinationAddress) made by a dry quote that fanned
-    // into multiple route variants. Travels back to the caller on the returned `MultiSwapQuote`
-    // (via `AlternateRouteCarrying`) so a later confirmation quote replays exactly that route
-    // — no provider-instance state required, so no leakage between swaps or accounts.
-    struct SelectedAlternateRoute: Equatable {
-        let sellAsset: String
-        let buyAsset: String
-        let destinationAddress: String
-    }
 }
 
-// Adopted by USwap quote subclasses that may carry a multi-route selection picked on the
-// dry call. Confirmation reads the selection via `as? AlternateRouteCarrying` so the same
-// path covers both the EVM and non-EVM USwap quote variants.
-protocol AlternateRouteCarrying: AnyObject {
-    var selectedAlternateRoute: USwapMultiSwapProvider.SelectedAlternateRoute? { get }
-}
+final class USwapMultiSwapQuote: MultiSwapQuote, USwapRateResult.Carrying {
+    let replay: (any USwapRateResult.Replay)?
 
-final class USwapMultiSwapQuote: MultiSwapQuote, AlternateRouteCarrying {
-    let selectedAlternateRoute: USwapMultiSwapProvider.SelectedAlternateRoute?
-
-    init(expectedBuyAmount: Decimal, estimatedTime: TimeInterval? = nil, selectedAlternateRoute: USwapMultiSwapProvider.SelectedAlternateRoute?) {
-        self.selectedAlternateRoute = selectedAlternateRoute
+    init(expectedBuyAmount: Decimal, estimatedTime: TimeInterval? = nil, replay: (any USwapRateResult.Replay)?) {
+        self.replay = replay
         super.init(expectedBuyAmount: expectedBuyAmount, estimatedTime: estimatedTime)
     }
 }
 
-final class USwapEvmMultiSwapQuote: EvmMultiSwapQuote, AlternateRouteCarrying {
-    let selectedAlternateRoute: USwapMultiSwapProvider.SelectedAlternateRoute?
+final class USwapEvmMultiSwapQuote: EvmMultiSwapQuote, USwapRateResult.Carrying {
+    let replay: (any USwapRateResult.Replay)?
 
-    init(expectedBuyAmount: Decimal, allowanceState: MultiSwapAllowanceHelper.AllowanceState, estimatedTime: TimeInterval? = nil, selectedAlternateRoute: USwapMultiSwapProvider.SelectedAlternateRoute?) {
-        self.selectedAlternateRoute = selectedAlternateRoute
+    init(expectedBuyAmount: Decimal, allowanceState: MultiSwapAllowanceHelper.AllowanceState, estimatedTime: TimeInterval? = nil, replay: (any USwapRateResult.Replay)?) {
+        self.replay = replay
         super.init(expectedBuyAmount: expectedBuyAmount, allowanceState: allowanceState, estimatedTime: estimatedTime)
     }
 }

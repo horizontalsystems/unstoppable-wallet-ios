@@ -32,20 +32,20 @@ final class USwapRateQuoteFactory {
         let tokenOut: Token
         let amountIn: Decimal
         let response: USwapMultiSwapApi.RateQuote
-        let selectedAlternateRoute: USwapMultiSwapProvider.SelectedAlternateRoute?
+        let replay: (any USwapRateResult.Replay)?
 
         init(
             tokenIn: Token,
             tokenOut: Token,
             amountIn: Decimal,
             response: USwapMultiSwapApi.RateQuote,
-            selectedAlternateRoute: USwapMultiSwapProvider.SelectedAlternateRoute? = nil
+            replay: (any USwapRateResult.Replay)? = nil
         ) {
             self.tokenIn = tokenIn
             self.tokenOut = tokenOut
             self.amountIn = amountIn
             self.response = response
-            self.selectedAlternateRoute = selectedAlternateRoute
+            self.replay = replay
         }
     }
 

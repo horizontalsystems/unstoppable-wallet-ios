@@ -80,7 +80,7 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
             defaultUSwapEntry(info: .letsExchange),
             defaultUSwapEntry(info: .stealthex),
             defaultUSwapEntry(info: .swapuz),
-            legacyUSwapEntry(info: .exolix),
+            exolixUSwapEntry(info: .exolix),
             defaultUSwapEntry(info: .cce),
             barterUSwapEntry(info: .barter),
             defaultUSwapEntry(info: .pegasus),
@@ -126,6 +126,10 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
 
     private static func lifiUSwapEntry(info: USwapProviderInfo) -> Entry {
         Entry(info: info, provider: { lifiUSwapProvider(info: info) })
+    }
+
+    private static func exolixUSwapEntry(info: USwapProviderInfo) -> Entry {
+        Entry(info: info, provider: { exolixUSwapProvider(info: info) })
     }
 
     private static func defaultUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
@@ -186,6 +190,25 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
             assetRepository: nil,
             commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
             tracker: uSwapTracker(api: api)
+        )
+
+        return uSwapProvider(subProvider: subProvider)
+    }
+
+    private static func exolixUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
+        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
+        let subProvider = ExolixUSwapSubProvider(
+            info: info,
+            api: api,
+            assetRepository: USwapAssetRepository(
+                providerId: info.id,
+                api: api,
+                storage: Core.shared.swapAssetStorage
+            ),
+            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
+            tracker: uSwapTracker(api: api),
+            accountManager: Core.shared.accountManager,
+            adapterManager: Core.shared.adapterManager
         )
 
         return uSwapProvider(subProvider: subProvider)

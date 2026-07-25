@@ -38,7 +38,7 @@ final class USwapMultiSwapProviderNew: IMultiSwapProvider {
     }
 
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {
-        let response = try await subProvider.rate(
+        let result = try await subProvider.rate(
             input: USwapRateInput(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
@@ -52,7 +52,8 @@ final class USwapMultiSwapProviderNew: IMultiSwapProvider {
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 amountIn: amountIn,
-                response: response
+                response: result.response,
+                replay: result.replay
             )
         )
     }
