@@ -32,7 +32,7 @@ final class USwapAllowanceRateQuoteBuilder: USwapRateQuoteBuilder {
             expectedBuyAmount: input.response.expectedBuyAmount,
             allowanceState: allowanceState,
             estimatedTime: estimatedTime,
-            selectedAlternateRoute: input.selectedAlternateRoute
+            replay: input.replay
         )
     }
 

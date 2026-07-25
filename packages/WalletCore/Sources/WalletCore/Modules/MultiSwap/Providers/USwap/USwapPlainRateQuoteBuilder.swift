@@ -16,7 +16,7 @@ final class USwapPlainRateQuoteBuilder: USwapRateQuoteBuilder {
         return USwapMultiSwapQuote(
             expectedBuyAmount: input.response.expectedBuyAmount,
             estimatedTime: estimatedTime,
-            selectedAlternateRoute: input.selectedAlternateRoute
+            replay: input.replay
         )
     }
 }
