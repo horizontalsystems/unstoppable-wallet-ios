@@ -6,14 +6,14 @@ class DefaultUSwapSubProvider: USwapSubProvider {
     let info: USwapProviderInfo
     let api: USwapMultiSwapApi
 
-    private let assetRepository: USwapAssetRepository
+    private let assetRepository: USwapAssetRepository?
     private let commitRequestBuilder: USwapCommitRequestBuilder
     private let tracker: USwapTracker
 
     init(
         info: USwapProviderInfo,
         api: USwapMultiSwapApi,
-        assetRepository: USwapAssetRepository,
+        assetRepository: USwapAssetRepository?,
         commitRequestBuilder: USwapCommitRequestBuilder,
         tracker: USwapTracker
     ) {
@@ -25,7 +25,7 @@ class DefaultUSwapSubProvider: USwapSubProvider {
     }
 
     var syncPublisher: AnyPublisher<Void, Never>? {
-        assetRepository.syncPublisher
+        assetRepository?.syncPublisher
     }
 
     func slippageSupported(tokenIn _: Token, tokenOut _: Token) -> Bool {
@@ -111,8 +111,8 @@ class DefaultUSwapSubProvider: USwapSubProvider {
         )
     }
 
-    private func asset(token: Token) -> String? {
-        assetRepository.asset(token: token)
+    func asset(token: Token) -> String? {
+        assetRepository?.asset(token: token)
     }
 }
 

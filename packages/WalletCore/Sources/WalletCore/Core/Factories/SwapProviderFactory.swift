@@ -82,11 +82,11 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
             defaultUSwapEntry(info: .swapuz),
             legacyUSwapEntry(info: .exolix),
             defaultUSwapEntry(info: .cce),
-            legacyUSwapEntry(info: .barter),
+            barterUSwapEntry(info: .barter),
             defaultUSwapEntry(info: .pegasus),
             defaultUSwapEntry(info: .circle),
-            legacyUSwapEntry(info: .jupiter),
-            legacyUSwapEntry(info: .lifi),
+            jupiterUSwapEntry(info: .jupiter),
+            lifiUSwapEntry(info: .lifi),
         ].map { entry in
             (entry.info.id, entry)
         }
@@ -116,6 +116,18 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
         Entry(info: info, provider: { quickExUSwapProvider(info: info) })
     }
 
+    private static func jupiterUSwapEntry(info: USwapProviderInfo) -> Entry {
+        Entry(info: info, provider: { jupiterUSwapProvider(info: info) })
+    }
+
+    private static func barterUSwapEntry(info: USwapProviderInfo) -> Entry {
+        Entry(info: info, provider: { barterUSwapProvider(info: info) })
+    }
+
+    private static func lifiUSwapEntry(info: USwapProviderInfo) -> Entry {
+        Entry(info: info, provider: { lifiUSwapProvider(info: info) })
+    }
+
     private static func defaultUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
         let api = uSwapApi(networkManager: NetworkManager(logger: nil))
         let subProvider = defaultUSwapSubProvider(info: info, api: api)
@@ -133,6 +145,45 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
                 api: api,
                 storage: Core.shared.swapAssetStorage
             ),
+            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
+            tracker: uSwapTracker(api: api)
+        )
+
+        return uSwapProvider(subProvider: subProvider)
+    }
+
+    private static func jupiterUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
+        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
+        let subProvider = JupiterUSwapSubProvider(
+            info: info,
+            api: api,
+            assetRepository: nil,
+            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
+            tracker: uSwapTracker(api: api)
+        )
+
+        return uSwapProvider(subProvider: subProvider)
+    }
+
+    private static func barterUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
+        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
+        let subProvider = BarterUSwapSubProvider(
+            info: info,
+            api: api,
+            assetRepository: nil,
+            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
+            tracker: uSwapTracker(api: api)
+        )
+
+        return uSwapProvider(subProvider: subProvider)
+    }
+
+    private static func lifiUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
+        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
+        let subProvider = LifiUSwapSubProvider(
+            info: info,
+            api: api,
+            assetRepository: nil,
             commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
             tracker: uSwapTracker(api: api)
         )
@@ -164,24 +215,16 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
 
     private static func legacyUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
         let api = uSwapApi(networkManager: NetworkManager(logger: nil))
-        let assetRepository: USwapAssetRepository?
-
-        switch info.id {
-        case USwapProviderInfo.barter.id, USwapProviderInfo.jupiter.id, USwapProviderInfo.lifi.id:
-            assetRepository = nil
-        default:
-            assetRepository = USwapAssetRepository(
-                providerId: info.id,
-                api: api,
-                storage: Core.shared.swapAssetStorage
-            )
-        }
 
         return USwapMultiSwapProvider(
             info: info,
             api: api,
             tracker: uSwapTracker(api: api),
-            assetRepository: assetRepository,
+            assetRepository: USwapAssetRepository(
+                providerId: info.id,
+                api: api,
+                storage: Core.shared.swapAssetStorage
+            ),
             commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
             rateQuoteFactory: uSwapRateQuoteFactory(),
             finalQuoteFactory: uSwapFinalQuoteFactory()
