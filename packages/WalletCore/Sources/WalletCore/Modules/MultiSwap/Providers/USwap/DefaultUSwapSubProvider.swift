@@ -2,20 +2,10 @@ import Combine
 import Foundation
 import MarketKit
 
-final class DefaultUSwapSubProvider: USwapSubProvider {
-    private static let supportedProviderIds = Set([
-        USwapProviderInfo.near.id,
-        USwapProviderInfo.letsExchange.id,
-        USwapProviderInfo.stealthex.id,
-        USwapProviderInfo.swapuz.id,
-        USwapProviderInfo.cce.id,
-        USwapProviderInfo.pegasus.id,
-        USwapProviderInfo.circle.id,
-    ])
-
+class DefaultUSwapSubProvider: USwapSubProvider {
     let info: USwapProviderInfo
+    let api: USwapMultiSwapApi
 
-    private let api: USwapMultiSwapApi
     private let assetRepository: USwapAssetRepository
     private let commitRequestBuilder: USwapCommitRequestBuilder
     private let tracker: USwapTracker
@@ -27,8 +17,6 @@ final class DefaultUSwapSubProvider: USwapSubProvider {
         commitRequestBuilder: USwapCommitRequestBuilder,
         tracker: USwapTracker
     ) {
-        precondition(Self.supportedProviderIds.contains(info.id))
-
         self.info = info
         self.api = api
         self.assetRepository = assetRepository
