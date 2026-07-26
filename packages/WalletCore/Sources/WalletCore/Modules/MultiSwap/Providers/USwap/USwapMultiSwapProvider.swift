@@ -23,8 +23,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private var headers: HTTPHeaders?
 
     private let provider: USwapProvider
-//    private let networkManager = Core.shared.networkManager
-    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .verbose))
+    private let networkManager = Core.shared.networkManager
+//    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .verbose))
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let adapterManager = Core.shared.adapterManager
     private let swapAssetStorage = Core.shared.swapAssetStorage

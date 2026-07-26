@@ -26,8 +26,28 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
     static let id = "STELLARBROKER"
     static let name = "StellarBroker"
 
+    // StellarBroker participation switch for THIS app — the ONE place SB is turned on or off.
+    // false = SB is never requested from /v2/rate nor picked, and the waterfall runs over the
+    // fallbacks only; every other flow is unchanged.
+    //
+    // Why false (2026-07-24 decision): SB has no service-fee mechanism, and we don't ship a
+    // fee-less provider in the app. SB stays live on the SERVER for the web SDK (whose partner
+    // volumes are the negotiating position for fee terms with SB — the 0.1% partner profit
+    // share accrues meanwhile).
+    //
+    // THE SB CODE IS DORMANT, NOT DEAD — KEEP IT CURRENT. Flipping this to true must restore a
+    // working SB-first waterfall, so everything it reaches (StellarBrokerSessionClient,
+    // Execution.stellarBroker, StellarBrokerFinalQuote, StellarExecutable.Kind.brokerSession
+    // and its StellarSwapBroadcaster arm) is maintained production code: keep it compiling, keep
+    // it matching uswap-server's current /v2 contract, and update it alongside the enabled paths.
+    // Do not delete it, do not #if it out, and do not exclude it from the build — the compiler is
+    // the only thing still checking a path no test or user exercises.
+    private static let stellarBrokerEnabled = false
+
     // The full waterfall set requested from /v2/rate.
-    private static let allProviders = ["STELLARBROKER", "SOROSWAP", "AQUARIUS", "STELLAR_DEX"]
+    private static let allProviders = stellarBrokerEnabled
+        ? ["STELLARBROKER", "SOROSWAP", "AQUARIUS", "STELLAR_DEX"]
+        : ["SOROSWAP", "AQUARIUS", "STELLAR_DEX"]
     // SB and Aquarius settle on the trader's own account — a third-party recipient can only
     // be served by the providers whose execution supports a distinct destination.
     private static let recipientCapableProviders = ["SOROSWAP", "STELLAR_DEX"]
@@ -149,7 +169,6 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
                 recipient: recipient,
                 estimatedTime: estimatedTime,
                 sessionParams: sessionParams,
-                token: tokenIn,
                 transactionError: transactionError,
                 toAddress: destination,
                 providerSwapId: route.uuid
@@ -226,6 +245,8 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
 
         let response: RateResponse = try await networkManager.fetch(url: "\(USwapMultiSwapProvider.baseUrl)/rate", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
 
+        // Only reachable while stellarBrokerEnabled — SB is otherwise never in `providers`, so
+        // the server never returns it. Kept live for the flag flip (see stellarBrokerEnabled).
         if let brokerRoute = response.routes.first(where: { $0.provider == "STELLARBROKER" }) {
             return brokerRoute
         }

@@ -17,33 +17,36 @@ class StellarSwapBroadcaster: ISwapBroadcaster {
             throw SwapBroadcasterError.dataMismatch
         }
 
-        let keyPair = try StellarKitManager.keyPair(accountType: account.type)
-
-        // StellarBroker interactive trade: run the WebSocket session (the broker builds and
-        // submits the txs; we sign each one). The last signed fee-bump hash is the tracking
-        // handle uswap-server's StellarTracker verifies on Horizon.
-        if let executable = prepared.executable as? StellarBrokerExecutable {
-            let client = StellarBrokerSessionClient(
-                trader: try StellarKitManager.accountId(accountType: account.type),
-                keyPair: keyPair,
-                params: executable.sessionParams
-            )
-            let result = try await client.execute()
-            return BroadcastResult(txHash: result.txHashes.last, trackingHandle: nil)
-        }
-
         guard let executable = prepared.executable as? StellarExecutable else {
             throw SwapBroadcasterError.dataMismatch
         }
 
-        let txHash = try await StellarSendHelper.send(
-            transactionData: executable.transactionData,
-            token: executable.token,
-            adjustNativeBalance: false,
-            keyPair: keyPair
-        )
+        let keyPair = try StellarKitManager.keyPair(accountType: account.type)
 
-        return BroadcastResult(txHash: txHash, trackingHandle: nil)
+        switch executable.kind {
+        case let .signed(transactionData):
+            let txHash = try await StellarSendHelper.send(
+                transactionData: transactionData,
+                token: executable.token,
+                adjustNativeBalance: false,
+                keyPair: keyPair
+            )
+
+            return BroadcastResult(txHash: txHash, trackingHandle: nil)
+
+        case let .brokerSession(sessionParams):
+            // The broker builds and submits the txs; we sign each one. The last signed
+            // fee-bump hash is the tracking handle uswap-server's StellarTracker verifies
+            // on Horizon.
+            let client = try StellarBrokerSessionClient(
+                trader: StellarKitManager.accountId(accountType: account.type),
+                keyPair: keyPair,
+                params: sessionParams
+            )
+            let result = try await client.execute()
+
+            return BroadcastResult(txHash: result.txHashes.last, trackingHandle: nil)
+        }
     }
 }
 

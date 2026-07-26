@@ -146,68 +146,54 @@ extension MultiSwapSendHandler: ISendHandler {
             // trackable record with the last known hash BEFORE surfacing the error — tracking
             // then resolves the real outcome (partial fills included) instead of the swap
             // becoming an invisible ghost while the server record waits forever.
-            if let partial = error as? IPartialExecutionError, let partialTxHash = partial.partialTxHash, let account = accountManager.activeAccount {
-                let swap = Swap(
-                    uid: UUID().uuidString,
-                    txHash: partialTxHash,
-                    trackingHandle: nil,
-                    accountId: account.id,
-                    providerId: provider.id,
-                    status: .pending,
-                    tokenIn: tokenIn,
-                    tokenOut: tokenOut,
-                    amountIn: amountIn,
-                    amountOut: data.quote.amountOut,
-                    recipient: data.quote.recipient,
-                    toAddress: data.quote.recipient ?? data.quote.toAddress,
-                    depositAddress: data.quote.depositAddress,
-                    providerSwapId: data.quote.providerSwapId,
-                    sourceAddress: nil,
-                    refundAddress: data.quote.refundAddress,
-                    date: Date(),
-                    fromAsset: nil,
-                    toAsset: nil,
-                    legs: nil,
-                    pauseReason: nil
-                )
-                swapHistoryManager.save(swap: swap)
+            if let partial = error as? IPartialExecutionError, let partialTxHash = partial.partialTxHash {
+                saveSwap(data: data, txHash: partialTxHash, trackingHandle: nil)
             }
             throw error
         }
-        let txHash = result.txHash
 
-        if let account = accountManager.activeAccount {
-            let swap = Swap(
-                uid: UUID().uuidString,
-                txHash: txHash,
-                trackingHandle: result.trackingHandle,
-                accountId: account.id,
-                providerId: provider.id,
-                status: .pending,
-                tokenIn: tokenIn,
-                tokenOut: tokenOut,
-                amountIn: amountIn,
-                amountOut: data.quote.amountOut,
-                recipient: data.quote.recipient,
-                toAddress: data.quote.recipient ?? data.quote.toAddress,
-                depositAddress: data.quote.depositAddress,
-                providerSwapId: data.quote.providerSwapId,
-                sourceAddress: nil,
-                refundAddress: data.quote.refundAddress,
-                date: Date(),
-                fromAsset: nil,
-                toAsset: nil,
-                legs: nil,
-                pauseReason: nil
-            )
-
-            swapHistoryManager.save(swap: swap)
-        }
+        saveSwap(data: data, txHash: result.txHash, trackingHandle: result.trackingHandle)
 
         if !walletManager.activeWallets.contains(where: { $0.token == tokenOut }), let activeAccount = accountManager.activeAccount {
             let wallet = Wallet(token: tokenOut, account: activeAccount)
             walletManager.save(wallets: [wallet])
         }
+    }
+
+    /// Persist the pending swap record both completion paths need — the normal one after a
+    /// successful broadcast, and the partial-execution one where the submit threw but value may
+    /// already have moved (the two differ only in which hash/handle is known). No-op without an
+    /// active account, matching the previous behaviour at both call sites.
+    private func saveSwap(data: SendData, txHash: String?, trackingHandle: String?) {
+        guard let account = accountManager.activeAccount else {
+            return
+        }
+
+        let swap = Swap(
+            uid: UUID().uuidString,
+            txHash: txHash,
+            trackingHandle: trackingHandle,
+            accountId: account.id,
+            providerId: provider.id,
+            status: .pending,
+            tokenIn: tokenIn,
+            tokenOut: tokenOut,
+            amountIn: amountIn,
+            amountOut: data.quote.amountOut,
+            recipient: data.quote.recipient,
+            toAddress: data.quote.recipient ?? data.quote.toAddress,
+            depositAddress: data.quote.depositAddress,
+            providerSwapId: data.quote.providerSwapId,
+            sourceAddress: nil,
+            refundAddress: data.quote.refundAddress,
+            date: Date(),
+            fromAsset: nil,
+            toAsset: nil,
+            legs: nil,
+            pauseReason: nil
+        )
+
+        swapHistoryManager.save(swap: swap)
     }
 }
 
