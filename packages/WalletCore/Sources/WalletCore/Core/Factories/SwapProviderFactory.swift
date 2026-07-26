@@ -108,10 +108,6 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
         Entry(info: info, provider: { defaultUSwapProvider(info: info) })
     }
 
-    private static func legacyUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, provider: { legacyUSwapProvider(info: info) })
-    }
-
     private static func quickExUSwapEntry(info: USwapProviderInfo) -> Entry {
         Entry(info: info, provider: { quickExUSwapProvider(info: info) })
     }
@@ -203,7 +199,10 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
             assetRepository: USwapAssetRepository(
                 providerId: info.id,
                 api: api,
-                storage: Core.shared.swapAssetStorage
+                storage: Core.shared.swapAssetStorage,
+                includeAsset: { identifier in
+                    ExolixUSwapSubProvider.includesInAssetMap(identifier: identifier)
+                }
             ),
             commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
             tracker: uSwapTracker(api: api),
@@ -229,26 +228,8 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
     }
 
     private static func uSwapProvider(subProvider: USwapSubProvider) -> IMultiSwapProvider {
-        USwapMultiSwapProviderNew(
+        USwapMultiSwapProvider(
             subProvider: subProvider,
-            rateQuoteFactory: uSwapRateQuoteFactory(),
-            finalQuoteFactory: uSwapFinalQuoteFactory()
-        )
-    }
-
-    private static func legacyUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
-        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
-
-        return USwapMultiSwapProvider(
-            info: info,
-            api: api,
-            tracker: uSwapTracker(api: api),
-            assetRepository: USwapAssetRepository(
-                providerId: info.id,
-                api: api,
-                storage: Core.shared.swapAssetStorage
-            ),
-            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
             rateQuoteFactory: uSwapRateQuoteFactory(),
             finalQuoteFactory: uSwapFinalQuoteFactory()
         )

@@ -33,18 +33,33 @@ public final class USwapAssetRepository {
     private let providerId: String
     private let api: USwapMultiSwapApi
     private let storage: SwapAssetStorage
+    private let includeAsset: @Sendable (String) -> Bool
     private let syncSubject = PassthroughSubject<Void, Never>()
     private let stateLock = NSLock()
     private var state: State
 
-    public init(providerId: String, api: USwapMultiSwapApi, storage: SwapAssetStorage) {
+    public init(
+        providerId: String,
+        api: USwapMultiSwapApi,
+        storage: SwapAssetStorage,
+        includeAsset: @escaping @Sendable (String) -> Bool = { _ in true }
+    ) {
         self.providerId = providerId
         self.api = api
         self.storage = storage
+        self.includeAsset = includeAsset
 
         do {
-            let assetMap = try storage.swapAssetMap(provider: providerId, as: String.self)
-            let lastSyncTimestamp = try? storage.lastSyncTimetamp(provider: providerId)
+            let storedAssetMap = try storage.swapAssetMap(provider: providerId, as: String.self)
+            let assetMap = storedAssetMap.filter { includeAsset($0.value) }
+            let lastSyncTimestamp: TimeInterval?
+
+            if assetMap.count == storedAssetMap.count {
+                lastSyncTimestamp = try? storage.lastSyncTimetamp(provider: providerId)
+            } else {
+                lastSyncTimestamp = nil
+            }
+
             state = State(assetMap: assetMap, lastSyncTimestamp: lastSyncTimestamp)
         } catch {
             state = State(assetMap: [:], lastSyncTimestamp: nil)
@@ -76,6 +91,7 @@ public final class USwapAssetRepository {
         let api = api
         let providerId = providerId
         let storage = storage
+        let includeAsset = includeAsset
 
         withState { state in
             guard state.refreshTask == nil else {
@@ -93,12 +109,12 @@ public final class USwapAssetRepository {
                     try Task.checkCancellation()
                     let tokens = try await api.tokens(providerId: providerId)
                     try Task.checkCancellation()
-                    let assetMap = Self.assetMap(tokens: tokens)
+                    let assetMap = Self.assetMap(tokens: tokens, includeAsset: includeAsset)
                     try Task.checkCancellation()
 
                     let timestamp = Date().timeIntervalSince1970
-                    try storage.save(swapAssetMap: assetMap, provider: providerId)
-                    try storage.save(lastSyncTimestamp: timestamp, provider: providerId)
+                    try? storage.save(swapAssetMap: assetMap, provider: providerId)
+                    try? storage.save(lastSyncTimestamp: timestamp, provider: providerId)
 
                     await MainActor.run { [weak self] in
                         self?.finishSync(assetMap: assetMap, timestamp: timestamp)
@@ -139,11 +155,20 @@ private extension USwapAssetRepository {
             state.refreshTask = nil
         }
     }
+}
 
-    static func assetMap(tokens: [USwapMultiSwapApi.Token]) -> [String: String] {
+extension USwapAssetRepository {
+    static func assetMap(
+        tokens: [USwapMultiSwapApi.Token],
+        includeAsset: (String) -> Bool
+    ) -> [String: String] {
         var assetMap = [String: String]()
 
         for token in tokens {
+            guard includeAsset(token.identifier) else {
+                continue
+            }
+
             guard let blockchainType = blockchainTypeMap[token.chainId] else {
                 continue
             }
@@ -155,7 +180,9 @@ private extension USwapAssetRepository {
 
         return assetMap
     }
+}
 
+private extension USwapAssetRepository {
     static func tokenQueries(blockchainType: BlockchainType, address: String?) -> [TokenQuery] {
         switch blockchainType {
         case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .tron, .base, .zkSync:

@@ -2,8 +2,11 @@ import Foundation
 import MarketKit
 
 final class ExolixUSwapSubProvider: DefaultUSwapSubProvider {
-    private static let zcashTransparentAsset = "ZEC.ZEC"
     private static let zcashShieldedAsset = "ZEC.ZECSHIELDED"
+
+    static func includesInAssetMap(identifier: String) -> Bool {
+        identifier != zcashShieldedAsset
+    }
 
     private struct DestinationCacheKey: Hashable {
         let accountId: String
@@ -204,14 +207,6 @@ final class ExolixUSwapSubProvider: DefaultUSwapSubProvider {
             refundAddress: request.refundAddress,
             destinationAddress: request.destinationAddress
         )
-    }
-
-    override func asset(token: Token) -> String? {
-        if token.blockchainType == .zcash {
-            return Self.zcashTransparentAsset
-        }
-
-        return super.asset(token: token)
     }
 
     private func supportsAlternateRouteSelection(tokenIn: Token, tokenOut: Token) -> Bool {
