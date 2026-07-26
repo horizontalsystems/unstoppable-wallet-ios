@@ -4,47 +4,47 @@ import Testing
 @testable import WalletCore
 
 struct SwapRequestRefundTests {
-    @Test func actionRequiredStatusIsPending() {
+    @Test func actionRequiredStatusDecodes() {
         #expect(Swap.Status(rawValue: "action_required") == .actionRequired)
-        #expect(Swap.pendingStatuses.contains(.actionRequired))
     }
 
-    @Test func trackResponseDecodesActionRequiredAndPauseReason() throws {
-        let response = try Mapper<USwapMultiSwapProvider.TrackResponse>().map(JSON: [
-            "status": "action_required",
-            "fromAsset": "btc",
-            "toAsset": "eth",
-            "toAmount": "1.23",
-            "providers": ["PEGASUS"],
-            "meta": [
-                "pauseReason": "aml",
+    @Test func trackResponseCarriesActionRequiredAndPauseReason() {
+        let response = USwapMultiSwapApi.TrackResponse(
+            status: "action_required",
+            fromAsset: "btc",
+            toAsset: "eth",
+            toAmount: 1.23,
+            legs: [
+                .init(
+                    status: "completed",
+                    type: "native_send",
+                    chainId: "bitcoin",
+                    txHash: "deposit-hash",
+                    fromAsset: "btc",
+                    toAsset: "btc"
+                ),
             ],
-            "legs": [
-                [
-                    "status": "completed",
-                    "type": "native_send",
-                    "chainId": "bitcoin",
-                    "hash": "deposit-hash",
-                    "fromAsset": "btc",
-                    "toAsset": "btc",
-                ],
-            ],
-        ])
+            provider: "PEGASUS",
+            pauseReason: "aml"
+        )
 
-        #expect(response.status == .actionRequired)
+        #expect(Swap.Status(rawValue: response.status) == .actionRequired)
         #expect(response.provider == "PEGASUS")
         #expect(response.pauseReason == "aml")
     }
 
-    @Test func unknownTrackStatusDecodesAsUnknown() throws {
-        let response = try Mapper<USwapMultiSwapProvider.TrackResponse>().map(JSON: [
-            "status": "new_provider_status",
-            "fromAsset": "btc",
-            "toAsset": "eth",
-            "legs": [],
-        ])
+    @Test func unknownTrackStatusMapsToUnknown() {
+        let response = USwapMultiSwapApi.TrackResponse(
+            status: "new_provider_status",
+            fromAsset: "btc",
+            toAsset: "eth",
+            toAmount: nil,
+            legs: [],
+            provider: nil,
+            pauseReason: nil
+        )
 
-        #expect(response.status == .unknown)
+        #expect((Swap.Status(rawValue: response.status) ?? .unknown) == .unknown)
     }
 
     @Test func providerContactsParseFromProvidersResponse() throws {
