@@ -80,13 +80,16 @@ class TransactionInfoService {
             }
             tokens.append(tx.fee?.token)
         case let tx as StellarTransactionRecord:
-            switch tx.type {
-            case let .accountCreated(startingBalance, _): tokens.append(startingBalance.token)
-            case let .accountFunded(startingBalance, _): tokens.append(startingBalance.token)
-            case let .sendPayment(value, _, _): tokens.append(value.token)
-            case let .receivePayment(value, _): tokens.append(value.token)
-            case let .changeTrust(value, _, _, _): tokens.append(value.token)
-            default: ()
+            for action in [tx.type] + tx.additionalActions {
+                switch action {
+                case let .accountCreated(startingBalance, _): tokens.append(startingBalance.token)
+                case let .accountFunded(startingBalance, _): tokens.append(startingBalance.token)
+                case let .sendPayment(value, _, _): tokens.append(value.token)
+                case let .receivePayment(value, _): tokens.append(value.token)
+                case let .changeTrust(value, _, _, _): tokens.append(value.token)
+                case let .swap(valueIn, valueOut): tokens.append(contentsOf: [valueIn.token, valueOut.token])
+                default: ()
+                }
             }
             tokens.append(tx.fee?.token)
         case let tx as SolanaIncomingTransactionRecord: tokens.append(tx.value.token)

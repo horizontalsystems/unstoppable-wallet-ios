@@ -15,10 +15,13 @@ class OutputTransactionFactory {
             return [r.to]
 
         case let r as StellarTransactionRecord:
-            if case let .sendPayment(_, to, _) = r.type {
-                return [to]
+            let recipients = ([r.type] + r.additionalActions).compactMap { action -> String? in
+                if case let .sendPayment(_, to, _) = action {
+                    return to
+                }
+                return nil
             }
-            return nil
+            return recipients.isEmpty ? nil : recipients
 
         case let r as ExternalContractCallTransactionRecord:
             let addresses = filterZeroPoisoningEvents(r.outgoingEvents).map(\.address)

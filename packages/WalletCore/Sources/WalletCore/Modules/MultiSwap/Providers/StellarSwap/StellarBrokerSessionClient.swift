@@ -43,6 +43,7 @@ class StellarBrokerSessionClient: NSObject {
         case quoteNotAvailable(String?)
         case invalidSwapTx
         case debitLimitExceeded
+        case txLimitExceeded
         case tradeFailed(String?)
         case serverError(String)
         case socketClosed
@@ -55,6 +56,7 @@ class StellarBrokerSessionClient: NSObject {
             case let .quoteNotAvailable(message): return "StellarBroker: quote not available\(message.map { ": \($0)" } ?? "")"
             case .invalidSwapTx: return "StellarBroker: invalid swap transaction received"
             case .debitLimitExceeded: return "StellarBroker: transaction would spend more than the confirmed amount"
+            case .txLimitExceeded: return "StellarBroker: too many transactions in one trade session"
             case let .tradeFailed(status): return "StellarBroker: trade failed\(status.map { " (\($0))" } ?? "")"
             case let .serverError(message): return "StellarBroker: \(message)"
             case .socketClosed: return "StellarBroker: connection closed"
@@ -90,7 +92,16 @@ class StellarBrokerSessionClient: NSObject {
     private let sellingAsset: Asset?
     private let sellingSacHex: String? // the selling asset's SAC contract id (hex)
     private let maxDebit: Decimal
-    private var totalDebited: Decimal = 0
+    // A CUMULATIVE budget is undecidable client-side against SB's real protocol: a failed
+    // chunk is rebuilt on a DIFFERENT channel account (live-verified 2026-07-24), so a
+    // legitimate retry is byte-indistinguishable from a parallel spend, and any cumulative
+    // ceiling kills real trades on exactly the flaky days retries happen. Enforced instead:
+    // PER-TX debit ≤ maxDebit (no single tx beyond confirmed + headroom) and at most
+    // `maxDebitedTxs` distinct debiting txs per session — bounding a compromised broker at
+    // ~5× the confirmed amount, in the selling asset only, while today's observed honest
+    // trades use 2–3 (chunks + a retry).
+    private static let maxDebitedTxs = 5
+    private var debitedTxCount = 0
 
     private var socket: URLSessionWebSocketTask?
     private var uid: String?
@@ -145,7 +156,6 @@ class StellarBrokerSessionClient: NSObject {
         guard quote["status"] as? String == "success" else {
             throw SessionError.quoteNotAvailable(quote["error"] as? String)
         }
-
 
         // Phase 3 — confirm immediately (the quote is fresh by construction; the 10s staleness
         // gate of the reference client is inherently satisfied) and process the trade stream.
@@ -222,17 +232,25 @@ class StellarBrokerSessionClient: NSObject {
             .compactMap { $0 as? InvokeHostFunctionOperation }
             .reduce(0) { $0 + $1.auth.count }
         let isSoroban = sorobanAuthCount > 0
-        let alreadySigned = !transaction.transactionXDR.signatures.isEmpty
+        let signedByTrader = hasTraderSignature(transaction: transaction, network: network)
 
-        // Debit budget check — ONCE per tx (the Soroban round-trip re-sends the same tx
-        // signed for its fee bump; counting it twice would falsely trip the limit).
-        if !alreadySigned {
+        // Debit budget check — ONCE per tx. "Once" is keyed off OUR verified signature, not
+        // signature presence: SB's channel-account pattern delivers classic txs already
+        // carrying the channel account's sequence signature, which would otherwise skip the
+        // budget for every classic tx. The Soroban round-trip re-sends the tx WE signed for
+        // its fee bump — that (and only that) is the pass the budget must not double-count.
+        if !signedByTrader {
             let debit = try tradeDebit(transaction: transaction)
-            guard totalDebited + debit <= maxDebit else { throw SessionError.debitLimitExceeded }
-            totalDebited += debit
+            guard debit <= maxDebit else {
+                throw SessionError.debitLimitExceeded
+            }
+            guard debitedTxCount < Self.maxDebitedTxs else {
+                throw SessionError.txLimitExceeded
+            }
+            debitedTxCount += 1
         }
 
-        if isSoroban, !alreadySigned {
+        if isSoroban, !signedByTrader {
             // Phase 1: sign the Soroban auth entries (expiring just past the tx's ledger
             // bounds, like the reference client), then the inner tx — NO fee bump yet.
             let expirationLedger = transaction.preconditions?.ledgerBounds.map { $0.maxLedger + 1 }
@@ -248,7 +266,7 @@ class StellarBrokerSessionClient: NSObject {
             return try transaction.encodedEnvelope()
         }
 
-        if !isSoroban {
+        if !isSoroban, !signedByTrader {
             try transaction.sign(keyPair: keyPair, network: network)
         }
 
@@ -267,6 +285,21 @@ class StellarBrokerSessionClient: NSObject {
         }
 
         return try feeBump.encodedEnvelope()
+    }
+
+    /// TRUE only when one of the envelope's signatures cryptographically VERIFIES against the
+    /// trader's key for this tx hash. A hint match alone is spoofable (the hint is the public
+    /// key's last 4 bytes — public knowledge), and "has any signature" is wrong because SB's
+    /// channel accounts pre-sign classic txs; both would let a tx bypass the debit budget.
+    private func hasTraderSignature(transaction: Transaction, network: Network) -> Bool {
+        guard let hash = try? transaction.getTransactionHashData(network: network) else { return false }
+        let hint = Data(keyPair.publicKey.bytes.suffix(4))
+        for decorated in transaction.transactionXDR.signatures where decorated.hint.wrapped == hint {
+            if (try? keyPair.verify(signature: [UInt8](decorated.signature), message: [UInt8](hash))) == true {
+                return true
+            }
+        }
+        return false
     }
 
     /// The reference client's safety check: every operation must be a path payment that either

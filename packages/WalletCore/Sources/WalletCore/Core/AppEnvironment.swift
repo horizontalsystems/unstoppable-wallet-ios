@@ -26,7 +26,7 @@ public extension AppEnvironment {
 
         static let dev = Config(
             marketApiUrl: "https://api-dev.blocksdecoded.com",
-            swapApiUrl: "http://192.168.1.21:3000",
+            swapApiUrl: "https://swap-dev.unstoppable.money/api",
             referralAppServerUrl: "https://dev-be.unstoppable.money/api",
             showBuildNumber: true,
             showDevTools: true

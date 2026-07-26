@@ -7,20 +7,17 @@ import MarketKit
 /// Network fees are paid per fee-bumped tx during the session, so no upfront fee is shown.
 class StellarBrokerFinalQuote: SwapFinalQuote {
     let sessionParams: StellarBrokerSessionClient.Params
-    private let token: Token
 
     init(
         amountOut: Decimal,
         recipient: String?,
         estimatedTime: TimeInterval?,
         sessionParams: StellarBrokerSessionClient.Params,
-        token: Token,
         transactionError: Error?,
         toAddress: String,
         providerSwapId: String?
     ) {
         self.sessionParams = sessionParams
-        self.token = token
 
         super.init(
             expectedBuyAmount: amountOut,
@@ -37,7 +34,7 @@ class StellarBrokerFinalQuote: SwapFinalQuote {
     }
 
     override func executable(tokenIn: Token) -> ISwapExecutable {
-        StellarBrokerExecutable(token: tokenIn, sessionParams: sessionParams)
+        StellarExecutable(token: tokenIn, kind: .brokerSession(sessionParams))
     }
 
     override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {

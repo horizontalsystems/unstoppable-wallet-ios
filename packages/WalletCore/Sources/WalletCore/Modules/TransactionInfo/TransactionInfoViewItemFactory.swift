@@ -677,53 +677,60 @@ class TransactionInfoViewItemFactory {
             feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(appValue: $0, rate: _rate($0.coin))) }
 
         case let record as StellarTransactionRecord:
-            var viewItems: [TransactionInfoModule.ViewItem]
+            // One section per action, primary first (the TON model): a swap tx that also
+            // carries e.g. its service-fee payment op shows the swap on top and the fee as a
+            // plain fund transfer below.
+            let actions = [record.type] + record.additionalActions
 
-            switch record.type {
-            case let .accountCreated(startingBalance, funder):
-                viewItems = receiveSection(source: record.source, appValue: startingBalance, from: funder, rates: item.rates, balanceHidden: balanceHidden)
+            for (index, action) in actions.enumerated() {
+                var viewItems: [TransactionInfoModule.ViewItem]
 
-            case let .accountFunded(startingBalance, account):
-                viewItems = sendSection(source: record.source, appValue: startingBalance, to: account, rates: item.rates, balanceHidden: balanceHidden)
+                switch action {
+                case let .accountCreated(startingBalance, funder):
+                    viewItems = receiveSection(source: record.source, appValue: startingBalance, from: funder, rates: item.rates, balanceHidden: balanceHidden)
 
-            case let .sendPayment(value, to, sentToSelf):
-                viewItems = sendSection(source: record.source, appValue: value, to: to, rates: item.rates, sentToSelf: sentToSelf, balanceHidden: balanceHidden)
+                case let .accountFunded(startingBalance, account):
+                    viewItems = sendSection(source: record.source, appValue: startingBalance, to: account, rates: item.rates, balanceHidden: balanceHidden)
 
-                if sentToSelf {
-                    viewItems.append(.sentToSelf)
+                case let .sendPayment(value, to, sentToSelf):
+                    viewItems = sendSection(source: record.source, appValue: value, to: to, rates: item.rates, sentToSelf: sentToSelf, balanceHidden: balanceHidden)
+
+                    if sentToSelf {
+                        viewItems.append(.sentToSelf)
+                    }
+
+                case let .receivePayment(value, from):
+                    viewItems = receiveSection(source: record.source, appValue: value, from: from, rates: item.rates, balanceHidden: balanceHidden)
+
+                case let .swap(valueIn, valueOut):
+                    viewItems = [
+                        amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(appValue: valueIn), appValue: valueIn, rate: _rate(valueIn.coin), type: type(appValue: valueIn, .outgoing), balanceHidden: balanceHidden),
+                        amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(appValue: valueOut), appValue: valueOut, rate: _rate(valueOut.coin), type: type(appValue: valueOut, .incoming), balanceHidden: balanceHidden),
+                    ]
+
+                    if let priceString = priceString(valueIn: valueIn, valueOut: valueOut, coinPriceIn: _rate(valueIn.coin)) {
+                        viewItems.append(.price(price: priceString))
+                    }
+
+                case let .changeTrust(value, _, _, _):
+                    let rate = _rate(value.coin)
+
+                    viewItems = [
+                        amount(source: record.source, title: "Change Trust", subtitle: nil, appValue: value, rate: rate, type: .neutral, balanceHidden: balanceHidden),
+                    ]
+
+                    viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: value.coin?.code)))
+
+                case let .unsupported(type):
+                    viewItems = [.fee(title: "Operation", value: type)]
                 }
 
-            case let .receivePayment(value, from):
-                viewItems = receiveSection(source: record.source, appValue: value, from: from, rates: item.rates, balanceHidden: balanceHidden)
-
-            case let .swap(valueIn, valueOut):
-                viewItems = [
-                    amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(appValue: valueIn), appValue: valueIn, rate: _rate(valueIn.coin), type: type(appValue: valueIn, .outgoing), balanceHidden: balanceHidden),
-                    amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(appValue: valueOut), appValue: valueOut, rate: _rate(valueOut.coin), type: type(appValue: valueOut, .incoming), balanceHidden: balanceHidden),
-                ]
-
-                if let priceString = priceString(valueIn: valueIn, valueOut: valueOut, coinPriceIn: _rate(valueIn.coin)) {
-                    viewItems.append(.price(price: priceString))
+                if index == 0, let memo = record.operation.memo {
+                    viewItems.append(.memo(text: memo))
                 }
 
-            case let .changeTrust(value, _, _, _):
-                let rate = _rate(value.coin)
-
-                viewItems = [
-                    amount(source: record.source, title: "Change Trust", subtitle: nil, appValue: value, rate: rate, type: .neutral, balanceHidden: balanceHidden),
-                ]
-
-                viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: value.coin?.code)))
-
-            case let .unsupported(type):
-                viewItems = [.fee(title: "Operation", value: type)]
+                sections.append(.init(viewItems))
             }
-
-            if let memo = record.operation.memo {
-                viewItems.append(.memo(text: memo))
-            }
-
-            sections.append(.init(viewItems))
 
             feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(appValue: $0, rate: _rate($0.coin))) }
 

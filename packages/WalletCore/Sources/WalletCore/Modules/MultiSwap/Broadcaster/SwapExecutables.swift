@@ -79,16 +79,24 @@ public struct TonExecutable: ISwapExecutable {
     public let transactionParam: SendTransactionParam
 }
 
+// Stellar is the one chain with more than one execution shape, so the variants are cases of a
+// single executable rather than sibling ISwapExecutable structs: StellarSwapBroadcaster does one
+// cast and an exhaustive switch, which makes a new variant a compile error at every site that
+// has to handle it. Mirrors StellarSwapMultiSwapProvider.Execution, the wire-side enum this is
+// built from. Do NOT split this back into per-variant structs — brokerSession is dormant behind
+// StellarSwapMultiSwapProvider.stellarBrokerEnabled and the compiler is what keeps it honest.
 public struct StellarExecutable: ISwapExecutable {
-    public let token: Token
-    let transactionData: StellarSendHelper.TransactionData
-}
+    // Internal, like the payloads it carries — only the token is part of the public surface.
+    enum Kind {
+        // Server-built XDR (Soroswap / Aquarius / Stellar DEX): sign it and submit.
+        case signed(StellarSendHelper.TransactionData)
+        // StellarBroker interactive trade — the broadcaster runs the WebSocket session (the
+        // broker builds + submits the txs; we sign each one) rather than broadcasting a tx.
+        case brokerSession(StellarBrokerSessionClient.Params)
+    }
 
-// StellarBroker interactive trade — the broadcaster runs the WebSocket session (the broker
-// builds + submits the txs; we sign each one) instead of broadcasting a prepared tx.
-public struct StellarBrokerExecutable: ISwapExecutable {
     public let token: Token
-    let sessionParams: StellarBrokerSessionClient.Params
+    let kind: Kind
 }
 
 public struct MoneroExecutable: ISwapExecutable {

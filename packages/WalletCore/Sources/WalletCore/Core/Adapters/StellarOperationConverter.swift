@@ -94,9 +94,16 @@ class StellarOperationConverter {
 }
 
 extension StellarOperationConverter {
-    func transactionRecord(operation: TxOperation) -> StellarTransactionRecord {
-        let type = type(type: operation.type)
+    /// All operations of ONE transaction (the adapter groups by hash). The swap is the primary
+    /// action when the tx contains one — e.g. a DEX swap whose service-fee payment op rides the
+    /// same atomic tx renders as a single "Swapped" row, the fee as a Tx Info fund flow.
+    func transactionRecord(operations: [TxOperation]) -> StellarTransactionRecord {
+        let types = operations.map { type(type: $0.type) }
+        let primaryIndex = types.firstIndex {
+            if case .swap = $0 { return true }
+            return false
+        } ?? 0
 
-        return StellarTransactionRecord(source: source, operation: operation, baseToken: baseToken, type: type, spam: false)
+        return StellarTransactionRecord(source: source, operations: operations, baseToken: baseToken, types: types, primaryIndex: primaryIndex, spam: false)
     }
 }
