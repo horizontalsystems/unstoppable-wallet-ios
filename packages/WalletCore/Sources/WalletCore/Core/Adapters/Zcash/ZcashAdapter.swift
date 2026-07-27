@@ -720,13 +720,13 @@ class ZcashAdapter {
     private func rewind(unmined: ZcashTransaction.Overview, completion: (() -> Void)? = nil) {
         synchronizer
             .rewind(.transaction(unmined))
-            .sink(receiveCompletion: { result in
+            .sink(receiveCompletion: { [weak self] result in
                       switch result {
                       case .finished:
                           Core.shared.localStorage.zcashAlwaysPendingRewind = true
                           completion?()
                       case .failure:
-                          self.rewindQuick()
+                          self?.rewindQuick()
                       }
                   },
                   receiveValue: { _ in })
