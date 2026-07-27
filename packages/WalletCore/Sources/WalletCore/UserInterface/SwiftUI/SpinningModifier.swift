@@ -14,7 +14,7 @@ struct ContinuousSpinningModifier: ViewModifier {
 }
 
 extension View {
-    func spinning(duration: Double = 2.0) -> some View {
+    public func spinning(duration: Double = 2.0) -> some View {
         modifier(ContinuousSpinningModifier(duration: duration))
     }
 }

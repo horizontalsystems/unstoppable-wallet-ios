@@ -1,13 +1,13 @@
 import SwiftUI
 
-struct Cell<Left: View, Middle: View, Right: View>: View {
+public struct Cell<Left: View, Middle: View, Right: View>: View {
     private let style: Style
     private let left: Left
     private let middle: Middle
     private let right: Right
     private let action: (() -> Void)?
 
-    init(
+    public init(
         style: Style = .primary,
         @ViewBuilder left: () -> Left = { EmptyView() },
         @ViewBuilder middle: () -> Middle,
@@ -21,7 +21,7 @@ struct Cell<Left: View, Middle: View, Right: View>: View {
         self.action = action
     }
 
-    var body: some View {
+    public var body: some View {
         if let action {
             Button(action: action) {
                 content()
@@ -44,7 +44,7 @@ struct Cell<Left: View, Middle: View, Right: View>: View {
         .padding(style.insets)
     }
 
-    enum Style {
+    public enum Style {
         case primary
         case secondary
 

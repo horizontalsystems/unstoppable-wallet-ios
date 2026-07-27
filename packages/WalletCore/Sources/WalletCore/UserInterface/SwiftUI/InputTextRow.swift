@@ -1,17 +1,17 @@
 import SwiftUI
 
-struct InputTextRow<Content: View>: View {
+public struct InputTextRow<Content: View>: View {
     @ViewBuilder let content: Content
     let vertical: CGFloat
     @Binding var borderColor: Color
 
-    init(vertical: CGFloat = 16, borderColor: Binding<Color> = .constant(Color.themeBlade), @ViewBuilder content: () -> Content) {
+    public init(vertical: CGFloat = 16, borderColor: Binding<Color> = .constant(Color.themeBlade), @ViewBuilder content: () -> Content) {
         self.content = content()
         self.vertical = vertical
         _borderColor = borderColor
     }
 
-    var body: some View {
+    public var body: some View {
         HStack(spacing: .margin16) {
             content
         }

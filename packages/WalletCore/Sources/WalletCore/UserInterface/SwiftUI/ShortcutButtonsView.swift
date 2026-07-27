@@ -1,12 +1,24 @@
 import SwiftUI
 
-struct ShortcutButtonsView: View {
+public struct ShortcutButtonsView: View {
     @Binding var showDelete: Bool
     let items: [ShortCutButtonType]
     let onTap: (Int) -> Void
     let onTapDelete: () -> Void
 
-    var body: some View {
+    public init(
+        showDelete: Binding<Bool>,
+        items: [ShortCutButtonType],
+        onTap: @escaping (Int) -> Void,
+        onTapDelete: @escaping () -> Void
+    ) {
+        _showDelete = showDelete
+        self.items = items
+        self.onTap = onTap
+        self.onTapDelete = onTapDelete
+    }
+
+    public var body: some View {
         HStack(spacing: .margin8) {
             if showDelete {
                 IconButton(icon: "trash", style: .secondary, size: .small) {
@@ -30,7 +42,7 @@ struct ShortcutButtonsView: View {
     }
 }
 
-enum ShortCutButtonType {
+public enum ShortCutButtonType {
     case text(String)
     case icon(String)
 

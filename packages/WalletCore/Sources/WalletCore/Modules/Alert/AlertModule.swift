@@ -11,13 +11,13 @@ protocol IAlertRouter {
     func close(completion: (() -> Void)?)
 }
 
-struct AlertViewItem {
+public struct AlertViewItem {
     let text: String
     let description: String?
     let selected: Bool
     let disabled: Bool
 
-    init(text: String, description: String? = nil, selected: Bool = false, disabled: Bool = false) {
+    public init(text: String, description: String? = nil, selected: Bool = false, disabled: Bool = false) {
         self.text = text
         self.description = description
         self.selected = selected

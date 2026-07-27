@@ -28,7 +28,7 @@ struct SearchableModifier: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     func searchBar(text: Binding<String>, prompt: String, autoFocus: Bool = false, isActive: Bool = true) -> some View {
         modifier(SearchableModifier(text: text, prompt: prompt, autoFocus: autoFocus, isActive: isActive))
     }

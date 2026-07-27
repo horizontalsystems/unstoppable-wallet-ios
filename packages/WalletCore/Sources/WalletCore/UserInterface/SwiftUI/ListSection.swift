@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ListSection<Content: View>: View {
+public struct ListSection<Content: View>: View {
     @Environment(\.themeListStyle) var themeListStyle
 
     private let selected: Bool
@@ -9,7 +9,7 @@ struct ListSection<Content: View>: View {
     private let footer: String?
     private let content: Content
 
-    init(selected: Bool = false, header: String? = nil, footer: String? = nil, uppercased: Bool = true, @ViewBuilder content: () -> Content) {
+    public init(selected: Bool = false, header: String? = nil, footer: String? = nil, uppercased: Bool = true, @ViewBuilder content: () -> Content) {
         self.selected = selected
         self.header = header
         self.footer = footer
@@ -17,7 +17,7 @@ struct ListSection<Content: View>: View {
         self.content = content()
     }
 
-    var body: some View {
+    public var body: some View {
         _VariadicView.Tree(Layout(themeListStyle: themeListStyle, selected: selected, uppercased: uppercased, header: header, footer: footer)) {
             content
         }

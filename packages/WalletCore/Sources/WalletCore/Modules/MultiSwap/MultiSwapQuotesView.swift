@@ -175,11 +175,11 @@ extension MultiSwapQuotesView {
     @ViewBuilder static func view(type: SwapProviderType, style: Style = .subheadSB, iconFirst: Bool = false) -> some View {
         HStack(spacing: style.hMargin) {
             if iconFirst {
-                ThemeImage(type.icon, size: style.iconSize, colorStyle: type.сolorStyle)
-                ThemeText(type.title, style: style.textStyle, colorStyle: type.сolorStyle)
+                ThemeImage(type.icon, size: style.iconSize, colorStyle: type.colorStyle)
+                ThemeText(type.title, style: style.textStyle, colorStyle: type.colorStyle)
             } else {
-                ThemeText(type.title, style: style.textStyle, colorStyle: type.сolorStyle)
-                ThemeImage(type.icon, size: style.iconSize, colorStyle: type.сolorStyle)
+                ThemeText(type.title, style: style.textStyle, colorStyle: type.colorStyle)
+                ThemeImage(type.icon, size: style.iconSize, colorStyle: type.colorStyle)
             }
         }
     }

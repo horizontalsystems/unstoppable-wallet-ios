@@ -1,7 +1,7 @@
 import Combine
 import SwiftUI
 
-struct CoordinatorViewModifier: ViewModifier {
+public struct CoordinatorViewModifier: ViewModifier {
     private let coordinator = Coordinator.shared
     private let level: Int
 
@@ -9,11 +9,11 @@ struct CoordinatorViewModifier: ViewModifier {
     @State private var sheetHeight: CGFloat?
     @State private var cancellable: AnyCancellable?
 
-    init(level: Int = 0) {
+    public init(level: Int = 0) {
         self.level = level
     }
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .onAppear {
                 currentType = coordinator.route(at: level)?.type

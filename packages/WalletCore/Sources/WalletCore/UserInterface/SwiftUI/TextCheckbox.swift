@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct TextCheckbox: View {
+public struct TextCheckbox: View {
     var title: CustomStringConvertible?
     var subhead: CustomStringConvertible?
     var subheadSB: CustomStringConvertible?
@@ -9,7 +9,25 @@ struct TextCheckbox: View {
     let checked: Bool
     var alignment: HorizontalAlignment = .trailing
 
-    var body: some View {
+    public init(
+        title: CustomStringConvertible? = nil,
+        subhead: CustomStringConvertible? = nil,
+        subheadSB: CustomStringConvertible? = nil,
+        description: CustomStringConvertible? = nil,
+        description2: CustomStringConvertible? = nil,
+        checked: Bool,
+        alignment: HorizontalAlignment = .trailing
+    ) {
+        self.title = title
+        self.subhead = subhead
+        self.subheadSB = subheadSB
+        self.description = description
+        self.description2 = description2
+        self.checked = checked
+        self.alignment = alignment
+    }
+
+    public var body: some View {
         HStack(spacing: 12) {
             let leading = alignment == .leading
             let textAligment: TextAlignment = leading ? .leading : .trailing

@@ -1,9 +1,11 @@
 import SwiftUI
 
-struct DeterminiteSpinnerStyle: ProgressViewStyle {
+public struct DeterminiteSpinnerStyle: ProgressViewStyle {
     private let strokeWidth: CGFloat = 2
 
-    func makeBody(configuration: Configuration) -> some View {
+    public init() {}
+
+    public func makeBody(configuration: Configuration) -> some View {
         ZStack {
             Circle()
                 .inset(by: strokeWidth / 2)

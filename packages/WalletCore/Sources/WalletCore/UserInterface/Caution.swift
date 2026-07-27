@@ -1,17 +1,17 @@
 import SwiftUI
 
-enum CautionState: Equatable {
+public enum CautionState: Equatable {
     case none
     case caution(Caution)
 
-    var caution: Caution? {
+    public var caution: Caution? {
         switch self {
         case let .caution(caution): return caution
         default: return nil
         }
     }
 
-    var color: Color {
+    public var color: Color {
         switch self {
         case .none: return Color.clear
         case let .caution(caution):
@@ -51,9 +51,14 @@ enum FieldCautionState: Equatable {
     }
 }
 
-struct Caution: Equatable, Hashable {
-    let text: String
-    let type: CautionType
+public struct Caution: Equatable, Hashable {
+    public let text: String
+    public let type: CautionType
+
+    public init(text: String, type: CautionType) {
+        self.text = text
+        self.type = type
+    }
 
     func cautionNew(title: String? = nil) -> CautionNew {
         .init(title: title, text: text, type: type)

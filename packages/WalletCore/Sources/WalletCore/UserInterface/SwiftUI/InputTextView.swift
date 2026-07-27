@@ -102,16 +102,16 @@ struct ColoredBorder: ViewModifier {
     }
 }
 
-struct CautionBorder: ViewModifier {
+public struct CautionBorder: ViewModifier {
     let cornerRadius: CGFloat
     @Binding var cautionState: CautionState
 
-    init(cornerRadius: CGFloat = InputView.cornerRadius, cautionState: Binding<CautionState>) {
+    public init(cornerRadius: CGFloat = .cornerRadius12, cautionState: Binding<CautionState>) {
         self.cornerRadius = cornerRadius
         _cautionState = cautionState
     }
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .overlay(
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
@@ -138,10 +138,14 @@ struct FieldCautionBorder: ViewModifier {
     }
 }
 
-struct CautionPrompt: ViewModifier {
+public struct CautionPrompt: ViewModifier {
     @Binding var cautionState: CautionState
 
-    func body(content: Content) -> some View {
+    public init(cautionState: Binding<CautionState>) {
+        _cautionState = cautionState
+    }
+
+    public func body(content: Content) -> some View {
         VStack(spacing: 8) {
             content
 

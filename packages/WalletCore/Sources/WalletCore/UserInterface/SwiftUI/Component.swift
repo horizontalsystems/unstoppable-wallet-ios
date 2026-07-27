@@ -1,11 +1,17 @@
 import SwiftUI
 
-struct ComponentText: CustomStringConvertible {
+public struct ComponentText: CustomStringConvertible {
     let text: String
     var colorStyle: ColorStyle?
     var dimmed: Bool = false
 
-    var description: String { text }
+    public init(text: String, colorStyle: ColorStyle? = nil, dimmed: Bool = false) {
+        self.text = text
+        self.colorStyle = colorStyle
+        self.dimmed = dimmed
+    }
+
+    public var description: String { text }
 }
 
 struct AttibutedComponentText: CustomStringConvertible {

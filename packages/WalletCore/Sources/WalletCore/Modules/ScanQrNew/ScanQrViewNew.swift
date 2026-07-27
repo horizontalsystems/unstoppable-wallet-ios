@@ -1,21 +1,21 @@
 import PhotosUI
 import SwiftUI
 
-struct ScanQrViewNew: View {
+public struct ScanQrViewNew: View {
     @StateObject private var viewModel: ScanQrViewModelNew
     @Binding private var isPresented: Bool
 
     private let reportAfterDismiss: Bool
     private let options: ScanQrModuleNew.Options
 
-    init(reportAfterDismiss: Bool = false, options: ScanQrModuleNew.Options = [.paste, .picker], isPresented: Binding<Bool>, didFetch: ((String) -> Void)?) {
+    public init(reportAfterDismiss: Bool = false, options: ScanQrModuleNew.Options = [.paste, .picker], isPresented: Binding<Bool>, didFetch: ((String) -> Void)?) {
         self.reportAfterDismiss = reportAfterDismiss
         self.options = options
         _isPresented = isPresented
         _viewModel = StateObject(wrappedValue: ScanQrViewModelNew(didFetch: didFetch))
     }
 
-    var body: some View {
+    public var body: some View {
         ThemeNavigationStack {
             ZStack {
                 QrCameraPreviewNew(session: viewModel.session)

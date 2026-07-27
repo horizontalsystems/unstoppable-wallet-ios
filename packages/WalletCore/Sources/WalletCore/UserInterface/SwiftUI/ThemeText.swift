@@ -1,12 +1,12 @@
 import SwiftUI
 
-struct ThemeText: View {
+public struct ThemeText: View {
     private let text: TextType
     private let style: TextStyle
     private let colorStyle: ColorStyle
     private let dimmed: Bool
 
-    init(_ text: CustomStringConvertible, style: TextStyle, colorStyle: ColorStyle? = nil, dimmed: Bool = false) {
+    public init(_ text: CustomStringConvertible, style: TextStyle, colorStyle: ColorStyle? = nil, dimmed: Bool = false) {
         if let componentText = text as? ComponentText {
             self.text = .plain(componentText.text)
             self.style = style
@@ -25,7 +25,7 @@ struct ThemeText: View {
         }
     }
 
-    init(_ attributedString: AttributedString, style: TextStyle, colorStyle: ColorStyle? = nil, dimmed: Bool = false) {
+    public init(_ attributedString: AttributedString, style: TextStyle, colorStyle: ColorStyle? = nil, dimmed: Bool = false) {
         text = .attributed(attributedString)
         self.style = style
         self.colorStyle = colorStyle ?? style.defaultColorStyle
@@ -39,7 +39,7 @@ struct ThemeText: View {
         self.dimmed = dimmed
     }
 
-    var body: some View {
+    public var body: some View {
         Group {
             switch text {
             case let .plain(text): Text(text)
