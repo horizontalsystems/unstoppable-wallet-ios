@@ -83,8 +83,13 @@ class StellarOperationConverter {
                     valueOut: assetValue(asset: inn.key, value: inn.value)
                 )
             }
-            if spent.isEmpty, gained.count == 1, let inn = gained.first {
-                return .receivePayment(value: assetValue(asset: inn.key, value: inn.value), from: data.balanceChanges.first(where: { $0.to == accountId })?.from ?? "")
+            // A pure inbound movement is a receive — but only when the counterparty is known.
+            // A contract-minted balance change carries no `from`, and an empty sender renders as
+            // a blank "From" row; degrade to the labeled invocation instead.
+            if spent.isEmpty, gained.count == 1, let inn = gained.first,
+               let from = data.balanceChanges.first(where: { $0.to == accountId })?.from, !from.isEmpty
+            {
+                return .receivePayment(value: assetValue(asset: inn.key, value: inn.value), from: from)
             }
             return .unsupported(type: data.function)
         case let .unknown(rawType):
@@ -97,7 +102,14 @@ extension StellarOperationConverter {
     /// All operations of ONE transaction (the adapter groups by hash). The swap is the primary
     /// action when the tx contains one — e.g. a DEX swap whose service-fee payment op rides the
     /// same atomic tx renders as a single "Swapped" row, the fee as a Tx Info fund flow.
-    func transactionRecord(operations: [TxOperation]) -> StellarTransactionRecord {
+    /// Nil for an empty group — `StellarTransactionRecord` indexes `operations[primaryIndex]`
+    /// and would trap. The adapter's grouping never produces one, but the contract is explicit
+    /// rather than a latent crash for any future caller.
+    func transactionRecord(operations: [TxOperation]) -> StellarTransactionRecord? {
+        guard !operations.isEmpty else {
+            return nil
+        }
+
         let types = operations.map { type(type: $0.type) }
         let primaryIndex = types.firstIndex {
             if case .swap = $0 { return true }

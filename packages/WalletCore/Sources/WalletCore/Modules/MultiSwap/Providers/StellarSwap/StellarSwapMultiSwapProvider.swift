@@ -128,12 +128,20 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
             throw ProviderError.noRoutes
         }
 
-        var parameters = baseParameters(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage)
+        var parameters = try baseParameters(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage)
         parameters["provider"] = provider
         parameters["destinationAddress"] = destination
         parameters["sourceAddress"] = source
 
         let route: Route = try await networkManager.fetch(url: "\(USwapMultiSwapProvider.baseUrl)/swap", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+
+        // A committed /v2/swap must carry the tracking handle — it is what `track(swap:)` sends
+        // as `uuid`, and the server resolves the record from it alone. Without it the swap is
+        // untrackable and sits pending forever, so fail before any funds move (the same guard
+        // USwapMultiSwapProvider.fetchSwap applies).
+        guard let uuid = route.uuid, !uuid.isEmpty else {
+            throw ProviderError.noTransactionData
+        }
 
         let amountOut = route.expectedBuyAmount
         // The server's minBuyAmount is the enforced on-chain floor; null (StellarBroker) means
@@ -158,7 +166,7 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
                 fee: fee,
                 transactionError: transactionError,
                 toAddress: destination,
-                providerSwapId: route.uuid
+                providerSwapId: uuid
             )
 
         case let .stellarBroker(sessionParams):
@@ -171,7 +179,7 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
                 sessionParams: sessionParams,
                 transactionError: transactionError,
                 toAddress: destination,
-                providerSwapId: route.uuid
+                providerSwapId: uuid
             )
 
         case .none:
@@ -240,7 +248,7 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
     /// `/v2/rate` over the given provider set, applying the waterfall: STELLARBROKER when it
     /// quoted (the grant's primary), otherwise the best-priced fallback.
     private func bestRoute(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, providers: [String]) async throws -> Route {
-        var parameters = baseParameters(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage)
+        var parameters = try baseParameters(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage)
         parameters["providers"] = providers
 
         let response: RateResponse = try await networkManager.fetch(url: "\(USwapMultiSwapProvider.baseUrl)/rate", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
@@ -256,10 +264,17 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
         return fallback
     }
 
-    private func baseParameters(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal) -> Parameters {
-        [
-            "sellAsset": asset(token: tokenIn) ?? "",
-            "buyAsset": asset(token: tokenOut) ?? "",
+    /// Throws on an unmappable token rather than sending `"sellAsset": ""`, which is a
+    /// well-formed request the server can only answer with an opaque 400. `supports()` already
+    /// gates both sides, so this is the contract being enforced, not an expected path.
+    private func baseParameters(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal) throws -> Parameters {
+        guard let sellAsset = asset(token: tokenIn), let buyAsset = asset(token: tokenOut) else {
+            throw ProviderError.unsupportedAsset
+        }
+
+        return [
+            "sellAsset": sellAsset,
+            "buyAsset": buyAsset,
             "sellAmount": amountIn.description,
             "slippage": slippage,
             "chainId": "stellar",
@@ -302,6 +317,7 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
 extension StellarSwapMultiSwapProvider {
     enum ProviderError: Error {
         case noStellarAdapter
+        case unsupportedAsset
         case noRoutes
         case noTransactionData
     }

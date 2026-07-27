@@ -24,7 +24,6 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
     private let provider: USwapProvider
     private let networkManager = Core.shared.networkManager
-//    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .verbose))
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let adapterManager = Core.shared.adapterManager
     private let swapAssetStorage = Core.shared.swapAssetStorage
@@ -140,7 +139,11 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 // type; only issuer-less rows are native XLM. Mapping classic rows to the
                 // native query would both lose the asset AND overwrite the real XLM mapping.
                 // The code must come from `ticker` (case-preserving) — `identifier` is uppercased.
-                if let issuer = token.address, !issuer.isEmpty, let code = token.ticker {
+                if let issuer = token.address, !issuer.isEmpty {
+                    // The ISSUER decides the branch, not the pair: a classic row whose `ticker`
+                    // is missing is unmappable, and falling through to the native query would
+                    // overwrite the real XLM mapping — the very thing this branch prevents.
+                    guard let code = token.ticker else { continue }
                     tokenQueries = [TokenQuery(blockchainType: .stellar, tokenType: .stellar(code: code, issuer: issuer))]
                 } else {
                     tokenQueries = blockchainType.nativeTokenQueries

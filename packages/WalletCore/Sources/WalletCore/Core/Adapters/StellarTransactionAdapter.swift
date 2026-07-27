@@ -155,7 +155,7 @@ extension StellarTransactionAdapter: ITransactionsAdapter {
 
     private func handleTransactions(_ operations: [TxOperation]) -> [TransactionRecord] {
         // Preserve stellarKit order
-        let records = Self.groupedByTransaction(operations).map { converter.transactionRecord(operations: $0) }
+        let records = Self.groupedByTransaction(operations).compactMap { converter.transactionRecord(operations: $0) }
 
         // Mutates .spam in-place via reference type.
         // Internally sorts ascending for correct detection,
