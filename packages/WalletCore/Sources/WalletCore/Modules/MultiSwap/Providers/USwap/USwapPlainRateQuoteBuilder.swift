@@ -1,15 +1,27 @@
 import MarketKit
 
-final class USwapPlainRateQuoteBuilder: USwapRateQuoteBuilder {
-    func supports(tokenIn: Token) -> Bool {
-        let blockchainType = tokenIn.blockchainType
+public final class USwapPlainRateQuoteBuilder: USwapRateQuoteBuilder {
+    private let supportsToken: (Token) -> Bool
 
-        return !blockchainType.isEvm
-            && blockchainType != .tron
-            && !blockchainType.isUnsupported
+    public init() {
+        supportsToken = { token in
+            let blockchainType = token.blockchainType
+
+            return !blockchainType.isEvm
+                && blockchainType != .tron
+                && !blockchainType.isUnsupported
+        }
     }
 
-    func build(input: USwapRateQuoteFactory.Input) async throws -> MultiSwapQuote {
+    public init(supportsToken: @escaping (Token) -> Bool) {
+        self.supportsToken = supportsToken
+    }
+
+    public func supports(tokenIn: Token) -> Bool {
+        supportsToken(tokenIn)
+    }
+
+    public func build(input: USwapRateQuoteFactory.Input) async throws -> MultiSwapQuote {
         let estimatedTime = input.response.estimatedTime
             ?? MultiSwapHelpers.estimate(tokenIn: input.tokenIn, tokenOut: input.tokenOut)
 

@@ -3,12 +3,12 @@ import Foundation
 import MarketKit
 import SwiftUI
 
-final class USwapMultiSwapProvider: IMultiSwapProvider {
+public final class USwapMultiSwapProvider: IMultiSwapProvider {
     private let subProvider: USwapSubProvider
     private let rateQuoteFactory: USwapRateQuoteFactory
     private let finalQuoteFactory: USwapFinalQuoteFactory
 
-    init(
+    public init(
         subProvider: USwapSubProvider,
         rateQuoteFactory: USwapRateQuoteFactory,
         finalQuoteFactory: USwapFinalQuoteFactory
@@ -18,26 +18,26 @@ final class USwapMultiSwapProvider: IMultiSwapProvider {
         self.finalQuoteFactory = finalQuoteFactory
     }
 
-    var id: String { subProvider.info.id }
-    var name: String { subProvider.info.name }
-    var type: SwapProviderType { subProvider.info.type }
-    var requireTerms: Bool { subProvider.info.requireTerms }
-    var icon: String { subProvider.info.icon }
-    var syncPublisher: AnyPublisher<Void, Never>? { subProvider.syncPublisher }
+    public var id: String { subProvider.info.id }
+    public var name: String { subProvider.info.name }
+    public var type: SwapProviderType { subProvider.info.type }
+    public var requireTerms: Bool { subProvider.info.requireTerms }
+    public var icon: String { subProvider.info.icon }
+    public var syncPublisher: AnyPublisher<Void, Never>? { subProvider.syncPublisher }
 
-    func slippageSupported(tokenIn: Token, tokenOut: Token) -> Bool {
+    public func slippageSupported(tokenIn: Token, tokenOut: Token) -> Bool {
         subProvider.slippageSupported(tokenIn: tokenIn, tokenOut: tokenOut)
     }
 
-    func supports(tokenIn: Token, tokenOut: Token) -> Bool {
+    public func supports(tokenIn: Token, tokenOut: Token) -> Bool {
         subProvider.supports(tokenIn: tokenIn, tokenOut: tokenOut)
     }
 
-    func mevProtectionAllowed(tokenIn: Token, tokenOut: Token) -> Bool {
+    public func mevProtectionAllowed(tokenIn: Token, tokenOut: Token) -> Bool {
         subProvider.mevProtectionAllowed(tokenIn: tokenIn, tokenOut: tokenOut)
     }
 
-    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {
+    public func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {
         let result = try await subProvider.rate(
             input: USwapRateInput(
                 tokenIn: tokenIn,
@@ -58,7 +58,7 @@ final class USwapMultiSwapProvider: IMultiSwapProvider {
         )
     }
 
-    func confirmationQuote(
+    public func confirmationQuote(
         multiSwapQuote: MultiSwapQuote,
         tokenIn: Token,
         tokenOut: Token,
@@ -105,11 +105,11 @@ final class USwapMultiSwapProvider: IMultiSwapProvider {
         return finalQuote
     }
 
-    func validateTrustedProvider(tokenIn: Token, amountIn: Decimal) async throws -> Bool? {
+    public func validateTrustedProvider(tokenIn: Token, amountIn: Decimal) async throws -> Bool? {
         try await subProvider.validateTrustedProvider(tokenIn: tokenIn, amountIn: amountIn)
     }
 
-    func preSwapView(
+    public func preSwapView(
         step: MultiSwapPreSwapStep,
         tokenIn: Token,
         tokenOut _: Token,
@@ -126,7 +126,7 @@ final class USwapMultiSwapProvider: IMultiSwapProvider {
         ) ?? AnyView(Text("Invalid Pre Swap Step"))
     }
 
-    func track(swap: Swap) async throws -> Swap {
+    public func track(swap: Swap) async throws -> Swap {
         try await subProvider.track(swap: swap)
     }
 }

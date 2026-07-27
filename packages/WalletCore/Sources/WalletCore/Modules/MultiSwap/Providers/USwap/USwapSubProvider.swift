@@ -2,7 +2,7 @@ import Combine
 import Foundation
 import MarketKit
 
-protocol USwapSubProvider {
+public protocol USwapSubProvider {
     var info: USwapProviderInfo { get }
     var syncPublisher: AnyPublisher<Void, Never>? { get }
 
@@ -15,41 +15,72 @@ protocol USwapSubProvider {
     func track(swap: Swap) async throws -> Swap
 }
 
-struct USwapRateInput {
-    let tokenIn: Token
-    let tokenOut: Token
-    let amountIn: Decimal
-    let slippage: Decimal
+public struct USwapRateInput {
+    public let tokenIn: Token
+    public let tokenOut: Token
+    public let amountIn: Decimal
+    public let slippage: Decimal
+
+    public init(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal) {
+        self.tokenIn = tokenIn
+        self.tokenOut = tokenOut
+        self.amountIn = amountIn
+        self.slippage = slippage
+    }
 }
 
-struct USwapRateResult {
-    protocol Replay {}
+public struct USwapRateResult {
+    public protocol Replay {}
 
     protocol Carrying: AnyObject {
         var replay: (any Replay)? { get }
     }
 
-    let response: USwapMultiSwapApi.RateQuote
-    let replay: (any Replay)?
+    public let response: USwapMultiSwapApi.RateQuote
+    public let replay: (any Replay)?
 
-    init(response: USwapMultiSwapApi.RateQuote, replay: (any Replay)? = nil) {
+    public init(response: USwapMultiSwapApi.RateQuote, replay: (any Replay)? = nil) {
         self.response = response
         self.replay = replay
     }
 }
 
-struct USwapCommitInput {
-    let multiSwapQuote: MultiSwapQuote
-    let tokenIn: Token
-    let tokenOut: Token
-    let amountIn: Decimal
-    let slippage: Decimal
-    let recipient: String?
-    let transactionSettings: TransactionSettings?
+public struct USwapCommitInput {
+    public let multiSwapQuote: MultiSwapQuote
+    public let tokenIn: Token
+    public let tokenOut: Token
+    public let amountIn: Decimal
+    public let slippage: Decimal
+    public let recipient: String?
+    public let transactionSettings: TransactionSettings?
+
+    public init(
+        multiSwapQuote: MultiSwapQuote,
+        tokenIn: Token,
+        tokenOut: Token,
+        amountIn: Decimal,
+        slippage: Decimal,
+        recipient: String?,
+        transactionSettings: TransactionSettings?
+    ) {
+        self.multiSwapQuote = multiSwapQuote
+        self.tokenIn = tokenIn
+        self.tokenOut = tokenOut
+        self.amountIn = amountIn
+        self.slippage = slippage
+        self.recipient = recipient
+        self.transactionSettings = transactionSettings
+    }
 }
 
-struct USwapCommitResult {
-    let response: USwapMultiSwapApi.SwapResponse
-    let refundAddress: String?
-    let destinationAddress: String
+public struct USwapCommitResult {
+    public let response: USwapMultiSwapApi.SwapResponse
+    public let refundAddress: String?
+    public let destinationAddress: String
+
+    public init(response: USwapMultiSwapApi.SwapResponse, refundAddress: String?, destinationAddress: String) {
+        self.response = response
+        self.refundAddress = refundAddress
+        self.destinationAddress = destinationAddress
+    }
 }
