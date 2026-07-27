@@ -3,11 +3,11 @@ import UIKit
 
 let THEME_LIST_TOP_VIEW_ID = "theme_list_top_view_id"
 
-struct ThemeList<Content: View>: View {
+public struct ThemeList<Content: View>: View {
     private let content: () -> Content
     private let bottomSpacing: CGFloat?
 
-    init(bottomSpacing: CGFloat? = nil, @ViewBuilder _ content: @escaping () -> Content) {
+    public init(bottomSpacing: CGFloat? = nil, @ViewBuilder _ content: @escaping () -> Content) {
         self.bottomSpacing = bottomSpacing
         self.content = content
     }
@@ -25,7 +25,7 @@ struct ThemeList<Content: View>: View {
         }
     }
 
-    var body: some View {
+    public var body: some View {
         if #available(iOS 17.0, *) {
             list().listSectionSpacing(.custom(0))
         } else {
@@ -58,10 +58,14 @@ struct ThemeList<Content: View>: View {
     }
 }
 
-struct ThemeListSectionHeader: View {
-    let text: String
+public struct ThemeListSectionHeader: View {
+    private let text: String
 
-    var body: some View {
+    public init(text: String) {
+        self.text = text
+    }
+
+    public var body: some View {
         ThemeText(text, style: .subheadSB, colorStyle: .andy)
             .padding(EdgeInsets(top: .margin24, leading: .margin16, bottom: .margin12, trailing: .margin16))
             .frame(maxWidth: .infinity, alignment: .leading)

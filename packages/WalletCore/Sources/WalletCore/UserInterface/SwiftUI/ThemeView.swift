@@ -1,10 +1,15 @@
 import SwiftUI
 
-struct ThemeView<Content: View>: View {
-    var style: ViewStyle = .regular
-    @ViewBuilder let content: Content
+public struct ThemeView<Content: View>: View {
+    private let style: ViewStyle
+    private let content: Content
 
-    var body: some View {
+    public init(style: ViewStyle = .regular, @ViewBuilder content: () -> Content) {
+        self.style = style
+        self.content = content()
+    }
+
+    public var body: some View {
         ZStack {
             style.background.ignoresSafeArea()
 
@@ -22,7 +27,7 @@ struct ThemeView<Content: View>: View {
     }
 }
 
-enum ViewStyle {
+public enum ViewStyle {
     case regular
     case list
 
@@ -122,21 +127,21 @@ enum ThemeRadialPosition {
     case corners
 }
 
-struct ThemeNavigationStack<Content: View>: View {
+public struct ThemeNavigationStack<Content: View>: View {
     private let content: Content
     private let path: Binding<NavigationPath>?
 
-    init(@ViewBuilder content: () -> Content) {
+    public init(@ViewBuilder content: () -> Content) {
         self.content = content()
         path = nil
     }
 
-    init(path: Binding<NavigationPath>, @ViewBuilder content: () -> Content) {
+    public init(path: Binding<NavigationPath>, @ViewBuilder content: () -> Content) {
         self.content = content()
         self.path = path
     }
 
-    var body: some View {
+    public var body: some View {
         Group {
             if let path {
                 NavigationStack(path: path) {

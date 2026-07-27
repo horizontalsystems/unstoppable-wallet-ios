@@ -1,10 +1,15 @@
 import SwiftUI
 
-struct ListHeader<Content: View>: View {
+public struct ListHeader<Content: View>: View {
     var scrollable: Bool = false
     @ViewBuilder let content: Content
 
-    var body: some View {
+    public init(scrollable: Bool = false, @ViewBuilder content: () -> Content) {
+        self.scrollable = scrollable
+        self.content = content()
+    }
+
+    public var body: some View {
         Group {
             if scrollable {
                 ScrollView(.horizontal, showsIndicators: false) {

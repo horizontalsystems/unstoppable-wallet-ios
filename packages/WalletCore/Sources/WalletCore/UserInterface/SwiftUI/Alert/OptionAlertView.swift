@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct OptionAlertView: View {
+public struct OptionAlertView: View {
     let title: String
     let viewItems: [AlertViewItem]
     let onSelect: (Int) -> Void
@@ -10,7 +10,19 @@ struct OptionAlertView: View {
     @State private var backgroundOpacity: CGFloat = 0
     @State private var scale: CGFloat = 0.8
 
-    var body: some View {
+    public init(
+        title: String,
+        viewItems: [AlertViewItem],
+        onSelect: @escaping (Int) -> Void,
+        isPresented: Binding<Bool>
+    ) {
+        self.title = title
+        self.viewItems = viewItems
+        self.onSelect = onSelect
+        _isPresented = isPresented
+    }
+
+    public var body: some View {
         GeometryReader { proxy in
             ZStack {
                 dimView

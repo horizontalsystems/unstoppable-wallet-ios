@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum TextStyle {
+public enum TextStyle {
     case body
     case subhead
     case subheadSB

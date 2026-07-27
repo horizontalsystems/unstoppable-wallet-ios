@@ -19,7 +19,7 @@ private class FirstAppearState: ObservableObject {
     @Published var value: Bool = true
 }
 
-extension View {
+public extension View {
     func onFirstAppear(action: @escaping () -> Void) -> some View {
         modifier(FirstAppearModifier(action: action))
     }

@@ -50,11 +50,11 @@ public enum SwapProviderType: String, CaseIterable, Identifiable {
     case good
     case fair
 
-    var title: String {
+    public var title: String {
         rawValue.capitalized(with: .autoupdatingCurrent)
     }
 
-    var icon: String {
+    public var icon: String {
         switch self {
         case .excellent: return "star_filled"
         case .good: return "shield_check_filled"
@@ -62,7 +62,7 @@ public enum SwapProviderType: String, CaseIterable, Identifiable {
         }
     }
 
-    var сolorStyle: ColorStyle {
+    public var colorStyle: ColorStyle {
         switch self {
         case .excellent: return .green
         case .good: return .blue

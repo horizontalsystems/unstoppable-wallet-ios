@@ -3,8 +3,8 @@ import Foundation
 import MarketKit
 import SwiftUI
 
-class Coordinator: ObservableObject {
-    static let shared = Coordinator()
+public class Coordinator: ObservableObject {
+    public static let shared = Coordinator()
 
     private var routeStack: [Route] = []
 
@@ -17,7 +17,7 @@ class Coordinator: ObservableObject {
         return levelPublishers[level]!.eraseToAnyPublisher()
     }
 
-    func present(type: RouteType = .sheet, @ViewBuilder content: @escaping (Binding<Bool>) -> some View, onDismiss: (() -> Void)? = nil) {
+    public func present(type: RouteType = .sheet, @ViewBuilder content: @escaping (Binding<Bool>) -> some View, onDismiss: (() -> Void)? = nil) {
         DispatchQueue.main.async { [weak self] in
             guard let self else {
                 return
@@ -76,7 +76,7 @@ extension Coordinator {
         }
     }
 
-    enum RouteType: Equatable {
+    public enum RouteType: Equatable {
         case sheet
         case bottomSheet
         case alert
@@ -204,7 +204,7 @@ extension Coordinator {
         }
     }
 
-    func present(url: String?) {
+    public func present(url: String?) {
         guard let url else {
             return
         }
@@ -212,7 +212,7 @@ extension Coordinator {
         present(url: URL(string: url))
     }
 
-    func present(url: URL?) {
+    public func present(url: URL?) {
         guard let url else {
             return
         }

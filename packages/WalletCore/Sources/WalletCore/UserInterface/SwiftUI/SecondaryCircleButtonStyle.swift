@@ -1,17 +1,22 @@
 import SwiftUI
 
-struct SecondaryCircleButtonStyle: ButtonStyle {
+public struct SecondaryCircleButtonStyle: ButtonStyle {
     private let style: Style
     private let isActive: Bool
 
     @Environment(\.isEnabled) private var isEnabled
+
+    public init() {
+        style = .default
+        isActive = false
+    }
 
     init(style: Style = .default, isActive: Bool = false) {
         self.style = style
         self.isActive = isActive
     }
 
-    func makeBody(configuration: Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding(.margin4)
             .foregroundColor(style.foregroundColor(isEnabled: isEnabled, isActive: isActive, isPressed: configuration.isPressed))

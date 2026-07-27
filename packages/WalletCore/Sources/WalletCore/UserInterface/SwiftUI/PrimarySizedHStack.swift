@@ -1,17 +1,17 @@
 import SwiftUI
 
-struct PrimarySizedHStack<Primary: View, Trailing: View>: View {
+public struct PrimarySizedHStack<Primary: View, Trailing: View>: View {
     let spacing: CGFloat
     @ViewBuilder let primary: Primary
     @ViewBuilder let trailing: Trailing
 
-    init(spacing: CGFloat = .margin16, @ViewBuilder primary: () -> Primary, @ViewBuilder trailing: () -> Trailing) {
+    public init(spacing: CGFloat = .margin16, @ViewBuilder primary: () -> Primary, @ViewBuilder trailing: () -> Trailing) {
         self.spacing = spacing
         self.primary = primary()
         self.trailing = trailing()
     }
 
-    var body: some View {
+    public var body: some View {
         PrimarySizedHStackLayout(spacing: spacing) {
             primary
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -21,7 +21,7 @@ struct PrimarySizedHStack<Primary: View, Trailing: View>: View {
     }
 }
 
-extension PrimarySizedHStack where Trailing == EmptyView {
+public extension PrimarySizedHStack where Trailing == EmptyView {
     init(spacing: CGFloat = .margin16, @ViewBuilder primary: () -> Primary) {
         self.spacing = spacing
         self.primary = primary()

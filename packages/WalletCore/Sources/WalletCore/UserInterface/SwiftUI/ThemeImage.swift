@@ -1,16 +1,16 @@
 import Kingfisher
 import SwiftUI
 
-struct ThemeImage: View {
+public struct ThemeImage: View {
     private let image: ImageType
     private let size: CGSize?
     private let colorStyle: ColorStyle
 
-    init(_ name: CustomStringConvertible, size: CGFloat? = nil, colorStyle: ColorStyle? = nil) {
+    public init(_ name: CustomStringConvertible, size: CGFloat? = nil, colorStyle: ColorStyle? = nil) {
         self.init(name, size: size.map { CGSize(width: $0, height: $0) }, colorStyle: colorStyle)
     }
 
-    init(_ name: CustomStringConvertible, size: CGSize? = nil, colorStyle: ColorStyle? = nil) {
+    public init(_ name: CustomStringConvertible, size: CGSize? = nil, colorStyle: ColorStyle? = nil) {
         if let componentImage = name as? ComponentImage {
             switch componentImage {
             case let .icon(name, localSize, localColorStyle):
@@ -33,7 +33,7 @@ struct ThemeImage: View {
         }
     }
 
-    var body: some View {
+    public var body: some View {
         switch image {
         case let .icon(name):
             Image(name)

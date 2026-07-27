@@ -523,6 +523,10 @@ public class Core {
 }
 
 public extension Core {
+    func logError(message: String, context: [String]? = nil, save: Bool = true) {
+        logger.log(level: .error, message: message, context: context, save: save)
+    }
+
     struct Config {
         let autoEnableTokensOnReceive: Bool
         let autoEnableStats: Bool
