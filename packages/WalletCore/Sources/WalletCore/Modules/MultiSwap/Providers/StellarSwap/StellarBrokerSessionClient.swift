@@ -102,6 +102,13 @@ class StellarBrokerSessionClient: NSObject {
     // trades use 2–3 (chunks + a retry).
     private static let maxDebitedTxs = 5
     private var debitedTxCount = 0
+    // The fee bump is paid by the TRADER in XLM and its fee comes straight off the broker's
+    // `tx` message, outside the selling-asset budget above — so it needs its own ceiling or a
+    // compromised broker drains XLM through inflated bumps. Only classic txs reach the bump
+    // (Soroban envelopes return before it), so the honest bid is a few hundred stroops even
+    // under surge pricing; 0.01 XLM is orders of magnitude of headroom and still no drain.
+    private static let defaultFeeBumpStroops: UInt64 = 1000
+    private static let maxFeeBumpStroops: UInt64 = 100_000
 
     private var socket: URLSessionWebSocketTask?
     private var uid: String?
@@ -270,8 +277,10 @@ class StellarBrokerSessionClient: NSObject {
             try transaction.sign(keyPair: keyPair, network: network)
         }
 
-        // Wrap with a fee bump paid by the trader and sign the wrapper.
-        let fee = UInt64(networkFee) ?? 1000
+        // Wrap with a fee bump paid by the trader and sign the wrapper. The bid is clamped:
+        // it is server-supplied and spends the trader's XLM (see maxFeeBumpStroops).
+        let requestedFee = UInt64(networkFee) ?? Self.defaultFeeBumpStroops
+        let fee = min(max(requestedFee, Self.defaultFeeBumpStroops), Self.maxFeeBumpStroops)
         let feeBump = try FeeBumpTransaction(
             sourceAccount: MuxedAccount(accountId: trader),
             fee: fee,
@@ -354,6 +363,9 @@ class StellarBrokerSessionClient: NSObject {
                 }
                 continue
             }
+            // PathPaymentStrictSend/ReceiveOperation both SUBCLASS PathPaymentOperation and add
+            // no fields, so this one cast covers all three kinds validate() admits, and sendMax
+            // is the only spend field any of them has (for strict-send it is the exact amount).
             guard let op = operation as? PathPaymentOperation else { continue } // validate() rejected the rest
             let source = operation.sourceAccountId
             guard source == nil || source == trader else { continue } // foreign-sourced legs don't spend our funds
@@ -363,6 +375,14 @@ class StellarBrokerSessionClient: NSObject {
         return debit
     }
 
+    /// An unrecognized `contractFn` is allowed with zero debit ON PURPOSE, and it is not a hole:
+    /// on Soroban nothing can move the trader's funds without a `require_auth` on the trader,
+    /// and every such call MUST appear as a node in the authorization tree we are signing. So a
+    /// hostile `swap`/`deposit` on an attacker's contract still has to carry a `transfer` from
+    /// the trader as a sub-invocation — which this walk reaches and either budgets (selling-asset
+    /// SAC) or rejects. A name allowlist would add nothing here and would break real trades: SB
+    /// routes across Soroswap/Aquarius/Phoenix/SDEX, whose router entry points are theirs to
+    /// rename, not ours to enumerate.
     private func authorizedDebit(invocation: SorobanAuthorizedInvocationXDR) throws -> Decimal {
         var debit: Decimal = 0
         switch invocation.function {

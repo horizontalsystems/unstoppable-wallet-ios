@@ -17,36 +17,40 @@ struct RegularSendView: View {
             BottomGradientWrapper {
                 SendView(viewModel: sendViewModel)
             } bottomContent: {
-                switch sendViewModel.state {
-                case .syncing:
-                    if sendViewModel.sendData != nil {
-                        ThemeButton(text: "send.confirmation.refreshing".localized, spinner: true, style: .secondary) {}
-                            .disabled(true)
-                    }
-                case .success:
-                    if sendViewModel.sending {
-                        ThemeButton(text: "send.confirmation.sending".localized, spinner: true, style: .secondary) {}
-                            .disabled(true)
-                    } else if let sendData = sendViewModel.sendData, sendViewModel.canSend {
-                        SlideButton(
-                            styling: .text(start: sendData.customSendButtonTitle ?? "send.confirmation.slide_to_send".localized, end: "", success: ""),
-                            action: {
-                                try await sendViewModel.send()
-                            }, completion: {
-                                onSuccess()
+                // A live send outranks every quote state — checked above the switch so a sync
+                // that lands mid-send and moves the screen to .failed can't offer Refresh.
+                if sendViewModel.sending {
+                    ThemeButton(text: "send.confirmation.sending".localized, spinner: true, style: .secondary) {}
+                        .disabled(true)
+                } else {
+                    switch sendViewModel.state {
+                    case .syncing:
+                        if sendViewModel.sendData != nil {
+                            ThemeButton(text: "send.confirmation.refreshing".localized, spinner: true, style: .secondary) {}
+                                .disabled(true)
+                        }
+                    case .success:
+                        if let sendData = sendViewModel.sendData, sendViewModel.canSend {
+                            SlideButton(
+                                styling: .text(start: sendData.customSendButtonTitle ?? "send.confirmation.slide_to_send".localized, end: "", success: ""),
+                                action: {
+                                    try await sendViewModel.send()
+                                }, completion: {
+                                    onSuccess()
+                                }
+                            )
+                        } else if let title = sendViewModel.sendData?.customSendButtonTitle {
+                            ThemeButton(text: title, style: .secondary) {}
+                                .disabled(true)
+                        } else {
+                            ThemeButton(text: "send.confirmation.refresh".localized, style: .secondary) {
+                                sendViewModel.sync()
                             }
-                        )
-                    } else if let title = sendViewModel.sendData?.customSendButtonTitle {
-                        ThemeButton(text: title, style: .secondary) {}
-                            .disabled(true)
-                    } else {
+                        }
+                    case .failed:
                         ThemeButton(text: "send.confirmation.refresh".localized, style: .secondary) {
                             sendViewModel.sync()
                         }
-                    }
-                case .failed:
-                    ThemeButton(text: "send.confirmation.refresh".localized, style: .secondary) {
-                        sendViewModel.sync()
                     }
                 }
             }

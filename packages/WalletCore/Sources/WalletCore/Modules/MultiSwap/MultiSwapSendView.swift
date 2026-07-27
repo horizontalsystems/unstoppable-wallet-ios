@@ -16,38 +16,42 @@ struct MultiSwapSendView: View {
             BottomGradientWrapper {
                 SendView(viewModel: sendViewModel)
             } bottomContent: {
-                switch sendViewModel.state {
-                case .syncing:
-                    if sendViewModel.sendData != nil {
-                        ThemeButton(text: "swap.quoting".localized, spinner: true, style: .secondary) {}
-                            .disabled(true)
-                    }
-                case .success:
-                    if sendViewModel.sending {
-                        // Replaces the SlideButton for the whole send (a StellarBroker session
-                        // can run for minutes). Safe: SlideButton runs its action in an
-                        // unstructured Task that survives the swap, and a disabled button
-                        // here makes a second slide/refresh impossible mid-send.
-                        ThemeButton(text: "send.confirmation.sending".localized, spinner: true, style: .secondary) {}
-                            .disabled(true)
-                    } else if sendViewModel.canSend, !sendViewModel.expired {
-                        SlideButton(
-                            styling: .text(start: "swap.confirmation.slide_to_swap".localized, end: "", success: ""),
-                            action: {
-                                try await sendViewModel.send()
-                            }, completion: {
-                                HudHelper.instance.show(banner: .swapped)
-                                onFinish()
+                // A live send outranks every quote state (a StellarBroker session can run for
+                // minutes, and a sync landing mid-send can still move the screen to .failed).
+                // Checked ABOVE the switch so no branch can offer Refresh — re-quoting during a
+                // send would let a second committed quote race the one being executed.
+                // Safe: SlideButton runs its action in an unstructured Task that survives
+                // being replaced here.
+                if sendViewModel.sending {
+                    ThemeButton(text: "send.confirmation.sending".localized, spinner: true, style: .secondary) {}
+                        .disabled(true)
+                } else {
+                    switch sendViewModel.state {
+                    case .syncing:
+                        if sendViewModel.sendData != nil {
+                            ThemeButton(text: "swap.quoting".localized, spinner: true, style: .secondary) {}
+                                .disabled(true)
+                        }
+                    case .success:
+                        if sendViewModel.canSend, !sendViewModel.expired {
+                            SlideButton(
+                                styling: .text(start: "swap.confirmation.slide_to_swap".localized, end: "", success: ""),
+                                action: {
+                                    try await sendViewModel.send()
+                                }, completion: {
+                                    HudHelper.instance.show(banner: .swapped)
+                                    onFinish()
+                                }
+                            )
+                        } else {
+                            ThemeButton(text: "send.confirmation.refresh".localized, style: .secondary) {
+                                sendViewModel.sync()
                             }
-                        )
-                    } else {
+                        }
+                    case .failed:
                         ThemeButton(text: "send.confirmation.refresh".localized, style: .secondary) {
                             sendViewModel.sync()
                         }
-                    }
-                case .failed:
-                    ThemeButton(text: "send.confirmation.refresh".localized, style: .secondary) {
-                        sendViewModel.sync()
                     }
                 }
             }
