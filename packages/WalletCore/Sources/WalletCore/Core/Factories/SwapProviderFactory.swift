@@ -67,10 +67,15 @@ public class SwapProviderFactory {
     }
 }
 
-public enum DefaultSwapProviderResolver: ISwapProviderResolver {
-    private struct Entry {
-        let info: USwapProviderInfo
-        let provider: () -> IMultiSwapProvider
+public enum SwapProviderResolver: ISwapProviderResolver {
+    public struct Entry {
+        public let info: USwapProviderInfo
+        public let makeProvider: () -> IMultiSwapProvider
+
+        public init(info: USwapProviderInfo, makeProvider: @escaping () -> IMultiSwapProvider) {
+            self.info = info
+            self.makeProvider = makeProvider
+        }
     }
 
     private static let entries: [String: Entry] = Dictionary(
@@ -105,27 +110,27 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
     }
 
     private static func defaultUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, provider: { defaultUSwapProvider(info: info) })
+        Entry(info: info, makeProvider: { defaultUSwapProvider(info: info) })
     }
 
     private static func quickExUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, provider: { quickExUSwapProvider(info: info) })
+        Entry(info: info, makeProvider: { quickExUSwapProvider(info: info) })
     }
 
     private static func jupiterUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, provider: { jupiterUSwapProvider(info: info) })
+        Entry(info: info, makeProvider: { jupiterUSwapProvider(info: info) })
     }
 
     private static func barterUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, provider: { barterUSwapProvider(info: info) })
+        Entry(info: info, makeProvider: { barterUSwapProvider(info: info) })
     }
 
     private static func lifiUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, provider: { lifiUSwapProvider(info: info) })
+        Entry(info: info, makeProvider: { lifiUSwapProvider(info: info) })
     }
 
     private static func exolixUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, provider: { exolixUSwapProvider(info: info) })
+        Entry(info: info, makeProvider: { exolixUSwapProvider(info: info) })
     }
 
     private static func defaultUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
@@ -331,7 +336,7 @@ public enum DefaultSwapProviderResolver: ISwapProviderResolver {
         }
 
         if let entry = entries[id] {
-            return entry.provider()
+            return entry.makeProvider()
         }
 
         return nil
