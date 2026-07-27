@@ -36,8 +36,6 @@ class ZcashAdapter {
     private var cancellables: [AnyCancellable] = []
     private var deferredStopCancellable: AnyCancellable?
     private var resubmitTask: Task<Void, Never>? // main-confined; dedupes concurrent startSynchronizer kicks
-    private var migrationGateCancellable: AnyCancellable? // main-confined; releases the migrating state when the SDK gate opens
-    private var migrationTickCancellable: AnyCancellable? // main-confined; countdown refresh + stuck-transfer healing
 
     private let token: Token
     private let transactionSource: TransactionSource
@@ -98,13 +96,6 @@ class ZcashAdapter {
 
     var balanceState: AdapterState {
         state.adapterState
-    }
-
-    var isMigrating: Bool {
-        if case .migrating = state {
-            return true
-        }
-        return false
     }
 
     var isIronwoodActive: Bool {
@@ -257,10 +248,10 @@ class ZcashAdapter {
             return
         }
 
-        // defense for non-UI callers (backup restore, node deletion): never reconfigure
-        // the synchronizer while background-finishing work or the migration window is active — "try again later"
+        // defense for non-UI callers (backup restore, node deletion): never reconfigure the
+        // synchronizer while background-finishing work (a send/migration broadcast) is active — "try again later"
         let busy = await MainActor.run { Core.shared.backgroundTaskManager.isCriticalActive }
-        guard !busy, !isMigrating else {
+        guard !busy else {
             throw AppError.zcash(reason: .sendInProgress)
         }
 
@@ -316,16 +307,7 @@ class ZcashAdapter {
                 self?.accountId = account.id
                 self?.uAddress = uAddress
                 self?.tAddress = tAddress
-                // the single engine selection point; the fake branch does not exist in release binaries
-                #if DEBUG
-                    if Core.shared.localStorage.emulateZcashMigration {
-                        self?.migrator.engine = FakeZcashMigrationEngine(migratedAt: self?.migrator.timestamp)
-                    } else {
-                        self?.migrator.engine = ZcashMigrationEngine(synchronizer: synchronizer, accountUUID: account.id, spendingKey: unifiedSpendingKey)
-                    }
-                #else
-                    self?.migrator.engine = ZcashMigrationEngine(synchronizer: synchronizer, accountUUID: account.id, spendingKey: unifiedSpendingKey)
-                #endif
+                self?.migrator.engine = ZcashMigrationEngine(synchronizer: synchronizer, accountUUID: account.id, spendingKey: unifiedSpendingKey)
 
                 self?.depositAddressSubject.send(.completed(DepositAddress(uAddress.stringEncoded)))
 
@@ -365,19 +347,7 @@ class ZcashAdapter {
 
         logger?.log(level: .debug, message: "Start kit after finish preparing!")
 
-        // one-shot per adapter activation: the sync is not running yet, so a pending
-        // migration transfer can be executed without stopping anything
-        Task { [weak self] in
-            guard let self else { return }
-            await migrator.reconcileIfNeeded(currentEndpointHost: currentEndpoint.host)
-
-            // relaunch inside the privacy window: show migrating and let the watcher restart sync
-            if let engine = migrator.engine, await engine.isSyncBlocked() {
-                enterMigratingState()
-            } else {
-                startSynchronizer()
-            }
-        }
+        startSynchronizer()
     }
 
     private func startSynchronizer() {
@@ -862,19 +832,13 @@ class ZcashAdapter {
             return
         }
 
-        let full = balances.shieldedTotal()
-        let available = balances.shieldedSpendableValue
+        let full = balances.saplingBalance.total() + balances.orchardBalance.total() + balances.ironwoodBalance.total()
+        let available = balances.saplingBalance.spendableValue + balances.orchardBalance.spendableValue + balances.ironwoodBalance.spendableValue
         logger?.log(level: .debug, message: "Full balance from syncer: \(full.decimalValue.decimalValue.description)")
         logger?.log(level: .debug, message: "Available balance from syncer: \(available.decimalValue.decimalValue.description)")
 
 //        print("BALANCE: t = \(balances.unshielded.decimalValue.decimalValue)")
-        var orchard = balances.orchardBalance.spendableValue.decimalValue.decimalValue
-        #if DEBUG
-            // emulation: the whole migration cycle (cell, alert, screen, zeroing) runs off the fake engine state
-            if let fakeEngine = migrator.engine as? FakeZcashMigrationEngine {
-                orchard = fakeEngine.orchardSpendable.decimalValue.decimalValue
-            }
-        #endif
+        let orchard = balances.orchardBalance.spendableValue.decimalValue.decimalValue
 
         let zCashBalanceData = ZcashBalanceData(
             id: uniqueId,
@@ -1101,12 +1065,6 @@ extension ZcashAdapter: IAdapter {
     func stop() {
         synchronizer.stop()
         logger?.log(level: .debug, message: "Synchronizer will stop")
-
-        // a live gate subscription would otherwise revive sync after deactivation
-        DispatchQueue.main.async { [weak self] in
-            self?.migrationGateCancellable = nil
-            self?.migrationTickCancellable = nil
-        }
     }
 
     func refresh() {
@@ -1136,9 +1094,6 @@ extension ZcashAdapter: IAdapter {
             Task { [weak self] in
                 do {
                     try await self?.synchronizer.start(retry: true)
-                } catch ZcashError.migrationSyncBlocked {
-                    // not an error: the migration privacy gate is holding sync, wait it out
-                    self?.enterMigratingState()
                 } catch {
                     self?.state = .notSynced(error: error)
                 }
@@ -1469,84 +1424,15 @@ extension ZcashAdapter {
         migrator.clearOnWipe()
     }
 
+    // send-max sweep to the wallet's own UA. It is an ordinary send: no stop-sync, no privacy buffer.
+    // Runs under the same "zcash-send" critical section as every send, so background survivability and
+    // same-bytes resubmit apply for free.
     func performMigration() async throws -> String? {
-        do {
-            let txId = try await Core.shared.backgroundTaskManager.performCritical(name: "zcash-migration") {
-                // sign/execute throw migrationBroadcastDuringSync while the synchronizer is live
-                stop()
-                await waitUntilSyncStopped()
-                return try await migrator.performMigration(currentEndpointHost: currentEndpoint.host)
-            }
-
-            enterMigratingState()
-            return txId
-        } catch {
-            // a failed broadcast can leave the signed transfer holding the sync gate;
-            // surface migrating and let the watcher reconcile it instead of a dead stopped sync
-            if let engine = migrator.engine, await engine.isSyncBlocked() {
-                enterMigratingState()
-            }
-            throw error
+        let txId = try await Core.shared.backgroundTaskManager.performCritical(name: "zcash-send") {
+            try await migrator.performMigration()
         }
-    }
-
-    // SDK stop() only schedules the teardown; the migration guard throws while status is still .syncing
-    private func waitUntilSyncStopped() async {
-        for _ in 0 ..< 50 {
-            guard case .syncing = synchronizer.latestState.syncStatus else {
-                return
-            }
-            try? await Task.sleep(seconds: 0.1)
-        }
-    }
-
-    private func enterMigratingState() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self, let engine = migrator.engine else { return }
-
-            areFundsSpendable = false // no spending against a stopped sync; restored by the sync stream after restart
-            state = .migrating(remainingMinutes: migrator.remainingBufferMinutes)
-
-            guard migrationGateCancellable == nil else { return }
-
-            // the gate is a CurrentValueSubject with its own expiry ticker: false arrives pushed.
-            // the subject's initial value can be stale (the SDK recomputes lazily on subscription),
-            // so every release is confirmed by an authoritative poll before leaving the window
-            migrationGateCancellable = engine.syncBlockedStream
-                .filter { !$0 }
-                .sink { [weak self] _ in
-                    Task { [weak self] in
-                        guard let self, let engine = migrator.engine else { return }
-                        guard await !engine.isSyncBlocked() else {
-                            return
-                        }
-                        DispatchQueue.main.async { [weak self] in self?.exitMigratingState() }
-                    }
-                }
-
-            // once a minute: refresh the countdown and re-deliver a stuck signed transfer (reconcile is idempotent)
-            migrationTickCancellable = Timer.publish(every: 60, on: .main, in: .common)
-                .autoconnect()
-                .sink { [weak self] _ in
-                    guard let self else { return }
-
-                    state = .migrating(remainingMinutes: migrator.remainingBufferMinutes)
-                    Task { [weak self] in
-                        guard let self else { return }
-                        await migrator.reconcileIfNeeded(currentEndpointHost: currentEndpoint.host)
-                    }
-                }
-        }
-    }
-
-    private func exitMigratingState() {
-        guard migrationGateCancellable != nil else { return } // already exited or stopped
-
-        migrationGateCancellable = nil
-        migrationTickCancellable = nil
-
-        logger?.log(level: .debug, message: "Migration gate released, restarting synchronizer")
-        startSynchronizer()
+        reSyncPending()
+        return txId
     }
 
     private func send(proposal: Proposal, spendingKey: UnifiedSpendingKey) async throws -> String? {
@@ -1627,24 +1513,17 @@ extension ZcashAdapter {
         }
 
         for overview in candidates {
-            let transaction: CreatedTransaction
-            do {
-                transaction = try CreatedTransaction(overview: overview)
-            } catch {
-                logger?.log(level: .error, message: "Resubmit skip \(overview.rawID.toHexStringTxId()): \(error)")
+            guard let raw = overview.raw else {
+                logger?.log(level: .error, message: "Resubmit skip \(overview.rawID.toHexStringTxId()): missing raw bytes")
                 continue
             }
 
-            let outcome = await synchronizer.broadcaster.submit(transaction: transaction, to: [currentEndpoint])
-
-            switch outcome {
-            case .accepted:
-                logger?.log(level: .debug, message: "Resubmit accepted: \(transaction.txId.toHexStringTxId())")
-            case let .rejected(code, message):
-                // duplicate ("already in block chain") or permanent rejection — retried on next foreground anyway
-                logger?.log(level: .error, message: "Resubmit rejected: \(transaction.txId.toHexStringTxId()) | code: \(code) | \(message)")
-            case .unreachable, .timedOut, .notAttempted, .cancelled:
-                logger?.log(level: .error, message: "Resubmit not delivered: \(transaction.txId.toHexStringTxId()) | \(outcome)")
+            do {
+                try await synchronizer.broadcaster.submit(raw, to: currentEndpoint)
+                logger?.log(level: .debug, message: "Resubmit accepted: \(overview.rawID.toHexStringTxId())")
+            } catch {
+                // duplicate ("already in block chain") or transient failure — retried on next foreground anyway
+                logger?.log(level: .error, message: "Resubmit not delivered: \(overview.rawID.toHexStringTxId()) | \(error)")
             }
         }
     }
@@ -1707,7 +1586,6 @@ enum ZCashAdapterState: Equatable {
     case preparing
     case synced
     case syncing(progress: Int?, remaining: Int?, lastBlockDate: Date?)
-    case migrating(remainingMinutes: Int?)
     case notSynced(error: Error)
 
     public static func == (lhs: ZCashAdapterState, rhs: ZCashAdapterState) -> Bool {
@@ -1716,7 +1594,6 @@ enum ZCashAdapterState: Equatable {
         case (.preparing, .preparing): return true
         case (.synced, .synced): return true
         case let (.syncing(lProgress, lRemaining, lLastBlockDate), .syncing(rProgress, rRemaining, rLastBlockDate)): return lProgress == rProgress && lRemaining == rRemaining && lLastBlockDate == rLastBlockDate
-        case let (.migrating(lRemaining), .migrating(rRemaining)): return lRemaining == rRemaining
         case (.notSynced, .notSynced): return true
         default: return false
         }
@@ -1728,7 +1605,6 @@ enum ZCashAdapterState: Equatable {
         case .preparing: return .customSyncing(main: "Preparing...", secondary: nil, progress: nil)
         case .synced: return .synced
         case let .syncing(progress, remaining, lastDate): return .syncing(progress: progress, remaining: remaining, lastBlockDate: lastDate)
-        case let .migrating(remainingMinutes): return .customSyncing(main: "Migrating...", secondary: remainingMinutes.map { "~\($0) min" }, progress: nil)
         case let .notSynced(error): return .notSynced(error: error.localizedDescription)
         }
     }
@@ -1739,7 +1615,6 @@ enum ZCashAdapterState: Equatable {
         case .preparing: return "Preparing..."
         case .synced: return "Synced"
         case let .syncing(progress, _, lastDate): return "Syncing: progress = \(progress?.description ?? "N/A"), lastBlockDate: \(lastDate?.description ?? "N/A")"
-        case let .migrating(remainingMinutes): return "Migrating: remaining = \(remainingMinutes?.description ?? "N/A") min"
         case let .notSynced(error): return "Not synced \(error.localizedDescription)"
         }
     }

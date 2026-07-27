@@ -16,7 +16,6 @@ class ZcashWalletTokenViewModel: ObservableObject {
     @Published var zCashBalanceData: ZcashBalanceData
     @Published var balanceHidden: Bool
     @Published var birthdayHeight: Int?
-    @Published var migrating: Bool
     @Published var ironwoodActive: Bool
 
     init(adapter: ZcashAdapter, wallet: Wallet) {
@@ -24,7 +23,6 @@ class ZcashWalletTokenViewModel: ObservableObject {
         self.wallet = wallet
         zCashBalanceData = adapter.zCashBalanceData
         balanceHidden = balanceHiddenManager.balanceHidden
-        migrating = adapter.isMigrating
         ironwoodActive = adapter.isIronwoodActive
 
         birthdayHeight = restoreSettingsService.settings(accountId: wallet.account.id, blockchainType: wallet.token.blockchainType).birthdayHeight
@@ -44,7 +42,6 @@ class ZcashWalletTokenViewModel: ObservableObject {
         adapter.balanceStateUpdatedObservable
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                self?.migrating = self?.adapter.isMigrating ?? false
                 self?.ironwoodActive = self?.adapter.isIronwoodActive ?? false
             })
             .disposed(by: disposeBag)
