@@ -36,7 +36,7 @@ struct UnstoppableApp: App {
     }
 
     private static func initCore() throws {
-        SwapProviderFactory.register([DefaultSwapProviderResolver.self])
+        SwapProviderFactory.register([SwapProviderResolver.self])
 
         // .tonConnect is not registered: TonConnectEventHandler is disabled, a parsed link would
         // only die in the handler chain. Register it together with re-enabling the handler.
