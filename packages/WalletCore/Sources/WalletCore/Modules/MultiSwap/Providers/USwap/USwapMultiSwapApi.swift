@@ -332,7 +332,7 @@ public extension USwapMultiSwapApi {
             }
         }
 
-        var depositAddress: String? {
+        public var depositAddress: String? {
             switch self {
             case .signedTransaction: nil
             case let .transfer(_, depositAddress, _, _): depositAddress
@@ -698,7 +698,7 @@ private extension USwapMultiSwapApi {
 
         init(map: Map) throws {
             kind = try map.value("kind")
-            json = map.JSON
+            json = (try? map.value("json")) ?? map.JSON
             innerTx = try? map.value("tx")
             message = try? map.value("message")
             psbt = try? map.value("psbt")
