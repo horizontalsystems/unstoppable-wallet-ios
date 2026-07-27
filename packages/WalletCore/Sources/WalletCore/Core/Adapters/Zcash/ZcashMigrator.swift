@@ -3,9 +3,7 @@ import HsToolKit
 import ZcashLightClientKit
 
 class ZcashMigrator {
-    // kill-switch for the Orchard → Ironwood migration flow. Flip to true together with the testnet
-    // E2E once the send-max migration is validated end to end.
-    // TEMPORARILY true for testnet debugging — revert to false before release.
+    // Orchard → Ironwood migration is live in production so users can migrate their Orchard funds.
     static let migrationEnabled = true
 
     private let uniqueId: String

@@ -108,9 +108,11 @@ class JupiterMultiSwapProvider: IMultiSwapProvider {
             let estimatedFee = try adapter.estimateFee(rawTransaction: rawTransaction)
             fee = estimatedFee
 
+            // fee is paid in native SOL, so check the SOL balance (not the tokenIn balance), else send fails with raw -32002
+            let solBalance = kit.balance
             let totalRequired = (tokenIn.type.isNative ? amountIn : 0) + estimatedFee
-            if adapter.balanceData.available < totalRequired {
-                throw SolanaSendHandler.TransactionError.insufficientSolBalance(balance: adapter.balanceData.available)
+            if solBalance < totalRequired {
+                throw SolanaSendHandler.TransactionError.insufficientSolBalance(balance: solBalance)
             }
         } catch {
             transactionError = error
