@@ -25,7 +25,7 @@ struct ZcashWalletTokenView: View {
                             HorizontalDivider()
                         }
 
-                        if ZcashMigrator.migrationEnabled, viewModel.ironwoodActive, !viewModel.migrating, viewModel.zCashBalanceData.orchard > ZcashAdapter.minimalThreshold {
+                        if ZcashMigrator.migrationEnabled, viewModel.ironwoodActive, viewModel.zCashBalanceData.orchard > ZcashAdapter.minimalThreshold {
                             view(orchard: viewModel.zCashBalanceData.orchard)
                             HorizontalDivider()
                         }
