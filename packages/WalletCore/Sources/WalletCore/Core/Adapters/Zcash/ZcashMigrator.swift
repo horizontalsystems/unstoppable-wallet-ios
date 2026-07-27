@@ -71,6 +71,13 @@ class ZcashMigrator {
     }
 
     func handleCheck(orchardBalance: Decimal, latestHeight: Int, syncStatus: SyncStatus?) -> Bool {
+        // Only the active account's adapter may surface the global migration alert. An adapter from a
+        // previously-selected account can outlive the switch (async synchronizer teardown) and fire a
+        // late balance/state update — it must not present the sheet over the now-active account.
+        guard Core.shared.accountManager.activeAccount?.id == uniqueId else {
+            return false
+        }
+
         guard let syncStatus else {
             return false
         }
