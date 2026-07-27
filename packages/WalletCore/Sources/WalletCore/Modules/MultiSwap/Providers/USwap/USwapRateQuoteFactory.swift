@@ -2,7 +2,7 @@ import Foundation
 import MarketKit
 import SwiftUI
 
-protocol USwapRateQuoteBuilder {
+public protocol USwapRateQuoteBuilder {
     func supports(tokenIn: Token) -> Bool
     func build(input: USwapRateQuoteFactory.Input) async throws -> MultiSwapQuote
     func preSwapView(
@@ -14,7 +14,7 @@ protocol USwapRateQuoteBuilder {
     ) -> AnyView?
 }
 
-extension USwapRateQuoteBuilder {
+public extension USwapRateQuoteBuilder {
     func preSwapView(
         step _: MultiSwapPreSwapStep,
         tokenIn _: Token,
@@ -26,15 +26,15 @@ extension USwapRateQuoteBuilder {
     }
 }
 
-final class USwapRateQuoteFactory {
-    struct Input {
-        let tokenIn: Token
-        let tokenOut: Token
-        let amountIn: Decimal
-        let response: USwapMultiSwapApi.RateQuote
-        let replay: (any USwapRateResult.Replay)?
+public final class USwapRateQuoteFactory {
+    public struct Input {
+        public let tokenIn: Token
+        public let tokenOut: Token
+        public let amountIn: Decimal
+        public let response: USwapMultiSwapApi.RateQuote
+        public let replay: (any USwapRateResult.Replay)?
 
-        init(
+        public init(
             tokenIn: Token,
             tokenOut: Token,
             amountIn: Decimal,
@@ -56,15 +56,15 @@ final class USwapRateQuoteFactory {
 
     private let builders: [USwapRateQuoteBuilder]
 
-    init(builders: [USwapRateQuoteBuilder]) {
+    public init(builders: [USwapRateQuoteBuilder]) {
         self.builders = builders
     }
 
-    func build(input: Input) async throws -> MultiSwapQuote {
+    public func build(input: Input) async throws -> MultiSwapQuote {
         try await builder(tokenIn: input.tokenIn).build(input: input)
     }
 
-    func preSwapView(
+    public func preSwapView(
         step: MultiSwapPreSwapStep,
         tokenIn: Token,
         amount: Decimal,

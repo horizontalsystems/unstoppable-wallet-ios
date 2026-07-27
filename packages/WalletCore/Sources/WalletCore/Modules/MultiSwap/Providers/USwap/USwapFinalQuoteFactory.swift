@@ -1,23 +1,23 @@
 import Foundation
 import MarketKit
 
-protocol USwapFinalQuoteBuilder {
+public protocol USwapFinalQuoteBuilder {
     func supports(input: USwapFinalQuoteFactory.Input) -> Bool
     func build(input: USwapFinalQuoteFactory.Input) async throws -> SwapFinalQuote
 }
 
-final class USwapFinalQuoteFactory {
-    struct Input {
-        let tokenIn: Token
-        let amountIn: Decimal
-        let response: USwapMultiSwapApi.SwapResponse
-        let providerSwapId: String
-        let destinationAddress: String
-        let slippage: Decimal?
-        let recipient: String?
-        let transactionSettings: TransactionSettings?
+public final class USwapFinalQuoteFactory {
+    public struct Input {
+        public let tokenIn: Token
+        public let amountIn: Decimal
+        public let response: USwapMultiSwapApi.SwapResponse
+        public let providerSwapId: String
+        public let destinationAddress: String
+        public let slippage: Decimal?
+        public let recipient: String?
+        public let transactionSettings: TransactionSettings?
 
-        init(
+        public init(
             tokenIn: Token,
             amountIn: Decimal,
             response: USwapMultiSwapApi.SwapResponse,
@@ -45,11 +45,11 @@ final class USwapFinalQuoteFactory {
 
     private let builders: [USwapFinalQuoteBuilder]
 
-    init(builders: [USwapFinalQuoteBuilder]) {
+    public init(builders: [USwapFinalQuoteBuilder]) {
         self.builders = builders
     }
 
-    func build(input: Input) async throws -> SwapFinalQuote {
+    public func build(input: Input) async throws -> SwapFinalQuote {
         let matchingBuilders = builders.filter { $0.supports(input: input) }
 
         guard matchingBuilders.count == 1 else {

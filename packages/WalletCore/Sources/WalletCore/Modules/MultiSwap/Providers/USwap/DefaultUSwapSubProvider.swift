@@ -2,15 +2,15 @@ import Combine
 import Foundation
 import MarketKit
 
-class DefaultUSwapSubProvider: USwapSubProvider {
-    let info: USwapProviderInfo
+public class DefaultUSwapSubProvider: USwapSubProvider {
+    public let info: USwapProviderInfo
     let api: USwapMultiSwapApi
 
     private let assetRepository: USwapAssetRepository?
     let commitRequestBuilder: USwapCommitRequestBuilder
     private let tracker: USwapTracker
 
-    init(
+    public init(
         info: USwapProviderInfo,
         api: USwapMultiSwapApi,
         assetRepository: USwapAssetRepository?,
@@ -24,23 +24,23 @@ class DefaultUSwapSubProvider: USwapSubProvider {
         self.tracker = tracker
     }
 
-    var syncPublisher: AnyPublisher<Void, Never>? {
+    public var syncPublisher: AnyPublisher<Void, Never>? {
         assetRepository?.syncPublisher
     }
 
-    func slippageSupported(tokenIn _: Token, tokenOut _: Token) -> Bool {
+    public func slippageSupported(tokenIn _: Token, tokenOut _: Token) -> Bool {
         true
     }
 
-    func supports(tokenIn: Token, tokenOut: Token) -> Bool {
+    public func supports(tokenIn: Token, tokenOut: Token) -> Bool {
         asset(token: tokenIn) != nil && asset(token: tokenOut) != nil
     }
 
-    func mevProtectionAllowed(tokenIn _: Token, tokenOut _: Token) -> Bool {
+    public func mevProtectionAllowed(tokenIn _: Token, tokenOut _: Token) -> Bool {
         false
     }
 
-    func rate(input: USwapRateInput) async throws -> USwapRateResult {
+    public func rate(input: USwapRateInput) async throws -> USwapRateResult {
         guard let assetIn = asset(token: input.tokenIn) else {
             throw SwapError.unsupportedTokenIn
         }
@@ -70,7 +70,7 @@ class DefaultUSwapSubProvider: USwapSubProvider {
         return USwapRateResult(response: quote)
     }
 
-    func commit(input: USwapCommitInput) async throws -> USwapCommitResult {
+    public func commit(input: USwapCommitInput) async throws -> USwapCommitResult {
         guard let assetIn = asset(token: input.tokenIn) else {
             throw SwapError.unsupportedTokenIn
         }
@@ -97,11 +97,11 @@ class DefaultUSwapSubProvider: USwapSubProvider {
         )
     }
 
-    func validateTrustedProvider(tokenIn _: Token, amountIn _: Decimal) async throws -> Bool? {
+    public func validateTrustedProvider(tokenIn _: Token, amountIn _: Decimal) async throws -> Bool? {
         true
     }
 
-    func track(swap: Swap) async throws -> Swap {
+    public func track(swap: Swap) async throws -> Swap {
         try await tracker.track(
             swap: swap,
             request: .swap(

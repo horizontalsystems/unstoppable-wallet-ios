@@ -1,17 +1,27 @@
 import Foundation
 import MarketKit
 
-final class USwapCommitRequestBuilder {
+public final class USwapCommitRequestBuilder {
     private struct DestinationCacheKey: Hashable {
         let accountId: String
         let blockchainType: BlockchainType
     }
 
     private let providerId: String
+    private let shouldIncludeSourceAddress: (Token) -> Bool
     private var temporaryDestinationAddresses = [DestinationCacheKey: String]()
 
-    init(providerId: String) {
+    public init(
+        providerId: String,
+        shouldIncludeSourceAddress: @escaping (Token) -> Bool = { token in
+            token.blockchain.type.isEvm ||
+                token.blockchainType == .tron ||
+                token.blockchainType == .ton ||
+                token.blockchainType == .solana
+        }
+    ) {
         self.providerId = providerId
+        self.shouldIncludeSourceAddress = shouldIncludeSourceAddress
     }
 
     func build(
@@ -60,14 +70,7 @@ final class USwapCommitRequestBuilder {
     }
 
     func sourceAddress(token: Token) async throws -> String? {
-        // `sourceAddress` tells USwap to build the executable transaction. The app consumes
-        // that server-built execution only for EVM, Tron, TON, and Solana; other chains build
-        // locally, so the field must stay absent for them.
-        guard token.blockchain.type.isEvm ||
-            token.blockchainType == .tron ||
-            token.blockchainType == .ton ||
-            token.blockchainType == .solana
-        else {
+        guard shouldIncludeSourceAddress(token) else {
             return nil
         }
 
