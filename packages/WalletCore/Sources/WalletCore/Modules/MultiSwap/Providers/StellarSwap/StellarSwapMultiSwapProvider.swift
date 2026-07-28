@@ -1,8 +1,5 @@
-import Alamofire
 import Foundation
-import HsToolKit
 import MarketKit
-import ObjectMapper
 import StellarKit
 import stellarsdk
 import SwiftUI
@@ -52,9 +49,14 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
     // be served by the providers whose execution supports a distinct destination.
     private static let recipientCapableProviders = ["SOROSWAP", "STELLAR_DEX"]
 
-    private let networkManager = NetworkManager(logger: nil)
+    private let api: USwapMultiSwapApi
+    private let tracker: USwapTracker
     private let adapterManager = Core.shared.adapterManager
-    private let headers = USwapMultiSwapProvider.headers
+
+    init(api: USwapMultiSwapApi, tracker: USwapTracker) {
+        self.api = api
+        self.tracker = tracker
+    }
 
     var id: String { Self.id }
     var name: String { Self.name }
@@ -79,7 +81,7 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
         return StellarSwapQuote(
             expectedBuyAmount: route.expectedBuyAmount,
             estimatedTime: route.estimatedTime ?? MultiSwapHelpers.estimate(tokenIn: tokenIn, tokenOut: tokenOut),
-            selectedProvider: route.provider,
+            selectedProvider: route.providerId,
             activationAsset: activationRequiredAsset(tokenOut: tokenOut)
         )
     }
@@ -121,19 +123,27 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
                 slippage: slippage,
                 providers: Self.recipientCapableProviders
             )
-            selectedProvider = route.provider
+            selectedProvider = route.providerId
         }
 
         guard let provider = selectedProvider else {
             throw ProviderError.noRoutes
         }
 
-        var parameters = try baseParameters(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage)
-        parameters["provider"] = provider
-        parameters["destinationAddress"] = destination
-        parameters["sourceAddress"] = source
-
-        let route: Route = try await networkManager.fetch(url: "\(USwapMultiSwapProvider.baseUrl)/swap", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+        let assets = try assets(tokenIn: tokenIn, tokenOut: tokenOut)
+        let route = try await api.swap(
+            .init(
+                sellAsset: assets.sell,
+                buyAsset: assets.buy,
+                sellAmount: amountIn,
+                slippage: slippage,
+                chainId: "stellar",
+                providerId: provider,
+                destinationAddress: destination,
+                sourceAddress: source,
+                refundAddress: nil
+            )
+        )
 
         // A committed /v2/swap must carry the tracking handle — it is what `track(swap:)` sends
         // as `uuid`, and the server resolves the record from it alone. Without it the swap is
@@ -150,7 +160,15 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
         let estimatedTime = route.estimatedTime ?? MultiSwapHelpers.estimate(tokenIn: tokenIn, tokenOut: tokenOut)
 
         switch route.execution {
-        case let .signedTransaction(xdr):
+        case let .signedTransaction(chain, transactions, _):
+            guard chain == "stellar",
+                  let transaction = transactions.first,
+                  transaction.kind == "stellar",
+                  let xdr = transaction.xdr
+            else {
+                throw ProviderError.noTransactionData
+            }
+
             // Fee = the envelope's fee BID (max); the effective on-chain fee is usually lower.
             let fee = (try? TransactionEnvelopeXDR(fromBase64: xdr)).map { Decimal($0.txFee) / 10_000_000 }
             let transactionError = balanceError(adapter: adapter, tokenIn: tokenIn, amountIn: amountIn, fee: fee ?? 0)
@@ -169,20 +187,26 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
                 providerSwapId: uuid
             )
 
-        case let .stellarBroker(sessionParams):
+        case let .stellarBroker(params):
             let transactionError = balanceError(adapter: adapter, tokenIn: tokenIn, amountIn: amountIn, fee: 0)
 
             return StellarBrokerFinalQuote(
                 amountOut: amountOut,
                 recipient: recipient,
                 estimatedTime: estimatedTime,
-                sessionParams: sessionParams,
+                sessionParams: StellarBrokerSessionClient.Params(
+                    sellingAsset: params.sellingAsset,
+                    buyingAsset: params.buyingAsset,
+                    sellingAmount: params.sellingAmount,
+                    slippageTolerance: params.slippageTolerance,
+                    partnerKey: params.partnerKey
+                ),
                 transactionError: transactionError,
                 toAddress: destination,
                 providerSwapId: uuid
             )
 
-        case .none:
+        case .transfer, .thorchainDeposit, .none:
             throw ProviderError.noTransactionData
         }
     }
@@ -193,10 +217,13 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
         // Same contract as every server-recorded swap: the committed route's uuid (carried in
         // providerSwapId) + our broadcast/fee-bump tx hash. The server's StellarTracker
         // verifies the outcome on Horizon — it never trusts client-claimed amounts.
-        var parameters: Parameters = [:]
-        if let uuid = swap.providerSwapId { parameters["uuid"] = uuid }
-        if let txHash = swap.txHash { parameters["inboundTxHash"] = txHash }
-        return try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, networkManager: networkManager)
+        try await tracker.track(
+            swap: swap,
+            request: .swap(
+                uuid: swap.providerSwapId,
+                inboundTxHash: swap.txHash
+            )
+        )
     }
 
     /// Trustline activation as an inline pre-swap step (the EIP-20 approve flow's shape): the
@@ -247,18 +274,25 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
 
     /// `/v2/rate` over the given provider set, applying the waterfall: STELLARBROKER when it
     /// quoted (the grant's primary), otherwise the best-priced fallback.
-    private func bestRoute(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, providers: [String]) async throws -> Route {
-        var parameters = try baseParameters(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage)
-        parameters["providers"] = providers
-
-        let response: RateResponse = try await networkManager.fetch(url: "\(USwapMultiSwapProvider.baseUrl)/rate", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+    private func bestRoute(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, providers: [String]) async throws -> USwapMultiSwapApi.RateQuote {
+        let assets = try assets(tokenIn: tokenIn, tokenOut: tokenOut)
+        let routes = try await api.rate(
+            .init(
+                sellAsset: assets.sell,
+                buyAsset: assets.buy,
+                sellAmount: amountIn,
+                slippage: slippage,
+                chainId: "stellar",
+                providerIds: providers
+            )
+        )
 
         // Only reachable while stellarBrokerEnabled — SB is otherwise never in `providers`, so
         // the server never returns it. Kept live for the flag flip (see stellarBrokerEnabled).
-        if let brokerRoute = response.routes.first(where: { $0.provider == "STELLARBROKER" }) {
+        if let brokerRoute = routes.first(where: { $0.providerId == "STELLARBROKER" }) {
             return brokerRoute
         }
-        guard let fallback = response.routes.max(by: { $0.expectedBuyAmount < $1.expectedBuyAmount }) else {
+        guard let fallback = routes.max(by: { $0.expectedBuyAmount < $1.expectedBuyAmount }) else {
             throw ProviderError.noRoutes
         }
         return fallback
@@ -267,18 +301,12 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
     /// Throws on an unmappable token rather than sending `"sellAsset": ""`, which is a
     /// well-formed request the server can only answer with an opaque 400. `supports()` already
     /// gates both sides, so this is the contract being enforced, not an expected path.
-    private func baseParameters(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal) throws -> Parameters {
+    private func assets(tokenIn: Token, tokenOut: Token) throws -> (sell: String, buy: String) {
         guard let sellAsset = asset(token: tokenIn), let buyAsset = asset(token: tokenOut) else {
             throw ProviderError.unsupportedAsset
         }
 
-        return [
-            "sellAsset": sellAsset,
-            "buyAsset": buyAsset,
-            "sellAmount": amountIn.description,
-            "slippage": slippage,
-            "chainId": "stellar",
-        ]
+        return (sellAsset, buyAsset)
     }
 
     /// uswap-server's self-describing Stellar identifiers (parseStellarAssetIdentifier):
@@ -358,60 +386,6 @@ extension StellarSwapMultiSwapProvider {
 
         override var id: String {
             "stellar_trustline_activation"
-        }
-    }
-
-    struct RateResponse: ImmutableMappable {
-        let routes: [Route]
-
-        init(map: Map) throws {
-            routes = (try? map.value("routes")) ?? []
-        }
-    }
-
-    struct Route: ImmutableMappable {
-        let provider: String
-        let expectedBuyAmount: Decimal
-        let minBuyAmount: Decimal?
-        let estimatedTime: TimeInterval?
-        let uuid: String?
-        let execution: Execution?
-
-        init(map: Map) throws {
-            provider = ((try? map.value("providers") as [String]) ?? []).first ?? ""
-            expectedBuyAmount = try map.value("expectedBuyAmount", using: Transform.stringToDecimalTransform)
-            minBuyAmount = try? map.value("minBuyAmount", using: Transform.stringToDecimalTransform)
-            estimatedTime = try? map.value("estimatedTime.total")
-            uuid = try? map.value("uuid")
-            execution = try? map.value("execution")
-        }
-    }
-
-    // The two execution methods a Stellar route can carry (subset of the /v2 union).
-    enum Execution: ImmutableMappable {
-        case signedTransaction(xdr: String)
-        case stellarBroker(StellarBrokerSessionClient.Params)
-
-        init(map: Map) throws {
-            let method: String = try map.value("method")
-            switch method {
-            case "signed_transaction":
-                let transactions: [[String: Any]] = (try? map.value("transactions")) ?? []
-                guard let first = transactions.first, first["kind"] as? String == "stellar", let xdr = first["xdr"] as? String else {
-                    throw MapError(key: "transactions", currentValue: nil, reason: "expected a stellar signable tx")
-                }
-                self = .signedTransaction(xdr: xdr)
-            case "stellar_broker":
-                self = try .stellarBroker(StellarBrokerSessionClient.Params(
-                    sellingAsset: map.value("sellingAsset"),
-                    buyingAsset: map.value("buyingAsset"),
-                    sellingAmount: map.value("sellingAmount"),
-                    slippageTolerance: map.value("slippageTolerance"),
-                    partnerKey: try? map.value("partnerKey")
-                ))
-            default:
-                throw MapError(key: "method", currentValue: method, reason: "unsupported execution method")
-            }
         }
     }
 }

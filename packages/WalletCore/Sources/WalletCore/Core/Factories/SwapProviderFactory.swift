@@ -92,6 +92,7 @@ public enum SwapProviderResolver: ISwapProviderResolver {
             defaultUSwapEntry(info: .circle),
             jupiterUSwapEntry(info: .jupiter),
             lifiUSwapEntry(info: .lifi),
+            axelarUSwapEntry(info: .axelarIts),
         ].map { entry in
             (entry.info.id, entry)
         }
@@ -131,6 +132,10 @@ public enum SwapProviderResolver: ISwapProviderResolver {
 
     private static func exolixUSwapEntry(info: USwapProviderInfo) -> Entry {
         Entry(info: info, makeProvider: { exolixUSwapProvider(info: info) })
+    }
+
+    private static func axelarUSwapEntry(info: USwapProviderInfo) -> Entry {
+        Entry(info: info, makeProvider: { axelarUSwapProvider(info: info) })
     }
 
     private static func defaultUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
@@ -216,6 +221,41 @@ public enum SwapProviderResolver: ISwapProviderResolver {
         )
 
         return uSwapProvider(subProvider: subProvider)
+    }
+
+    private static func axelarUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
+        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
+        let subProvider = DefaultUSwapSubProvider(
+            info: info,
+            api: api,
+            assetRepository: USwapAssetRepository(
+                providerId: info.id,
+                api: api,
+                storage: Core.shared.swapAssetStorage
+            ),
+            commitRequestBuilder: USwapCommitRequestBuilder(
+                providerId: info.id,
+                shouldIncludeSourceAddress: { token in
+                    token.blockchain.type.isEvm ||
+                        token.blockchainType == .tron ||
+                        token.blockchainType == .ton ||
+                        token.blockchainType == .solana ||
+                        token.blockchainType == .stellar
+                }
+            ),
+            tracker: uSwapTracker(api: api)
+        )
+
+        return uSwapProvider(subProvider: subProvider)
+    }
+
+    private static func stellarSwapProvider() -> IMultiSwapProvider {
+        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
+
+        return StellarSwapMultiSwapProvider(
+            api: api,
+            tracker: uSwapTracker(api: api)
+        )
     }
 
     private static func defaultUSwapSubProvider(info: USwapProviderInfo, api: USwapMultiSwapApi) -> DefaultUSwapSubProvider {
@@ -332,7 +372,7 @@ public enum SwapProviderResolver: ISwapProviderResolver {
         // Stellar-native swaps are exposed as one provider. The fallback route ids stay
         // internal to StellarSwapMultiSwapProvider and intentionally do not resolve here.
         if id == StellarSwapMultiSwapProvider.id {
-            return StellarSwapMultiSwapProvider()
+            return stellarSwapProvider()
         }
 
         if let entry = entries[id] {

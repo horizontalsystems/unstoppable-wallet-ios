@@ -110,4 +110,12 @@ public extension USwapProviderInfo {
         type: .excellent,
         requireTerms: true
     )
+
+    static let axelarIts = USwapProviderInfo(
+        id: "AXELAR_ITS",
+        name: "Axelar ITS",
+        icon: "swap_provider_axelar",
+        type: .excellent,
+        requireTerms: true
+    )
 }

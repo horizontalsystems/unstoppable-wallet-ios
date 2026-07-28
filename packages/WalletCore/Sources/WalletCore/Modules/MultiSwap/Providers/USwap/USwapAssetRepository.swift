@@ -173,7 +173,11 @@ extension USwapAssetRepository {
                 continue
             }
 
-            for tokenQuery in tokenQueries(blockchainType: blockchainType, address: token.address) {
+            for tokenQuery in tokenQueries(
+                blockchainType: blockchainType,
+                address: token.address,
+                ticker: token.ticker
+            ) {
                 assetMap[tokenQuery.id.lowercased()] = token.identifier
             }
         }
@@ -183,7 +187,7 @@ extension USwapAssetRepository {
 }
 
 private extension USwapAssetRepository {
-    static func tokenQueries(blockchainType: BlockchainType, address: String?) -> [TokenQuery] {
+    static func tokenQueries(blockchainType: BlockchainType, address: String?, ticker: String?) -> [TokenQuery] {
         switch blockchainType {
         case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .tron, .base, .zkSync:
             let tokenType: TokenType
@@ -218,7 +222,23 @@ private extension USwapAssetRepository {
 
             return [TokenQuery(blockchainType: blockchainType, tokenType: tokenType)]
 
-        case .bitcoin, .bitcoinCash, .ecash, .dash, .zcash, .monero, .stellar:
+        case .stellar:
+            if let issuer = address, !issuer.isEmpty {
+                guard let ticker else {
+                    return []
+                }
+
+                return [
+                    TokenQuery(
+                        blockchainType: .stellar,
+                        tokenType: .stellar(code: ticker, issuer: issuer)
+                    ),
+                ]
+            }
+
+            return blockchainType.nativeTokenQueries
+
+        case .bitcoin, .bitcoinCash, .ecash, .dash, .zcash, .monero:
             return blockchainType.nativeTokenQueries
 
         case .zano:

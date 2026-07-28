@@ -105,12 +105,14 @@ public extension USwapMultiSwapApi {
         public let chainId: String
         public let address: String?
         public let identifier: String
+        public let ticker: String?
 
-        public init(chain: String, chainId: String, address: String?, identifier: String) {
+        public init(chain: String, chainId: String, address: String?, identifier: String, ticker: String? = nil) {
             self.chain = chain
             self.chainId = chainId
             self.address = address
             self.identifier = identifier
+            self.ticker = ticker
         }
     }
 
@@ -159,19 +161,22 @@ public extension USwapMultiSwapApi {
         public let buyAsset: String?
         public let estimatedTime: TimeInterval?
         public let approvalSpender: String?
+        public let providerId: String
 
         public init(
             expectedBuyAmount: Decimal,
             minBuyAmount: Decimal?,
             buyAsset: String?,
             estimatedTime: TimeInterval?,
-            approvalSpender: String?
+            approvalSpender: String?,
+            providerId: String = ""
         ) {
             self.expectedBuyAmount = expectedBuyAmount
             self.minBuyAmount = minBuyAmount
             self.buyAsset = buyAsset
             self.estimatedTime = estimatedTime
             self.approvalSpender = approvalSpender
+            self.providerId = providerId
         }
     }
 
@@ -323,12 +328,14 @@ public extension USwapMultiSwapApi {
         case signedTransaction(chain: String, transactions: [SignableTx], approval: Approval?)
         case transfer(chain: String, depositAddress: String, attachment: [String: Any]?, unsignedTx: SignableTx?)
         case thorchainDeposit(chain: String, inboundAddress: String, memo: String, delivery: Delivery)
+        case stellarBroker(StellarBrokerParams)
 
         var primarySignable: SignableTx? {
             switch self {
             case let .signedTransaction(_, transactions, _): transactions.first
             case let .transfer(_, _, _, unsignedTx): unsignedTx
             case let .thorchainDeposit(_, _, _, delivery): delivery.unsignedTx
+            case .stellarBroker: nil
             }
         }
 
@@ -337,6 +344,7 @@ public extension USwapMultiSwapApi {
             case .signedTransaction: nil
             case let .transfer(_, depositAddress, _, _): depositAddress
             case let .thorchainDeposit(_, inboundAddress, _, _): inboundAddress
+            case .stellarBroker: nil
             }
         }
 
@@ -347,9 +355,31 @@ public extension USwapMultiSwapApi {
                 return (depositAddress, memo)
             case let .thorchainDeposit(_, inboundAddress, memo, _):
                 return (inboundAddress, memo)
-            case .signedTransaction:
+            case .signedTransaction, .stellarBroker:
                 return nil
             }
+        }
+    }
+
+    struct StellarBrokerParams {
+        public let sellingAsset: String
+        public let buyingAsset: String
+        public let sellingAmount: String
+        public let slippageTolerance: Double
+        public let partnerKey: String?
+
+        public init(
+            sellingAsset: String,
+            buyingAsset: String,
+            sellingAmount: String,
+            slippageTolerance: Double,
+            partnerKey: String?
+        ) {
+            self.sellingAsset = sellingAsset
+            self.buyingAsset = buyingAsset
+            self.sellingAmount = sellingAmount
+            self.slippageTolerance = slippageTolerance
+            self.partnerKey = partnerKey
         }
     }
 
@@ -463,12 +493,14 @@ private extension USwapMultiSwapApi {
         let chainId: String
         let address: String?
         let identifier: String
+        let ticker: String?
 
         init(map: Map) throws {
             chain = try map.value("chain")
             chainId = try map.value("chainId")
             address = try? map.value("address")
             identifier = try map.value("identifier")
+            ticker = try? map.value("ticker")
         }
 
         var token: Token {
@@ -476,7 +508,8 @@ private extension USwapMultiSwapApi {
                 chain: chain,
                 chainId: chainId,
                 address: address,
-                identifier: identifier
+                identifier: identifier,
+                ticker: ticker
             )
         }
     }
@@ -504,6 +537,7 @@ private extension USwapMultiSwapApi {
         let estimatedTime: TimeInterval?
         let execution: ExecutionResponse?
         let approvalSpender: String?
+        let providerId: String
 
         init(map: Map) throws {
             expectedBuyAmount = try map.value("expectedBuyAmount", using: USwapMultiSwapApi.decimalTransform)
@@ -512,6 +546,7 @@ private extension USwapMultiSwapApi {
             estimatedTime = try? map.value("estimatedTime.total")
             execution = try? map.value("execution")
             approvalSpender = (try? map.value("approvalSpender")) ?? execution?.approvalSpender
+            providerId = ((try? map.value("providers") as [String]) ?? []).first ?? ""
         }
 
         var quote: RateQuote {
@@ -520,7 +555,8 @@ private extension USwapMultiSwapApi {
                 minBuyAmount: minBuyAmount,
                 buyAsset: buyAsset,
                 estimatedTime: estimatedTime,
-                approvalSpender: approvalSpender
+                approvalSpender: approvalSpender,
+                providerId: providerId
             )
         }
     }
@@ -622,6 +658,7 @@ private extension USwapMultiSwapApi {
         case signedTransaction(chain: String, transactions: [SignableTxResponse], approval: ApprovalResponse?)
         case transfer(chain: String, depositAddress: String, attachment: [String: Any]?, unsignedTx: SignableTxResponse?)
         case thorchainDeposit(chain: String, inboundAddress: String, memo: String, delivery: DeliveryResponse)
+        case stellarBroker(StellarBrokerParams)
 
         init(map: Map) throws {
             let method: String = try map.value("method")
@@ -646,6 +683,16 @@ private extension USwapMultiSwapApi {
                     memo: map.value("memo"),
                     delivery: map.value("delivery")
                 )
+            case "stellar_broker":
+                self = try .stellarBroker(
+                    StellarBrokerParams(
+                        sellingAsset: map.value("sellingAsset"),
+                        buyingAsset: map.value("buyingAsset"),
+                        sellingAmount: map.value("sellingAmount"),
+                        slippageTolerance: map.value("slippageTolerance"),
+                        partnerKey: try? map.value("partnerKey")
+                    )
+                )
             default:
                 throw MapError(key: "method", currentValue: method, reason: "Unsupported execution method")
             }
@@ -659,6 +706,8 @@ private extension USwapMultiSwapApi {
                 nil
             case let .thorchainDeposit(_, _, _, delivery):
                 delivery.approval?.spender
+            case .stellarBroker:
+                nil
             }
         }
 
@@ -684,6 +733,8 @@ private extension USwapMultiSwapApi {
                     memo: memo,
                     delivery: delivery.delivery
                 )
+            case let .stellarBroker(params):
+                .stellarBroker(params)
             }
         }
     }
