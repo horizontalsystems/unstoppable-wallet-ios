@@ -1,10 +1,10 @@
 import Foundation
 import MarketKit
 
-final class ExolixUSwapSubProvider: DefaultUSwapSubProvider {
+public final class ExolixUSwapSubProvider: DefaultUSwapSubProvider {
     private static let zcashShieldedAsset = "ZEC.ZECSHIELDED"
 
-    static func includesInAssetMap(identifier: String) -> Bool {
+    public static func includesInAssetMap(identifier: String) -> Bool {
         identifier != zcashShieldedAsset
     }
 
@@ -30,7 +30,7 @@ final class ExolixUSwapSubProvider: DefaultUSwapSubProvider {
     private let adapterManager: AdapterManager
     private var temporaryUnifiedDestinationAddresses = [DestinationCacheKey: String]()
 
-    init(
+    public init(
         info: USwapProviderInfo,
         api: USwapMultiSwapApi,
         assetRepository: USwapAssetRepository,
@@ -51,7 +51,7 @@ final class ExolixUSwapSubProvider: DefaultUSwapSubProvider {
         )
     }
 
-    override func rate(input: USwapRateInput) async throws -> USwapRateResult {
+    public override func rate(input: USwapRateInput) async throws -> USwapRateResult {
         guard supportsAlternateRouteSelection(tokenIn: input.tokenIn, tokenOut: input.tokenOut) else {
             return try await super.rate(input: input)
         }
@@ -159,7 +159,7 @@ final class ExolixUSwapSubProvider: DefaultUSwapSubProvider {
         )
     }
 
-    override func commit(input: USwapCommitInput) async throws -> USwapCommitResult {
+    public override func commit(input: USwapCommitInput) async throws -> USwapCommitResult {
         guard supportsAlternateRouteSelection(tokenIn: input.tokenIn, tokenOut: input.tokenOut) else {
             return try await super.commit(input: input)
         }

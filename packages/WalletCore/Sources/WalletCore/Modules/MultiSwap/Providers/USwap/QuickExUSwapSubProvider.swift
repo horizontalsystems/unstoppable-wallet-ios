@@ -1,8 +1,8 @@
 import Foundation
 import MarketKit
 
-final class QuickExUSwapSubProvider: DefaultUSwapSubProvider {
-    override func validateTrustedProvider(tokenIn: Token, amountIn: Decimal) async throws -> Bool? {
+public final class QuickExUSwapSubProvider: DefaultUSwapSubProvider {
+    public override func validateTrustedProvider(tokenIn: Token, amountIn: Decimal) async throws -> Bool? {
         let addresses = await DestinationHelper.sourceAddresses(
             token: tokenIn,
             amountIn: amountIn,
