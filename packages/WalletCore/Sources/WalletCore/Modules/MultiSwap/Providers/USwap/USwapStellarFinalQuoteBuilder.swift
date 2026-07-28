@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import stellarsdk
 
 final class USwapStellarFinalQuoteBuilder: USwapFinalQuoteBuilder {
     private let adapterManager: AdapterManager
@@ -22,6 +23,35 @@ final class USwapStellarFinalQuoteBuilder: USwapFinalQuoteBuilder {
         guard let execution = input.response.execution else {
             throw USwapMultiSwapProvider.SwapError.noTransactionData
         }
+
+        if case .signedTransaction = execution {
+            guard let xdr = execution.primarySignable?.xdr else {
+                throw USwapMultiSwapProvider.SwapError.invalidTransactionData
+            }
+
+            let fee = (try? TransactionEnvelopeXDR(fromBase64: xdr)).map {
+                Decimal($0.txFee) / 10_000_000
+            }
+
+            return StellarSwapFinalQuote(
+                amountIn: input.amountIn,
+                expectedAmountOut: input.response.expectedBuyAmount,
+                recipient: input.recipient,
+                slippage: input.slippage,
+                estimatedTime: input.response.estimatedTime,
+                transactionData: .envelope(xdr),
+                token: input.tokenIn,
+                fee: fee,
+                transactionError: nil,
+                toAddress: input.destinationAddress,
+                providerSwapId: input.providerSwapId
+            )
+        }
+
+        if case .stellarBroker = execution {
+            throw USwapMultiSwapProvider.SwapError.noTransactionData
+        }
+
         guard let deposit = execution.depositInstruction() else {
             throw USwapMultiSwapProvider.SwapError.invalidTransactionData
         }
