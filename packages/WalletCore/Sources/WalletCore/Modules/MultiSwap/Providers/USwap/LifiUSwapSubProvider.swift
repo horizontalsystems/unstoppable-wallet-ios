@@ -1,6 +1,6 @@
 import MarketKit
 
-final class LifiUSwapSubProvider: DefaultUSwapSubProvider {
+public final class LifiUSwapSubProvider: DefaultUSwapSubProvider {
     private static let nativeEvmAsset = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
     private static let wrappedSolMint = "So11111111111111111111111111111111111111112"
 
@@ -13,6 +13,32 @@ final class LifiUSwapSubProvider: DefaultUSwapSubProvider {
         .avalanche: "AVAX",
         .binanceSmartChain: "BSC",
     ]
+
+    private let supportsSourceToken: (Token) -> Bool
+
+    public init(
+        info: USwapProviderInfo,
+        api: USwapMultiSwapApi,
+        assetRepository: USwapAssetRepository?,
+        commitRequestBuilder: USwapCommitRequestBuilder,
+        tracker: USwapTracker,
+        supportsSourceToken: @escaping (Token) -> Bool = { _ in true }
+    ) {
+        self.supportsSourceToken = supportsSourceToken
+
+        super.init(
+            info: info,
+            api: api,
+            assetRepository: assetRepository,
+            commitRequestBuilder: commitRequestBuilder,
+            tracker: tracker
+        )
+    }
+
+    public override func supports(tokenIn: Token, tokenOut: Token) -> Bool {
+        supportsSourceToken(tokenIn)
+            && super.supports(tokenIn: tokenIn, tokenOut: tokenOut)
+    }
 
     override func asset(token: Token) -> String? {
         if token.blockchainType == .solana {
