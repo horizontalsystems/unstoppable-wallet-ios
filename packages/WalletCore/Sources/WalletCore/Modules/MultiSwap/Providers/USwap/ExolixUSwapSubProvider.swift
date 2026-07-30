@@ -51,7 +51,7 @@ public final class ExolixUSwapSubProvider: DefaultUSwapSubProvider {
         )
     }
 
-    public override func rate(input: USwapRateInput) async throws -> USwapRateResult {
+    override public func rate(input: USwapRateInput) async throws -> USwapRateResult {
         guard supportsAlternateRouteSelection(tokenIn: input.tokenIn, tokenOut: input.tokenOut) else {
             return try await super.rate(input: input)
         }
@@ -159,7 +159,7 @@ public final class ExolixUSwapSubProvider: DefaultUSwapSubProvider {
         )
     }
 
-    public override func commit(input: USwapCommitInput) async throws -> USwapCommitResult {
+    override public func commit(input: USwapCommitInput) async throws -> USwapCommitResult {
         guard supportsAlternateRouteSelection(tokenIn: input.tokenIn, tokenOut: input.tokenOut) else {
             return try await super.commit(input: input)
         }

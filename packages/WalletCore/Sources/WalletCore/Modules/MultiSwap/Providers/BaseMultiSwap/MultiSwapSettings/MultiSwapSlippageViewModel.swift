@@ -4,7 +4,6 @@ import MarketKit
 import UIKit
 
 class MultiSwapSlippageViewModel: ObservableObject {
-    private let decimalParser = AmountDecimalParser()
     private let initialSlippage: Decimal
 
     @Published var slippageCautionState: CautionState = .none
@@ -12,7 +11,7 @@ class MultiSwapSlippageViewModel: ObservableObject {
         didSet {
             if slippageString == oldValue { return }
 
-            if let decimal = decimalParser.parseAnyDecimal(from: slippageString) {
+            if let decimal = AmountDecimalParser.parseAnyDecimal(from: slippageString) {
                 slippage = decimal
             } else {
                 slippage = 0

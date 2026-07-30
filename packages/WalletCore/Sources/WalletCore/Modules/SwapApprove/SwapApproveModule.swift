@@ -23,8 +23,7 @@ enum SwapApproveModule {
             allowance: BigUInt(data.allowance.hs.roundedString(decimal: data.token.decimals)) ?? 0
         )
 
-        let decimalParser = AmountDecimalParser()
-        let viewModel = SwapApproveViewModel(service: service, coinService: coinService, decimalParser: decimalParser)
+        let viewModel = SwapApproveViewModel(service: service, coinService: coinService)
         let viewController = SwapApproveViewController(
             viewModel: viewModel,
             delegate: delegate,

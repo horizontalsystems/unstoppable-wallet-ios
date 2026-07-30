@@ -1,9 +1,7 @@
 import Foundation
 
-public struct AmountDecimalParser {
-    public init() {}
-
-    public func parseAnyDecimal(from string: String?) -> Decimal? {
+public enum AmountDecimalParser {
+    public static func parseAnyDecimal(from string: String?) -> Decimal? {
         guard let string, !string.isEmpty else {
             return nil
         }
@@ -16,7 +14,7 @@ public struct AmountDecimalParser {
         return Decimal(string: normalized)
     }
 
-    public func string(from decimal: Decimal?) -> String {
+    public static func string(from decimal: Decimal?) -> String {
         guard let decimal else {
             return ""
         }

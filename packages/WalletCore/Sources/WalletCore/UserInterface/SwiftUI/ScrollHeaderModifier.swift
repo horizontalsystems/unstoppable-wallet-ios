@@ -31,8 +31,8 @@ struct ScrollHeaderModifier: ViewModifier {
     }
 }
 
-extension View {
-    public func themeListTopView() -> some View {
+public extension View {
+    func themeListTopView() -> some View {
         background(
             GeometryReader { geometry in
                 Color.clear
@@ -44,7 +44,7 @@ extension View {
         )
     }
 
-    public func themeListScrollHeader() -> some View {
+    func themeListScrollHeader() -> some View {
         modifier(ScrollHeaderModifier())
     }
 }

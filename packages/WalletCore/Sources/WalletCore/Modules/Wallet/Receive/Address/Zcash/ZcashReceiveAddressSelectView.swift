@@ -61,8 +61,7 @@ struct ZcashReceiveAddressSelectView: View {
         let service = ZCashReceiveAddressService(wallet: wallet, addressType: addressType)
         let viewModel = BaseReceiveAddressViewModel(
             service: service,
-            viewItemFactory: ZCashReceiveAddressViewItemFactory(addressType: addressType),
-            decimalParser: AmountDecimalParser()
+            viewItemFactory: ZCashReceiveAddressViewItemFactory(addressType: addressType)
         )
 
         BaseReceiveAddressView(viewModel: viewModel, content: {}, onDismiss: onDismiss)

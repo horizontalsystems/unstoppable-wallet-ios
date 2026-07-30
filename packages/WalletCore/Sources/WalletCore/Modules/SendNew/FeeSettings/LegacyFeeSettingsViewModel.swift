@@ -6,7 +6,6 @@ import SwiftUI
 class LegacyFeeSettingsViewModel: ObservableObject {
     private let service: EvmTransactionService
     private let feeViewItemFactory: FeeViewItemFactory
-    private let decimalParser = AmountDecimalParser()
 
     @Published var gasPriceCautionState: FieldCautionState = .none
     @Published var applyEnabled = false
@@ -55,7 +54,7 @@ class LegacyFeeSettingsViewModel: ObservableObject {
     }
 
     private func handleChange() {
-        guard let gasPriceDecimal = decimalParser.parseAnyDecimal(from: _gasPriceValue) else {
+        guard let gasPriceDecimal = AmountDecimalParser.parseAnyDecimal(from: _gasPriceValue) else {
             gasPriceCautionState = .caution(.error)
             return
         }
@@ -64,7 +63,7 @@ class LegacyFeeSettingsViewModel: ObservableObject {
     }
 
     private func updateByStep(value: String?, direction: StepChangeButtonsViewDirection) -> Decimal? {
-        guard let decimal = value.flatMap({ decimalParser.parseAnyDecimal(from: $0) }) else {
+        guard let decimal = value.flatMap({ AmountDecimalParser.parseAnyDecimal(from: $0) }) else {
             return nil
         }
 

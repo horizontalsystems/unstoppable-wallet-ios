@@ -13,8 +13,7 @@ struct HDReceiveAddressView: View {
         _viewModel = StateObject(
             wrappedValue: HDReceiveAddressViewModel(
                 service: service,
-                viewItemFactory: ReceiveAddressViewItemFactory(),
-                decimalParser: AmountDecimalParser()
+                viewItemFactory: ReceiveAddressViewItemFactory()
             )
         )
     }

@@ -44,8 +44,7 @@ enum CoinCardModule {
         let amountInputViewModel = AmountInputViewModel(
             service: coinCardService,
             fiatService: fiatService,
-            switchService: switchService,
-            decimalParser: AmountDecimalParser()
+            switchService: switchService
         )
         return SwapCoinCardCell(viewModel: viewModel, amountInputViewModel: amountInputViewModel, title: "swap.you_pay".localized)
     }
@@ -62,7 +61,6 @@ enum CoinCardModule {
             service: coinCardService,
             fiatService: fiatService,
             switchService: switchService,
-            decimalParser: AmountDecimalParser(),
             isMaxSupported: false
         )
         return SwapCoinCardCell(viewModel: viewModel, amountInputViewModel: amountInputViewModel, title: "swap.you_get".localized)
@@ -79,8 +77,7 @@ enum CoinCardModule {
         let amountInputViewModel = AmountInputViewModel(
             service: coinCardService,
             fiatService: fiatService,
-            switchService: switchService,
-            decimalParser: AmountDecimalParser()
+            switchService: switchService
         )
         return SwapCoinCardCell(viewModel: viewModel, amountInputViewModel: amountInputViewModel, title: "swap.you_pay".localized)
     }
@@ -97,7 +94,6 @@ enum CoinCardModule {
             service: coinCardService,
             fiatService: fiatService,
             switchService: switchService,
-            decimalParser: AmountDecimalParser(),
             isMaxSupported: false
         )
         return SwapCoinCardCell(viewModel: viewModel, amountInputViewModel: amountInputViewModel, title: "swap.you_get".localized)

@@ -9,7 +9,6 @@ public class PreSendViewModel: ObservableObject {
     private let marketKit = Core.shared.marketKit
     private let walletManager = Core.shared.walletManager
     private let adapterManager = Core.shared.adapterManager
-    private let decimalParser = AmountDecimalParser()
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -21,21 +20,21 @@ public class PreSendViewModel: ObservableObject {
             syncFiatAmount()
             syncSendData()
 
-            var amount = decimalParser.parseAnyDecimal(from: amountString)
+            var amount = AmountDecimalParser.parseAnyDecimal(from: amountString)
 
             if amount == 0 {
                 amount = nil
             }
 
             if amount != self.amount {
-                amountString = decimalParser.string(from: self.amount)
+                amountString = AmountDecimalParser.string(from: self.amount)
             }
         }
     }
 
     @Published public var amountString: String = "" {
         didSet {
-            var amount = decimalParser.parseAnyDecimal(from: amountString)
+            var amount = AmountDecimalParser.parseAnyDecimal(from: amountString)
 
             if amount == 0 {
                 amount = nil
@@ -55,17 +54,17 @@ public class PreSendViewModel: ObservableObject {
         didSet {
             syncAmount()
 
-            let amount = decimalParser.parseAnyDecimal(from: fiatAmountString)?.rounded(decimal: 2)
+            let amount = AmountDecimalParser.parseAnyDecimal(from: fiatAmountString)?.rounded(decimal: 2)
 
             if amount != fiatAmount {
-                fiatAmountString = decimalParser.string(from: fiatAmount)
+                fiatAmountString = AmountDecimalParser.string(from: fiatAmount)
             }
         }
     }
 
     @Published var fiatAmountString: String = "" {
         didSet {
-            let amount = decimalParser.parseAnyDecimal(from: fiatAmountString)?.rounded(decimal: 2)
+            let amount = AmountDecimalParser.parseAnyDecimal(from: fiatAmountString)?.rounded(decimal: 2)
 
             guard amount != fiatAmount else {
                 return

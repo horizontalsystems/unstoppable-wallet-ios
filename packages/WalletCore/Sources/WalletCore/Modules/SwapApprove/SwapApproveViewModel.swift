@@ -16,12 +16,9 @@ class SwapApproveViewModel {
 
     private let amountCautionRelay = BehaviorRelay<Caution?>(value: nil)
 
-    private let decimalParser: AmountDecimalParser
-
-    init(service: SwapApproveService, coinService: CoinService, decimalParser: AmountDecimalParser) {
+    init(service: SwapApproveService, coinService: CoinService) {
         self.service = service
         self.coinService = coinService
-        self.decimalParser = decimalParser
 
         service.stateObservable
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -77,7 +74,7 @@ extension SwapApproveViewModel {
     }
 
     func isValid(amount: String) -> Bool {
-        guard let amount = decimalParser.parseAnyDecimal(from: amount) else {
+        guard let amount = AmountDecimalParser.parseAnyDecimal(from: amount) else {
             return false
         }
 
@@ -86,7 +83,7 @@ extension SwapApproveViewModel {
     }
 
     func onChange(amount: String?) {
-        let amount = decimalParser.parseAnyDecimal(from: amount)
+        let amount = AmountDecimalParser.parseAnyDecimal(from: amount)
             .map { coinService.fractionalMonetaryValue(value: $0) }
 
         service.set(amount: amount)

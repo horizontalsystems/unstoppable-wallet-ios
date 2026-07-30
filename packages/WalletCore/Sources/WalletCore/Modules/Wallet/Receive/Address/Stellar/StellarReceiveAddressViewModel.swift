@@ -8,9 +8,9 @@ class StellarReceiveAddressViewModel: BaseReceiveAddressViewModel {
 
     @Published private(set) var activated: DataStatus<Bool> = .loading
 
-    init(service: StellarReceiveAddressService, viewItemFactory: StellarReceiveAddressViewItemFactory, decimalParser: AmountDecimalParser) {
+    init(service: StellarReceiveAddressService, viewItemFactory: StellarReceiveAddressViewItemFactory) {
         stellarService = service
-        super.init(service: service, viewItemFactory: viewItemFactory, decimalParser: decimalParser)
+        super.init(service: service, viewItemFactory: viewItemFactory)
 
         service.statusUpdatedPublisher
             .receive(on: DispatchQueue.main)

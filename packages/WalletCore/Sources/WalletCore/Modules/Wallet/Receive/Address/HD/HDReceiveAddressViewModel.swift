@@ -6,8 +6,8 @@ class HDReceiveAddressViewModel: BaseReceiveAddressViewModel {
 
     @Published private(set) var usedAddresses: DataStatus<[AddressChain: [UsedAddress]]?> = .loading
 
-    init(service: HDReceiveAddressService, viewItemFactory: ReceiveAddressViewItemFactory, decimalParser: AmountDecimalParser) {
-        super.init(service: service, viewItemFactory: viewItemFactory, decimalParser: decimalParser)
+    init(service: HDReceiveAddressService, viewItemFactory: ReceiveAddressViewItemFactory) {
+        super.init(service: service, viewItemFactory: viewItemFactory)
 
         service.statusUpdatedPublisher
             .receive(on: DispatchQueue.main)

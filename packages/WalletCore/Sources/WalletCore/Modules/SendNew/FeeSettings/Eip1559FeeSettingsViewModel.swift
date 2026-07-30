@@ -6,7 +6,6 @@ import SwiftUI
 class Eip1559FeeSettingsViewModel: ObservableObject {
     private let service: EvmTransactionService
     private let feeViewItemFactory: FeeViewItemFactory
-    private let decimalParser = AmountDecimalParser()
 
     @Published var baseFee: String?
     @Published var maxFeeCautionState: FieldCautionState = .none
@@ -76,8 +75,8 @@ class Eip1559FeeSettingsViewModel: ObservableObject {
     }
 
     private func handleChange() {
-        guard let maxFeeDecimal = decimalParser.parseAnyDecimal(from: _maxFee),
-              let maxTipsDecimal = decimalParser.parseAnyDecimal(from: _maxTips)
+        guard let maxFeeDecimal = AmountDecimalParser.parseAnyDecimal(from: _maxFee),
+              let maxTipsDecimal = AmountDecimalParser.parseAnyDecimal(from: _maxTips)
         else {
             maxFeeCautionState = .caution(.error)
             maxTipsCautionState = .caution(.error)
@@ -91,7 +90,7 @@ class Eip1559FeeSettingsViewModel: ObservableObject {
     }
 
     private func updateByStep(value: String?, direction: StepChangeButtonsViewDirection) -> Decimal? {
-        guard let decimal = value.flatMap({ decimalParser.parseAnyDecimal(from: $0) }) else {
+        guard let decimal = value.flatMap({ AmountDecimalParser.parseAnyDecimal(from: $0) }) else {
             return nil
         }
 

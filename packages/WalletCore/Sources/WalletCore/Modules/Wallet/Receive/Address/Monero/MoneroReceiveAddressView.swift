@@ -13,8 +13,7 @@ struct MoneroReceiveAddressView: View {
         _viewModel = StateObject(
             wrappedValue: MoneroReceiveAddressViewModel(
                 service: service,
-                viewItemFactory: ReceiveAddressViewItemFactory(),
-                decimalParser: AmountDecimalParser()
+                viewItemFactory: ReceiveAddressViewItemFactory()
             )
         )
     }

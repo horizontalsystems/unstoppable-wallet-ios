@@ -67,18 +67,18 @@ public struct ThemeButton: View {
     }
 }
 
-extension ThemeButton {
-    public enum Style {
+public extension ThemeButton {
+    enum Style {
         case primary
         case secondary
     }
 
-    public enum Mode {
+    enum Mode {
         case solid
         case transparent
     }
 
-    public enum Size {
+    enum Size {
         case medium
         case small
 
@@ -118,7 +118,7 @@ extension ThemeButton {
         }
     }
 
-    static func foregroundColor(style: Style, mode: Mode, size: Size, isEnabled: Bool) -> Color {
+    internal static func foregroundColor(style: Style, mode: Mode, size: Size, isEnabled: Bool) -> Color {
         switch mode {
         case .solid:
             guard isEnabled else {
@@ -141,7 +141,7 @@ extension ThemeButton {
         }
     }
 
-    static func backgroundColor(style: Style, mode: Mode, size: Size, isEnabled: Bool) -> Color {
+    internal static func backgroundColor(style: Style, mode: Mode, size: Size, isEnabled: Bool) -> Color {
         switch mode {
         case .solid:
             guard isEnabled else {
