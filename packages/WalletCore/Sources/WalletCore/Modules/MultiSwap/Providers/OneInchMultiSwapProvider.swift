@@ -155,8 +155,8 @@ public class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
                 toAddress: swap.toAddress,
                 transactionHash: swap.txHash,
                 chainId: String(evmBlockchainManager.chain(blockchainType: blockchainType).id),
-                fromAsset: try address(token: swap.tokenIn).eip55,
-                toAsset: try address(token: swap.tokenOut).eip55,
+                fromAsset: address(token: swap.tokenIn).eip55,
+                toAsset: address(token: swap.tokenOut).eip55,
                 providerSwapId: nil
             )
         )

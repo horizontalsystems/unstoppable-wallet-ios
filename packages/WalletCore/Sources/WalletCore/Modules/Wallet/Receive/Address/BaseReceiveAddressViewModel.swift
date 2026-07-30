@@ -18,7 +18,6 @@ protocol IReceiveAddressService {
 class BaseReceiveAddressViewModel: ObservableObject {
     private let service: BaseReceiveAddressService
     private let viewItemFactory: ReceiveAddressViewItemFactory
-    private let decimalParser: AmountDecimalParser
     private var cancellables = Set<AnyCancellable>()
     private var hasAppeared = false
 
@@ -33,10 +32,9 @@ class BaseReceiveAddressViewModel: ObservableObject {
         amountFieldChangedSuccessSubject.eraseToAnyPublisher()
     }
 
-    init(service: BaseReceiveAddressService, viewItemFactory: ReceiveAddressViewItemFactory, decimalParser: AmountDecimalParser) {
+    init(service: BaseReceiveAddressService, viewItemFactory: ReceiveAddressViewItemFactory) {
         self.service = service
         self.viewItemFactory = viewItemFactory
-        self.decimalParser = decimalParser
 
         service.statusUpdatedPublisher
             .receive(on: DispatchQueue.main)
@@ -89,7 +87,7 @@ extension BaseReceiveAddressViewModel {
     }
 
     func set(amount: String) {
-        let value = decimalParser.parseAnyDecimal(from: amount) ?? 0
+        let value = AmountDecimalParser.parseAnyDecimal(from: amount) ?? 0
         self.amount = value
         sync(state: service.state)
     }
@@ -118,6 +116,6 @@ extension BaseReceiveAddressViewModel {
         let service = BaseReceiveAddressService(wallet: wallet)
         let depositViewItemFactory = ReceiveAddressViewItemFactory()
 
-        return BaseReceiveAddressViewModel(service: service, viewItemFactory: depositViewItemFactory, decimalParser: AmountDecimalParser())
+        return BaseReceiveAddressViewModel(service: service, viewItemFactory: depositViewItemFactory)
     }
 }

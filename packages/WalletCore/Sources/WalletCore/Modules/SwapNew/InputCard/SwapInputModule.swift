@@ -16,14 +16,12 @@ enum SwapInputModule {
         let fromAmountInputViewModel = AmountInputViewModel(
             service: fromCoinCardService,
             fiatService: fromFiatService,
-            switchService: switchService,
-            decimalParser: AmountDecimalParser()
+            switchService: switchService
         )
         let toAmountInputViewModel = AmountInputViewModel(
             service: toCoinCardService,
             fiatService: toFiatService,
-            switchService: switchService,
-            decimalParser: AmountDecimalParser()
+            switchService: switchService
         )
 
         return SwapInputCell(fromViewModel: fromViewModel,
@@ -47,14 +45,12 @@ enum SwapInputModule {
         let fromAmountInputViewModel = AmountInputViewModel(
             service: fromCoinCardService,
             fiatService: fromFiatService,
-            switchService: switchService,
-            decimalParser: AmountDecimalParser()
+            switchService: switchService
         )
         let toAmountInputViewModel = AmountInputViewModel(
             service: toCoinCardService,
             fiatService: toFiatService,
-            switchService: switchService,
-            decimalParser: AmountDecimalParser()
+            switchService: switchService
         )
 
         return SwapInputCell(fromViewModel: fromViewModel,
@@ -78,14 +74,12 @@ enum SwapInputModule {
         let fromAmountInputViewModel = AmountInputViewModel(
             service: fromCoinCardService,
             fiatService: fromFiatService,
-            switchService: switchService,
-            decimalParser: AmountDecimalParser()
+            switchService: switchService
         )
         let toAmountInputViewModel = AmountInputViewModel(
             service: toCoinCardService,
             fiatService: toFiatService,
-            switchService: switchService,
-            decimalParser: AmountDecimalParser()
+            switchService: switchService
         )
 
         return SwapInputCell(fromViewModel: fromViewModel,

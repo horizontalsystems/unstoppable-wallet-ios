@@ -27,7 +27,6 @@ public class MultiSwapViewModel: ObservableObject {
     private let walletManager = Core.shared.walletManager
     private let adapterManager = Core.shared.adapterManager
     private let localStorage = Core.shared.localStorage
-    private let decimalParser = AmountDecimalParser()
 
     @Published var currency: Currency
     private let customDecimals: Int?
@@ -159,17 +158,17 @@ public class MultiSwapViewModel: ObservableObject {
             syncQuotes()
             syncFiatAmountIn()
 
-            let amount = decimalParser.parseAnyDecimal(from: amountString)
+            let amount = AmountDecimalParser.parseAnyDecimal(from: amountString)
 
             if amount != amountIn {
-                amountString = decimalParser.string(from: amountIn)
+                amountString = AmountDecimalParser.string(from: amountIn)
             }
         }
     }
 
     @Published public var amountString: String = "" {
         didSet {
-            let amount = decimalParser.parseAnyDecimal(from: amountString)
+            let amount = AmountDecimalParser.parseAnyDecimal(from: amountString)
 
             guard amount != amountIn else {
                 return
@@ -185,17 +184,17 @@ public class MultiSwapViewModel: ObservableObject {
         didSet {
             syncAmountIn()
 
-            let amount = decimalParser.parseAnyDecimal(from: fiatAmountString)?.rounded(decimal: 2)
+            let amount = AmountDecimalParser.parseAnyDecimal(from: fiatAmountString)?.rounded(decimal: 2)
 
             if amount != fiatAmountIn {
-                fiatAmountString = decimalParser.string(from: fiatAmountIn)
+                fiatAmountString = AmountDecimalParser.string(from: fiatAmountIn)
             }
         }
     }
 
     @Published var fiatAmountString: String = "" {
         didSet {
-            let amount = decimalParser.parseAnyDecimal(from: fiatAmountString)?.rounded(decimal: 2)
+            let amount = AmountDecimalParser.parseAnyDecimal(from: fiatAmountString)?.rounded(decimal: 2)
 
             guard amount != fiatAmountIn else {
                 return

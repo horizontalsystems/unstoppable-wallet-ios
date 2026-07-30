@@ -12,8 +12,7 @@ struct TronReceiveAddressView: View {
         _viewModel = StateObject(
             wrappedValue: TronReceiveAddressViewModel(
                 service: TronReceiveAddressService(wallet: wallet),
-                viewItemFactory: ReceiveAddressViewItemFactory(),
-                decimalParser: AmountDecimalParser()
+                viewItemFactory: ReceiveAddressViewItemFactory()
             )
         )
     }

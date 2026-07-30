@@ -12,8 +12,7 @@ struct StellarReceiveAddressView: View {
         _viewModel = StateObject(
             wrappedValue: StellarReceiveAddressViewModel(
                 service: StellarReceiveAddressService(wallet: wallet),
-                viewItemFactory: StellarReceiveAddressViewItemFactory(),
-                decimalParser: AmountDecimalParser()
+                viewItemFactory: StellarReceiveAddressViewItemFactory()
             )
         )
     }

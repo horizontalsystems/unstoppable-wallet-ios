@@ -73,6 +73,11 @@ public enum AddressSecurityIssueType: CaseIterable, Identifiable {
 }
 
 public struct ResolvedAddress: Hashable {
+    public init(address: String, issueTypes: [AddressSecurityIssueType]) {
+        self.address = address
+        self.issueTypes = issueTypes
+    }
+
     public let address: String
     public let issueTypes: [AddressSecurityIssueType]
 }

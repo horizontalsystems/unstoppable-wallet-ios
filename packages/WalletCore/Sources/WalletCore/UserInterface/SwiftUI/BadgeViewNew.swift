@@ -66,8 +66,8 @@ public struct BadgeViewNew: View {
     }
 }
 
-extension BadgeViewNew {
-    public enum Mode {
+public extension BadgeViewNew {
+    enum Mode {
         case solid
         case transparent
     }

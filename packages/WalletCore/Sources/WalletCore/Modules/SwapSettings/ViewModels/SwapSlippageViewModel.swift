@@ -21,11 +21,9 @@ class SwapSlippageViewModel {
     private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
 
     private let service: ISlippageService
-    private let decimalParser: AmountDecimalParser
 
-    public init(service: ISlippageService, decimalParser: AmountDecimalParser) {
+    public init(service: ISlippageService) {
         self.service = service
-        self.decimalParser = decimalParser
 
         service.slippageChangeObservable
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -72,7 +70,7 @@ extension SwapSlippageViewModel {
     }
 
     func onChange(text: String?) {
-        guard let value = decimalParser.parseAnyDecimal(from: text) else {
+        guard let value = AmountDecimalParser.parseAnyDecimal(from: text) else {
             service.set(slippage: service.defaultSlippage)
             return
         }
@@ -81,7 +79,7 @@ extension SwapSlippageViewModel {
     }
 
     func isValid(text: String) -> Bool {
-        guard let amount = decimalParser.parseAnyDecimal(from: text) else {
+        guard let amount = AmountDecimalParser.parseAnyDecimal(from: text) else {
             return false
         }
 

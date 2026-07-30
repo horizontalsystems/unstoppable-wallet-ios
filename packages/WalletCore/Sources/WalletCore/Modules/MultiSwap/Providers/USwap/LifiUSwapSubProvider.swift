@@ -35,7 +35,7 @@ public final class LifiUSwapSubProvider: DefaultUSwapSubProvider {
         )
     }
 
-    public override func supports(tokenIn: Token, tokenOut: Token) -> Bool {
+    override public func supports(tokenIn: Token, tokenOut: Token) -> Bool {
         supportsSourceToken(tokenIn)
             && super.supports(tokenIn: tokenIn, tokenOut: tokenOut)
     }

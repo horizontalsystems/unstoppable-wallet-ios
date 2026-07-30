@@ -214,7 +214,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
     func track(swap: Swap) async throws -> Swap {
         // Native THORChain/Maya swaps aren't recorded by us → the stateless reader.
-        return try await tracker.track(
+        try await tracker.track(
             swap: swap,
             request: .thorchain(
                 providerId: swap.providerId,

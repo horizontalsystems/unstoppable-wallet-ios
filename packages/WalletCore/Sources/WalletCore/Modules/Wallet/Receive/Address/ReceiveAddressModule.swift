@@ -105,7 +105,7 @@ extension ReceiveAddressModule {
         case .zcash: ZcashReceiveAddressSelectView(wallet: wallet, path: path, onDismiss: onDismiss)
         default:
             let service = BaseReceiveAddressService(wallet: wallet)
-            let viewModel = BaseReceiveAddressViewModel(service: service, viewItemFactory: ReceiveAddressViewItemFactory(), decimalParser: AmountDecimalParser())
+            let viewModel = BaseReceiveAddressViewModel(service: service, viewItemFactory: ReceiveAddressViewItemFactory())
 
             BaseReceiveAddressView(viewModel: viewModel, content: {}, onDismiss: onDismiss)
         }

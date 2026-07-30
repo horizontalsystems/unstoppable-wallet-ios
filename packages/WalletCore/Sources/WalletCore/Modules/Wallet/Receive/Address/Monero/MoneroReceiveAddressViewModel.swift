@@ -6,8 +6,8 @@ class MoneroReceiveAddressViewModel: BaseReceiveAddressViewModel {
 
     @Published private(set) var subAddresses: DataStatus<[UsedAddress]?> = .loading
 
-    init(service: MoneroReceiveAddressService, viewItemFactory: ReceiveAddressViewItemFactory, decimalParser: AmountDecimalParser) {
-        super.init(service: service, viewItemFactory: viewItemFactory, decimalParser: decimalParser)
+    init(service: MoneroReceiveAddressService, viewItemFactory: ReceiveAddressViewItemFactory) {
+        super.init(service: service, viewItemFactory: viewItemFactory)
 
         service.statusUpdatedPublisher
             .receive(on: DispatchQueue.main)

@@ -33,10 +33,10 @@ enum UniswapSettingsModule {
         let viewModel = UniswapSettingsViewModel(service: service, settingProvider: settingProvider)
 
         let recipientViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
-        let slippageViewModel = SwapSlippageViewModel(service: service, decimalParser: AmountDecimalParser())
+        let slippageViewModel = SwapSlippageViewModel(service: service)
 
         let deadlineViewModel: SwapDeadlineViewModel? = showDeadline ?
-            .init(service: service, decimalParser: AmountDecimalParser()) :
+            .init(service: service) :
             nil
 
         return UniswapSettingsDataSource(

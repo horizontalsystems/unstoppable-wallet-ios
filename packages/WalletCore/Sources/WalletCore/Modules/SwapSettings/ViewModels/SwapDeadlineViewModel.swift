@@ -7,11 +7,9 @@ class SwapDeadlineViewModel {
     private let disposeBag = DisposeBag()
 
     private let service: UniswapSettingsService
-    private let decimalParser: AmountDecimalParser
 
-    public init(service: UniswapSettingsService, decimalParser: AmountDecimalParser) {
+    public init(service: UniswapSettingsService) {
         self.service = service
-        self.decimalParser = decimalParser
     }
 
     private func toString(_ value: Double) -> String {
@@ -42,7 +40,7 @@ extension SwapDeadlineViewModel {
     }
 
     func onChange(text: String?) {
-        guard let value = decimalParser.parseAnyDecimal(from: text) else {
+        guard let value = AmountDecimalParser.parseAnyDecimal(from: text) else {
             service.deadline = TradeOptions.defaultTtl
             return
         }
@@ -51,7 +49,7 @@ extension SwapDeadlineViewModel {
     }
 
     func isValid(text: String) -> Bool {
-        guard let amount = decimalParser.parseAnyDecimal(from: text) else {
+        guard let amount = AmountDecimalParser.parseAnyDecimal(from: text) else {
             return false
         }
 

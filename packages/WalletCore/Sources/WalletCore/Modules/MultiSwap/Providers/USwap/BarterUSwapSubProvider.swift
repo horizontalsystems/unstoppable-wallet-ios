@@ -3,7 +3,7 @@ import MarketKit
 public final class BarterUSwapSubProvider: DefaultUSwapSubProvider {
     private static let nativeAsset = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 
-    public override func supports(tokenIn: Token, tokenOut: Token) -> Bool {
+    override public func supports(tokenIn: Token, tokenOut: Token) -> Bool {
         super.supports(tokenIn: tokenIn, tokenOut: tokenOut)
             && tokenIn.blockchainType == tokenOut.blockchainType
     }

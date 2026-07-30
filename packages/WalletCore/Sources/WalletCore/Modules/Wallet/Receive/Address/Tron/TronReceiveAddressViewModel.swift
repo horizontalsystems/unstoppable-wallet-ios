@@ -7,8 +7,8 @@ class TronReceiveAddressViewModel: BaseReceiveAddressViewModel {
 
     @Published private(set) var activated: DataStatus<Bool> = .loading
 
-    init(service: TronReceiveAddressService, viewItemFactory: ReceiveAddressViewItemFactory, decimalParser: AmountDecimalParser) {
-        super.init(service: service, viewItemFactory: viewItemFactory, decimalParser: decimalParser)
+    init(service: TronReceiveAddressService, viewItemFactory: ReceiveAddressViewItemFactory) {
+        super.init(service: service, viewItemFactory: viewItemFactory)
 
         service.statusUpdatedPublisher
             .receive(on: DispatchQueue.main)
