@@ -100,6 +100,7 @@ public class Core {
     let moneroNodeManager: MoneroNodeManager
     let zanoNodeManager: ZanoNodeManager
     let zcashNodeManager: ZcashNodeManager
+    let thorChainEndpointManager: ThorChainEndpointManager
     let restoreStateManager: RestoreStateManager
     public let evmBlockchainManager: EvmBlockchainManager
     let evmLabelManager: EvmLabelManager
@@ -278,6 +279,11 @@ public class Core {
         evmLabelManager = EvmLabelManager(provider: hsLabelProvider, storage: evmLabelStorage, syncerStateStorage: syncerStateStorage)
 
         let tronKitManager = TronKitManager(testNetManager: testNetManager, evmSyncSourceManager: evmSyncSourceManager)
+        thorChainEndpointManager = ThorChainEndpointManager(
+            blockchainSettingsStorage: blockchainSettingsStorage,
+            endpointProvider: ThorChainEndpointConfigurationProvider()
+        )
+        let thorChainKitManager = ThorChainKitManager(endpointManager: thorChainEndpointManager)
         tronAccountManager = TronAccountManager(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, tronKitManager: tronKitManager, restoreStateManager: restoreStateManager)
 
         tonKitManager = TonKitManager(restoreStateManager: restoreStateManager, marketKit: marketKit, walletManager: walletManager)
@@ -361,6 +367,7 @@ public class Core {
             zcashNodeManager: zcashNodeManager,
             btcBlockchainManager: btcBlockchainManager,
             tronKitManager: tronKitManager,
+            thorChainKitManager: thorChainKitManager,
             tonKitManager: tonKitManager,
             stellarKitManager: stellarKitManager,
             zanoKitManager: zanoKitManager,
@@ -382,7 +389,8 @@ public class Core {
             btcBlockchainManager: btcBlockchainManager,
             moneroNodeManager: moneroNodeManager,
             zanoNodeManager: zanoNodeManager,
-            zcashNodeManager: zcashNodeManager
+            zcashNodeManager: zcashNodeManager,
+            thorChainKitManager: thorChainKitManager
         )
         transactionAdapterManager = TransactionAdapterManager(
             adapterManager: adapterManager,
@@ -402,6 +410,7 @@ public class Core {
             moneroNodeManager: moneroNodeManager,
             zanoNodeManager: zanoNodeManager,
             zcashNodeManager: zcashNodeManager,
+            thorChainEndpointManager: thorChainEndpointManager,
             btcBlockchainManager: btcBlockchainManager,
             restoreSettingsManager: restoreSettingsManager,
             chartRepository: chartRepository,

@@ -1,5 +1,6 @@
 import EvmKit
 import MarketKit
+import ThorChainKit
 import TronKit
 
 public enum AccountAddress {
@@ -28,9 +29,20 @@ public enum AccountAddress {
 
         throw AdapterError.unsupportedAccount
     }
+
+    static func thorChainAddress(account: Account) throws -> ThorChainKit.Address {
+        for provider in providers {
+            if let address = try provider.thorChainAddress(account: account) {
+                return address
+            }
+        }
+
+        throw AdapterError.unsupportedAccount
+    }
 }
 
 public protocol IAccountAddressProvider {
     func evmAddress(account: Account, blockchainType: BlockchainType) throws -> EvmKit.Address?
     func tronAddress(account: Account) throws -> TronKit.Address?
+    func thorChainAddress(account: Account) throws -> ThorChainKit.Address?
 }

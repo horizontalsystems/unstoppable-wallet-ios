@@ -185,8 +185,10 @@ struct SwapExecutableTests {
 
         let executable = try #require(quote.executable(tokenIn: Self.token(blockchainType: .tron)) as? TronExecutable)
 
-        #expect(executable.created.txID == created.txID)
-        #expect(executable.created.rawDataHex == created.rawDataHex)
+        let executableCreated = try #require(executable.created)
+
+        #expect(executableCreated.txID == created.txID)
+        #expect(executableCreated.rawDataHex == created.rawDataHex)
         #expect(executable.transferIntent == nil)
     }
 

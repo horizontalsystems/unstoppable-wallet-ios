@@ -520,6 +520,21 @@ class TransactionInfoViewItemFactory {
                 .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: record.transaction.contract?.label ?? "transactions.contract_call".localized, subTitle: ""),
             ]))
 
+        case let record as ThorChainIncomingTransactionRecord:
+            sections.append(.init(receiveSection(source: record.source, appValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden)))
+
+        case let record as ThorChainOutgoingTransactionRecord:
+            sections.append(.init(sendSection(source: record.source, appValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden)))
+
+            if record.sentToSelf {
+                sections.append(.init([.sentToSelf]))
+            }
+
+        case let record as ThorChainTransactionRecord:
+            sections.append(.init([
+                .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: record.transaction.type.capitalized, subTitle: ""),
+            ]))
+
         case let record as BitcoinIncomingTransactionRecord:
             sections.append(.init(receiveSection(source: record.source, appValue: record.value, from: record.from, rates: item.rates, to: record.to, balanceHidden: balanceHidden)))
 
@@ -807,6 +822,13 @@ class TransactionInfoViewItemFactory {
             }
 
         default: ()
+        }
+
+        if let thorChainRecord = record as? ThorChainTransactionRecord,
+           let memo = thorChainRecord.transaction.memo,
+           !memo.isEmpty
+        {
+            sections.append(.init([.memo(text: memo)]))
         }
 
         var transactionViewItems: [TransactionInfoModule.ViewItem] = [
