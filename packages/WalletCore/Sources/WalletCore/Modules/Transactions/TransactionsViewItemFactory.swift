@@ -456,7 +456,7 @@ class TransactionsViewItemFactory {
         case let record as ThorChainIncomingTransactionRecord:
             iconType = singleValueIconType(source: record.source, kind: record.value.kind)
             title = "transactions.receive".localized
-            subTitle = "transactions.from".localized(mapped(address: record.from, blockchainType: item.record.source.blockchainType))
+            subTitle = record.from.flatMap { "transactions.from".localized(mapped(address: $0, blockchainType: item.record.source.blockchainType)) } ?? "---"
 
             primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: type(value: record.value, .incoming))
 
@@ -467,7 +467,7 @@ class TransactionsViewItemFactory {
         case let record as ThorChainOutgoingTransactionRecord:
             iconType = singleValueIconType(source: record.source, kind: record.value.kind)
             title = "transactions.send".localized
-            subTitle = "transactions.to".localized(mapped(address: record.to, blockchainType: item.record.source.blockchainType))
+            subTitle = record.to.flatMap { "transactions.to".localized(mapped(address: $0, blockchainType: item.record.source.blockchainType)) } ?? "---"
 
             primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, signType: record.sentToSelf ? .never : .always), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
 

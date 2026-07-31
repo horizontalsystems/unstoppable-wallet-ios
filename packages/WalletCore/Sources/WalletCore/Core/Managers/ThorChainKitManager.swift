@@ -17,15 +17,6 @@ struct ThorChainEndpointConfiguration {
 final class ThorChainEndpointConfigurationProvider: IThorChainEndpointConfigurationProvider {
     func configuration() throws -> ThorChainEndpointConfiguration {
         let families = try [
-            // Matches the THORNode endpoint thorchain-kit-android ships as its
-            // default. Android reaches it through `thorchain_api` only; the kit
-            // here also verifies chain identity and height over CometBFT, which
-            // the same host serves under `thorchain_rpc`.
-            ThorChainKit.EndpointFamilyDescriptor(
-                id: "liquify-mainnet",
-                cosmosRestURL: URL(string: "https://gateway.liquify.com/chain/thorchain_api")!,
-                cometBftURL: URL(string: "https://gateway.liquify.com/chain/thorchain_rpc")!
-            ),
             ThorChainKit.EndpointFamilyDescriptor(
                 id: "rorcual-mainnet",
                 cosmosRestURL: URL(string: "https://api-thorchain.rorcual.xyz")!,
@@ -40,6 +31,16 @@ final class ThorChainEndpointConfigurationProvider: IThorChainEndpointConfigurat
                 id: "keplr-mainnet",
                 cosmosRestURL: URL(string: "https://lcd-thorchain.keplr.app")!,
                 cometBftURL: URL(string: "https://rpc-thorchain.keplr.app")!
+            ),
+            // The THORNode endpoint thorchain-kit-android ships as its default. Android
+            // reaches it through `thorchain_api` only; this kit also verifies chain
+            // identity and height over CometBFT, which the same host serves under
+            // `thorchain_rpc`. Listed last, not first: it intermittently answers the
+            // account read with HTTP 500, and 500 is not a retryable status.
+            ThorChainKit.EndpointFamilyDescriptor(
+                id: "liquify-mainnet",
+                cosmosRestURL: URL(string: "https://gateway.liquify.com/chain/thorchain_api")!,
+                cometBftURL: URL(string: "https://gateway.liquify.com/chain/thorchain_rpc")!
             ),
         ]
         return try ThorChainEndpointConfiguration(

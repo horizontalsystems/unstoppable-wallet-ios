@@ -58,6 +58,6 @@ public struct PaymentInfo {
 }
 
 public enum StellarSendData {
-    case payment(asset: Asset, amount: Decimal, accountId: String)
-    case changeTrust(asset: Asset, limit: Decimal)
+    case payment(asset: StellarKit.Asset, amount: Decimal, accountId: String)
+    case changeTrust(asset: StellarKit.Asset, limit: Decimal)
 }
