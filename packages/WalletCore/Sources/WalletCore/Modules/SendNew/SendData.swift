@@ -42,14 +42,16 @@ public struct PaymentInfo {
     public let tokenAmount: Decimal
     public let qrLink: String
     public let chain: String
+    public let token: String
 
-    public init(recipient: String, rate: Decimal, amount: Decimal, tokenAmount: Decimal, qrLink: String, chain: String) {
+    public init(recipient: String, rate: Decimal, amount: Decimal, tokenAmount: Decimal, qrLink: String, chain: String, token: String) {
         self.recipient = recipient
         self.rate = rate
         self.amount = amount
         self.tokenAmount = tokenAmount
         self.qrLink = qrLink
         self.chain = chain
+        self.token = token
     }
 }
 
