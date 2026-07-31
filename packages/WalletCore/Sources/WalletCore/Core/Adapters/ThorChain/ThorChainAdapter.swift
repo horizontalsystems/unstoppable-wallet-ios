@@ -6,18 +6,22 @@ import RxSwift
 import ThorChainKit
 
 final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
-    private static let decimals = 8
+    private static let decimals = ThorChainKit.Denom.decimals
 
     let thorChainKitWrapper: ThorChainKitWrapper
+    // One account read carries every denom, so RUNE and every THORChain asset share a
+    // single kit; the adapter only picks its own denom out of that state.
+    private let denom: ThorChainKit.Denom
     private let disposeBag = DisposeBag()
     private let balanceStateSubject = PublishSubject<AdapterState>()
     private let balanceDataSubject = PublishSubject<BalanceData>()
     private var cachedBalance = BalanceData(balance: 0)
     private var conversionFailure = false
 
-    init(thorChainKitWrapper: ThorChainKitWrapper) throws {
+    init(thorChainKitWrapper: ThorChainKitWrapper, denom: ThorChainKit.Denom = .rune) throws {
         self.thorChainKitWrapper = thorChainKitWrapper
-        cachedBalance = try Self.balanceData(baseUnits: thorChainKitWrapper.thorChainKit.runeBalance, decimals: Self.decimals)
+        self.denom = denom
+        cachedBalance = try Self.balanceData(baseUnits: thorChainKitWrapper.thorChainKit.balance(denom: denom), decimals: Self.decimals)
 
         thorChainKitWrapper.thorChainKit.syncStatePublisher
             .asObservable()
@@ -48,9 +52,12 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
         "thorchain:\(syncStateCode):\(thorChainKitWrapper.thorChainKit.network.expectedChainId)"
     }
 
-    func start() {}
+    func start() {
+        // started via ThorChainKitManager
+    }
+
     func stop() {
-        thorChainKitWrapper.thorChainKit.stop()
+        // stopped via ThorChainKitManager
     }
 
     func refresh() {}
@@ -108,7 +115,7 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
     private func publishBalance() {
         do {
             cachedBalance = try Self.balanceData(
-                baseUnits: thorChainKitWrapper.thorChainKit.runeBalance,
+                baseUnits: thorChainKitWrapper.thorChainKit.balance(denom: denom),
                 decimals: Self.decimals
             )
             conversionFailure = false

@@ -5,5 +5,6 @@ enum TokenProtocol {
     case jetton
     case stellar
     case zanoAsset
+    case thorChainAsset
     case unsupported
 }

@@ -5,6 +5,7 @@ import MarketKit
 import RxRelay
 import RxSwift
 import StellarKit
+import ThorChainKit
 
 public class AdapterFactory {
     private let evmBlockchainManager: EvmBlockchainManager
@@ -110,13 +111,24 @@ public class AdapterFactory {
     }
 
     private func thorChainAdapter(wallet: Wallet) -> IAdapter? {
-        guard wallet.token.blockchainType == .thorChain,
-              wallet.token.type == .native
-        else { return nil }
+        guard wallet.token.blockchainType == .thorChain else { return nil }
+
+        let denom: ThorChainKit.Denom
+
+        switch wallet.token.type {
+        case .native:
+            denom = .rune
+        case let .thorChainAsset(rawDenom):
+            guard let parsed = try? ThorChainKit.Denom(rawValue: rawDenom) else { return nil }
+            denom = parsed
+        default:
+            return nil
+        }
 
         do {
+            // Every denom of an account shares one kit; the wrapper is cached per account
             let wrapper = try thorChainKitManager.thorChainKitWrapper(account: wallet.account)
-            return try ThorChainAdapter(thorChainKitWrapper: wrapper)
+            return try ThorChainAdapter(thorChainKitWrapper: wrapper, denom: denom)
         } catch {
             return nil
         }
@@ -188,7 +200,8 @@ extension AdapterFactory {
             let adapter = ThorChainTransactionsAdapter(
                 thorChainKitWrapper: thorChainKitWrapper,
                 source: transactionSource,
-                baseToken: baseToken
+                baseToken: baseToken,
+                coinManager: coinManager
             )
             return TransactionsAdapterDecoratorFactory.decorate(adapter: adapter, source: transactionSource)
         }
@@ -286,7 +299,7 @@ extension AdapterFactory {
         case (.native, .tron):
             return tronAdapter(wallet: wallet)
 
-        case (.native, .thorChain):
+        case (.native, .thorChain), (.thorChainAsset, .thorChain):
             return thorChainAdapter(wallet: wallet)
 
         case let (.eip20(address), .tron):

@@ -194,6 +194,7 @@ extension BlockchainType {
         case .tron: return "TRX, TRC20 tokens"
         case .ton: return "TON"
         case .stellar: return "Stellar"
+        case .thorChain: return "RUNE, THORChain assets"
         case .solana: return "SOL, SPL tokens"
         default: return ""
         }

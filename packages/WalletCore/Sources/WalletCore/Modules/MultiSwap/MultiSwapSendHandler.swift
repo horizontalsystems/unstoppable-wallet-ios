@@ -361,7 +361,7 @@ extension MultiSwapSendHandler {
         switch tokenIn.type {
         case .native, .derived, .addressType:
             baseToken = tokenIn
-        case .eip20, .spl, .jetton, .stellar, .zanoAsset:
+        case .eip20, .spl, .jetton, .stellar, .zanoAsset, .thorChainAsset:
             baseToken = try? Core.shared.marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native))
         case .unsupported:
             baseToken = nil

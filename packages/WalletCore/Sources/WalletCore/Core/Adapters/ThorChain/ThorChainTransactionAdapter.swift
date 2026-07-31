@@ -8,35 +8,55 @@ class ThorChainTransactionsAdapter {
     private let thorChainKitWrapper: ThorChainKitWrapper
     private let converter: ThorChainTransactionConverter
 
-    init(thorChainKitWrapper: ThorChainKitWrapper, source: TransactionSource, baseToken: Token) {
+    init(thorChainKitWrapper: ThorChainKitWrapper, source: TransactionSource, baseToken: Token, coinManager: CoinManager) {
         self.thorChainKitWrapper = thorChainKitWrapper
-        converter = ThorChainTransactionConverter(source: source, baseToken: baseToken, thorChainKitWrapper: thorChainKitWrapper)
+        converter = ThorChainTransactionConverter(
+            source: source,
+            baseToken: baseToken,
+            coinManager: coinManager,
+            thorChainKitWrapper: thorChainKitWrapper
+        )
     }
 
     private var thorChainKit: ThorChainKit.Kit {
         thorChainKitWrapper.thorChainKit
     }
 
-    private func supports(token: Token?, address: String?) -> Bool {
-        if let token {
-            guard token.type == .native else { return false }
-        }
-        return address == nil || address == thorChainKit.address.raw
+    private func records(from transactions: [ThorChainKit.Transaction], token: Token?, filter: TransactionTypeFilter, address: String?) -> [TransactionRecord] {
+        transactions
+            .flatMap { converter.transactionRecords(from: $0) }
+            .filter { matches(record: $0, token: token, filter: filter, address: address) }
     }
 
-    private func records(from transactions: [ThorChainKit.Transaction], filter: TransactionTypeFilter) -> [TransactionRecord] {
-        let records = transactions.map { converter.transactionRecord(from: $0) }
-
+    private func matches(record: ThorChainTransactionRecord, token: Token?, filter: TransactionTypeFilter, address: String?) -> Bool {
         switch filter {
-        case .all:
-            return records
-        case .incoming:
-            return records.filter { $0 is ThorChainIncomingTransactionRecord }
-        case .outgoing:
-            return records.filter { $0 is ThorChainOutgoingTransactionRecord }
-        default:
-            return []
+        case .all: break
+        case .incoming: guard record is ThorChainIncomingTransactionRecord else { return false }
+        case .outgoing: guard record is ThorChainOutgoingTransactionRecord else { return false }
+        default: return false
         }
+
+        // One action yields a record per user-side asset, so an action can carry both
+        // RUNE and a THORChain asset. Without this the RUNE wallet lists them all.
+        if let token, record.mainValue?.token?.coin.uid != token.coin.uid {
+            return false
+        }
+
+        if let address {
+            let counterparty: String?
+
+            switch record {
+            case let record as ThorChainIncomingTransactionRecord: counterparty = record.from
+            case let record as ThorChainOutgoingTransactionRecord: counterparty = record.to
+            default: counterparty = nil
+            }
+
+            guard let counterparty, counterparty.caseInsensitiveCompare(address) == .orderedSame else {
+                return false
+            }
+        }
+
+        return true
     }
 }
 
@@ -58,7 +78,7 @@ extension ThorChainTransactionsAdapter: ITransactionsAdapter {
     }
 
     var explorerTitle: String {
-        "THORChain"
+        "RuneScan"
     }
 
     var additionalTokenQueries: [TokenQuery] {
@@ -66,29 +86,31 @@ extension ThorChainTransactionsAdapter: ITransactionsAdapter {
     }
 
     func explorerUrl(transactionHash: String) -> String? {
-        "https://thorchain.net/tx/\(transactionHash)"
+        "https://runescan.io/tx/\(transactionHash)"
     }
 
     func transactionsObservable(token: Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
-        guard supports(token: token, address: address) else {
-            return .just([])
-        }
-
-        return thorChainKit.transactionsPublisher
+        thorChainKit.transactionsPublisher
             .asObservable()
-            .map { [weak self] in self?.records(from: $0, filter: filter) ?? [] }
+            .map { [weak self] in self?.records(from: $0, token: token, filter: filter, address: address) ?? [] }
     }
 
     func transactionsSingle(paginationData: String?, token: Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
-        guard supports(token: token, address: address) else {
-            return .just([])
-        }
+        // The limit applies to matching records, so it cannot be pushed into the query:
+        // one action yields several records and most may be filtered out. Cutting first
+        // returns a short page, which the caller reads as "everything is loaded".
+        let matching = records(
+            from: thorChainKit.transactions(hash: paginationData, descending: true, limit: nil),
+            token: token,
+            filter: filter,
+            address: address
+        )
 
-        return .just(records(from: thorChainKit.transactions(hash: paginationData, descending: true, limit: limit), filter: filter))
+        return .just(Array(matching.prefix(limit)))
     }
 
     func allTransactionsAfter(paginationData: String?) -> Single<[TransactionRecord]> {
-        .just(records(from: thorChainKit.transactions(hash: paginationData, descending: false, limit: nil), filter: .all))
+        .just(records(from: thorChainKit.transactions(hash: paginationData, descending: false, limit: nil), token: nil, filter: .all, address: nil))
     }
 
     func rawTransaction(hash _: String) -> String? {

@@ -18,6 +18,7 @@ extension TokenType {
         case .jetton: return .jetton
         case .stellar: return .stellar
         case .zanoAsset: return .zanoAsset
+        case .thorChainAsset: return .thorChainAsset
         case .unsupported: return .unsupported
         }
     }
@@ -74,6 +75,7 @@ extension TokenType {
         case let .derived(derivation): return derivation.rawValue
         case let .addressType(type): return type.rawValue
         case let .zanoAsset(id): return id
+        case let .thorChainAsset(denom): return denom
         default: return nil
         }
     }
