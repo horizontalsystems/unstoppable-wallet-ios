@@ -253,7 +253,9 @@ struct SwapExecutableTests {
         let executable = try #require(quote.executable(tokenIn: tokenIn) as? StellarExecutable)
 
         #expect(executable.token == tokenIn)
-        guard case let .envelope(envelope) = executable.transactionData else {
+        guard case let .signed(transactionData) = executable.kind,
+              case let .envelope(envelope) = transactionData
+        else {
             Issue.record("expected .envelope")
             return
         }
