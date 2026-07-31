@@ -5,6 +5,7 @@ import Foundation
 import MarketKit
 import SolanaKit
 import StellarKit
+import ThorChainKit
 import TonSwift
 import TronKit
 import ZcashLightClientKit
@@ -27,6 +28,7 @@ public enum SendData {
     case monero(token: Token, amount: MoneroSendAmount, address: String, memo: String?)
     case zano(token: Token, amount: ZanoSendAmount, address: String, memo: String?)
     case zanoAsset(token: Token, baseToken: Token, amount: ZanoSendAmount, address: String, memo: String?)
+    case thorChain(token: Token, amount: ThorChainKit.SendAmount, recipient: ThorChainKit.Address, memo: String?)
     indirect case openCryptoPay(payment: OpenCryptoPayPayment, entry: OpenCryptoPayPayment.Entry, inner: SendData)
     indirect case payment(info: PaymentInfo, inner: SendData)
 }

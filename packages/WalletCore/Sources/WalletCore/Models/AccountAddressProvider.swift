@@ -1,5 +1,6 @@
 import EvmKit
 import MarketKit
+import ThorChainKit
 import TronKit
 
 class AccountAddressProvider: IAccountAddressProvider {
@@ -36,6 +37,19 @@ class AccountAddressProvider: IAccountAddressProvider {
 
         case let .tronAddress(address):
             return address
+
+        default:
+            return nil
+        }
+    }
+
+    func thorChainAddress(account: Account) throws -> ThorChainKit.Address? {
+        switch account.type {
+        case .mnemonic:
+            guard let seed = account.type.mnemonicSeed else {
+                throw AdapterError.unsupportedAccount
+            }
+            return try ThorChainKit.Signer.address(seed: seed)
 
         default:
             return nil

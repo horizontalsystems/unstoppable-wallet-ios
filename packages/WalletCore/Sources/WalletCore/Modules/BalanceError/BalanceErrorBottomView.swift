@@ -55,6 +55,10 @@ struct BalanceErrorBottomView: View {
                         Coordinator.shared.present { isPresented in
                             ZcashNetworkView(blockchain: blockchain, isPresented: isPresented)
                         }
+                    case let .thorChain(blockchain):
+                        Coordinator.shared.present { isPresented in
+                            ThorChainNetworkView(blockchain: blockchain, isPresented: isPresented)
+                        }
                     }
                 }
             )

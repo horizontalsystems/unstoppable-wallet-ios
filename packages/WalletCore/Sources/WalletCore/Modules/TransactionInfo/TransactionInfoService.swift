@@ -62,6 +62,8 @@ class TransactionInfoService {
         case let tx as TronExternalContractCallTransactionRecord:
             tokens.append(contentsOf: tx.incomingEvents.map(\.value.token))
             tokens.append(contentsOf: tx.outgoingEvents.map(\.value.token))
+        case let tx as ThorChainIncomingTransactionRecord: tokens.append(tx.value.token)
+        case let tx as ThorChainOutgoingTransactionRecord: tokens.append(tx.value.token)
         case let tx as BitcoinIncomingTransactionRecord: tokens.append(tx.value.token)
         case let tx as BitcoinOutgoingTransactionRecord:
             tx.fee.flatMap { tokens.append($0.token) }

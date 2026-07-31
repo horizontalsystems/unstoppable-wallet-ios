@@ -453,6 +453,35 @@ class TransactionsViewItemFactory {
             title = record.transaction.contract?.label ?? "transactions.unknown_transaction.title".localized
             subTitle = "transactions.unknown_transaction.description".localized()
 
+        case let record as ThorChainIncomingTransactionRecord:
+            iconType = singleValueIconType(source: record.source, kind: record.value.kind)
+            title = "transactions.receive".localized
+            subTitle = "transactions.from".localized(mapped(address: record.from, blockchainType: item.record.source.blockchainType))
+
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: type(value: record.value, .incoming))
+
+            if let currencyValue = item.currencyValue {
+                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+            }
+
+        case let record as ThorChainOutgoingTransactionRecord:
+            iconType = singleValueIconType(source: record.source, kind: record.value.kind)
+            title = "transactions.send".localized
+            subTitle = "transactions.to".localized(mapped(address: record.to, blockchainType: item.record.source.blockchainType))
+
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, signType: record.sentToSelf ? .never : .always), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
+
+            if let currencyValue = item.currencyValue {
+                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+            }
+
+            sentToSelf = record.sentToSelf
+
+        case let record as ThorChainTransactionRecord:
+            iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
+            title = record.transaction.type.capitalized
+            subTitle = record.transaction.memo ?? "transactions.unknown_transaction.description".localized()
+
         case let record as TonTransactionRecord:
             if record.actions.count == 1, let action = record.actions.first {
                 switch action.type {

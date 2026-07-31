@@ -6,6 +6,7 @@ class SettingsBackup: Codable {
     var moneroNodes: MoneroNodeManager.NodeBackup
     var zanoNodes: ZanoNodeManager.NodeBackup
     var zcashEndpoints: ZcashNodeManager.NodeBackup
+    let thorChainEndpoint: ThorChainEndpointManager.EndpointBackup
     let btcModes: [BtcBlockchainManager.BtcRestoreModeBackup]
 
     let remoteContactsSync: Bool?
@@ -30,6 +31,7 @@ class SettingsBackup: Codable {
         case moneroNodes = "monero_nodes"
         case zanoNodes = "zano_nodes"
         case zcashEndpoints = "zcash_endpoints"
+        case thorChainEndpoint = "thorchain_endpoint"
         case btcModes = "btc_modes"
         case remoteContactsSync = "contacts_sync"
         case swapProviders = "swap_providers"
@@ -53,6 +55,7 @@ class SettingsBackup: Codable {
         moneroNodes: MoneroNodeManager.NodeBackup,
         zanoNodes: ZanoNodeManager.NodeBackup,
         zcashEndpoints: ZcashNodeManager.NodeBackup,
+        thorChainEndpoint: ThorChainEndpointManager.EndpointBackup,
         btcModes: [BtcBlockchainManager.BtcRestoreModeBackup],
         remoteContactsSync: Bool?,
         swapProviders: [DefaultProvider],
@@ -74,6 +77,7 @@ class SettingsBackup: Codable {
         self.moneroNodes = moneroNodes
         self.zanoNodes = zanoNodes
         self.zcashEndpoints = zcashEndpoints
+        self.thorChainEndpoint = thorChainEndpoint
         self.btcModes = btcModes
         self.remoteContactsSync = remoteContactsSync
         self.swapProviders = swapProviders
@@ -98,6 +102,7 @@ class SettingsBackup: Codable {
         moneroNodes = (try? container.decode(MoneroNodeManager.NodeBackup.self, forKey: .moneroNodes)) ?? .init(selected: [], custom: [])
         zanoNodes = (try? container.decode(ZanoNodeManager.NodeBackup.self, forKey: .zanoNodes)) ?? .init(selected: [], custom: [])
         zcashEndpoints = (try? container.decode(ZcashNodeManager.NodeBackup.self, forKey: .zcashEndpoints)) ?? .init(selected: [], custom: [])
+        thorChainEndpoint = (try? container.decode(ThorChainEndpointManager.EndpointBackup.self, forKey: .thorChainEndpoint)) ?? .init(familyId: nil)
         btcModes = try container.decode([BtcBlockchainManager.BtcRestoreModeBackup].self, forKey: .btcModes)
         remoteContactsSync = try? container.decode(Bool.self, forKey: .remoteContactsSync)
         swapProviders = (try? container.decode([DefaultProvider].self, forKey: .swapProviders)) ?? []
@@ -122,6 +127,7 @@ class SettingsBackup: Codable {
         try container.encode(moneroNodes, forKey: .moneroNodes)
         try container.encode(zanoNodes, forKey: .zanoNodes)
         try container.encode(zcashEndpoints, forKey: .zcashEndpoints)
+        try container.encode(thorChainEndpoint, forKey: .thorChainEndpoint)
         try container.encode(btcModes, forKey: .btcModes)
         try container.encodeIfPresent(remoteContactsSync, forKey: .remoteContactsSync)
         try container.encode(swapProviders, forKey: .swapProviders)
@@ -155,6 +161,7 @@ class SettingsBackup: Codable {
             moneroNodes: moneroNodes,
             zanoNodes: zanoNodes,
             zcashEndpoints: zcashEndpoints,
+            thorChainEndpoint: thorChainEndpoint,
             btcModes: btcModes,
             remoteContactsSync: remoteContactsSync,
             swapProviders: swapProviders,

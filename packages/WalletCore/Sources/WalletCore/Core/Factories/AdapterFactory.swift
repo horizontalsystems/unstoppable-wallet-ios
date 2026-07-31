@@ -1,5 +1,6 @@
 import BitcoinCore
 import EvmKit
+import HsToolKit
 import MarketKit
 import RxRelay
 import RxSwift
@@ -12,6 +13,7 @@ public class AdapterFactory {
     private let zcashNodeManager: ZcashNodeManager
     private let btcBlockchainManager: BtcBlockchainManager
     private let tronKitManager: TronKitManager
+    private let thorChainKitManager: ThorChainKitManager
     private let tonKitManager: TonKitManager
     private let stellarKitManager: StellarKitManager
     private let zanoKitManager: ZanoKitManager
@@ -21,10 +23,36 @@ public class AdapterFactory {
     private let spamWrapper: SpamWrapper
     private let evmLabelManager: EvmLabelManager
 
-    public init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zcashNodeManager: ZcashNodeManager,
-                btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
-                zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager,
-                spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager)
+    public convenience init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zcashNodeManager: ZcashNodeManager,
+                            btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
+                            zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager,
+                            spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager)
+    {
+        self.init(
+            evmBlockchainManager: evmBlockchainManager,
+            evmSyncSourceManager: evmSyncSourceManager,
+            moneroNodeManager: moneroNodeManager,
+            zcashNodeManager: zcashNodeManager,
+            btcBlockchainManager: btcBlockchainManager,
+            tronKitManager: tronKitManager,
+            thorChainKitManager: ThorChainKitManager(
+                endpointManager: ThorChainEndpointManager(endpointProvider: ThorChainEndpointConfigurationProvider())
+            ),
+            tonKitManager: tonKitManager,
+            stellarKitManager: stellarKitManager,
+            zanoKitManager: zanoKitManager,
+            solanaKitManager: solanaKitManager,
+            restoreSettingsManager: restoreSettingsManager,
+            coinManager: coinManager,
+            spamWrapper: spamWrapper,
+            evmLabelManager: evmLabelManager
+        )
+    }
+
+    init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zcashNodeManager: ZcashNodeManager,
+         btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, thorChainKitManager: ThorChainKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
+         zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager,
+         spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager)
     {
         self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager
@@ -32,6 +60,7 @@ public class AdapterFactory {
         self.zcashNodeManager = zcashNodeManager
         self.btcBlockchainManager = btcBlockchainManager
         self.tronKitManager = tronKitManager
+        self.thorChainKitManager = thorChainKitManager
         self.tonKitManager = tonKitManager
         self.stellarKitManager = stellarKitManager
         self.zanoKitManager = zanoKitManager
@@ -78,6 +107,19 @@ public class AdapterFactory {
         }
 
         return TronAdapter(tronKitWrapper: tronKitWrapper)
+    }
+
+    private func thorChainAdapter(wallet: Wallet) -> IAdapter? {
+        guard wallet.token.blockchainType == .thorChain,
+              wallet.token.type == .native
+        else { return nil }
+
+        do {
+            let wrapper = try thorChainKitManager.thorChainKitWrapper(account: wallet.account)
+            return try ThorChainAdapter(thorChainKitWrapper: wrapper)
+        } catch {
+            return nil
+        }
     }
 
     private func trc20Adapter(address: String, wallet: Wallet) -> IAdapter? {
@@ -130,6 +172,23 @@ extension AdapterFactory {
                 coinManager: coinManager,
                 spamWrapper: spamWrapper,
                 evmLabelManager: evmLabelManager
+            )
+            return TransactionsAdapterDecoratorFactory.decorate(adapter: adapter, source: transactionSource)
+        }
+
+        return nil
+    }
+
+    func thorChainTransactionsAdapter(transactionSource: TransactionSource) -> ITransactionsAdapter? {
+        let query = TokenQuery(blockchainType: .thorChain, tokenType: .native)
+
+        if let thorChainKitWrapper = thorChainKitManager.thorChainKitWrapper,
+           let baseToken = try? coinManager.token(query: query)
+        {
+            let adapter = ThorChainTransactionsAdapter(
+                thorChainKitWrapper: thorChainKitWrapper,
+                source: transactionSource,
+                baseToken: baseToken
             )
             return TransactionsAdapterDecoratorFactory.decorate(adapter: adapter, source: transactionSource)
         }
@@ -226,6 +285,9 @@ extension AdapterFactory {
 
         case (.native, .tron):
             return tronAdapter(wallet: wallet)
+
+        case (.native, .thorChain):
+            return thorChainAdapter(wallet: wallet)
 
         case let (.eip20(address), .tron):
             return trc20Adapter(address: address, wallet: wallet)

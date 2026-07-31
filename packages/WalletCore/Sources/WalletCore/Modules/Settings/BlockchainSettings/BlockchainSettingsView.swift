@@ -21,6 +21,9 @@ struct BlockchainSettingsView: View {
                     if let tronItem = viewModel.tronItem {
                         ItemView(item: tronItem)
                     }
+                    if let thorChainItem = viewModel.thorChainItem {
+                        ItemView(item: thorChainItem)
+                    }
                 }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
@@ -64,6 +67,10 @@ struct BlockchainSettingsView: View {
                     }
 
                     stat(page: .blockchainSettings, event: .openBlockchainSettingsZcash)
+                case .thorChain:
+                    Coordinator.shared.present { isPresented in
+                        ThorChainNetworkView(blockchain: item.blockchain, isPresented: isPresented)
+                    }
                 }
 
             }) {

@@ -103,6 +103,7 @@ public enum AccountType: Identifiable {
             case (.base, .native), (.base, .eip20): return true
             case (.zkSync, .native), (.zkSync, .eip20): return true
             case (.tron, .native), (.tron, .eip20): return true
+            case (.thorChain, .native): return true
             case (.ton, .native), (.ton, .jetton): return true
             case (.stellar, .native), (.stellar, .stellar): return true
             case (.solana, .native), (.solana, .spl): return true
