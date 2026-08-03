@@ -52,6 +52,10 @@ public struct CoordinatorViewModifier: ViewModifier {
         Group {
             if let route = coordinator.route(at: level) {
                 route.content(isPresented: binding(for: .sheet))
+                    // Per-route identity: a new route at this level must be a NEW view, otherwise SwiftUI
+                    // reuses the previous subtree and the presented screen's `@StateObject` (created once
+                    // per identity) survives — showing the previously presented item's data.
+                    .id(route.id)
                     .modifier(CoordinatorViewModifier(level: level + 1))
             }
         }
@@ -64,6 +68,7 @@ public struct CoordinatorViewModifier: ViewModifier {
                     Color.themeLawrence.ignoresSafeArea()
 
                     route.content(isPresented: binding(for: .bottomSheet))
+                        .id(route.id)
                         .fixedSize(horizontal: false, vertical: true)
                         .overlay {
                             GeometryReader { geometry in
@@ -84,6 +89,7 @@ public struct CoordinatorViewModifier: ViewModifier {
         Group {
             if let route = coordinator.route(at: level) {
                 route.content(isPresented: binding(for: .alert))
+                    .id(route.id)
                     .modifier(CoordinatorViewModifier(level: level + 1))
             }
         }
