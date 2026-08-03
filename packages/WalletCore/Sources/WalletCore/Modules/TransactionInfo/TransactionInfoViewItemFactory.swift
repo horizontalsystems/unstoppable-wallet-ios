@@ -521,6 +521,7 @@ class TransactionInfoViewItemFactory {
             ]))
 
         case let record as ThorChainIncomingTransactionRecord:
+            // No fee on the receiving side: the sender paid it.
             sections.append(.init(receiveSection(source: record.source, appValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden)))
 
         case let record as ThorChainOutgoingTransactionRecord:
@@ -530,10 +531,18 @@ class TransactionInfoViewItemFactory {
                 sections.append(.init([.sentToSelf]))
             }
 
+            if let fee = record.fee {
+                feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(appValue: fee, rate: _rate(fee.coin)))
+            }
+
         case let record as ThorChainTransactionRecord:
             sections.append(.init([
                 .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: record.transaction.type.capitalized, subTitle: ""),
             ]))
+
+            if let fee = record.fee {
+                feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(appValue: fee, rate: _rate(fee.coin)))
+            }
 
         case let record as BitcoinIncomingTransactionRecord:
             sections.append(.init(receiveSection(source: record.source, appValue: record.value, from: record.from, rates: item.rates, to: record.to, balanceHidden: balanceHidden)))

@@ -117,6 +117,10 @@ class TransactionInfoService {
             tokens.append(fee.token)
         }
 
+        if let thorChainTransaction = transactionRecord as? ThorChainTransactionRecord, let fee = thorChainTransaction.fee {
+            tokens.append(fee.token)
+        }
+
         return Array(Set(tokens.compactMap { $0 }))
     }
 

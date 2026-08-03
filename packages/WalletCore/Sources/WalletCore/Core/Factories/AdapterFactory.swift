@@ -114,15 +114,13 @@ public class AdapterFactory {
         guard wallet.token.blockchainType == .thorChain else { return nil }
 
         let denom: ThorChainKit.Denom
-
         switch wallet.token.type {
-        case .native:
-            denom = .rune
+        case .native: denom = .rune
+        // Never fall back to RUNE on a malformed reference — that would move the wrong asset.
         case let .thorChainAsset(rawDenom):
             guard let parsed = try? ThorChainKit.Denom(rawValue: rawDenom) else { return nil }
             denom = parsed
-        default:
-            return nil
+        default: return nil
         }
 
         do {
