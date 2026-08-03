@@ -69,8 +69,8 @@ final class ThorChainKitWrapper {
         self.signer = signer
     }
 
-    func quote(to recipient: ThorChainKit.Address, amount: ThorChainKit.SendAmount, memo: String?) async throws -> ThorChainKit.SendQuote {
-        try await thorChainKit.quote(to: recipient, amount: amount, memo: memo)
+    func quote(to recipient: ThorChainKit.Address, amount: ThorChainKit.SendAmount, memo: String?, denom: ThorChainKit.Denom) async throws -> ThorChainKit.SendQuote {
+        try await thorChainKit.quote(to: recipient, amount: amount, memo: memo, denom: denom)
     }
 
     func send(quote: ThorChainKit.SendQuote) async throws -> ThorChainKit.SendSubmission {

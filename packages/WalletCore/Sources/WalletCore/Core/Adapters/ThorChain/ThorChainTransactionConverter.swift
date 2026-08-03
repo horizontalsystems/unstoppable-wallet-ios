@@ -79,6 +79,7 @@ extension ThorChainTransactionConverter {
                 ThorChainOutgoingTransactionRecord(
                     source: source,
                     transaction: transaction,
+                    baseToken: baseToken,
                     uid: uid(transaction: transaction, asset: transfer.asset),
                     to: to,
                     value: appValue(transfer, sign: .minus),
@@ -97,6 +98,7 @@ extension ThorChainTransactionConverter {
                 ThorChainIncomingTransactionRecord(
                     source: source,
                     transaction: transaction,
+                    baseToken: baseToken,
                     uid: uid(transaction: transaction, asset: transfer.asset),
                     from: transaction.incoming.first { $0.asset == transfer.asset }?.address,
                     value: appValue(transfer, sign: .plus)
