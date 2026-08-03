@@ -61,6 +61,11 @@ public class Coordinator: ObservableObject {
 
 extension Coordinator {
     struct Route {
+        // Distinguishes one presentation from the next at the same level. Without it SwiftUI reuses the
+        // subtree identity of the previously presented route, and any `@StateObject` the presented screen
+        // owns survives — so a second presentation renders the FIRST screen's view model (e.g. tapping a
+        // row in a list could open the previously opened item). See CoordinatorViewModifier.
+        let id = UUID()
         let type: RouteType
         let contentBuilder: (Binding<Bool>) -> AnyView
         let onDismiss: (() -> Void)?
