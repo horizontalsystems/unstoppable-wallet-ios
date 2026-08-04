@@ -3,6 +3,7 @@ import BitcoinCore
 import EvmKit
 import Foundation
 import MarketKit
+import ThorChainKit
 import MoneroKit
 import TronKit
 import ZcashLightClientKit
@@ -97,6 +98,20 @@ public struct StellarExecutable: ISwapExecutable {
 
     public let token: Token
     let kind: Kind
+}
+
+public struct ThorChainExecutable: ISwapExecutable {
+    enum Kind {
+        // No inbound vault: the swap is a MsgDeposit addressed to the chain.
+        case deposit(asset: ThorChainKit.Asset)
+        // Maya and anything with a vault: an ordinary transfer into it.
+        case send(recipient: ThorChainKit.Address)
+    }
+
+    public let token: Token
+    let kind: Kind
+    let amount: Decimal
+    let memo: String
 }
 
 public struct MoneroExecutable: ISwapExecutable {

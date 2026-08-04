@@ -58,7 +58,9 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
     }
 
     private func proposal(adapter: ZcashAdapter, tokenIn _: Token, swapQuote: SwapQuote, amountIn: Decimal) async throws -> Proposal {
-        guard let tRecipient = adapter.recipient(from: swapQuote.quote.inboundAddress),
+        // Zcash always pays into a vault, so the address is required here.
+        guard let inboundAddress = swapQuote.quote.inboundAddress,
+              let tRecipient = adapter.recipient(from: inboundAddress),
               let uRecipient = adapter.recipient(from: swapQuote.unifiedAddress)
         else {
             throw SendTransactionError.invalidAddress

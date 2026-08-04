@@ -38,14 +38,16 @@ final class ThorChainSendData: ISendData {
 
         let amountValue = AppValue(token: token, value: amount)
         let feeValue = AppValue(token: baseToken, value: fee)
-        let flowFields: [SendField] = [
+        var flowFields: [SendField] = [
             .amount(
                 token: token,
                 appValueType: .regular(appValue: amountValue),
                 currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) }
             ),
-            .address(value: quote.recipient.raw, blockchainType: token.blockchainType),
         ]
+        if let recipient = quote.recipient {
+            flowFields.append(.address(value: recipient.raw, blockchainType: token.blockchainType))
+        }
 
         var detailsFields = [SendField]()
         if let memo = quote.memo {

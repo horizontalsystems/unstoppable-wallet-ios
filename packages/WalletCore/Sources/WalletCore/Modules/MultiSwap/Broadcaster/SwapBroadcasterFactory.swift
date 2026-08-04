@@ -38,5 +38,6 @@ public extension SwapBroadcasterFactory {
         SolanaSwapBroadcaster.self,
         MoneroSwapBroadcaster.self,
         ZanoSwapBroadcaster.self,
+        ThorChainSwapBroadcaster.self,
     ]
 }
