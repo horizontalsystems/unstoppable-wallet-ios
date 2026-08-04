@@ -450,7 +450,14 @@ extension BaseThorChainMultiSwapProvider {
         let totalSwapSeconds: TimeInterval?
 
         init(map: Map) throws {
-            inboundAddress = try? map.value("inbound_address")
+            // Absent when the input asset is THORChain-native: there is no vault to pay
+            // into. Only absence may mean that — a value of the wrong shape is a broken
+            // quote, and reading it as absence would turn it into a deposit.
+            if map.JSON["inbound_address"] == nil {
+                inboundAddress = nil
+            } else {
+                inboundAddress = try map.value("inbound_address")
+            }
             expectedAmountOut = try map.value("expected_amount_out", using: Transform.stringToDecimalTransform) / pow(10, 8)
             memo = try map.value("memo")
             router = try? map.value("router")

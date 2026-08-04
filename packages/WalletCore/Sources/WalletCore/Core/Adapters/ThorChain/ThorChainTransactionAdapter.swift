@@ -106,7 +106,18 @@ extension ThorChainTransactionsAdapter: ITransactionsAdapter {
             address: address
         )
 
-        return .just(Array(matching.prefix(limit)))
+        // The cursor is the last record's transaction, and it excludes that transaction
+        // from the next page. Cutting inside one action would therefore drop its
+        // remaining records for good — a swap is two records, so the page ends on an
+        // action boundary even when that overshoots the limit by one.
+        return .just(Self.wholeActions(of: matching, limit: limit))
+    }
+
+    private static func wholeActions(of records: [TransactionRecord], limit: Int) -> [TransactionRecord] {
+        guard limit > 0, records.count > limit else { return records }
+        let boundary = records[limit - 1].transactionHash
+        let rest = records.dropFirst(limit).prefix { $0.transactionHash == boundary }
+        return Array(records.prefix(limit)) + Array(rest)
     }
 
     func allTransactionsAfter(paginationData: String?) -> Single<[TransactionRecord]> {

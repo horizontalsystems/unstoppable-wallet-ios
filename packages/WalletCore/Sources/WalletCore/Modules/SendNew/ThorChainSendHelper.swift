@@ -7,7 +7,6 @@ enum ThorChainSendHelper {
         case invalidAmount
         case excessivePrecision
         case invalidAddress
-        case ownAddress
         case overflow
         case adapterUnavailable
         case expired
@@ -48,7 +47,6 @@ enum ThorChainSendHelper {
         case .invalidAmount: text = "Invalid amount"
         case .excessivePrecision: text = "Amount has more than eight decimal places"
         case .invalidAddress: text = "Invalid THORChain address"
-        case .ownAddress: text = "Cannot send to this wallet"
         case .expired: text = "Quote expired; refresh to continue"
         case .adapterUnavailable: text = "THORChain is unavailable"
         case .submissionUnknown: text = "Transaction submission is unknown"

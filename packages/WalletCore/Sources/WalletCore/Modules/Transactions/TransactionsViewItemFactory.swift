@@ -480,7 +480,7 @@ class TransactionsViewItemFactory {
         case let record as ThorChainTransactionRecord:
             iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
             title = record.transaction.type.capitalized
-            subTitle = record.transaction.memo ?? "transactions.unknown_transaction.description".localized()
+            subTitle = record.transaction.memo.flatMap { $0.isEmpty ? nil : $0 } ?? "transactions.unknown_transaction.description".localized()
 
         case let record as TonTransactionRecord:
             if record.actions.count == 1, let action = record.actions.first {
