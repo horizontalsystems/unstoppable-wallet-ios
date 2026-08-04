@@ -14,8 +14,9 @@ struct ThorChainEndpointManagerTests {
 
         try environment.manager.setCurrent(endpointFamily: families[1])
 
-        #expect(try environment.manager.endpointFamily().id == "second")
-        #expect(try environment.manager.endpointConfiguration().value.families.map(\.id) == ["second"])
+        let reloaded = environment.reloaded()
+        #expect(try reloaded.endpointFamily().id == "second")
+        #expect(try reloaded.endpointConfiguration().value.families.map(\.id) == ["second"])
     }
 
     @Test func selectedFamilyKeepsConfiguredMidgardURLs() throws {
@@ -47,6 +48,16 @@ struct ThorChainEndpointManagerTests {
 
 private struct EndpointTestEnvironment {
     let manager: ThorChainEndpointManager
+    private let settingsStorage: BlockchainSettingsStorage
+
+    // A second manager over the same storage: reading back through the one that wrote
+    // proves nothing about what was persisted.
+    func reloaded() -> ThorChainEndpointManager {
+        ThorChainEndpointManager(
+            blockchainSettingsStorage: settingsStorage,
+            endpointProvider: StaticThorChainEndpointProvider()
+        )
+    }
 
     init() throws {
         let databaseURL = FileManager.default.temporaryDirectory
@@ -63,7 +74,7 @@ private struct EndpointTestEnvironment {
         }
 
         let recordStorage = try BlockchainSettingRecordStorage(dbPool: dbPool)
-        let settingsStorage = BlockchainSettingsStorage(storage: recordStorage)
+        settingsStorage = BlockchainSettingsStorage(storage: recordStorage)
         manager = ThorChainEndpointManager(
             blockchainSettingsStorage: settingsStorage,
             endpointProvider: StaticThorChainEndpointProvider()

@@ -13,9 +13,17 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
     // single kit; the adapter only picks its own denom out of that state.
     private let denom: ThorChainKit.Denom
 
-    // The network fee is fixed chain-wide; start() refreshes the cached value.
-    private var cachedFee: BigUInt = 2_000_000
+    // The network fee is fixed chain-wide; start() refreshes the cached value. The
+    // refresh runs off a task and the fee is read from wherever a screen asks, so the
+    // two are kept apart by a lock rather than by hoping they never overlap.
+    private let feeLock = NSLock()
+    private var storedFee: BigUInt = 2_000_000
     private var feeTask: Task<Void, Never>?
+
+    private var cachedFee: BigUInt {
+        get { feeLock.lock(); defer { feeLock.unlock() }; return storedFee }
+        set { feeLock.lock(); storedFee = newValue; feeLock.unlock() }
+    }
 
     init(thorChainKitWrapper: ThorChainKitWrapper, denom: ThorChainKit.Denom = .rune) throws {
         self.thorChainKitWrapper = thorChainKitWrapper
@@ -95,19 +103,23 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
     }
 
     private var syncStateCode: String {
-        switch thorChainKitWrapper.thorChainKit.syncState {
+        Self.stateCode(thorChainKitWrapper.thorChainKit.syncState)
+    }
+
+    private static func stateCode(_ syncState: ThorChainKit.SyncState) -> String {
+        switch syncState {
         case .idle(cached: false): return "idle"
         case .idle(cached: true): return "idle_cached"
         case .syncing: return "syncing"
         case .synced: return "synced"
-        case let .notSynced(error, cached: _): return Self.syncErrorCode(error)
+        case let .notSynced(error, cached: _): return syncErrorCode(error)
         }
     }
 
     private func adapterState(syncState: ThorChainKit.SyncState) -> AdapterState {
         switch syncState {
-        case .idle(cached: false), .idle(cached: true):
-            return .notSynced(error: syncStateCode)
+        case .idle:
+            return .notSynced(error: Self.stateCode(syncState))
         case .syncing:
             return .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
         case .synced:

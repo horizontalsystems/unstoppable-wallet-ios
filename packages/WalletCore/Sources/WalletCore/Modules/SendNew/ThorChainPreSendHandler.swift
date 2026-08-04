@@ -51,8 +51,11 @@ final class ThorChainPreSendHandler: PreSendHandler, IPreSendHandler {
         do {
             let amountBaseUnits = try ThorChainSendHelper.baseUnits(amount)
             let recipient = try ThorChainKit.Address(address, network: .mainnet)
-            guard recipient != adapter.thorChainKitWrapper.thorChainKit.address else {
-                throw ThorChainSendHelper.Error.ownAddress
+            // A token draws its amount from its own balance and its fee from RUNE, so a
+            // RUNE balance too small for the fee has to be refused here: nothing reads a
+            // balance again before signing.
+            guard adapter.isNativeCoin || adapter.runeAvailableBalance >= adapter.fee else {
+                throw ThorChainKit.SendError.insufficientBalance
             }
             return .valid(sendData: .thorChain(token: token, amount: .exact(amountBaseUnits), recipient: recipient, memo: memo))
         } catch {
