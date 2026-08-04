@@ -126,7 +126,8 @@ public class AdapterFactory {
         do {
             // Every denom of an account shares one kit; the wrapper is cached per account
             let wrapper = try thorChainKitManager.thorChainKitWrapper(account: wallet.account)
-            return try ThorChainAdapter(thorChainKitWrapper: wrapper, denom: denom)
+            let adapter = try ThorChainAdapter(thorChainKitWrapper: wrapper, denom: denom)
+            return adapter
         } catch {
             return nil
         }

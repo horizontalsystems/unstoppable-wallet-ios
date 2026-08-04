@@ -38,7 +38,12 @@ final class ThorChainPreSendHandler: PreSendHandler, IPreSendHandler {
 
     var state: AdapterState { adapter.balanceState }
     var statePublisher: AnyPublisher<AdapterState, Never> { stateSubject.eraseToAnyPublisher() }
-    var balance: Decimal { adapter.balanceData.available }
+    // The fee is charged in RUNE, so only a RUNE send has to leave room for it. This is
+    // the balance the amount is chosen against, and nothing re-reads it before signing.
+    var balance: Decimal {
+        let available = adapter.balanceData.available
+        return adapter.isNativeCoin ? max(0, available - adapter.fee) : available
+    }
     var balancePublisher: AnyPublisher<Decimal, Never> { balanceSubject.eraseToAnyPublisher() }
     func hasMemo(address _: String?) -> Bool { true }
 
@@ -49,9 +54,7 @@ final class ThorChainPreSendHandler: PreSendHandler, IPreSendHandler {
             guard recipient != adapter.thorChainKitWrapper.thorChainKit.address else {
                 throw ThorChainSendHelper.Error.ownAddress
             }
-            let balanceBaseUnits = try ThorChainSendHelper.baseUnits(adapter.balanceData.available)
-            let sendAmount = amountBaseUnits == balanceBaseUnits ? ThorChainKit.SendAmount.maximum : .exact(amountBaseUnits)
-            return .valid(sendData: .thorChain(token: token, amount: sendAmount, recipient: recipient, memo: memo))
+            return .valid(sendData: .thorChain(token: token, amount: .exact(amountBaseUnits), recipient: recipient, memo: memo))
         } catch {
             return .invalid(cautions: [ThorChainSendHelper.caution(error, feeToken: token)])
         }

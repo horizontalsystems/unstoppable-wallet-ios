@@ -4,6 +4,7 @@ import BitcoinCore
 import Combine
 import EvmKit
 import Foundation
+import ThorChainKit
 import HsToolKit
 import MarketKit
 import ObjectMapper
@@ -11,6 +12,9 @@ import SwiftUI
 
 class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     private let assetMapExpiration: TimeInterval = 60 * 60
+    // Bump to discard maps cached by older mapping logic.
+    private let assetMapVersion = 2
+    private var assetMapKey: String { "\(id)-v\(assetMapVersion)" }
 
     let networkManager = Core.shared.networkManager
 //    let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
@@ -29,7 +33,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
     init(tracker: USwapTracker) {
         self.tracker = tracker
-        assetMap = (try? swapAssetStorage.swapAssetMap(provider: id, as: String.self)) ?? [:]
+        assetMap = (try? swapAssetStorage.swapAssetMap(provider: assetMapKey, as: String.self)) ?? [:]
         syncAssets()
     }
 
@@ -73,7 +77,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 allowanceState: allowanceHelper.allowanceState(spenderAddress: .init(raw: router), token: tokenIn, amount: amountIn),
                 estimatedTime: estimatedTime(swapQuote, tokenOut: tokenOut)
             )
-        case .bitcoin, .bitcoinCash, .dash, .litecoin, .zcash:
+        case .bitcoin, .bitcoinCash, .dash, .litecoin, .zcash, .thorChain:
             return MultiSwapQuote(expectedBuyAmount: swapQuote.expectedAmountOut, estimatedTime: swapQuote.totalSwapSeconds)
         default:
             throw SwapError.unsupportedTokenIn
@@ -89,19 +93,22 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             guard let router = swapQuote.router else {
                 throw SwapError.noRouterAddress
             }
+            guard let inboundAddress = swapQuote.inboundAddress else {
+                throw SwapError.noInboundAddress
+            }
 
             let transactionData: TransactionData
 
             switch tokenIn.type {
             case .native:
                 transactionData = try TransactionData(
-                    to: EvmKit.Address(hex: swapQuote.inboundAddress),
+                    to: EvmKit.Address(hex: inboundAddress),
                     value: tokenIn.fractionalMonetaryValue(value: amountIn),
                     input: Data(swapQuote.memo.utf8)
                 )
             case let .eip20(address):
                 let method = try DepositWithExpiryMethod(
-                    inboundAddress: EvmKit.Address(hex: swapQuote.inboundAddress),
+                    inboundAddress: EvmKit.Address(hex: inboundAddress),
                     asset: EvmKit.Address(hex: address),
                     amount: tokenIn.fractionalMonetaryValue(value: amountIn),
                     memo: swapQuote.memo,
@@ -196,6 +203,44 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 fee: sendInfo?.fee,
                 toAddress: toAddress
             )
+        case .thorChain:
+            // No vault means the swap is a deposit to the chain; Maya publishes one and
+            // takes an ordinary transfer instead.
+            let kind: ThorChainExecutable.Kind
+            if let inboundAddress = swapQuote.inboundAddress {
+                kind = .send(recipient: try ThorChainKit.Address(inboundAddress, network: .mainnet))
+            } else {
+                guard let assetNotation = assetMap[tokenIn.tokenQuery.id.lowercased()] else {
+                    throw SwapError.unsupportedTokenIn
+                }
+                kind = .deposit(asset: try ThorChainKit.Asset(notation: assetNotation))
+            }
+
+            let adapter = Core.shared.adapterManager.adapter(for: tokenIn) as? ThorChainAdapter
+            // The fee is always paid in RUNE, on top of the amount swapped.
+            var transactionError: Error?
+            if let adapter {
+                let insufficient = adapter.isNativeCoin
+                    ? amountIn + adapter.fee > adapter.availableBalance
+                    : amountIn > adapter.availableBalance || adapter.fee > adapter.runeAvailableBalance
+                if insufficient {
+                    transactionError = ThorChainKit.SendError.insufficientBalance
+                }
+            }
+
+            return ThorChainSwapFinalQuote(
+                amountIn: amountIn,
+                expectedAmountOut: swapQuote.expectedAmountOut,
+                recipient: recipient,
+                slippage: slippage,
+                estimatedTime: swapQuote.totalSwapSeconds,
+                kind: kind,
+                memo: swapQuote.memo,
+                fee: adapter?.fee,
+                transactionError: transactionError,
+                toAddress: toAddress
+            )
+
         default:
             throw SwapError.unsupportedTokenIn
         }
@@ -274,7 +319,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     }
 
     private func syncAssets() {
-        let lastSyncTimetamp = try? swapAssetStorage.lastSyncTimetamp(provider: id)
+        let lastSyncTimetamp = try? swapAssetStorage.lastSyncTimetamp(provider: assetMapKey)
 
         if let lastSyncTimetamp, Date().timeIntervalSince1970 - lastSyncTimetamp < assetMapExpiration {
             return
@@ -321,6 +366,11 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             case .bitcoinCash, .bitcoin, .dash, .zcash:
                 tokenQueries = blockchainType.nativeTokenQueries
 
+            case .thorChain:
+                guard let asset = try? ThorChainKit.Asset(notation: pool.asset) else { continue }
+                let denom = ThorChainKit.Denom.denom(for: asset)
+                tokenQueries = [TokenQuery(blockchainType: .thorChain, tokenType: denom == "rune" ? .native : .thorChainAsset(denom: denom))]
+
             case .litecoin:
                 let supportedDerivations: [TokenType.Derivation] = [.bip44, .bip49, .bip84]
                 tokenQueries = supportedDerivations.map {
@@ -335,8 +385,11 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             }
         }
 
-        try? swapAssetStorage.save(swapAssetMap: assetMap, provider: id)
-        try? swapAssetStorage.save(lastSyncTimestamp: Date().timeIntervalSince1970, provider: id)
+        // RUNE settles every pool and is never listed among them.
+        assetMap[TokenQuery(blockchainType: .thorChain, tokenType: .native).id.lowercased()] = "THOR.RUNE"
+
+        try? swapAssetStorage.save(swapAssetMap: assetMap, provider: assetMapKey)
+        try? swapAssetStorage.save(lastSyncTimestamp: Date().timeIntervalSince1970, provider: assetMapKey)
 
         DispatchQueue.main.async {
             self.assetMap = assetMap
@@ -356,6 +409,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         case "ETH": return .ethereum
         case "LTC": return .litecoin
         case "ZEC": return .zcash
+        case "THOR": return .thorChain
         default: return nil
         }
     }
@@ -378,7 +432,8 @@ extension BaseThorChainMultiSwapProvider {
     }
 
     struct SwapQuote: ImmutableMappable {
-        let inboundAddress: String
+        // Absent when the input is THORChain-native: there is no vault to pay into.
+        let inboundAddress: String?
         let expectedAmountOut: Decimal
         let memo: String
         let router: String?
@@ -395,7 +450,7 @@ extension BaseThorChainMultiSwapProvider {
         let totalSwapSeconds: TimeInterval?
 
         init(map: Map) throws {
-            inboundAddress = try map.value("inbound_address")
+            inboundAddress = try? map.value("inbound_address")
             expectedAmountOut = try map.value("expected_amount_out", using: Transform.stringToDecimalTransform) / pow(10, 8)
             memo = try map.value("memo")
             router = try? map.value("router")
@@ -418,6 +473,7 @@ extension BaseThorChainMultiSwapProvider {
         case unsupportedTokenIn
         case unsupportedTokenOut
         case noRouterAddress
+        case noInboundAddress
         case invalidTokenInType
         case noAdapter
         case noEvmKit

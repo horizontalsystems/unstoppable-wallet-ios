@@ -12,27 +12,30 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
     // One account read carries every denom, so RUNE and every THORChain asset share a
     // single kit; the adapter only picks its own denom out of that state.
     private let denom: ThorChainKit.Denom
-    private let disposeBag = DisposeBag()
-    private let balanceStateSubject = PublishSubject<AdapterState>()
-    private let balanceDataSubject = PublishSubject<BalanceData>()
-    private var cachedBalance = BalanceData(balance: 0)
-    private var conversionFailure = false
+
+    // The network fee is fixed chain-wide; start() refreshes the cached value.
+    private var cachedFee: BigUInt = 2_000_000
+    private var feeTask: Task<Void, Never>?
 
     init(thorChainKitWrapper: ThorChainKitWrapper, denom: ThorChainKit.Denom = .rune) throws {
         self.thorChainKitWrapper = thorChainKitWrapper
         self.denom = denom
-        cachedBalance = try Self.balanceData(baseUnits: thorChainKitWrapper.thorChainKit.balance(denom: denom), decimals: Self.decimals)
+    }
 
-        thorChainKitWrapper.thorChainKit.syncStatePublisher
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in self?.publishState() })
-            .disposed(by: disposeBag)
-        thorChainKitWrapper.thorChainKit.accountStatePublisher
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.publishBalance()
-            })
-            .disposed(by: disposeBag)
+    var fee: Decimal {
+        balanceData(baseUnits: cachedFee).available
+    }
+
+    var availableBalance: Decimal {
+        balanceData.available
+    }
+
+    var runeAvailableBalance: Decimal {
+        balanceData(baseUnits: thorChainKitWrapper.thorChainKit.balance(denom: .rune)).available
+    }
+
+    var isNativeCoin: Bool {
+        denom == .rune
     }
 
     var isMainNet: Bool {
@@ -53,32 +56,38 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
     }
 
     func start() {
-        // started via ThorChainKitManager
+        // The kit itself is started by ThorChainKitManager; only the fee cache is ours.
+        feeTask = Task { [weak self] in
+            guard let fee = try? await self?.thorChainKitWrapper.thorChainKit.estimateFee() else { return }
+            self?.cachedFee = fee
+        }
     }
 
     func stop() {
-        // stopped via ThorChainKitManager
+        feeTask?.cancel()
+        feeTask = nil
     }
 
     func refresh() {}
 
     var balanceState: AdapterState {
-        if conversionFailure {
-            return .notSynced(error: ThorChainAdapterError.balanceInvariantCode)
-        }
-        return adapterState(syncState: thorChainKitWrapper.thorChainKit.syncState)
+        adapterState(syncState: thorChainKitWrapper.thorChainKit.syncState)
     }
 
     var balanceStateUpdatedObservable: Observable<AdapterState> {
-        balanceStateSubject.startWith(balanceState)
+        thorChainKitWrapper.thorChainKit.syncStatePublisher.asObservable().map { [weak self] in
+            self?.adapterState(syncState: $0) ?? .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
+        }
     }
 
     var balanceData: BalanceData {
-        cachedBalance
+        balanceData(baseUnits: thorChainKitWrapper.thorChainKit.balance(denom: denom))
     }
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
-        balanceDataSubject.startWith(cachedBalance)
+        thorChainKitWrapper.thorChainKit.balancePublisher(denom: denom).asObservable().map { [weak self] in
+            self?.balanceData(baseUnits: $0) ?? BalanceData(balance: 0)
+        }
     }
 
     var receiveAddress: DepositAddress {
@@ -108,22 +117,8 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
         }
     }
 
-    private func publishState() {
-        balanceStateSubject.onNext(balanceState)
-    }
-
-    private func publishBalance() {
-        do {
-            cachedBalance = try Self.balanceData(
-                baseUnits: thorChainKitWrapper.thorChainKit.balance(denom: denom),
-                decimals: Self.decimals
-            )
-            conversionFailure = false
-            balanceDataSubject.onNext(cachedBalance)
-        } catch {
-            conversionFailure = true
-            balanceStateSubject.onNext(balanceState)
-        }
+    private func balanceData(baseUnits: BigUInt) -> BalanceData {
+        (try? Self.balanceData(baseUnits: baseUnits, decimals: Self.decimals)) ?? BalanceData(balance: 0)
     }
 
     static func balanceData(baseUnits: BigUInt, decimals: Int) throws -> BalanceData {
