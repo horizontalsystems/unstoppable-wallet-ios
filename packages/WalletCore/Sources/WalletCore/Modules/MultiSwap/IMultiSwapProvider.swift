@@ -9,6 +9,10 @@ public protocol IMultiSwapProvider {
     var type: SwapProviderType { get }
     var requireTerms: Bool { get }
     var icon: String { get }
+    // True when the provider swaps on a privacy-preserving rail. Mirrors the server's
+    // `privacy.confidential` on /v2/providers, so the "confidential only" filter never needs a
+    // hardcoded list of provider ids.
+    var isConfidential: Bool { get }
     var syncPublisher: AnyPublisher<Void, Never>? { get }
     func slippageSupported(tokenIn: Token, tokenOut: Token) -> Bool
     func supports(tokenIn: Token, tokenOut: Token) -> Bool
@@ -22,6 +26,13 @@ public protocol IMultiSwapProvider {
 
 extension IMultiSwapProvider {
     var requireTerms: Bool {
+        false
+    }
+
+    // Every native in-app provider (1inch, Uniswap, THORChain, …) is a public swap; only the
+    // USwap sub-providers that say otherwise opt in. `public` so conformers OUTSIDE this package
+    // (e.g. the Stable app's AA provider) inherit the default instead of failing to compile.
+    public var isConfidential: Bool {
         false
     }
 

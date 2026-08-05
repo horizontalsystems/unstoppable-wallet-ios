@@ -34,6 +34,7 @@ public class LocalStorage {
     private let keyForceEnableSwap = "force-enable-swap"
     private let keyEmulateZcashMigration = "emulate-zcash-migration"
     private let keySimulateFailSwap = "simulate-fail-swap"
+    private let keyShowConfidentialSwitch = "show-confidential-switch"
 
     private let keyRecipientAddressCheck = "recipient-address-check"
 
@@ -212,6 +213,13 @@ extension LocalStorage {
     var emulateZcashMigration: Bool {
         get { userDefaultsStorage.value(for: keyEmulateZcashMigration) ?? false }
         set { userDefaultsStorage.set(value: newValue, for: keyEmulateZcashMigration) }
+    }
+
+    // Reveals the raw "Confidential only" PoC switch on the swap screen. Off by default — the
+    // confidential rail is not part of the ordinary swap flow yet.
+    public var showConfidentialSwitch: Bool {
+        get { userDefaultsStorage.value(for: keyShowConfidentialSwitch) ?? false }
+        set { userDefaultsStorage.set(value: newValue, for: keyShowConfidentialSwitch) }
     }
 
     var simulateFailSwap: SimulateFailSwapMode {

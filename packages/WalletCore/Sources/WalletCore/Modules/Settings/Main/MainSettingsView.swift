@@ -570,6 +570,13 @@ struct MainSettingsView: View {
                 .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
             }
 
+            ListRow {
+                Toggle(isOn: $viewModel.showConfidentialSwitch) {
+                    Text("Confidential Swap Switcher").themeBody()
+                }
+                .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+            }
+
             row(
                 title: "AML checking result".localized,
                 subtitle: "Oerride checking result from serer".localized,

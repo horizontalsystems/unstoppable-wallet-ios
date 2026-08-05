@@ -35,6 +35,29 @@ public class MultiSwapViewModel: ObservableObject {
 
     @Published public var validProviders = [IMultiSwapProvider]()
 
+    // PoC toggle: restrict the swap to providers that run on a privacy-preserving rail (today
+    // NEAR_CONFIDENTIAL; the server advertises the fact per provider, so nothing here names one).
+    // Raw switch for now — final design pending.
+    //
+    // Scope note: the server also allows a same-token A→A swap on a confidential rail (a private
+    // send), but this screen does not offer it — picking the token already on the other side flips
+    // the two, as it always has. A private send belongs in a send flow, not the swap screen.
+    @Published public var confidentialOnly = false {
+        didSet {
+            guard confidentialOnly != oldValue else {
+                return
+            }
+
+            internalUserSelectedProviderId = nil
+            syncValidProviders()
+            syncQuotes()
+        }
+    }
+
+    // Dev-only visibility of the raw PoC switch above — read once, at screen creation. Off unless
+    // enabled in Settings, so the confidential rail stays out of the ordinary swap flow entirely.
+    public let confidentialSwitchVisible = Core.shared.localStorage.showConfidentialSwitch
+
     private var internalTokenIn: Token? {
         didSet {
             guard internalTokenIn != oldValue else {
@@ -392,7 +415,17 @@ public class MultiSwapViewModel: ObservableObject {
 
     private func syncValidProviders() {
         if let internalTokenIn, let internalTokenOut {
-            validProviders = providers.filter { $0.supports(tokenIn: internalTokenIn, tokenOut: internalTokenOut) }
+            validProviders = providers.filter { provider in
+                // Symmetric on purpose: OFF quotes the public rails only, ON the confidential ones
+                // only. The server's own default (privacy: 'exclude') can't do the excluding for
+                // us — we quote by explicit provider id, which always beats that filter — so a
+                // one-sided check here would put the confidential rail in every ordinary fan-out
+                // and pay for a second 1Click call on quotes that never show it.
+                guard provider.isConfidential == confidentialOnly else {
+                    return false
+                }
+                return provider.supports(tokenIn: internalTokenIn, tokenOut: internalTokenOut)
+            }
         } else {
             validProviders = []
         }

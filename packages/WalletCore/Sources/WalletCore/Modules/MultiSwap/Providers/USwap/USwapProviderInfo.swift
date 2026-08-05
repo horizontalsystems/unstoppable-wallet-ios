@@ -4,13 +4,18 @@ public struct USwapProviderInfo: Equatable {
     public let icon: String
     public let type: SwapProviderType
     public let requireTerms: Bool
+    // Swaps on a privacy-preserving rail — the server exposes the same fact as
+    // `privacy.confidential` on /v2/providers and on every route. Defaults to false so every
+    // existing provider declaration is unchanged.
+    public let confidential: Bool
 
-    public init(id: String, name: String, icon: String, type: SwapProviderType, requireTerms: Bool) {
+    public init(id: String, name: String, icon: String, type: SwapProviderType, requireTerms: Bool, confidential: Bool = false) {
         self.id = id
         self.name = name
         self.icon = icon
         self.type = type
         self.requireTerms = requireTerms
+        self.confidential = confidential
     }
 }
 
@@ -21,6 +26,18 @@ public extension USwapProviderInfo {
         icon: "swap_provider_near",
         type: .fair,
         requireTerms: true
+    )
+
+    // Same 1Click rail as .near, quoted with confidentiality on — a distinct name because the two
+    // are separate providers everywhere it matters (own fees, own accuracy, own swap records), and
+    // swap history renders this label with no other way to tell which rail a swap took.
+    static let nearConfidential = USwapProviderInfo(
+        id: "NEAR_CONFIDENTIAL",
+        name: "Near",
+        icon: "swap_provider_near",
+        type: .fair,
+        requireTerms: true,
+        confidential: true
     )
 
     static let quickEx = USwapProviderInfo(

@@ -22,6 +22,7 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
     public var name: String { subProvider.info.name }
     public var type: SwapProviderType { subProvider.info.type }
     public var requireTerms: Bool { subProvider.info.requireTerms }
+    public var isConfidential: Bool { subProvider.info.confidential }
     public var icon: String { subProvider.info.icon }
     public var syncPublisher: AnyPublisher<Void, Never>? { subProvider.syncPublisher }
 

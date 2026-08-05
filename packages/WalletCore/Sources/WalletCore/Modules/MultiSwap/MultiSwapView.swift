@@ -14,6 +14,8 @@ struct MultiSwapView: View {
             BottomGradientWrapper(gradientColor: .themeLawrence) {
                 ScrollView {
                     VStack(spacing: 16) {
+                        confidentialToggle()
+
                         VStack(spacing: 0) {
                             amountsView()
                                 .themeListTopView()
@@ -59,6 +61,23 @@ struct MultiSwapView: View {
         }
         .onDisappear {
             viewModel.stopAutoQuoting()
+        }
+    }
+
+    // PROOF OF CONCEPT — deliberately a raw switch, not a designed control. Restricts the swap
+    // to privacy-preserving providers; the view model handles both consequences (which providers
+    // are quoted, and allowing the same token on both sides for a private send).
+    @ViewBuilder private func confidentialToggle() -> some View {
+        if viewModel.confidentialSwitchVisible {
+            Toggle(isOn: $viewModel.confidentialOnly) {
+                Text(String("Confidential only"))
+                    .textSubhead1(color: .themeLeah)
+            }
+            .padding(.horizontal, .margin16)
+            .padding(.vertical, .margin12)
+            .background(Color.themeLawrence)
+            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
+            .padding(.horizontal, .margin16)
         }
     }
 

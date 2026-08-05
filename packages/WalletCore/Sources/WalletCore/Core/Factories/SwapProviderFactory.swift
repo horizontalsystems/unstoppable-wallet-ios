@@ -81,6 +81,7 @@ public enum SwapProviderResolver: ISwapProviderResolver {
     private static let entries: [String: Entry] = Dictionary(
         uniqueKeysWithValues: [
             defaultUSwapEntry(info: .near),
+            defaultUSwapEntry(info: .nearConfidential),
             quickExUSwapEntry(info: .quickEx),
             defaultUSwapEntry(info: .letsExchange),
             defaultUSwapEntry(info: .stealthex),

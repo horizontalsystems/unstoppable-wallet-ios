@@ -88,6 +88,13 @@ class MainSettingsViewModel: ObservableObject {
         }
     }
 
+    // Picked up the next time the swap screen is created — MultiSwapViewModel reads it once at init.
+    @Published var showConfidentialSwitch: Bool {
+        didSet {
+            localStorage.showConfidentialSwitch = showConfidentialSwitch
+        }
+    }
+
     init() {
         showDevTools = AppConfig.showDevTools
         forceEnableSwap = localStorage.forceEnableSwap
@@ -97,6 +104,7 @@ class MainSettingsViewModel: ObservableObject {
         mayaStagenetEnabled = testNetManager.mayaStagenetEnabled
         emulateZcashMigration = localStorage.emulateZcashMigration
         debuggingAmlResult = localStorage.debuggingAmlCheckResult
+        showConfidentialSwitch = localStorage.showConfidentialSwitch
 
         subscribe(MainScheduler.instance, disposeBag, backupManager.allBackedUpObservable) { [weak self] _ in self?.syncManageWalletsAlert() }
         if let walletConnectSessionManager {
