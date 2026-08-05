@@ -118,4 +118,20 @@ public extension USwapProviderInfo {
         type: .excellent,
         requireTerms: true
     )
+
+    static let lizex = USwapProviderInfo(
+        id: "LIZEX",
+        name: "Lizex",
+        icon: "swap_provider_lizex",
+        type: .good,
+        requireTerms: true
+    )
+
+    static let bitania = USwapProviderInfo(
+        id: "BITANIA",
+        name: "Bitania",
+        icon: "swap_provider_bitania",
+        type: .good,
+        requireTerms: true
+    )
 }

@@ -93,6 +93,8 @@ public enum SwapProviderResolver: ISwapProviderResolver {
             jupiterUSwapEntry(info: .jupiter),
             lifiUSwapEntry(info: .lifi),
             axelarUSwapEntry(info: .axelarIts),
+            defaultUSwapEntry(info: .lizex),
+            defaultUSwapEntry(info: .bitania),
         ].map { entry in
             (entry.info.id, entry)
         }
