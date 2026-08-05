@@ -12,6 +12,7 @@ public class SwapFinalQuote {
     public let depositAddress: String?
     public let providerSwapId: String?
     public var refundAddress: String?
+    public var minAmountOut: Decimal?
 
     public init(
         expectedBuyAmount: Decimal,
@@ -22,7 +23,8 @@ public class SwapFinalQuote {
         toAddress: String,
         depositAddress: String? = nil,
         providerSwapId: String? = nil,
-        refundAddress: String? = nil
+        refundAddress: String? = nil,
+        minAmountOut: Decimal? = nil
     ) {
         self.expectedBuyAmount = expectedBuyAmount
         self.slippage = slippage
@@ -33,10 +35,20 @@ public class SwapFinalQuote {
         self.depositAddress = depositAddress
         self.providerSwapId = providerSwapId
         self.refundAddress = refundAddress
+        self.minAmountOut = minAmountOut
     }
 
     public var amountOut: Decimal {
         expectedBuyAmount
+    }
+
+    // server-enforced floor when the provider reports one, slippage estimate otherwise
+    var guaranteedAmountOut: Decimal? {
+        guard let slippage else {
+            return nil
+        }
+
+        return minAmountOut ?? amountOut * (1 - slippage / 100)
     }
 
     var feeData: FeeData? {
@@ -73,8 +85,7 @@ public class SwapFinalQuote {
         var fields = [SendField]()
 
         if let slippage {
-            let minAmountOut = amountOut * (1 - slippage / 100)
-            if let minRecieve = SendField.minRecieve(token: tokenOut, value: minAmountOut) {
+            if let guaranteedAmountOut, let minRecieve = SendField.minRecieve(token: tokenOut, value: guaranteedAmountOut) {
                 fields.append(minRecieve)
             }
 

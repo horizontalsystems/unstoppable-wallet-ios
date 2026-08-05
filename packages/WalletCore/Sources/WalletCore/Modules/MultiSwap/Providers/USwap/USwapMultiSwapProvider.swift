@@ -102,6 +102,7 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
         )
 
         finalQuote.refundAddress = result.refundAddress
+        finalQuote.minAmountOut = result.response.minBuyAmount
         return finalQuote
     }
 
