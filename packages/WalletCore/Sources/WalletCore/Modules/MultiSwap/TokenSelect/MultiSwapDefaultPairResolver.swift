@@ -7,6 +7,10 @@ enum MultiSwapDefaultPairResolver {
             return (token, input.autoResolveTokenOut ? destination(for: token, input: input) : nil)
         }
 
+        if let tokenOut = input.explicitTokenOut {
+            return (destination(for: tokenOut, input: input), tokenOut)
+        }
+
         guard input.hasWallets, !input.items.isEmpty else {
             return (input.bitcoin, input.monero)
         }
@@ -54,6 +58,7 @@ extension MultiSwapDefaultPairResolver {
 
     struct Input {
         let explicitToken: Token?
+        var explicitTokenOut: Token?
         let autoResolveTokenOut: Bool
         let hasWallets: Bool
         let items: [Item]

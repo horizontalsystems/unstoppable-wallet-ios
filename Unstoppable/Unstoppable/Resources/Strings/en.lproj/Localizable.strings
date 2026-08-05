@@ -1095,6 +1095,8 @@
 "coin_page.overview" = "Price";
 "coin_page.analytics" = "Analytics";
 "coin_page.markets" = "Markets";
+"coin_page.buy" = "Buy";
+"coin_page.sell" = "Sell";
 "coin_page.tweets" = "Tweets";
 
 // Coin Page -> Overview
