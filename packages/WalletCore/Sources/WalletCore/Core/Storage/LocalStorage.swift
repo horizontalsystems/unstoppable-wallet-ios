@@ -28,6 +28,7 @@ public class LocalStorage {
     private let keySpamFilterEnabled = "spam-filter"
     private let keySwapTermsAccepted = "swap-terms-accepted"
     private let keySwapProvidersLastSyncTimestamp = "swap-providers-last-sync-timestamp"
+    private let keySwapRecentTokenQueryIds = "swap-recent-token-query-ids"
     private let keyUSwapProviders = "uswap-providers"
     private let keySwapEnabled = "swap_enabled"
     private let keyAppStateLastSyncTimestamp = "app-state-last-sync-timestamp"
@@ -187,6 +188,11 @@ extension LocalStorage {
     var swapProvidersLastSyncTimestamp: TimeInterval? {
         get { userDefaultsStorage.value(for: keySwapProvidersLastSyncTimestamp) }
         set { userDefaultsStorage.set(value: newValue, for: keySwapProvidersLastSyncTimestamp) }
+    }
+
+    var swapRecentTokenQueryIds: [String] {
+        get { userDefaultsStorage.value(for: keySwapRecentTokenQueryIds) ?? [] }
+        set { userDefaultsStorage.set(value: newValue, for: keySwapRecentTokenQueryIds) }
     }
 
     var uSwapProviders: String? {

@@ -128,8 +128,8 @@ extension Token: IComposableSortable {
         // spec tie-break for the default swap source: ETH -> TRON -> BSC, others fall through to .blockchainOrder
         case .swapNetworkPriority:
             return Comparators.intAscending(
-                Self.swapNetworkRank(lhs.blockchainType),
-                Self.swapNetworkRank(rhs.blockchainType)
+                swapNetworkRank(lhs.blockchainType),
+                swapNetworkRank(rhs.blockchainType)
             )
         }
     }

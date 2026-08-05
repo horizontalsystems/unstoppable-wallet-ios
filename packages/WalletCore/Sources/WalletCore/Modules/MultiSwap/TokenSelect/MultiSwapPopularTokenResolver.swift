@@ -61,7 +61,9 @@ enum MultiSwapPopularTokenResolver {
             let usdcSame = usdc[context.blockchainType] ?? usdcEth
             ordered = [usdtSame, usdcSame] + tailStables + baseNatives
         case let context?:
-            let nativeSame = (try? marketKit.token(query: context.blockchainType.defaultTokenQuery)) ?? nil
+            // doc rule 1: a base-list native (e.g. ETH for L2 chains) moves to front as a single entry
+            let nativeRaw = (try? marketKit.token(query: context.blockchainType.defaultTokenQuery)) ?? nil
+            let nativeSame = baseNatives.compactMap { $0 }.first { $0.coin.uid == nativeRaw?.coin.uid } ?? nativeRaw
             let usdtSame = usdt[context.blockchainType] ?? usdtEth
             let usdcSame = usdc[context.blockchainType] ?? usdcEth
             ordered = [nativeSame] + baseNatives + [usdtSame, usdcSame] + tailStables
