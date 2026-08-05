@@ -160,9 +160,13 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
         let estimatedTime = route.estimatedTime ?? MultiSwapHelpers.estimate(tokenIn: tokenIn, tokenOut: tokenOut)
 
         switch route.execution {
-        case let .signedTransaction(chain, transactions, _):
-            guard chain == "stellar",
-                  let transaction = transactions.first,
+        case let .signedTransaction(_, transactions, _):
+            // Gate on the SignableTx `kind` — that is the discriminator that says "this is a
+            // base64 XDR". The execution's `chain` is deliberately NOT compared: it carries the
+            // server's Chain code (`XLM`), not the ChainId (`stellar`) we send as the request's
+            // `chainId`, and comparing it to "stellar" silently failed every server-built
+            // Stellar swap with noTransactionData.
+            guard let transaction = transactions.first,
                   transaction.kind == "stellar",
                   let xdr = transaction.xdr
             else {
