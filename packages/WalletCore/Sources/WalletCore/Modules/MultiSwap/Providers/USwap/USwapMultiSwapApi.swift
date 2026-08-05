@@ -479,7 +479,7 @@ public extension USwapMultiSwapApi {
     }
 }
 
-private extension USwapMultiSwapApi {
+extension USwapMultiSwapApi {
     struct TokensResponse: ImmutableMappable {
         let tokens: [TokenResponse]
 

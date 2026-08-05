@@ -604,6 +604,10 @@
 // Swap
 
 "swap.title" = "Swap";
+"swap.token_select.popular_tokens" = "Popular Tokens";
+"swap.token_select.your_tokens" = "Your Tokens";
+"swap.token_select.top_tokens" = "Top Tokens";
+"swap.token_select.recent" = "Recent Search";
 "swap.you_pay" = "You Pay";
 "swap.estimated" = "estimated";
 "swap.balance" = "Balance";

@@ -32,7 +32,7 @@ struct MultiSwapPopularTokenResolverTests {
         #expect(!result.contains { $0.coin.uid == "tether" && $0.blockchainType == .ethereum })
     }
 
-    @Test func arbitrumContextKeepsOwnChainNative() {
+    @Test func arbitrumContextCollapsesNativeIntoBaseEth() {
         var stub = Self.stub()
         let ethArbitrum = Self.token(coinUid: "ethereum", blockchainType: .arbitrumOne)
         stub.tokensByQueryId[ethArbitrum.tokenQuery.id] = ethArbitrum
@@ -40,8 +40,19 @@ struct MultiSwapPopularTokenResolverTests {
 
         let result = MultiSwapPopularTokenResolver.tokens(marketKit: stub, for: context)
 
-        #expect(result.first?.tokenQuery.id == ethArbitrum.tokenQuery.id)
-        #expect(result.contains { $0.tokenQuery.id == Self.eth.tokenQuery.id })
+        #expect(result.first?.tokenQuery.id == Self.eth.tokenQuery.id)
+        #expect(!result.contains { $0.tokenQuery.id == ethArbitrum.tokenQuery.id })
+    }
+
+    @Test func chainOutsideBaseListAddsOwnNativeInFront() {
+        var stub = Self.stub()
+        let sol = Self.token(coinUid: "solana", blockchainType: .solana)
+        stub.tokensByQueryId[sol.tokenQuery.id] = sol
+        let context = Self.token(coinUid: "usd-coin", blockchainType: .solana, type: .spl(address: "usdc-sol"))
+
+        let result = MultiSwapPopularTokenResolver.tokens(marketKit: stub, for: context)
+
+        #expect(result.first?.tokenQuery.id == sol.tokenQuery.id)
     }
 
     @Test func runeNativeContextFallsBackToEthereumStable() {
