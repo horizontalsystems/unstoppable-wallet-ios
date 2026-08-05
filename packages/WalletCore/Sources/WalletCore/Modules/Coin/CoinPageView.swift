@@ -6,52 +6,44 @@ struct CoinPageView: View {
 
     @StateObject private var overviewViewModel: CoinOverviewViewModel
     @StateObject private var chartViewModel: CoinChartViewModel
-    @StateObject private var analyticsViewModel: CoinAnalyticsViewModel
-    @StateObject private var marketsViewModel: CoinMarketsViewModel
 
     @Environment(\.dismiss) private var dismiss
-
-    @State private var currentTab: Tab = .overview
-    @State private var loadedTabs = [Tab]()
 
     init(coin: Coin) {
         _viewModel = StateObject(wrappedValue: CoinPageViewModel(coin: coin))
         _overviewViewModel = StateObject(wrappedValue: CoinOverviewViewModel(coinUid: coin.uid))
         _chartViewModel = StateObject(wrappedValue: CoinChartViewModel.instance(coinUid: coin.uid))
-        _analyticsViewModel = StateObject(wrappedValue: CoinAnalyticsViewModel(coin: coin))
-        _marketsViewModel = StateObject(wrappedValue: CoinMarketsViewModel(coinUid: coin.uid))
     }
 
     var body: some View {
         ThemeNavigationStack {
             ThemeView {
-                VStack(spacing: 0) {
-                    TabHeaderView(
-                        tabs: Tab.allCases.map(\.title),
-                        currentTabIndex: Binding(
-                            get: {
-                                Tab.allCases.firstIndex(of: currentTab) ?? 0
-                            },
-                            set: { index in
-                                currentTab = Tab.allCases[index]
+                if let token = viewModel.swapToken {
+                    BottomGradientWrapper {
+                        overview()
+                    } bottomContent: {
+                        HStack(spacing: .margin8) {
+                            Button(action: {
+                                Coordinator.shared.present { _ in
+                                    RegularMultiSwapView(tokenOut: token)
+                                }
+                            }) {
+                                Text("coin_page.buy".localized)
                             }
-                        )
-                    )
+                            .buttonStyle(PrimaryButtonStyle(style: .yellow))
 
-                    VStack {
-                        switch currentTab {
-                        case .overview: CoinOverviewView(viewModel: overviewViewModel, chartViewModel: chartViewModel)
-                        case .analytics: CoinAnalyticsView(viewModel: analyticsViewModel)
-                        case .markets: CoinMarketsView(viewModel: marketsViewModel)
+                            Button(action: {
+                                Coordinator.shared.present { _ in
+                                    RegularMultiSwapView(token: token)
+                                }
+                            }) {
+                                Text("coin_page.sell".localized)
+                            }
+                            .buttonStyle(PrimaryButtonStyle(style: .gray))
                         }
                     }
-                    .frame(maxHeight: .infinity)
-                    .onChange(of: currentTab) { tab in
-                        load(tab: tab)
-                    }
-                    .onFirstAppear {
-                        load(tab: currentTab)
-                    }
+                } else {
+                    overview()
                 }
             }
             .navigationTitle(viewModel.coin.code)
@@ -76,33 +68,11 @@ struct CoinPageView: View {
         }
     }
 
-    private func load(tab: Tab) {
-        guard !loadedTabs.contains(tab) else {
-            return
-        }
-
-        loadedTabs.append(tab)
-
-        switch tab {
-        case .overview: overviewViewModel.load()
-        case .analytics: analyticsViewModel.load()
-        case .markets: marketsViewModel.load()
-        }
-    }
-}
-
-extension CoinPageView {
-    enum Tab: Int, CaseIterable {
-        case overview
-        case analytics
-        case markets
-
-        var title: String {
-            switch self {
-            case .overview: return "coin_page.overview".localized
-            case .analytics: return "coin_page.analytics".localized
-            case .markets: return "coin_page.markets".localized
+    @ViewBuilder private func overview() -> some View {
+        CoinOverviewView(viewModel: overviewViewModel, chartViewModel: chartViewModel)
+            .frame(maxHeight: .infinity)
+            .onFirstAppear {
+                overviewViewModel.load()
             }
-        }
     }
 }

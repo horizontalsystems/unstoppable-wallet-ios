@@ -286,18 +286,19 @@ public class MultiSwapViewModel: ObservableObject {
 
     @Published var quoteSortType: QuoteSortType = .bestRate
 
-    public init(token: Token? = nil, autoResolveTokenOut: Bool = true, customDecimals: Int? = nil) {
+    public init(token: Token? = nil, tokenOut: Token? = nil, autoResolveTokenOut: Bool = true, customDecimals: Int? = nil) {
         providers = swapProviderManager.providers.compactMap { SwapProviderFactory.provider(id: $0) }
         currency = currencyManager.baseCurrency
         spendMode = .fromBalanceState
         self.customDecimals = customDecimals
-        hasExplicitToken = token != nil
+        hasExplicitToken = token != nil || tokenOut != nil
         self.autoResolveTokenOut = autoResolveTokenOut
         currentAccountId = accountManager.activeAccount?.id
 
         defer {
-            if let token {
+            if token != nil || tokenOut != nil {
                 internalTokenIn = token
+                internalTokenOut = tokenOut
                 syncDefaultTokens()
             } else {
                 scheduleDefaultTokensSync()
@@ -378,7 +379,14 @@ public class MultiSwapViewModel: ObservableObject {
             return
         }
 
+        if hasExplicitToken {
+            guard autoResolveTokenOut, internalTokenIn == nil || internalTokenOut == nil else {
+                return
+            }
+        }
+
         let explicitToken = hasExplicitToken ? internalTokenIn : nil
+        let explicitTokenOut = hasExplicitToken ? internalTokenOut : nil
 
         defaultTokensTask = Task { [weak self] in
             guard let self else {
@@ -402,6 +410,7 @@ public class MultiSwapViewModel: ObservableObject {
             let pair = MultiSwapDefaultPairResolver.resolve(
                 .init(
                     explicitToken: explicitToken,
+                    explicitTokenOut: explicitTokenOut,
                     autoResolveTokenOut: autoResolveTokenOut,
                     hasWallets: accountManager.activeAccount != nil && !wallets.isEmpty,
                     items: items,
@@ -424,11 +433,14 @@ public class MultiSwapViewModel: ObservableObject {
         }
 
         if hasExplicitToken {
-            guard internalTokenOut == nil, let tokenOut else {
-                return
+            if internalTokenOut == nil, let tokenOut {
+                internalTokenOut = activeWalletToken(for: tokenOut)
             }
 
-            internalTokenOut = activeWalletToken(for: tokenOut)
+            if internalTokenIn == nil, let tokenIn {
+                internalTokenIn = activeWalletToken(for: tokenIn)
+            }
+
             return
         }
 

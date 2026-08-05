@@ -163,6 +163,23 @@ struct MultiSwapDefaultPairResolverTests {
         #expect(pair.tokenOut == Self.eth)
     }
 
+    @Test func explicitTokenOutResolvesSourceFromPopular() {
+        let pair = MultiSwapDefaultPairResolver.resolve(Self.input(
+            explicitTokenOut: Self.btc,
+            popularTokens: { context in context == Self.btc ? [Self.usdtEth] : [] }
+        ))
+
+        #expect(pair.tokenIn == Self.usdtEth)
+        #expect(pair.tokenOut == Self.btc)
+    }
+
+    @Test func explicitTokenOutWithEmptyPopularFallsBackToBitcoin() {
+        let pair = MultiSwapDefaultPairResolver.resolve(Self.input(explicitTokenOut: Self.eth))
+
+        #expect(pair.tokenIn == Self.btc)
+        #expect(pair.tokenOut == Self.eth)
+    }
+
     @Test func explicitWithoutAutoResolveLeavesDestinationNil() {
         let pair = MultiSwapDefaultPairResolver.resolve(Self.input(
             explicitToken: Self.usdtEth,
@@ -213,6 +230,7 @@ extension MultiSwapDefaultPairResolverTests {
 
     private static func input(
         explicitToken: Token? = nil,
+        explicitTokenOut: Token? = nil,
         autoResolveTokenOut: Bool = true,
         hasWallets: Bool = true,
         items: [MultiSwapDefaultPairResolver.Item] = [],
@@ -220,6 +238,7 @@ extension MultiSwapDefaultPairResolverTests {
     ) -> MultiSwapDefaultPairResolver.Input {
         .init(
             explicitToken: explicitToken,
+            explicitTokenOut: explicitTokenOut,
             autoResolveTokenOut: autoResolveTokenOut,
             hasWallets: hasWallets,
             items: items,
