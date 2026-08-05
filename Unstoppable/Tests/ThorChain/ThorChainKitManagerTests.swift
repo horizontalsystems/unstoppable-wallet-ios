@@ -40,7 +40,7 @@ struct ThorChainKitManagerTests {
         let second = try manager.thorChainKitWrapper(account: account)
 
         #expect(first === second)
-        #expect(try first.thorChainKit.address.raw == AccountAddress.thorChainAddress(account: account).raw)
+        #expecttry (first.thorChainKit.address.raw == AccountAddress.thorChainAddress(account: account).raw)
     }
 
     @Test func mnemonicDerivationMatchesFrozenVector() throws {
@@ -66,7 +66,7 @@ struct ThorChainKitManagerTests {
             fileBackedUp: false
         )
 
-        #expect(try AccountAddress.thorChainAddress(account: account) == expected)
+        #expecttry (AccountAddress.thorChainAddress(account: account) == expected)
     }
 
     @Test func changedAccountIdentityReplacesCachedWrapper() throws {

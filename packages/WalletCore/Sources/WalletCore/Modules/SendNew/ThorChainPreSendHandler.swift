@@ -44,6 +44,7 @@ final class ThorChainPreSendHandler: PreSendHandler, IPreSendHandler {
         let available = adapter.balanceData.available
         return adapter.isNativeCoin ? max(0, available - adapter.fee) : available
     }
+
     var balancePublisher: AnyPublisher<Decimal, Never> { balanceSubject.eraseToAnyPublisher() }
     func hasMemo(address _: String?) -> Bool { true }
 

@@ -3,8 +3,8 @@ import BitcoinCore
 import EvmKit
 import Foundation
 import MarketKit
-import ThorChainKit
 import MoneroKit
+import ThorChainKit
 import TronKit
 import ZcashLightClientKit
 

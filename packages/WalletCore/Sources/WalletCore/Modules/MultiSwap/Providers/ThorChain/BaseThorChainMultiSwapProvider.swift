@@ -4,11 +4,11 @@ import BitcoinCore
 import Combine
 import EvmKit
 import Foundation
-import ThorChainKit
 import HsToolKit
 import MarketKit
 import ObjectMapper
 import SwiftUI
+import ThorChainKit
 
 class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     private let assetMapExpiration: TimeInterval = 60 * 60
@@ -208,12 +208,12 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             // takes an ordinary transfer instead.
             let kind: ThorChainExecutable.Kind
             if let inboundAddress = swapQuote.inboundAddress {
-                kind = .send(recipient: try ThorChainKit.Address(inboundAddress, network: .mainnet))
+                kind = try .send(recipient: ThorChainKit.Address(inboundAddress, network: .mainnet))
             } else {
                 guard let assetNotation = assetMap[tokenIn.tokenQuery.id.lowercased()] else {
                     throw SwapError.unsupportedTokenIn
                 }
-                kind = .deposit(asset: try ThorChainKit.Asset(notation: assetNotation))
+                kind = try .deposit(asset: ThorChainKit.Asset(notation: assetNotation))
             }
 
             let adapter = Core.shared.adapterManager.adapter(for: tokenIn) as? ThorChainAdapter
