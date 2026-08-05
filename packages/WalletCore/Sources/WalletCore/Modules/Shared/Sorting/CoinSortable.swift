@@ -124,7 +124,20 @@ extension Token: IComposableSortable {
         // token level — TokenSortContext doesn't carry a priceChanges dictionary.
         case .percentGrowthDescending:
             return .orderedSame
+
+        // spec tie-break for the default swap source: ETH -> TRON -> BSC, others fall through to .blockchainOrder
+        case .swapNetworkPriority:
+            return Comparators.intAscending(
+                Self.swapNetworkRank(lhs.blockchainType),
+                Self.swapNetworkRank(rhs.blockchainType)
+            )
         }
+    }
+
+    private static let swapPriorityTypes: [BlockchainType] = [.ethereum, .tron, .binanceSmartChain]
+
+    private static func swapNetworkRank(_ blockchainType: BlockchainType) -> Int {
+        swapPriorityTypes.firstIndex(of: blockchainType) ?? Int.max
     }
 }
 
@@ -187,7 +200,7 @@ extension FullCoin: IComposableSortable {
         // Genuinely inapplicable for FullCoin: a coin aggregates multiple tokens with potentially
         // different badges, token types, and blockchain affinities, so there is no canonical value
         // to sort by.
-        case .badge, .tokenTypeOrder, .sameBlockchainFirst:
+        case .badge, .tokenTypeOrder, .sameBlockchainFirst, .swapNetworkPriority:
             return .orderedSame
 
         // Not exposed for FullCoin: per-token balance fields live outside this context and the
@@ -237,7 +250,7 @@ extension ISortableWalletItem {
 
         // Not exposed by ISortableWalletItem protocol.
         case .filterRelevance, .sameBlockchainFirst, .marketCapRank,
-             .blockchainOrder, .tokenTypeOrder, .badge, .codeAscending, .codeNativeFirst:
+             .blockchainOrder, .tokenTypeOrder, .badge, .codeAscending, .codeNativeFirst, .swapNetworkPriority:
             return .orderedSame
         }
     }

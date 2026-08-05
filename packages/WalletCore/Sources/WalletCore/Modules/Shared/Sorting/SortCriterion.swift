@@ -25,6 +25,9 @@ enum SortCriterion {
     // Wallet-specific
     case nonZeroBalanceFirst
     case hasPriceFirst
+
+    // MultiSwap default pair: ETH -> TRON -> BSC (blockchainOrder puts BSC before TRON)
+    case swapNetworkPriority
 }
 
 extension SortCriterion {
@@ -37,6 +40,10 @@ extension SortCriterion {
     // Legacy code
     static let coinSelect: [SortCriterion] = [.balanceDescending, .enabled, .marketCapRank, .nameAscending]
     static let coinSelectFiltered: [SortCriterion] = [.balanceDescending, .enabled, .filterRelevance, .marketCapRank, .nameAscending]
+
+    // MultiSwap default pair
+    static let swapDefaultSource: [SortCriterion] = [.fiatBalanceDescending, .swapNetworkPriority, .blockchainOrder, .tokenTypeOrder]
+    static let swapDefaultTopWallet: [SortCriterion] = walletBalance + [.blockchainOrder, .tokenTypeOrder]
 
     // MultiSwap coin selection
     static let swapEnabled: [SortCriterion] = [.sameBlockchainFirst, .fiatBalanceDescending, .codeAscending, .codeNativeFirst, .blockchainOrder, .badge]

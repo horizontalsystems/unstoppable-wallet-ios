@@ -12,6 +12,7 @@ public class MultiSwapViewModel: ObservableObject {
     private var providerCancellables = Set<AnyCancellable>()
     private var quotesTask: AnyTask?
     private var swapTask: AnyTask?
+    private var defaultTokensTask: AnyTask?
     private var rateInCancellable: AnyCancellable?
     private var rateOutCancellable: AnyCancellable?
     private var timer: Timer?
@@ -20,7 +21,6 @@ public class MultiSwapViewModel: ObservableObject {
 
     private var providers: [IMultiSwapProvider]
     private let swapProviderManager = Core.shared.swapProviderManager
-    private let swapHistoryManager = Core.shared.swapHistoryManager
     private let currencyManager = Core.shared.currencyManager
     private let marketKit = Core.shared.marketKit
     private let accountManager = Core.shared.accountManager
@@ -30,6 +30,12 @@ public class MultiSwapViewModel: ObservableObject {
 
     @Published var currency: Currency
     private let customDecimals: Int?
+
+    private let hasExplicitToken: Bool
+    private let autoResolveTokenOut: Bool
+    private var tokensManuallySet = false
+    private var currentAccountId: String?
+    private var defaultTokensDisposeBag = DisposeBag()
 
     private var enteringFiat = false
 
@@ -66,6 +72,8 @@ public class MultiSwapViewModel: ObservableObject {
             guard internalTokenIn != tokenIn else {
                 return
             }
+
+            tokensManuallySet = true
 
             if enteringFiat {
                 fiatAmountIn = nil
@@ -117,6 +125,8 @@ public class MultiSwapViewModel: ObservableObject {
             guard internalTokenOut != tokenOut else {
                 return
             }
+
+            tokensManuallySet = true
 
             let oldTokenOut = internalTokenOut
 
@@ -281,9 +291,17 @@ public class MultiSwapViewModel: ObservableObject {
         currency = currencyManager.baseCurrency
         spendMode = .fromBalanceState
         self.customDecimals = customDecimals
+        hasExplicitToken = token != nil
+        self.autoResolveTokenOut = autoResolveTokenOut
+        currentAccountId = accountManager.activeAccount?.id
 
         defer {
-            syncDefaultTokens(token: token, autoResolveTokenOut: autoResolveTokenOut)
+            if let token {
+                internalTokenIn = token
+                syncDefaultTokens()
+            } else {
+                scheduleDefaultTokensSync()
+            }
         }
 
         currencyManager.$baseCurrency
@@ -301,9 +319,11 @@ public class MultiSwapViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
-        accountManager.activeAccountPublisher
+        walletManager.activeWalletDataUpdatedPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in self?.syncDefaultTokens() }
+            .sink { [weak self] walletData in
+                self?.handle(walletData: walletData)
+            }
             .store(in: &cancellables)
 
         subscribe(disposeBag, adapterManager.adapterDataReadyObservable) { [weak self] _ in self?.syncAdapter() }
@@ -316,20 +336,128 @@ public class MultiSwapViewModel: ObservableObject {
         swapProviderManager.sync()
     }
 
-    private func syncDefaultTokens(token: Token? = nil, autoResolveTokenOut: Bool = true) {
-        let bitcoin = try? marketKit.token(query: TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84)))
-        let monero = try? marketKit.token(query: TokenQuery(blockchainType: .monero, tokenType: .native))
-
-        if let token {
-            internalTokenIn = token
-            internalTokenOut = autoResolveTokenOut ? MultiSwapDefaultTokenResolver.default(for: token) ?? (token.blockchainType == .bitcoin ? monero : bitcoin) : nil
-        } else if let account = accountManager.activeAccount, let lastSwap = swapHistoryManager.lastSwap(accountId: account.id) {
-            internalTokenIn = lastSwap.tokenIn
-            internalTokenOut = lastSwap.tokenOut
-        } else {
-            internalTokenIn = bitcoin
-            internalTokenOut = monero
+    // account switched -> full re-resolve; enabled source disappeared (spec rule 1.3) -> re-resolve
+    private func handle(walletData: WalletManager.WalletData) {
+        guard !hasExplicitToken else {
+            return
         }
+
+        if walletData.account?.id != currentAccountId {
+            currentAccountId = walletData.account?.id
+            tokensManuallySet = false
+            scheduleDefaultTokensSync()
+            return
+        }
+
+        if !tokensManuallySet, let internalTokenIn, !walletData.wallets.contains(where: { $0.token == internalTokenIn }) {
+            scheduleDefaultTokensSync()
+        }
+    }
+
+    // one-shot: resolve now if adapters are ready or there is nothing to wait for, otherwise once on ready
+    private func scheduleDefaultTokensSync() {
+        defaultTokensDisposeBag = DisposeBag()
+
+        let wallets = walletManager.activeWallets
+        let resolvesImmediately = wallets.isEmpty || wallets.contains { adapterManager.balanceAdapter(for: $0) != nil }
+
+        if resolvesImmediately {
+            syncDefaultTokens()
+            return
+        }
+
+        subscribe(defaultTokensDisposeBag, adapterManager.adapterDataReadyObservable.take(1)) { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.syncDefaultTokens()
+            }
+        }
+    }
+
+    private func syncDefaultTokens() {
+        guard !tokensManuallySet else {
+            return
+        }
+
+        let explicitToken = hasExplicitToken ? internalTokenIn : nil
+
+        defaultTokensTask = Task { [weak self] in
+            guard let self else {
+                return
+            }
+
+            let bitcoin = try? marketKit.token(query: BlockchainType.bitcoin.defaultTokenQuery)
+            let monero = try? marketKit.token(query: BlockchainType.monero.defaultTokenQuery)
+
+            let wallets = walletManager.activeWallets
+            let coinPriceMap = marketKit.coinPriceMap(coinUids: wallets.map(\.coin.uid).removeDuplicates(), currencyCode: currency.code)
+
+            let items = wallets.map { wallet in
+                MultiSwapDefaultPairResolver.Item(
+                    token: wallet.token,
+                    balance: adapterManager.balanceAdapter(for: wallet)?.balanceData.available ?? 0,
+                    price: coinPriceMap[wallet.coin.uid]?.value
+                )
+            }
+
+            let pair = MultiSwapDefaultPairResolver.resolve(
+                .init(
+                    explicitToken: explicitToken,
+                    autoResolveTokenOut: autoResolveTokenOut,
+                    hasWallets: accountManager.activeAccount != nil && !wallets.isEmpty,
+                    items: items,
+                    popularTokens: { [marketKit] in MultiSwapPopularTokenResolver.tokens(marketKit: marketKit, for: $0) },
+                    bitcoin: bitcoin,
+                    monero: monero
+                )
+            )
+
+            await MainActor.run { [weak self] in
+                self?.apply(tokenIn: pair.tokenIn, tokenOut: pair.tokenOut)
+            }
+        }
+        .erased()
+    }
+
+    private func apply(tokenIn: Token?, tokenOut: Token?) {
+        guard !tokensManuallySet else {
+            return
+        }
+
+        if hasExplicitToken {
+            guard internalTokenOut == nil, let tokenOut else {
+                return
+            }
+
+            internalTokenOut = activeWalletToken(for: tokenOut)
+            return
+        }
+
+        set(
+            tokenIn: tokenIn.map { activeWalletToken(for: $0) },
+            tokenOut: tokenOut.map { activeWalletToken(for: $0) }
+        )
+    }
+
+    private func set(tokenIn: Token?, tokenOut: Token?) {
+        guard tokenIn != internalTokenIn || tokenOut != internalTokenOut else {
+            return
+        }
+
+        internalTokenIn = tokenIn
+        internalTokenOut = tokenOut
+
+        priceFlipped = false
+        internalUserSelectedProviderId = nil
+
+        if enteringFiat {
+            fiatAmountIn = nil
+        } else {
+            amountIn = nil
+        }
+    }
+
+    private func activeWalletToken(for token: Token) -> Token {
+        walletManager.activeWallets.first { $0.token.coin.uid == token.coin.uid && $0.token.blockchainType == token.blockchainType }?.token ?? token
     }
 
     private func syncAdapter() {
@@ -569,6 +697,8 @@ public extension MultiSwapViewModel {
     }
 
     func interchange() {
+        tokensManuallySet = true
+
         let currentFiatAmountOut = fiatAmountOut
         let currentAmountOut = currentQuote?.quote.expectedBuyAmount
 
