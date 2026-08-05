@@ -604,6 +604,10 @@
 // Swap
 
 "swap.title" = "掉期交易";
+"swap.token_select.popular_tokens" = "热门代币";
+"swap.token_select.your_tokens" = "您的代币";
+"swap.token_select.top_tokens" = "顶级代币";
+"swap.token_select.recent" = "最近搜索";
 "swap.you_pay" = "您支付";
 "swap.estimated" = "估计";
 "swap.balance" = "余额";
@@ -1091,6 +1095,8 @@
 "coin_page.overview" = "价格";
 "coin_page.analytics" = "分析";
 "coin_page.markets" = "市场";
+"coin_page.buy" = "购买";
+"coin_page.sell" = "出售";
 "coin_page.tweets" = "推文";
 
 // Coin Page -> Overview

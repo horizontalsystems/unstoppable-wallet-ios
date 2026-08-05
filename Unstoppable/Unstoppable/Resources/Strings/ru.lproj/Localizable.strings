@@ -604,6 +604,10 @@
 // Swap
 
 "swap.title" = "Обмен";
+"swap.token_select.popular_tokens" = "Популярные токены";
+"swap.token_select.your_tokens" = "Ваши токены";
+"swap.token_select.top_tokens" = "Топ токены";
+"swap.token_select.recent" = "Недавний поиск";
 "swap.you_pay" = "Вы платите";
 "swap.estimated" = "приблизительно";
 "swap.balance" = "Баланс";
@@ -1091,6 +1095,8 @@
 "coin_page.overview" = "Цена";
 "coin_page.analytics" = "Аналитика";
 "coin_page.markets" = "Рынки";
+"coin_page.buy" = "Купить";
+"coin_page.sell" = "Продать";
 "coin_page.tweets" = "Твиты";
 
 // Coin Page -> Overview

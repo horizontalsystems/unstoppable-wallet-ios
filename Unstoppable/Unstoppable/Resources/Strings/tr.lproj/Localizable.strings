@@ -604,6 +604,10 @@
 // Swap
 
 "swap.title" = "Takas";
+"swap.token_select.popular_tokens" = "Popüler Tokenlar";
+"swap.token_select.your_tokens" = "Tokenlarınız";
+"swap.token_select.top_tokens" = "En İyi Tokenlar";
+"swap.token_select.recent" = "Son Arama";
 "swap.you_pay" = "Ödediğiniz";
 "swap.estimated" = "tahmini";
 "swap.balance" = "Bakiye";
@@ -1091,6 +1095,8 @@
 "coin_page.overview" = "Fiyat";
 "coin_page.analytics" = "Analitik";
 "coin_page.markets" = "Marketler";
+"coin_page.buy" = "Satın Al";
+"coin_page.sell" = "Sat";
 "coin_page.tweets" = "Tweets";
 
 // Coin Page -> Overview

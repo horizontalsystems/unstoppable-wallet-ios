@@ -604,6 +604,10 @@
 // Swap
 
 "swap.title" = "Trocar";
+"swap.token_select.popular_tokens" = "Tokens Populares";
+"swap.token_select.your_tokens" = "Seus Tokens";
+"swap.token_select.top_tokens" = "Principais Tokens";
+"swap.token_select.recent" = "Pesquisa Recente";
 "swap.you_pay" = "Você Paga";
 "swap.estimated" = "estimado";
 "swap.balance" = "Saldo";
@@ -1091,6 +1095,8 @@
 "coin_page.overview" = "Preço";
 "coin_page.analytics" = "Análises";
 "coin_page.markets" = "Mercados";
+"coin_page.buy" = "Comprar";
+"coin_page.sell" = "Vender";
 "coin_page.tweets" = "Tweets";
 
 // Coin Page -> Overview

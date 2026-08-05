@@ -604,6 +604,10 @@
 // Swap
 
 "swap.title" = "스왑";
+"swap.token_select.popular_tokens" = "인기 토큰";
+"swap.token_select.your_tokens" = "내 토큰";
+"swap.token_select.top_tokens" = "상위 토큰";
+"swap.token_select.recent" = "최근 검색";
 "swap.you_pay" = "지불하기";
 "swap.estimated" = "예상";
 "swap.balance" = "잔액";
@@ -1091,6 +1095,8 @@
 "coin_page.overview" = "금액";
 "coin_page.analytics" = "분석";
 "coin_page.markets" = "시장";
+"coin_page.buy" = "구매";
+"coin_page.sell" = "판매";
 "coin_page.tweets" = "트윗";
 
 // Coin Page -> Overview
