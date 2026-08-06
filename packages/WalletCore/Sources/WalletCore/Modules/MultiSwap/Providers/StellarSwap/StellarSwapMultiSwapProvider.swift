@@ -50,6 +50,7 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
             ? ["STELLARBROKER", "SOROSWAP", "AQUARIUS", "STELLAR_DEX"]
             : ["SOROSWAP", "AQUARIUS", "STELLAR_DEX"]
     }
+
     // SB and Aquarius settle on the trader's own account — a third-party recipient can only
     // be served by the providers whose execution supports a distinct destination.
     private static let recipientCapableProviders = ["SOROSWAP", "STELLAR_DEX"]
