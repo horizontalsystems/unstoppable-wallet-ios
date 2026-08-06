@@ -13,7 +13,7 @@ struct RegularMultiSwapView: View {
 
     var body: some View {
         ThemeNavigationStack {
-            MultiSwapView(viewModel: viewModel, sendPresented: $sendPresented)
+            MultiSwapView(viewModel: viewModel, sendPresented: $sendPresented, autoFocus: true)
                 .navigationDestination(isPresented: $sendPresented) {
                     MultiSwapSendDestinationView(viewModel: viewModel) {
                         presentationMode.wrappedValue.dismiss()

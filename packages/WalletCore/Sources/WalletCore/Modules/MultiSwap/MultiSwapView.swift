@@ -6,8 +6,13 @@ import SwiftUI
 struct MultiSwapView: View {
     @ObservedObject var viewModel: MultiSwapViewModel
     @Binding var sendPresented: Bool
+    var autoFocus = false
 
-    @FocusState var isInputActive: Bool
+    @FocusState var focusedField: FocusField?
+
+    private var isInputActive: Bool {
+        focusedField != nil
+    }
 
     var body: some View {
         ThemeView(style: .list) {
@@ -33,7 +38,7 @@ struct MultiSwapView: View {
                 }
                 .themeListScrollHeader()
                 .onTapGesture {
-                    isInputActive = false
+                    focusedField = nil
                 }
             } bottomContent: {
                 buttonView()
@@ -41,10 +46,10 @@ struct MultiSwapView: View {
                 if isInputActive {
                     AmountAccessoryView(
                         visible: isInputActive,
-                        hasPercents: viewModel.availableBalance != nil,
+                        enabledPercents: (viewModel.availableBalance ?? 0) > 0,
                         onPercent: { percent in
                             viewModel.setAmountIn(percent: percent)
-                            isInputActive = false
+                            focusedField = nil
                         },
                         onTrash: {
                             viewModel.clearAmountIn()
@@ -56,6 +61,11 @@ struct MultiSwapView: View {
         }
         .onAppear {
             viewModel.autoQuoteIfRequired()
+        }
+        .onFirstAppear {
+            if autoFocus {
+                focusedField = .amount
+            }
         }
         .onDisappear {
             viewModel.stopAutoQuoting()
@@ -92,7 +102,7 @@ struct MultiSwapView: View {
                     .font(.themeHeadline1)
                     .tint(.themeInputFieldTintColor)
                     .keyboardType(.decimalPad)
-                    .focused($isInputActive)
+                    .focused($focusedField, equals: .amount)
                     .frame(height: 33)
 
                 if viewModel.tokenIn != nil {
@@ -107,7 +117,7 @@ struct MultiSwapView: View {
                                 .font(.themeBody)
                                 .tint(.themeInputFieldTintColor)
                                 .keyboardType(.decimalPad)
-                                .focused($isInputActive)
+                                .focused($focusedField, equals: .fiat)
                                 .frame(height: 22)
                                 .disabled(coinPriceIn.expired)
                         }
@@ -215,7 +225,7 @@ struct MultiSwapView: View {
                         Text("swap.select".localized).textHeadline2(color: .themeJacob)
                     }
 
-                    ThemeImage("arrow_s_down", size: 20, colorStyle: .secondary)
+                    ThemeImage("arrow_s_down", size: 20, colorStyle: .primary)
                 }
             }
         }
@@ -304,11 +314,15 @@ struct MultiSwapView: View {
             Cell(
                 style: .secondary,
                 middle: {
-                    RightButtonText(text: ComponentText(text: "swap.provider.score".localized, colorStyle: .secondary), textStyle: .subhead, icon: "information", iconColorStyle: .secondary) {
-                        onTapProviderInfo()
+                    HStack(spacing: 8) {
+                        ThemeText("swap.provider.score".localized, style: .subhead, colorStyle: .secondary)
+                        Image("information").icon(size: 20, colorStyle: .secondary)
                     }
                 }, right: {
                     MultiSwapQuotesView.view(type: quote.provider.type)
+                },
+                action: {
+                    onTapProviderInfo()
                 }
             )
 
@@ -343,7 +357,7 @@ struct MultiSwapView: View {
                     viewModel.onAcceptTerms()
 
                     DispatchQueue.main.async {
-                        isInputActive = false
+                        focusedField = nil
                         sendPresented = true
                     }
                 }
@@ -351,7 +365,7 @@ struct MultiSwapView: View {
                 viewModel.autoQuoteIfRequired()
             }
         } else {
-            isInputActive = false
+            focusedField = nil
             sendPresented = true
         }
     }
@@ -456,6 +470,13 @@ struct MultiSwapView: View {
         }
 
         return (title, style, disabled, showProgress, preSwapStep)
+    }
+}
+
+extension MultiSwapView {
+    enum FocusField {
+        case amount
+        case fiat
     }
 }
 

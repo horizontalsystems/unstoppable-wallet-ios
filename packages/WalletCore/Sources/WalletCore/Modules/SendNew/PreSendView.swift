@@ -56,7 +56,7 @@ struct PreSendView: View {
             } keyboardContent: {
                 AmountAccessoryView(
                     visible: focusField != nil,
-                    hasPercents: viewModel.availableBalance != nil,
+                    enabledPercents: (viewModel.availableBalance ?? 0) > 0,
                     onPercent: { percent in
                         viewModel.setAmountIn(percent: percent)
                         focusField = nil
@@ -68,9 +68,9 @@ struct PreSendView: View {
             }
             .animation(.easeOut(duration: 0.25), value: focusField)
         }
-        .onFirstAppear {
-            focusField = .amount
-        }
+        // .onFirstAppear {
+        //     focusField = .amount
+        // }
         .navigationDestination(for: ConfirmationData.self) { data in
             RegularSendView(sendData: data.sendData, address: data.address) {
                 HudHelper.instance.show(banner: .sent)

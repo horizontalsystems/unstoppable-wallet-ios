@@ -63,9 +63,9 @@ struct RestoreMnemonicView: View {
                 RestoreCoinsView(accountName: data.name, accountType: data.accountType, isParentPresented: $isParentPresented)
             }
         }
-        .onFirstAppear {
-            isMnemonicFocused = true
-        }
+        // .onFirstAppear {
+        //     isMnemonicFocused = true
+        // }
         .onReceive(viewModel.proceedPublisher) { name, accountType in
             handleProceed(name: name, accountType: accountType)
         }
