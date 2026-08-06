@@ -12,16 +12,26 @@ struct RegularSendView: View {
         self.onSuccess = onSuccess
     }
 
+    private var showSlideButton: Bool {
+        if sendViewModel.sending { return true }
+        guard case .success = sendViewModel.state else { return false }
+        return sendViewModel.sendData != nil && sendViewModel.canSend
+    }
+
     var body: some View {
         ThemeView {
             BottomGradientWrapper {
                 SendView(viewModel: sendViewModel)
             } bottomContent: {
-                // A live send outranks every quote state — checked above the switch so a sync
-                // that lands mid-send and moves the screen to .failed can't offer Refresh.
-                if sendViewModel.sending {
-                    ThemeButton(text: "send.confirmation.sending".localized, spinner: true, style: .secondary) {}
-                        .disabled(true)
+                if showSlideButton {
+                    SlideButton(
+                        styling: .text(start: sendViewModel.sendData?.customSendButtonTitle ?? "send.confirmation.slide_to_send".localized, end: "", success: ""),
+                        action: {
+                            try await sendViewModel.send()
+                        }, completion: {
+                            onSuccess()
+                        }
+                    )
                 } else {
                     switch sendViewModel.state {
                     case .syncing:
@@ -30,16 +40,7 @@ struct RegularSendView: View {
                                 .disabled(true)
                         }
                     case .success:
-                        if let sendData = sendViewModel.sendData, sendViewModel.canSend {
-                            SlideButton(
-                                styling: .text(start: sendData.customSendButtonTitle ?? "send.confirmation.slide_to_send".localized, end: "", success: ""),
-                                action: {
-                                    try await sendViewModel.send()
-                                }, completion: {
-                                    onSuccess()
-                                }
-                            )
-                        } else if let title = sendViewModel.sendData?.customSendButtonTitle {
+                        if let title = sendViewModel.sendData?.customSendButtonTitle {
                             ThemeButton(text: title, style: .secondary) {}
                                 .disabled(true)
                         } else {
