@@ -387,6 +387,7 @@ public class MultiSwapViewModel: ObservableObject {
 
         let explicitToken = hasExplicitToken ? internalTokenIn : nil
         let explicitTokenOut = hasExplicitToken ? internalTokenOut : nil
+        let currencyCode = currency.code
 
         defaultTokensTask = Task { [weak self] in
             guard let self else {
@@ -397,7 +398,7 @@ public class MultiSwapViewModel: ObservableObject {
             let monero = try? marketKit.token(query: BlockchainType.monero.defaultTokenQuery)
 
             let wallets = walletManager.activeWallets
-            let coinPriceMap = marketKit.coinPriceMap(coinUids: wallets.map(\.coin.uid).removeDuplicates(), currencyCode: currency.code)
+            let coinPriceMap = marketKit.coinPriceMap(coinUids: wallets.map(\.coin.uid).removeDuplicates(), currencyCode: currencyCode)
 
             let items = wallets.map { wallet in
                 MultiSwapDefaultPairResolver.Item(
@@ -420,14 +421,16 @@ public class MultiSwapViewModel: ObservableObject {
                 )
             )
 
-            await MainActor.run { [weak self] in
-                self?.apply(tokenIn: pair.tokenIn, tokenOut: pair.tokenOut)
+            guard !Task.isCancelled else {
+                return
             }
+
+            await apply(tokenIn: pair.tokenIn, tokenOut: pair.tokenOut)
         }
         .erased()
     }
 
-    private func apply(tokenIn: Token?, tokenOut: Token?) {
+    @MainActor private func apply(tokenIn: Token?, tokenOut: Token?) {
         guard !tokensManuallySet else {
             return
         }

@@ -5,10 +5,10 @@ import Testing
 
 struct ThorChainSendPreflightTests {
     @Test func exactBaseUnitBoundariesAreLossless() throws {
-        #expecttry (ThorChainSendHelper.baseUnits(Decimal(string: "1.00000000")!) == 100_000_000)
-        #expecttry (ThorChainSendHelper.baseUnits(Decimal(string: "0.00000001")!) == 1)
-        #expecttry (ThorChainSendHelper.baseUnits(Decimal(string: "0.00000010")!) == 10)
-        #expecttry (ThorChainSendHelper.baseUnits(Decimal(string: "1.23000000")!) == 123_000_000)
+        #expect(try ThorChainSendHelper.baseUnits(Decimal(string: "1.00000000")!) == 100_000_000)
+        #expect(try ThorChainSendHelper.baseUnits(Decimal(string: "0.00000001")!) == 1)
+        #expect(try ThorChainSendHelper.baseUnits(Decimal(string: "0.00000010")!) == 10)
+        #expect(try ThorChainSendHelper.baseUnits(Decimal(string: "1.23000000")!) == 123_000_000)
     }
 
     @Test func excessivePrecisionFailsClosed() {
