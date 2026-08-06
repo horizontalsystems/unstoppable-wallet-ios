@@ -32,6 +32,7 @@ public class LocalStorage {
     private let keySwapEnabled = "swap_enabled"
     private let keyAppStateLastSyncTimestamp = "app-state-last-sync-timestamp"
     private let keyForceEnableSwap = "force-enable-swap"
+    private let keyStellarBrokerEnabled = "stellar-broker-enabled"
     private let keyEmulateZcashMigration = "emulate-zcash-migration"
     private let keySimulateFailSwap = "simulate-fail-swap"
 
@@ -207,6 +208,11 @@ extension LocalStorage {
     var forceEnableSwap: Bool {
         get { userDefaultsStorage.value(for: keyForceEnableSwap) ?? false }
         set { userDefaultsStorage.set(value: newValue, for: keyForceEnableSwap) }
+    }
+
+    var stellarBrokerEnabled: Bool {
+        get { userDefaultsStorage.value(for: keyStellarBrokerEnabled) ?? false }
+        set { userDefaultsStorage.set(value: newValue, for: keyStellarBrokerEnabled) }
     }
 
     var emulateZcashMigration: Bool {
