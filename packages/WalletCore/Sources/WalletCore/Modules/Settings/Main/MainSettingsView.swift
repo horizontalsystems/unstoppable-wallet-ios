@@ -522,6 +522,13 @@ struct MainSettingsView: View {
                 .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
             }
 
+            ListRow {
+                Toggle(isOn: $viewModel.stellarBrokerEnabled) {
+                    Text("Enable StellarBroker").themeBody()
+                }
+                .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+            }
+
             row(
                 title: "Simulate Fail Swap",
                 subtitle: "none / server / local",
