@@ -10,13 +10,13 @@ struct ThorChainEndpointManagerTests {
         let environment = try EndpointTestEnvironment()
         let families = try environment.manager.endpointFamilies()
 
-        #expecttry (environment.manager.endpointFamily().id == "first")
+        #expect(try environment.manager.endpointFamily().id == "first")
 
         try environment.manager.setCurrent(endpointFamily: families[1])
 
         let reloaded = environment.reloaded()
-        #expecttry (reloaded.endpointFamily().id == "second")
-        #expecttry (reloaded.endpointConfiguration().value.families.map(\.id) == ["second"])
+        #expect(try reloaded.endpointFamily().id == "second")
+        #expect(try reloaded.endpointConfiguration().value.families.map(\.id) == ["second"])
     }
 
     @Test func selectedFamilyKeepsConfiguredMidgardURLs() throws {
@@ -34,7 +34,7 @@ struct ThorChainEndpointManagerTests {
         let restored = try EndpointTestEnvironment()
         restored.manager.restore(backup: source.manager.backup)
 
-        #expecttry (restored.manager.endpointFamily().id == "second")
+        #expect(try restored.manager.endpointFamily().id == "second")
     }
 
     @Test func restoreIgnoresUnknownFamily() throws {
@@ -42,7 +42,7 @@ struct ThorChainEndpointManagerTests {
 
         environment.manager.restore(backup: .init(familyId: "unknown"))
 
-        #expecttry (environment.manager.endpointFamily().id == "first")
+        #expect(try environment.manager.endpointFamily().id == "first")
     }
 }
 

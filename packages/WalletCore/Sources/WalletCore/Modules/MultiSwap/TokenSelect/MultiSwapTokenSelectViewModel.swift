@@ -133,16 +133,24 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
 
             let resolvedTopTokens = topTokens
 
-            if !Task.isCancelled {
-                await MainActor.run { [weak self] in
-                    self?.popular = popular
-                    self?.yourTokens = yourTokens
-                    self?.topTokens = resolvedTopTokens
-                    self?.recent = recent
-                }
+            guard !Task.isCancelled else {
+                return
             }
+
+            await self?.apply(popular: popular, yourTokens: yourTokens, topTokens: resolvedTopTokens, recent: recent)
         }
         .erased()
+    }
+
+    @MainActor private func apply(popular: [Item], yourTokens: [Item], topTokens: [Item], recent: [Item]) {
+        self.popular = popular
+        self.yourTokens = yourTokens
+        self.topTokens = topTokens
+        self.recent = recent
+    }
+
+    @MainActor private func apply(searchResults: [Item]) {
+        self.searchResults = searchResults
     }
 
     private func syncSearchResults() {
@@ -210,11 +218,11 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                 return Item(token: token, balance: balanceString, fiatBalance: fiatBalanceString)
             }
 
-            if !Task.isCancelled {
-                await MainActor.run { [weak self] in
-                    self?.searchResults = items
-                }
+            guard !Task.isCancelled else {
+                return
             }
+
+            await self?.apply(searchResults: items)
         }
         .erased()
     }
