@@ -48,6 +48,12 @@ class MainSettingsViewModel: ObservableObject {
         }
     }
 
+    @Published var emulateEvmSwapSend: Bool {
+        didSet {
+            localStorage.emulateEvmSwapSend = emulateEvmSwapSend
+        }
+    }
+
     @Published var simulateFailSwap: SimulateFailSwapMode {
         didSet {
             localStorage.simulateFailSwap = simulateFailSwap
@@ -98,6 +104,7 @@ class MainSettingsViewModel: ObservableObject {
         showDevTools = AppConfig.showDevTools
         forceEnableSwap = localStorage.forceEnableSwap
         stellarBrokerEnabled = localStorage.stellarBrokerEnabled
+        emulateEvmSwapSend = localStorage.emulateEvmSwapSend
         simulateFailSwap = localStorage.simulateFailSwap
         emulatePurchase = localStorage.emulatePurchase
         testNetEnabled = testNetManager.testNetEnabled

@@ -8,6 +8,7 @@ public protocol IMultiSwapProvider {
     var name: String { get }
     var type: SwapProviderType { get }
     var requireTerms: Bool { get }
+    var preciseEstimateTime: Bool { get }
     var icon: String { get }
     var syncPublisher: AnyPublisher<Void, Never>? { get }
     func slippageSupported(tokenIn: Token, tokenOut: Token) -> Bool
@@ -23,6 +24,10 @@ public protocol IMultiSwapProvider {
 extension IMultiSwapProvider {
     var requireTerms: Bool {
         false
+    }
+
+    public var preciseEstimateTime: Bool {
+        true
     }
 
     var syncPublisher: AnyPublisher<Void, Never>? {

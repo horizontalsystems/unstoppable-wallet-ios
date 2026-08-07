@@ -113,6 +113,7 @@ extension MultiSwapSendHandler: ISendHandler {
             recipient: recipient,
             transactionSettings: transactionSettings
         )
+        quote.preciseEstimateTime = provider.preciseEstimateTime
 
         guard accountManager.activeAccount != nil else {
             throw SendError.noActiveAccount
@@ -186,6 +187,7 @@ extension MultiSwapSendHandler: ISendHandler {
             providerSwapId: data.quote.providerSwapId,
             sourceAddress: nil,
             refundAddress: data.quote.refundAddress,
+            estimatedTime: data.quote.estimatedTime,
             date: Date(),
             fromAsset: nil,
             toAsset: nil,

@@ -22,6 +22,7 @@ public struct Swap: Hashable {
     public let providerSwapId: String?
     let sourceAddress: String?
     let refundAddress: String?
+    public let estimatedTime: TimeInterval?
     public let date: Date
     public var fromAsset: String?
     public var toAsset: String?
@@ -36,7 +37,7 @@ public struct Swap: Hashable {
         [.notStarted, .pending, .swapping]
     }
 
-    public init(uid: String, txHash: String?, trackingHandle: String?, accountId: String, providerId: String, status: Status, tokenIn: Token, tokenOut: Token, amountIn: Decimal, amountOut: Decimal, recipient: String?, toAddress: String, depositAddress: String?, providerSwapId: String?, sourceAddress: String?, refundAddress: String?, date: Date, fromAsset: String? = nil, toAsset: String? = nil, legs: [Leg]? = nil, pauseReason: String? = nil) {
+    public init(uid: String, txHash: String?, trackingHandle: String?, accountId: String, providerId: String, status: Status, tokenIn: Token, tokenOut: Token, amountIn: Decimal, amountOut: Decimal, recipient: String?, toAddress: String, depositAddress: String?, providerSwapId: String?, sourceAddress: String?, refundAddress: String?, estimatedTime: TimeInterval? = nil, date: Date, fromAsset: String? = nil, toAsset: String? = nil, legs: [Leg]? = nil, pauseReason: String? = nil) {
         self.uid = uid
         self.txHash = txHash
         self.trackingHandle = trackingHandle
@@ -53,6 +54,7 @@ public struct Swap: Hashable {
         self.providerSwapId = providerSwapId
         self.sourceAddress = sourceAddress
         self.refundAddress = refundAddress
+        self.estimatedTime = estimatedTime
         self.date = date
         self.fromAsset = fromAsset
         self.toAsset = toAsset
@@ -123,6 +125,7 @@ struct SwapRecord: Codable {
     let providerSwapId: String?
     let sourceAddress: String?
     let refundAddress: String?
+    let estimatedTime: TimeInterval?
     let date: Date
     let fromAsset: String?
     let toAsset: String?
@@ -163,6 +166,7 @@ extension SwapRecord: FetchableRecord, PersistableRecord {
         static let providerSwapId = Column(CodingKeys.providerSwapId)
         static let sourceAddress = Column(CodingKeys.sourceAddress)
         static let refundAddress = Column(CodingKeys.refundAddress)
+        static let estimatedTime = Column(CodingKeys.estimatedTime)
         static let date = Column(CodingKeys.date)
         static let fromAsset = Column(CodingKeys.fromAsset)
         static let toAsset = Column(CodingKeys.toAsset)

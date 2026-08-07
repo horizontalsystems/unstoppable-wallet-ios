@@ -14,7 +14,7 @@ struct Informed: ViewModifier {
             Coordinator.shared.present(type: .bottomSheet) { isPresented in
                 BottomSheetView(
                     items: [
-                        .title(icon: ThemeImage.book, title: infoDescription.title),
+                        .title(icon: infoDescription.icon, title: infoDescription.title),
                         .text(text: infoDescription.description),
                         .buttonGroup(.init(buttons: [
                             .init(style: .gray, title: "button.understood".localized) {

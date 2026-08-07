@@ -3,13 +3,15 @@ public struct USwapProviderInfo: Equatable {
     public let name: String
     public let icon: String
     public let type: SwapProviderType
+    public let preciseEstimateTime: Bool
     public let requireTerms: Bool
 
-    public init(id: String, name: String, icon: String, type: SwapProviderType, requireTerms: Bool) {
+    public init(id: String, name: String, icon: String, type: SwapProviderType, preciseEstimateTime: Bool = true, requireTerms: Bool) {
         self.id = id
         self.name = name
         self.icon = icon
         self.type = type
+        self.preciseEstimateTime = preciseEstimateTime
         self.requireTerms = requireTerms
     }
 }
@@ -28,6 +30,7 @@ public extension USwapProviderInfo {
         name: "QuickEx",
         icon: "swap_provider_quickex",
         type: .good,
+        preciseEstimateTime: false,
         requireTerms: true
     )
 
@@ -36,6 +39,7 @@ public extension USwapProviderInfo {
         name: "LetsExchange",
         icon: "swap_provider_letsexchange",
         type: .good,
+        preciseEstimateTime: false,
         requireTerms: true
     )
 
@@ -44,6 +48,7 @@ public extension USwapProviderInfo {
         name: "StealthEX",
         icon: "swap_provider_stealthex",
         type: .fair,
+        preciseEstimateTime: false,
         requireTerms: true
     )
 
@@ -52,6 +57,7 @@ public extension USwapProviderInfo {
         name: "Swapuz",
         icon: "swap_provider_swapuz",
         type: .good,
+        preciseEstimateTime: false,
         requireTerms: true
     )
 
@@ -60,6 +66,7 @@ public extension USwapProviderInfo {
         name: "Exolix",
         icon: "swap_provider_exolix",
         type: .good,
+        preciseEstimateTime: false,
         requireTerms: true
     )
 
@@ -68,6 +75,7 @@ public extension USwapProviderInfo {
         name: "CCE Cash",
         icon: "swap_provider_cce",
         type: .good,
+        preciseEstimateTime: false,
         requireTerms: true
     )
 
@@ -84,6 +92,7 @@ public extension USwapProviderInfo {
         name: "PegasusSwap",
         icon: "swap_provider_pegasus",
         type: .good,
+        preciseEstimateTime: false,
         requireTerms: true
     )
 
@@ -124,6 +133,7 @@ public extension USwapProviderInfo {
         name: "Lizex",
         icon: "swap_provider_lizex",
         type: .good,
+        preciseEstimateTime: false,
         requireTerms: true
     )
 
@@ -132,6 +142,7 @@ public extension USwapProviderInfo {
         name: "Bitania",
         icon: "swap_provider_bitania",
         type: .good,
+        preciseEstimateTime: false,
         requireTerms: true
     )
 }

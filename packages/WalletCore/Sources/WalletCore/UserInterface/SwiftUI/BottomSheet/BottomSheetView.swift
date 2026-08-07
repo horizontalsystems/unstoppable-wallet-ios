@@ -144,9 +144,15 @@ struct BottomSheetView: View {
 
 public struct InfoDescription: Identifiable {
     public static var fee = InfoDescription(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized)
+    public static var swapTime = InfoDescription(
+        title: "swap.swapped_time".localized,
+        description: "swap.swapped_time.info".localized,
+        icon: ComponentImage("clock", size: .iconSize72)
+    )
 
     let title: String
     let description: String
+    var icon: CustomStringConvertible = ThemeImage.book
 
     public var id: String {
         title + description

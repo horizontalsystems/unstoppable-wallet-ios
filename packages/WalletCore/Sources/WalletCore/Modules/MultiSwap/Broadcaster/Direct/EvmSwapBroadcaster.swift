@@ -5,10 +5,12 @@ import MarketKit
 class EvmSwapBroadcaster: ISwapBroadcaster {
     private let evmKitWrapper: EvmKitWrapper
     private let securityManager: SecurityManager
+    private let localStorage: LocalStorage
 
-    init(evmKitWrapper: EvmKitWrapper, securityManager: SecurityManager) {
+    init(evmKitWrapper: EvmKitWrapper, securityManager: SecurityManager, localStorage: LocalStorage) {
         self.evmKitWrapper = evmKitWrapper
         self.securityManager = securityManager
+        self.localStorage = localStorage
     }
 
     func prepare(_ executable: ISwapExecutable) async throws -> IPrepared {
@@ -27,6 +29,11 @@ class EvmSwapBroadcaster: ISwapBroadcaster {
         }
         guard let gasPrice = executable.gasPrice else {
             throw MultiSwapSendHandler.SendError.noGasPrice
+        }
+
+        if AppConfig.showDevTools, localStorage.emulateEvmSwapSend {
+            let fakeHash = Data((0 ..< 32).map { _ in UInt8.random(in: .min ... .max) })
+            return BroadcastResult(txHash: fakeHash.hs.hexString, trackingHandle: nil)
         }
 
         // routing flag read live at send-tap: MEV toggle state is the persisted setting
@@ -50,6 +57,6 @@ extension EvmSwapBroadcaster: ISwapBroadcasterType {
             return nil
         }
 
-        return EvmSwapBroadcaster(evmKitWrapper: evmKitWrapper, securityManager: Core.shared.securityManager)
+        return EvmSwapBroadcaster(evmKitWrapper: evmKitWrapper, securityManager: Core.shared.securityManager, localStorage: Core.shared.localStorage)
     }
 }

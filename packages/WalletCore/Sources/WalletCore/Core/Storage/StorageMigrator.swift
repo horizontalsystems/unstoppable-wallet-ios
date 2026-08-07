@@ -964,6 +964,12 @@ public enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Add estimatedTime to SwapRecord") { db in
+            try db.alter(table: SwapRecord.databaseTableName) { t in
+                t.add(column: SwapRecord.Columns.estimatedTime.name, .double)
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

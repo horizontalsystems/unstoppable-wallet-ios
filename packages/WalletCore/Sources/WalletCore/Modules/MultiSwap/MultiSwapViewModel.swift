@@ -844,13 +844,18 @@ extension MultiSwapViewModel {
         let timeState: SwapTimeState?
     }
 
-    enum SwapTimeState {
-        case neutral(TimeInterval)
-        case attention(TimeInterval)
+    enum SwapTimeValue: Equatable {
+        case approximate(TimeInterval)
+        case range(min: TimeInterval, max: TimeInterval)
+    }
 
-        var time: TimeInterval {
+    enum SwapTimeState: Equatable {
+        case neutral(SwapTimeValue)
+        case attention(SwapTimeValue)
+
+        var value: SwapTimeValue {
             switch self {
-            case let .neutral(t), let .attention(t): return t
+            case let .neutral(value), let .attention(value): return value
             }
         }
 
@@ -969,19 +974,21 @@ extension MultiSwapViewModel {
             Quote(
                 provider: item.provider,
                 quote: item.quote,
-                timeState: timeState(for: item.quote.estimatedTime, baseline: baseline)
+                timeState: timeState(for: item.quote.estimatedTime, precise: item.provider.preciseEstimateTime, baseline: baseline)
             )
         }
     }
 
-    private static func timeState(for time: TimeInterval?, baseline: TimeInterval?) -> SwapTimeState? {
-        if let warning = warningTime(for: time, baseline: baseline) {
-            return .attention(warning)
+    // internal visibility intentional: pure function covered by unit tests via @testable import.
+    static func timeState(for time: TimeInterval?, precise: Bool, baseline: TimeInterval?) -> SwapTimeState? {
+        guard let time, time > 0 else { return nil }
+        // An imprecise estimate renders as (X−25%)–(X+25%); the warning rule judges its upper bound.
+        let value: SwapTimeValue = precise ? .approximate(time) : .range(min: time * 0.75, max: time * 1.25)
+        let comparisonTime = precise ? time : time * 1.25
+        if warningTime(for: comparisonTime, baseline: baseline) != nil {
+            return .attention(value)
         }
-        if let time, time > 0 {
-            return .neutral(time)
-        }
-        return nil
+        return .neutral(value)
     }
 
     // internal visibility intentional: pure function covered by unit tests via @testable import.

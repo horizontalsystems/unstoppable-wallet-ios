@@ -73,4 +73,68 @@ struct MultiSwapWarningTimeTests {
         #expect(VM.warningTime(for: 1800, baseline: nil) == nil)
         #expect(VM.warningTime(for: 1800, baseline: 600) == nil)
     }
+
+    // MARK: - Time value (precise vs interval, #7095)
+
+    @Test func precise_rendersApproximateAndJudgesCenter() {
+        let neutralState = VM.timeState(for: 600, precise: true, baseline: nil)
+        #expect(neutralState == .neutral(.approximate(600)))
+
+        let attentionState = VM.timeState(for: 2460, precise: true, baseline: nil)
+        #expect(attentionState == .attention(.approximate(2460)))
+    }
+
+    @Test func imprecise_rendersQuarterRangeAroundEstimate() {
+        // X = 48m → 36m–1h
+        let state = VM.timeState(for: 2880, precise: false, baseline: nil)
+        #expect(state == .attention(.range(min: 2160, max: 3600)))
+    }
+
+    @Test func imprecise_upperBoundTripsThresholdWhereCenterWouldNot() {
+        // X = 25m: center is under 30m, but X·1.25 = 31.25m crosses it.
+        let imprecise = VM.timeState(for: 1500, precise: false, baseline: nil)
+        #expect(imprecise == .attention(.range(min: 1125, max: 1875)))
+
+        let precise = VM.timeState(for: 1500, precise: true, baseline: nil)
+        #expect(precise == .neutral(.approximate(1500)))
+    }
+
+    @Test func imprecise_upperBoundJudgedAgainstBaselineRatio() {
+        // baseline 20m, X = 20m: upper bound 25m ≤ 30m → neutral despite ratio context.
+        let state = VM.timeState(for: 1200, precise: false, baseline: 1200)
+        #expect(state == .neutral(.range(min: 900, max: 1500)))
+    }
+
+    @Test func timeState_nilOrZero_returnsNil() {
+        #expect(VM.timeState(for: nil, precise: false, baseline: nil) == nil)
+        #expect(VM.timeState(for: 0, precise: true, baseline: 900) == nil)
+    }
+
+    // MARK: - Formatting (Android parity)
+
+    @Test func format_approximate_prefixedWithTilde() {
+        let string = MultiSwapQuotesView.string(time: .approximate(600))
+        #expect(string.hasPrefix("~"))
+        #expect(!string.contains("-"))
+    }
+
+    @Test func format_range_boundsRoundedToMinutesAndDashed() {
+        // 48m → 36m-1h
+        let string = MultiSwapQuotesView.string(time: .range(min: 2160, max: 3600))
+        #expect(string.contains("-"))
+        #expect(!string.hasPrefix("~"))
+    }
+
+    @Test func format_rangeCollapsedAfterRounding_rendersAsApproximate() {
+        // 100s and 110s both round to 2m → single approximate value.
+        let string = MultiSwapQuotesView.string(time: .range(min: 100, max: 110))
+        #expect(string.hasPrefix("~"))
+        #expect(!string.contains("-"))
+    }
+
+    @Test func format_rangeFloorIsOneMinute() {
+        // Sub-minute bounds round up to the 1m floor and collapse.
+        let string = MultiSwapQuotesView.string(time: .range(min: 10, max: 20))
+        #expect(string.hasPrefix("~"))
+    }
 }

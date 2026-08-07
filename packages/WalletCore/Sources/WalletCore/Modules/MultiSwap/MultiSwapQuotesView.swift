@@ -113,7 +113,7 @@ struct MultiSwapQuotesView: View {
             }
             .buttonStyle(.plain)
             if let timeState = quote.timeState {
-                Self.view(estimatedTime: timeState.time, colorStyle: timeState.colorStyle, style: .subheadSB, showIcon: false)
+                Self.view(time: timeState.value, colorStyle: timeState.colorStyle, style: .subheadSB, showIcon: false)
             }
         }
         .fixedSize()
@@ -154,8 +154,8 @@ extension MultiSwapQuotesView {
         var textStyle: TextStyle { self == .subheadSB ? .subheadSB : .captionSB }
     }
 
-    @ViewBuilder static func view(estimatedTime: TimeInterval, colorStyle: ColorStyle = .yellow, style: Style = .subheadSB, iconFirst: Bool = false, showIcon: Bool = true) -> some View {
-        let timeString = Duration.seconds(estimatedTime).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
+    @ViewBuilder static func view(time: MultiSwapViewModel.SwapTimeValue, colorStyle: ColorStyle = .yellow, style: Style = .subheadSB, iconFirst: Bool = false, showIcon: Bool = true) -> some View {
+        let timeString = string(time: time)
 
         HStack(spacing: style.hMargin) {
             if iconFirst {
@@ -170,6 +170,28 @@ extension MultiSwapQuotesView {
                 }
             }
         }
+    }
+
+    // Android-parity formatting: range bounds rounded to whole minutes (floor 1m); a range
+    // that collapses after rounding renders as a single approximate value.
+    static func string(time: MultiSwapViewModel.SwapTimeValue) -> String {
+        switch time {
+        case let .approximate(time):
+            return "~" + formatted(time)
+        case let .range(min, max):
+            let minRounded = roundedToMinutes(min)
+            let maxRounded = roundedToMinutes(max)
+            guard minRounded != maxRounded else { return "~" + formatted(minRounded) }
+            return formatted(minRounded) + "-" + formatted(maxRounded)
+        }
+    }
+
+    private static func formatted(_ time: TimeInterval) -> String {
+        Duration.seconds(time).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
+    }
+
+    private static func roundedToMinutes(_ seconds: TimeInterval) -> TimeInterval {
+        max(1, (seconds / 60).rounded()) * 60
     }
 
     @ViewBuilder static func view(type: SwapProviderType, style: Style = .subheadSB, iconFirst: Bool = false) -> some View {
