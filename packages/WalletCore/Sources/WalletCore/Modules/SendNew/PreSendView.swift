@@ -37,8 +37,8 @@ struct PreSendView: View {
                             availableBalanceView(value: balanceValue())
                         }
 
-                        if viewModel.hasMemo {
-                            memoView()
+                        if viewModel.memoType != .none {
+                            memoView(type: viewModel.memoType)
                         }
 
                         if !viewModel.cautions.isEmpty {
@@ -46,7 +46,7 @@ struct PreSendView: View {
                         }
                     }
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin16, trailing: .margin16))
-                    .animation(.linear, value: viewModel.hasMemo)
+                    .animation(.linear, value: viewModel.memoType)
                 }
                 .onTapGesture {
                     focusField = nil
@@ -166,7 +166,9 @@ struct PreSendView: View {
         }
     }
 
-    @ViewBuilder private func memoView() -> some View {
+    @ViewBuilder private func memoView(type: MemoType) -> some View {
+        let cautionState = CautionState.caution(Caution(text: memoWarningText(type: type), type: .warning))
+
         InputTextRow {
             InputTextView(
                 placeholder: "send.confirmation.memo_placeholder".localized,
@@ -174,6 +176,16 @@ struct PreSendView: View {
                 font: .themeBody.italic(),
                 text: $viewModel.memo
             )
+        }
+        .modifier(CautionBorder(cautionState: .constant(cautionState)))
+        .modifier(CautionPrompt(cautionState: .constant(cautionState)))
+    }
+
+    private func memoWarningText(type: MemoType) -> String {
+        switch type {
+        case .onChainPrivate: return "send.memo.private_warning".localized
+        case .local: return "send.memo.local_warning".localized
+        default: return "send.memo.public_warning".localized
         }
     }
 

@@ -57,8 +57,8 @@ extension SolanaPreSendHandler: IPreSendHandler {
         balanceSubject.eraseToAnyPublisher()
     }
 
-    func hasMemo(address _: String?) -> Bool {
-        false
+    func memoType(address _: String?) -> MemoType {
+        .none
     }
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {

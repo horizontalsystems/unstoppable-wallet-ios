@@ -57,8 +57,8 @@ extension StellarPreSendHandler: IPreSendHandler {
         balanceSubject.eraseToAnyPublisher()
     }
 
-    func hasMemo(address _: String?) -> Bool {
-        true
+    func memoType(address _: String?) -> MemoType {
+        .onChainPublic
     }
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {

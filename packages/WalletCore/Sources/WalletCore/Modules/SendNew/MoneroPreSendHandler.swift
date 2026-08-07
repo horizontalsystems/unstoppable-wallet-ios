@@ -58,8 +58,8 @@ extension MoneroPreSendHandler: IPreSendHandler {
         balanceSubject.eraseToAnyPublisher()
     }
 
-    func hasMemo(address _: String?) -> Bool {
-        true
+    func memoType(address _: String?) -> MemoType {
+        .local
     }
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
