@@ -70,12 +70,12 @@ extension ZcashPreSendHandler: IPreSendHandler {
         balanceSubject.eraseToAnyPublisher()
     }
 
-    func hasMemo(address: String?) -> Bool {
+    func memoType(address: String?) -> MemoType {
         guard let address, let addressType = try? adapter.validate(address: address, checkSendToSelf: true) else {
-            return false
+            return .none
         }
 
-        return addressType == .shielded
+        return addressType == .shielded ? .onChainPrivate : .none
     }
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {

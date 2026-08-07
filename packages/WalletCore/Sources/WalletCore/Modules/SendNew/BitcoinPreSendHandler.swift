@@ -149,8 +149,8 @@ extension BitcoinPreSendHandler: IPreSendHandler {
         settingsModifiedSubject.eraseToAnyPublisher()
     }
 
-    func hasMemo(address _: String?) -> Bool {
-        true
+    func memoType(address _: String?) -> MemoType {
+        .onChainPublic
     }
 
     func settingsView(onChangeSettings: @escaping () -> Void) -> AnyView {

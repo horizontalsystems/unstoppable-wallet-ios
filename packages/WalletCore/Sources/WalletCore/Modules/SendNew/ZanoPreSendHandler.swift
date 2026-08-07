@@ -60,8 +60,8 @@ extension ZanoPreSendHandler: IPreSendHandler {
         balanceSubject.eraseToAnyPublisher()
     }
 
-    func hasMemo(address _: String?) -> Bool {
-        true
+    func memoType(address _: String?) -> MemoType {
+        .onChainPrivate
     }
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {

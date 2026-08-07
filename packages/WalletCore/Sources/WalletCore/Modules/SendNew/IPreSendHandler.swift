@@ -11,7 +11,7 @@ public protocol IPreSendHandler {
     var balancePublisher: AnyPublisher<Decimal, Never> { get }
     var settingsModified: Bool { get }
     var settingsModifiedPublisher: AnyPublisher<Bool, Never> { get }
-    func hasMemo(address: String?) -> Bool
+    func memoType(address: String?) -> MemoType
     func settingsView(onChangeSettings: @escaping () -> Void) -> AnyView
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult
 }
@@ -25,8 +25,8 @@ public extension IPreSendHandler {
         false
     }
 
-    func hasMemo(address _: String?) -> Bool {
-        false
+    func memoType(address _: String?) -> MemoType {
+        .none
     }
 
     func settingsView(onChangeSettings _: @escaping () -> Void) -> AnyView {
@@ -45,4 +45,11 @@ public extension IPreSendHandler {
 public enum SendDataResult {
     case valid(sendData: SendData)
     case invalid(cautions: [CautionNew])
+}
+
+public enum MemoType {
+    case none
+    case onChainPublic
+    case onChainPrivate
+    case local
 }

@@ -84,7 +84,7 @@ public class PreSendViewModel: ObservableObject {
 
     @Published public private(set) var adapterState: AdapterState?
     @Published public private(set) var availableBalance: Decimal?
-    @Published var hasMemo = false
+    @Published var memoType: MemoType = .none
 
     private var enteringFiat = false
 
@@ -129,7 +129,7 @@ public class PreSendViewModel: ObservableObject {
         if let handler {
             adapterState = handler.state
             availableBalance = handler.balance
-            hasMemo = handler.hasMemo(address: resolvedAddress.address)
+            memoType = handler.memoType(address: resolvedAddress.address)
 
             handler.statePublisher
                 .receive(on: DispatchQueue.main)
@@ -176,13 +176,13 @@ public class PreSendViewModel: ObservableObject {
         fiatAmount = (amount * coinPrice.value).rounded(decimal: 2)
     }
 
-    private func syncHasMemo() {
+    private func syncMemoType() {
         guard let handler else {
-            hasMemo = false
+            memoType = .none
             return
         }
 
-        hasMemo = handler.hasMemo(address: resolvedAddress.address)
+        memoType = handler.memoType(address: resolvedAddress.address)
     }
 }
 
@@ -212,7 +212,7 @@ public extension PreSendViewModel {
         }
 
         let trimmedMemo = memo.trimmingCharacters(in: .whitespaces)
-        let memo = hasMemo && !trimmedMemo.isEmpty ? trimmedMemo : nil
+        let memo = memoType != .none && !trimmedMemo.isEmpty ? trimmedMemo : nil
 
         let result = handler.sendData(amount: amount, address: resolvedAddress.address, memo: memo)
 
