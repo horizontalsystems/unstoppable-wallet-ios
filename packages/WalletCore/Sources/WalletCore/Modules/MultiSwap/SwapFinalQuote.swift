@@ -13,6 +13,9 @@ public class SwapFinalQuote {
     public let providerSwapId: String?
     public var refundAddress: String?
     public var minAmountOut: Decimal?
+    // Set by the send handler from the provider; a deposit-based exchanger's estimate
+    // renders as a (X−25%)–(X+25%) range instead of ~X.
+    public var preciseEstimateTime = true
 
     public init(
         expectedBuyAmount: Decimal,
@@ -98,13 +101,11 @@ public class SwapFinalQuote {
             fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
         }
 
-        if let estimatedTime {
+        // Single route on the confirm screen: no baseline, absolute threshold only.
+        if let timeState = MultiSwapViewModel.timeState(for: estimatedTime, precise: preciseEstimateTime, baseline: nil) {
             fields.append(.simpleValue(
-                title: ComponentInformedTitle("swap.swapped_time".localized, info: InfoDescription(
-                    title: "swap.swapped_time".localized,
-                    description: "swap.swapped_time.info".localized
-                )),
-                value: Duration.seconds(estimatedTime).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
+                title: ComponentInformedTitle("swap.swapped_time".localized, info: .swapTime),
+                value: ComponentText(text: MultiSwapQuotesView.string(time: timeState.value), colorStyle: timeState.colorStyle)
             ))
         }
 

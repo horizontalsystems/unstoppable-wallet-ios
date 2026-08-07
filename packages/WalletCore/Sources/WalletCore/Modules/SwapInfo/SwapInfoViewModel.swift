@@ -77,6 +77,17 @@ class SwapInfoViewModel: ObservableObject {
             )
         )
 
+        // The estimate captured when the swap was sent; single route, so no baseline.
+        let precise = SwapProviderFactory.provider(id: swap.providerId)?.preciseEstimateTime ?? true
+        if let timeState = MultiSwapViewModel.timeState(for: swap.estimatedTime, precise: precise, baseline: nil) {
+            fields.append(
+                .simpleValue(
+                    title: ComponentInformedTitle("swap.swapped_time".localized, info: .swapTime),
+                    value: ComponentText(text: MultiSwapQuotesView.string(time: timeState.value), colorStyle: timeState.colorStyle)
+                )
+            )
+        }
+
         if let recipient = swap.recipient {
             fields.append(
                 .recipient(

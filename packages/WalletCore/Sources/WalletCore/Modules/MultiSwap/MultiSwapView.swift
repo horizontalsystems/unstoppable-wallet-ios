@@ -326,13 +326,19 @@ struct MultiSwapView: View {
                 }
             )
 
-            if case let .attention(warningTime) = quote.timeState {
+            if let timeState = quote.timeState {
                 Cell(
                     style: .secondary,
                     middle: {
-                        MiddleTextIcon(text: "swap.provider.swap_time".localized)
+                        HStack(spacing: 8) {
+                            ThemeText("swap.swapped_time".localized, style: .subhead, colorStyle: .secondary)
+                            Image("information").icon(size: 20, colorStyle: .secondary)
+                        }
                     }, right: {
-                        MultiSwapQuotesView.view(estimatedTime: warningTime)
+                        MultiSwapQuotesView.view(time: timeState.value, colorStyle: timeState.colorStyle)
+                    },
+                    action: {
+                        Coordinator.shared.present(info: .swapTime)
                     }
                 )
             }
