@@ -263,13 +263,13 @@
 
 // Backup Prompt
 
-"backup_prompt.backup_recovery_phrase" = "Wiederherstellungsphrase sichern";
-"backup_prompt.backup_required" = "Sicherung erforderlich";
-"backup_prompt.warning" = "Erstellen Sie eine Sicherungskopie der Wiederherstellungsphrase und des zugehörigen Passworts, mit dem Sie Ihre Wallet wiederherstellen können, wenn Ihr Telefon verloren geht, gestohlen, kaputt, etc.";
-"backup_prompt.backup" = "Sicherung";
+"backup_prompt.title" = "Wallet sichern";
+"backup_prompt.description" = "Ohne ein Backup bedeutet der Verlust Ihres Telefons den dauerhaften Verlust Ihrer Guthaben. Es gibt keine Möglichkeit, sie wiederherzustellen.";
 "backup_prompt.backup_manual" = "Manuelle Sicherung";
+"backup_prompt.backup_manual.description" = "Schreiben Sie Ihre Wiederherstellungsphrase auf";
 "backup_prompt.backup_cloud" = "Sicherung in iCloud";
-"backup_prompt.later" = "Später";
+"backup_prompt.backup_cloud.description" = "Verschlüsselt, geräteübergreifend synchronisiert";
+"backup_prompt.remind_later" = "Später erinnern";
 
 // Backup to iCloud
 

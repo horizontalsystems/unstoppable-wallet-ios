@@ -263,13 +263,13 @@
 
 // Backup Prompt
 
-"backup_prompt.backup_recovery_phrase" = "备份钱包";
-"backup_prompt.backup_required" = "需要备份";
-"backup_prompt.warning" = "创建恢复短语和相关密码的备份副本，允许您在手机丢失时恢复钱包， • 盗窃、故障等问题";
-"backup_prompt.backup" = "备份";
+"backup_prompt.title" = "备份您的钱包";
+"backup_prompt.description" = "没有备份，丢失手机意味着永久丢失您的资金。无法恢复。";
 "backup_prompt.backup_manual" = "进行手动备份";
+"backup_prompt.backup_manual.description" = "写下您的恢复助记词";
 "backup_prompt.backup_cloud" = "备份到iCloud";
-"backup_prompt.later" = "稍后";
+"backup_prompt.backup_cloud.description" = "加密存储，跨设备同步";
+"backup_prompt.remind_later" = "稍后提醒我";
 
 // Backup to iCloud
 

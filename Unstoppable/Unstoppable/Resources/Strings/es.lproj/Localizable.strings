@@ -263,13 +263,13 @@
 
 // Backup Prompt
 
-"backup_prompt.backup_recovery_phrase" = "Backup del Monedero";
-"backup_prompt.backup_required" = "Se requiere una copia de seg";
-"backup_prompt.warning" = "Crear una copia de seguridad de la frase de recuperación y la contraseña asociada que le permitirá recuperar su cartera si su teléfono está perdido, robado, roto, etc.";
-"backup_prompt.backup" = "Copia de seguridad";
+"backup_prompt.title" = "Haz una copia de seguridad de tu wallet";
+"backup_prompt.description" = "Sin una copia de seguridad, perder tu teléfono significa perder tus fondos permanentemente. No hay forma de recuperarlos.";
 "backup_prompt.backup_manual" = "Copia de seguridad manual";
+"backup_prompt.backup_manual.description" = "Escribe tu frase de recuperación";
 "backup_prompt.backup_cloud" = "Copia de seguridad en iCloud";
-"backup_prompt.later" = "Más tarde";
+"backup_prompt.backup_cloud.description" = "Cifrado, sincronizado entre dispositivos";
+"backup_prompt.remind_later" = "Recordarme más tarde";
 
 // Backup to iCloud
 
