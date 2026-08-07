@@ -12,7 +12,6 @@ enum StatPage: String {
     case appStatus = "app_status"
     case appearance
     case backupManager = "backup_manager"
-    case backupPromptAfterCreate = "backup_prompt_after_create"
     case backupRequired = "backup_required"
     case balance
     case baseCurrency = "base_currency"

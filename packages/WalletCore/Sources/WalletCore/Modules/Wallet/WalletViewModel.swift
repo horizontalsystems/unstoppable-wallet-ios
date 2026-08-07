@@ -9,6 +9,7 @@ public class WalletViewModel: WalletListViewModel {
     private let appManager = Core.shared.appManager
     private let eventHandler = Core.shared.appEventHandler
     private let rateAppManager = Core.shared.rateAppManager
+    private let backupPromptManager = Core.shared.backupPromptManager
     private let appStateManager = AppStateManager.instance
 
     @Published private(set) var buttonHidden: Bool
@@ -112,10 +113,12 @@ extension WalletViewModel {
 
     func onAppear() {
         rateAppManager.onBalancePageAppear()
+        backupPromptManager.onBalancePageAppear()
     }
 
     func onDisappear() {
         rateAppManager.onBalancePageDisappear()
+        backupPromptManager.onBalancePageDisappear()
     }
 
     public func onTapAmount() {
