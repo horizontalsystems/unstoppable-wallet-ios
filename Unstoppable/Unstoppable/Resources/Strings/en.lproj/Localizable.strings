@@ -263,13 +263,13 @@
 
 // Backup Prompt
 
-"backup_prompt.backup_recovery_phrase" = "Backup Recovery Phrase";
-"backup_prompt.backup_required" = "Backup Required";
-"backup_prompt.warning" = "Create a backup of your recovery phrase and the associated passphrase. These will allow you to restore your wallet if your phone is lost, stolen, or damaged.";
-"backup_prompt.backup" = "Backup";
+"backup_prompt.title" = "Backup your wallet";
+"backup_prompt.description" = "Without a backup, losing your phone means losing your funds permanently. There is no way to recover them.";
 "backup_prompt.backup_manual" = "Manual Backup";
+"backup_prompt.backup_manual.description" = "Write down your recovery phrase";
 "backup_prompt.backup_cloud" = "Backup to iCloud";
-"backup_prompt.later" = "Later";
+"backup_prompt.backup_cloud.description" = "Encrypted, synced across devices";
+"backup_prompt.remind_later" = "Remind Me Later";
 
 // Backup to iCloud
 

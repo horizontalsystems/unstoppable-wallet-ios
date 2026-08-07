@@ -11,6 +11,7 @@ public class LocalStorage {
     private let debugLogKey = "debug_log_key"
     private let keyAppLaunchCount = "app_launch_count"
     private let keyRateAppLastRequestDate = "rate_app_last_request_date"
+    private let keyBackupPromptShownDates = "backup-prompt-shown-dates"
     private let keyZCashRewind = "z_cash_always_pending_rewind"
     private let keyDefaultProvider = "swap_provider"
     private let keyRemoteContactSync = "icloud-sync-value"
@@ -89,6 +90,11 @@ extension LocalStorage {
     var rateAppLastRequestDate: Date? {
         get { userDefaultsStorage.value(for: keyRateAppLastRequestDate) }
         set { userDefaultsStorage.set(value: newValue, for: keyRateAppLastRequestDate) }
+    }
+
+    var backupPromptShownDates: [String: Date] {
+        get { userDefaultsStorage.value(for: keyBackupPromptShownDates) ?? [:] }
+        set { userDefaultsStorage.set(value: newValue, for: keyBackupPromptShownDates) }
     }
 
     var zcashAlwaysPendingRewind: Bool {

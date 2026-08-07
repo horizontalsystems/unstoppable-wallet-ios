@@ -165,16 +165,16 @@ struct CreateAccountView: View {
         switch viewModel.walletType {
         case .regular:
             do {
-                let account = try viewModel.createAccount()
-                handleSuccess(account: account)
+                _ = try viewModel.createAccount()
+                handleSuccess()
             } catch {
                 handleError(error)
             }
         case .passkey:
             Task {
                 do {
-                    let account = try await viewModel.createPasskeyAccount()
-                    await MainActor.run { handleSuccess(account: account) }
+                    _ = try await viewModel.createPasskeyAccount()
+                    await MainActor.run { handleSuccess() }
                 } catch {
                     await MainActor.run { handleError(error) }
                 }
@@ -182,19 +182,13 @@ struct CreateAccountView: View {
         }
     }
 
-    private func handleSuccess(account: Account) {
+    private func handleSuccess() {
         HudHelper.instance.show(banner: .created)
 
         if let onCreate {
             onCreate()
         } else {
             isPresented = false
-        }
-
-        if case .regular = viewModel.walletType {
-            Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                BackupRequiredView.afterCreate(account: account, isPresented: isPresented)
-            }
         }
     }
 

@@ -131,6 +131,7 @@ public class Core {
     public let adapterManager: AdapterManager
     public let transactionAdapterManager: TransactionAdapterManager
     let rateAppManager: RateAppManager
+    let backupPromptManager: BackupPromptManager
 
     let appBackupProvider: AppBackupProvider
     let cloudBackupManager: CloudBackupManager
@@ -518,6 +519,16 @@ public class Core {
 
         appWorkerRegistry = AppWorkerRegistry(appManager: appManager)
         appWorkerRegistry.register(provider: openCryptoPay.proofWorkerProvider)
+
+        backupPromptManager = BackupPromptManager(
+            accountManager: accountManager,
+            walletManager: walletManager,
+            adapterManager: adapterManager,
+            cloudBackupManager: cloudBackupManager,
+            lockManager: lockManager,
+            appManager: appManager,
+            localStorage: localStorage
+        )
 
         swapAssetStorage = SwapAssetStorage(dbPool: dbPool)
         swapProviderManager = MultiSwapProviderManager(localStorage: localStorage, networkManager: networkManager, apiKey: AppConfig.uswapApiKey)
