@@ -263,13 +263,13 @@
 
 // Backup Prompt
 
-"backup_prompt.backup_recovery_phrase" = "백업용 지갑";
-"backup_prompt.backup_required" = "백업이 필요합니다";
-"backup_prompt.warning" = "휴대전화 분실, 도난, 파손 등의 경우 지갑을 복구할 수 있도록 복구 문구 및 관련 비밀번호의 백업 사본을 만드십시오.";
-"backup_prompt.backup" = "백업";
+"backup_prompt.title" = "지갑 백업하기";
+"backup_prompt.description" = "백업 없이 휴대폰을 분실하면 자금을 영구적으로 잃게 됩니다. 복구할 수 있는 방법이 없습니다.";
 "backup_prompt.backup_manual" = "수동으로 백업합니다";
+"backup_prompt.backup_manual.description" = "복구 문구를 적어두세요";
 "backup_prompt.backup_cloud" = "iCloud에 백업";
-"backup_prompt.later" = "나중에";
+"backup_prompt.backup_cloud.description" = "암호화됨, 기기 간 동기화";
+"backup_prompt.remind_later" = "나중에 알림";
 
 // Backup to iCloud
 

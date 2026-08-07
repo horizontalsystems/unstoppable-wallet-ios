@@ -263,13 +263,13 @@
 
 // Backup Prompt
 
-"backup_prompt.backup_recovery_phrase" = "Sauvegarder le portefeuille";
-"backup_prompt.backup_required" = "Sauvegarde requise";
-"backup_prompt.warning" = "Créez une copie de sauvegarde de la phrase de récupération et du mot de passe qui vous permettra de récupérer votre portefeuille si votre téléphone est perdu, volé, cassé, etc.";
-"backup_prompt.backup" = "Sauvegarde";
+"backup_prompt.title" = "Sauvegardez votre portefeuille";
+"backup_prompt.description" = "Sans sauvegarde, perdre votre téléphone signifie perdre vos fonds définitivement. Il n'existe aucun moyen de les récupérer.";
 "backup_prompt.backup_manual" = "Sauvegarde manuelle";
+"backup_prompt.backup_manual.description" = "Notez votre phrase de récupération";
 "backup_prompt.backup_cloud" = "Sauvegarder sur iCloud";
-"backup_prompt.later" = "Plus tard";
+"backup_prompt.backup_cloud.description" = "Chiffré, synchronisé entre les appareils";
+"backup_prompt.remind_later" = "Me rappeler plus tard";
 
 // Backup to iCloud
 

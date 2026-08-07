@@ -263,13 +263,13 @@
 
 // Backup Prompt
 
-"backup_prompt.backup_recovery_phrase" = "Cüzdanı yedekle";
-"backup_prompt.backup_required" = "Yedekleme Gerekli";
-"backup_prompt.warning" = "Telefonunuzun kaybolması, çalınması, kırılması vb. durumlarda cüzdanınızı kurtarmanıza olanak sağlayacak kurtarma ifadesinin ve ilgili parolanın yedek bir kopyasını oluşturun.";
-"backup_prompt.backup" = "Yedekle";
+"backup_prompt.title" = "Cüzdanınızı yedekleyin";
+"backup_prompt.description" = "Yedekleme olmadan telefonunuzu kaybetmek, fonlarınızı kalıcı olarak kaybetmeniz anlamına gelir. Onları kurtarmanın hiçbir yolu yoktur.";
 "backup_prompt.backup_manual" = "Manuel Yedekleme";
+"backup_prompt.backup_manual.description" = "Kurtarma ifadenizi yazın";
 "backup_prompt.backup_cloud" = "iCloud'a yedekle";
-"backup_prompt.later" = "Sonra";
+"backup_prompt.backup_cloud.description" = "Şifrelenmiş, cihazlar arasında senkronize";
+"backup_prompt.remind_later" = "Daha Sonra Hatırlat";
 
 // Backup to iCloud
 

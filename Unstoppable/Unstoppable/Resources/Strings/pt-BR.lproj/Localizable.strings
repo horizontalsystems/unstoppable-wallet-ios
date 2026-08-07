@@ -263,13 +263,13 @@
 
 // Backup Prompt
 
-"backup_prompt.backup_recovery_phrase" = "Carteira de Backup";
-"backup_prompt.backup_required" = "Backup necessário";
-"backup_prompt.warning" = "Listen up, folks. You've got to create a backup of that recovery phrase and the password that goes with it. This is your lifeline, in case your phone decides to go rogue – lost, stolen, broken, you name it. Protect your assets, it's the smart play!";
-"backup_prompt.backup" = "Cópia de segurança";
+"backup_prompt.title" = "Faça backup da sua carteira";
+"backup_prompt.description" = "Sem um backup, perder seu telefone significa perder seus fundos permanentemente. Não há como recuperá-los.";
 "backup_prompt.backup_manual" = "Backup Manual";
+"backup_prompt.backup_manual.description" = "Anote sua frase de recuperação";
 "backup_prompt.backup_cloud" = "Backup para o iCloud";
-"backup_prompt.later" = "Mais tarde";
+"backup_prompt.backup_cloud.description" = "Criptografado, sincronizado entre dispositivos";
+"backup_prompt.remind_later" = "Lembrar mais tarde";
 
 // Backup to iCloud
 

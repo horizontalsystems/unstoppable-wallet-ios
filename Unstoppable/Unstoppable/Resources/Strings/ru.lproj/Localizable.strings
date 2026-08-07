@@ -263,13 +263,13 @@
 
 // Backup Prompt
 
-"backup_prompt.backup_recovery_phrase" = "Резервная копия";
-"backup_prompt.backup_required" = "Необходима резервная копия";
-"backup_prompt.warning" = "Создайте резервную копию вашей фразы восстановления и пароля, которые позволят вам восстановить ваш кошелек, если телефон потерян, украден, сломал и т.д.";
-"backup_prompt.backup" = "Резервная копия";
+"backup_prompt.title" = "Создайте резервную копию кошелька";
+"backup_prompt.description" = "Без резервной копии потеря телефона означает безвозвратную потерю ваших средств. Восстановить их невозможно.";
 "backup_prompt.backup_manual" = "Ручное резервное копирование";
+"backup_prompt.backup_manual.description" = "Запишите вашу фразу восстановления";
 "backup_prompt.backup_cloud" = "Резерв. копирование в iCloud";
-"backup_prompt.later" = "Позже";
+"backup_prompt.backup_cloud.description" = "Зашифровано, синхронизировано между устройствами";
+"backup_prompt.remind_later" = "Напомнить позже";
 
 // Backup to iCloud
 
