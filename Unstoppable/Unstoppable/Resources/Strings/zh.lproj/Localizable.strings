@@ -485,6 +485,9 @@
 "send.confirmation.contact_name" = "联系人姓名";
 "send.confirmation.memo" = "备忘录";
 "send.confirmation.memo_placeholder" = "备忘录";
+"send.memo.public_warning" = "此备注将在区块链上公开显示。";
+"send.memo.private_warning" = "此备注将以加密形式发布到区块链上。";
+"send.memo.local_warning" = "此备注将仅保存在您的手机上。";
 "send.confirmation.fee" = "费用";
 "send.confirmation.fee_sponsored" = "已赞助";
 "send.confirmation.fee_paid_in" = "以 %@ 支付";

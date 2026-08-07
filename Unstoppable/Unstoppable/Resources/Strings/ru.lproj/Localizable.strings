@@ -485,6 +485,9 @@
 "send.confirmation.contact_name" = "Имя контакта";
 "send.confirmation.memo" = "Мемо";
 "send.confirmation.memo_placeholder" = "Мемо";
+"send.memo.public_warning" = "Это примечание будет публичным в блокчейне.";
+"send.memo.private_warning" = "Эта заметка будет опубликована в блокчейне в зашифрованном виде.";
+"send.memo.local_warning" = "Это примечание будет сохранено только на вашем телефоне.";
 "send.confirmation.fee" = "Комиссия";
 "send.confirmation.fee_sponsored" = "Спонсировано";
 "send.confirmation.fee_paid_in" = "Оплачено в %@";

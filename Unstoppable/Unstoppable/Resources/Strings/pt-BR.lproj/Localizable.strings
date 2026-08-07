@@ -485,6 +485,9 @@
 "send.confirmation.contact_name" = "Nome do Contato";
 "send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "Memo";
+"send.memo.public_warning" = "Este memo será público na blockchain.";
+"send.memo.private_warning" = "Esta nota será publicada na blockchain de forma criptografada.";
+"send.memo.local_warning" = "Este memo será salvo apenas no seu telefone.";
 "send.confirmation.fee" = "Taxa";
 "send.confirmation.fee_sponsored" = "Patrocinado";
 "send.confirmation.fee_paid_in" = "Pago em %@";
