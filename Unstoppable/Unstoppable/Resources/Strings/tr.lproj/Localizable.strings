@@ -485,6 +485,9 @@
 "send.confirmation.contact_name" = "Kişi Adı";
 "send.confirmation.memo" = "Not";
 "send.confirmation.memo_placeholder" = "Not";
+"send.memo.public_warning" = "Bu not blok zincirinde herkese açık olacaktır.";
+"send.memo.private_warning" = "Bu not blok zincirinde şifrelenmiş biçimde yayınlanacaktır.";
+"send.memo.local_warning" = "Bu not yalnızca telefonunuzda kaydedilecektir.";
 "send.confirmation.fee" = "Ücret";
 "send.confirmation.fee_sponsored" = "Sponsorlu";
 "send.confirmation.fee_paid_in" = "%@ ile ödendi";

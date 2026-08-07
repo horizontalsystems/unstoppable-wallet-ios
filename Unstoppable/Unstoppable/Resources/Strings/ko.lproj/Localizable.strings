@@ -485,6 +485,9 @@
 "send.confirmation.contact_name" = "담당자 이름";
 "send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "Memo";
+"send.memo.public_warning" = "이 메모는 블록체인에 공개됩니다.";
+"send.memo.private_warning" = "이 메모는 암호화된 형태로 블록체인에 게시됩니다.";
+"send.memo.local_warning" = "이 메모는 휴대폰에만 저장됩니다.";
 "send.confirmation.fee" = "수수료";
 "send.confirmation.fee_sponsored" = "스폰서됨";
 "send.confirmation.fee_paid_in" = "%@(으)로 지불";
