@@ -123,13 +123,15 @@ struct MultiSwapTokenSelectView: View {
                             Button(action: {
                                 select(item.token)
                             }) {
-                                HStack(spacing: .margin8) {
+                                // The chain badge sticks out past the coin icon, so it absorbs
+                                // half of the icon-to-text gap.
+                                HStack(spacing: 6) {
                                     chipIcon(token: item.token)
 
-                                    Text(item.token.coin.code).textBody()
+                                    ThemeText(item.token.coin.code, style: .captionSB, colorStyle: .primary)
                                 }
-                                .padding(.leading, .margin8)
-                                .padding(.trailing, .margin12)
+                                .padding(.leading, .margin12)
+                                .padding(.trailing, .margin16)
                                 .frame(height: 36)
                                 .background(RoundedRectangle(cornerRadius: 24, style: .continuous).fill(Color.themeBlade))
                             }

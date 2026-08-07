@@ -44,6 +44,11 @@ extension Token {
         badge ?? "coin_platforms.native".localized
     }
 
+    // "ETH(Optimism)" for a token that carries a badge, plain coin code otherwise
+    var coinCodeWithBadge: String {
+        badge.map { "\(coin.code)(\($0))" } ?? coin.code
+    }
+
     var sendToSelfAllowed: Bool {
         if case .native = type, blockchainType == .zcash { return false }
         if blockchainType == .tron { return false }

@@ -75,6 +75,9 @@ struct MarketSearchView: View {
         let coin = fullCoin.coin
 
         ClickableRow(action: {
+            // The search field stays first responder under the presented coin page and
+            // iOS restores its keyboard on return: resign before presenting.
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             viewModel.handleOpen(coinUid: coin.uid)
             Coordinator.shared.presentCoinPage(coin: coin, page: .marketSearch)
         }) {

@@ -22,7 +22,7 @@ class EvmSendHelper {
             switch reason {
             case .insufficientBalanceWithFee:
                 title = "fee_settings.errors.insufficient_balance".localized
-                text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(feeToken.coin.code)
+                text = "ethereum_transaction.error.insufficient_balance_with_fee".localized(feeToken.coinCodeWithBadge)
             case let .executionReverted(message):
                 title = "fee_settings.errors.unexpected_error".localized
                 text = message
