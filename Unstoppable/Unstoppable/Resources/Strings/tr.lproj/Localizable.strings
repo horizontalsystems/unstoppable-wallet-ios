@@ -680,8 +680,8 @@
 "swap.high_price_impact" = "Yüksek Fiyat Etkisi";
 "swap.recipient" = "Alıcı";
 "swap.slippage" = "Kayma";
-"swap.swapped_time" = "Tahmini Süre";
-"swap.swapped_time.info" = "Fonların alınması için gereken tahmini süre. Swap işleminin işlenmesi ve işlem onayları, ağ ve sağlayıcıya bağlı olarak zaman alabilir.";
+"swap.swapped_time" = "Swap Süresi";
+"swap.swapped_time.info" = "Bu, swap işlemini tamamlamak ve fonlarınızı almak için gereken tahmini süredir. Gerçek süre, ağ koşullarına, işlem onaylarına ve seçilen swap rotasına bağlı olarak daha kısa veya daha uzun olabilir.";
 
 "swap.affiliate_fee" = "Ortaklık Ücreti";
 "swap.liquidity_fee" = "Likidite Ücreti";

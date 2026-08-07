@@ -680,8 +680,8 @@
 "swap.high_price_impact" = "Impact de prix élevé";
 "swap.recipient" = "Destinataire";
 "swap.slippage" = "Glissement";
-"swap.swapped_time" = "Temps";
-"swap.swapped_time.info" = "Temps approximatif pour recevoir les fonds. Le traitement du swap et les confirmations de transaction peuvent prendre un certain temps, selon le réseau et le fournisseur.";
+"swap.swapped_time" = "Temps de Swap";
+"swap.swapped_time.info" = "Il s'agit du temps estimé nécessaire pour effectuer le swap et recevoir vos fonds. Le temps réel peut être plus court ou plus long en fonction des conditions du réseau, des confirmations de transaction et de la route de swap sélectionnée.";
 
 "swap.affiliate_fee" = "Frais d'affiliation";
 "swap.liquidity_fee" = "Frais de liquidité";
