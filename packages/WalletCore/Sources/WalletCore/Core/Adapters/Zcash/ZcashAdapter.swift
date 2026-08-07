@@ -152,8 +152,21 @@ class ZcashAdapter {
         }
         switch wallet.account.origin {
         case .created:
-            birthday = Self.newBirthdayHeight(network: network)
-            initMode = existingMode ?? .newWallet
+            // The height saved at account creation (and rewritten by a rescan) wins;
+            // ignoring it here made a created wallet's rescan height silently vanish.
+            // A saved height older than the freshest checkpoint means the user rescanned
+            // for history: sync must run in restore mode — in newWallet mode the SDK
+            // snaps the birthday to the chain tip and skips scanning entirely.
+            if let height = restoreSettings.birthdayHeight {
+                birthday = max(height, network.constants.saplingActivationHeight)
+                // Account creation writes exactly newBirthdayHeight, so any other value can
+                // only come from a rescan and must scan history; a height above the bundled
+                // checkpoint still starts from the nearest checkpoint below it.
+                initMode = existingMode ?? (birthday == Self.newBirthdayHeight(network: network) ? .newWallet : .restoreWallet)
+            } else {
+                birthday = Self.newBirthdayHeight(network: network)
+                initMode = existingMode ?? .newWallet
+            }
         case .restored:
             if let height = restoreSettings.birthdayHeight {
                 birthday = max(height, network.constants.saplingActivationHeight)
@@ -161,6 +174,12 @@ class ZcashAdapter {
                 birthday = network.constants.saplingActivationHeight
             }
             initMode = existingMode ?? .restoreWallet
+        }
+
+        var aliasedDataDbExists = false
+        if let url = try? Self.dataDbURL(uniqueId: uniqueId, network: network) {
+            let aliased = url.deletingLastPathComponent().appendingPathComponent("c_\(uniqueId)_" + url.lastPathComponent)
+            aliasedDataDbExists = FileManager.default.fileExists(atPath: aliased.path)
         }
 
         let seedData = [UInt8](seed)
@@ -386,8 +405,11 @@ class ZcashAdapter {
             return
         }
 
-        if uAddress == nil { // else we need to try prepare library again
-            logger?.log(level: .debug, message: "No address, try to prepare kit again!")
+        // `.unprepared` with an address means a wipe failed after tearing the synchronizer
+        // down: start() would only throw notPrepared, so re-prepare instead — this makes
+        // pull-to-refresh and foregrounding recover the wallet without an app restart.
+        if uAddress == nil || synchronizer.latestState.syncStatus == .unprepared {
+            logger?.log(level: .debug, message: "Not prepared, try to prepare kit again!")
             prepare(seedData: seedData, walletBirthday: birthday, for: initMode)
 
             return
@@ -460,17 +482,22 @@ class ZcashAdapter {
             lastBlockHeight = max(state.latestBlockHeight, lastBlockHeight)
             self.areFundsSpendable = areFundsSpendable
 
-            if progress == 1 { // before blocks syncing
-                syncStatus = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
-            }
             logger?.log(level: .debug, message: "Update BlockHeight = \(lastBlockHeight)")
 
             lastBlockUpdatedSubject.onNext(())
 
-            let newProgress = min(99, Int(progress * 100))
-            let newRemaining = max(1, Int(Float(lastBlockHeight - birthday) * (1 - progress)))
+            // Progress 0 (nothing scanned yet — the real scan range is unknown, and for a
+            // new wallet the SDK starts near the tip, not at the nominal birthday) and
+            // progress 1 (pre-scan housekeeping) carry no usable numbers: show an
+            // indeterminate spinner instead of a count extrapolated from the birthday.
+            if progress == 0 || progress == 1 {
+                syncStatus = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
+            } else {
+                let newProgress = min(99, Int(progress * 100))
+                let newRemaining = max(1, Int(Float(lastBlockHeight - birthday) * (1 - progress)))
 
-            syncStatus = .syncing(progress: newProgress, remaining: newRemaining, lastBlockDate: nil)
+                syncStatus = .syncing(progress: newProgress, remaining: newRemaining, lastBlockDate: nil)
+            }
         case let .error(error):
             if !started, case .synchronizerDisconnected = error as? ZcashError {
                 syncStatus = .idle
@@ -782,78 +809,32 @@ class ZcashAdapter {
             .store(in: &cancellables)
     }
 
-    public func wipe() -> AnyPublisher<Void, Error> {
-        synchronizer.stop()
-        migrator.clearOnWipe()
-
-        let synchronizer = synchronizer
-        let uniqueId = uniqueId
-        let network = network
-        let logger = logger
-
-        return Future<Void, Error> { promise in
-            let currentStatus = synchronizer.latestState.syncStatus
-
-            if case .stopped = currentStatus {
-                promise(.success(()))
-                return
-            }
-            if case .unprepared = currentStatus {
-                promise(.success(()))
-                return
-            }
-
-            var cancellable: AnyCancellable?
-            cancellable = synchronizer.stateStream
-                .receive(on: DispatchQueue.main)
-                .sink { state in
-                    if case .stopped = state.syncStatus {
-                        cancellable?.cancel()
-                        cancellable = nil
-                        Self.deleteFiles(uniqueId: uniqueId, network: network, logger: logger, promise: promise)
-                    }
-                }
-        }
-        .flatMap { _ -> AnyPublisher<Void, Error> in
-            synchronizer.wipe()
-        }
-        .handleEvents(receiveCompletion: { completion in
-            switch completion {
-            case .finished:
-                logger?.log(level: .debug, message: "[ZcashAdapter] wipe: completed successfully")
-            case let .failure(error):
-                logger?.log(level: .error, message: "[ZcashAdapter] wipe: completed with error: \(error)")
-            }
-        })
-        .eraseToAnyPublisher()
+    // The SDK's wipe is self-serializing: called mid-sync it registers an after-sync hook,
+    // stops the processor and wipes once the loop has fully wound down; called idle it wipes
+    // immediately. Stopping manually and waiting for a `.stopped` emission here used to hang
+    // forever on an idle synchronizer (the event is only produced by cancelling a running
+    // sync loop) and raced the SDK's own teardown when sync was active.
+    var isPreparing: Bool {
+        state.isPrepairing
     }
 
-    private static func deleteFiles(uniqueId: String, network: ZcashNetwork, logger: HsToolKit.Logger?, promise: @escaping (Result<Void, Error>) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            do {
-                let fileManager = FileManager.default
+    public func wipe() -> AnyPublisher<Void, Error> {
+        let logger = logger
+        let migrator = migrator
 
-                let urlsToDelete: [URL] = [
-                    try? Self.fsBlockDbRootURL(uniqueId: uniqueId, network: network),
-                    try? Self.generalStorageURL(uniqueId: uniqueId, network: network),
-                    try? Self.dataDbURL(uniqueId: uniqueId, network: network),
-                    try? Self.cacheDbURL(uniqueId: uniqueId, network: network),
-                    try? Self.torDirURL(uniqueId: uniqueId, network: network),
-                ].compactMap { $0 }
-
-                for url in urlsToDelete {
-                    if fileManager.fileExists(atPath: url.path) {
-                        try fileManager.removeItem(at: url)
-                        logger?.log(level: .debug, message: "[ZcashAdapter] Deleted: \(url.lastPathComponent)")
-                    }
+        return synchronizer.wipe()
+            .handleEvents(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    // Cleared only on success: a failed wipe leaves the wallet data in
+                    // place, and the migration markers must stay consistent with it.
+                    migrator.clearOnWipe()
+                    logger?.log(level: .debug, message: "[ZcashAdapter] wipe: completed successfully")
+                case let .failure(error):
+                    logger?.log(level: .error, message: "[ZcashAdapter] wipe: completed with error: \(error)")
                 }
-
-                promise(.success(()))
-            } catch {
-                logger?.log(level: .error, message: "[ZcashAdapter] Delete files failed: \(error)")
-                promise(.failure(error))
-            }
-        }
+            })
+            .eraseToAnyPublisher()
     }
 
     private func syncZcashBalanceData() {
@@ -1016,10 +997,6 @@ extension ZcashAdapter {
 
     private static func generalStorageURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
         try dataDirectoryUrl().appendingPathComponent(network.networkType.chainName + uniqueId + "general_storage", isDirectory: true)
-    }
-
-    private static func cacheDbURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
-        try dataDirectoryUrl().appendingPathComponent(network.constants.defaultDbNamePrefix + uniqueId + ZcashSDK.defaultCacheDbName, isDirectory: false)
     }
 
     private static func dataDbURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
