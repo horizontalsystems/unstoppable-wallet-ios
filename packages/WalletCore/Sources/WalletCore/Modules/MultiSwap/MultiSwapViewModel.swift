@@ -310,6 +310,13 @@ public class MultiSwapViewModel: ObservableObject {
             .sink { [weak self] in self?.currency = $0 }
             .store(in: &cancellables)
 
+        // Fires on EVERY successful sync, not only when the id list actually changes —
+        // `@PostPublished` is a plain PassthroughSubject with no equality check (that is the
+        // separate `DistinctPublished`). That is what lets this one subscription cover suspensions
+        // too: the manager assigns them just before `providers`, so a sync that only changes which
+        // PAIRS a provider may serve still refreshes here. A second subscription on `$suspensions`
+        // would fire from the same response and cancel this refresh mid-flight, wasting a full
+        // round of provider requests.
         swapProviderManager.$providers
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
@@ -535,7 +542,19 @@ public class MultiSwapViewModel: ObservableObject {
 
     private func syncValidProviders() {
         if let internalTokenIn, let internalTokenOut {
-            validProviders = providers.filter { $0.supports(tokenIn: internalTokenIn, tokenOut: internalTokenOut) }
+            let suspensions = swapProviderManager.suspensions
+
+            validProviders = providers.filter { provider in
+                // Scoped suspension from uswap-server (asset / chain / directed pair). Checked
+                // HERE, in the one place every provider passes through, rather than inside each
+                // `supports` implementation — and it is the only enforcement that exists for the
+                // providers this app quotes natively, since those never reach the server.
+                guard !suspensions.isSuspended(providerId: provider.id, tokenIn: internalTokenIn, tokenOut: internalTokenOut) else {
+                    return false
+                }
+
+                return provider.supports(tokenIn: internalTokenIn, tokenOut: internalTokenOut)
+            }
         } else {
             validProviders = []
         }

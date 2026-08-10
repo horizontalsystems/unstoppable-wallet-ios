@@ -31,6 +31,7 @@ public class LocalStorage {
     private let keySwapProvidersLastSyncTimestamp = "swap-providers-last-sync-timestamp"
     private let keySwapRecentTokenQueryIds = "swap-recent-token-query-ids"
     private let keyUSwapProviders = "uswap-providers"
+    private let keyUSwapSuspensions = "uswap-suspensions"
     private let keySwapEnabled = "swap_enabled"
     private let keyAppStateLastSyncTimestamp = "app-state-last-sync-timestamp"
     private let keyForceEnableSwap = "force-enable-swap"
@@ -206,6 +207,13 @@ extension LocalStorage {
     var uSwapProviders: String? {
         get { userDefaultsStorage.value(for: keyUSwapProviders) }
         set { userDefaultsStorage.set(value: newValue, for: keyUSwapProviders) }
+    }
+
+    // Scoped provider suspensions (JSON, provider id -> rules). Cached alongside the provider list
+    // so a cold launch keeps honouring them until the next sync.
+    var uSwapSuspensions: String? {
+        get { userDefaultsStorage.value(for: keyUSwapSuspensions) }
+        set { userDefaultsStorage.set(value: newValue, for: keyUSwapSuspensions) }
     }
 
     var swapEnabled: Bool {
