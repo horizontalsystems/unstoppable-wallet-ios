@@ -46,6 +46,10 @@ class EvmSendData: ISendData {
         return cautions
     }
 
+    func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
+        EvmSendHelper.feeFields(evmFeeData: evmFeeData, gasPrice: gasPrice, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid])
+    }
+
     func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
         let flow = decoration.flowSection(baseToken: baseToken, currency: currency, rates: rates)
         var fields = decoration.fields(baseToken: baseToken, currency: currency, rates: rates)
@@ -56,7 +60,7 @@ class EvmSendData: ISendData {
             )
         }
 
-        fields.append(contentsOf: EvmSendHelper.feeFields(evmFeeData: evmFeeData, gasPrice: gasPrice, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid]))
+        fields.append(contentsOf: feeFields(baseToken: baseToken, currency: currency, rates: rates))
 
         return [flow, .init(fields, isMain: false)].compactMap { $0 }
     }

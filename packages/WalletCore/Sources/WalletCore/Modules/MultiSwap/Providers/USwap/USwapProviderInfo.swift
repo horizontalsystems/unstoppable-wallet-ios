@@ -5,14 +5,18 @@ public struct USwapProviderInfo: Equatable {
     public let type: SwapProviderType
     public let preciseEstimateTime: Bool
     public let requireTerms: Bool
+    // Routes through a confidential rail. Such providers are excluded from the ordinary swap
+    // fan-out; availability itself is decided by ConfidentialProviderRegistry, not by this flag.
+    public let confidential: Bool
 
-    public init(id: String, name: String, icon: String, type: SwapProviderType, preciseEstimateTime: Bool = true, requireTerms: Bool) {
+    public init(id: String, name: String, icon: String, type: SwapProviderType, preciseEstimateTime: Bool = true, requireTerms: Bool, confidential: Bool = false) {
         self.id = id
         self.name = name
         self.icon = icon
         self.type = type
         self.preciseEstimateTime = preciseEstimateTime
         self.requireTerms = requireTerms
+        self.confidential = confidential
     }
 }
 
@@ -23,6 +27,17 @@ public extension USwapProviderInfo {
         icon: "swap_provider_near",
         type: .fair,
         requireTerms: true
+    )
+
+    // Registered so SwapProviderFactory.provider(id:) resolves the provider for tracking and
+    // history rendering. It is never offered on the ordinary swap screen.
+    static let nearConfidential = USwapProviderInfo(
+        id: "NEAR_CONFIDENTIAL",
+        name: "Near Confidential",
+        icon: "swap_provider_near",
+        type: .fair,
+        requireTerms: true,
+        confidential: true
     )
 
     static let quickEx = USwapProviderInfo(

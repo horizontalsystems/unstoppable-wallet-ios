@@ -40,6 +40,10 @@ public class Core {
         instance!
     }
 
+    // Set by each app, because the service needs a USwapMultiSwapApi the app configures. Left nil,
+    // private send is simply unavailable and nothing else changes.
+    public static var privateSendService: PrivateSendService?
+
     let config: Config
 
     public let marketKit: MarketKit.Kit
@@ -166,6 +170,7 @@ public class Core {
     let valueFormatter: CurrencyValueFormatter
 
     public let swapAssetStorage: SwapAssetStorage
+    public let confidentialProviderStorage: ConfidentialProviderStorage
     let swapProviderManager: MultiSwapProviderManager
     public let swapProviderInfoManager: SwapProviderInfoManager
     public let swapHistoryManager: SwapHistoryManager
@@ -531,6 +536,7 @@ public class Core {
         )
 
         swapAssetStorage = SwapAssetStorage(dbPool: dbPool)
+        confidentialProviderStorage = ConfidentialProviderStorage(dbPool: dbPool)
         swapProviderManager = MultiSwapProviderManager(localStorage: localStorage, networkManager: networkManager, apiKey: AppConfig.uswapApiKey)
         swapProviderInfoManager = SwapProviderInfoManager(networkManager: networkManager, apiKey: AppConfig.uswapApiKey)
 

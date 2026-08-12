@@ -46,7 +46,9 @@ final class ThorChainPreSendHandler: PreSendHandler, IPreSendHandler {
     }
 
     var balancePublisher: AnyPublisher<Decimal, Never> { balanceSubject.eraseToAnyPublisher() }
-    func memoType(address _: String?) -> MemoType { .onChainPublic }
+    // Chain-constant, so it reads the one table rather than restating it: a THORChain memo is public
+    // on-chain (.onChainPublic).
+    func memoType(address _: String?) -> MemoType { token.blockchainType.memoType }
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
         do {

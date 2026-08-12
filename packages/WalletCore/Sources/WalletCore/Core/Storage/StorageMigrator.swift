@@ -970,6 +970,14 @@ public enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Create ConfidentialProviderRecord") { db in
+            try db.create(table: ConfidentialProviderRecord.databaseTableName) { t in
+                t.column(ConfidentialProviderRecord.Columns.providerId.name, .text).notNull().primaryKey(onConflict: .replace)
+                t.column(ConfidentialProviderRecord.Columns.executionType.name, .text).notNull()
+                t.column(ConfidentialProviderRecord.Columns.lastSyncTimestamp.name, .double).notNull()
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

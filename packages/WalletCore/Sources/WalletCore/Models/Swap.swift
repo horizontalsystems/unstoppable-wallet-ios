@@ -98,6 +98,14 @@ public struct Swap: Hashable {
 }
 
 public extension Swap {
+    // A private send is recorded as a Swap so it inherits polling, statuses, legs and the refund UI
+    // for free — but it must not read as one.
+    var isPrivateSend: Bool {
+        tokenIn == tokenOut && (SwapProviderFactory.providerInfo(id: providerId)?.confidential ?? false)
+    }
+}
+
+public extension Swap {
     struct Leg: Hashable {
         public let status: Status
         public let type: String

@@ -43,6 +43,15 @@ public class SwapProviderFactory {
         return nil
     }
 
+    // The ordinary swap screen must never offer a confidential provider. Not automatic: a registered
+    // entry resolves through `provider(id:)` (which tracking needs) and DefaultUSwapSubProvider.rate
+    // sends an explicit `providers` list, which overrides the server-side privacy filter.
+    public static func swappableProviders(ids: [String]) -> [IMultiSwapProvider] {
+        ids
+            .filter { providerInfo(id: $0)?.confidential != true }
+            .compactMap { provider(id: $0) }
+    }
+
     public static func providerName(id: String) -> String? {
         if let info = providerInfo(id: id) {
             return info.name
@@ -81,6 +90,11 @@ public enum SwapProviderResolver: ISwapProviderResolver {
     private static let entries: [String: Entry] = Dictionary(
         uniqueKeysWithValues: [
             defaultUSwapEntry(info: .near),
+            // Registered so SwapProviderFactory.provider(id:) resolves it for tracking — without
+            // this, SwapHistoryManager._sync() skips the row and a private send never leaves
+            // pending. It is kept off the ordinary swap screen by the confidential filter in
+            // swappableProviders(ids:) above, which MultiSwapViewModel is the only caller of.
+            defaultUSwapEntry(info: .nearConfidential),
             quickExUSwapEntry(info: .quickEx),
             defaultUSwapEntry(info: .letsExchange),
             defaultUSwapEntry(info: .stealthex),
@@ -100,7 +114,9 @@ public enum SwapProviderResolver: ISwapProviderResolver {
         }
     )
 
-    private static func uSwapApi(networkManager: NetworkManager) -> USwapMultiSwapApi {
+    // Accessible so the app can build the same USwap API instance for the private send stack
+    // instead of duplicating the base URL / api key construction.
+    public static func uSwapApi(networkManager: NetworkManager) -> USwapMultiSwapApi {
         guard let baseURL = URL(string: "\(AppConfig.swapApiUrl)/v2") else {
             preconditionFailure("Invalid USwap API URL: \(AppConfig.swapApiUrl)")
         }

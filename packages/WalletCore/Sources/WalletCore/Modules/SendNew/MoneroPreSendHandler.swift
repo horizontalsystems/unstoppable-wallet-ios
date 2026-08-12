@@ -58,8 +58,10 @@ extension MoneroPreSendHandler: IPreSendHandler {
         balanceSubject.eraseToAnyPublisher()
     }
 
+    // Chain-constant, so it reads the one table rather than restating it: a Monero memo is a local
+    // wallet note (.local).
     func memoType(address _: String?) -> MemoType {
-        .local
+        token.blockchainType.memoType
     }
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {

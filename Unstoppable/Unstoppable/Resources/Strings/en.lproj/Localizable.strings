@@ -593,6 +593,35 @@
 "send.address.blacklist.caution.title" = "Blacklisted Address!";
 "send.address.blacklist.caution.description" = "The address you entered is flagged as blacklisted. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
 
+// Private Send
+
+"private_send.toggle.title" = "Private send";
+"private_send.toggle.subtitle" = "The recipient can't be linked to you on-chain";
+"private_send.amount_caption" = "Amount the recipient receives";
+"private_send.unavailable" = "Private send unavailable";
+
+"private_send.fee" = "Private send fee";
+"private_send.max_deposit" = "Maximum deposit";
+"private_send.refundable" = "Refunded if unused";
+"private_send.estimated_time" = "Estimated arrival";
+
+"private_send.quote_expired" = "Quote expired — go back and re-enter";
+"private_send.commit_failed" = "Couldn't set up the private send. Try again.";
+
+"private_send.caution.title" = "Private send";
+"private_send.caution.below_minimum %@" = "Private send requires the recipient to receive at least %@.";
+"private_send.caution.above_maximum %@" = "Private send supports at most %@.";
+"private_send.caution.insufficient_balance %@" = "This private send needs %@ in your wallet, including fees.";
+"private_send.caution.no_route" = "No private route is available for this token and amount right now.";
+"private_send.caution.exact_output_unsupported" = "This route can't guarantee an exact received amount.";
+"private_send.caution.provider_suspended" = "The private send provider is temporarily unavailable.";
+"private_send.caution.network_error" = "Couldn't reach the private send provider. Check your connection and try again.";
+"private_send.caution.token_unsupported" = "Private send is no longer available for this token.";
+"private_send.caution.attachment_unsupported" = "This private route requires a transaction tag this wallet can't attach. Private send is unavailable for this token.";
+"private_send.caution.amount_adjusted" = "The amount was adjusted to cover fees and no longer matches the private send quote. Reduce the amount and try again.";
+"private_send.caution.quote_expired" = "This quote has expired. Go back and re-enter the amount to get a fresh one.";
+"private_send.caution.buffer_unknown" = "The fee shown is an upper estimate; the final cost may be lower.";
+
 // Donate
 
 "donate.list.title" = "Donate with";

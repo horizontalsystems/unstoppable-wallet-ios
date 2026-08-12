@@ -149,8 +149,10 @@ extension BitcoinPreSendHandler: IPreSendHandler {
         settingsModifiedSubject.eraseToAnyPublisher()
     }
 
+    // Chain-constant, so it reads the one table rather than restating it: a memo here becomes an
+    // OP_RETURN output (.onChainPublic).
     func memoType(address _: String?) -> MemoType {
-        .onChainPublic
+        token.blockchainType.memoType
     }
 
     func settingsView(onChangeSettings: @escaping () -> Void) -> AnyView {

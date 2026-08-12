@@ -287,7 +287,7 @@ public class MultiSwapViewModel: ObservableObject {
     @Published var quoteSortType: QuoteSortType = .bestRate
 
     public init(token: Token? = nil, tokenOut: Token? = nil, autoResolveTokenOut: Bool = true, customDecimals: Int? = nil) {
-        providers = swapProviderManager.providers.compactMap { SwapProviderFactory.provider(id: $0) }
+        providers = SwapProviderFactory.swappableProviders(ids: swapProviderManager.providers)
         currency = currencyManager.baseCurrency
         spendMode = .fromBalanceState
         self.customDecimals = customDecimals
@@ -320,7 +320,7 @@ public class MultiSwapViewModel: ObservableObject {
         swapProviderManager.$providers
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-                self?.providers = $0.compactMap { SwapProviderFactory.provider(id: $0) }
+                self?.providers = SwapProviderFactory.swappableProviders(ids: $0)
                 self?.syncValidProviders()
                 self?.syncQuotes(silent: true)
                 self?.subscribeToProviders()

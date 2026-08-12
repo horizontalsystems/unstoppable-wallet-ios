@@ -7,16 +7,30 @@ public protocol ISendData {
     var canSend: Bool { get }
     var rateCoins: [Coin] { get }
     var customSendButtonTitle: String? { get }
+    // The fee rows alone, so a decorator can splice them into a section of its own instead of
+    // reusing `sections(...)` wholesale — those render the whole transfer, which a decorated send
+    // must present differently.
+    func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField]
+    // True when the handler silently reduced the transfer amount to fit the balance.
+    var amountAdjusted: Bool { get }
     func cautions(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [CautionNew]
     func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection]
 }
 
-extension ISendData {
-    public var customSendButtonTitle: String? {
+public extension ISendData {
+    var customSendButtonTitle: String? {
         nil
     }
 
-    func flowSection(baseToken _: Token, currency _: Currency, rates _: [String: Decimal]) -> (SendField, SendField)? {
+    func feeFields(baseToken _: Token, currency _: Currency, rates _: [String: Decimal]) -> [SendField] {
+        []
+    }
+
+    var amountAdjusted: Bool {
+        false
+    }
+
+    internal func flowSection(baseToken _: Token, currency _: Currency, rates _: [String: Decimal]) -> (SendField, SendField)? {
         nil
     }
 }

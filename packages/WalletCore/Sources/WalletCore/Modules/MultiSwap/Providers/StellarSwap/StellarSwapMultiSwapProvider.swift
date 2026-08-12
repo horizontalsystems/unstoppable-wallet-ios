@@ -295,7 +295,7 @@ class StellarSwapMultiSwapProvider: IMultiSwapProvider {
                 chainId: "stellar",
                 providerIds: providers
             )
-        )
+        ).quotes
 
         // Only reachable while stellarBrokerEnabled — SB is otherwise never in `providers`, so
         // the server never returns it. Kept live for the flag flip (see stellarBrokerEnabled).
