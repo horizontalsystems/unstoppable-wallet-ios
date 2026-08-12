@@ -354,7 +354,9 @@
 "transactions.migrate" = "迁移";
 "transactions.migrate.to_ironwood" = "至 Ironwood";
 "balance.token.migration.detected.title" = "ZEC 池迁移";
-"balance.token.migration.detected.description" = "Zcash 已升级到新的屏蔽池。您在旧池中的余额必须进行迁移，才能在 Unstoppable 中继续完全使用。";
+"balance.token.migration.detected.description" = "Zcash has upgraded to a new shielded pool. Your shielded balance must be migrated to that new pool to remain fully anonymous in future transactions.
+\n\nPlease note that migration transactions aren’t fully anonymous and expose the amounts involved.
+\n\nTo maintain high level of privacy you may consider using VPN or TOR when making migration transactions.";
 "balance.token.migrate" = "迁移";
 "error.zcash.migration_failed" = "迁移无法完成。没有资金丢失——您可以稍后重试。";
 "zcash.migration.warning.title" = "公开可见金额";
