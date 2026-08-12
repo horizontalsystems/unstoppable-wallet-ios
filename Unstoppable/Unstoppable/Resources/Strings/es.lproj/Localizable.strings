@@ -593,6 +593,35 @@
 "send.address.blacklist.caution.title" = "¡Dirección en lista negra!";
 "send.address.blacklist.caution.description" = "La dirección que ingresaste está marcada como incluida en lista negra. Las transacciones a esta dirección podrían conducir a pérdidas u otros riesgos. Por favor, verifica los detalles del destinatario antes de proceder.";
 
+// Private Send
+
+"private_send.toggle.title" = "Envío privado";
+"private_send.toggle.subtitle" = "El destinatario no puede vincularse contigo en la cadena";
+"private_send.amount_caption" = "Cantidad que recibe el destinatario";
+"private_send.unavailable" = "Envío privado no disponible";
+
+"private_send.fee" = "Comisión de envío privado";
+"private_send.max_deposit" = "Depósito máximo";
+"private_send.refundable" = "Se reembolsa si no se usa";
+"private_send.estimated_time" = "Llegada estimada";
+
+"private_send.quote_expired" = "La cotización expiró: vuelve atrás y reintroduce el monto";
+"private_send.commit_failed" = "No se pudo configurar el envío privado. Inténtalo de nuevo.";
+
+"private_send.caution.title" = "Envío privado";
+"private_send.caution.below_minimum %@" = "El envío privado requiere que el destinatario reciba al menos %@.";
+"private_send.caution.above_maximum %@" = "El envío privado admite como máximo %@.";
+"private_send.caution.insufficient_balance %@" = "Este envío privado necesita %@ en tu wallet, incluyendo comisiones.";
+"private_send.caution.no_route" = "No hay una ruta privada disponible para este token y monto en este momento.";
+"private_send.caution.exact_output_unsupported" = "Esta ruta no puede garantizar una cantidad recibida exacta.";
+"private_send.caution.provider_suspended" = "El proveedor de envío privado no está disponible temporalmente.";
+"private_send.caution.network_error" = "No se pudo contactar al proveedor de envío privado. Verifica tu conexión e inténtalo de nuevo.";
+"private_send.caution.token_unsupported" = "El envío privado ya no está disponible para este token.";
+"private_send.caution.attachment_unsupported" = "Esta ruta privada requiere una etiqueta de transacción que este wallet no puede adjuntar. El envío privado no está disponible para este token.";
+"private_send.caution.amount_adjusted" = "El monto se ajustó para cubrir comisiones y ya no coincide con la cotización del envío privado. Reduce el monto e inténtalo de nuevo.";
+"private_send.caution.quote_expired" = "Esta cotización ha expirado. Vuelve atrás y reintroduce el monto para obtener una nueva.";
+"private_send.caution.buffer_unknown" = "La comisión mostrada es una estimación máxima; el costo final puede ser menor.";
+
 // Donate
 
 "donate.list.title" = "Donar con";

@@ -593,6 +593,35 @@
 "send.address.blacklist.caution.title" = "Адрес в черном списке!";
 "send.address.blacklist.caution.description" = "Введенный вами адрес помечен как находящийся в черном списке. Транзакции на этот адрес могут привести к потерям или другим рискам. Пожалуйста, проверьте данные получателя перед продолжением.";
 
+// Private Send
+
+"private_send.toggle.title" = "Приватная отправка";
+"private_send.toggle.subtitle" = "Получателя невозможно связать с вами в блокчейне";
+"private_send.amount_caption" = "Сумма, которую получит получатель";
+"private_send.unavailable" = "Приватная отправка недоступна";
+
+"private_send.fee" = "Комиссия за приватную отправку";
+"private_send.max_deposit" = "Максимальный депозит";
+"private_send.refundable" = "Возвращается, если не использовано";
+"private_send.estimated_time" = "Расчётное время получения";
+
+"private_send.quote_expired" = "Котировка истекла — вернитесь и введите сумму заново";
+"private_send.commit_failed" = "Не удалось настроить приватную отправку. Попробуйте снова.";
+
+"private_send.caution.title" = "Приватная отправка";
+"private_send.caution.below_minimum %@" = "Для приватной отправки получатель должен получить не менее %@.";
+"private_send.caution.above_maximum %@" = "Приватная отправка поддерживает не более %@.";
+"private_send.caution.insufficient_balance %@" = "Для этой приватной отправки необходимо %@ в вашем кошельке, включая комиссии.";
+"private_send.caution.no_route" = "В данный момент нет доступного приватного маршрута для этого токена и суммы.";
+"private_send.caution.exact_output_unsupported" = "Этот маршрут не может гарантировать точную сумму получения.";
+"private_send.caution.provider_suspended" = "Провайдер приватной отправки временно недоступен.";
+"private_send.caution.network_error" = "Не удалось связаться с провайдером приватной отправки. Проверьте подключение и попробуйте снова.";
+"private_send.caution.token_unsupported" = "Приватная отправка больше не доступна для этого токена.";
+"private_send.caution.attachment_unsupported" = "Этот приватный маршрут требует тег транзакции, который этот кошелёк не может прикрепить. Приватная отправка недоступна для этого токена.";
+"private_send.caution.amount_adjusted" = "Сумма была скорректирована для покрытия комиссий и больше не соответствует котировке приватной отправки. Уменьшите сумму и попробуйте снова.";
+"private_send.caution.quote_expired" = "Эта котировка истекла. Вернитесь и введите сумму заново, чтобы получить новую.";
+"private_send.caution.buffer_unknown" = "Указанная комиссия — это верхняя оценка; итоговая стоимость может быть ниже.";
+
 // Donate
 
 "donate.list.title" = "Пожертвовать с помощью";

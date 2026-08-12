@@ -593,6 +593,35 @@
 "send.address.blacklist.caution.title" = "黑名单地址！";
 "send.address.blacklist.caution.description" = "您输入的地址已被标记为黑名单地址。向该地址转账可能导致资金损失或其他风险。请在继续之前仔细核实收款人信息。";
 
+// Private Send
+
+"private_send.toggle.title" = "隐私发送";
+"private_send.toggle.subtitle" = "收款方无法在链上与您关联";
+"private_send.amount_caption" = "收款方收到的金额";
+"private_send.unavailable" = "隐私发送不可用";
+
+"private_send.fee" = "隐私发送费用";
+"private_send.max_deposit" = "最大存款金额";
+"private_send.refundable" = "未使用时退还";
+"private_send.estimated_time" = "预计到账时间";
+
+"private_send.quote_expired" = "报价已过期 — 请返回并重新输入";
+"private_send.commit_failed" = "无法设置隐私发送，请重试。";
+
+"private_send.caution.title" = "隐私发送";
+"private_send.caution.below_minimum %@" = "隐私发送要求收款方至少收到 %@。";
+"private_send.caution.above_maximum %@" = "隐私发送最多支持 %@。";
+"private_send.caution.insufficient_balance %@" = "此隐私发送需要您的钱包中有 %@（含手续费）。";
+"private_send.caution.no_route" = "当前没有适用于此代币和金额的隐私路由。";
+"private_send.caution.exact_output_unsupported" = "此路由无法保证精确的到账金额。";
+"private_send.caution.provider_suspended" = "隐私发送提供商暂时不可用。";
+"private_send.caution.network_error" = "无法连接隐私发送提供商。请检查网络连接后重试。";
+"private_send.caution.token_unsupported" = "此代币已不再支持隐私发送。";
+"private_send.caution.attachment_unsupported" = "此隐私路由需要一个此钱包无法附加的交易标签。此代币无法使用隐私发送。";
+"private_send.caution.amount_adjusted" = "金额已调整以涵盖手续费，不再与隐私发送报价匹配。请减少金额后重试。";
+"private_send.caution.quote_expired" = "此报价已过期。请返回并重新输入金额以获取新报价。";
+"private_send.caution.buffer_unknown" = "显示的费用为上限估算值，实际费用可能更低。";
+
 // Donate
 
 "donate.list.title" = "捐赠方式";

@@ -593,6 +593,35 @@
 "send.address.blacklist.caution.title" = "Adresse sur liste noire!";
 "send.address.blacklist.caution.description" = "L'adresse que vous avez saisie est signalée comme étant sur liste noire. Les transactions vers cette adresse pourraient entraîner des pertes ou d'autres risques. Veuillez vérifier les informations du destinataire avant de continuer.";
 
+// Private Send
+
+"private_send.toggle.title" = "Envoi privé";
+"private_send.toggle.subtitle" = "Le destinataire ne peut pas être lié à vous on-chain";
+"private_send.amount_caption" = "Montant reçu par le destinataire";
+"private_send.unavailable" = "Envoi privé indisponible";
+
+"private_send.fee" = "Frais d'envoi privé";
+"private_send.max_deposit" = "Dépôt maximum";
+"private_send.refundable" = "Remboursé si non utilisé";
+"private_send.estimated_time" = "Arrivée estimée";
+
+"private_send.quote_expired" = "Devis expiré — revenez en arrière et saisissez à nouveau le montant";
+"private_send.commit_failed" = "Impossible de configurer l'envoi privé. Veuillez réessayer.";
+
+"private_send.caution.title" = "Envoi privé";
+"private_send.caution.below_minimum %@" = "L'envoi privé nécessite que le destinataire reçoive au moins %@.";
+"private_send.caution.above_maximum %@" = "L'envoi privé prend en charge au maximum %@.";
+"private_send.caution.insufficient_balance %@" = "Cet envoi privé nécessite %@ dans votre wallet, frais inclus.";
+"private_send.caution.no_route" = "Aucune route privée n'est disponible pour ce token et ce montant actuellement.";
+"private_send.caution.exact_output_unsupported" = "Cette route ne peut pas garantir un montant reçu exact.";
+"private_send.caution.provider_suspended" = "Le fournisseur d'envoi privé est temporairement indisponible.";
+"private_send.caution.network_error" = "Impossible de joindre le fournisseur d'envoi privé. Vérifiez votre connexion et réessayez.";
+"private_send.caution.token_unsupported" = "L'envoi privé n'est plus disponible pour ce token.";
+"private_send.caution.attachment_unsupported" = "Cette route privée nécessite un tag de transaction que ce wallet ne peut pas joindre. L'envoi privé est indisponible pour ce token.";
+"private_send.caution.amount_adjusted" = "Le montant a été ajusté pour couvrir les frais et ne correspond plus au devis de l'envoi privé. Réduisez le montant et réessayez.";
+"private_send.caution.quote_expired" = "Ce devis a expiré. Revenez en arrière et saisissez à nouveau le montant pour en obtenir un nouveau.";
+"private_send.caution.buffer_unknown" = "Les frais affichés sont une estimation haute ; le coût final peut être inférieur.";
+
 // Donate
 
 "donate.list.title" = "Donnez avec";
