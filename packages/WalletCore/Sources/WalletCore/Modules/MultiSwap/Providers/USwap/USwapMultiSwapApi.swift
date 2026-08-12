@@ -4,12 +4,15 @@ import HsToolKit
 import ObjectMapper
 
 public final class USwapMultiSwapApi {
-    private static let decimalTransform = TransformOf<Decimal, String>(
+    // Amounts arrive as decimal strings on the amount fields but as bare JSON numbers on
+    // providerErrors.minimumAmount/maximumAmount, so both representations are accepted.
+    private static let decimalTransform = TransformOf<Decimal, Any>(
         fromJSON: { value in
-            guard let value else {
-                return nil
+            switch value {
+            case let value as String: return Decimal(string: value)
+            case let value as NSNumber: return Decimal(string: value.stringValue)
+            default: return nil
             }
-            return Decimal(string: value)
         },
         toJSON: { value in
             value?.description
@@ -46,7 +49,16 @@ public final class USwapMultiSwapApi {
         return response.passedAmlCheck
     }
 
-    public func rate(_ request: RateRequest) async throws -> [RateQuote] {
+    public func providers() async throws -> [ProviderDescriptor] {
+        let response: ProvidersResponse = try await networkManager.fetch(
+            url: endpoint("providers"),
+            headers: headers
+        )
+
+        return response.providers.map(\.descriptor)
+    }
+
+    public func rate(_ request: RateRequest) async throws -> RateResult {
         let response: RateResponse = try await networkManager.fetch(
             url: endpoint("rate"),
             method: .post,
@@ -55,7 +67,10 @@ public final class USwapMultiSwapApi {
             headers: headers
         )
 
-        return response.routes.map(\.quote)
+        return RateResult(
+            quotes: response.routes.map(\.quote),
+            providerErrors: response.providerErrors.map(\.providerError)
+        )
     }
 
     public func swap(_ request: SwapRequest) async throws -> SwapResponse {
@@ -116,13 +131,62 @@ public extension USwapMultiSwapApi {
         }
     }
 
+    // /v2/rate and /v2/swap take exactly one of sellAmount / buyAmount — neither or both is a 400.
+    enum AmountSpec: Equatable {
+        case sell(Decimal)
+        case buy(Decimal)
+
+        public var value: Decimal {
+            switch self {
+            case let .sell(value), let .buy(value): return value
+            }
+        }
+
+        public var isExactOutput: Bool {
+            if case .buy = self { return true }
+            return false
+        }
+
+        fileprivate var parameters: Parameters {
+            switch self {
+            case let .sell(value): return ["sellAmount": value.description]
+            case let .buy(value): return ["buyAmount": value.description]
+            }
+        }
+    }
+
+    enum Privacy: String {
+        case exclude
+        case only
+        case include
+    }
+
     struct RateRequest {
         public let sellAsset: String
         public let buyAsset: String
-        public let sellAmount: Decimal
+        public let amount: AmountSpec
         public let slippage: Decimal
         public let chainId: String?
         public let providerIds: [String]
+        public let privacy: Privacy
+
+        public init(
+            sellAsset: String,
+            buyAsset: String,
+            amount: AmountSpec,
+            slippage: Decimal,
+            chainId: String?,
+            providerIds: [String],
+            privacy: Privacy = .exclude
+        ) {
+            self.sellAsset = sellAsset
+            self.buyAsset = buyAsset
+            self.amount = amount
+            self.slippage = slippage
+            self.chainId = chainId
+            self.providerIds = providerIds
+            self.privacy = privacy
+        }
 
         public init(
             sellAsset: String,
@@ -130,24 +194,37 @@ public extension USwapMultiSwapApi {
             sellAmount: Decimal,
             slippage: Decimal,
             chainId: String?,
-            providerIds: [String]
+            providerIds: [String],
+            privacy: Privacy = .exclude
         ) {
-            self.sellAsset = sellAsset
-            self.buyAsset = buyAsset
-            self.sellAmount = sellAmount
-            self.slippage = slippage
-            self.chainId = chainId
-            self.providerIds = providerIds
+            self.init(
+                sellAsset: sellAsset,
+                buyAsset: buyAsset,
+                amount: .sell(sellAmount),
+                slippage: slippage,
+                chainId: chainId,
+                providerIds: providerIds,
+                privacy: privacy
+            )
         }
 
         fileprivate var parameters: Parameters {
             var parameters: Parameters = [
                 "sellAsset": sellAsset,
                 "buyAsset": buyAsset,
-                "sellAmount": sellAmount.description,
                 "slippage": slippage,
-                "providers": providerIds,
             ]
+
+            parameters.merge(amount.parameters) { _, new in new }
+
+            // An explicit provider list overrides the privacy filter server-side, so only one of
+            // the two is ever sent.
+            if providerIds.isEmpty {
+                parameters["privacy"] = privacy.rawValue
+            } else {
+                parameters["providers"] = providerIds
+            }
+
             if let chainId {
                 parameters["chainId"] = chainId
             }
@@ -162,6 +239,11 @@ public extension USwapMultiSwapApi {
         public let estimatedTime: TimeInterval?
         public let approvalSpender: String?
         public let providerId: String
+        // In exact-output mode this is the answer: the amount to deposit, carrying the slippage
+        // buffer over `minSellAmount`.
+        public let sellAmount: Decimal?
+        public let minSellAmount: Decimal?
+        public let exactOutput: Bool
 
         public init(
             expectedBuyAmount: Decimal,
@@ -169,7 +251,10 @@ public extension USwapMultiSwapApi {
             buyAsset: String?,
             estimatedTime: TimeInterval?,
             approvalSpender: String?,
-            providerId: String = ""
+            providerId: String = "",
+            sellAmount: Decimal? = nil,
+            minSellAmount: Decimal? = nil,
+            exactOutput: Bool = false
         ) {
             self.expectedBuyAmount = expectedBuyAmount
             self.minBuyAmount = minBuyAmount
@@ -177,19 +262,116 @@ public extension USwapMultiSwapApi {
             self.estimatedTime = estimatedTime
             self.approvalSpender = approvalSpender
             self.providerId = providerId
+            self.sellAmount = sellAmount
+            self.minSellAmount = minSellAmount
+            self.exactOutput = exactOutput
+        }
+    }
+
+    struct ProviderError {
+        // Tracking / diagnostics only — never shown in the UI.
+        public let providerId: String
+        public let message: String?
+        public let errorCode: String?
+        public let minimumAmount: Decimal?
+        public let maximumAmount: Decimal?
+
+        public init(providerId: String, message: String?, errorCode: String?, minimumAmount: Decimal?, maximumAmount: Decimal?) {
+            self.providerId = providerId
+            self.message = message
+            self.errorCode = errorCode
+            self.minimumAmount = minimumAmount
+            self.maximumAmount = maximumAmount
+        }
+    }
+
+    struct RateResult {
+        public let quotes: [RateQuote]
+        public let providerErrors: [ProviderError]
+
+        public init(quotes: [RateQuote], providerErrors: [ProviderError]) {
+            self.quotes = quotes
+            self.providerErrors = providerErrors
+        }
+    }
+
+    // A failed /v2/rate answers 200 with `{ routes, providerErrors }`; a failed /v2/swap answers a
+    // non-2xx with the provider error *itself* as the body — `{ error, provider, errorCode?,
+    // minimumAmount?, maximumAmount? }`, the same field set (API.txt §4, §9). Parsing it here keeps
+    // both surfaces on one wire mapping, and hands the caller only structured fields, never the body.
+    //
+    // Explicitly internal despite the public extension: the only caller is PrivateSendService, in this
+    // module — the same reason `track(_:)` is left internal in the class body above.
+    internal static func providerError(networkError: Error) -> ProviderError? {
+        guard let responseError = networkError as? NetworkManager.ResponseError,
+              let json = responseError.json as? [String: Any],
+              // Mapper.map(JSON:) is not throwing for any BaseMappable flavour — it reports failure as
+              // nil — so there is nothing here to `try`.
+              let response = Mapper<ProviderErrorResponse>().map(JSON: json)
+        else {
+            return nil
+        }
+
+        // A body with none of the provider-error markers is some other failure wearing the same
+        // envelope (an auth rejection, a proxy page). Reporting nil lets the caller fall back on the
+        // status code instead of inventing a route-level reason from it.
+        guard response.errorCode != nil || response.minimumAmount != nil || response.maximumAmount != nil else {
+            return nil
+        }
+
+        return response.providerError
+    }
+
+    struct ProviderDescriptor {
+        public let id: String
+        public let executionType: String
+        public let confidential: Bool
+        public let suspended: Bool
+        public let amlPolicy: String?
+        public let supportedChainIds: [String]
+
+        public init(id: String, executionType: String, confidential: Bool, suspended: Bool, amlPolicy: String?, supportedChainIds: [String]) {
+            self.id = id
+            self.executionType = executionType
+            self.confidential = confidential
+            self.suspended = suspended
+            self.amlPolicy = amlPolicy
+            self.supportedChainIds = supportedChainIds
         }
     }
 
     struct SwapRequest {
         public let sellAsset: String
         public let buyAsset: String
-        public let sellAmount: Decimal
+        public let amount: AmountSpec
         public let slippage: Decimal
         public let chainId: String?
         public let providerId: String
         public let destinationAddress: String
         public let sourceAddress: String?
         public let refundAddress: String?
+
+        public init(
+            sellAsset: String,
+            buyAsset: String,
+            amount: AmountSpec,
+            slippage: Decimal,
+            chainId: String?,
+            providerId: String,
+            destinationAddress: String,
+            sourceAddress: String?,
+            refundAddress: String?
+        ) {
+            self.sellAsset = sellAsset
+            self.buyAsset = buyAsset
+            self.amount = amount
+            self.slippage = slippage
+            self.chainId = chainId
+            self.providerId = providerId
+            self.destinationAddress = destinationAddress
+            self.sourceAddress = sourceAddress
+            self.refundAddress = refundAddress
+        }
 
         public init(
             sellAsset: String,
@@ -202,26 +384,30 @@ public extension USwapMultiSwapApi {
             sourceAddress: String?,
             refundAddress: String?
         ) {
-            self.sellAsset = sellAsset
-            self.buyAsset = buyAsset
-            self.sellAmount = sellAmount
-            self.slippage = slippage
-            self.chainId = chainId
-            self.providerId = providerId
-            self.destinationAddress = destinationAddress
-            self.sourceAddress = sourceAddress
-            self.refundAddress = refundAddress
+            self.init(
+                sellAsset: sellAsset,
+                buyAsset: buyAsset,
+                amount: .sell(sellAmount),
+                slippage: slippage,
+                chainId: chainId,
+                providerId: providerId,
+                destinationAddress: destinationAddress,
+                sourceAddress: sourceAddress,
+                refundAddress: refundAddress
+            )
         }
 
         fileprivate var parameters: Parameters {
             var parameters: Parameters = [
                 "sellAsset": sellAsset,
                 "buyAsset": buyAsset,
-                "sellAmount": sellAmount.description,
                 "slippage": slippage,
                 "provider": providerId,
                 "destinationAddress": destinationAddress,
             ]
+
+            parameters.merge(amount.parameters) { _, new in new }
+
             if let chainId {
                 parameters["chainId"] = chainId
             }
@@ -304,6 +490,9 @@ public extension USwapMultiSwapApi {
         public let execution: Execution?
         public let uuid: String?
         public let approvalSpender: String?
+        public let sellAmount: Decimal?
+        public let minSellAmount: Decimal?
+        public let exactOutput: Bool
 
         public init(
             expectedBuyAmount: Decimal,
@@ -312,7 +501,10 @@ public extension USwapMultiSwapApi {
             estimatedTime: TimeInterval?,
             execution: Execution?,
             uuid: String?,
-            approvalSpender: String?
+            approvalSpender: String?,
+            sellAmount: Decimal? = nil,
+            minSellAmount: Decimal? = nil,
+            exactOutput: Bool = false
         ) {
             self.expectedBuyAmount = expectedBuyAmount
             self.minBuyAmount = minBuyAmount
@@ -321,19 +513,74 @@ public extension USwapMultiSwapApi {
             self.execution = execution
             self.uuid = uuid
             self.approvalSpender = approvalSpender
+            self.sellAmount = sellAmount
+            self.minSellAmount = minSellAmount
+            self.exactOutput = exactOutput
+        }
+    }
+
+    enum Attachment: Equatable {
+        case text(String)
+        case destinationTag(String)
+        case unknown(type: String, value: String)
+
+        public var text: String? {
+            if case let .text(value) = self { return value }
+            return nil
+        }
+
+        init?(json: [String: Any]?) {
+            guard let json, let type = json["type"] as? String else {
+                return nil
+            }
+
+            let value = (json["value"] as? String) ?? (json["value"] as? NSNumber)?.stringValue ?? ""
+
+            switch type {
+            case "text": self = .text(value)
+            case "destination_tag": self = .destinationTag(value)
+            default: self = .unknown(type: type, value: value)
+            }
+        }
+
+        // Only a text memo can be carried by the plain deposit transactions this app builds, and
+        // only on a chain where that memo actually reaches the deposit-address owner. Anything else
+        // must fail the route rather than be dropped: the provider matches the incoming deposit to
+        // the order by this identifier, and a deposit it cannot match is typically unrecoverable.
+        //
+        // `memoType` is mandatory on purpose — it is what a caller must have decided BEFORE it can
+        // read the memo out, so no new deposit builder can forget the question. Pass the chain's
+        // BlockchainType.memoType, or the finer IPreSendHandler.memoType(address:) where the
+        // destination address is known.
+        public static func memo(_ attachment: Attachment?, memoType: MemoType) throws -> String? {
+            switch attachment {
+            case .none: return nil
+            case let .some(.text(value)):
+                guard memoType.deliversAttachment else { throw AttachmentError.undeliverable }
+                return value
+            case .some: throw AttachmentError.unsupported
+            }
+        }
+
+        public enum AttachmentError: Error {
+            // A destination tag or an attachment kind this app does not know how to carry.
+            case unsupported
+            // A text memo the transaction could technically hold, but which would never reach the
+            // provider on this chain (local-only or encrypted on-chain).
+            case undeliverable
         }
     }
 
     enum Execution {
         case signedTransaction(chain: String, transactions: [SignableTx], approval: Approval?)
-        case transfer(chain: String, depositAddress: String, attachment: [String: Any]?, unsignedTx: SignableTx?)
+        case transfer(chain: String, depositAddress: String, amount: Decimal?, attachment: Attachment?, unsignedTx: SignableTx?)
         case thorchainDeposit(chain: String, inboundAddress: String, memo: String, delivery: Delivery)
         case stellarBroker(StellarBrokerParams)
 
         var primarySignable: SignableTx? {
             switch self {
             case let .signedTransaction(_, transactions, _): transactions.first
-            case let .transfer(_, _, _, unsignedTx): unsignedTx
+            case let .transfer(_, _, _, _, unsignedTx): unsignedTx
             case let .thorchainDeposit(_, _, _, delivery): delivery.unsignedTx
             case .stellarBroker: nil
             }
@@ -342,19 +589,37 @@ public extension USwapMultiSwapApi {
         public var depositAddress: String? {
             switch self {
             case .signedTransaction: nil
-            case let .transfer(_, depositAddress, _, _): depositAddress
+            case let .transfer(_, depositAddress, _, _, _): depositAddress
             case let .thorchainDeposit(_, inboundAddress, _, _): inboundAddress
             case .stellarBroker: nil
             }
         }
 
-        func depositInstruction() -> (address: String, memo: String?)? {
+        // The amount the route wants deposited. Always transfer it as given — never recompute it.
+        public var transferAmount: Decimal? {
             switch self {
-            case let .transfer(_, depositAddress, attachment, _):
-                let memo = (attachment?["type"] as? String) == "text" ? attachment?["value"] as? String : nil
-                return (depositAddress, memo)
+            case .signedTransaction: return nil
+            case let .transfer(_, _, amount, _, _): return amount
+            case .thorchainDeposit: return nil
+            case .stellarBroker: return nil
+            }
+        }
+
+        public var chain: String? {
+            switch self {
+            case let .signedTransaction(chain, _, _): return chain
+            case let .transfer(chain, _, _, _, _): return chain
+            case let .thorchainDeposit(chain, _, _, _): return chain
+            case .stellarBroker: return nil
+            }
+        }
+
+        func depositInstruction() -> (address: String, amount: Decimal?, attachment: Attachment?)? {
+            switch self {
+            case let .transfer(_, depositAddress, amount, attachment, _):
+                return (depositAddress, amount, attachment)
             case let .thorchainDeposit(_, inboundAddress, memo, _):
-                return (inboundAddress, memo)
+                return (inboundAddress, nil, .text(memo))
             case .signedTransaction, .stellarBroker:
                 return nil
             }
@@ -522,11 +787,78 @@ extension USwapMultiSwapApi {
         }
     }
 
+    struct ProvidersResponse: ImmutableMappable {
+        let providers: [ProviderDescriptorResponse]
+
+        init(map: Map) throws {
+            providers = (try? map.value("providers")) ?? []
+        }
+    }
+
+    struct ProviderDescriptorResponse: ImmutableMappable {
+        let id: String
+        let executionType: String
+        let confidential: Bool
+        let suspended: Bool
+        let amlPolicy: String?
+        let supportedChainIds: [String]
+
+        init(map: Map) throws {
+            id = try map.value("id")
+            executionType = (try? map.value("executionType")) ?? ""
+            confidential = (try? map.value("privacy.confidential")) ?? false
+            suspended = (try? map.value("suspended")) ?? false
+            amlPolicy = try? map.value("amlPolicy")
+            supportedChainIds = (try? map.value("supportedChainIds")) ?? []
+        }
+
+        var descriptor: ProviderDescriptor {
+            ProviderDescriptor(
+                id: id,
+                executionType: executionType,
+                confidential: confidential,
+                suspended: suspended,
+                amlPolicy: amlPolicy,
+                supportedChainIds: supportedChainIds
+            )
+        }
+    }
+
     struct RateResponse: ImmutableMappable {
         let routes: [RateQuoteResponse]
+        let providerErrors: [ProviderErrorResponse]
 
         init(map: Map) throws {
             routes = try map.value("routes")
+            providerErrors = (try? map.value("providerErrors")) ?? []
+        }
+    }
+
+    struct ProviderErrorResponse: ImmutableMappable {
+        let providerId: String
+        let message: String?
+        let errorCode: String?
+        let minimumAmount: Decimal?
+        let maximumAmount: Decimal?
+
+        init(map: Map) throws {
+            providerId = ((try? map.value("provider")) ?? (try? map.value("providerId"))) ?? ""
+            // The documented key is "error" on both surfaces (API.txt §3 line 187, §4 line 358);
+            // "message" is accepted first because it is what some providers actually send.
+            message = (try? map.value("message")) ?? (try? map.value("error"))
+            errorCode = try? map.value("errorCode")
+            minimumAmount = try? map.value("minimumAmount", using: USwapMultiSwapApi.decimalTransform)
+            maximumAmount = try? map.value("maximumAmount", using: USwapMultiSwapApi.decimalTransform)
+        }
+
+        var providerError: ProviderError {
+            ProviderError(
+                providerId: providerId,
+                message: message,
+                errorCode: errorCode,
+                minimumAmount: minimumAmount,
+                maximumAmount: maximumAmount
+            )
         }
     }
 
@@ -538,6 +870,9 @@ extension USwapMultiSwapApi {
         let execution: ExecutionResponse?
         let approvalSpender: String?
         let providerId: String
+        let sellAmount: Decimal?
+        let minSellAmount: Decimal?
+        let exactOutput: Bool
 
         init(map: Map) throws {
             expectedBuyAmount = try map.value("expectedBuyAmount", using: USwapMultiSwapApi.decimalTransform)
@@ -547,6 +882,9 @@ extension USwapMultiSwapApi {
             execution = try? map.value("execution")
             approvalSpender = (try? map.value("approvalSpender")) ?? execution?.approvalSpender
             providerId = ((try? map.value("providers") as [String]) ?? []).first ?? ""
+            sellAmount = try? map.value("sellAmount", using: USwapMultiSwapApi.decimalTransform)
+            minSellAmount = try? map.value("meta.near.minSellAmount", using: USwapMultiSwapApi.decimalTransform)
+            exactOutput = (try? map.value("meta.near.exactOutput")) ?? false
         }
 
         var quote: RateQuote {
@@ -556,7 +894,10 @@ extension USwapMultiSwapApi {
                 buyAsset: buyAsset,
                 estimatedTime: estimatedTime,
                 approvalSpender: approvalSpender,
-                providerId: providerId
+                providerId: providerId,
+                sellAmount: sellAmount,
+                minSellAmount: minSellAmount,
+                exactOutput: exactOutput
             )
         }
     }
@@ -569,6 +910,9 @@ extension USwapMultiSwapApi {
         let execution: ExecutionResponse?
         let uuid: String?
         let approvalSpender: String?
+        let sellAmount: Decimal?
+        let minSellAmount: Decimal?
+        let exactOutput: Bool
 
         init(map: Map) throws {
             expectedBuyAmount = try map.value("expectedBuyAmount", using: USwapMultiSwapApi.decimalTransform)
@@ -578,6 +922,9 @@ extension USwapMultiSwapApi {
             execution = try? map.value("execution")
             uuid = try? map.value("uuid")
             approvalSpender = (try? map.value("approvalSpender")) ?? execution?.approvalSpender
+            sellAmount = try? map.value("sellAmount", using: USwapMultiSwapApi.decimalTransform)
+            minSellAmount = try? map.value("meta.near.minSellAmount", using: USwapMultiSwapApi.decimalTransform)
+            exactOutput = (try? map.value("meta.near.exactOutput")) ?? false
         }
 
         var response: SwapResponse {
@@ -588,7 +935,10 @@ extension USwapMultiSwapApi {
                 estimatedTime: estimatedTime,
                 execution: execution?.execution,
                 uuid: uuid,
-                approvalSpender: approvalSpender
+                approvalSpender: approvalSpender,
+                sellAmount: sellAmount,
+                minSellAmount: minSellAmount,
+                exactOutput: exactOutput
             )
         }
     }
@@ -656,7 +1006,7 @@ extension USwapMultiSwapApi {
 
     enum ExecutionResponse: ImmutableMappable {
         case signedTransaction(chain: String, transactions: [SignableTxResponse], approval: ApprovalResponse?)
-        case transfer(chain: String, depositAddress: String, attachment: [String: Any]?, unsignedTx: SignableTxResponse?)
+        case transfer(chain: String, depositAddress: String, amount: Decimal?, attachment: Attachment?, unsignedTx: SignableTxResponse?)
         case thorchainDeposit(chain: String, inboundAddress: String, memo: String, delivery: DeliveryResponse)
         case stellarBroker(StellarBrokerParams)
 
@@ -670,10 +1020,13 @@ extension USwapMultiSwapApi {
                     approval: try? map.value("approval")
                 )
             case "transfer":
+                let attachmentJson: [String: Any]? = try? map.value("attachment")
+
                 self = try .transfer(
                     chain: map.value("chain"),
                     depositAddress: map.value("depositAddress"),
-                    attachment: try? map.value("attachment"),
+                    amount: try? map.value("amount", using: USwapMultiSwapApi.decimalTransform),
+                    attachment: Attachment(json: attachmentJson),
                     unsignedTx: try? map.value("unsignedTx")
                 )
             case "thorchain_deposit":
@@ -719,10 +1072,11 @@ extension USwapMultiSwapApi {
                     transactions: transactions.map(\.signableTx),
                     approval: approval?.approval
                 )
-            case let .transfer(chain, depositAddress, attachment, unsignedTx):
+            case let .transfer(chain, depositAddress, amount, attachment, unsignedTx):
                 .transfer(
                     chain: chain,
                     depositAddress: depositAddress,
+                    amount: amount,
                     attachment: attachment,
                     unsignedTx: unsignedTx?.signableTx
                 )

@@ -24,6 +24,15 @@ final class USwapZanoFinalQuoteBuilder: USwapFinalQuoteBuilder {
             throw USwapMultiSwapProvider.SwapError.invalidTransactionData
         }
 
+        // Thrown, not folded into `transactionError`: the adapter passes a Zano memo as the
+        // transfer's "comment", which travels encrypted on-chain — whether the provider decrypts and
+        // reads it is unverifiable from here, and the failure mode is lost funds. Same for a
+        // destination tag or an unknown attachment kind.
+        let memo = try USwapMultiSwapApi.Attachment.memo(
+            deposit.attachment,
+            memoType: input.tokenIn.blockchainType.memoType
+        )
+
         let amount: ZanoSendAmount = adapter.balanceData.available == input.amountIn ? .all(input.amountIn) : .value(input.amountIn)
         var fee: Decimal?
         var transactionError: Error?
@@ -57,7 +66,7 @@ final class USwapZanoFinalQuoteBuilder: USwapFinalQuoteBuilder {
             estimatedTime: input.response.estimatedTime,
             amount: amount,
             address: deposit.address,
-            memo: deposit.memo,
+            memo: memo,
             fee: fee,
             transactionError: transactionError,
             toAddress: input.destinationAddress,

@@ -3,6 +3,7 @@ import SwiftUI
 
 struct PreSendView: View {
     @StateObject var viewModel: PreSendViewModel
+    @StateObject private var privateSend: PrivateSendViewModel
     private let addressVisible: Bool
     private let onDismiss: () -> Void
 
@@ -13,6 +14,7 @@ struct PreSendView: View {
 
     init(wallet: Wallet, handler: IPreSendHandler?, resolvedAddress: ResolvedAddress, amount: Decimal? = nil, memo: String? = nil, addressVisible: Bool = true, path: Binding<NavigationPath>, onDismiss: @escaping () -> Void) {
         _viewModel = StateObject(wrappedValue: PreSendViewModel(wallet: wallet, handler: handler, resolvedAddress: resolvedAddress, amount: amount, memo: memo))
+        _privateSend = StateObject(wrappedValue: PrivateSendViewModel(token: wallet.token, service: Core.privateSendService))
         self.addressVisible = addressVisible
         _path = path
         self.onDismiss = onDismiss
@@ -35,6 +37,7 @@ struct PreSendView: View {
                         VStack(spacing: .margin8) {
                             inputView()
                             availableBalanceView(value: balanceValue())
+                            privateSendView()
                         }
 
                         if viewModel.memoType != .none {
@@ -109,6 +112,27 @@ struct PreSendView: View {
                 .multilineTextAlignment(.trailing)
         }
         .padding(.horizontal, .margin16)
+    }
+
+    @ViewBuilder private func privateSendView() -> some View {
+        // Not rendered at all for an unsupported token, not merely disabled. `isSupported` is a
+        // synchronous read of the already-synced confidential token cache — this screen performs no
+        // network work.
+        if privateSend.isSupported {
+            ListSection {
+                Cell(
+                    middle: {
+                        MultiText(
+                            title: "private_send.toggle.title".localized,
+                            subtitle: "private_send.toggle.subtitle".localized
+                        )
+                    },
+                    right: {
+                        ThemeToggle(isOn: $privateSend.isEnabled.animation())
+                    }
+                )
+            }
+        }
     }
 
     @ViewBuilder private func inputView() -> some View {
@@ -193,16 +217,35 @@ struct PreSendView: View {
         let (title, disabled, showProgress) = buttonState()
 
         Button(action: {
-            guard let sendData = viewModel.sendData else { return }
+            // The private path is built inline and synchronously — no quote, no commit, no await —
+            // and is deliberately NOT gated on `viewModel.sendData`: under private send the deposit
+            // transfer is built later, inside the handler, once the commit has produced a deposit
+            // address and amount.
+            let data: SendData?
+            let address: String?
+
+            if privateSend.isEnabled {
+                if let amount = viewModel.amount {
+                    data = .privateSend(request: privateSend.request(recipient: viewModel.resolvedAddress.address, amount: amount))
+                } else {
+                    data = nil
+                }
+
+                // The real recipient, never a deposit address.
+                address = viewModel.resolvedAddress.address
+            } else {
+                data = viewModel.sendData?.sendData
+                address = viewModel.sendData?.address
+            }
+
+            guard let data else { return }
+
             let proceedToSend = {
                 if #available(iOS 17.0, *) {
                     focusField = nil
-                    path.append(ConfirmationData(
-                        sendData: sendData.sendData,
-                        address: sendData.address
-                    ))
+                    path.append(ConfirmationData(sendData: data, address: address))
                 } else {
-                    presentRegularSendView(sendData: sendData.sendData, address: sendData.address)
+                    presentRegularSendView(sendData: data, address: address)
                 }
             }
             if viewModel.resolvedAddress.issueTypes.isEmpty {
@@ -287,7 +330,9 @@ struct PreSendView: View {
             title = "send.insufficient_balance".localized
         } else {
             title = "send.next_button".localized
-            disabled = viewModel.sendData == nil
+            // A private send has no inner SendData at this stage — it is built inside the handler
+            // after the commit — so it must not be gated on `viewModel.sendData`.
+            disabled = !privateSend.isEnabled && viewModel.sendData == nil
         }
 
         return (title, disabled, showProgress)

@@ -60,8 +60,10 @@ extension ZanoPreSendHandler: IPreSendHandler {
         balanceSubject.eraseToAnyPublisher()
     }
 
+    // Chain-constant, so it reads the one table rather than restating it: a Zano memo is the
+    // transfer's encrypted comment (.onChainPrivate).
     func memoType(address _: String?) -> MemoType {
-        .onChainPrivate
+        token.blockchainType.memoType
     }
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {

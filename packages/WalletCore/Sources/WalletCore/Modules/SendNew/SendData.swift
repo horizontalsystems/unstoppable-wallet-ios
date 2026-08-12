@@ -31,6 +31,10 @@ public enum SendData {
     case thorChain(token: Token, amount: ThorChainKit.SendAmount, recipient: ThorChainKit.Address, memo: String?)
     indirect case openCryptoPay(payment: OpenCryptoPayPayment, entry: OpenCryptoPayPayment.Entry, inner: SendData)
     indirect case payment(info: PaymentInfo, inner: SendData)
+    // Unlike the two decorator cases above, this one carries no inner SendData: with no pre-send
+    // quoting and exact-output semantics, neither the deposit address nor the amount to transfer
+    // exists yet. Both are the commit's answer, so the inner send is built inside the handler.
+    case privateSend(request: PrivateSendRequest)
 }
 
 // App-agnostic display + reporting payload attached to a merchant payment send. Carried through the

@@ -194,7 +194,6 @@ enum CanonicalAssetId {
     }
 }
 
-
 /// The provider-id → rules index, plus the one question the swap screen asks.
 public struct SwapSuspensionIndex {
     private let byProvider: [String: [SwapSuspension]]

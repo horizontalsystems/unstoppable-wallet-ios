@@ -24,6 +24,16 @@ final class USwapMoneroFinalQuoteBuilder: USwapFinalQuoteBuilder {
             throw USwapMultiSwapProvider.SwapError.invalidTransactionData
         }
 
+        // Thrown, not folded into `transactionError`: a Monero memo never leaves this device — the
+        // adapter hands it to MoneroKit, which stores it as a wallet user note against the tx id
+        // (MONERO_Wallet_setUserNote), so the provider can never read the identifier it needs to
+        // match this deposit. Same for a destination tag or an unknown attachment kind. A deposit
+        // that silently loses it is unrecoverable.
+        let memo = try USwapMultiSwapApi.Attachment.memo(
+            deposit.attachment,
+            memoType: input.tokenIn.blockchainType.memoType
+        )
+
         let amount: MoneroSendAmount = adapter.balanceData.available == input.amountIn ? .all(input.amountIn) : .value(input.amountIn)
         let priority = input.transactionSettings?.moneroPriority ?? .default
         var fee: Decimal?
@@ -52,7 +62,7 @@ final class USwapMoneroFinalQuoteBuilder: USwapFinalQuoteBuilder {
             estimatedTime: input.response.estimatedTime,
             amount: amount,
             address: deposit.address,
-            memo: deposit.memo,
+            memo: memo,
             token: input.tokenIn,
             priority: priority,
             fee: fee,

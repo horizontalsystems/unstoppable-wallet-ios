@@ -110,7 +110,23 @@ struct SendView: View {
     }
 
     @ViewBuilder private func errorView(error: Error) -> some View {
-        PlaceholderViewNew(icon: "warning_filled", subtitle: "send.confirmation.failed_to_fetch_data".localized) {
+        // A handler that authored a user-facing reason (a private send that cannot be quoted or
+        // committed says exactly why, and often names an amount) gets to show it instead of the
+        // generic copy.
+        //
+        // The gate is UserFacingError, NOT LocalizedError: this view is shared by every send flow,
+        // and types like HsToolKit's NetworkManager.ResponseError conform to LocalizedError purely
+        // for debug logging — its errorDescription is "[statusCode: …]\n<server response body>".
+        // Anything not explicitly marked user-facing renders the generic placeholder, exactly as
+        // it did before.
+        let userFacingError = error as? UserFacingError
+        let description = userFacingError?.errorDescription
+
+        PlaceholderViewNew(
+            icon: "warning_filled",
+            title: description == nil ? nil : userFacingError?.failureReason,
+            subtitle: description ?? "send.confirmation.failed_to_fetch_data".localized
+        ) {
             ThemeButton(text: "button.copy_error".localized, mode: .transparent, size: .small) {
                 CopyHelper.copyAndNotify(value: error.smartDescription)
             }

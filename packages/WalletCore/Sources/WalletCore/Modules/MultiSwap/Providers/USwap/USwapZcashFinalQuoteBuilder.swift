@@ -27,12 +27,22 @@ final class USwapZcashFinalQuoteBuilder: USwapFinalQuoteBuilder {
             throw SendTransactionError.invalidAddress
         }
 
+        // Thrown, not folded into `transactionError`: the memo below rides a ZIP-321 payment URI, so
+        // a shielded deposit address encrypts it on-chain (unverifiable that the provider reads it)
+        // and a transparent one carries no memo at all. Neither delivers the identifier, and a
+        // deposit the provider cannot match is unrecoverable. Same for a destination tag or an
+        // unknown attachment kind.
+        let memoText = try USwapMultiSwapApi.Attachment.memo(
+            deposit.attachment,
+            memoType: input.tokenIn.blockchainType.memoType
+        )
+
         var transactionError: Error?
         var proposal: Proposal?
         var totalFeeRequired: Zatoshi?
 
         do {
-            let memo = try deposit.memo.map { try Memo(string: $0) }
+            let memo = try memoText.map { try Memo(string: $0) }
             let output = ZcashAdapter.TransferOutput(
                 amount: input.amountIn.rounded(decimal: 8),
                 address: adapterRecipient,

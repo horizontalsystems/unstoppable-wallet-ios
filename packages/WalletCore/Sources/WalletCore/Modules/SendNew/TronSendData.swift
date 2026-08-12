@@ -152,6 +152,10 @@ class TronSendData: ISendData {
         return cautions
     }
 
+    func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
+        TronSendHelper.feeFields(baseToken: self.baseToken, totalFees: totalFees, fees: fees, currency: currency, feeTokenRate: rates[baseToken.coin.uid])
+    }
+
     func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
         var sections = [SendDataSection]()
         if let flow = flowSection(baseToken: baseToken, currency: currency, rates: rates) {
@@ -159,7 +163,7 @@ class TronSendData: ISendData {
         }
 
         let decorationFields = decorationFields(currency: currency, rates: rates)
-        let feeFields = TronSendHelper.feeFields(baseToken: self.baseToken, totalFees: totalFees, fees: fees, currency: currency, feeTokenRate: rates[baseToken.coin.uid])
+        let feeFields = feeFields(baseToken: baseToken, currency: currency, rates: rates)
 
         sections.append(.init(decorationFields + feeFields, isMain: false))
 

@@ -81,6 +81,13 @@ extension TronSendHandler: ISendHandler {
     }
 
     func send(data: ISendData) async throws {
+        _ = try await sendCapturingRef(data: data)
+    }
+}
+
+extension TronSendHandler: ISendHandlerRefCapturing {
+    // Same broadcast path as `send`. The Tron tx hash IS the created transaction's `txID`.
+    func sendCapturingRef(data: ISendData) async throws -> String {
         guard let data = data as? TronSendData else {
             throw SendError.invalidData
         }
@@ -93,10 +100,12 @@ extension TronSendHandler: ISendHandler {
             throw SendError.noFees
         }
 
-        _ = try await tronKitWrapper.send(
+        let created = try await tronKitWrapper.send(
             contract: contract,
             feeLimit: totalFees
         )
+
+        return created.txID.hs.hex
     }
 }
 

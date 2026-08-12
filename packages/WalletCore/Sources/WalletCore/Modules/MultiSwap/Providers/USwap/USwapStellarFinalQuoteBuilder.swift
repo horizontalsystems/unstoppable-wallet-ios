@@ -56,11 +56,18 @@ final class USwapStellarFinalQuoteBuilder: USwapFinalQuoteBuilder {
             throw USwapMultiSwapProvider.SwapError.invalidTransactionData
         }
 
-        let transactionData = StellarSendHelper.TransactionData.payment(
+        // A text memo IS deliverable here and must keep working: a Stellar text memo is a plain,
+        // publicly readable field of the payment transaction. Still throws on a destination tag or
+        // an unknown attachment kind, outside the do/catch below so it surfaces rather than being
+        // folded into `transactionError`.
+        let transactionData = try StellarSendHelper.TransactionData.payment(
             asset: asset,
             amount: input.amountIn,
             accountId: deposit.address,
-            memo: deposit.memo
+            memo: USwapMultiSwapApi.Attachment.memo(
+                deposit.attachment,
+                memoType: input.tokenIn.blockchainType.memoType
+            )
         )
 
         var transactionError: Error?

@@ -70,6 +70,10 @@ extension ZcashPreSendHandler: IPreSendHandler {
         balanceSubject.eraseToAnyPublisher()
     }
 
+    // The one chain whose answer varies by address, so it narrows BlockchainType.memoType rather
+    // than reading it: a shielded address encrypts the memo on-chain, a transparent one carries no
+    // memo at all. Both are narrower than the chain-level .onChainPrivate and neither delivers, so
+    // the table stays conclusive for refusals.
     func memoType(address: String?) -> MemoType {
         guard let address, let addressType = try? adapter.validate(address: address, checkSendToSelf: true) else {
             return .none

@@ -58,8 +58,10 @@ extension TonPreSendHandler: IPreSendHandler {
         balanceSubject.eraseToAnyPublisher()
     }
 
+    // Chain-constant, so it reads the one table rather than restating it: a TON comment is a public
+    // payload (.onChainPublic).
     func memoType(address _: String?) -> MemoType {
-        .onChainPublic
+        token.blockchainType.memoType
     }
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {

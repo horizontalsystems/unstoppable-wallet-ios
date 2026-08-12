@@ -78,6 +78,13 @@ extension EvmSendHandler: ISendHandler {
     }
 
     func send(data: ISendData) async throws {
+        _ = try await sendCapturingRef(data: data)
+    }
+}
+
+extension EvmSendHandler: ISendHandlerRefCapturing {
+    // Same broadcast path as `send`, returning the on-chain tx hash.
+    func sendCapturingRef(data: ISendData) async throws -> String {
         guard let data = data as? EvmSendData else {
             throw SendError.invalidData
         }
@@ -94,13 +101,15 @@ extension EvmSendHandler: ISendHandler {
             throw SendError.noGasLimit
         }
 
-        _ = try await evmKitWrapper.send(
+        let fullTransaction = try await evmKitWrapper.send(
             transactionData: transactionData,
             gasPrice: gasPrice,
             gasLimit: gasLimit,
             privateSend: false,
             nonce: data.nonce
         )
+
+        return fullTransaction.transaction.hash.hs.hexString
     }
 }
 

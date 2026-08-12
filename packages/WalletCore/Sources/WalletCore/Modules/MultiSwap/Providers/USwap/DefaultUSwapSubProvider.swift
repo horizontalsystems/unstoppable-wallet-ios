@@ -61,9 +61,9 @@ public class DefaultUSwapSubProvider: USwapSubProvider {
             chainId: commitRequestBuilder.chainId(token: input.tokenIn),
             providerIds: [info.id]
         )
-        let quotes = try await api.rate(request)
+        let result = try await api.rate(request)
 
-        guard let quote = quotes.first else {
+        guard let quote = result.quotes.first else {
             throw SwapError.noRoutes
         }
 

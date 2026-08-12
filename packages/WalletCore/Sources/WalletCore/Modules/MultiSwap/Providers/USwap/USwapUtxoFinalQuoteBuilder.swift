@@ -27,6 +27,15 @@ final class USwapUtxoFinalQuoteBuilder: USwapFinalQuoteBuilder {
             throw USwapMultiSwapProvider.SwapError.invalidTransactionData
         }
 
+        // A text memo IS deliverable here and must keep working: it reaches BitcoinCore's
+        // OutputSetter, which broadcasts it as a plain OP_RETURN output the provider can read. It
+        // travels on `params` below, and `canSwap` requires those, so it can never be sent without.
+        // Still throws on a destination tag or an unknown attachment kind.
+        let memo = try USwapMultiSwapApi.Attachment.memo(
+            deposit.attachment,
+            memoType: input.tokenIn.blockchainType.memoType
+        )
+
         if let satoshiPerByte = input.transactionSettings?.satoshiPerByte,
            let adapter = adapterManager.adapter(for: input.tokenIn) as? BitcoinBaseAdapter
         {
@@ -36,7 +45,7 @@ final class USwapUtxoFinalQuoteBuilder: USwapFinalQuoteBuilder {
                     address: deposit.address,
                     value: value,
                     feeRate: satoshiPerByte,
-                    memo: deposit.memo
+                    memo: memo
                 )
 
                 sendInfo = try adapter.sendInfo(params: sendParameters)

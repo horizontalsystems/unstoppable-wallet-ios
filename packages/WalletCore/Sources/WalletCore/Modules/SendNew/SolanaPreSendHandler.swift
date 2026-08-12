@@ -57,8 +57,10 @@ extension SolanaPreSendHandler: IPreSendHandler {
         balanceSubject.eraseToAnyPublisher()
     }
 
+    // Chain-constant, so it reads the one table rather than restating it: nothing on this path
+    // carries the memo to the chain (.none).
     func memoType(address _: String?) -> MemoType {
-        .none
+        token.blockchainType.memoType
     }
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
