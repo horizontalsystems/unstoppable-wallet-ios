@@ -354,7 +354,9 @@
 "transactions.migrate" = "Migrieren";
 "transactions.migrate.to_ironwood" = "nach Ironwood";
 "balance.token.migration.detected.title" = "ZEC-Pool-Migration";
-"balance.token.migration.detected.description" = "Zcash wurde auf einen neuen geschützten Pool aktualisiert. Ihr Guthaben im alten Pool muss migriert werden, um in Unstoppable weiterhin vollständig nutzbar zu bleiben.";
+"balance.token.migration.detected.description" = "Zcash has upgraded to a new shielded pool. Your shielded balance must be migrated to that new pool to remain fully anonymous in future transactions.
+\n\nPlease note that migration transactions aren’t fully anonymous and expose the amounts involved.
+\n\nTo maintain high level of privacy you may consider using VPN or TOR when making migration transactions.";
 "balance.token.migrate" = "Migrieren";
 "error.zcash.migration_failed" = "Die Migration konnte nicht abgeschlossen werden. Es sind keine Mittel verloren gegangen — Sie können es später erneut versuchen.";
 "zcash.migration.warning.title" = "Öffentlich sichtbarer Betrag";

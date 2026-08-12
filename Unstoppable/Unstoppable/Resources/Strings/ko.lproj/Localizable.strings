@@ -354,7 +354,9 @@
 "transactions.migrate" = "마이그레이션";
 "transactions.migrate.to_ironwood" = "Ironwood로";
 "balance.token.migration.detected.title" = "ZEC 풀 마이그레이션";
-"balance.token.migration.detected.description" = "Zcash가 새로운 차폐 풀로 업그레이드되었습니다. 이전 풀의 잔액을 Unstoppable에서 완전히 사용할 수 있도록 마이그레이션해야 합니다.";
+"balance.token.migration.detected.description" = "Zcash has upgraded to a new shielded pool. Your shielded balance must be migrated to that new pool to remain fully anonymous in future transactions.
+\n\nPlease note that migration transactions aren’t fully anonymous and expose the amounts involved.
+\n\nTo maintain high level of privacy you may consider using VPN or TOR when making migration transactions.";
 "balance.token.migrate" = "마이그레이션";
 "error.zcash.migration_failed" = "마이그레이션을 완료할 수 없습니다. 자금 손실은 없습니다 — 나중에 다시 시도할 수 있습니다.";
 "zcash.migration.warning.title" = "공개적으로 표시되는 금액";
