@@ -591,6 +591,35 @@
 "send.address.blacklist.caution.title" = "Adresse auf schwarzer Liste!";
 "send.address.blacklist.caution.description" = "Die eingegebene Adresse ist als auf der schwarzen Liste stehend gekennzeichnet. Transaktionen an diese Adresse könnten zu Verlusten oder anderen Risiken führen. Bitte überprüfe die Details des Empfängers, bevor du fortfährst.";
 
+// Private Send
+
+"private_send.toggle.title" = "Privater Versand";
+"private_send.toggle.subtitle" = "Der Empfänger kann on-chain nicht mit Ihnen verknüpft werden";
+"private_send.amount_caption" = "Betrag, den der Empfänger erhält";
+"private_send.unavailable" = "Privater Versand nicht verfügbar";
+
+"private_send.fee" = "Gebühr für privaten Versand";
+"private_send.max_deposit" = "Maximale Einzahlung";
+"private_send.refundable" = "Wird erstattet, falls nicht verwendet";
+"private_send.estimated_time" = "Voraussichtliche Ankunft";
+
+"private_send.quote_expired" = "Angebot abgelaufen – gehen Sie zurück und geben Sie den Betrag erneut ein";
+"private_send.commit_failed" = "Der private Versand konnte nicht eingerichtet werden. Versuchen Sie es erneut.";
+
+"private_send.caution.title" = "Privater Versand";
+"private_send.caution.below_minimum %@" = "Beim privaten Versand muss der Empfänger mindestens %@ erhalten.";
+"private_send.caution.above_maximum %@" = "Privater Versand unterstützt maximal %@.";
+"private_send.caution.insufficient_balance %@" = "Für diesen privaten Versand benötigen Sie %@ in Ihrem Wallet, einschließlich Gebühren.";
+"private_send.caution.no_route" = "Für diesen Token und Betrag ist derzeit keine private Route verfügbar.";
+"private_send.caution.exact_output_unsupported" = "Diese Route kann keinen exakten Empfangsbetrag garantieren.";
+"private_send.caution.provider_suspended" = "Der Anbieter für privaten Versand ist vorübergehend nicht verfügbar.";
+"private_send.caution.network_error" = "Der Anbieter für privaten Versand konnte nicht erreicht werden. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.";
+"private_send.caution.token_unsupported" = "Privater Versand ist für diesen Token nicht mehr verfügbar.";
+"private_send.caution.attachment_unsupported" = "Diese private Route erfordert ein Transaktions-Tag, das dieses Wallet nicht anhängen kann. Privater Versand ist für diesen Token nicht verfügbar.";
+"private_send.caution.amount_adjusted" = "Der Betrag wurde angepasst, um die Gebühren zu decken, und stimmt nicht mehr mit dem Angebot für den privaten Versand überein. Reduzieren Sie den Betrag und versuchen Sie es erneut.";
+"private_send.caution.quote_expired" = "Dieses Angebot ist abgelaufen. Gehen Sie zurück und geben Sie den Betrag erneut ein, um ein neues zu erhalten.";
+"private_send.caution.buffer_unknown" = "Die angezeigte Gebühr ist eine Obergrenze; die tatsächlichen Kosten können niedriger sein.";
+
 // Donate
 
 "donate.list.title" = "Spenden mit";
