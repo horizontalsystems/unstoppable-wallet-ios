@@ -256,8 +256,22 @@ extension MoneroAdapter {
         return Decimal(fee) / coinRate
     }
 
-    @discardableResult func send(to address: String, amount: MoneroSendAmount, priority: MoneroKit.SendPriority, memo: String?) throws -> [String] {
-        try kit.send(to: address, amount: convertToPiconero(amount: amount), priority: priority, memo: memo)
+    @discardableResult func send(to address: String, amount: MoneroSendAmount, priority: MoneroKit.SendPriority, memo: String?, selectedKeyImages: [String]? = nil) throws -> [String] {
+        try kit.send(to: address, amount: convertToPiconero(amount: amount), priority: priority, memo: memo, selectedKeyImages: selectedKeyImages)
+    }
+
+    /// Takes the wallet mutex - never call from the main thread.
+    func unspentOutputs() throws -> [MoneroKit.UnspentOutput] {
+        try kit.unspentOutputs()
+    }
+
+    /// Timestamps of known transactions by hash, for labeling outputs in the selection UI.
+    func transactionTimestamps() -> [String: Int] {
+        Dictionary(kit.transactions(descending: true, type: nil, limit: nil).map { ($0.hash, $0.timestamp) }, uniquingKeysWith: { first, _ in first })
+    }
+
+    func subaddress(index: Int) -> String? {
+        kit.usedAddresses.first { $0.index == index }?.address
     }
 
     func convertToPiconero(amount: MoneroSendAmount) -> SendAmount {

@@ -25,7 +25,7 @@ public enum SendData {
     case swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, multiSwapQuote: MultiSwapQuote)
     case walletConnect(request: WalletConnectRequest)
     case tonConnect(request: TonConnectSendTransactionRequest)
-    case monero(token: Token, amount: MoneroSendAmount, address: String, memo: String?)
+    case monero(token: Token, amount: MoneroSendAmount, address: String, memo: String?, selectedKeyImages: [String]?)
     case zano(token: Token, amount: ZanoSendAmount, address: String, memo: String?)
     case zanoAsset(token: Token, baseToken: Token, amount: ZanoSendAmount, address: String, memo: String?)
     case thorChain(token: Token, amount: ThorChainKit.SendAmount, recipient: ThorChainKit.Address, memo: String?)
