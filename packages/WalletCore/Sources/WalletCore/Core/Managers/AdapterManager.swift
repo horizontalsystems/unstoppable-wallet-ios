@@ -201,6 +201,15 @@ extension AdapterManager {
         queue.sync { _adapterData.adapterMap[wallet] }
     }
 
+    // Re-emits the current adapter data so consumers (e.g. transaction pools) rebuild against
+    // adapters whose internal scope changed without being recreated - such as a Monero
+    // account switch, which requires no kit restart.
+    func reloadAdapterData() {
+        queue.async {
+            self.adapterDataReadyRelay.accept(self._adapterData)
+        }
+    }
+
     public func adapter(for token: Token) -> IAdapter? {
         queue.sync {
             guard let wallet = walletManager.activeWallets.first(where: { $0.token == token }) else {

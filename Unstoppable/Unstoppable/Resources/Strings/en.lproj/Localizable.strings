@@ -25,6 +25,7 @@
 "button.reject" = "Reject";
 "button.connect" = "Connect";
 "button.save" = "Save";
+"button.create" = "Create";
 "button.send" = "Send";
 "button.sign" = "Sign";
 "button.i_understand" = "I Understand";
@@ -2177,6 +2178,12 @@
 "monero_network.added" = "Added";
 "monero_network.add_new" = "Add New";
 "monero_network.description" = "Choose the node Unstoppable app should use for synchronizing wallet(s).";
+"monero.account" = "Account";
+"monero.accounts.title" = "Accounts";
+"monero.accounts.description" = "Accounts are separate compartments inside the same Monero wallet. Balances, addresses and transactions shown belong to the active account. Moving funds between accounts requires an on-chain transaction.";
+"monero.accounts.new" = "New Account";
+"monero.accounts.rename" = "Rename";
+"monero.accounts.name_placeholder" = "Name (optional)";
 "monero_network.settings.title" = "Node Preferences";
 "monero_network.settings.description" = "Trusted node - When enabled, the wallet trusts the selected node and accepts its data without additional verification. \n\nOn → Transactions appear as Pending immediately after broadcast (faster sync, but lower privacy and greater reliance on the node).\n\nOff → Transactions appear only after network confirmations (slower, but safer and more private).";
 "monero_network.settings.trust" = "Trust";
