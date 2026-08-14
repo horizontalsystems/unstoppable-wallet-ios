@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import HdWalletKit
+import MoneroKit
 
 class RestoreMnemonicViewModel: ObservableObject {
     private let accountFactory = Core.shared.accountFactory
@@ -67,9 +68,11 @@ class RestoreMnemonicViewModel: ObservableObject {
             let word = String(text[range]).lowercased()
             let type: WordItemType
 
-            if wordList.contains(word) {
+            // Monero legacy words are accepted alongside the BIP39 list; the two wordlists
+            // are fully disjoint, so a finished phrase is unambiguous.
+            if wordList.contains(word) || MoneroMnemonic.isValid(word: word) {
                 type = .correct
-            } else if wordList.contains(where: { $0.hasPrefix(word) }) {
+            } else if wordList.contains(where: { $0.hasPrefix(word) }) || MoneroMnemonic.isValid(word: word, partial: true) {
                 type = .correctPrefix
             } else {
                 type = .incorrect
@@ -80,7 +83,7 @@ class RestoreMnemonicViewModel: ObservableObject {
     }
 
     private func possibleMnemonicWords(string: String) -> [String] {
-        wordList.filter { $0.hasPrefix(string) }
+        wordList.filter { $0.hasPrefix(string) } + MoneroMnemonic.suggestions(prefix: string)
     }
 
     private func hasCursor(item: WordItem) -> Bool {
@@ -104,6 +107,31 @@ class RestoreMnemonicViewModel: ObservableObject {
             words: words.map(\.decomposedStringWithCompatibilityMapping),
             salt: passphrase.decomposedStringWithCompatibilityMapping,
             bip39Compliant: true
+        )
+    }
+
+    private func resolveMoneroAccountType(words: [String]) throws -> AccountType {
+        let invalidItems = mnemonicItems.filter { !MoneroMnemonic.isValid(word: $0.word) }
+        guard invalidItems.isEmpty else {
+            invalidRanges = invalidItems.map(\.range)
+            throw MoneroRestoreError.invalidChecksum
+        }
+
+        do {
+            try MoneroMnemonic.validateChecksum(words: words)
+        } catch {
+            throw MoneroRestoreError.invalidChecksum
+        }
+
+        let rawPassphrase = advanced ? passphrase : ""
+        // A whitespace-only passphrase collapses to empty: backup serialization drops blank
+        // passphrases, so a whitespace-only seed offset would silently restore a different
+        // wallet after a backup round-trip. Matches the Android implementation.
+        let resolvedPassphrase = rawPassphrase.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "" : rawPassphrase
+
+        return .moneroMnemonic(
+            words: words.map(\.decomposedStringWithCompatibilityMapping),
+            passphrase: resolvedPassphrase
         )
     }
 }
@@ -172,8 +200,19 @@ extension RestoreMnemonicViewModel {
         }
 
         do {
-            let accountType = try resolveAccountType(words: mnemonicItems.map(\.word))
+            let words = mnemonicItems.map(\.word)
+
+            let accountType: AccountType
+            if words.count == MoneroMnemonic.wordCount {
+                // 25 words can only be a Monero legacy seed: BIP39 tops out at 24
+                accountType = try resolveMoneroAccountType(words: words)
+            } else {
+                accountType = try resolveAccountType(words: words)
+            }
+
             proceedSubject.send((resolvedName, accountType))
+        } catch MoneroRestoreError.invalidChecksum {
+            mnemonicCaution = .caution(Caution(text: "restore.checksum_error".localized, type: .error))
         } catch {
             mnemonicCaution = .caution(Caution(text: error.convertedError.smartDescription, type: .error))
         }
@@ -183,6 +222,10 @@ extension RestoreMnemonicViewModel {
 // MARK: - Types
 
 extension RestoreMnemonicViewModel {
+    enum MoneroRestoreError: Error {
+        case invalidChecksum
+    }
+
     enum WordItemType {
         case correct
         case incorrect

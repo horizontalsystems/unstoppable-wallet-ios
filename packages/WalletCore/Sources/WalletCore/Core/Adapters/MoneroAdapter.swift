@@ -59,6 +59,18 @@ class MoneroAdapter {
                 logger: logger
             )
 
+        case let .moneroMnemonic(words, passphrase):
+            kit = try MoneroKit.Kit(
+                wallet: .legacy(seed: words, passphrase: passphrase),
+                account: 0,
+                restoreHeight: UInt64(restoreSettings.birthdayHeight ?? 0),
+                walletId: wallet.account.id,
+                node: node,
+                networkType: Self.networkType,
+                reachabilityManager: Core.shared.reachabilityManager,
+                logger: logger
+            )
+
         default:
             throw AdapterError.unsupportedAccount
         }

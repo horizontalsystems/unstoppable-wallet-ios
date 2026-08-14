@@ -19,6 +19,9 @@ public enum AccountType: Identifiable {
     case hdExtendedKey(key: HDExtendedKey)
     case btcAddress(address: String, blockchainType: BlockchainType, tokenType: TokenType)
     case moneroWatchAccount(address: String, viewKey: String)
+    // A raw ed25519 spend key behind a Monero legacy (Electrum-style) 25-word seed; no other
+    // chain can be derived from it. The passphrase is wallet2's seed offset, not a BIP39 salt.
+    case moneroMnemonic(words: [String], passphrase: String)
 
     public var id: Self {
         self
@@ -70,6 +73,15 @@ public enum AccountType: Identifiable {
             privateData = "\(address)&\(blockchainType.uid)|\(tokenType.id)".data(using: .utf8) ?? Data()
         case let .moneroWatchAccount(address, viewKey):
             privateData = "\(address)|\(viewKey)".data(using: .utf8) ?? Data()
+        case let .moneroMnemonic(words, passphrase):
+            // Must stay byte-identical to Android's BackupLocalModule format so encrypted
+            // backups restore across platforms.
+            var description = words.joined(separator: " ")
+            if !passphrase.isEmpty {
+                description += "@" + passphrase
+            }
+
+            privateData = description.data(using: .utf8) ?? Data()
         }
 
         if hashed {
@@ -162,6 +174,8 @@ public enum AccountType: Identifiable {
             return token.blockchainType == blockchainType && token.type == tokenType
         case .moneroWatchAccount:
             return token.blockchainType == .monero
+        case .moneroMnemonic:
+            return token.blockchainType == .monero && token.type == .native
         }
     }
 
@@ -225,6 +239,9 @@ public enum AccountType: Identifiable {
             return "BTC Address"
         case .moneroWatchAccount:
             return "Monero Watch Account"
+        case let .moneroMnemonic(words, passphrase):
+            let count = "\(words.count)"
+            return passphrase.isEmpty ? "manage_accounts.n_words".localized(count) : "manage_accounts.n_words_with_passphrase".localized(count)
         }
     }
 
@@ -267,6 +284,8 @@ public enum AccountType: Identifiable {
             return "btc_address"
         case .moneroWatchAccount:
             return "monero_watch_account"
+        case let .moneroMnemonic(_, passphrase):
+            return passphrase.isEmpty ? "monero_mnemonic" : "monero_mnemonic_with_passphrase"
         }
     }
 
@@ -418,6 +437,15 @@ extension AccountType {
             let viewKey = components[1]
 
             return AccountType.moneroWatchAccount(address: address, viewKey: viewKey)
+        case .moneroMnemonic:
+            let (wordList, passphrase) = split(string, separator: "@")
+            let words = wordList.split(separator: " ").map(String.init)
+
+            guard words.count == 25 else {
+                return nil
+            }
+
+            return AccountType.moneroMnemonic(words: words, passphrase: passphrase)
         }
     }
 
@@ -434,6 +462,7 @@ extension AccountType {
         case hdExtendedKey = "hd_extended_key"
         case btcAddress = "btc_address_key"
         case moneroWatchAccount = "monero_watch_account"
+        case moneroMnemonic = "monero_mnemonic"
 
         init(_ type: AccountType) {
             switch type {
@@ -449,6 +478,7 @@ extension AccountType {
             case .hdExtendedKey: self = .hdExtendedKey
             case .btcAddress: self = .btcAddress
             case .moneroWatchAccount: self = .moneroWatchAccount
+            case .moneroMnemonic: self = .moneroMnemonic
             }
         }
     }
@@ -481,6 +511,8 @@ extension AccountType: Hashable {
             return lhsAddress == rhsAddress && lhsBlockchainType == rhsBlockchainType && lhsTokenType == rhsTokenType
         case let (.moneroWatchAccount(lhsAddress, lhsViewKey), .moneroWatchAccount(rhsAddress, rhsViewKey)):
             return lhsAddress == rhsAddress && lhsViewKey == rhsViewKey
+        case let (.moneroMnemonic(lhsWords, lhsPassphrase), .moneroMnemonic(rhsWords, rhsPassphrase)):
+            return lhsWords == rhsWords && lhsPassphrase == rhsPassphrase
         default: return false
         }
     }
@@ -528,6 +560,10 @@ extension AccountType: Hashable {
             hasher.combine("moneroWatchWallet")
             hasher.combine(address)
             hasher.combine(viewKey)
+        case let .moneroMnemonic(words, passphrase):
+            hasher.combine("moneroMnemonic")
+            hasher.combine(words)
+            hasher.combine(passphrase)
         }
     }
 }

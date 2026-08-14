@@ -3,11 +3,15 @@ class RecoveryPhraseService {
     let salt: String
 
     init?(account: Account) {
-        guard case let .mnemonic(words, salt, _) = account.type else {
+        switch account.type {
+        case let .mnemonic(words, salt, _):
+            self.words = words
+            self.salt = salt
+        case let .moneroMnemonic(words, passphrase):
+            self.words = words
+            salt = passphrase
+        default:
             return nil
         }
-
-        self.words = words
-        self.salt = salt
     }
 }

@@ -39,7 +39,9 @@ class ManageAccountViewModel: ObservableObject {
 extension ManageAccountViewModel {
     var recoveryPhraseVisible: Bool {
         switch account.type {
-        case .mnemonic: return true
+        // For a Monero legacy account the 25-word phrase is the only exportable secret;
+        // there are no BIP32 keys behind it, so private/public key export stays hidden.
+        case .mnemonic, .moneroMnemonic: return true
         default: return false
         }
     }

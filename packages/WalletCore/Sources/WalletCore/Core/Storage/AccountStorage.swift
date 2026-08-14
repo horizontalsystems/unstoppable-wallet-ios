@@ -117,6 +117,15 @@ public class AccountStorage {
             }
 
             type = .moneroWatchAccount(address: address, viewKey: viewKey)
+        case .moneroMnemonic:
+            guard let words = recoverStringArray(id: id, typeName: typeName, keyName: .words) else {
+                return nil
+            }
+            guard let passphrase: String = recover(id: id, typeName: typeName, keyName: .salt) else {
+                return nil
+            }
+
+            type = .moneroMnemonic(words: words, passphrase: passphrase)
         }
 
         return Account(
@@ -181,6 +190,10 @@ public class AccountStorage {
             typeName = .moneroWatchAccount
             wordsKey = address
             dataKey = try store(viewKey, id: id, typeName: typeName, keyName: .data)
+        case let .moneroMnemonic(words, passphrase):
+            typeName = .moneroMnemonic
+            wordsKey = try store(stringArray: words, id: id, typeName: typeName, keyName: .words)
+            saltKey = try store(passphrase, id: id, typeName: typeName, keyName: .salt)
         }
 
         return AccountRecord(
@@ -223,6 +236,9 @@ public class AccountStorage {
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .btcAddress, keyName: .data))
         case .moneroWatchAccount:
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .moneroWatchAccount, keyName: .data))
+        case .moneroMnemonic:
+            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .moneroMnemonic, keyName: .words))
+            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .moneroMnemonic, keyName: .salt))
         default:
             ()
         }
@@ -314,6 +330,7 @@ extension AccountStorage {
         case hdExtendedKey
         case btcAddress
         case moneroWatchAccount
+        case moneroMnemonic
     }
 
     private enum KeyName: String {
