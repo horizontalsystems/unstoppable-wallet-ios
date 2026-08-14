@@ -99,7 +99,8 @@ enum AddressParserFactory {
         case .monero:
             return [MoneroAddressParserItem()]
         case .zano:
-            return [ZanoAddressParserItem()]
+            let aliasResolver = ZanoAliasResolver(zanoNodeManager: Core.shared.zanoNodeManager, networkManager: Core.shared.networkManager)
+            return [ZanoAddressParserItem(), ZanoAliasAddressParserItem(resolver: aliasResolver)]
         case .unsupported: return []
         }
     }
