@@ -279,6 +279,10 @@ extension AdapterFactory {
             return try? ZcashAdapter(wallet: wallet, restoreSettings: restoreSettings, endpoint: zcashEndpoint)
 
         case (.native, .monero):
+            // Deferred while startup auto-select resolves the fastest node, so the wallet never
+            // connects to a stale stored node; created via initMissingAdapters right after.
+            guard !moneroNodeManager.isResolvingFastestNode else { return nil }
+
             let restoreSettings = restoreSettingsManager.settings(accountId: wallet.account.id, blockchainType: .monero)
             let moneroNode = moneroNodeManager.node(blockchainType: .monero)
             return try? MoneroAdapter(wallet: wallet, restoreSettings: restoreSettings, node: moneroNode.node)

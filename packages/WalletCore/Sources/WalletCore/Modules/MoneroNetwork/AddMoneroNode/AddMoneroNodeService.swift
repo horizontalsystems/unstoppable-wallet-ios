@@ -31,6 +31,20 @@ extension AddMoneroNodeService {
         self.password = password.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
+    // Existing entries may be bare "host:port" strings, so duplicates are matched on the
+    // canonical host:port rather than the raw URL string.
+    private static func canonical(url: URL) -> String? {
+        let raw = url.absoluteString
+        let normalized = raw.hasPrefix("http://") || raw.hasPrefix("https://") ? raw : "https://\(raw)"
+
+        guard let components = URLComponents(string: normalized), let host = components.host else {
+            return nil
+        }
+
+        let port = components.port ?? (components.scheme == "http" ? 80 : 443)
+        return "\(host):\(port)"
+    }
+
     func save() throws {
         guard let url = URL(string: urlString), let scheme = url.scheme else {
             throw UrlError.invalid
@@ -40,9 +54,14 @@ extension AddMoneroNodeService {
             throw UrlError.invalid
         }
 
-        let existingNodes = moneroNodeManager.allNodes(blockchainType: blockchainType)
+        guard url.port != nil else {
+            throw UrlError.portRequired
+        }
 
-        guard !existingNodes.contains(where: { $0.node.url == url }) else {
+        let existingNodes = moneroNodeManager.allNodes(blockchainType: blockchainType)
+        let newCanonical = Self.canonical(url: url)
+
+        guard !existingNodes.contains(where: { Self.canonical(url: $0.node.url) == newCanonical }) else {
             throw UrlError.alreadyExists
         }
 
@@ -57,6 +76,7 @@ extension AddMoneroNodeService {
 extension AddMoneroNodeService {
     enum UrlError: Error {
         case invalid
+        case portRequired
         case alreadyExists
     }
 }

@@ -12,6 +12,22 @@ class MoneroNetworkViewModel: ObservableObject {
     @Published var defaultItems: [NodeItem] = []
     @Published var customItems: [NodeItem] = []
     @Published var saveEnabled = false
+    @Published var pingStates: [String: PingState] = [:]
+
+    @Published var autoSelectEnabled: Bool {
+        didSet {
+            guard autoSelectEnabled != moneroNodeManager.autoSelectEnabled else { return }
+
+            moneroNodeManager.autoSelectEnabled = autoSelectEnabled
+
+            if autoSelectEnabled {
+                applyFastestNode(results: lastPingResults)
+            }
+        }
+    }
+
+    private var lastPingResults: [NodePingResult] = []
+    private var pingTask: Task<Void, Never>?
 
     private(set) var selectedNode: MoneroNode
 
@@ -19,13 +35,63 @@ class MoneroNetworkViewModel: ObservableObject {
         self.blockchain = blockchain
 
         selectedNode = moneroNodeManager.node(blockchainType: blockchain.type)
+        autoSelectEnabled = moneroNodeManager.autoSelectEnabled
 
         subscribe(disposeBag, moneroNodeManager.nodesUpdatedObservable) { [weak self] blockchainType in
             guard let self, blockchainType == self.blockchain.type else { return }
-            DispatchQueue.main.async { [weak self] in self?.handleNodesUpdated() }
+            DispatchQueue.main.async { [weak self] in
+                self?.handleNodesUpdated()
+                self?.refreshPings()
+            }
         }
 
         syncItems()
+        refreshPings()
+    }
+
+    deinit {
+        pingTask?.cancel()
+    }
+
+    func refreshPings() {
+        pingTask?.cancel()
+
+        for node in moneroNodeManager.allNodes(blockchainType: blockchain.type) {
+            pingStates[node.node.url.absoluteString] = .loading
+        }
+
+        let blockchainType = blockchain.type
+        pingTask = Task { [weak self, moneroNodeManager] in
+            let results = await moneroNodeManager.pingNodes(blockchainType: blockchainType)
+
+            guard !Task.isCancelled else { return }
+
+            await MainActor.run { [weak self] in
+                guard let self else { return }
+
+                for result in results {
+                    pingStates[result.node.url.absoluteString] = PingState(result: result)
+                }
+
+                lastPingResults = results
+
+                if autoSelectEnabled {
+                    applyFastestNode(results: results)
+                }
+            }
+        }
+    }
+
+    // Auto-select applies immediately (with the manager's height-lag and hysteresis rules);
+    // fires the node relay, so a running wallet reconnects to the winner.
+    private func applyFastestNode(results: [NodePingResult]) {
+        guard !results.isEmpty else { return }
+
+        guard let fastest = moneroNodeManager.fastestNode(results: results, blockchainType: blockchain.type) else { return }
+
+        moneroNodeManager.setCurrent(node: fastest, blockchainType: blockchain.type)
+        selectedNode = fastest
+        handleNodesUpdated()
     }
 
     private func handleNodesUpdated() {
@@ -82,6 +148,34 @@ extension MoneroNetworkViewModel {
 }
 
 extension MoneroNetworkViewModel {
+    enum PingState {
+        case loading
+        case unreachable
+        case reachable(text: String, level: Level)
+
+        enum Level {
+            case good, medium, slow
+        }
+
+        init(result: NodePingResult) {
+            guard let responseTime = result.responseTime, result.isValid else {
+                self = .unreachable
+                return
+            }
+
+            let level: Level
+            if responseTime <= NodePingResult.pingGood {
+                level = .good
+            } else if responseTime <= NodePingResult.pingMedium {
+                level = .medium
+            } else {
+                level = .slow
+            }
+
+            self = .reachable(text: "\(Int(responseTime * 1000)) ms", level: level)
+        }
+    }
+
     struct NodeItem: Identifiable {
         let node: MoneroNode
         let selected: Bool

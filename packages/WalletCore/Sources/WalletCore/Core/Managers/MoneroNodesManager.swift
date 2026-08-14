@@ -11,9 +11,22 @@ public class MoneroNodeManager {
     private let nodeRelay = PublishRelay<BlockchainType>()
     private let nodeUpdatedRelay = PublishRelay<BlockchainType>()
 
+    // Set at construction time: while true the Monero adapter is not created, so the wallet
+    // never connects to a stale stored node before the fastest one is resolved on startup.
+    private(set) var isResolvingFastestNode = false
+
+    // Nodes lagging more than this many blocks behind the best-known tip are never
+    // auto-selected, no matter how fast they respond.
+    private static let heightLagThreshold: UInt64 = 10
+    // Only switch away from a working current node when the winner is meaningfully faster,
+    // so repeated pings don't flip-flop nodes (and tear down the wallet) over noise.
+    private static let switchLatencyGain: TimeInterval = 0.1
+
     public init(blockchainSettingsStorage: BlockchainSettingsStorage, moneroNodeStorage: MoneroNodeStorage) {
         self.blockchainSettingsStorage = blockchainSettingsStorage
         self.moneroNodeStorage = moneroNodeStorage
+
+        isResolvingFastestNode = blockchainSettingsStorage.moneroAutoSelectEnabled(blockchainType: .monero)
     }
 
     private func saveCurrent(nodeUrl: URL, blockchainType: BlockchainType) {
@@ -94,6 +107,57 @@ public class MoneroNodeManager {
 }
 
 extension MoneroNodeManager {
+    var autoSelectEnabled: Bool {
+        get { blockchainSettingsStorage.moneroAutoSelectEnabled(blockchainType: .monero) }
+        set { blockchainSettingsStorage.save(moneroAutoSelectEnabled: newValue, blockchainType: .monero) }
+    }
+
+    func pingNodes(blockchainType: BlockchainType) async -> [NodePingResult] {
+        await NodePinger.ping(nodes: allNodes(blockchainType: blockchainType).map(\.node))
+    }
+
+    /// Picks the fastest of the valid, reachable nodes that are not lagging behind the
+    /// best-known chain tip. Returns nil when the current node should be kept (hysteresis)
+    /// or no candidate qualifies.
+    func fastestNode(results: [NodePingResult], blockchainType: BlockchainType) -> MoneroNode? {
+        let candidates = results.filter { $0.isValid && $0.responseTime != nil }
+
+        guard let maxHeight = candidates.map(\.height).max() else { return nil }
+
+        let fresh = candidates.filter { $0.height + Self.heightLagThreshold >= maxHeight }
+
+        guard let fastest = fresh.min(by: { ($0.responseTime ?? .infinity) < ($1.responseTime ?? .infinity) }) else { return nil }
+
+        let current = node(blockchainType: blockchainType)
+
+        guard fastest.node.url != current.node.url else { return nil }
+
+        if let currentResult = fresh.first(where: { $0.node.url == current.node.url }),
+           let currentTime = currentResult.responseTime,
+           let fastestTime = fastest.responseTime,
+           currentTime <= fastestTime + Self.switchLatencyGain
+        {
+            return nil
+        }
+
+        return allNodes(blockchainType: blockchainType).first { $0.node.url == fastest.node.url }
+    }
+
+    /// Startup path: persists the winner WITHOUT firing nodeRelay - the Monero adapter was
+    /// deferred while this ran, so there is nothing to tear down; the adapter is then created
+    /// once, already pointing at the fastest node.
+    func autoSelectFastestNodeOnStartup() async {
+        defer { isResolvingFastestNode = false }
+
+        guard autoSelectEnabled else { return }
+
+        let results = await pingNodes(blockchainType: .monero)
+
+        guard let fastest = fastestNode(results: results, blockchainType: .monero) else { return }
+
+        blockchainSettingsStorage.save(moneroNodeUrl: fastest.node.url.absoluteString, blockchainType: .monero)
+    }
+
     var nodeObservable: Observable<BlockchainType> {
         nodeRelay.asObservable()
     }

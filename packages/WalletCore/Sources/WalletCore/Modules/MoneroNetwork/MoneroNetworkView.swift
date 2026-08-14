@@ -21,6 +21,17 @@ struct MoneroNetworkView: View {
                                 .padding(.horizontal, 16)
 
                             ListSection {
+                                Cell(
+                                    middle: {
+                                        MultiText(title: "monero_network.auto_select".localized, subtitle: "monero_network.auto_select.description".localized)
+                                    },
+                                    right: {
+                                        ThemeToggle(isOn: $viewModel.autoSelectEnabled)
+                                    }
+                                )
+                            }
+
+                            ListSection {
                                 ForEach(viewModel.defaultItems) { item in
                                     nodeCell(item: item)
                                 }
@@ -83,6 +94,11 @@ struct MoneroNetworkView: View {
             .navigationTitle(viewModel.blockchain.name)
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
+                    Button(action: { viewModel.refreshPings() }) {
+                        Image(systemName: "arrow.clockwise")
+                    }
+                }
+                ToolbarItem(placement: .primaryAction) {
                     KFImage.url(URL(string: viewModel.blockchain.type.imageUrl))
                         .resizable()
                         .frame(size: 24)
@@ -102,11 +118,14 @@ struct MoneroNetworkView: View {
                 MultiText(title: item.name, subtitle: item.url)
             },
             right: {
+                pingBadge(state: viewModel.pingStates[item.url])
+
                 if item.selected {
                     Image.checkIcon
                 }
             },
-            action: {
+            // While auto-select is on, the fastest node wins - manual choice is disabled
+            action: viewModel.autoSelectEnabled ? nil : {
                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
                     let initialTrusted = item.node.node.url == viewModel.selectedNode.node.url ? viewModel.selectedNode.node.isTrusted : item.isTrusted
                     MoneroNetworkNodeSettingsView(name: item.name, isTrusted: initialTrusted, isPresented: isPresented) { isTrusted in
@@ -115,6 +134,25 @@ struct MoneroNetworkView: View {
                 }
             }
         )
+    }
+
+    @ViewBuilder private func pingBadge(state: MoneroNetworkViewModel.PingState?) -> some View {
+        // Plain font/color instead of themeSubhead2, which expands to full width and would
+        // float the badge mid-cell instead of keeping it at the trailing edge
+        switch state {
+        case .loading:
+            ProgressView()
+        case .unreachable:
+            Text("monero_network.unreachable".localized).font(.themeSubhead2).foregroundColor(.themeLucian)
+        case let .reachable(text, level):
+            switch level {
+            case .good: Text(text).font(.themeSubhead2).foregroundColor(.themeRemus)
+            case .medium: Text(text).font(.themeSubhead2).foregroundColor(.themeJacob)
+            case .slow: Text(text).font(.themeSubhead2).foregroundColor(.themeGray)
+            }
+        case nil:
+            EmptyView()
+        }
     }
 }
 

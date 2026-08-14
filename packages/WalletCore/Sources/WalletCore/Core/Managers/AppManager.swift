@@ -25,6 +25,7 @@ public class AppManager {
     private let stellarKitManager: StellarKitManager
     private let solanaKitManager: SolanaKitManager
     private let swapHistoryManager: SwapHistoryManager
+    private let moneroNodeManager: MoneroNodeManager
 
     private let didBecomeActiveSubjectOld = PublishSubject<Void>()
     private let willEnterForegroundSubjectOld = PublishSubject<Void>()
@@ -42,7 +43,7 @@ public class AppManager {
          evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager, statManager: StatManager,
          nftMetadataSyncer: NftMetadataSyncer, tonKitManager: TonKitManager,
          stellarKitManager: StellarKitManager, solanaKitManager: SolanaKitManager,
-         swapHistoryManager: SwapHistoryManager)
+         swapHistoryManager: SwapHistoryManager, moneroNodeManager: MoneroNodeManager)
     {
         self.widgetRefresher = widgetRefresher
         self.accountManager = accountManager
@@ -65,6 +66,7 @@ public class AppManager {
         self.stellarKitManager = stellarKitManager
         self.solanaKitManager = solanaKitManager
         self.swapHistoryManager = swapHistoryManager
+        self.moneroNodeManager = moneroNodeManager
     }
 
     private func warmUp() {
@@ -85,6 +87,13 @@ public extension AppManager {
         swapHistoryManager.sync()
 
         rateAppManager.onLaunch()
+
+        if moneroNodeManager.isResolvingFastestNode {
+            Task { [moneroNodeManager, adapterManager] in
+                await moneroNodeManager.autoSelectFastestNodeOnStartup()
+                adapterManager.initMissingAdapters()
+            }
+        }
 
         evmLabelManager.sync()
 

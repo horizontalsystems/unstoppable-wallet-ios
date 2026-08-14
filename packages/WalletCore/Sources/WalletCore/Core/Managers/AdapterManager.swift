@@ -228,6 +228,13 @@ extension AdapterManager {
         queue.sync { _adapterData.adapterMap[wallet] as? IDepositAdapter }
     }
 
+    // Re-runs adapter creation for active wallets that don't have an adapter yet
+    // (e.g. Monero, deferred until the fastest node was resolved).
+    func initMissingAdapters() {
+        let activeWalletData = walletManager.activeWalletData
+        initAdapters(wallets: activeWalletData.wallets, account: activeWalletData.account)
+    }
+
     func recreateAdapter(blockchainType: BlockchainType) {
         Task {
             if blockchainType == .zano {
