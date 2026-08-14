@@ -42,6 +42,12 @@ class ZanoAdapter {
         self.coinRate = coinRate
         self.transactionSource = transactionSource
 
+        // Custom assets (added by asset id) are unknown to the wallet's whitelist until pinned;
+        // without this their balance never appears in getbalance. Idempotent, retried by the kit.
+        if assetId != ZanoAssetId {
+            kit.pinAssetToWhitelist(assetId: assetId)
+        }
+
         balanceStateRelay = BehaviorRelay(value: Self.adapterState(kitState: kit.walletState))
 
         let scheduler = SerialDispatchQueueScheduler(queue: queue, internalSerialQueueName: "\(AppConfig.label).zano-adapter")

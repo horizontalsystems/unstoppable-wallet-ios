@@ -67,7 +67,12 @@ public class ZanoKitManager {
 
         guard let currentAccount else { return }
 
-        let nonNativeAssets = assets.filter { !$0.isNative }
+        // Whitelisted assets all report through getbalance, including ones the wallet never
+        // held - mirror EVM token auto-detection and only enable assets with a balance.
+        let nonNativeAssets = assets.filter { asset in
+            guard !asset.isNative, let balance = _kit?.balance(forAssetId: asset.assetId) else { return false }
+            return balance.total > 0 || balance.awaitingIn > 0
+        }
         guard !nonNativeAssets.isEmpty else { return }
 
         let existingWallets = walletManager.activeWallets
@@ -115,6 +120,8 @@ extension ZanoKitManager: ZanoKitDelegate {
     public func balancesDidChange(balances: [BalanceInfo]) {
         queue.async {
             self.balancesSubject.onNext(balances)
+            // Balances can arrive after the asset list; re-run auto-enable with them in place
+            self.handle(assets: self._kit?.assets ?? [])
         }
     }
 

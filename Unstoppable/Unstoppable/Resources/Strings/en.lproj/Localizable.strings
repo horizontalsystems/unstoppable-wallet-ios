@@ -1982,6 +1982,8 @@
 "add_token.contract_address_not_found" = "Contract address not found in %@ blockchain";
 "add_token.jetton_master_not_found" = "Jetton Master not found in %@ blockchain";
 "add_token.input_placeholder.contract_address" = "Contract Address";
+"add_token.input_placeholder.asset_id" = "Asset ID";
+"add_token.invalid_asset_id" = "Invalid asset ID";
 "add_token.input_placeholder.jetton_master_address" = "Jetton Master Address";
 "add_token.input_placeholder.mint_address" = "Token Mint Address";
 "add_token.invalid_mint_address" = "Invalid Solana address";
