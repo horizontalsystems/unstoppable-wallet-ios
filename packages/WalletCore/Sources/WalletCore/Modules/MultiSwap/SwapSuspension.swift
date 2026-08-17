@@ -116,6 +116,7 @@ enum CanonicalAssetId {
         .ton: "TON",
         .stellar: "XLM",
         .thorChain: "THOR",
+        .mayaChain: "MAYA",
     ]
 
     /// The gas asset's ticker per chain — NOT always the chain code (`BASE.ETH`, `BSC.BNB`,
@@ -142,6 +143,7 @@ enum CanonicalAssetId {
         .ton: "TON",
         .stellar: "XLM",
         .thorChain: "RUNE",
+        .mayaChain: "CACAO",
     ]
 
     private static let wrappedSolMint = "So11111111111111111111111111111111111111112"

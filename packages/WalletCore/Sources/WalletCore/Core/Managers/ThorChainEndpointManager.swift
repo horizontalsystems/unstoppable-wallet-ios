@@ -1,3 +1,4 @@
+import MarketKit
 import RxRelay
 import RxSwift
 import ThorChainKit
@@ -5,21 +6,24 @@ import ThorChainKit
 final class ThorChainEndpointManager {
     private let blockchainSettingsStorage: BlockchainSettingsStorage?
     private let endpointProvider: IThorChainEndpointConfigurationProvider
+    private let blockchainType: BlockchainType
     private let endpointRelay = PublishRelay<Void>()
     private var transientEndpointFamilyId: String?
 
-    init(blockchainSettingsStorage: BlockchainSettingsStorage, endpointProvider: IThorChainEndpointConfigurationProvider) {
+    init(blockchainSettingsStorage: BlockchainSettingsStorage, endpointProvider: IThorChainEndpointConfigurationProvider, blockchainType: BlockchainType = .thorChain) {
         self.blockchainSettingsStorage = blockchainSettingsStorage
         self.endpointProvider = endpointProvider
+        self.blockchainType = blockchainType
     }
 
-    convenience init(endpointProvider: IThorChainEndpointConfigurationProvider) {
-        self.init(blockchainSettingsStorage: nil, endpointProvider: endpointProvider)
+    convenience init(endpointProvider: IThorChainEndpointConfigurationProvider, blockchainType: BlockchainType = .thorChain) {
+        self.init(blockchainSettingsStorage: nil, endpointProvider: endpointProvider, blockchainType: blockchainType)
     }
 
-    private init(blockchainSettingsStorage: BlockchainSettingsStorage?, endpointProvider: IThorChainEndpointConfigurationProvider) {
+    private init(blockchainSettingsStorage: BlockchainSettingsStorage?, endpointProvider: IThorChainEndpointConfigurationProvider, blockchainType: BlockchainType) {
         self.blockchainSettingsStorage = blockchainSettingsStorage
         self.endpointProvider = endpointProvider
+        self.blockchainType = blockchainType
     }
 
     var endpointObservable: Observable<Void> {
@@ -37,7 +41,7 @@ final class ThorChainEndpointManager {
     private func endpointFamily(configuration: ThorChainEndpointConfiguration) throws -> ThorChainKit.EndpointFamilyDescriptor {
         let endpointFamilies = configuration.value.families
 
-        if let savedId = blockchainSettingsStorage?.thorChainEndpointFamilyId(blockchainType: .thorChain) ?? transientEndpointFamilyId,
+        if let savedId = blockchainSettingsStorage?.thorChainEndpointFamilyId(blockchainType: blockchainType) ?? transientEndpointFamilyId,
            let endpointFamily = endpointFamilies.first(where: { $0.id == savedId })
         {
             return endpointFamily
@@ -71,7 +75,7 @@ final class ThorChainEndpointManager {
             throw ThorChainEndpointManagerError.unknownEndpointFamily
         }
 
-        blockchainSettingsStorage?.save(thorChainEndpointFamilyId: endpointFamily.id, blockchainType: .thorChain)
+        blockchainSettingsStorage?.save(thorChainEndpointFamilyId: endpointFamily.id, blockchainType: blockchainType)
         transientEndpointFamilyId = endpointFamily.id
         endpointRelay.accept(())
     }

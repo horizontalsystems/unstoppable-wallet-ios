@@ -60,6 +60,31 @@ final class ThorChainEndpointConfigurationProvider: IThorChainEndpointConfigurat
     }
 }
 
+// Maya Protocol (mayanode, a thornode fork) served by the same kit; single public
+// node family so far, mirroring thorchain-kit-android's MayaMainnet defaults.
+final class MayaChainEndpointConfigurationProvider: IThorChainEndpointConfigurationProvider {
+    func configuration() throws -> ThorChainEndpointConfiguration {
+        let families = try [
+            ThorChainKit.EndpointFamilyDescriptor(
+                id: "mayanode-mainnet",
+                cosmosRestURL: URL(string: "https://mayanode.mayachain.info")!,
+                cometBftURL: URL(string: "https://tendermint.mayachain.info")!
+            ),
+        ]
+        return try ThorChainEndpointConfiguration(
+            value: ThorChainKit.EndpointConfiguration(
+                families: families,
+                midgardURLs: [URL(string: "https://midgard.mayachain.info/")!]
+            ),
+            approvedMainnetHosts: [
+                "mayanode.mayachain.info",
+                "tendermint.mayachain.info",
+                "midgard.mayachain.info",
+            ]
+        )
+    }
+}
+
 final class ThorChainKitWrapper {
     let thorChainKit: ThorChainKit.Kit
     private let signer: ThorChainKit.Signer?
@@ -91,20 +116,26 @@ final class ThorChainKitManager {
     private let disposeBag = DisposeBag()
     private weak var _wrapper: ThorChainKitWrapper?
     private var currentIdentity: CacheIdentity?
-    private let queue = DispatchQueue(label: "\(AppConfig.label).thor-chain-kit-manager", qos: .userInitiated)
+    private let queue: DispatchQueue
     private let endpointManager: ThorChainEndpointManager
+    private let network: ThorChainKit.Network
     private let kitUpdatedRelay = PublishRelay<Void>()
 
-    init(endpointManager: ThorChainEndpointManager) {
+    init(endpointManager: ThorChainEndpointManager, network: ThorChainKit.Network = .mainnet) {
         self.endpointManager = endpointManager
+        self.network = network
+        queue = DispatchQueue(label: "\(AppConfig.label).thor-chain-kit-manager.\(network.chain.rawValue)", qos: .userInitiated)
 
         subscribe(disposeBag, endpointManager.endpointObservable) { [weak self] in
             self?.handleUpdatedEndpoint()
         }
     }
 
-    convenience init(endpointProvider: IThorChainEndpointConfigurationProvider) {
-        self.init(endpointManager: ThorChainEndpointManager(endpointProvider: endpointProvider))
+    convenience init(endpointProvider: IThorChainEndpointConfigurationProvider, network: ThorChainKit.Network = .mainnet) {
+        self.init(
+            endpointManager: ThorChainEndpointManager(endpointProvider: endpointProvider, blockchainType: network.chain == .maya ? .mayaChain : .thorChain),
+            network: network
+        )
     }
 
     private func handleUpdatedEndpoint() {
@@ -142,7 +173,7 @@ final class ThorChainKitManager {
             throw ThorChainKitManagerError.mnemonicNoSeed
         }
 
-        let address = try AccountAddress.thorChainAddress(account: account)
+        let address = try AccountAddress.thorChainAddress(account: account, network: network)
         let endpointConfiguration = try endpointManager.endpointConfiguration()
         try validate(endpointConfiguration: endpointConfiguration)
 

@@ -10,6 +10,7 @@ enum BlockchainSettingsModule {
             zanoNodeManager: Core.shared.zanoNodeManager,
             zcashNodeManager: Core.shared.zcashNodeManager,
             thorChainEndpointManager: Core.shared.thorChainEndpointManager,
+            mayaChainEndpointManager: Core.shared.mayaChainEndpointManager,
             marketKit: Core.shared.marketKit
         )
         return BlockchainSettingsView(viewModel: viewModel)

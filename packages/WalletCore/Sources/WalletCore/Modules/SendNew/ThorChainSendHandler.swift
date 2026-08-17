@@ -14,7 +14,7 @@ final class ThorChainSendHandler: SendHandler, ISendHandler {
     override class func instance(sendData: SendData) -> ISendHandler? {
         guard case let .thorChain(token, amount, recipient, memo) = sendData,
               let adapter = Core.shared.adapterManager.adapter(for: token) as? ThorChainAdapter,
-              let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .thorChain, tokenType: .native))
+              let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: token.blockchainType, tokenType: .native))
         else { return nil }
 
         return ThorChainSendHandler(
@@ -47,8 +47,8 @@ final class ThorChainSendHandler: SendHandler, ISendHandler {
         do {
             let denom: ThorChainKit.Denom
             switch token.type {
-            case .native: denom = .rune
-            // Never fall back to RUNE on a malformed reference — that would send the wrong asset.
+            case .native: denom = token.blockchainType == .mayaChain ? .cacao : .rune
+            // Never fall back to the native coin on a malformed reference — that would send the wrong asset.
             case let .thorChainAsset(rawDenom):
                 guard let parsed = try? ThorChainKit.Denom(rawValue: rawDenom) else { throw SendError.invalidData }
                 denom = parsed

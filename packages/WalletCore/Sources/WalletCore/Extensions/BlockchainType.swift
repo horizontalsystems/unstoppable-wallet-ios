@@ -26,6 +26,7 @@ extension BlockchainType {
         .binanceSmartChain,
         .tron,
         .thorChain,
+        .mayaChain,
         .ton,
         .stellar,
         .solana,
@@ -62,6 +63,7 @@ extension BlockchainType {
             .solana,
             .tron,
             .thorChain,
+            .mayaChain,
             .base,
             .polygon,
             .arbitrumOne,
@@ -195,6 +197,7 @@ extension BlockchainType {
         case .ton: return "TON"
         case .stellar: return "Stellar"
         case .thorChain: return "RUNE, THORChain assets"
+        case .mayaChain: return "CACAO"
         case .solana: return "SOL, SPL tokens"
         default: return ""
         }
@@ -283,7 +286,7 @@ extension BlockchainType {
         case .monero: return 120
         case .zano: return 60
         case .binanceSmartChain, .arbitrumOne: return 1
-        case .thorChain: return nil
+        case .thorChain, .mayaChain: return nil
         case .solana, .unsupported: return nil
         }
     }

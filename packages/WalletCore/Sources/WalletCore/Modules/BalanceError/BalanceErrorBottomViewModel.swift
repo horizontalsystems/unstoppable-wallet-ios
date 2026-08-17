@@ -24,7 +24,7 @@ class BalanceErrorBottomViewModel: ObservableObject {
             sourceType = .zano(blockchain: wallet.token.blockchain)
         } else if wallet.token.blockchainType == .zcash {
             sourceType = .zcash(blockchain: wallet.token.blockchain)
-        } else if wallet.token.blockchainType == .thorChain {
+        } else if wallet.token.blockchainType == .thorChain || wallet.token.blockchainType == .mayaChain {
             sourceType = .thorChain(blockchain: wallet.token.blockchain)
         }
 

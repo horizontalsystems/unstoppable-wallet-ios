@@ -52,8 +52,8 @@ final class ThorChainPreSendHandler: PreSendHandler, IPreSendHandler {
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
         do {
-            let amountBaseUnits = try ThorChainSendHelper.baseUnits(amount)
-            let recipient = try ThorChainKit.Address(address, network: .mainnet)
+            let amountBaseUnits = try ThorChainSendHelper.baseUnits(amount, decimals: token.decimals)
+            let recipient = try ThorChainKit.Address(address, network: token.blockchainType == .mayaChain ? .mayaMainnet : .mainnet)
             // A token draws its amount from its own balance and its fee from RUNE, so a
             // RUNE balance too small for the fee has to be refused here: nothing reads a
             // balance again before signing.
