@@ -37,6 +37,10 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         AppConfig.mayaAffiliateBps
     }
 
+    // Maya settles pools in CACAO, not RUNE — without this, swaps to/from CACAO show no route.
+    override var settlementBlockchainType: BlockchainType { .mayaChain }
+    override var settlementAsset: String { "MAYA.CACAO" }
+
     private func zcashSwapQuote(adapter: ZcashAdapter, tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal) async throws -> SwapQuote {
         let refundAddress = try await resolveDestination(recipient: nil, token: tokenIn)
         var params = Parameters()

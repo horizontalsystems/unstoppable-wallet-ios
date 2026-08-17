@@ -13,6 +13,7 @@ class BlockchainSettingsViewModel: ObservableObject {
     private let zanoNodeManager: ZanoNodeManager
     private let zcashNodeManager: ZcashNodeManager
     private let thorChainEndpointManager: ThorChainEndpointManager
+    private let mayaChainEndpointManager: ThorChainEndpointManager
     private let marketKit: MarketKit.Kit
     private let disposeBag = DisposeBag()
 
@@ -20,8 +21,9 @@ class BlockchainSettingsViewModel: ObservableObject {
     @Published var btcItems: [Item] = []
     @Published var tronItem: Item?
     @Published var thorChainItem: Item?
+    @Published var mayaChainItem: Item?
 
-    init(btcBlockchainManager: BtcBlockchainManager, evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zanoNodeManager: ZanoNodeManager, zcashNodeManager: ZcashNodeManager, thorChainEndpointManager: ThorChainEndpointManager, marketKit: MarketKit.Kit) {
+    init(btcBlockchainManager: BtcBlockchainManager, evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zanoNodeManager: ZanoNodeManager, zcashNodeManager: ZcashNodeManager, thorChainEndpointManager: ThorChainEndpointManager, mayaChainEndpointManager: ThorChainEndpointManager, marketKit: MarketKit.Kit) {
         self.btcBlockchainManager = btcBlockchainManager
         self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager
@@ -29,6 +31,7 @@ class BlockchainSettingsViewModel: ObservableObject {
         self.zanoNodeManager = zanoNodeManager
         self.zcashNodeManager = zcashNodeManager
         self.thorChainEndpointManager = thorChainEndpointManager
+        self.mayaChainEndpointManager = mayaChainEndpointManager
         self.marketKit = marketKit
 
         subscribe(MainScheduler.instance, disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] _ in self?.syncBtcItems() }
@@ -43,11 +46,13 @@ class BlockchainSettingsViewModel: ObservableObject {
         subscribe(MainScheduler.instance, disposeBag, zanoNodeManager.nodeObservable) { [weak self] _ in self?.syncBtcItems() }
         subscribe(MainScheduler.instance, disposeBag, zcashNodeManager.nodeObservable) { [weak self] _ in self?.syncBtcItems() }
         subscribe(MainScheduler.instance, disposeBag, thorChainEndpointManager.endpointObservable) { [weak self] in self?.syncThorChainItem() }
+        subscribe(MainScheduler.instance, disposeBag, mayaChainEndpointManager.endpointObservable) { [weak self] in self?.syncMayaChainItem() }
 
         syncBtcItems()
         syncEvmItems()
         syncTronItem()
         syncThorChainItem()
+        syncMayaChainItem()
     }
 
     private func syncBtcItems() {
@@ -99,6 +104,17 @@ class BlockchainSettingsViewModel: ObservableObject {
         }
 
         thorChainItem = Item(blockchain: blockchain, type: .thorChain(endpointFamily: endpointFamily))
+    }
+
+    private func syncMayaChainItem() {
+        guard let blockchain = try? marketKit.blockchain(uid: BlockchainType.mayaChain.uid),
+              let endpointFamily = try? mayaChainEndpointManager.endpointFamily()
+        else {
+            mayaChainItem = nil
+            return
+        }
+
+        mayaChainItem = Item(blockchain: blockchain, type: .thorChain(endpointFamily: endpointFamily))
     }
 }
 

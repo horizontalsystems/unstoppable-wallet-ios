@@ -8,12 +8,14 @@ class ThorChainTransactionConverter {
     private let baseToken: Token
     private let coinManager: ICoinManager
     private let ownAddress: String
+    private let network: ThorChainKit.Network
 
     init(source: TransactionSource, baseToken: Token, coinManager: ICoinManager, thorChainKitWrapper: ThorChainKitWrapper) {
         self.source = source
         self.baseToken = baseToken
         self.coinManager = coinManager
         ownAddress = thorChainKitWrapper.thorChainKit.address.raw
+        network = thorChainKitWrapper.thorChainKit.network
     }
 
     private func isOwn(_ address: String) -> Bool {
@@ -25,30 +27,45 @@ class ThorChainTransactionConverter {
     }
 
     private func appValue(_ transfer: ThorChainKit.CoinTransfer, sign: FloatingPointSign) -> AppValue {
-        let value = Decimal(
-            sign: sign,
-            exponent: -ThorChainKit.Denom.decimals,
-            significand: Decimal(string: transfer.amount.description) ?? 0
-        )
+        func value(decimals: Int) -> Decimal {
+            Decimal(
+                sign: sign,
+                exponent: -decimals,
+                significand: Decimal(string: transfer.amount.description) ?? 0
+            )
+        }
 
-        guard let asset = try? ThorChainKit.Denom.asset(for: transfer.asset) else {
+        guard let asset = try? network.chain.asset(for: transfer.asset) else {
             let ticker = fallbackTicker(transfer.asset)
-            return AppValue(tokenName: ticker, tokenCode: ticker, tokenDecimals: ThorChainKit.Denom.decimals, value: value)
+            return AppValue(tokenName: ticker, tokenCode: ticker, tokenDecimals: network.decimals, value: value(decimals: network.decimals))
         }
 
-        let denom = ThorChainKit.Denom.denom(for: asset)
+        let denom = network.chain.denom(for: asset)
 
-        guard denom != ThorChainKit.Denom.rune.rawValue else {
-            return AppValue(token: baseToken, value: value)
+        guard denom != network.nativeDenom.rawValue else {
+            return AppValue(token: baseToken, value: value(decimals: baseToken.decimals))
         }
 
-        if let token = try? coinManager.token(query: TokenQuery(blockchainType: .thorChain, tokenType: .thorChainAsset(denom: denom))) {
-            return AppValue(token: token, value: value)
+        if let token = try? coinManager.token(query: TokenQuery(blockchainType: baseToken.blockchainType, tokenType: .thorChainAsset(denom: denom))) {
+            return AppValue(token: token, value: value(decimals: token.decimals))
         }
 
-        // A THORChain asset MarketKit does not know yet still has to carry its ticker:
+        // A chain asset MarketKit does not know yet still has to carry its ticker:
         // without a value every token filter drops the record.
-        return AppValue(tokenName: asset.ticker, tokenCode: asset.ticker, tokenDecimals: ThorChainKit.Denom.decimals, value: value)
+        let decimals = fallbackDecimals(denom: denom)
+        return AppValue(tokenName: asset.ticker, tokenCode: asset.ticker, tokenDecimals: decimals, value: value(decimals: decimals))
+    }
+
+    // Bank-denom decimals for assets MarketKit does not list. THOR is uniformly 1e8;
+    // Maya is heterogeneous: CACAO 1e10, the MAYA governance token 1e4 (verified against
+    // the MAYA.MAYA pool depth on midgard), synths 1e8.
+    private func fallbackDecimals(denom: String) -> Int {
+        guard network.chain == .maya else { return network.decimals }
+        switch denom {
+        case "cacao": return 10
+        case "maya": return 4
+        default: return 8
+        }
     }
 
     private func fallbackTicker(_ midgardAsset: String) -> String {

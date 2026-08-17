@@ -78,7 +78,7 @@ extension ThorChainTransactionsAdapter: ITransactionsAdapter {
     }
 
     var explorerTitle: String {
-        "RuneScan"
+        thorChainKit.network.chain == .maya ? "MayaScan" : "RuneScan"
     }
 
     var additionalTokenQueries: [TokenQuery] {
@@ -86,7 +86,9 @@ extension ThorChainTransactionsAdapter: ITransactionsAdapter {
     }
 
     func explorerUrl(transactionHash: String) -> String? {
-        "https://runescan.io/tx/\(transactionHash)"
+        thorChainKit.network.chain == .maya
+            ? "https://www.mayascan.org/tx/\(transactionHash)"
+            : "https://runescan.io/tx/\(transactionHash)"
     }
 
     func transactionsObservable(token: Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {

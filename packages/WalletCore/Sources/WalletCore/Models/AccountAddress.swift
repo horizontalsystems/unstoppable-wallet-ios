@@ -39,6 +39,20 @@ public enum AccountAddress {
 
         throw AdapterError.unsupportedAccount
     }
+
+    // Provider chain is single-network (THOR mainnet); other thornode-family networks
+    // derive directly from the seed with the same coin type and their own hrp.
+    static func thorChainAddress(account: Account, network: ThorChainKit.Network) throws -> ThorChainKit.Address {
+        guard network != .mainnet else {
+            return try thorChainAddress(account: account)
+        }
+
+        guard let seed = account.type.mnemonicSeed else {
+            throw AdapterError.unsupportedAccount
+        }
+
+        return try ThorChainKit.Signer.address(seed: seed, network: network)
+    }
 }
 
 public protocol IAccountAddressProvider {

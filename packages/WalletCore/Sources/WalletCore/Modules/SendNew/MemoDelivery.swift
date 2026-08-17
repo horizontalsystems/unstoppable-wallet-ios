@@ -54,7 +54,7 @@ public extension BlockchainType {
              .gnosis, .fantom, .base, .zkSync, .tron, .solana: .none
         // Public payloads: a TON comment, a Stellar text memo and a THORChain memo are all plainly
         // readable on-chain.
-        case .ton, .stellar, .thorChain: .onChainPublic
+        case .ton, .stellar, .thorChain, .mayaChain: .onChainPublic
         case .unsupported: .none
         }
     }

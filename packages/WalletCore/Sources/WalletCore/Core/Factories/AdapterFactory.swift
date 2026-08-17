@@ -15,6 +15,7 @@ public class AdapterFactory {
     private let btcBlockchainManager: BtcBlockchainManager
     private let tronKitManager: TronKitManager
     private let thorChainKitManager: ThorChainKitManager
+    private let mayaChainKitManager: ThorChainKitManager
     private let tonKitManager: TonKitManager
     private let stellarKitManager: StellarKitManager
     private let zanoKitManager: ZanoKitManager
@@ -39,6 +40,10 @@ public class AdapterFactory {
             thorChainKitManager: ThorChainKitManager(
                 endpointManager: ThorChainEndpointManager(endpointProvider: ThorChainEndpointConfigurationProvider())
             ),
+            mayaChainKitManager: ThorChainKitManager(
+                endpointManager: ThorChainEndpointManager(endpointProvider: MayaChainEndpointConfigurationProvider(), blockchainType: .mayaChain),
+                network: .mayaMainnet
+            ),
             tonKitManager: tonKitManager,
             stellarKitManager: stellarKitManager,
             zanoKitManager: zanoKitManager,
@@ -51,7 +56,7 @@ public class AdapterFactory {
     }
 
     init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zcashNodeManager: ZcashNodeManager,
-         btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, thorChainKitManager: ThorChainKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
+         btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, thorChainKitManager: ThorChainKitManager, mayaChainKitManager: ThorChainKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
          zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager,
          spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager)
     {
@@ -62,6 +67,7 @@ public class AdapterFactory {
         self.btcBlockchainManager = btcBlockchainManager
         self.tronKitManager = tronKitManager
         self.thorChainKitManager = thorChainKitManager
+        self.mayaChainKitManager = mayaChainKitManager
         self.tonKitManager = tonKitManager
         self.stellarKitManager = stellarKitManager
         self.zanoKitManager = zanoKitManager
@@ -110,22 +116,28 @@ public class AdapterFactory {
         return TronAdapter(tronKitWrapper: tronKitWrapper)
     }
 
+    // THORChain (RUNE) and Maya (CACAO) share the ThorChainKit; pick the per-chain manager
+    func thorChainFamilyKitManager(blockchainType: BlockchainType) -> ThorChainKitManager {
+        blockchainType == .mayaChain ? mayaChainKitManager : thorChainKitManager
+    }
+
     private func thorChainAdapter(wallet: Wallet) -> IAdapter? {
-        guard wallet.token.blockchainType == .thorChain else { return nil }
+        let blockchainType = wallet.token.blockchainType
+        guard blockchainType == .thorChain || blockchainType == .mayaChain else { return nil }
 
         let denom: ThorChainKit.Denom
         switch wallet.token.type {
-        case .native: denom = .rune
-        // Never fall back to RUNE on a malformed reference — that would move the wrong asset.
+        case .native: denom = blockchainType == .mayaChain ? .cacao : .rune
+        // Never fall back to the native coin on a malformed reference — that would move the wrong asset.
         case let .thorChainAsset(rawDenom):
-            guard let parsed = try? ThorChainKit.Denom(rawValue: rawDenom) else { return nil }
+            guard blockchainType == .thorChain, let parsed = try? ThorChainKit.Denom(rawValue: rawDenom) else { return nil }
             denom = parsed
         default: return nil
         }
 
         do {
             // Every denom of an account shares one kit; the wrapper is cached per account
-            let wrapper = try thorChainKitManager.thorChainKitWrapper(account: wallet.account)
+            let wrapper = try thorChainFamilyKitManager(blockchainType: blockchainType).thorChainKitWrapper(account: wallet.account)
             let adapter = try ThorChainAdapter(thorChainKitWrapper: wrapper, denom: denom)
             return adapter
         } catch {
@@ -191,9 +203,10 @@ extension AdapterFactory {
     }
 
     func thorChainTransactionsAdapter(transactionSource: TransactionSource) -> ITransactionsAdapter? {
-        let query = TokenQuery(blockchainType: .thorChain, tokenType: .native)
+        let blockchainType = transactionSource.blockchainType
+        let query = TokenQuery(blockchainType: blockchainType, tokenType: .native)
 
-        if let thorChainKitWrapper = thorChainKitManager.thorChainKitWrapper,
+        if let thorChainKitWrapper = thorChainFamilyKitManager(blockchainType: blockchainType).thorChainKitWrapper,
            let baseToken = try? coinManager.token(query: query)
         {
             let adapter = ThorChainTransactionsAdapter(
@@ -298,7 +311,7 @@ extension AdapterFactory {
         case (.native, .tron):
             return tronAdapter(wallet: wallet)
 
-        case (.native, .thorChain), (.thorChainAsset, .thorChain):
+        case (.native, .thorChain), (.thorChainAsset, .thorChain), (.native, .mayaChain):
             return thorChainAdapter(wallet: wallet)
 
         case let (.eip20(address), .tron):

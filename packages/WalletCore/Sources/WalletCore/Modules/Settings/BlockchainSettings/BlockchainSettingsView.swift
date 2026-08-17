@@ -24,6 +24,9 @@ struct BlockchainSettingsView: View {
                     if let thorChainItem = viewModel.thorChainItem {
                         ItemView(item: thorChainItem)
                     }
+                    if let mayaChainItem = viewModel.mayaChainItem {
+                        ItemView(item: mayaChainItem)
+                    }
                 }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))

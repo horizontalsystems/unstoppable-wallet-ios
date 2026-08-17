@@ -6,18 +6,17 @@ import RxSwift
 import ThorChainKit
 
 final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
-    private static let decimals = ThorChainKit.Denom.decimals
-
     let thorChainKitWrapper: ThorChainKitWrapper
-    // One account read carries every denom, so RUNE and every THORChain asset share a
-    // single kit; the adapter only picks its own denom out of that state.
+    // One account read carries every denom, so the native coin and every chain asset
+    // share a single kit; the adapter only picks its own denom out of that state.
     private let denom: ThorChainKit.Denom
 
     // The network fee is fixed chain-wide; start() refreshes the cached value. The
     // refresh runs off a task and the fee is read from wherever a screen asks, so the
     // two are kept apart by a lock rather than by hoping they never overlap.
     private let feeLock = NSLock()
-    private var storedFee: BigUInt = 2_000_000
+    // NativeTransactionFee node constant: 0.02 RUNE (1e8) / 0.2 CACAO (1e10)
+    private var storedFee: BigUInt
     private var feeTask: Task<Void, Never>?
 
     private var cachedFee: BigUInt {
@@ -25,9 +24,19 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
         set { feeLock.lock(); storedFee = newValue; feeLock.unlock() }
     }
 
-    init(thorChainKitWrapper: ThorChainKitWrapper, denom: ThorChainKit.Denom = .rune) throws {
+    init(thorChainKitWrapper: ThorChainKitWrapper, denom: ThorChainKit.Denom? = nil) throws {
         self.thorChainKitWrapper = thorChainKitWrapper
-        self.denom = denom
+        let network = thorChainKitWrapper.thorChainKit.network
+        self.denom = denom ?? network.nativeDenom
+        storedFee = network.chain == .maya ? 2_000_000_000 : 2_000_000
+    }
+
+    private var decimals: Int {
+        thorChainKitWrapper.thorChainKit.decimals
+    }
+
+    private var nativeDenom: ThorChainKit.Denom {
+        thorChainKitWrapper.thorChainKit.network.nativeDenom
     }
 
     var fee: Decimal {
@@ -38,12 +47,13 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
         balanceData.available
     }
 
+    // Native-coin balance backing the fee: RUNE on THORChain, CACAO on Maya
     var runeAvailableBalance: Decimal {
-        balanceData(baseUnits: thorChainKitWrapper.thorChainKit.balance(denom: .rune)).available
+        balanceData(baseUnits: thorChainKitWrapper.thorChainKit.balance(denom: nativeDenom)).available
     }
 
     var isNativeCoin: Bool {
-        denom == .rune
+        denom == nativeDenom
     }
 
     var isMainNet: Bool {
@@ -60,7 +70,7 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
     }
 
     var debugInfo: String {
-        "thorchain:\(syncStateCode):\(thorChainKitWrapper.thorChainKit.network.expectedChainId)"
+        "\(thorChainKitWrapper.thorChainKit.network.protocolPath):\(syncStateCode):\(thorChainKitWrapper.thorChainKit.network.expectedChainId)"
     }
 
     func start() {
@@ -130,7 +140,7 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
     }
 
     private func balanceData(baseUnits: BigUInt) -> BalanceData {
-        (try? Self.balanceData(baseUnits: baseUnits, decimals: Self.decimals)) ?? BalanceData(balance: 0)
+        (try? Self.balanceData(baseUnits: baseUnits, decimals: decimals)) ?? BalanceData(balance: 0)
     }
 
     static func balanceData(baseUnits: BigUInt, decimals: Int) throws -> BalanceData {

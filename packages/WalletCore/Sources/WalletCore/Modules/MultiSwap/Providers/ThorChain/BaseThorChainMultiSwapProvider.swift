@@ -13,7 +13,7 @@ import ThorChainKit
 class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     private let assetMapExpiration: TimeInterval = 60 * 60
     // Bump to discard maps cached by older mapping logic.
-    private let assetMapVersion = 2
+    private let assetMapVersion = 3
     private var assetMapKey: String { "\(id)-v\(assetMapVersion)" }
 
     let networkManager = Core.shared.networkManager
@@ -57,6 +57,20 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
     var streamingInterval: Int { 1 }
 
+    // The settlement coin backs every pool and is never listed among them: THOR.RUNE on
+    // THORChain, MAYA.CACAO on Maya (where THOR.RUNE is an ordinary external pool).
+    var settlementBlockchainType: BlockchainType { .thorChain }
+    var settlementAsset: String { "THOR.RUNE" }
+
+    // Base-unit scale the protocol quotes an amount in. Every pool asset is 1e8
+    // regardless of its real decimals; the lone exception is the settlement chain's own
+    // native coin, quoted in native decimals — 1e8 for RUNE, 1e10 for CACAO. Encoding
+    // CACAO at 1e8 sends a 100x-too-small amount and the quote fails with
+    // "not enough asset to pay for fees".
+    func protocolDecimals(token: Token) -> Int {
+        token.type == .native && token.blockchainType == settlementBlockchainType ? token.decimals : 8
+    }
+
     func supports(tokenIn: Token, tokenOut: Token) -> Bool {
         assetMap[tokenIn.tokenQuery.id.lowercased()] != nil && assetMap[tokenOut.tokenQuery.id.lowercased()] != nil
     }
@@ -77,7 +91,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 allowanceState: allowanceHelper.allowanceState(spenderAddress: .init(raw: router), token: tokenIn, amount: amountIn),
                 estimatedTime: estimatedTime(swapQuote, tokenOut: tokenOut)
             )
-        case .bitcoin, .bitcoinCash, .dash, .litecoin, .zcash, .thorChain:
+        case .bitcoin, .bitcoinCash, .dash, .litecoin, .zcash, .thorChain, .mayaChain:
             return MultiSwapQuote(expectedBuyAmount: swapQuote.expectedAmountOut, estimatedTime: swapQuote.totalSwapSeconds)
         default:
             throw SwapError.unsupportedTokenIn
@@ -203,12 +217,12 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 fee: sendInfo?.fee,
                 toAddress: toAddress
             )
-        case .thorChain:
-            // No vault means the swap is a deposit to the chain; Maya publishes one and
-            // takes an ordinary transfer instead.
+        case .thorChain, .mayaChain:
+            // A settlement-native input (RUNE, CACAO) has no vault to pay into and takes
+            // a MsgDeposit; anything quoted with an inbound address is a plain transfer.
             let kind: ThorChainExecutable.Kind
             if let inboundAddress = swapQuote.inboundAddress {
-                kind = try .send(recipient: ThorChainKit.Address(inboundAddress, network: .mainnet))
+                kind = try .send(recipient: ThorChainKit.Address(inboundAddress, network: tokenIn.blockchainType == .mayaChain ? .mayaMainnet : .mainnet))
             } else {
                 guard let assetNotation = assetMap[tokenIn.tokenQuery.id.lowercased()] else {
                     throw SwapError.unsupportedTokenIn
@@ -217,7 +231,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             }
 
             let adapter = Core.shared.adapterManager.adapter(for: tokenIn) as? ThorChainAdapter
-            // The fee is always paid in RUNE, on top of the amount swapped.
+            // The fee is always paid in the chain's native coin, on top of the amount swapped.
             var transactionError: Error?
             if let adapter {
                 let insufficient = adapter.isNativeCoin
@@ -280,7 +294,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             throw SwapError.unsupportedTokenOut
         }
 
-        let amount = (amountIn * pow(10, 8)).roundedDown(decimal: 0)
+        let amount = (amountIn * pow(10, protocolDecimals(token: tokenIn))).roundedDown(decimal: 0)
         let destination = try await resolveDestination(recipient: recipient, token: tokenOut)
 
         var parameters: Parameters = [
@@ -307,7 +321,10 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             }
         }
 
-        return try await networkManager.fetch(url: "\(baseUrl)/quote/swap", parameters: parameters)
+        let quote: SwapQuote = try await networkManager.fetch(url: "\(baseUrl)/quote/swap", parameters: parameters)
+        // The decoder normalizes at 1e8; a settlement-native output (and its fees, which
+        // the node denominates in the output asset) arrives at native decimals instead.
+        return quote.rescalingOutput(extraDecimals: protocolDecimals(token: tokenOut) - 8)
     }
 
     func resolveDestination(recipient: String?, token: Token) async throws -> String {
@@ -385,8 +402,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             }
         }
 
-        // RUNE settles every pool and is never listed among them.
-        assetMap[TokenQuery(blockchainType: .thorChain, tokenType: .native).id.lowercased()] = "THOR.RUNE"
+        assetMap[TokenQuery(blockchainType: settlementBlockchainType, tokenType: .native).id.lowercased()] = settlementAsset
 
         try? swapAssetStorage.save(swapAssetMap: assetMap, provider: assetMapKey)
         try? swapAssetStorage.save(lastSyncTimestamp: Date().timeIntervalSince1970, provider: assetMapKey)
@@ -434,14 +450,14 @@ extension BaseThorChainMultiSwapProvider {
     struct SwapQuote: ImmutableMappable {
         // Absent when the input is THORChain-native: there is no vault to pay into.
         let inboundAddress: String?
-        let expectedAmountOut: Decimal
+        var expectedAmountOut: Decimal
         let memo: String
         let router: String?
 
-        let affiliateFee: Decimal
-        let outboundFee: Decimal
-        let liquidityFee: Decimal
-        let totalFee: Decimal
+        var affiliateFee: Decimal
+        var outboundFee: Decimal
+        var liquidityFee: Decimal
+        var totalFee: Decimal
 
         let dustThreshold: Int?
         let inboundConfirmationSeconds: TimeInterval?
@@ -473,6 +489,18 @@ extension BaseThorChainMultiSwapProvider {
             outboundDelaySeconds = try? map.value("outbound_delay_seconds")
             streamingSwapSeconds = try? map.value("streaming_swap_seconds")
             totalSwapSeconds = try? map.value("total_swap_seconds")
+        }
+
+        func rescalingOutput(extraDecimals: Int) -> SwapQuote {
+            guard extraDecimals != 0 else { return self }
+            let divisor = pow(10, extraDecimals)
+            var copy = self
+            copy.expectedAmountOut /= divisor
+            copy.affiliateFee /= divisor
+            copy.outboundFee /= divisor
+            copy.liquidityFee /= divisor
+            copy.totalFee /= divisor
+            return copy
         }
     }
 

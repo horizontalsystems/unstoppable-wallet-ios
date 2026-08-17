@@ -22,7 +22,7 @@ class ThorChainSwapBroadcaster: ISwapBroadcaster {
         // round-trip for x/-prefixed tokens.
         let denom: ThorChainKit.Denom
         switch executable.token.type {
-        case .native: denom = .rune
+        case .native: denom = executable.token.blockchainType == .mayaChain ? .cacao : .rune
         case let .thorChainAsset(rawDenom):
             guard let parsed = try? ThorChainKit.Denom(rawValue: rawDenom) else { throw SwapBroadcasterError.dataMismatch }
             denom = parsed
@@ -73,6 +73,6 @@ struct ThorChainPrepared: IPrepared {
 
 extension ThorChainSwapBroadcaster: ISwapBroadcasterType {
     static func make(blockchainType: BlockchainType, account: Account) -> ISwapBroadcaster? {
-        blockchainType == .thorChain ? ThorChainSwapBroadcaster(account: account) : nil
+        blockchainType == .thorChain || blockchainType == .mayaChain ? ThorChainSwapBroadcaster(account: account) : nil
     }
 }

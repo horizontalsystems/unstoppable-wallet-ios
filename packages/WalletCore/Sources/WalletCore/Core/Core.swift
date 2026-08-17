@@ -105,6 +105,7 @@ public class Core {
     let zanoNodeManager: ZanoNodeManager
     let zcashNodeManager: ZcashNodeManager
     let thorChainEndpointManager: ThorChainEndpointManager
+    let mayaChainEndpointManager: ThorChainEndpointManager
     let restoreStateManager: RestoreStateManager
     public let evmBlockchainManager: EvmBlockchainManager
     let evmLabelManager: EvmLabelManager
@@ -290,6 +291,12 @@ public class Core {
             endpointProvider: ThorChainEndpointConfigurationProvider()
         )
         let thorChainKitManager = ThorChainKitManager(endpointManager: thorChainEndpointManager)
+        mayaChainEndpointManager = ThorChainEndpointManager(
+            blockchainSettingsStorage: blockchainSettingsStorage,
+            endpointProvider: MayaChainEndpointConfigurationProvider(),
+            blockchainType: .mayaChain
+        )
+        let mayaChainKitManager = ThorChainKitManager(endpointManager: mayaChainEndpointManager, network: .mayaMainnet)
         tronAccountManager = TronAccountManager(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, tronKitManager: tronKitManager, restoreStateManager: restoreStateManager)
 
         tonKitManager = TonKitManager(restoreStateManager: restoreStateManager, marketKit: marketKit, walletManager: walletManager)
@@ -374,6 +381,7 @@ public class Core {
             btcBlockchainManager: btcBlockchainManager,
             tronKitManager: tronKitManager,
             thorChainKitManager: thorChainKitManager,
+            mayaChainKitManager: mayaChainKitManager,
             tonKitManager: tonKitManager,
             stellarKitManager: stellarKitManager,
             zanoKitManager: zanoKitManager,
@@ -396,7 +404,8 @@ public class Core {
             moneroNodeManager: moneroNodeManager,
             zanoNodeManager: zanoNodeManager,
             zcashNodeManager: zcashNodeManager,
-            thorChainKitManager: thorChainKitManager
+            thorChainKitManager: thorChainKitManager,
+            mayaChainKitManager: mayaChainKitManager
         )
         transactionAdapterManager = TransactionAdapterManager(
             adapterManager: adapterManager,

@@ -6,7 +6,7 @@ import ThorChainKit
 
 final class ThorChainNetworkViewModel: ObservableObject {
     let blockchain: Blockchain
-    private let endpointManager = Core.shared.thorChainEndpointManager
+    private let endpointManager: ThorChainEndpointManager
     private let disposeBag = DisposeBag()
 
     @Published private(set) var endpointFamilies = [ThorChainKit.EndpointFamilyDescriptor]()
@@ -15,6 +15,7 @@ final class ThorChainNetworkViewModel: ObservableObject {
 
     init(blockchain: Blockchain) {
         self.blockchain = blockchain
+        endpointManager = blockchain.type == .mayaChain ? Core.shared.mayaChainEndpointManager : Core.shared.thorChainEndpointManager
 
         subscribe(disposeBag, endpointManager.endpointObservable) { [weak self] in
             DispatchQueue.main.async { [weak self] in self?.sync() }
