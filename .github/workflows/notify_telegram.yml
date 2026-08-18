@@ -6,18 +6,13 @@ on:
 
 jobs:
   notify:
-    if: ${{ !startsWith(github.head_ref, 'l10n_version/') }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Send telegram message
-        uses: appleboy/telegram-action@master
+        uses: appleboy/telegram-action@v1.1.1
         with:
-          to: ${{secrets.TELEGRAM_TO}}
-          token: ${{secrets.TELEGRAM_TOKEN}}
-          args: |
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
             ${{ github.event.pull_request.html_url }}
-
-            Title   : ${{github.event.pull_request.title}}
-            Author  : @${{github.actor}}
-            Event   : ${{ github.event_name }}
