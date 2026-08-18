@@ -13,7 +13,7 @@ import ThorChainKit
 class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     private let assetMapExpiration: TimeInterval = 60 * 60
     // Bump to discard maps cached by older mapping logic.
-    private let assetMapVersion = 3
+    private let assetMapVersion = 4
     private var assetMapKey: String { "\(id)-v\(assetMapVersion)" }
 
     let networkManager = Core.shared.networkManager
@@ -38,6 +38,9 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     }
 
     var baseUrl: String { fatalError("Must be overridden by subclass") }
+    // THORChain exposes secured assets (BTC-BTC, ETH-ETH, …) via /securedassets and makes
+    // them swappable through the standard `=:` memo. Maya has none, so it stays false.
+    var securedAssetsSupported: Bool { false }
     var id: String { fatalError("Must be overridden by subclass") }
     var name: String { fatalError("Must be overridden by subclass") }
     var type: SwapProviderType { fatalError("Must be overridden by subclass") }
@@ -342,13 +345,21 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             return
         }
 
-        Task { [weak self, networkManager, baseUrl] in
+        Task { [weak self, networkManager, baseUrl, securedAssetsSupported] in
             let pools: [Pool] = try await networkManager.fetch(url: "\(baseUrl)/pools")
-            self?.sync(pools: pools)
+
+            // Secured assets live in x/bank, not /pools. Fetched defensively: a
+            // /securedassets outage must not discard the pool-based map.
+            var securedAssets = [SecuredAsset]()
+            if securedAssetsSupported {
+                securedAssets = await (try? networkManager.fetch(url: "\(baseUrl)/securedassets") as [SecuredAsset]) ?? []
+            }
+
+            self?.sync(pools: pools, securedAssets: securedAssets)
         }
     }
 
-    private func sync(pools: [Pool]) {
+    private func sync(pools: [Pool], securedAssets: [SecuredAsset]) {
         var assetMap = [String: String]()
 
         let availablePools = pools.filter { $0.status.caseInsensitiveCompare("available") == .orderedSame }
@@ -404,6 +415,8 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
         assetMap[TokenQuery(blockchainType: settlementBlockchainType, tokenType: .native).id.lowercased()] = settlementAsset
 
+        assetMap.merge(Self.securedAssetMapEntries(securedAssets: securedAssets)) { _, secured in secured }
+
         try? swapAssetStorage.save(swapAssetMap: assetMap, provider: assetMapKey)
         try? swapAssetStorage.save(lastSyncTimestamp: Date().timeIntervalSince1970, provider: assetMapKey)
 
@@ -411,6 +424,18 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             self.assetMap = assetMap
             self.syncSubject.send()
         }
+    }
+
+    static func securedAssetMapEntries(securedAssets: [SecuredAsset]) -> [String: String] {
+        var entries = [String: String]()
+
+        for securedAsset in securedAssets {
+            guard let asset = try? ThorChainKit.Asset(notation: securedAsset.asset) else { continue }
+            let denom = ThorChainKit.Denom.denom(for: asset)
+            entries[TokenQuery(blockchainType: .thorChain, tokenType: .thorChainAsset(denom: denom)).id.lowercased()] = securedAsset.asset
+        }
+
+        return entries
     }
 
     private func blockchainType(assetBlockchainId: String) -> BlockchainType? {
@@ -444,6 +469,15 @@ extension BaseThorChainMultiSwapProvider {
         init(map: Map) throws {
             asset = try map.value("asset")
             status = try map.value("status")
+        }
+    }
+
+    // /securedassets also reports supply and depth; only the asset notation is needed.
+    struct SecuredAsset: ImmutableMappable {
+        let asset: String
+
+        init(map: Map) throws {
+            asset = try map.value("asset")
         }
     }
 

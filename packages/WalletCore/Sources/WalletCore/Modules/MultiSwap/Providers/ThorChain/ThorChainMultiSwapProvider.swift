@@ -6,6 +6,8 @@ class ThorChainMultiSwapProvider: BaseThorChainMultiSwapProvider {
         "https://gateway.liquify.com/chain/thorchain_api/thorchain"
     }
 
+    override var securedAssetsSupported: Bool { true }
+
     override var id: String { Self.id }
     override var name: String { Self.name }
     override var type: SwapProviderType { .excellent }
