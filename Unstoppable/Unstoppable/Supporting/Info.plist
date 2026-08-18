@@ -4,7 +4,8 @@
     <dict>
         <!-- Plain-HTTP Monero nodes pinged by NodePinger (URLSession). Keep in sync with
              MoneroNodeManager.defaultNodes: a node absent here syncs fine (the C++ wallet
-             bypasses ATS) but always shows "Unreachable" and never wins auto-select. -->
+             bypasses ATS) but always shows "Unreachable". These nodes are manual-only:
+             auto-select never picks a plain-HTTP endpoint. -->
         <key>NSAppTransportSecurity</key>
         <dict>
             <key>NSExceptionDomains</key>
@@ -30,11 +31,6 @@
                     <true/>
                 </dict>
                 <key>nodex.monerujo.io</key>
-                <dict>
-                    <key>NSExceptionAllowsInsecureHTTPLoads</key>
-                    <true/>
-                </dict>
-                <key>xmr-node.cakewallet.com</key>
                 <dict>
                     <key>NSExceptionAllowsInsecureHTTPLoads</key>
                     <true/>

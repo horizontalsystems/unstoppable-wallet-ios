@@ -432,6 +432,9 @@ extension MoneroAdapter {
         case let .mnemonic(words, passphrase, _):
             return (try? Kit.key(wallet: .bip39(seed: words, passphrase: passphrase), privateKey: privateKey, spendKey: spendKey)) ?? ""
 
+        case let .moneroMnemonic(words, passphrase):
+            return (try? Kit.key(wallet: .legacy(seed: words, passphrase: passphrase), privateKey: privateKey, spendKey: spendKey)) ?? ""
+
         case let .moneroWatchAccount(address, viewKey):
             return (try? Kit.key(wallet: .watch(address: address, viewKey: viewKey), privateKey: privateKey, spendKey: spendKey)) ?? ""
 
@@ -443,6 +446,9 @@ extension MoneroAdapter {
         switch accountType {
         case let .mnemonic(words, passphrase, _):
             return (try? Kit.address(wallet: .bip39(seed: words, passphrase: passphrase), account: 0, index: 1)) ?? ""
+
+        case let .moneroMnemonic(words, passphrase):
+            return (try? Kit.address(wallet: .legacy(seed: words, passphrase: passphrase), account: 0, index: 1)) ?? ""
 
         case let .moneroWatchAccount(address, viewKey):
             return (try? Kit.address(wallet: .watch(address: address, viewKey: viewKey), account: 0, index: 0)) ?? ""

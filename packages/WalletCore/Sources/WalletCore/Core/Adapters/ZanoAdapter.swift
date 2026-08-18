@@ -290,6 +290,12 @@ extension ZanoAdapter: IDepositAdapter {
 extension ZanoAdapter {
     var minimumSendAmount: Decimal { 0.0 }
 
+    // Fees are always paid in native ZANO, even when this adapter serves a confidential
+    // asset — send validation needs the native balance regardless of assetId.
+    var availableZanoBalance: Decimal {
+        Decimal(kit.nativeBalance.unlocked) / Self.zanoRate
+    }
+
     func estimateFee() -> Decimal {
         Decimal(kit.estimateFee(priority: .default)) / Self.zanoRate
     }

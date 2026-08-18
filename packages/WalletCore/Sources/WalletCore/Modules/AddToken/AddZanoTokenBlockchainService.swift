@@ -58,7 +58,12 @@ extension AddZanoTokenBlockchainService: IAddTokenBlockchainService {
               result["status"] as? String == "OK",
               let descriptor = result["asset_descriptor"] as? [String: Any],
               let ticker = descriptor["ticker"] as? String,
-              let fullName = descriptor["full_name"] as? String
+              let fullName = descriptor["full_name"] as? String,
+              // No fallback: decimals drive atomic-unit conversion in ZanoAdapter, so a
+              // guessed value would corrupt balances and send amounts. 0...255 is the
+              // protocol range of decimal_point.
+              let decimals = descriptor["decimal_point"] as? Int,
+              (0 ... 255).contains(decimals)
         else {
             throw TokenError.notFound(blockchainName: blockchain.name)
         }
@@ -69,7 +74,7 @@ extension AddZanoTokenBlockchainService: IAddTokenBlockchainService {
             coin: Coin(uid: tokenQuery.customCoinUid, name: fullName, code: ticker),
             blockchain: blockchain,
             type: tokenQuery.tokenType,
-            decimals: descriptor["decimal_point"] as? Int ?? 12
+            decimals: decimals
         )
     }
 }

@@ -14,15 +14,11 @@ class MoneroNetworkViewModel: ObservableObject {
     @Published var saveEnabled = false
     @Published var pingStates: [String: PingState] = [:]
 
+    // Draft state, like the node selection: nothing is persisted or applied until save().
+    // The close button just dismisses the screen, so it must not leave side effects behind.
     @Published var autoSelectEnabled: Bool {
         didSet {
-            guard autoSelectEnabled != moneroNodeManager.autoSelectEnabled else { return }
-
-            moneroNodeManager.autoSelectEnabled = autoSelectEnabled
-
-            if autoSelectEnabled {
-                applyFastestNode(results: lastPingResults)
-            }
+            updateSaveEnabled()
         }
     }
 
@@ -75,7 +71,9 @@ class MoneroNetworkViewModel: ObservableObject {
 
                 lastPingResults = results
 
-                if autoSelectEnabled {
+                // Persisted setting, not the draft toggle: refresh only re-applies a choice
+                // the user has already saved.
+                if moneroNodeManager.autoSelectEnabled {
                     applyFastestNode(results: results)
                 }
             }
@@ -120,7 +118,9 @@ class MoneroNetworkViewModel: ObservableObject {
 
     private func updateSaveEnabled() {
         let current = moneroNodeManager.node(blockchainType: blockchain.type)
-        saveEnabled = selectedNode.node.url != current.node.url || selectedNode.node.isTrusted != current.node.isTrusted
+        saveEnabled = selectedNode.node.url != current.node.url
+            || selectedNode.node.isTrusted != current.node.isTrusted
+            || autoSelectEnabled != moneroNodeManager.autoSelectEnabled
     }
 }
 
@@ -141,9 +141,23 @@ extension MoneroNetworkViewModel {
     }
 
     func save() {
-        let isCustom = customItems.contains { $0.node.node.url == selectedNode.node.url }
-        stat(page: .blockchainSettingsMonero, event: .switchMoneroNode(chainUid: blockchain.uid, name: isCustom ? "custom" : selectedNode.name))
-        moneroNodeManager.setCurrent(node: selectedNode, blockchainType: blockchain.type)
+        moneroNodeManager.autoSelectEnabled = autoSelectEnabled
+
+        if autoSelectEnabled {
+            // Auto-select owns the node choice from now on; a manual pick made before the
+            // toggle was flipped is superseded by the fastest-node result.
+            applyFastestNode(results: lastPingResults)
+        } else {
+            let current = moneroNodeManager.node(blockchainType: blockchain.type)
+
+            // Only persist an actual change: setCurrent fires the node relay, which tears
+            // down and reconnects a running wallet.
+            if selectedNode.node.url != current.node.url || selectedNode.node.isTrusted != current.node.isTrusted {
+                let isCustom = customItems.contains { $0.node.node.url == selectedNode.node.url }
+                stat(page: .blockchainSettingsMonero, event: .switchMoneroNode(chainUid: blockchain.uid, name: isCustom ? "custom" : selectedNode.name))
+                moneroNodeManager.setCurrent(node: selectedNode, blockchainType: blockchain.type)
+            }
+        }
     }
 }
 

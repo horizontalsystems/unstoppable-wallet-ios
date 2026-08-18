@@ -28,6 +28,17 @@ public class MoneroNodeManager {
     // so repeated pings don't flip-flop nodes (and tear down the wallet) over noise.
     private static let switchLatencyGain: TimeInterval = 0.1
 
+    // Mirrors NodePinger.probeUrl's scheme inference: an explicit scheme wins; a bare
+    // "host:port" URL is TLS only when the port implies it (443/18443).
+    static func isTls(url: URL) -> Bool {
+        let raw = url.absoluteString
+        if raw.hasPrefix("https://") { return true }
+        if raw.hasPrefix("http://") { return false }
+
+        let port = URLComponents(string: "http://\(raw)")?.port
+        return port == 443 || port == 18443
+    }
+
     public init(blockchainSettingsStorage: BlockchainSettingsStorage, moneroNodeStorage: MoneroNodeStorage) {
         self.blockchainSettingsStorage = blockchainSettingsStorage
         self.moneroNodeStorage = moneroNodeStorage
@@ -63,8 +74,9 @@ public class MoneroNodeManager {
 
     // NOTE: NodePinger reaches these over URLSession, so every plain-HTTP host here needs a
     // matching NSExceptionDomains entry in the app's Info.plist (the C++ wallet's own sockets
-    // are not subject to ATS). A node missing there syncs fine but always pings "Unreachable"
-    // and can never win auto-select.
+    // are not subject to ATS). A node missing there syncs fine but always pings "Unreachable".
+    // Plain-HTTP nodes are manual-only: auto-select considers TLS endpoints exclusively
+    // (see fastestNode), so prefer an explicit https:// URL whenever a node supports it.
     private func defaultNodes(blockchainType: BlockchainType) -> [MoneroNode] {
         switch blockchainType {
         case .monero:
@@ -95,7 +107,7 @@ public class MoneroNodeManager {
                 ),
                 MoneroNode(
                     name: "cakewallet.com",
-                    node: .init(url: URL(string: "xmr-node.cakewallet.com:18081")!, isTrusted: false)
+                    node: .init(url: URL(string: "https://xmr-node.cakewallet.com:18081")!, isTrusted: false)
                 ),
                 MoneroNode(
                     name: "stackwallet.com",
@@ -126,15 +138,20 @@ extension MoneroNodeManager {
         await NodePinger.ping(nodes: allNodes(blockchainType: blockchainType).map(\.node))
     }
 
-    /// Picks the fastest of the valid, reachable nodes that are not lagging behind the
-    /// best-known chain tip. Returns nil when the current node should be kept (hysteresis)
-    /// or no candidate qualifies.
+    /// Picks the fastest of the valid, reachable TLS nodes that are not lagging behind the
+    /// best-known chain tip. Plain-HTTP nodes are never auto-selected — silently switching
+    /// a user onto plaintext RPC traffic would downgrade their privacy; they stay available
+    /// for explicit manual selection only. Returns nil when the current node should be kept
+    /// (hysteresis) or no candidate qualifies.
     func fastestNode(results: [NodePingResult], blockchainType: BlockchainType) -> MoneroNode? {
-        let candidates = results.filter { $0.isValid && $0.responseTime != nil }
+        let candidates = results.filter { $0.isValid && $0.responseTime != nil && Self.isTls(url: $0.node.url) }
 
         guard let maxHeight = candidates.map(\.height).max() else { return nil }
 
-        let fresh = candidates.filter { $0.height + Self.heightLagThreshold >= maxHeight }
+        // Subtraction, not `height + threshold >= maxHeight`: a node reporting a height near
+        // UInt64.max would trap the addition. maxHeight is the candidate maximum, so the
+        // difference can never underflow.
+        let fresh = candidates.filter { maxHeight - $0.height <= Self.heightLagThreshold }
 
         guard let fastest = fresh.min(by: { ($0.responseTime ?? .infinity) < ($1.responseTime ?? .infinity) }) else { return nil }
 

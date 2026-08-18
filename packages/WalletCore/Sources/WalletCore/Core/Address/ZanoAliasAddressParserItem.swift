@@ -10,8 +10,6 @@ class ZanoAliasAddressParserItem: IAddressParserItem {
     private static let aliasRegex = try! NSRegularExpression(pattern: "^[a-z0-9.-]{1,255}$")
 
     private let resolver: ZanoAliasResolver
-    private let cacheLock = NSLock()
-    private var cache = [String: String]()
 
     init(resolver: ZanoAliasResolver) {
         self.resolver = resolver
@@ -48,26 +46,14 @@ class ZanoAliasAddressParserItem: IAddressParserItem {
             return .error(AddressService.AddressError.invalidAddress(blockchainName: "Zano"))
         }
 
-        cacheLock.lock()
-        let cached = cache[alias]
-        cacheLock.unlock()
-
-        if let cached {
-            return .just(Address(raw: cached, domain: address, blockchainType: .zano))
-        }
-
         let resolver = resolver
 
-        return Single.create { [weak self] observer in
+        // No caching: `update_alias` can re-point an alias on-chain at any time, and a stale
+        // cached address would silently redirect a later send. Resolve on every request.
+        return Single.create { observer in
             let task = Task {
                 do {
                     if let resolved = try await resolver.resolve(alias: alias), ZanoAdapter.isValidAddress(resolved) {
-                        if let self {
-                            self.cacheLock.lock()
-                            self.cache[alias] = resolved
-                            self.cacheLock.unlock()
-                        }
-
                         observer(.success(Address(raw: resolved, domain: address, blockchainType: .zano)))
                     } else {
                         observer(.error(AddressService.AddressError.invalidAddress(blockchainName: "Zano")))
