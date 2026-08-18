@@ -97,11 +97,30 @@ enum ThorChainEndpointManagerError: Error {
 }
 
 extension ThorChainEndpointManager {
+    // Android's cross-platform schema — {blockchain_type_id, name}. Endpoint family ids
+    // match Android's source names ("Keplr", "Rorcual", …), so the name is the id itself
+    // and the selected node survives a cross-platform restore.
     struct EndpointBackup: Codable {
         let familyId: String?
 
+        init(familyId: String?) {
+            self.familyId = familyId
+        }
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            familyId = try container.decodeIfPresent(String.self, forKey: .name)
+        }
+
+        func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            try container.encode(familyId == "Mayanode" ? BlockchainType.mayaChain.uid : BlockchainType.thorChain.uid, forKey: .blockchainTypeId)
+            try container.encodeIfPresent(familyId, forKey: .name)
+        }
+
         enum CodingKeys: String, CodingKey {
-            case familyId = "family_id"
+            case blockchainTypeId = "blockchain_type_id"
+            case name
         }
     }
 }

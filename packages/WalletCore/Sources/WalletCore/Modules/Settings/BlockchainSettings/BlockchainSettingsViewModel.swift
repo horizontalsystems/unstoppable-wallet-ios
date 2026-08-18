@@ -107,7 +107,9 @@ class BlockchainSettingsViewModel: ObservableObject {
     }
 
     private func syncMayaChainItem() {
+        // A single family leaves nothing to select; the row appears once Maya has a second endpoint
         guard let blockchain = try? marketKit.blockchain(uid: BlockchainType.mayaChain.uid),
+              let endpointFamilies = try? mayaChainEndpointManager.endpointFamilies(), endpointFamilies.count > 1,
               let endpointFamily = try? mayaChainEndpointManager.endpointFamily()
         else {
             mayaChainItem = nil
