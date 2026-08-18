@@ -200,13 +200,13 @@ extension EvmSyncSourceManager {
         case .base:
             return [
                 EvmSyncSource(
-                    name: "Base",
-                    rpcSource: .baseRpcHttp(),
+                    name: "dRPC",
+                    rpcSource: .http(urls: [URL(string: "https://base.drpc.org")!], auth: nil),
                     transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
                 EvmSyncSource(
-                    name: "dRPC",
-                    rpcSource: .http(urls: [URL(string: "https://base.drpc.org")!], auth: nil),
+                    name: "Base",
+                    rpcSource: .baseRpcHttp(),
                     transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
                 EvmSyncSource(
