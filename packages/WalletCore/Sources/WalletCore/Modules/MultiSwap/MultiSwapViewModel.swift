@@ -573,12 +573,12 @@ public class MultiSwapViewModel: ObservableObject {
             return
         }
 
-        guard let coinPriceIn, let fiatAmountIn else {
+        guard let coinPriceIn, let fiatAmountIn, let tokenIn else {
             amountIn = nil
             return
         }
 
-        amountIn = fiatAmountIn / coinPriceIn.value
+        amountIn = (fiatAmountIn / coinPriceIn.value).roundedUp(decimal: customDecimals ?? tokenIn.decimals)
     }
 
     private func syncFiatAmountIn() {

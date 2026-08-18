@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MarketKit
+import ObjectMapper
 import Testing
 @testable import Unstoppable
 @testable import WalletCore
