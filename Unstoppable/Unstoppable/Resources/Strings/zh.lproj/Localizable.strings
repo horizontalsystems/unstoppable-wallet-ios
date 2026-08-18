@@ -25,6 +25,7 @@
 "button.reject" = "拒绝";
 "button.connect" = "连接";
 "button.save" = "保存";
+"button.create" = "创建";
 "button.send" = "发送​​";
 "button.sign" = "签名";
 "button.i_understand" = "我理解";
@@ -1982,6 +1983,8 @@
 "add_token.contract_address_not_found" = "在 %@ 区块链中找不到合同地址";
 "add_token.jetton_master_not_found" = "在 %@ 区块链中找不到杰顿大师";
 "add_token.input_placeholder.contract_address" = "智能合约地址";
+"add_token.input_placeholder.asset_id" = "资产 ID";
+"add_token.invalid_asset_id" = "无效的资产 ID";
 "add_token.input_placeholder.jetton_master_address" = "Jetton Master 地址";
 "add_token.input_placeholder.mint_address" = "代币铸造地址";
 "add_token.invalid_mint_address" = "无效的 Solana 地址";
@@ -2175,6 +2178,16 @@
 "monero_network.added" = "已添加";
 "monero_network.add_new" = "添加新的";
 "monero_network.description" = "选择 Unstoppable 应用用于同步钱包的节点。";
+"monero_network.auto_select" = "自动选择节点";
+"monero_network.auto_select.description" = "连接到最快的最新节点";
+"monero_network.unreachable" = "无法连接";
+"add_monero_node.error.port_required" = "URL 必须包含端口";
+"monero.account" = "账户";
+"monero.accounts.title" = "账户";
+"monero.accounts.description" = "账户是同一个门罗币钱包中的独立分区。显示的余额、地址和交易属于当前活跃账户。在账户之间转移资金需要进行链上交易。";
+"monero.accounts.new" = "新建账户";
+"monero.accounts.rename" = "重命名";
+"monero.accounts.name_placeholder" = "名称（可选）";
 "monero_network.settings.title" = "节点偏好设置";
 "monero_network.settings.description" = "受信节点 – 启用后，钱包将信任所选节点并接受其数据，无需额外验证。\n\n开启 → 交易在广播后立即显示为待处理（同步更快，但隐私性较低且更依赖节点）。\n\n关闭 → 交易仅在网络确认后才会显示（速度较慢，但更安全、更私密）。";
 "monero_network.settings.trust" = "信任";

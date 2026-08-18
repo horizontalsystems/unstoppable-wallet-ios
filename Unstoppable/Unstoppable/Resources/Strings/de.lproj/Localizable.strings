@@ -25,6 +25,7 @@
 "button.reject" = "Verwerfen";
 "button.connect" = "Verbinden";
 "button.save" = "Speichern";
+"button.create" = "Erstellen";
 "button.send" = "Senden";
 "button.sign" = "Signieren";
 "button.i_understand" = "Ich stimme zu";
@@ -1982,6 +1983,8 @@
 "add_token.contract_address_not_found" = "Vertragsadresse in %@ Blockchain nicht gefunden";
 "add_token.jetton_master_not_found" = "Jetton Master nicht in %@ Blockchain gefunden";
 "add_token.input_placeholder.contract_address" = "Vertragsadresse";
+"add_token.input_placeholder.asset_id" = "Asset-ID";
+"add_token.invalid_asset_id" = "Ungültige Asset-ID";
 "add_token.input_placeholder.jetton_master_address" = "Jetton Hauptadresse";
 "add_token.input_placeholder.mint_address" = "Token-Mint-Adresse";
 "add_token.invalid_mint_address" = "Ungültige Solana-Adresse";
@@ -2175,6 +2178,16 @@
 "monero_network.added" = "Hinzugefügt";
 "monero_network.add_new" = "Neu hinzufügen";
 "monero_network.description" = "Wählen Sie den Knoten aus, den die Unstoppable-App zur Synchronisierung der Wallet(s) verwenden soll.";
+"monero_network.auto_select" = "Node automatisch auswählen";
+"monero_network.auto_select.description" = "Mit dem schnellsten aktuellen Node verbinden";
+"monero_network.unreachable" = "Nicht erreichbar";
+"add_monero_node.error.port_required" = "URL muss einen Port enthalten";
+"monero.account" = "Konto";
+"monero.accounts.title" = "Konten";
+"monero.accounts.description" = "Konten sind separate Bereiche innerhalb derselben Monero-Wallet. Guthaben, Adressen und Transaktionen gehören zum aktiven Konto. Das Verschieben von Guthaben zwischen Konten erfordert eine On-Chain-Transaktion.";
+"monero.accounts.new" = "Neues Konto";
+"monero.accounts.rename" = "Umbenennen";
+"monero.accounts.name_placeholder" = "Name (optional)";
 "monero_network.settings.title" = "Knoteneinstellungen";
 "monero_network.settings.description" = "Vertrauenswürdiger Node – Wenn aktiviert, vertraut die Wallet dem ausgewählten Node und akzeptiert dessen Daten ohne zusätzliche Überprüfung. \n\nEin → Transaktionen erscheinen sofort nach der Übertragung als ausstehend (schnellere Synchronisierung, aber geringere Privatsphäre und größere Abhängigkeit vom Node).\n\nAus → Transaktionen erscheinen erst nach Netzwerkbestätigungen (langsamer, aber sicherer und privater).";
 "monero_network.settings.trust" = "Vertrauen";
