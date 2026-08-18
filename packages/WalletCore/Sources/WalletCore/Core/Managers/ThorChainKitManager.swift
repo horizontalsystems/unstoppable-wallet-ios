@@ -18,17 +18,17 @@ final class ThorChainEndpointConfigurationProvider: IThorChainEndpointConfigurat
     func configuration() throws -> ThorChainEndpointConfiguration {
         let families = try [
             ThorChainKit.EndpointFamilyDescriptor(
-                id: "rorcual-mainnet",
+                id: "Rorcual",
                 cosmosRestURL: URL(string: "https://api-thorchain.rorcual.xyz")!,
                 cometBftURL: URL(string: "https://rpc-thorchain.rorcual.xyz")!
             ),
             ThorChainKit.EndpointFamilyDescriptor(
-                id: "ibs-mainnet",
+                id: "IBS",
                 cosmosRestURL: URL(string: "https://thorchain.ibs.team/api")!,
                 cometBftURL: URL(string: "https://thorchain.ibs.team/rpc")!
             ),
             ThorChainKit.EndpointFamilyDescriptor(
-                id: "keplr-mainnet",
+                id: "Keplr",
                 cosmosRestURL: URL(string: "https://lcd-thorchain.keplr.app")!,
                 cometBftURL: URL(string: "https://rpc-thorchain.keplr.app")!
             ),
@@ -38,7 +38,7 @@ final class ThorChainEndpointConfigurationProvider: IThorChainEndpointConfigurat
             // `thorchain_rpc`. Listed last, not first: it intermittently answers the
             // account read with HTTP 500, and 500 is not a retryable status.
             ThorChainKit.EndpointFamilyDescriptor(
-                id: "liquify-mainnet",
+                id: "Liquify",
                 cosmosRestURL: URL(string: "https://gateway.liquify.com/chain/thorchain_api")!,
                 cometBftURL: URL(string: "https://gateway.liquify.com/chain/thorchain_rpc")!
             ),
@@ -66,7 +66,7 @@ final class MayaChainEndpointConfigurationProvider: IThorChainEndpointConfigurat
     func configuration() throws -> ThorChainEndpointConfiguration {
         let families = try [
             ThorChainKit.EndpointFamilyDescriptor(
-                id: "mayanode-mainnet",
+                id: "Mayanode",
                 cosmosRestURL: URL(string: "https://mayanode.mayachain.info")!,
                 cometBftURL: URL(string: "https://tendermint.mayachain.info")!
             ),
