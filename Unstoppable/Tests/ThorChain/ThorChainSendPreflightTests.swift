@@ -11,14 +11,13 @@ struct ThorChainSendPreflightTests {
         #expect(try ThorChainSendHelper.baseUnits(Decimal(string: "1.23000000")!) == 123_000_000)
     }
 
-    @Test func excessivePrecisionFailsClosed() {
-        do {
-            _ = try ThorChainSendHelper.baseUnits(Decimal(string: "0.000000001")!)
-            Issue.record("sub-base-unit amount was accepted")
-        } catch let error as ThorChainSendHelper.Error {
-            #expect(error == .excessivePrecision)
-        } catch {
-            Issue.record("unexpected error: \(error)")
+    @Test func excessivePrecisionRoundsLikeTron() throws {
+        #expect(try ThorChainSendHelper.baseUnits(Decimal(string: "1.000000009")!) == 100_000_001)
+    }
+
+    @Test func subBaseUnitAmountIsStillInvalid() {
+        #expect(throws: ThorChainSendHelper.Error.invalidAmount) {
+            try ThorChainSendHelper.baseUnits(Decimal(string: "0.000000001")!)
         }
     }
 }

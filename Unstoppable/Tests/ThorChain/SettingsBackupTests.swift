@@ -6,15 +6,15 @@ struct SettingsBackupTests {
     @Test func encodesOnlySelectedThorChainFamilyId() throws {
         let data = try JSONEncoder().encode(backup(thorChainEndpoint: .init(familyId: "second")))
         let object = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
-        let thorChainEndpoint = try #require(object["thorchain_endpoint"] as? [String: String])
+        let thorChainEndpoint = try #require(object["thorchain_sync_source"] as? [String: String])
 
-        #expect(thorChainEndpoint == ["family_id": "second"])
+        #expect(thorChainEndpoint == ["blockchain_type_id": "thorchain", "name": "second"])
     }
 
     @Test func decodesBackupWithoutThorChainEndpoint() throws {
         let data = try JSONEncoder().encode(backup(thorChainEndpoint: .init(familyId: "second")))
         var object = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
-        object.removeValue(forKey: "thorchain_endpoint")
+        object.removeValue(forKey: "thorchain_sync_source")
 
         let dataWithoutThorChainEndpoint = try JSONSerialization.data(withJSONObject: object)
         let decoded = try JSONDecoder().decode(SettingsBackup.self, from: dataWithoutThorChainEndpoint)
