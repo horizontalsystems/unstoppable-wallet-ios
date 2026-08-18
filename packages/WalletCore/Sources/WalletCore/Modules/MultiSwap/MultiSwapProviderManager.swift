@@ -57,7 +57,6 @@ class MultiSwapProviderManager {
         PancakeV3MultiSwapProvider.id,
         ThorChainMultiSwapProvider.id,
         MayaMultiSwapProvider.id,
-        AllBridgeMultiSwapProvider.id,
     ]
 
     private func syncProviders(uSwapProviders: [String]) {

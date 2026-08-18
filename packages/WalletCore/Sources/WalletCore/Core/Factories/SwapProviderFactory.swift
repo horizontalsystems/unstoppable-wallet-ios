@@ -43,12 +43,18 @@ public class SwapProviderFactory {
         return nil
     }
 
-    // The ordinary swap screen must never offer a confidential provider. Not automatic: a registered
-    // entry resolves through `provider(id:)` (which tracking needs) and DefaultUSwapSubProvider.rate
-    // sends an explicit `providers` list, which overrides the server-side privacy filter.
+    /// Providers no longer offered for swapping. They stay resolvable through `provider(id:)` so
+    /// swaps already made with them keep resolving their type and stage layout in history, but no
+    /// quote card is built for them — the server may still list the id purely to carry policy.
+    private static let retiredProviderIds: Set<String> = [AllBridgeMultiSwapProvider.id]
+
+    // The ordinary swap screen must never offer a confidential or retired provider. Not automatic:
+    // a registered entry resolves through `provider(id:)` (which tracking needs) and
+    // DefaultUSwapSubProvider.rate sends an explicit `providers` list, which overrides the
+    // server-side privacy filter.
     public static func swappableProviders(ids: [String]) -> [IMultiSwapProvider] {
         ids
-            .filter { providerInfo(id: $0)?.confidential != true }
+            .filter { !retiredProviderIds.contains($0) && providerInfo(id: $0)?.confidential != true }
             .compactMap { provider(id: $0) }
     }
 

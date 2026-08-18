@@ -25,6 +25,7 @@
 "button.reject" = "거절";
 "button.connect" = "연결";
 "button.save" = "저장";
+"button.create" = "생성";
 "button.send" = "전송";
 "button.sign" = "가입";
 "button.i_understand" = "이해합니다";
@@ -1982,6 +1983,8 @@
 "add_token.contract_address_not_found" = "%@ 블록체인에서 계약 주소를 찾을 수 없습니다.";
 "add_token.jetton_master_not_found" = "Jetton Master를 %@ 블록체인에서 찾을 수 없습니다";
 "add_token.input_placeholder.contract_address" = "계약 주소";
+"add_token.input_placeholder.asset_id" = "자산 ID";
+"add_token.invalid_asset_id" = "유효하지 않은 자산 ID";
 "add_token.input_placeholder.jetton_master_address" = "제톤 마스터 주소";
 "add_token.input_placeholder.mint_address" = "토큰 민트 주소";
 "add_token.invalid_mint_address" = "유효하지 않은 솔라나 주소";
@@ -2175,6 +2178,16 @@
 "monero_network.added" = "추가됨";
 "monero_network.add_new" = "신규로 추가";
 "monero_network.description" = "Unstoppable 앱이 지갑 동기화에 사용할 노드를 선택하세요.";
+"monero_network.auto_select" = "노드 자동 선택";
+"monero_network.auto_select.description" = "가장 빠르고 최신 상태인 노드에 연결";
+"monero_network.unreachable" = "연결 불가";
+"add_monero_node.error.port_required" = "URL에 포트가 포함되어야 합니다";
+"monero.account" = "계정";
+"monero.accounts.title" = "계정";
+"monero.accounts.description" = "계정은 동일한 모네로 지갑 내의 별도 구획입니다. 표시되는 잔액, 주소 및 트랜잭션은 활성 계정에 속합니다. 계정 간 자금 이동에는 온체인 트랜잭션이 필요합니다.";
+"monero.accounts.new" = "새 계정";
+"monero.accounts.rename" = "이름 변경";
+"monero.accounts.name_placeholder" = "이름 (선택 사항)";
 "monero_network.settings.title" = "노드 설정";
 "monero_network.settings.description" = "신뢰 노드 – 활성화하면 지갑은 선택된 노드를 신뢰하고 추가 검증 없이 해당 데이터를 수락합니다. \n\n켜기 → 트랜잭션이 브로드캐스트 직후 대기 중으로 표시됩니다 (더 빠른 동기화, 그러나 프라이버시가 낮고 노드에 대한 의존도가 높음).\n\n끄기 → 트랜잭션이 네트워크 확인 후에만 표시됩니다 (더 느리지만 더 안전하고 프라이버시 보호가 높음).";
 "monero_network.settings.trust" = "신뢰";

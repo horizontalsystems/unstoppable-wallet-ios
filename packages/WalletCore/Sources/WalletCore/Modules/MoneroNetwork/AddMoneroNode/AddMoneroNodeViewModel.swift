@@ -45,6 +45,8 @@ extension AddMoneroNodeViewModel {
             urlCautionRelay.accept(Caution(text: "add_monero_node.warning.url_exists".localized, type: .warning))
         } catch AddMoneroNodeService.UrlError.invalid {
             urlCautionRelay.accept(Caution(text: "add_monero_node.error.invalid_url".localized, type: .error))
+        } catch AddMoneroNodeService.UrlError.portRequired {
+            urlCautionRelay.accept(Caution(text: "add_monero_node.error.port_required".localized, type: .error))
         } catch {}
     }
 }

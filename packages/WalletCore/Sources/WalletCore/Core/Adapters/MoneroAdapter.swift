@@ -30,15 +30,18 @@ class MoneroAdapter {
 
     let token: Token
     private let transactionSource: TransactionSource
+    private let accountId: String
+    private let accountsSubject = PublishSubject<[MoneroKit.AccountInfo]>()
 
     init(wallet: Wallet, restoreSettings: RestoreSettings, node: Node) throws {
         let logger = Core.shared.logger.scoped(with: "MoneroKit")
+        let activeAccount = UInt32(Core.shared.localStorage.moneroActiveAccount(accountId: wallet.account.id))
 
         switch wallet.account.type {
         case let .mnemonic(words, passphrase, _):
             kit = try MoneroKit.Kit(
                 wallet: .bip39(seed: words, passphrase: passphrase),
-                account: 0,
+                account: activeAccount,
                 restoreHeight: UInt64(restoreSettings.birthdayHeight ?? 0),
                 walletId: wallet.account.id,
                 node: node,
@@ -50,7 +53,19 @@ class MoneroAdapter {
         case let .moneroWatchAccount(address, viewKey):
             kit = try MoneroKit.Kit(
                 wallet: .watch(address: address, viewKey: viewKey),
-                account: 0,
+                account: activeAccount,
+                restoreHeight: UInt64(restoreSettings.birthdayHeight ?? 0),
+                walletId: wallet.account.id,
+                node: node,
+                networkType: Self.networkType,
+                reachabilityManager: Core.shared.reachabilityManager,
+                logger: logger
+            )
+
+        case let .moneroMnemonic(words, passphrase):
+            kit = try MoneroKit.Kit(
+                wallet: .legacy(seed: words, passphrase: passphrase),
+                account: activeAccount,
                 restoreHeight: UInt64(restoreSettings.birthdayHeight ?? 0),
                 walletId: wallet.account.id,
                 node: node,
@@ -65,6 +80,7 @@ class MoneroAdapter {
 
         token = wallet.token
         transactionSource = wallet.transactionSource
+        accountId = wallet.account.id
 
         balanceState = .notSynced(error: AppError.unknownError.localizedDescription)
         kit.delegate = self
@@ -189,6 +205,16 @@ extension MoneroAdapter: MoneroKitDelegate {
         depositAddressSubject.send(.completed(receiveAddress))
     }
 
+    func accountsUpdated(accounts: [MoneroKit.AccountInfo]) {
+        // A persisted selection can point past the wallet's account list (e.g. after a fresh
+        // restore on a new device) - fall back to the first account.
+        if !accounts.isEmpty, !accounts.contains(where: { $0.index == kit.activeAccount }) {
+            setActiveAccount(index: 0)
+        }
+
+        accountsSubject.onNext(accounts)
+    }
+
     func balanceDidChange(balanceInfo: MoneroKit.BalanceInfo) {
         moneroBalanceDataSubject.onNext(moneroBalanceData(balanceInfo: balanceInfo))
     }
@@ -209,6 +235,42 @@ extension MoneroAdapter: MoneroKitDelegate {
         }
 
         transactionRecordsSubject.onNext(records)
+    }
+}
+
+extension MoneroAdapter {
+    var accounts: [MoneroKit.AccountInfo] {
+        kit.accounts
+    }
+
+    var activeAccountIndex: UInt32 {
+        kit.activeAccount
+    }
+
+    var accountsObservable: Observable<[MoneroKit.AccountInfo]> {
+        accountsSubject.asObservable()
+    }
+
+    /// Switching needs no kit restart: the wallet scans all accounts in one pass, so this only
+    /// changes which account balances, addresses and transactions are reported.
+    /// Balance, accounts and transactions re-emit through the kit's delegate callbacks on its
+    /// serial event queue - emitting into the Rx subjects directly from this thread would
+    /// overlap those emissions (RxSwift subjects must not receive concurrent events).
+    func setActiveAccount(index: UInt32) {
+        guard index != kit.activeAccount else { return }
+
+        Core.shared.localStorage.setMoneroActiveAccount(accountId: accountId, index: Int(index))
+        // The deposit address re-emits through the kit's subAddressesUpdated callback on its
+        // serial event queue - nothing may be sent into the subjects from this thread.
+        kit.setActiveAccount(index)
+    }
+
+    func createAccount(label: String?) throws -> MoneroKit.AccountInfo {
+        try kit.createAccount(label: label)
+    }
+
+    func setAccountLabel(index: UInt32, label: String) throws {
+        try kit.setAccountLabel(accountIndex: index, label: label)
     }
 }
 
@@ -244,8 +306,22 @@ extension MoneroAdapter {
         return Decimal(fee) / coinRate
     }
 
-    @discardableResult func send(to address: String, amount: MoneroSendAmount, priority: MoneroKit.SendPriority, memo: String?) throws -> [String] {
-        try kit.send(to: address, amount: convertToPiconero(amount: amount), priority: priority, memo: memo)
+    @discardableResult func send(to address: String, amount: MoneroSendAmount, priority: MoneroKit.SendPriority, memo: String?, selectedKeyImages: [String]? = nil) throws -> [String] {
+        try kit.send(to: address, amount: convertToPiconero(amount: amount), priority: priority, memo: memo, selectedKeyImages: selectedKeyImages)
+    }
+
+    /// Takes the wallet mutex - never call from the main thread.
+    func unspentOutputs() throws -> [MoneroKit.UnspentOutput] {
+        try kit.unspentOutputs()
+    }
+
+    /// Timestamps of known transactions by hash, for labeling outputs in the selection UI.
+    func transactionTimestamps() -> [String: Int] {
+        Dictionary(kit.transactions(descending: true, type: nil, limit: nil).map { ($0.hash, $0.timestamp) }, uniquingKeysWith: { first, _ in first })
+    }
+
+    func subaddress(index: Int) -> String? {
+        kit.usedAddresses.first { $0.index == index }?.address
     }
 
     func convertToPiconero(amount: MoneroSendAmount) -> SendAmount {
@@ -356,6 +432,9 @@ extension MoneroAdapter {
         case let .mnemonic(words, passphrase, _):
             return (try? Kit.key(wallet: .bip39(seed: words, passphrase: passphrase), privateKey: privateKey, spendKey: spendKey)) ?? ""
 
+        case let .moneroMnemonic(words, passphrase):
+            return (try? Kit.key(wallet: .legacy(seed: words, passphrase: passphrase), privateKey: privateKey, spendKey: spendKey)) ?? ""
+
         case let .moneroWatchAccount(address, viewKey):
             return (try? Kit.key(wallet: .watch(address: address, viewKey: viewKey), privateKey: privateKey, spendKey: spendKey)) ?? ""
 
@@ -367,6 +446,9 @@ extension MoneroAdapter {
         switch accountType {
         case let .mnemonic(words, passphrase, _):
             return (try? Kit.address(wallet: .bip39(seed: words, passphrase: passphrase), account: 0, index: 1)) ?? ""
+
+        case let .moneroMnemonic(words, passphrase):
+            return (try? Kit.address(wallet: .legacy(seed: words, passphrase: passphrase), account: 0, index: 1)) ?? ""
 
         case let .moneroWatchAccount(address, viewKey):
             return (try? Kit.address(wallet: .watch(address: address, viewKey: viewKey), account: 0, index: 0)) ?? ""

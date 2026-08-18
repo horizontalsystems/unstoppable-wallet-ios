@@ -11,9 +11,39 @@ public class MoneroNodeManager {
     private let nodeRelay = PublishRelay<BlockchainType>()
     private let nodeUpdatedRelay = PublishRelay<BlockchainType>()
 
+    // Set at construction time: while true the Monero adapter is not created, so the wallet
+    // never connects to a stale stored node before the fastest one is resolved on startup.
+    // Lock-protected: written from the startup Task, read from the adapter queue.
+    private let resolvingLock = NSLock()
+    private var _isResolvingFastestNode = false
+
+    var isResolvingFastestNode: Bool {
+        resolvingLock.withLock { _isResolvingFastestNode }
+    }
+
+    // Nodes lagging more than this many blocks behind the best-known tip are never
+    // auto-selected, no matter how fast they respond.
+    private static let heightLagThreshold: UInt64 = 10
+    // Only switch away from a working current node when the winner is meaningfully faster,
+    // so repeated pings don't flip-flop nodes (and tear down the wallet) over noise.
+    private static let switchLatencyGain: TimeInterval = 0.1
+
+    // Mirrors NodePinger.probeUrl's scheme inference: an explicit scheme wins; a bare
+    // "host:port" URL is TLS only when the port implies it (443/18443).
+    static func isTls(url: URL) -> Bool {
+        let raw = url.absoluteString
+        if raw.hasPrefix("https://") { return true }
+        if raw.hasPrefix("http://") { return false }
+
+        let port = URLComponents(string: "http://\(raw)")?.port
+        return port == 443 || port == 18443
+    }
+
     public init(blockchainSettingsStorage: BlockchainSettingsStorage, moneroNodeStorage: MoneroNodeStorage) {
         self.blockchainSettingsStorage = blockchainSettingsStorage
         self.moneroNodeStorage = moneroNodeStorage
+
+        _isResolvingFastestNode = blockchainSettingsStorage.moneroAutoSelectEnabled(blockchainType: .monero)
     }
 
     private func saveCurrent(nodeUrl: URL, blockchainType: BlockchainType) {
@@ -42,6 +72,11 @@ public class MoneroNodeManager {
         nodeUpdatedRelay.accept(blockchainType)
     }
 
+    // NOTE: NodePinger reaches these over URLSession, so every plain-HTTP host here needs a
+    // matching NSExceptionDomains entry in the app's Info.plist (the C++ wallet's own sockets
+    // are not subject to ATS). A node missing there syncs fine but always pings "Unreachable".
+    // Plain-HTTP nodes are manual-only: auto-select considers TLS endpoints exclusively
+    // (see fastestNode), so prefer an explicit https:// URL whenever a node supports it.
     private func defaultNodes(blockchainType: BlockchainType) -> [MoneroNode] {
         switch blockchainType {
         case .monero:
@@ -72,7 +107,7 @@ public class MoneroNodeManager {
                 ),
                 MoneroNode(
                     name: "cakewallet.com",
-                    node: .init(url: URL(string: "xmr-node.cakewallet.com:18081")!, isTrusted: false)
+                    node: .init(url: URL(string: "https://xmr-node.cakewallet.com:18081")!, isTrusted: false)
                 ),
                 MoneroNode(
                     name: "stackwallet.com",
@@ -94,6 +129,62 @@ public class MoneroNodeManager {
 }
 
 extension MoneroNodeManager {
+    var autoSelectEnabled: Bool {
+        get { blockchainSettingsStorage.moneroAutoSelectEnabled(blockchainType: .monero) }
+        set { blockchainSettingsStorage.save(moneroAutoSelectEnabled: newValue, blockchainType: .monero) }
+    }
+
+    func pingNodes(blockchainType: BlockchainType) async -> [NodePingResult] {
+        await NodePinger.ping(nodes: allNodes(blockchainType: blockchainType).map(\.node))
+    }
+
+    /// Picks the fastest of the valid, reachable TLS nodes that are not lagging behind the
+    /// best-known chain tip. Plain-HTTP nodes are never auto-selected — silently switching
+    /// a user onto plaintext RPC traffic would downgrade their privacy; they stay available
+    /// for explicit manual selection only. Returns nil when the current node should be kept
+    /// (hysteresis) or no candidate qualifies.
+    func fastestNode(results: [NodePingResult], blockchainType: BlockchainType) -> MoneroNode? {
+        let candidates = results.filter { $0.isValid && $0.responseTime != nil && Self.isTls(url: $0.node.url) }
+
+        guard let maxHeight = candidates.map(\.height).max() else { return nil }
+
+        // Subtraction, not `height + threshold >= maxHeight`: a node reporting a height near
+        // UInt64.max would trap the addition. maxHeight is the candidate maximum, so the
+        // difference can never underflow.
+        let fresh = candidates.filter { maxHeight - $0.height <= Self.heightLagThreshold }
+
+        guard let fastest = fresh.min(by: { ($0.responseTime ?? .infinity) < ($1.responseTime ?? .infinity) }) else { return nil }
+
+        let current = node(blockchainType: blockchainType)
+
+        guard fastest.node.url != current.node.url else { return nil }
+
+        if let currentResult = fresh.first(where: { $0.node.url == current.node.url }),
+           let currentTime = currentResult.responseTime,
+           let fastestTime = fastest.responseTime,
+           currentTime <= fastestTime + Self.switchLatencyGain
+        {
+            return nil
+        }
+
+        return allNodes(blockchainType: blockchainType).first { $0.node.url == fastest.node.url }
+    }
+
+    /// Startup path: persists the winner WITHOUT firing nodeRelay - the Monero adapter was
+    /// deferred while this ran, so there is nothing to tear down; the adapter is then created
+    /// once, already pointing at the fastest node.
+    func autoSelectFastestNodeOnStartup() async {
+        defer { resolvingLock.withLock { _isResolvingFastestNode = false } }
+
+        guard autoSelectEnabled else { return }
+
+        let results = await pingNodes(blockchainType: .monero)
+
+        guard let fastest = fastestNode(results: results, blockchainType: .monero) else { return }
+
+        blockchainSettingsStorage.save(moneroNodeUrl: fastest.node.url.absoluteString, blockchainType: .monero)
+    }
+
     var nodeObservable: Observable<BlockchainType> {
         nodeRelay.asObservable()
     }

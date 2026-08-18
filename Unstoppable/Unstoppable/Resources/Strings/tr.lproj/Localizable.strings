@@ -25,6 +25,7 @@
 "button.reject" = "Reddet";
 "button.connect" = "Bağlan";
 "button.save" = "Kaydet";
+"button.create" = "Oluştur";
 "button.send" = "Gönder";
 "button.sign" = "kaydol";
 "button.i_understand" = "Anlıyorum";
@@ -1982,6 +1983,8 @@
 "add_token.contract_address_not_found" = "Sözleşme adresi %@ blockchain'de bulunamadı";
 "add_token.jetton_master_not_found" = "Jetton Master %@ blockchain'inde bulunamadı";
 "add_token.input_placeholder.contract_address" = "Sözleşme Adresi";
+"add_token.input_placeholder.asset_id" = "Varlık ID";
+"add_token.invalid_asset_id" = "Geçersiz varlık ID";
 "add_token.input_placeholder.jetton_master_address" = "Jetton Ana Adresi";
 "add_token.input_placeholder.mint_address" = "Token Mint Adresi";
 "add_token.invalid_mint_address" = "Geçersiz Solana adresi";
@@ -2175,6 +2178,16 @@
 "monero_network.added" = "Eklendi";
 "monero_network.add_new" = "Yeni ekle";
 "monero_network.description" = "Unstoppable uygulamasının cüzdan(lar)ı senkronize etmek için kullanacağı node’u seçin.";
+"monero_network.auto_select" = "Düğümü Otomatik Seç";
+"monero_network.auto_select.description" = "En hızlı ve güncel düğüme bağlan";
+"monero_network.unreachable" = "Ulaşılamıyor";
+"add_monero_node.error.port_required" = "URL bir port içermelidir";
+"monero.account" = "Hesap";
+"monero.accounts.title" = "Hesaplar";
+"monero.accounts.description" = "Hesaplar, aynı Monero cüzdanı içindeki ayrı bölümlerdir. Gösterilen bakiyeler, adresler ve işlemler aktif hesaba aittir. Hesaplar arasında fon taşımak zincir üstü bir işlem gerektirir.";
+"monero.accounts.new" = "Yeni Hesap";
+"monero.accounts.rename" = "Yeniden Adlandır";
+"monero.accounts.name_placeholder" = "Ad (isteğe bağlı)";
 "monero_network.settings.title" = "Node Tercihleri";
 "monero_network.settings.description" = "Güvenilir düğüm – Etkinleştirildiğinde, cüzdan seçilen düğüme güvenir ve verilerini ek doğrulama olmadan kabul eder. \n\nAçık → İşlemler yayınlandıktan hemen sonra Beklemede olarak görünür (daha hızlı senkronizasyon, ancak daha düşük gizlilik ve düğüme daha fazla bağımlılık).\n\nKapalı → İşlemler yalnızca ağ onaylarından sonra görünür (daha yavaş, ancak daha güvenli ve daha gizli).";
 "monero_network.settings.trust" = "Güven";

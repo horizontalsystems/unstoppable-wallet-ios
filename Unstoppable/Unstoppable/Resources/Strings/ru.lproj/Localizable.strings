@@ -25,6 +25,7 @@
 "button.reject" = "Отклонить";
 "button.connect" = "Подключиться";
 "button.save" = "Сохранить";
+"button.create" = "Создать";
 "button.send" = "Отправить";
 "button.sign" = "Подписать";
 "button.i_understand" = "Я понимаю";
@@ -1982,6 +1983,8 @@
 "add_token.contract_address_not_found" = "Адрес контракта не найден в %@ блокчейне";
 "add_token.jetton_master_not_found" = "Jetton Master не найден в блокчейне %@";
 "add_token.input_placeholder.contract_address" = "Адрес контракта";
+"add_token.input_placeholder.asset_id" = "ID актива";
+"add_token.invalid_asset_id" = "Недопустимый ID актива";
 "add_token.input_placeholder.jetton_master_address" = "Jetton Master адрес";
 "add_token.input_placeholder.mint_address" = "Mint-адрес токена";
 "add_token.invalid_mint_address" = "Недействительный адрес Solana";
@@ -2175,6 +2178,16 @@
 "monero_network.added" = "Добавлен";
 "monero_network.add_new" = "Добавить новый";
 "monero_network.description" = "Выберите ноду, которую приложение Unstoppable будет использовать для синхронизации кошелька(ов).";
+"monero_network.auto_select" = "Автоматический выбор ноды";
+"monero_network.auto_select.description" = "Подключиться к самой быстрой актуальной ноде";
+"monero_network.unreachable" = "Недоступен";
+"add_monero_node.error.port_required" = "URL должен содержать порт";
+"monero.account" = "Аккаунт";
+"monero.accounts.title" = "Аккаунты";
+"monero.accounts.description" = "Аккаунты — это отдельные разделы внутри одного кошелька Monero. Отображаемые балансы, адреса и транзакции принадлежат активному аккаунту. Перевод средств между аккаунтами требует ончейн-транзакции.";
+"monero.accounts.new" = "Новый аккаунт";
+"monero.accounts.rename" = "Переименовать";
+"monero.accounts.name_placeholder" = "Имя (необязательно)";
 "monero_network.settings.title" = "Настройки узла";
 "monero_network.settings.description" = "Доверенная нода – При включении кошелёк доверяет выбранной ноде и принимает её данные без дополнительной проверки. \n\nВкл → Транзакции отображаются как ожидающие сразу после отправки (более быстрая синхронизация, но меньшая конфиденциальность и большая зависимость от ноды).\n\nВыкл → Транзакции отображаются только после подтверждений сети (медленнее, но безопаснее и конфиденциальнее).";
 "monero_network.settings.trust" = "Доверять узлу";

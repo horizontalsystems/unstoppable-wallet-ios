@@ -25,6 +25,7 @@
 "button.reject" = "Rejeitar";
 "button.connect" = "Conectar";
 "button.save" = "Salvar";
+"button.create" = "Criar";
 "button.send" = "Enviar";
 "button.sign" = "Assinar";
 "button.i_understand" = "Estou ciente";
@@ -1982,6 +1983,8 @@
 "add_token.contract_address_not_found" = "Endereço do contrato não encontrado em %@ blockchain";
 "add_token.jetton_master_not_found" = "Jetton Master não encontrado na blockchain %@";
 "add_token.input_placeholder.contract_address" = "Endereço do Contrato";
+"add_token.input_placeholder.asset_id" = "ID do ativo";
+"add_token.invalid_asset_id" = "ID de ativo inválido";
 "add_token.input_placeholder.jetton_master_address" = "Endereço do Mestre Jetton";
 "add_token.input_placeholder.mint_address" = "Endereço Mint do token";
 "add_token.invalid_mint_address" = "Endereço Solana inválido";
@@ -2175,6 +2178,16 @@
 "monero_network.added" = "Adicionado";
 "monero_network.add_new" = "Adicionar novo";
 "monero_network.description" = "Escolha o nó que o app Unstoppable deve usar para sincronizar a(s) carteira(s).";
+"monero_network.auto_select" = "Seleção automática de nó";
+"monero_network.auto_select.description" = "Conectar ao nó mais rápido e atualizado";
+"monero_network.unreachable" = "Inacessível";
+"add_monero_node.error.port_required" = "A URL deve incluir uma porta";
+"monero.account" = "Conta";
+"monero.accounts.title" = "Contas";
+"monero.accounts.description" = "Contas são compartimentos separados dentro da mesma carteira Monero. Saldos, endereços e transações exibidos pertencem à conta ativa. A movimentação de fundos entre contas requer uma transação on-chain.";
+"monero.accounts.new" = "Nova conta";
+"monero.accounts.rename" = "Renomear";
+"monero.accounts.name_placeholder" = "Nome (opcional)";
 "monero_network.settings.title" = "Preferências de Nós";
 "monero_network.settings.description" = "Nó confiável – Quando ativado, a carteira confia no nó selecionado e aceita seus dados sem verificação adicional. \n\nAtivado → As transações aparecem como pendentes imediatamente após a transmissão (sincronização mais rápida, mas menor privacidade e maior dependência do nó).\n\nDesativado → As transações aparecem somente após as confirmações da rede (mais lento, mas mais seguro e privado).";
 "monero_network.settings.trust" = "Confiar";

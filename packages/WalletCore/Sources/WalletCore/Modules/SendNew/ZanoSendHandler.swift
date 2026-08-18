@@ -3,6 +3,7 @@ import MarketKit
 import ZanoKit
 
 protocol ZanoSendable: IBalanceAdapter {
+    var availableZanoBalance: Decimal { get }
     func estimateFee() -> Decimal
     @discardableResult
     func send(to address: String, amount: ZanoSendAmount, memo: String?) throws -> String
@@ -51,13 +52,36 @@ extension ZanoSendHandler: ISendHandler {
     func sendData(transactionSettings _: TransactionSettings?) async throws -> ISendData {
         let fee = adapter.estimateFee()
 
+        // The fee is always paid in native ZANO. Without this check a confidential-asset
+        // send with an empty ZANO balance only fails at broadcast, surfacing a raw
+        // NOT_ENOUGH_MONEY wallet error instead of a caution on the confirmation screen.
+        var transactionError: Error?
+        let availableZano = adapter.availableZanoBalance
+
+        if feeToken.coin.uid == token.coin.uid {
+            // Native ZANO: amount and fee are drawn from the same balance.
+            // Send-all subtracts the fee itself, so it only needs the fee covered.
+            switch amount {
+            case let .value(value):
+                if value + fee > availableZano {
+                    transactionError = TransactionError.insufficientZanoBalance(balance: availableZano)
+                }
+            case .all:
+                if fee >= availableZano {
+                    transactionError = TransactionError.insufficientZanoBalance(balance: availableZano)
+                }
+            }
+        } else if fee > availableZano {
+            transactionError = TransactionError.insufficientZanoBalance(balance: availableZano)
+        }
+
         return SendData(
             token: token,
             feeToken: feeToken,
             amount: amount,
             address: address,
             memo: memo,
-            transactionError: nil,
+            transactionError: transactionError,
             fee: fee
         )
     }

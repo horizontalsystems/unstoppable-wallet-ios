@@ -25,6 +25,7 @@
 "button.reject" = "Rejeter";
 "button.connect" = "Connecter";
 "button.save" = "Sauvegarder";
+"button.create" = "Créer";
 "button.send" = "Envoyer";
 "button.sign" = "Signer";
 "button.i_understand" = "J’ai Compris";
@@ -1982,6 +1983,8 @@
 "add_token.contract_address_not_found" = "Adresse du contrat introuvable dans la blockchain %@";
 "add_token.jetton_master_not_found" = "Jetton Master n'a pas été trouvé dans la blockchain %@";
 "add_token.input_placeholder.contract_address" = "Adresse du contrat";
+"add_token.input_placeholder.asset_id" = "ID de l'actif";
+"add_token.invalid_asset_id" = "ID d'actif invalide";
 "add_token.input_placeholder.jetton_master_address" = "Adresse du Jetton Master";
 "add_token.input_placeholder.mint_address" = "Adresse Mint du token";
 "add_token.invalid_mint_address" = "Adresse Solana invalide";
@@ -2175,6 +2178,16 @@
 "monero_network.added" = "Ajouté";
 "monero_network.add_new" = "Ajouter un Nouveau";
 "monero_network.description" = "Choisissez le nœud que l’application Unstoppable doit utiliser pour synchroniser le(s) portefeuille(s).";
+"monero_network.auto_select" = "Sélection automatique du nœud";
+"monero_network.auto_select.description" = "Se connecter au nœud le plus rapide et à jour";
+"monero_network.unreachable" = "Inaccessible";
+"add_monero_node.error.port_required" = "L'URL doit inclure un port";
+"monero.account" = "Compte";
+"monero.accounts.title" = "Comptes";
+"monero.accounts.description" = "Les comptes sont des compartiments séparés au sein du même portefeuille Monero. Les soldes, adresses et transactions affichés appartiennent au compte actif. Le transfert de fonds entre comptes nécessite une transaction on-chain.";
+"monero.accounts.new" = "Nouveau compte";
+"monero.accounts.rename" = "Renommer";
+"monero.accounts.name_placeholder" = "Nom (facultatif)";
 "monero_network.settings.title" = "Préférences de nœud";
 "monero_network.settings.description" = "Nœud de confiance – Lorsqu'il est activé, le portefeuille fait confiance au nœud sélectionné et accepte ses données sans vérification supplémentaire. \n\nActivé → Les transactions apparaissent comme en attente immédiatement après la diffusion (synchronisation plus rapide, mais confidentialité réduite et dépendance accrue envers le nœud).\n\nDésactivé → Les transactions n'apparaissent qu'après les confirmations du réseau (plus lent, mais plus sûr et plus confidentiel).";
 "monero_network.settings.trust" = "Confiance";

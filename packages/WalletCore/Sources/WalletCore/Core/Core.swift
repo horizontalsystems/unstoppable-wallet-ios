@@ -528,7 +528,8 @@ public class Core {
             tonKitManager: tonKitManager,
             stellarKitManager: stellarKitManager,
             solanaKitManager: solanaKitManager,
-            swapHistoryManager: swapHistoryManager
+            swapHistoryManager: swapHistoryManager,
+            moneroNodeManager: moneroNodeManager
         )
 
         appWorkerRegistry = AppWorkerRegistry(appManager: appManager)

@@ -282,6 +282,17 @@ extension LocalStorage {
 }
 
 extension LocalStorage {
+    // Keyed per app account, matching Android's convention
+    func moneroActiveAccount(accountId: String) -> Int {
+        userDefaultsStorage.value(for: "monero_active_account_\(accountId)") ?? 0
+    }
+
+    func setMoneroActiveAccount(accountId: String, index: Int) {
+        userDefaultsStorage.set(value: index, for: "monero_active_account_\(accountId)")
+    }
+}
+
+extension LocalStorage {
     func restore(backup: SettingsBackup) {
         remoteContactsSync = backup.remoteContactsSync ?? false
         indicatorsShown = backup.indicatorsShown

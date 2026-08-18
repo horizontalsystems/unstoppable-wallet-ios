@@ -11,11 +11,40 @@ class MoneroPreSendHandler: PreSendHandler {
         return MoneroPreSendHandler(token: wallet.token, adapter: adapter)
     }
 
-    private let token: Token
+    let token: Token
     private let adapter: MoneroAdapter
+
+    // syncOutputs runs only on this queue so two refreshes can never interleave; the lock
+    // guards the stored state because SwiftUI view models read it from the main thread.
+    private let syncQueue = DispatchQueue(label: "\(AppConfig.label).monero-pre-send-handler", qos: .userInitiated)
+    private let stateLock = NSLock()
+    private var _allOutputs = [MoneroKit.UnspentOutput]()
+    private var _transactionTimestamps = [String: Int]()
+    private var _customOutputs: [MoneroKit.UnspentOutput]?
+
+    var allOutputs: [MoneroKit.UnspentOutput] {
+        stateLock.withLock { _allOutputs }
+    }
+
+    var transactionTimestamps: [String: Int] {
+        stateLock.withLock { _transactionTimestamps }
+    }
+
+    // nil = automatic input selection by the wallet
+    var customOutputs: [MoneroKit.UnspentOutput]? {
+        get {
+            stateLock.withLock { _customOutputs }
+        }
+        set {
+            stateLock.withLock { _customOutputs = newValue }
+            balanceSubject.send(availableBalance)
+            settingsModifiedSubject.send(settingsModified)
+        }
+    }
 
     private let stateSubject = PassthroughSubject<AdapterState, Never>()
     private let balanceSubject = PassthroughSubject<Decimal, Never>()
+    private let settingsModifiedSubject = PassthroughSubject<Bool, Never>()
 
     private let disposeBag = DisposeBag()
 
@@ -33,15 +62,69 @@ class MoneroPreSendHandler: PreSendHandler {
             .disposed(by: disposeBag)
 
         adapter.balanceDataUpdatedObservable
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe { [weak self] balanceData in
-                self?.balanceSubject.send(balanceData.available)
+            .observeOn(SerialDispatchQueueScheduler(queue: syncQueue, internalSerialQueueName: "\(AppConfig.label).monero-pre-send-handler-rx"))
+            .subscribe { [weak self] _ in
+                self?.syncOutputs()
+                if let self {
+                    balanceSubject.send(availableBalance)
+                }
             }
             .disposed(by: disposeBag)
+
+        syncQueue.async { [weak self] in
+            self?.syncOutputs()
+            if let self {
+                balanceSubject.send(availableBalance)
+            }
+        }
+    }
+
+    // Runs on syncQueue only: output enumeration takes the wallet mutex.
+    private func syncOutputs() {
+        let outputs = (try? adapter.unspentOutputs())?.filter(\.spendable) ?? []
+        let timestamps = adapter.transactionTimestamps()
+
+        var prunedSelection = false
+
+        stateLock.lock()
+        _allOutputs = outputs
+        _transactionTimestamps = timestamps
+
+        // Prune selections referencing outputs that disappeared during sync
+        if let custom = _customOutputs {
+            let validKeyImages = Set(outputs.map(\.keyImage))
+            let pruned = custom.filter { validKeyImages.contains($0.keyImage) }
+            if pruned.count != custom.count {
+                _customOutputs = pruned
+                prunedSelection = true
+            }
+        }
+        stateLock.unlock()
+
+        if prunedSelection {
+            balanceSubject.send(availableBalance)
+            settingsModifiedSubject.send(settingsModified)
+        }
+    }
+
+    var availableBalance: Decimal {
+        if let customOutputs {
+            return Decimal(customOutputs.reduce(0) { $0 + $1.amount }) / adapter.coinRate
+        }
+
+        return adapter.balanceData.available
+    }
+
+    func subaddress(index: Int) -> String? {
+        adapter.subaddress(index: index)
     }
 }
 
 extension MoneroPreSendHandler: IPreSendHandler {
+    var hasSettings: Bool {
+        true
+    }
+
     var state: AdapterState {
         adapter.balanceState
     }
@@ -51,11 +134,19 @@ extension MoneroPreSendHandler: IPreSendHandler {
     }
 
     var balance: Decimal {
-        adapter.balanceData.available
+        availableBalance
     }
 
     var balancePublisher: AnyPublisher<Decimal, Never> {
         balanceSubject.eraseToAnyPublisher()
+    }
+
+    var settingsModified: Bool {
+        customOutputs != nil
+    }
+
+    var settingsModifiedPublisher: AnyPublisher<Bool, Never> {
+        settingsModifiedSubject.eraseToAnyPublisher()
     }
 
     // Chain-constant, so it reads the one table rather than restating it: a Monero memo is a local
@@ -64,18 +155,25 @@ extension MoneroPreSendHandler: IPreSendHandler {
         token.blockchainType.memoType
     }
 
+    func settingsView(onChangeSettings: @escaping () -> Void) -> AnyView {
+        // No ThemeNavigationStack wrapper: MoneroSendSettingsView opens its own
+        AnyView(MoneroSendSettingsView(handler: self, onChangeSettings: onChangeSettings))
+    }
+
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
         if !MoneroKit.Kit.isValid(address: address, networkType: MoneroAdapter.networkType) {
             return .invalid(cautions: [CautionNew(text: "send.address.invalid_address".localized, type: .error)])
         }
 
+        // Spending the whole available balance is a sweep; with a custom selection the
+        // available balance is the selection sum, so the sweep covers exactly those outputs.
         let moneroAmount: MoneroSendAmount
-        if amount == adapter.balanceData.available {
+        if amount == availableBalance {
             moneroAmount = .all(amount)
         } else {
             moneroAmount = .value(amount)
         }
 
-        return .valid(sendData: .monero(token: token, amount: moneroAmount, address: address, memo: memo))
+        return .valid(sendData: .monero(token: token, amount: moneroAmount, address: address, memo: memo, selectedKeyImages: customOutputs.map { $0.map(\.keyImage) }))
     }
 }

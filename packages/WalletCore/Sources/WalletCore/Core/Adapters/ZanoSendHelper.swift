@@ -7,7 +7,16 @@ class ZanoSendHelper {
         let title: String
         let text: String
 
-        if let zanoError = transactionError as? ZanoCoreError {
+        if let handlerError = transactionError as? ZanoSendHandler.TransactionError {
+            switch handlerError {
+            case let .insufficientZanoBalance(balance):
+                let appValue = AppValue(token: feeToken, value: balance)
+                let balanceString = appValue.formattedShort()
+
+                title = "fee_settings.errors.insufficient_balance".localized
+                text = "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? "")
+            }
+        } else if let zanoError = transactionError as? ZanoCoreError {
             switch zanoError {
             case let .insufficientFunds(balance):
                 let appValue = AppValue(token: feeToken, value: Decimal(string: balance) ?? 0)

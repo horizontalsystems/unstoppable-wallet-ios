@@ -21,7 +21,17 @@ class BackupVerifyWordsService {
     private var validatedWordCount = 0
 
     init?(account: Account, accountManager: AccountManager, appManager: IAppManager) {
-        guard case let .mnemonic(words, salt, _) = account.type else {
+        let words: [String]
+        let salt: String
+
+        switch account.type {
+        case let .mnemonic(accountWords, accountSalt, _):
+            words = accountWords
+            salt = accountSalt
+        case let .moneroMnemonic(accountWords, passphrase):
+            words = accountWords
+            salt = passphrase
+        default:
             return nil
         }
 

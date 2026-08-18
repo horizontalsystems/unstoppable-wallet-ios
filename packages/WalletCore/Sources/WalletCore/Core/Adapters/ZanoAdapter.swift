@@ -42,6 +42,12 @@ class ZanoAdapter {
         self.coinRate = coinRate
         self.transactionSource = transactionSource
 
+        // Custom assets (added by asset id) are unknown to the wallet's whitelist until pinned;
+        // without this their balance never appears in getbalance. Idempotent, retried by the kit.
+        if assetId != ZanoAssetId {
+            kit.pinAssetToWhitelist(assetId: assetId)
+        }
+
         balanceStateRelay = BehaviorRelay(value: Self.adapterState(kitState: kit.walletState))
 
         let scheduler = SerialDispatchQueueScheduler(queue: queue, internalSerialQueueName: "\(AppConfig.label).zano-adapter")
@@ -283,6 +289,12 @@ extension ZanoAdapter: IDepositAdapter {
 
 extension ZanoAdapter {
     var minimumSendAmount: Decimal { 0.0 }
+
+    // Fees are always paid in native ZANO, even when this adapter serves a confidential
+    // asset — send validation needs the native balance regardless of assetId.
+    var availableZanoBalance: Decimal {
+        Decimal(kit.nativeBalance.unlocked) / Self.zanoRate
+    }
 
     func estimateFee() -> Decimal {
         Decimal(kit.estimateFee(priority: .default)) / Self.zanoRate
