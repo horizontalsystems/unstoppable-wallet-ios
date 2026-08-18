@@ -12,12 +12,13 @@ class MoneroWalletTokenViewModel: ObservableObject {
     @Published var birthdayHeight: Int?
     @Published var activeAccountTitle: String = ""
 
-    var adapter: MoneroAdapter? {
-        adapterManager.adapter(for: wallet) as? MoneroAdapter
-    }
+    // Cached: adapterManager.adapter(for:) is a cross-queue sync, too expensive to run on
+    // every SwiftUI render pass.
+    let adapter: MoneroAdapter?
 
     init(wallet: Wallet) {
         self.wallet = wallet
+        adapter = Core.shared.adapterManager.adapter(for: wallet) as? MoneroAdapter
 
         birthdayHeight = restoreSettingsService.settings(accountId: wallet.account.id, blockchainType: wallet.token.blockchainType).birthdayHeight
 

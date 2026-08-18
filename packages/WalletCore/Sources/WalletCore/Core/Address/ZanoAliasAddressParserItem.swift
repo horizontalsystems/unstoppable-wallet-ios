@@ -20,7 +20,14 @@ class ZanoAliasAddressParserItem: IAddressParserItem {
     var blockchainType: BlockchainType { .zano }
 
     static func normalize(_ input: String) -> String? {
-        var value = input.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let trimmed = input.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        // Never treat something that already is a valid address as an alias. Checked against
+        // the original casing: addresses are mixed-case base58, so validating the lowercased
+        // form would never match and every pasted address would fire an alias lookup.
+        guard !ZanoAdapter.isValidAddress(trimmed) else { return nil }
+
+        var value = trimmed.lowercased()
 
         let hadPrefix = value.hasPrefix("@")
         if hadPrefix {
@@ -32,9 +39,6 @@ class ZanoAliasAddressParserItem: IAddressParserItem {
 
         let range = NSRange(value.startIndex..., in: value)
         guard Self.aliasRegex.firstMatch(in: value, range: range) != nil else { return nil }
-
-        // Never treat something that already is a valid address as an alias
-        guard !ZanoAdapter.isValidAddress(value) else { return nil }
 
         return value
     }

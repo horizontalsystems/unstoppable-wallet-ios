@@ -14,12 +14,29 @@ class MoneroPreSendHandler: PreSendHandler {
     let token: Token
     private let adapter: MoneroAdapter
 
-    private(set) var allOutputs = [MoneroKit.UnspentOutput]()
-    private(set) var transactionTimestamps = [String: Int]()
+    // syncOutputs runs only on this queue so two refreshes can never interleave; the lock
+    // guards the stored state because SwiftUI view models read it from the main thread.
+    private let syncQueue = DispatchQueue(label: "\(AppConfig.label).monero-pre-send-handler", qos: .userInitiated)
+    private let stateLock = NSLock()
+    private var _allOutputs = [MoneroKit.UnspentOutput]()
+    private var _transactionTimestamps = [String: Int]()
+    private var _customOutputs: [MoneroKit.UnspentOutput]?
+
+    var allOutputs: [MoneroKit.UnspentOutput] {
+        stateLock.withLock { _allOutputs }
+    }
+
+    var transactionTimestamps: [String: Int] {
+        stateLock.withLock { _transactionTimestamps }
+    }
 
     // nil = automatic input selection by the wallet
     var customOutputs: [MoneroKit.UnspentOutput]? {
-        didSet {
+        get {
+            stateLock.withLock { _customOutputs }
+        }
+        set {
+            stateLock.withLock { _customOutputs = newValue }
             balanceSubject.send(availableBalance)
             settingsModifiedSubject.send(settingsModified)
         }
@@ -45,7 +62,7 @@ class MoneroPreSendHandler: PreSendHandler {
             .disposed(by: disposeBag)
 
         adapter.balanceDataUpdatedObservable
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .observeOn(SerialDispatchQueueScheduler(queue: syncQueue, internalSerialQueueName: "\(AppConfig.label).monero-pre-send-handler-rx"))
             .subscribe { [weak self] _ in
                 self?.syncOutputs()
                 if let self {
@@ -54,7 +71,7 @@ class MoneroPreSendHandler: PreSendHandler {
             }
             .disposed(by: disposeBag)
 
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+        syncQueue.async { [weak self] in
             self?.syncOutputs()
             if let self {
                 balanceSubject.send(availableBalance)
@@ -62,18 +79,31 @@ class MoneroPreSendHandler: PreSendHandler {
         }
     }
 
-    // Runs on a background queue: output enumeration takes the wallet mutex.
+    // Runs on syncQueue only: output enumeration takes the wallet mutex.
     private func syncOutputs() {
-        allOutputs = (try? adapter.unspentOutputs())?.filter(\.spendable) ?? []
-        transactionTimestamps = adapter.transactionTimestamps()
+        let outputs = (try? adapter.unspentOutputs())?.filter(\.spendable) ?? []
+        let timestamps = adapter.transactionTimestamps()
+
+        var prunedSelection = false
+
+        stateLock.lock()
+        _allOutputs = outputs
+        _transactionTimestamps = timestamps
 
         // Prune selections referencing outputs that disappeared during sync
-        if let customOutputs {
-            let validKeyImages = Set(allOutputs.map(\.keyImage))
-            let pruned = customOutputs.filter { validKeyImages.contains($0.keyImage) }
-            if pruned.count != customOutputs.count {
-                self.customOutputs = pruned
+        if let custom = _customOutputs {
+            let validKeyImages = Set(outputs.map(\.keyImage))
+            let pruned = custom.filter { validKeyImages.contains($0.keyImage) }
+            if pruned.count != custom.count {
+                _customOutputs = pruned
+                prunedSelection = true
             }
+        }
+        stateLock.unlock()
+
+        if prunedSelection {
+            balanceSubject.send(availableBalance)
+            settingsModifiedSubject.send(settingsModified)
         }
     }
 
@@ -126,11 +156,8 @@ extension MoneroPreSendHandler: IPreSendHandler {
     }
 
     func settingsView(onChangeSettings: @escaping () -> Void) -> AnyView {
-        let view = ThemeNavigationStack {
-            MoneroSendSettingsView(handler: self, onChangeSettings: onChangeSettings)
-        }
-
-        return AnyView(view)
+        // No ThemeNavigationStack wrapper: MoneroSendSettingsView opens its own
+        AnyView(MoneroSendSettingsView(handler: self, onChangeSettings: onChangeSettings))
     }
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {

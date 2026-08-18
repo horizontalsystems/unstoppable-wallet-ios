@@ -70,34 +70,42 @@ struct MoneroAccountsView: View {
         }
     }
 
+    // The select area and the rename button are sibling buttons - nesting the rename
+    // Button inside the row's own tappable Cell would make the outer row swallow its taps.
     @ViewBuilder private func accountCell(item: MoneroAccountsViewModel.Item) -> some View {
-        Cell(
-            middle: {
-                MultiText(title: item.title, subtitle: item.balanceText)
-            },
-            right: {
-                if item.index == viewModel.activeIndex {
-                    Image.checkIcon
-                }
-
-                Button(action: {
-                    presentNameSheet(
-                        title: "monero.accounts.rename".localized,
-                        buttonTitle: "button.save".localized,
-                        initialName: item.label ?? "",
-                        requireName: true
-                    ) { name in
-                        viewModel.renameAccount(index: item.index, label: name)
-                    }
-                }, label: {
-                    Image("edit_20").renderingMode(.template)
-                })
-                .buttonStyle(SecondaryCircleButtonStyle(style: .default))
-            },
-            action: {
+        HStack(spacing: 0) {
+            Button(action: {
                 viewModel.setActive(index: item.index)
+            }) {
+                HStack(spacing: .margin8) {
+                    MultiText(title: item.title, subtitle: item.balanceText)
+
+                    Spacer()
+
+                    if item.index == viewModel.activeIndex {
+                        Image.checkIcon
+                    }
+                }
+                .padding(EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin16, trailing: .margin8))
+                .contentShape(Rectangle())
             }
-        )
+            .buttonStyle(CellButtonStyle())
+
+            Button(action: {
+                presentNameSheet(
+                    title: "monero.accounts.rename".localized,
+                    buttonTitle: "button.save".localized,
+                    initialName: item.label ?? "",
+                    requireName: true
+                ) { name in
+                    viewModel.renameAccount(index: item.index, label: name)
+                }
+            }, label: {
+                Image("edit_20").renderingMode(.template)
+            })
+            .buttonStyle(SecondaryCircleButtonStyle(style: .default))
+            .padding(.trailing, .margin16)
+        }
     }
 }
 

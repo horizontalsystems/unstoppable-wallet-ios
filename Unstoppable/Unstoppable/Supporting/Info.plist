@@ -2,6 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
     <dict>
+        <!-- Plain-HTTP Monero nodes pinged by NodePinger (URLSession). Keep in sync with
+             MoneroNodeManager.defaultNodes: a node absent here syncs fine (the C++ wallet
+             bypasses ATS) but always shows "Unreachable" and never wins auto-select. -->
         <key>NSAppTransportSecurity</key>
         <dict>
             <key>NSExceptionDomains</key>

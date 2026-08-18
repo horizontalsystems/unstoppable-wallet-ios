@@ -260,9 +260,9 @@ extension MoneroAdapter {
         guard index != kit.activeAccount else { return }
 
         Core.shared.localStorage.setMoneroActiveAccount(accountId: accountId, index: Int(index))
+        // The deposit address re-emits through the kit's subAddressesUpdated callback on its
+        // serial event queue - nothing may be sent into the subjects from this thread.
         kit.setActiveAccount(index)
-
-        depositAddressSubject.send(.completed(receiveAddress))
     }
 
     func createAccount(label: String?) throws -> MoneroKit.AccountInfo {

@@ -13,7 +13,13 @@ public class MoneroNodeManager {
 
     // Set at construction time: while true the Monero adapter is not created, so the wallet
     // never connects to a stale stored node before the fastest one is resolved on startup.
-    private(set) var isResolvingFastestNode = false
+    // Lock-protected: written from the startup Task, read from the adapter queue.
+    private let resolvingLock = NSLock()
+    private var _isResolvingFastestNode = false
+
+    var isResolvingFastestNode: Bool {
+        resolvingLock.withLock { _isResolvingFastestNode }
+    }
 
     // Nodes lagging more than this many blocks behind the best-known tip are never
     // auto-selected, no matter how fast they respond.
@@ -26,7 +32,7 @@ public class MoneroNodeManager {
         self.blockchainSettingsStorage = blockchainSettingsStorage
         self.moneroNodeStorage = moneroNodeStorage
 
-        isResolvingFastestNode = blockchainSettingsStorage.moneroAutoSelectEnabled(blockchainType: .monero)
+        _isResolvingFastestNode = blockchainSettingsStorage.moneroAutoSelectEnabled(blockchainType: .monero)
     }
 
     private func saveCurrent(nodeUrl: URL, blockchainType: BlockchainType) {
@@ -55,6 +61,10 @@ public class MoneroNodeManager {
         nodeUpdatedRelay.accept(blockchainType)
     }
 
+    // NOTE: NodePinger reaches these over URLSession, so every plain-HTTP host here needs a
+    // matching NSExceptionDomains entry in the app's Info.plist (the C++ wallet's own sockets
+    // are not subject to ATS). A node missing there syncs fine but always pings "Unreachable"
+    // and can never win auto-select.
     private func defaultNodes(blockchainType: BlockchainType) -> [MoneroNode] {
         switch blockchainType {
         case .monero:
@@ -147,7 +157,7 @@ extension MoneroNodeManager {
     /// deferred while this ran, so there is nothing to tear down; the adapter is then created
     /// once, already pointing at the fastest node.
     func autoSelectFastestNodeOnStartup() async {
-        defer { isResolvingFastestNode = false }
+        defer { resolvingLock.withLock { _isResolvingFastestNode = false } }
 
         guard autoSelectEnabled else { return }
 
