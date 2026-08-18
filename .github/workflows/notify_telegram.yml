@@ -16,3 +16,6 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             ${{ github.event.pull_request.html_url }}
+
+            Title: ${{ github.event.pull_request.title }}
+            Author: ${{ github.actor }}

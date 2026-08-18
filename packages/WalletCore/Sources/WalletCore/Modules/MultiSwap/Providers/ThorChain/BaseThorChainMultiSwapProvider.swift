@@ -10,7 +10,7 @@ import ObjectMapper
 import SwiftUI
 import ThorChainKit
 
-class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
+public class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     private let assetMapExpiration: TimeInterval = 60 * 60
     // Bump to discard maps cached by older mapping logic.
     private let assetMapVersion = 4
@@ -31,7 +31,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     private var assetMap = [String: String]()
     private let syncSubject = PassthroughSubject<Void, Never>()
 
-    init(tracker: USwapTracker) {
+    public init(tracker: USwapTracker) {
         self.tracker = tracker
         assetMap = (try? swapAssetStorage.swapAssetMap(provider: assetMapKey, as: String.self)) ?? [:]
         syncAssets()
@@ -41,12 +41,12 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     // THORChain exposes secured assets (BTC-BTC, ETH-ETH, …) via /securedassets and makes
     // them swappable through the standard `=:` memo. Maya has none, so it stays false.
     var securedAssetsSupported: Bool { false }
-    var id: String { fatalError("Must be overridden by subclass") }
-    var name: String { fatalError("Must be overridden by subclass") }
-    var type: SwapProviderType { fatalError("Must be overridden by subclass") }
-    var icon: String { fatalError("Must be overridden by subclass") }
+    public var id: String { fatalError("Must be overridden by subclass") }
+    public var name: String { fatalError("Must be overridden by subclass") }
+    public var type: SwapProviderType { fatalError("Must be overridden by subclass") }
+    public var icon: String { fatalError("Must be overridden by subclass") }
 
-    var syncPublisher: AnyPublisher<Void, Never>? {
+    public var syncPublisher: AnyPublisher<Void, Never>? {
         syncSubject.eraseToAnyPublisher()
     }
 
@@ -74,11 +74,11 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         token.type == .native && token.blockchainType == settlementBlockchainType ? token.decimals : 8
     }
 
-    func supports(tokenIn: Token, tokenOut: Token) -> Bool {
+    public func supports(tokenIn: Token, tokenOut: Token) -> Bool {
         assetMap[tokenIn.tokenQuery.id.lowercased()] != nil && assetMap[tokenOut.tokenQuery.id.lowercased()] != nil
     }
 
-    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {
+    public func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {
         let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
 
         let blockchainType = tokenIn.blockchainType
@@ -101,7 +101,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func confirmationQuote(multiSwapQuote _: MultiSwapQuote, tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote {
+    public func confirmationQuote(multiSwapQuote _: MultiSwapQuote, tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote {
         let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient)
         let toAddress = try await resolveDestination(recipient: nil, token: tokenOut)
 
@@ -270,11 +270,11 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         return inbound + swap + outbound
     }
 
-    func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
+    public func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
         allowanceHelper.preSwapView(step: step, tokenIn: tokenIn, amount: amount, isPresented: isPresented, onSuccess: onSuccess)
     }
 
-    func track(swap: Swap) async throws -> Swap {
+    public func track(swap: Swap) async throws -> Swap {
         // Native THORChain/Maya swaps aren't recorded by us → the stateless reader.
         try await tracker.track(
             swap: swap,

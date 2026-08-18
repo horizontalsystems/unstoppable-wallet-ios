@@ -21,12 +21,12 @@ public protocol IMultiSwapProvider {
     func track(swap: Swap) async throws -> Swap
 }
 
-extension IMultiSwapProvider {
+public extension IMultiSwapProvider {
     var requireTerms: Bool {
         false
     }
 
-    public var preciseEstimateTime: Bool {
+    var preciseEstimateTime: Bool {
         true
     }
 

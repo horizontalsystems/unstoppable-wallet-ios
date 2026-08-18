@@ -6,8 +6,8 @@ import ObjectMapper
 import SwiftUI
 import ZcashLightClientKit
 
-class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
-    static let id = "MAYACHAIN"
+public class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
+    public static let id = "MAYACHAIN"
     static let name = "Maya Protocol"
 
     private let testNetManager = Core.shared.testNetManager
@@ -24,10 +24,10 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         return "https://\(stagenet)mayanode.mayachain.info/mayachain"
     }
 
-    override var id: String { Self.id }
-    override var name: String { Self.name }
-    override var type: SwapProviderType { .excellent }
-    override var icon: String { "swap_provider_maya" }
+    override public var id: String { Self.id }
+    override public var name: String { Self.name }
+    override public var type: SwapProviderType { .excellent }
+    override public var icon: String { "swap_provider_maya" }
 
     override var affiliate: String? {
         AppConfig.mayaAffiliate
@@ -80,7 +80,7 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         return try await adapter.sendProposal(outputs: [transparentOutput, memoOutput])
     }
 
-    override func confirmationQuote(multiSwapQuote: MultiSwapQuote, tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote {
+    override public func confirmationQuote(multiSwapQuote: MultiSwapQuote, tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote {
         // use base scenario for all tokens except zcash
         guard tokenIn.blockchainType == .zcash else {
             return try await super.confirmationQuote(multiSwapQuote: multiSwapQuote, tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient, transactionSettings: transactionSettings)

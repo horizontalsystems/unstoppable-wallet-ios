@@ -1,5 +1,5 @@
-class ThorChainMultiSwapProvider: BaseThorChainMultiSwapProvider {
-    static let id = "THORCHAIN"
+public class ThorChainMultiSwapProvider: BaseThorChainMultiSwapProvider {
+    public static let id = "THORCHAIN"
     static let name = "THORChain"
 
     override var baseUrl: String {
@@ -8,10 +8,10 @@ class ThorChainMultiSwapProvider: BaseThorChainMultiSwapProvider {
 
     override var securedAssetsSupported: Bool { true }
 
-    override var id: String { Self.id }
-    override var name: String { Self.name }
-    override var type: SwapProviderType { .excellent }
-    override var icon: String { "swap_provider_thorchain" }
+    override public var id: String { Self.id }
+    override public var name: String { Self.name }
+    override public var type: SwapProviderType { .excellent }
+    override public var icon: String { "swap_provider_thorchain" }
 
     override var affiliate: String? {
         AppConfig.thorchainAffiliate
