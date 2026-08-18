@@ -76,6 +76,10 @@ public enum DestinationHelper {
             address = ZanoAdapter.address(accountType: account.type)
         case .solana:
             address = try SolanaKitManager.address(accountType: account.type)
+        case .thorChain:
+            address = try AccountAddress.thorChainAddress(account: account, network: .mainnet).raw
+        case .mayaChain:
+            address = try AccountAddress.thorChainAddress(account: account, network: .mayaMainnet).raw
         default:
             throw SwapError.noDestinationAddress
         }

@@ -290,12 +290,14 @@ public class Core {
             blockchainSettingsStorage: blockchainSettingsStorage,
             endpointProvider: ThorChainEndpointConfigurationProvider()
         )
-        let thorChainKitManager = ThorChainKitManager(endpointManager: thorChainEndpointManager)
+        let thorChainKitManager = ThorChainKitManager(endpointManager: thorChainEndpointManager, restoreStateManager: restoreStateManager, marketKit: marketKit, walletManager: walletManager)
         mayaChainEndpointManager = ThorChainEndpointManager(
             blockchainSettingsStorage: blockchainSettingsStorage,
             endpointProvider: MayaChainEndpointConfigurationProvider(),
             blockchainType: .mayaChain
         )
+        // No auto-enable deps for Maya: the catalog has no Maya denoms and the app maps
+        // .thorChainAsset to THOR only (AccountType.supports, AdapterFactory).
         let mayaChainKitManager = ThorChainKitManager(endpointManager: mayaChainEndpointManager, network: .mayaMainnet)
         tronAccountManager = TronAccountManager(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, tronKitManager: tronKitManager, restoreStateManager: restoreStateManager)
 

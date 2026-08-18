@@ -1,6 +1,8 @@
+import Combine
 import Foundation
 import HsCryptoKit
 import HsToolKit
+import MarketKit
 import RxRelay
 import RxSwift
 import ThorChainKit
@@ -119,10 +121,19 @@ final class ThorChainKitManager {
     private let queue: DispatchQueue
     private let endpointManager: ThorChainEndpointManager
     private let network: ThorChainKit.Network
+    // Auto-enable dependencies; nil leaves held-token auto-enable off (tests, factory convenience path)
+    private let restoreStateManager: RestoreStateManager?
+    private let marketKit: MarketKit.Kit?
+    private let walletManager: WalletManager?
     private let kitUpdatedRelay = PublishRelay<Void>()
+    private var balanceCancellable: AnyCancellable?
+    private var transactionsCancellable: AnyCancellable?
 
-    init(endpointManager: ThorChainEndpointManager, network: ThorChainKit.Network = .mainnet) {
+    init(endpointManager: ThorChainEndpointManager, restoreStateManager: RestoreStateManager? = nil, marketKit: MarketKit.Kit? = nil, walletManager: WalletManager? = nil, network: ThorChainKit.Network = .mainnet) {
         self.endpointManager = endpointManager
+        self.restoreStateManager = restoreStateManager
+        self.marketKit = marketKit
+        self.walletManager = walletManager
         self.network = network
         queue = DispatchQueue(label: "\(AppConfig.label).thor-chain-kit-manager.\(network.chain.rawValue)", qos: .userInitiated)
 
@@ -195,10 +206,109 @@ final class ThorChainKitManager {
             endpoints: endpointConfiguration.value
         )
         kit.start()
+        subscribeToAutoEnable(kit: kit, address: address, account: account)
         let wrapper = ThorChainKitWrapper(thorChainKit: kit, signer: signer)
         _wrapper = wrapper
         currentIdentity = identity
         return wrapper
+    }
+
+    // Auto-enable of held denoms (TCY, secured assets, …), mirroring TonKitManager's
+    // dual pattern: a one-shot balances pass for restore, then tx-driven enabling.
+    // Re-subscription is free: a new kit (endpoint or account switch) passes here again.
+    private func subscribeToAutoEnable(kit: ThorChainKit.Kit, address: ThorChainKit.Address, account: Account) {
+        guard let restoreStateManager else { return }
+
+        let blockchainType = blockchainType
+        let restoreState = restoreStateManager.restoreState(account: account, blockchainType: blockchainType)
+
+        if restoreState.shouldRestore || account.watchAccount, !restoreState.initialRestored {
+            balanceCancellable = kit.accountStatePublisher
+                .sink { [weak self] accountState in
+                    guard let balances = accountState?.balances, !balances.isEmpty else { return }
+
+                    self?.handle(denoms: balances.filter { $0.value > 0 }.map(\.key), account: account)
+
+                    restoreStateManager.setInitialRestored(account: account, blockchainType: blockchainType)
+
+                    self?.balanceCancellable?.cancel()
+                    self?.balanceCancellable = nil
+                }
+        }
+
+        // allTransactionsPublisher emits only unprocessed transactions, so a manually
+        // disabled token is not re-enabled by unchanged history.
+        transactionsCancellable = kit.allTransactionsPublisher
+            .sink { [weak self] transactions, initial in
+                self?.handle(transactions: transactions, initial: initial, address: address, account: account)
+            }
+    }
+
+    private func handle(transactions: [ThorChainKit.Transaction], initial: Bool, address: ThorChainKit.Address, account: Account) {
+        if initial, account.origin == .restored, !account.watchAccount,
+           let restoreStateManager, !restoreStateManager.shouldRestore(account: account, blockchainType: blockchainType)
+        {
+            return
+        }
+
+        let denoms = Self.incomingDenoms(transactions: transactions, address: address.raw, chain: network.chain)
+
+        handle(denoms: Array(denoms), account: account)
+    }
+
+    private func handle(denoms: [ThorChainKit.Denom], account: Account) {
+        guard let marketKit, let walletManager, Core.shared.config.autoEnableTokensOnReceive else {
+            return
+        }
+
+        let queries = Self.autoEnableQueries(
+            denoms: denoms,
+            nativeDenom: network.nativeDenom,
+            existingTokenTypeIds: walletManager.activeWallets.map(\.token.type.id),
+            blockchainType: blockchainType
+        )
+
+        guard !queries.isEmpty, let tokens = try? marketKit.tokens(queries: queries), !tokens.isEmpty else {
+            return
+        }
+
+        let enabledWallets = tokens.map { token in
+            EnabledWallet(
+                tokenQueryId: token.tokenQuery.id,
+                accountId: account.id,
+                coinName: token.coin.name,
+                coinCode: token.coin.code,
+                tokenDecimals: token.decimals
+            )
+        }
+
+        walletManager.save(enabledWallets: enabledWallets)
+    }
+
+    static func incomingDenoms(transactions: [ThorChainKit.Transaction], address: String, chain: ThorChainKit.Network.Chain) -> Set<ThorChainKit.Denom> {
+        var denoms = Set<ThorChainKit.Denom>()
+
+        for transaction in transactions {
+            for transfer in transaction.incoming where transfer.address == address {
+                guard let asset = try? chain.asset(for: transfer.asset),
+                      let denom = try? ThorChainKit.Denom(rawValue: chain.denom(for: asset))
+                else { continue }
+                denoms.insert(denom)
+            }
+        }
+
+        return denoms
+    }
+
+    static func autoEnableQueries(denoms: [ThorChainKit.Denom], nativeDenom: ThorChainKit.Denom, existingTokenTypeIds: [String], blockchainType: BlockchainType) -> [TokenQuery] {
+        denoms
+            .filter { $0 != nativeDenom }
+            .map { TokenQuery(blockchainType: blockchainType, tokenType: .thorChainAsset(denom: $0.rawValue)) }
+            .filter { !existingTokenTypeIds.contains($0.tokenType.id) }
+    }
+
+    private var blockchainType: BlockchainType {
+        network.chain == .maya ? .mayaChain : .thorChain
     }
 
     private func validate(endpointConfiguration: ThorChainEndpointConfiguration) throws {
