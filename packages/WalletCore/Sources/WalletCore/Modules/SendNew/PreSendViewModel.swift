@@ -160,7 +160,7 @@ public class PreSendViewModel: ObservableObject {
             return
         }
 
-        amount = (fiatAmount / coinPrice.value).roundedUp(decimal: customDecimals ?? token.decimals)
+        amount = (fiatAmount / coinPrice.value).roundedDown(decimal: customDecimals ?? token.decimals)
     }
 
     private func syncFiatAmount() {
