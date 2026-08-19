@@ -33,11 +33,11 @@ class MarketSearchViewModel: ObservableObject {
             let recentMarketFullCoins = (try? marketKit.fullCoins(coinUids: recentCoinUids)) ?? []
             let recentFullCoins = recentCoinUids.compactMap { coinUid in recentMarketFullCoins.first { $0.coin.uid == coinUid } }
 
-            let popularFullCoins = (try? marketKit.topFullCoins()) ?? []
+            let popularFullCoins = ((try? marketKit.topFullCoins()) ?? []).filter { !$0.coin.isSynthetic }
 
             state = .placeholder(recentFullCoins: recentFullCoins, popularFullCoins: popularFullCoins)
         } else {
-            state = .searchResults(fullCoins: (try? marketKit.fullCoins(filter: searchText)) ?? [])
+            state = .searchResults(fullCoins: ((try? marketKit.fullCoins(filter: searchText)) ?? []).filter { !$0.coin.isSynthetic })
         }
     }
 }
