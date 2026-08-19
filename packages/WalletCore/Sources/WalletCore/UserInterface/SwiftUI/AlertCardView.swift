@@ -73,7 +73,7 @@ extension AlertCardView {
 
         init(cautionType: CautionType) {
             switch cautionType {
-            case .warning: self = .caution
+            case .warning, .regular: self = .caution
             case .error: self = .critical
             }
         }

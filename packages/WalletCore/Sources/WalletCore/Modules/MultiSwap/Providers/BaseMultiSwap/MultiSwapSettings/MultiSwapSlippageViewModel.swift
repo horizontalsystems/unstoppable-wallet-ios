@@ -127,6 +127,7 @@ extension CautionState {
             switch caution.type {
             case .warning: return .warning
             case .error: return .error
+            case .regular: return .regular
             }
         }
     }

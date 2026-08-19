@@ -94,10 +94,6 @@ public class MoneroNodeManager {
                     node: .init(url: URL(string: "node.sethforprivacy.com:18089")!, isTrusted: false)
                 ),
                 MoneroNode(
-                    name: "boldsuck.org",
-                    node: .init(url: URL(string: "xmr-de.boldsuck.org:18081")!, isTrusted: false)
-                ),
-                MoneroNode(
                     name: "monerodevs.org",
                     node: .init(url: URL(string: "node.monerodevs.org:18089")!, isTrusted: false)
                 ),

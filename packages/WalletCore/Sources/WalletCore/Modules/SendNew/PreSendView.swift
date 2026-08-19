@@ -37,7 +37,7 @@ struct PreSendView: View {
                         VStack(spacing: .margin8) {
                             inputView()
                             availableBalanceView(value: balanceValue())
-                            privateSendView()
+//                            privateSendView()
                         }
 
                         if viewModel.memoType != .none {
@@ -191,7 +191,7 @@ struct PreSendView: View {
     }
 
     @ViewBuilder private func memoView(type: MemoType) -> some View {
-        let cautionState = CautionState.caution(Caution(text: memoWarningText(type: type), type: .warning))
+        let cautionState = CautionState.caution(Caution(text: memoWarningText(type: type), type: viewModel.memo.isEmpty ? .regular : .warning))
 
         InputTextRow {
             InputTextView(

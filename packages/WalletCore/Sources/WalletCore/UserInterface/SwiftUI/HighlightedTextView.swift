@@ -17,6 +17,7 @@ struct HighlightedTextView: View {
         text = caution.text
 
         switch caution.type {
+        case .regular: style = .regular
         case .warning: style = .warning
         case .error: style = .alert
         }
@@ -62,11 +63,13 @@ struct HighlightedTextView: View {
 
 extension HighlightedTextView {
     enum Style {
+        case regular
         case warning
         case alert
 
         var color: Color {
             switch self {
+            case .regular: return .themeGray
             case .warning: return .themeYellow
             case .alert: return .themeLucian
             }
