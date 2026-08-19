@@ -674,6 +674,7 @@
 "swap.no_providers" = "无可用路由";
 "swap.enter_amount" = "输入金额";
 "swap.no_quotes" = "没有报价";
+"swap.error.no_memo" = "此路由目前无法确认。请刷新报价或选择其他提供商。";
 "swap.token_not_enabled" = "代币未启用";
 "swap.token_syncing" = "代币同步";
 "swap.token_not_synced" = "代币未同步";

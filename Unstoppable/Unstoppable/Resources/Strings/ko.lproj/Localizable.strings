@@ -674,6 +674,7 @@
 "swap.no_providers" = "경로 없음";
 "swap.enter_amount" = "금액 입력";
 "swap.no_quotes" = "제안이 없습니다";
+"swap.error.no_memo" = "이 경로는 현재 확인할 수 없습니다. 견적을 새로고침하거나 다른 제공자를 선택해 주세요.";
 "swap.token_not_enabled" = "토큰 활성화되지 않음";
 "swap.token_syncing" = "토큰 동기화 중";
 "swap.token_not_synced" = "토큰 동기화되지 않음";

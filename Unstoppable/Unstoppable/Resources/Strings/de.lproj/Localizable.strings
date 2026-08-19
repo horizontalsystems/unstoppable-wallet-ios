@@ -674,6 +674,7 @@
 "swap.no_providers" = "Keine Routen";
 "swap.enter_amount" = "Betrag eingeben";
 "swap.no_quotes" = "Keine Angebote";
+"swap.error.no_memo" = "Diese Route kann derzeit nicht bestätigt werden. Bitte aktualisieren Sie das Angebot oder wählen Sie einen anderen Anbieter.";
 "swap.token_not_enabled" = "Token nicht aktiviert";
 "swap.token_syncing" = "Token-Synchronisation";
 "swap.token_not_synced" = "Token nicht synchronisiert";

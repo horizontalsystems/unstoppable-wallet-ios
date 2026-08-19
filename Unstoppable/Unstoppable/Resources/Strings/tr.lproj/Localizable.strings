@@ -674,6 +674,7 @@
 "swap.no_providers" = "Rota Yok";
 "swap.enter_amount" = "Miktarı Girin";
 "swap.no_quotes" = "Teklif Yok";
+"swap.error.no_memo" = "Bu rota şu anda onaylanamıyor. Lütfen teklifi yenileyin veya başka bir sağlayıcı seçin.";
 "swap.token_not_enabled" = "Jeton Etkin Değil";
 "swap.token_syncing" = "Token Senkronizasyonu";
 "swap.token_not_synced" = "Jeton Senkronize Edilmedi";

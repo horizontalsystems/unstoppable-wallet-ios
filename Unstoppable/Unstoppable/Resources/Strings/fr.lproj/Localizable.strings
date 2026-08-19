@@ -674,6 +674,7 @@
 "swap.no_providers" = "Aucune route";
 "swap.enter_amount" = "Entrez le montant";
 "swap.no_quotes" = "Aucun prix disponible";
+"swap.error.no_memo" = "Cet itinéraire ne peut pas être confirmé pour le moment. Veuillez actualiser le devis ou choisir un autre fournisseur.";
 "swap.token_not_enabled" = "Token non activés";
 "swap.token_syncing" = "Synchronisation des token";
 "swap.token_not_synced" = "Token non synchronisé";

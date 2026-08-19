@@ -674,6 +674,7 @@
 "swap.no_providers" = "Sin rutas";
 "swap.enter_amount" = "Introducir cantidad";
 "swap.no_quotes" = "Sin ofertas";
+"swap.error.no_memo" = "Esta ruta no se puede confirmar en este momento. Por favor, actualiza la cotización o elige otro proveedor.";
 "swap.token_not_enabled" = "Token no habilitado";
 "swap.token_syncing" = "Sincronización de tokens";
 "swap.token_not_synced" = "Token no sincronizado";
