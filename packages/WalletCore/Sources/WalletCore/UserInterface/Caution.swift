@@ -18,6 +18,7 @@ public enum CautionState: Equatable {
             switch caution.type {
             case .warning: return .themeJacob
             case .error: return .themeLucian
+            case .regular: return .themeGray
             }
         }
     }
@@ -46,6 +47,7 @@ enum FieldCautionState: Equatable {
             switch type {
             case .warning: return .themeJacob
             case .error: return .themeLucian
+            case .regular: return .themeGray
             }
         }
     }
@@ -68,11 +70,13 @@ public struct Caution: Equatable, Hashable {
 public enum CautionType: Equatable, Hashable {
     case error
     case warning
+    case regular
 
     var labelColor: UIColor {
         switch self {
         case .error: return .themeLucian
         case .warning: return .themeJacob
+        case .regular: return .themeGray
         }
     }
 
@@ -80,6 +84,7 @@ public enum CautionType: Equatable, Hashable {
         switch self {
         case .error: return .themeLucian
         case .warning: return .themeYellowD
+        case .regular: return .themeGray
         }
     }
 
@@ -87,12 +92,13 @@ public enum CautionType: Equatable, Hashable {
         switch self {
         case .error: return .red
         case .warning: return .yellow
+        case .regular: return .secondary
         }
     }
 
     public static func == (lhs: CautionType, rhs: CautionType) -> Bool {
         switch (lhs, rhs) {
-        case (.error, .error), (.warning, .warning): return true
+        case (.error, .error), (.warning, .warning), (.regular, .regular): return true
         default: return false
         }
     }

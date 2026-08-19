@@ -20,11 +20,6 @@
                     <key>NSExceptionAllowsInsecureHTTPLoads</key>
                     <true/>
                 </dict>
-                <key>xmr-de.boldsuck.org</key>
-                <dict>
-                    <key>NSExceptionAllowsInsecureHTTPLoads</key>
-                    <true/>
-                </dict>
                 <key>node.monerodevs.org</key>
                 <dict>
                     <key>NSExceptionAllowsInsecureHTTPLoads</key>
