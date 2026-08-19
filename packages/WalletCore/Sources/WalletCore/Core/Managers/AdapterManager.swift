@@ -264,9 +264,9 @@ extension AdapterManager {
 
         // switching reconfigures the synchronizer under a live broadcast; background-finishing
         // work is bounded (local proving + 30s gRPC timeout per tx), so the refusal is short-lived.
-        // the migration window blocks too: its gate watcher owns the synchronizer restart
+        // a migration is an ordinary send, so it holds the same "zcash-send" critical section.
         let busy = await MainActor.run { Core.shared.backgroundTaskManager.isCriticalActive }
-        guard !busy, !adapter.isMigrating else {
+        guard !busy else {
             throw ZcashEndpointValidationError.sendInProgress
         }
 

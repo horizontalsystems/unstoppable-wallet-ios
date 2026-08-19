@@ -3,11 +3,8 @@ import HsToolKit
 import ZcashLightClientKit
 
 class ZcashMigrator {
-    // kill-switch for the Orchard → Ironwood migration flow. OFF for the Ironwood sync/send hotfix:
-    // the UI/session/reconcile infrastructure stays in place but has no entry points; re-enabled
-    // together with the move to the upstream send-max engine (docs/specs/2026-07-23-…-transition)
-    static let migrationEnabled = false
-    static let bufferInterval: TimeInterval = 600 // mirrors the SDK-enforced post-broadcast privacy window
+    // Orchard → Ironwood migration is live in production so users can migrate their Orchard funds.
+    static let migrationEnabled = true
 
     private let uniqueId: String
     private let threshold: Decimal
@@ -18,24 +15,6 @@ class ZcashMigrator {
     var engine: IZcashMigrationEngine?
 
     private var alertShown = false
-
-    // a migration row exists ⟺ a broadcast happened; createdAt of the latest row is the privacy-buffer start
-    var timestamp: Date? {
-        (try? storage.latestMigrationDate(accountId: uniqueId)) ?? nil
-    }
-
-    // UI countdown only; the authority on whether sync is actually blocked is the SDK gate
-    var remainingBufferMinutes: Int? {
-        guard let timestamp else {
-            return nil
-        }
-
-        let remaining = timestamp.addingTimeInterval(Self.bufferInterval).timeIntervalSinceNow
-        guard remaining > 0 else {
-            return nil
-        }
-        return Int((remaining / 60).rounded(.up))
-    }
 
     init(uniqueId: String, threshold: Decimal, network: ZcashNetwork, storage: ZcashAdapterStorage, logger: HsToolKit.Logger?) {
         self.uniqueId = uniqueId
@@ -55,26 +34,48 @@ class ZcashMigrator {
         ((try? storage.migrationTxIds(accountId: uniqueId)) ?? []).contains(hash)
     }
 
+    // history marker only: a row lets `isMigrationTx` label the self-send in transaction history.
+    // send-max is a normal transaction, so there is no privacy buffer to track here.
     private func save(txId: String?) {
-        if let txId {
-            guard !isMigrationTx(hash: txId) else {
-                return
-            }
-        } else if let timestamp, Date() < timestamp.addingTimeInterval(Self.bufferInterval) {
-            return // an active buffer marker already exists; a duplicate row would extend the window
+        guard let txId, !isMigrationTx(hash: txId) else {
+            return
         }
-
         try? storage.save(migrationTx: ZcashMigrationTx(txId: txId, accountId: uniqueId, createdAt: Date()))
     }
 
+    // The NU6.3 (Ironwood) activation height for the wallet's network. In DEBUG, when the
+    // "Emulate ZEC Migration" toggle is on, mainnet is forced to a low height so the migration flow
+    // can be exercised on mainnet; otherwise the real SDK/FFI activation height is used.
+    var activationHeight: BlockHeight? {
+        #if DEBUG
+            if Core.shared.localStorage.emulateZcashMigration, network.networkType == .mainnet {
+                return 3_420_000
+            }
+        #endif
+        // NU6.3 (Ironwood) activation heights, from zcash_protocol consensus (the SDK reads the same
+        // values via the rust FFI, which the official prebuilt binary doesn't surface to Swift).
+        switch network.networkType {
+        case .mainnet: return 3_428_143
+        case .testnet: return 4_134_000
+        default: return nil
+        }
+    }
+
     func ironwoodActive(latestHeight: Int) -> Bool {
-        guard let activationHeight = network.ironwoodActivationHeight else {
+        guard let activationHeight else {
             return false
         }
         return latestHeight >= activationHeight
     }
 
     func handleCheck(orchardBalance: Decimal, latestHeight: Int, syncStatus: SyncStatus?) -> Bool {
+        // Only the active account's adapter may surface the global migration alert. An adapter from a
+        // previously-selected account can outlive the switch (async synchronizer teardown) and fire a
+        // late balance/state update — it must not present the sheet over the now-active account.
+        guard Core.shared.accountManager.activeAccount?.id == uniqueId else {
+            return false
+        }
+
         guard let syncStatus else {
             return false
         }
@@ -85,9 +86,7 @@ class ZcashMigrator {
             syncStatus: syncStatus,
             orchardSpendable: orchardBalance,
             threshold: threshold,
-            alertShown: alertShown,
-            migrationTimestamp: timestamp,
-            now: Date()
+            alertShown: alertShown
         ) else {
             return false
         }
@@ -98,153 +97,43 @@ class ZcashMigrator {
         return true
     }
 
-    static func isMigrationSuggestionNeeded(migrationEnabled: Bool, ironwoodActive: Bool, syncStatus: SyncStatus, orchardSpendable: Decimal,
-                                            threshold: Decimal, alertShown: Bool, migrationTimestamp: Date?, now: Date) -> Bool
+    // After a broadcast the swept notes become pending-spent, so orchardSpendable drops below the
+    // threshold and the predicate is false on its own — no timestamp-based suppression needed.
+    static func isMigrationSuggestionNeeded(migrationEnabled: Bool, ironwoodActive: Bool, syncStatus: SyncStatus,
+                                            orchardSpendable: Decimal, threshold: Decimal, alertShown: Bool) -> Bool
     {
         guard migrationEnabled, ironwoodActive, !alertShown, syncStatus == .upToDate else {
             return false
         }
-        guard orchardSpendable > threshold else {
-            return false
-        }
-        if let migrationTimestamp, now < migrationTimestamp.addingTimeInterval(bufferInterval) {
-            return false
-        }
-        return true
+        return orchardSpendable > threshold
     }
 
-    // pure read for the confirmation screen; the session re-proposes before signing
+    // read for the confirmation screen: fee is authoritative from the proposal, amount is the swept
+    // shielded balance minus that fee. `performMigration` re-proposes before broadcasting.
     func migrationProposal(orchardBalance: Decimal) async throws -> (amount: Decimal, fee: Decimal) {
         guard let engine else {
             throw AppError.ZcashError.noAccountId
         }
 
-        let schedule = try await engine.proposeImmediate()
-        guard let transfer = schedule.transfers.first else {
+        let fee = try await engine.estimatedFee().decimalValue.decimalValue
+        let amount = orchardBalance - fee
+        guard amount > 0 else {
             throw AppError.ZcashError.notEnough
         }
-
-        let amount = transfer.amount.decimalValue.decimalValue
-        return (amount: amount, fee: max(0, orchardBalance - amount))
+        return (amount: amount, fee: fee)
     }
 
-    // must be called with the synchronizer stopped: sign/execute throw migrationBroadcastDuringSync while sync is live.
-    // Returns nil when the broadcast landed but the SDK failed to record it (reconciled by the engine later).
-    func performMigration(currentEndpointHost: String) async throws -> String? {
+    // send-max sweep to the wallet's own UA. Runs as an ordinary send (the adapter wraps it in its
+    // send critical section); no stop-sync, no privacy buffer. Returns the broadcast txid.
+    func performMigration() async throws -> String? {
         guard let engine else {
             throw AppError.ZcashError.noAccountId
         }
 
-        // re-propose: the balance may have changed since the confirmation screen
-        let schedule = try await engine.proposeImmediate()
-        guard let transfer = schedule.transfers.first else {
-            throw AppError.ZcashError.notEnough
-        }
-
-        try await engine.signAndStore(schedule: schedule)
-
-        let options = MigrationNetworkPrivacyOptions(useTor: false, submissionEndpoint: submissionEndpoint(excludingHost: currentEndpointHost))
-        let txId = try await executeWithRetries(engine: engine, options: options)
-
+        let txId = try await engine.migrate()
         save(txId: txId)
         logger?.log(level: .debug, message: "Migration broadcast done, txId: \(txId ?? "unrecorded")")
         return txId
-    }
-
-    // called once per adapter activation, before the synchronizer starts
-    func reconcileIfNeeded(currentEndpointHost: String, enabled: Bool = ZcashMigrator.migrationEnabled) async {
-        guard enabled, let engine else {
-            return
-        }
-
-        do {
-            let state = try await engine.state()
-
-            switch state {
-            case .inProgress:
-                _ = try await resumePendingMigration(currentEndpointHost: currentEndpointHost)
-            case .requiresAttention:
-                try await engine.restart() // silent: the alert will offer migration again
-            case .notStarted, .readyToPropose:
-                if await engine.isSyncBlocked() {
-                    try await engine.restart() // un-wedge: gate armed but nothing scheduled
-                }
-            case .splitPendingConfirmation, .complete:
-                // killed between execute and save: restore the buffer marker so the countdown survives
-                if timestamp == nil, await engine.isSyncBlocked() {
-                    save(txId: nil)
-                }
-            }
-        } catch {
-            logger?.log(level: .error, message: "Migration reconcile failed: \(error)")
-        }
-    }
-
-    // reconcile path for an interrupted session: a signed-but-unexecuted transfer is delivered,
-    // "nothing pending" is a normal outcome (the broadcast already happened before the interruption)
-    private func resumePendingMigration(currentEndpointHost: String) async throws -> String? {
-        guard let engine else {
-            return nil
-        }
-
-        let options = MigrationNetworkPrivacyOptions(useTor: false, submissionEndpoint: submissionEndpoint(excludingHost: currentEndpointHost))
-
-        let result: MigrationTransferResult?
-        do {
-            result = try await engine.executeNext(options: options)
-        } catch ZcashError.migrationRecordFailedAfterBroadcast {
-            save(txId: nil)
-            return nil
-        }
-
-        switch result {
-        case let .success(txId):
-            save(txId: txId)
-            logger?.log(level: .debug, message: "Reconcile delivered pending migration transfer, txId: \(txId)")
-            return txId
-        case nil, .networkError:
-            // networkError: signed transfer stays pending, retried on next adapter start
-            return nil
-        case .invalidNote, .expired:
-            try await engine.restart()
-            return nil
-        }
-    }
-
-    private func executeWithRetries(engine: IZcashMigrationEngine, options: MigrationNetworkPrivacyOptions) async throws -> String? {
-        var attemptsLeft = 2
-
-        while true {
-            let result: MigrationTransferResult?
-            do {
-                result = try await engine.executeNext(options: options)
-            } catch ZcashError.migrationRecordFailedAfterBroadcast {
-                return nil
-            }
-
-            switch result {
-            case let .success(txId):
-                return txId
-            case .networkError(retryable: true) where attemptsLeft > 0:
-                attemptsLeft -= 1
-                logger?.log(level: .debug, message: "Migration broadcast retry, attempts left: \(attemptsLeft)")
-            case .networkError:
-                // signed transfer stays pending; reconciliation re-executes it on next adapter start
-                throw AppError.zcash(reason: .migrationFailed)
-            case .invalidNote, .expired, nil:
-                try await engine.restart()
-                throw AppError.zcash(reason: .migrationFailed)
-            }
-        }
-    }
-
-    // a broadcast node must differ from the sync node so the two are not linked at the lightwalletd level;
-    // node-level separation only — without Tor both connections still originate from the user's IP.
-    // user-added custom nodes are deliberately excluded
-    func submissionEndpoint(excludingHost host: String) -> LightWalletEndpoint {
-        let nodes = network.networkType == .mainnet ? ZcashNode.defaultNodes : ZcashNode.defaultTestnetNodes
-        let node = nodes.first { $0.url.host != host } ?? nodes[0]
-        return ZcashAdapter.endpoint(url: node.url)
     }
 
     private func showAlert() {
