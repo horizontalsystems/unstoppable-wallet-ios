@@ -64,11 +64,16 @@ public final class ExolixUSwapSubProvider: DefaultUSwapSubProvider {
             throw SwapError.unsupportedTokenOut
         }
 
-        let destinations = try await resolveDestinations(
+        // The account may be unable to receive tokenOut (external-recipient swap, entered
+        // before confirmation): no destination can be resolved, so quote the plain
+        // transparent route, which needs none at the dry stage.
+        guard let destinations = try? await resolveDestinations(
             recipient: nil,
             token: input.tokenOut,
             includeUnified: true
-        )
+        ) else {
+            return try await super.rate(input: input)
+        }
 
         var variants = [
             RouteVariant(

@@ -714,6 +714,7 @@
 "swap.price_impact.info" = "Die erwartete Preisabweichung vom angezeigten Preis, die sich in der Regel mit der Swap-Menge erhöht.";
 "swap.high_price_impact" = "Hohe Preisbeeinflussung";
 "swap.recipient" = "Empfänger";
+"swap.external_recipient.description" = "Das Wallet, das die getauschten Guthaben erhalten wird.";
 "swap.slippage" = "Preisabweichung";
 "swap.swapped_time" = "Swap-Zeit";
 "swap.swapped_time.info" = "Dies ist die geschätzte Zeit, die benötigt wird, um den Swap abzuschließen und Ihre Guthaben zu erhalten. Die tatsächliche Zeit kann je nach Netzwerkbedingungen, Transaktionsbestätigungen und der gewählten Swap-Route kürzer oder länger sein.";

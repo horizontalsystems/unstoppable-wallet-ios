@@ -714,6 +714,7 @@
 "swap.price_impact.info" = "O desvio de preço esperado em relação ao preço exibido, que normalmente aumenta conforme o valor do swap.";
 "swap.high_price_impact" = "Impacto de preços altos";
 "swap.recipient" = "Destinatário";
+"swap.external_recipient.description" = "A carteira que receberá os fundos convertidos.";
 "swap.slippage" = "Slippage";
 "swap.swapped_time" = "Tempo de Swap";
 "swap.swapped_time.info" = "Este é o tempo estimado necessário para concluir o swap e receber seus fundos. O tempo real pode ser menor ou maior dependendo das condições da rede, confirmações de transação e da rota de swap selecionada.";

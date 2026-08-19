@@ -39,6 +39,36 @@ public class MultiSwapViewModel: ObservableObject {
 
     private var enteringFiat = false
 
+    // External delivery address entered before confirmation for a tokenOut the account
+    // can't hold. Shared with the confirmation handler, which writes back into it when the
+    // user edits the recipient there. Cleared whenever tokenOut changes or the account
+    // switches, so it can only ever hold an address meant for the current pair.
+    let externalRecipientHolder = SwapExternalRecipientHolder()
+
+    var externalRecipient: String? {
+        // Only honored while the address is actually required: a recipient set on the
+        // confirmation screen of an ordinary swap stays local to that confirmation, as before.
+        externalRecipientRequired ? externalRecipientHolder.address : nil
+    }
+
+    func setExternalRecipient(address: String) {
+        externalRecipientHolder.address = address
+    }
+
+    // tokenOut the account can't hold: the swap is deliverable only to an external
+    // address, which the user is asked for before the confirmation screen
+    var externalRecipientRequired: Bool {
+        externalRecipientRequired(tokenOut: internalTokenOut)
+    }
+
+    private func externalRecipientRequired(tokenOut: Token?) -> Bool {
+        guard let tokenOut, let accountType = accountManager.activeAccount?.type else {
+            return false
+        }
+
+        return !accountType.supports(token: tokenOut)
+    }
+
     @Published public var validProviders = [IMultiSwapProvider]()
 
     private var internalTokenIn: Token? {
@@ -102,6 +132,10 @@ public class MultiSwapViewModel: ObservableObject {
                 return
             }
 
+            // An address entered for the previous tokenOut is meaningless for the new one —
+            // and would otherwise be picked up as the confirmation's initial recipient.
+            externalRecipientHolder.address = nil
+
             syncValidProviders()
 
             if internalTokenOut != tokenOut {
@@ -123,6 +157,14 @@ public class MultiSwapViewModel: ObservableObject {
     @Published public var tokenOut: Token? {
         didSet {
             guard internalTokenOut != tokenOut else {
+                return
+            }
+
+            // picking the current sell token on the You Get side swaps the pair — blocked
+            // when the current tokenOut needs external delivery (same rule as the switch
+            // arrow), else an externally-delivered token would become the unsignable sell side
+            if internalTokenIn == tokenOut, externalRecipientRequired(tokenOut: internalTokenOut) {
+                tokenOut = internalTokenOut
                 return
             }
 
@@ -346,12 +388,21 @@ public class MultiSwapViewModel: ObservableObject {
 
     // account switched -> full re-resolve; enabled source disappeared (spec rule 1.3) -> re-resolve
     private func handle(walletData: WalletManager.WalletData) {
+        let accountChanged = walletData.account?.id != currentAccountId
+        currentAccountId = walletData.account?.id
+
+        if accountChanged {
+            // an external recipient entered for the previous account must not silently
+            // redirect the new account's swaps, even if the pair stays the same — also
+            // with an explicit token, where no default-pair re-resolve happens below
+            externalRecipientHolder.address = nil
+        }
+
         guard !hasExplicitToken else {
             return
         }
 
-        if walletData.account?.id != currentAccountId {
-            currentAccountId = walletData.account?.id
+        if accountChanged {
             tokensManuallySet = false
             scheduleDefaultTokensSync()
             return
@@ -731,6 +782,12 @@ public extension MultiSwapViewModel {
     }
 
     func interchange() {
+        // an externally-delivered tokenOut can't become the sell side — the account
+        // can't sign transactions for it
+        guard !externalRecipientRequired else {
+            return
+        }
+
         tokensManuallySet = true
 
         let currentFiatAmountOut = fiatAmountOut

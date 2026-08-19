@@ -714,6 +714,7 @@
 "swap.price_impact.info" = "표시된 가격 대비 예상 가격 편차로, 일반적으로 스왑 금액이 클수록 증가합니다.";
 "swap.high_price_impact" = "높은 가격 영향";
 "swap.recipient" = "수령인";
+"swap.external_recipient.description" = "스왑된 자금을 받을 지갑입니다.";
 "swap.slippage" = "미끄러짐";
 "swap.swapped_time" = "스왑 시간";
 "swap.swapped_time.info" = "스왑을 완료하고 자금을 수령하는 데 필요한 예상 시간입니다. 실제 시간은 네트워크 상태, 트랜잭션 확인 및 선택한 스왑 경로에 따라 더 짧거나 길어질 수 있습니다.";

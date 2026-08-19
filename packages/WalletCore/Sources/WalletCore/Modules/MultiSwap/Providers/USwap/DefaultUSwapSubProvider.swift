@@ -50,8 +50,11 @@ public class DefaultUSwapSubProvider: USwapSubProvider {
         }
 
         // Preserve the dry-quote destination resolution and cache so a generated
-        // address is replayed by the same request builder during commit.
-        _ = try await commitRequestBuilder.destinationAddress(recipient: nil, token: input.tokenOut)
+        // address is replayed by the same request builder during commit. Best-effort:
+        // the account may be unable to receive tokenOut at all (external-recipient
+        // swap) — the recipient entered before confirmation then supplies the
+        // destination, so a failed resolution must not kill the dry quote.
+        _ = try? await commitRequestBuilder.destinationAddress(recipient: nil, token: input.tokenOut)
 
         let request = USwapMultiSwapApi.RateRequest(
             sellAsset: assetIn,

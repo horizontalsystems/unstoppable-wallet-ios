@@ -566,6 +566,7 @@
   "swap.price_impact.info": "The expected price deviation from a shown price, typically increases with the swap amount.",
   "swap.high_price_impact": "High Price Impact",
   "swap.recipient": "Recipient",
+  "swap.external_recipient.description": "The wallet that will receive the swapped funds.",
   "swap.slippage": "Slippage",
   "swap.swapped_time": "Swap Time",
   "swap.swapped_time.info": "This is the estimated time required to complete the swap and receive your funds. The actual time may be shorter or longer depending on network conditions, transaction confirmations, and the selected swap route.",

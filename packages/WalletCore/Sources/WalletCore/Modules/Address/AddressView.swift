@@ -6,6 +6,9 @@ struct AddressView: View {
     @StateObject var viewModel: AddressViewModel
     private let buttonTitle: String
     private let mustChangeAddress: Bool
+    // false: applying an emptied field may not clear the initial address — used where a
+    // recipient is mandatory (external swap delivery) and there is no fallback address
+    private let allowRemoval: Bool
     @State private var foregroundColor: Color = .themeLeah
     private let onFinish: (ResolvedAddress?) -> Void
 
@@ -21,10 +24,11 @@ struct AddressView: View {
         }
     }
 
-    init(token: Token, buttonTitle: String, destination: AddressViewModel.Destination, address: String? = nil, mustChangeAddress: Bool = false, onFinish: @escaping (ResolvedAddress?) -> Void) {
+    init(token: Token, buttonTitle: String, destination: AddressViewModel.Destination, address: String? = nil, mustChangeAddress: Bool = false, allowRemoval: Bool = true, onFinish: @escaping (ResolvedAddress?) -> Void) {
         _viewModel = StateObject(wrappedValue: AddressViewModel(token: token, destination: destination, address: address))
         self.buttonTitle = buttonTitle
         self.mustChangeAddress = mustChangeAddress
+        self.allowRemoval = allowRemoval
         self.onFinish = onFinish
     }
 
@@ -95,7 +99,7 @@ struct AddressView: View {
             Button(action: {
                 switch viewModel.state {
                 case .empty:
-                    if !viewModel.initialAddress.isEmpty {
+                    if !viewModel.initialAddress.isEmpty, allowRemoval {
                         onFinish(nil)
                     }
                 case let .valid(resolvedAddress):
@@ -138,7 +142,7 @@ struct AddressView: View {
 
         switch viewModel.state {
         case .empty:
-            if !viewModel.initialAddress.isEmpty {
+            if !viewModel.initialAddress.isEmpty, allowRemoval {
                 title = buttonTitle
                 disabled = false
             } else {

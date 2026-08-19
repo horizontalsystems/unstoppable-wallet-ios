@@ -142,12 +142,15 @@ struct MultiSwapView: View {
                 .frame(height: .heightOnePixel)
                 .frame(maxWidth: .infinity)
 
+            // an externally-delivered tokenOut can't become the sell side — the account
+            // can't sign transactions for it
             Button(action: {
                 viewModel.interchange()
             }) {
                 Image("arrow_medium_2_down_20").renderingMode(.template)
             }
             .buttonStyle(SecondaryCircleButtonStyle(style: .default))
+            .disabled(viewModel.externalRecipientRequired)
 
             Rectangle()
                 .fill(Color.themeBlade)
@@ -164,6 +167,7 @@ struct MultiSwapView: View {
                         title: "swap.you_get".localized,
                         currentToken: $viewModel.tokenOut,
                         otherToken: viewModel.tokenIn,
+                        allowExternalReceive: true,
                         isPresented: isPresented
                     )
                 }
@@ -363,16 +367,41 @@ struct MultiSwapView: View {
                     viewModel.onAcceptTerms()
 
                     DispatchQueue.main.async {
-                        focusedField = nil
-                        sendPresented = true
+                        proceedToConfirmation()
                     }
                 }
             } onDismiss: {
                 viewModel.autoQuoteIfRequired()
             }
         } else {
-            focusedField = nil
+            proceedToConfirmation()
+        }
+    }
+
+    // tokenOut the account can't hold: ask for the external delivery address first,
+    // then open the confirmation with it
+    private func proceedToConfirmation() {
+        focusedField = nil
+
+        guard viewModel.externalRecipientRequired, let tokenOut = viewModel.tokenOut else {
             sendPresented = true
+            return
+        }
+
+        Coordinator.shared.present { isPresented in
+            MultiSwapExternalRecipientView(
+                token: tokenOut,
+                initialAddress: viewModel.externalRecipient,
+                isPresented: isPresented
+            ) { address in
+                viewModel.setExternalRecipient(address: address)
+
+                DispatchQueue.main.async {
+                    sendPresented = true
+                }
+            }
+        } onDismiss: {
+            viewModel.autoQuoteIfRequired()
         }
     }
 
@@ -502,6 +531,7 @@ struct MultiSwapSendDestinationView: View {
                 amountIn: amountIn,
                 provider: currentQuote.provider,
                 multiSwapQuote: currentQuote.quote,
+                recipientHolder: viewModel.externalRecipientHolder,
                 onFinish: onFinish
             )
         }

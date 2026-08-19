@@ -714,6 +714,7 @@
 "swap.price_impact.info" = "相对于所显示价格的预期价格偏差，通常会随着兑换金额的增加而增大。";
 "swap.high_price_impact" = "高价格影响";
 "swap.recipient" = "收款人";
+"swap.external_recipient.description" = "将接收兑换资金的钱包。";
 "swap.slippage" = "滑点";
 "swap.swapped_time" = "兑换时间";
 "swap.swapped_time.info" = "这是完成兑换并收到您的资金所需的预计时间。实际时间可能会因网络状况、交易确认和所选兑换路径的不同而有所缩短或延长。";
