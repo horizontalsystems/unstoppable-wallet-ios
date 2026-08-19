@@ -4,8 +4,8 @@ import MarketKit
 
 class MultiSwapSendHandler: SendHandler {
     override class func instance(sendData: WalletCore.SendData) -> ISendHandler? {
-        guard case let .swap(tokenIn, tokenOut, amountIn, provider, multiSwapQuote) = sendData else { return nil }
-        return instance(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider, multiSwapQuote: multiSwapQuote)
+        guard case let .swap(tokenIn, tokenOut, amountIn, provider, multiSwapQuote, recipientHolder) = sendData else { return nil }
+        return instance(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider, multiSwapQuote: multiSwapQuote, recipientHolder: recipientHolder)
     }
 
     private let currencyManager = Core.shared.currencyManager
@@ -26,7 +26,24 @@ class MultiSwapSendHandler: SendHandler {
     let multiSwapQuote: MultiSwapQuote
 
     private var slippage = MultiSwapSlippage.default
-    private var recipient: String?
+
+    // Shared with the swap screen: an edit here must be visible to the pre-confirmation
+    // recipient page, which pre-fills from the same box when the user returns to it.
+    private let recipientHolder: SwapExternalRecipientHolder
+    private var recipient: String? {
+        get { recipientHolder.address }
+        set { recipientHolder.address = newValue }
+    }
+
+    // tokenOut the account can't hold — the recipient was entered before confirmation,
+    // is mandatory and must not be cleared (there is no own-wallet address to fall back to)
+    private var recipientRequired: Bool {
+        guard let accountType = accountManager.activeAccount?.type else {
+            return false
+        }
+
+        return !accountType.supports(token: tokenOut)
+    }
 
     // resolved once per confirmation: the mechanism is fixed by (chain, account)
     private lazy var broadcaster: ISwapBroadcaster? = accountManager.activeAccount.flatMap {
@@ -35,13 +52,14 @@ class MultiSwapSendHandler: SendHandler {
 
     private let refreshSubject = PassthroughSubject<Void, Never>()
 
-    init(baseToken: Token, tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, multiSwapQuote: MultiSwapQuote) {
+    init(baseToken: Token, tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, multiSwapQuote: MultiSwapQuote, recipientHolder: SwapExternalRecipientHolder) {
         self.baseToken = baseToken
         self.tokenIn = tokenIn
         self.tokenOut = tokenOut
         self.amountIn = amountIn
         self.provider = provider
         self.multiSwapQuote = multiSwapQuote
+        self.recipientHolder = recipientHolder
     }
 }
 
@@ -87,10 +105,24 @@ extension MultiSwapSendHandler: ISendHandler {
                     return
                 }
 
+                // Only Maya delivers ZEC to shielded/unified receivers — every other provider
+                // needs a transparent recipient (CEX routes reject shielded ones at order
+                // creation), matching the restriction on the pre-confirmation recipient page.
+                let parserFilter: AddressParserFactory.ParserFilter? = tokenOut.blockchainType == .zcash && !(provider is MayaMultiSwapProvider) ? .zCashTransparentOnly : nil
+
                 Coordinator.shared.present { _ in
-                    MultiSwapRecipientView(address: self.recipient, token: self.tokenOut) { [weak self] recipient in
-                        self?.recipient = recipient
-                        self?.refreshSubject.send()
+                    MultiSwapRecipientView(address: self.recipient, token: self.tokenOut, allowRemoval: !self.recipientRequired, parserFilter: parserFilter) { [weak self] recipient in
+                        guard let self else {
+                            return
+                        }
+
+                        // a mandatory external recipient can be changed but never cleared
+                        if recipient == nil, recipientRequired {
+                            return
+                        }
+
+                        self.recipient = recipient
+                        refreshSubject.send()
                     }
                 }
             }
@@ -155,7 +187,11 @@ extension MultiSwapSendHandler: ISendHandler {
 
         saveSwap(data: data, txHash: result.txHash, trackingHandle: result.trackingHandle)
 
-        if !walletManager.activeWallets.contains(where: { $0.token == tokenOut }), let activeAccount = accountManager.activeAccount {
+        // externally-delivered swaps must not auto-enable a wallet the account can't hold
+        if !walletManager.activeWallets.contains(where: { $0.token == tokenOut }),
+           let activeAccount = accountManager.activeAccount,
+           activeAccount.type.supports(token: tokenOut)
+        {
             let wallet = Wallet(token: tokenOut, account: activeAccount)
             walletManager.save(wallets: [wallet])
         }
@@ -357,7 +393,7 @@ extension MultiSwapSendHandler {
 }
 
 extension MultiSwapSendHandler {
-    static func instance(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, multiSwapQuote: MultiSwapQuote) -> MultiSwapSendHandler? {
+    static func instance(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, multiSwapQuote: MultiSwapQuote, recipientHolder: SwapExternalRecipientHolder) -> MultiSwapSendHandler? {
         let baseToken: Token?
 
         switch tokenIn.type {
@@ -373,6 +409,6 @@ extension MultiSwapSendHandler {
             return nil
         }
 
-        return MultiSwapSendHandler(baseToken: baseToken, tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider, multiSwapQuote: multiSwapQuote)
+        return MultiSwapSendHandler(baseToken: baseToken, tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider, multiSwapQuote: multiSwapQuote, recipientHolder: recipientHolder)
     }
 }

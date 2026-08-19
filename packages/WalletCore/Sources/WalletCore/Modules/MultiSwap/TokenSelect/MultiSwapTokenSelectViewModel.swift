@@ -19,6 +19,9 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
     private let localStorage = Core.shared.localStorage
 
     private let token: Token?
+    // "You Get" side: tokens the account can't hold stay selectable — the swap is
+    // delivered to an external address the user enters before confirmation
+    private let allowExternalReceive: Bool
 
     @Published var searchText: String = "" {
         didSet {
@@ -34,10 +37,33 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
     @Published var recent = [Item]()
     @Published var searchResults = [Item]()
 
-    init(token: Token?) {
+    init(token: Token?, allowExternalReceive: Bool = false) {
         self.token = token
+        self.allowExternalReceive = allowExternalReceive
 
         syncSections()
+    }
+
+    // For external delivery the derivation/address-format variants of a chain are
+    // indistinguishable — the funds go to whatever address the user enters — so only
+    // the chain's default variant is offered (e.g. one BTC row with BIP84, not four).
+    private static func isExternallyReceivable(token: Token) -> Bool {
+        switch token.type {
+        case .derived, .addressType:
+            return token.tokenQuery.id == token.blockchainType.defaultTokenQuery.id
+        default:
+            return true
+        }
+    }
+
+    // Recent ids are stored globally, so a variant saved by another session (e.g. BTC BIP44)
+    // is narrowed to the chain-default variant here too, keeping the collapse rule canonical.
+    private static func includeToken(_ token: Token, account: Account?, allowExternalReceive: Bool) -> Bool {
+        if allowExternalReceive {
+            return BlockchainType.supported.contains(token.blockchainType) && isExternallyReceivable(token: token)
+        }
+
+        return account?.type.supports(token: token) ?? true
     }
 
     var searching: Bool {
@@ -57,7 +83,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
     private func syncSections() {
         let account = accountManager.activeAccount
 
-        sectionsTask = Task { [weak self, marketKit, walletManager, adapterManager, currencyManager, localStorage, token] in
+        sectionsTask = Task { [weak self, marketKit, walletManager, adapterManager, currencyManager, localStorage, token, allowExternalReceive] in
             let wallets = walletManager.activeWallets
             let currency = currencyManager.baseCurrency
             let coinPriceMap = marketKit.coinPriceMap(coinUids: wallets.map(\.coin.uid).removeDuplicates(), currencyCode: currency.code)
@@ -91,7 +117,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
             }
 
             let popularTokens = MultiSwapPopularTokenResolver.tokens(marketKit: marketKit, for: token)
-                .filter { account?.type.supports(token: $0) ?? true }
+                .filter { Self.includeToken($0, account: account, allowExternalReceive: allowExternalReceive) }
             let popular = popularTokens.map { Item(token: $0, balance: nil, fiatBalance: nil) }
 
             let yourTokens = wallets.map(\.token)
@@ -110,7 +136,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                 }
 
                 let eligible = fullCoin.tokens.filter { candidate in
-                    (account?.type.supports(token: candidate) ?? true) && BlockchainType.supported.contains(candidate.blockchainType)
+                    Self.includeToken(candidate, account: account, allowExternalReceive: allowExternalReceive) && BlockchainType.supported.contains(candidate.blockchainType)
                 }
 
                 let representative = eligible
@@ -128,7 +154,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
             let recent = localStorage.swapRecentTokenQueryIds
                 .compactMap { TokenQuery(id: $0) }
                 .compactMap { (try? marketKit.token(query: $0)) ?? nil }
-                .filter { account?.type.supports(token: $0) ?? true }
+                .filter { Self.includeToken($0, account: account, allowExternalReceive: allowExternalReceive) }
                 .map(item)
 
             let resolvedTopTokens = topTokens
@@ -165,7 +191,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
 
         let account = accountManager.activeAccount
 
-        searchTask = Task { [weak self, marketKit, walletManager, adapterManager, currencyManager] in
+        searchTask = Task { [weak self, marketKit, walletManager, adapterManager, currencyManager, allowExternalReceive] in
             let wallets = walletManager.activeWallets
             let currency = currencyManager.baseCurrency
             let coinPriceMap = marketKit.coinPriceMap(coinUids: wallets.map(\.coin.uid).removeDuplicates(), currencyCode: currency.code)
@@ -192,14 +218,14 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                 let tokens = (try? marketKit.tokens(reference: ethAddress.hex)) ?? []
 
                 resultTokens = tokens
-                    .filter { (account?.type.supports(token: $0) ?? true) }
+                    .filter { Self.includeToken($0, account: account, allowExternalReceive: allowExternalReceive) }
                     .sorted(by: SortCriterion.tokenByBlockchain, context: context)
             } else {
                 let allFullCoins = (try? marketKit.fullCoins(filter: filter, limit: 100)) ?? []
                 let tokens = allFullCoins.map(\.tokens).flatMap { $0 }
 
                 resultTokens = tokens
-                    .filter { (account?.type.supports(token: $0) ?? true) }
+                    .filter { Self.includeToken($0, account: account, allowExternalReceive: allowExternalReceive) }
                     .sorted(by: SortCriterion.tokenFilteredByBlockchain, context: context)
             }
 

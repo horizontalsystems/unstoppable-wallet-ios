@@ -674,6 +674,7 @@
 "swap.no_providers" = "Aucune route";
 "swap.enter_amount" = "Entrez le montant";
 "swap.no_quotes" = "Aucun prix disponible";
+"swap.error.no_memo" = "Cet itinéraire ne peut pas être confirmé pour le moment. Veuillez actualiser le devis ou choisir un autre fournisseur.";
 "swap.token_not_enabled" = "Token non activés";
 "swap.token_syncing" = "Synchronisation des token";
 "swap.token_not_synced" = "Token non synchronisé";
@@ -714,6 +715,7 @@
 "swap.price_impact.info" = "L'écart de prix attendu par rapport à un prix affiché, augmente généralement avec le montant de l\'échange.";
 "swap.high_price_impact" = "Impact de prix élevé";
 "swap.recipient" = "Destinataire";
+"swap.external_recipient.description" = "Le portefeuille qui recevra les fonds échangés.";
 "swap.slippage" = "Glissement";
 "swap.swapped_time" = "Temps de Swap";
 "swap.swapped_time.info" = "Il s'agit du temps estimé nécessaire pour effectuer le swap et recevoir vos fonds. Le temps réel peut être plus court ou plus long en fonction des conditions du réseau, des confirmations de transaction et de la route de swap sélectionnée.";

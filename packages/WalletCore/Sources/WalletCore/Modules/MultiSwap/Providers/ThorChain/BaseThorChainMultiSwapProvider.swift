@@ -79,7 +79,10 @@ public class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     }
 
     public func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {
-        let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
+        // Dry quote only: the account may be unable to receive tokenOut (external-recipient
+        // swap), and a price can be quoted without a destination. Every confirmation path
+        // resolves strictly — see swapQuote(allowMissingDestination:).
+        let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, allowMissingDestination: true)
 
         let blockchainType = tokenIn.blockchainType
 
@@ -103,7 +106,15 @@ public class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
     public func confirmationQuote(multiSwapQuote _: MultiSwapQuote, tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote {
         let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient)
-        let toAddress = try await resolveDestination(recipient: nil, token: tokenOut)
+
+        // The memo carries the swap instruction; an inbound transfer without it is an
+        // unrecoverable donation to the vault. swapQuote resolves the destination strictly
+        // here, so a missing memo means the node itself withheld one.
+        let memo = try swapQuote.requiredMemo()
+
+        // the recipient is where the funds actually go; without one the account's own
+        // address is resolved (and must resolve — else the swap has no destination)
+        let toAddress = try await resolveDestination(recipient: recipient, token: tokenOut)
 
         switch tokenIn.blockchainType {
         case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum:
@@ -121,14 +132,14 @@ public class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 transactionData = try TransactionData(
                     to: EvmKit.Address(hex: inboundAddress),
                     value: tokenIn.fractionalMonetaryValue(value: amountIn),
-                    input: Data(swapQuote.memo.utf8)
+                    input: Data(memo.utf8)
                 )
             case let .eip20(address):
                 let method = try DepositWithExpiryMethod(
                     inboundAddress: EvmKit.Address(hex: inboundAddress),
                     asset: EvmKit.Address(hex: address),
                     amount: tokenIn.fractionalMonetaryValue(value: amountIn),
-                    memo: swapQuote.memo,
+                    memo: memo,
                     expiry: BigUInt(UInt64(Date().timeIntervalSince1970) + 1 * 60 * 60)
                 )
 
@@ -198,7 +209,7 @@ public class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                         address: swapQuote.inboundAddress,
                         value: value,
                         feeRate: satoshiPerByte,
-                        memo: swapQuote.memo,
+                        memo: memo,
                         utxoFilters: utxoFilters,
                         changeToFirstInput: true
                     )
@@ -252,7 +263,7 @@ public class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 slippage: slippage,
                 estimatedTime: swapQuote.totalSwapSeconds,
                 kind: kind,
-                memo: swapQuote.memo,
+                memo: memo,
                 fee: adapter?.fee,
                 transactionError: transactionError,
                 toAddress: toAddress
@@ -288,7 +299,13 @@ public class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         )
     }
 
-    func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil, recipient: String? = nil, params: Parameters? = nil) async throws -> SwapQuote {
+    /// - Parameter allowMissingDestination: pass true ONLY for dry quotes. The account may be
+    /// unable to receive tokenOut (external-recipient swap), and a price can be quoted without a
+    /// destination — the node then answers without a memo, which a dry quote never reads. Every
+    /// path that builds a signable transaction must leave this false: a quote whose destination
+    /// silently failed to resolve carries no memo, and a memo-less inbound transfer is an
+    /// unrecoverable donation to the vault.
+    func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil, recipient: String? = nil, params: Parameters? = nil, allowMissingDestination: Bool = false) async throws -> SwapQuote {
         guard let assetIn = assetMap[tokenIn.tokenQuery.id.lowercased()] else {
             throw SwapError.unsupportedTokenIn
         }
@@ -298,16 +315,25 @@ public class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         }
 
         let amount = (amountIn * pow(10, protocolDecimals(token: tokenIn))).roundedDown(decimal: 0)
-        let destination = try await resolveDestination(recipient: recipient, token: tokenOut)
+
+        let destination: String?
+        if allowMissingDestination {
+            destination = try? await resolveDestination(recipient: recipient, token: tokenOut)
+        } else {
+            destination = try await resolveDestination(recipient: recipient, token: tokenOut)
+        }
 
         var parameters: Parameters = [
             "from_asset": assetIn,
             "to_asset": assetOut,
             "amount": amount.description,
-            "destination": destination,
             "streaming_interval": streamingInterval,
             "streaming_quantity": 0,
         ]
+
+        if let destination {
+            parameters["destination"] = destination
+        }
 
         if let slippage {
             parameters["liquidity_tolerance_bps"] = Int((slippage * 100).roundedDown(decimal: 0).description)
@@ -485,7 +511,8 @@ extension BaseThorChainMultiSwapProvider {
         // Absent when the input is THORChain-native: there is no vault to pay into.
         let inboundAddress: String?
         var expectedAmountOut: Decimal
-        let memo: String
+        // nil when the quote was requested without a destination — see swapQuote(allowMissingDestination:)
+        let memo: String?
         let router: String?
 
         var affiliateFee: Decimal
@@ -509,7 +536,11 @@ extension BaseThorChainMultiSwapProvider {
                 inboundAddress = try map.value("inbound_address")
             }
             expectedAmountOut = try map.value("expected_amount_out", using: Transform.stringToDecimalTransform) / pow(10, 8)
-            memo = try map.value("memo")
+            // Absent when the quote was requested without a destination (dry quote for a
+            // tokenOut the account can't hold). Optional rather than a "" sentinel so every
+            // consumer that turns a memo into a signed transfer must handle its absence —
+            // a memo-less inbound transfer is an unrecoverable donation to the vault.
+            memo = try? map.value("memo")
             router = try? map.value("router")
 
             affiliateFee = try map.value("fees.affiliate", using: Transform.stringToDecimalTransform) / pow(10, 8)
@@ -525,6 +556,17 @@ extension BaseThorChainMultiSwapProvider {
             totalSwapSeconds = try? map.value("total_swap_seconds")
         }
 
+        /// The swap instruction to attach to the inbound transfer. Throws instead of
+        /// returning an empty string: every caller here turns the result into a signed
+        /// transfer, and a memo-less one is an unrecoverable donation to the vault.
+        func requiredMemo() throws -> String {
+            guard let memo, !memo.isEmpty else {
+                throw SwapError.noMemo
+            }
+
+            return memo
+        }
+
         func rescalingOutput(extraDecimals: Int) -> SwapQuote {
             guard extraDecimals != 0 else { return self }
             let divisor = pow(10, extraDecimals)
@@ -538,7 +580,7 @@ extension BaseThorChainMultiSwapProvider {
         }
     }
 
-    enum SwapError: Error {
+    enum SwapError: Error, LocalizedError {
         case unsupportedTokenIn
         case unsupportedTokenOut
         case noRouterAddress
@@ -546,6 +588,16 @@ extension BaseThorChainMultiSwapProvider {
         case invalidTokenInType
         case noAdapter
         case noEvmKit
+        case noMemo
+
+        public var errorDescription: String? {
+            switch self {
+            // The only case a user can hit on a quote that looked valid a moment earlier,
+            // so it is the one that must not surface as a raw enum name.
+            case .noMemo: return "swap.error.no_memo".localized
+            default: return nil
+            }
+        }
     }
 }
 

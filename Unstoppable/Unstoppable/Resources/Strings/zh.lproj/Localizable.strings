@@ -674,6 +674,7 @@
 "swap.no_providers" = "无可用路由";
 "swap.enter_amount" = "输入金额";
 "swap.no_quotes" = "没有报价";
+"swap.error.no_memo" = "此路由目前无法确认。请刷新报价或选择其他提供商。";
 "swap.token_not_enabled" = "代币未启用";
 "swap.token_syncing" = "代币同步";
 "swap.token_not_synced" = "代币未同步";
@@ -714,6 +715,7 @@
 "swap.price_impact.info" = "相对于所显示价格的预期价格偏差，通常会随着兑换金额的增加而增大。";
 "swap.high_price_impact" = "高价格影响";
 "swap.recipient" = "收款人";
+"swap.external_recipient.description" = "将接收兑换资金的钱包。";
 "swap.slippage" = "滑点";
 "swap.swapped_time" = "兑换时间";
 "swap.swapped_time.info" = "这是完成兑换并收到您的资金所需的预计时间。实际时间可能会因网络状况、交易确认和所选兑换路径的不同而有所缩短或延长。";
