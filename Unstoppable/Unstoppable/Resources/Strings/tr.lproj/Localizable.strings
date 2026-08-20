@@ -2450,7 +2450,6 @@
 "purchases.swap_protection.info" = "Swap işlemleri sırasında botları ve front-running saldırılarını durdurur. İşlemlerinizin adil ve güvenli kalmasını sağlar.";
 "purchases.robbery_protection" = "Zorla Açtırma Koruması";
 "purchases.robbery_protection.description" = "Uygulamayı zorla kilidini açmanız durumunda fonlarınızı korur.";
-"purchases.robbery_protection.info" = "Ayrı bir PIN ile sahte (yem) cüzdan oluşturmanıza olanak tanır. Yüksek riskli durumlarda gerçek varlıklarınızı gizli tutar.";
 
 // Advanced Controls
 "purchases.advanced_controls" = "Gelişmiş Kontroller";

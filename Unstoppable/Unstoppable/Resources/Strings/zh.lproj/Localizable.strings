@@ -2450,7 +2450,6 @@
 "purchases.swap_protection.info" = "在兑换过程中阻止 bots 和抢跑（front-running）攻击，确保您的交易公平且安全。";
 "purchases.robbery_protection" = "抢劫保护";
 "purchases.robbery_protection.description" = "在您被迫解锁应用的情况下保护您的资金安全。";
-"purchases.robbery_protection.info" = "允许您创建一个带独立 PIN 的诱饵钱包，在高风险情况下隐藏真实资产。";
 
 // Advanced Controls
 "purchases.advanced_controls" = "高级控制";

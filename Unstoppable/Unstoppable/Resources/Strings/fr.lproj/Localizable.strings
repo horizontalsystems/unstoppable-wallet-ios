@@ -2450,7 +2450,6 @@
 "purchases.swap_protection.info" = "Bloque les bots et les attaques de front-running lors des swaps. Garantit des transactions équitables et sécurisées.";
 "purchases.robbery_protection" = "Protection contre le vol";
 "purchases.robbery_protection.description" = "Protège vos fonds si vous êtes contraint de déverrouiller l’application.";
-"purchases.robbery_protection.info" = "Vous permet de créer un portefeuille leurre avec un code PIN distinct. Vos véritables actifs restent cachés dans les situations à risque. ";
 
 // Advanced Controls
 "purchases.advanced_controls" = "Contrôles avancés";

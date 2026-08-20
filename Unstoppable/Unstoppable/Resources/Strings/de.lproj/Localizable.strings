@@ -2450,7 +2450,6 @@
 "purchases.swap_protection.info" = "Stoppt Bots und Front-Running-Angriffe während Swaps. Hält deine Transaktionen fair und sicher.";
 "purchases.robbery_protection" = "Raubschutz";
 "purchases.robbery_protection.description" = "Schützt deine Gelder, falls du gezwungen bist, die App zu entsperren.";
-"purchases.robbery_protection.info" = "Ermöglicht das Erstellen einer Tarn-Wallet mit separater PIN und hält Ihre echten Vermögenswerte in risikoreichen Situationen verborgen.";
 
 // Advanced Controls
 "purchases.advanced_controls" = "Erweiterte Steuerungen";

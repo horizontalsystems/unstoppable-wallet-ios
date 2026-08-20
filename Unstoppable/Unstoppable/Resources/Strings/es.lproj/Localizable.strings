@@ -2450,7 +2450,6 @@
 "purchases.swap_protection.info" = "Detiene bots y ataques de front-running durante los swaps. Mantiene tus transacciones justas y seguras.";
 "purchases.robbery_protection" = "Protección contra robo";
 "purchases.robbery_protection.description" = "Protege tus fondos si te ves obligado a desbloquear la app.";
-"purchases.robbery_protection.info" = "Te permite crear una wallet señuelo con un PIN diferente. Mantiene tus activos reales ocultos en situaciones de alto riesgo.";
 
 // Advanced Controls
 "purchases.advanced_controls" = "Controles avanzados";

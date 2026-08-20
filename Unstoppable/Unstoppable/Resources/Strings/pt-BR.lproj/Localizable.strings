@@ -2450,7 +2450,6 @@
 "purchases.swap_protection.info" = "Bloqueia bots e ataques de front-running durante swaps. Mantém suas transações justas e seguras.";
 "purchases.robbery_protection" = "Proteção contra Roubo";
 "purchases.robbery_protection.description" = "Protege seus fundos caso você seja forçado a desbloquear o app.";
-"purchases.robbery_protection.info" = "Permite criar uma carteira-isca com um PIN separado. Mantém seus ativos reais ocultos em situações de alto risco.";
 
 // Advanced Controls
 "purchases.advanced_controls" = "Controles Avançados";
