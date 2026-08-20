@@ -2450,7 +2450,6 @@
 "purchases.swap_protection.info" = "Stops bots and front-running attacks during swaps. Keeps your transactions fair and secure.";
 "purchases.robbery_protection" = "Robbery Protection";
 "purchases.robbery_protection.description" = "Safeguards your funds if you’re forced to unlock the app.";
-"purchases.robbery_protection.info" = "Lets you create a decoy wallet with a separate PIN. Keeps real assets hidden in high-risk situations.";
 
 // Advanced Controls
 "purchases.advanced_controls" = "Advanced Controls";

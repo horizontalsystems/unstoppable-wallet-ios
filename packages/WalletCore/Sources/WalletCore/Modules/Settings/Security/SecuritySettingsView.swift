@@ -228,10 +228,8 @@ struct SecuritySettingsView: View {
                 if viewModel.isDuressPasscodeSet {
                     HStack(spacing: .margin12) {
                         Button {
-                            Coordinator.shared.performAfterPurchase(premiumFeature: .robberyProtection, page: .security, trigger: .robberyProtection) {
-                                Coordinator.shared.presentAfterUnlock { isPresented in
-                                    ThemeNavigationStack { EditPasscodeModule.editDuressPasscodeView(showParentSheet: isPresented) }
-                                }
+                            Coordinator.shared.presentAfterUnlock { isPresented in
+                                ThemeNavigationStack { EditPasscodeModule.editDuressPasscodeView(showParentSheet: isPresented) }
                             }
                         } label: {
                             Image("pen")
@@ -249,14 +247,12 @@ struct SecuritySettingsView: View {
                     }
                 } else {
                     Button {
-                        Coordinator.shared.performAfterPurchase(premiumFeature: .robberyProtection, page: .security, trigger: .robberyProtection) {
-                            if viewModel.isPasscodeSet {
-                                Coordinator.shared.performAfterUnlock {
-                                    presentCreateDuressPasscode()
-                                }
-                            } else {
-                                presentCreatePasscode(reason: .duress)
+                        if viewModel.isPasscodeSet {
+                            Coordinator.shared.performAfterUnlock {
+                                presentCreateDuressPasscode()
                             }
+                        } else {
+                            presentCreatePasscode(reason: .duress)
                         }
                     } label: {
                         Text("button.add".localized)

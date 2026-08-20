@@ -2450,7 +2450,6 @@
 "purchases.swap_protection.info" = "Защищает от ботов и front-running атак при обмене.";
 "purchases.robbery_protection" = "Защита при ограблении";
 "purchases.robbery_protection.description" = "Защищает ваши средства, если вас вынуждают разблокировать приложение.";
-"purchases.robbery_protection.info" = "Позволяет создать ложный кошелёк с отдельным PIN-кодом. Скрывает реальные активы в рискованных ситуациях.";
 
 // Advanced Controls
 "purchases.advanced_controls" = "Расширенные настройки";

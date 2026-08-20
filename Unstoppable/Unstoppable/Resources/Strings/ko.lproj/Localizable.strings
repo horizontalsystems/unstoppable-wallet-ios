@@ -2450,7 +2450,6 @@
 "purchases.swap_protection.info" = "스왑 중 봇 및 프런트 러닝 공격을 차단하여 트랜잭션을 공정하고 안전하게 유지합니다.";
 "purchases.robbery_protection" = "강제 상황 보호";
 "purchases.robbery_protection.description" = "강제로 앱을 잠금 해제해야 하는 상황에서도 자금을 보호합니다.";
-"purchases.robbery_protection.info" = "별도의 PIN으로 미끼용 지갑을 생성할 수 있습니다. 위험한 상황에서도 실제 자산을 숨겨 보호합니다.";
 
 // Advanced Controls
 "purchases.advanced_controls" = "고급 제어";
