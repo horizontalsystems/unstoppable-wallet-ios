@@ -1,9 +1,12 @@
 import Foundation
 import HsToolKit
 
+// Proximity to any counterparty in the window, most recent first; block distance is checked
+// before time for each entry, and the first entry within either threshold decides
 class TimeCorrelationCondition: SpamCondition {
     var identifier: String { "time_correlation" }
 
+    private let cache: OutputTransactionCache
     private let blockThreshold: Int
     private let timeThresholdMinutes: Int
     private let blockScore: Int
@@ -11,12 +14,14 @@ class TimeCorrelationCondition: SpamCondition {
     private let logger: Logger?
 
     init(
+        cache: OutputTransactionCache,
         blockThreshold: Int = 5,
         timeThresholdMinutes: Int = 20,
         blockScore: Int = 4,
         timeScore: Int = 3,
         logger: Logger? = nil
     ) {
+        self.cache = cache
         self.blockThreshold = blockThreshold
         self.timeThresholdMinutes = timeThresholdMinutes
         self.blockScore = blockScore
@@ -25,28 +30,21 @@ class TimeCorrelationCondition: SpamCondition {
     }
 
     func evaluate(_ context: SpamEvaluationContext) -> Int {
-        let matchedTimestamp: Int? = context.get(SpamContextKeys.matchedTimestamp)
-        let matchedBlockHeight: Int? = context.get(SpamContextKeys.matchedBlockHeight)
+        let transaction = context.transaction
+        let thresholdSeconds = timeThresholdMinutes * 60
 
-        guard matchedTimestamp != nil || matchedBlockHeight != nil else {
+        guard !transaction.events.incoming.isEmpty else {
             return 0
         }
 
-        // Check block correlation first (more precise)
-        if let matchedBlock = matchedBlockHeight,
-           let txBlock = context.transaction.blockHeight
-        {
-            let blockDiff = abs(txBlock - matchedBlock)
-            if blockDiff < blockThreshold {
+        for cached in cache.get(blockchainType: transaction.blockchainType) {
+            if let cachedBlock = cached.blockHeight, let txBlock = transaction.blockHeight,
+               abs(txBlock - cachedBlock) <= blockThreshold
+            {
                 return blockScore
             }
-        }
 
-        // Fall back to time correlation
-        if let matchedTime = matchedTimestamp {
-            let timeDiff = abs(context.transaction.timestamp - matchedTime)
-            let thresholdSeconds = timeThresholdMinutes * 60
-            if timeDiff < thresholdSeconds {
+            if abs(transaction.timestamp - cached.timestamp) <= thresholdSeconds {
                 return timeScore
             }
         }

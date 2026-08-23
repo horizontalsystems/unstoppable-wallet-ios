@@ -27,7 +27,7 @@ final class OutputTransactionCache {
 
     // MARK: - Read
 
-    /// Returns cached outgoing addresses for blockchain.
+    /// Returns cached counterparty addresses (recipients of sends, senders of receives) for blockchain.
     /// Must be called after loadCache().
     func get(blockchainType: BlockchainType) -> [CachedOutputTransaction] {
         cache[blockchainType] ?? []
@@ -60,7 +60,7 @@ final class OutputTransactionCache {
 
     // MARK: - Write
 
-    /// Saves outgoing record to DB and updates in-memory cache.
+    /// Saves the record's counterparties to DB and updates in-memory cache.
     func add(record: TransactionRecord, accountId: String) {
         let blockchainType = record.source.blockchainType
         let outputs = factory.cachedOutputs(from: record)
