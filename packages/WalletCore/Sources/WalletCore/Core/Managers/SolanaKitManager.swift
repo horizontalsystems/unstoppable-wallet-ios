@@ -51,12 +51,7 @@ public class SolanaKitManager {
             return _solanaKit
         }
 
-        guard let seed = account.type.mnemonicSeed else {
-            throw AdapterError.unsupportedAccount
-        }
-
-        let address = try SolanaKit.Signer.address(seed: seed)
-        let addressString = address.base58
+        let addressString = try Self.address(accountType: account.type)
 
         let kit = try SolanaKit.Kit.instance(
             address: addressString,
@@ -145,10 +140,17 @@ extension SolanaKitManager {
 
 extension SolanaKitManager {
     static func address(accountType: AccountType) throws -> String {
-        guard let seed = accountType.mnemonicSeed else {
+        switch accountType {
+        case .mnemonic:
+            guard let seed = accountType.mnemonicSeed else {
+                throw AdapterError.unsupportedAccount
+            }
+            return try SolanaKit.Signer.address(seed: seed).base58
+        case let .solanaAddress(address):
+            return address
+        default:
             throw AdapterError.unsupportedAccount
         }
-        return try SolanaKit.Signer.address(seed: seed).base58
     }
 
     static func signer(accountType: AccountType) throws -> SolanaKit.Signer {

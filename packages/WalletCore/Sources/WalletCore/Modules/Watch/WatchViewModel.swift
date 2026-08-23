@@ -107,6 +107,7 @@ class WatchViewModel: ObservableObject {
                 }
                 + AddressParserFactory.parserChainHandlers(blockchainType: .tron)
                 + AddressParserFactory.parserChainHandlers(blockchainType: .ton)
+                + AddressParserFactory.parserChainHandlers(blockchainType: .solana)
                 + AddressParserFactory.parserChainHandlers(blockchainType: .stellar)
                 + AddressParserFactory.parserChainHandlers(blockchainType: .monero)
         )
@@ -194,6 +195,8 @@ class WatchViewModel: ObservableObject {
                     accountType = try .tronAddress(address: TronKit.Address(address: address.raw))
                 case .ton:
                     accountType = .tonAddress(address: address.raw)
+                case .solana:
+                    accountType = .solanaAddress(address: address.raw)
                 case .stellar:
                     accountType = .stellarAccount(accountId: address.raw)
                 case .monero:
@@ -249,6 +252,9 @@ class WatchViewModel: ObservableObject {
 
         case .tonAddress:
             tokenQueries = BlockchainType.ton.nativeTokenQueries
+
+        case .solanaAddress:
+            tokenQueries = BlockchainType.solana.nativeTokenQueries
 
         case .stellarAccount:
             tokenQueries = BlockchainType.stellar.nativeTokenQueries
