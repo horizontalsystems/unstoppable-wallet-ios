@@ -38,28 +38,11 @@ final class AddressSimilarityCondition: SpamCondition {
 
         let incomingAddresses = context.transaction.events.incoming.map { normalize($0.address) }
 
-        let (score, matchedOutput) = bestMatch(
-            incomingAddresses: incomingAddresses,
-            cachedOutputs: cachedOutputs
-        )
-
-        if let matched = matchedOutput ?? cachedOutputs.first {
-            context.set(SpamContextKeys.matchedAddress, value: matched.address)
-            context.set(SpamContextKeys.matchedTimestamp, value: Int(matched.timestamp))
-            if let blockHeight = matched.blockHeight {
-                context.set(SpamContextKeys.matchedBlockHeight, value: blockHeight)
-            }
-        }
-
-        return score
+        return bestMatch(incomingAddresses: incomingAddresses, cachedOutputs: cachedOutputs)
     }
 
-    private func bestMatch(
-        incomingAddresses: [String],
-        cachedOutputs: [CachedOutputTransaction]
-    ) -> (Int, CachedOutputTransaction?) {
+    private func bestMatch(incomingAddresses: [String], cachedOutputs: [CachedOutputTransaction]) -> Int {
         var bestScore = 0
-        var matchedOutput: CachedOutputTransaction?
         let maxScore = prefixScore + suffixScore
 
         for incomingAddress in incomingAddresses {
@@ -83,20 +66,23 @@ final class AddressSimilarityCondition: SpamCondition {
 
                 if score > bestScore {
                     bestScore = score
-                    matchedOutput = cached
 
                     if bestScore >= maxScore {
-                        return (bestScore, matchedOutput)
+                        return bestScore
                     }
                 }
             }
         }
 
-        return (bestScore, matchedOutput)
+        return bestScore
     }
 
+    // "T" opens every 34-char Tron address and carries no more information than "0x"
     private func normalize(_ address: String) -> String {
-        address.stripping(prefix: "0x").lowercased()
+        if address.count == 34, address.hasPrefix("T") {
+            return address.dropFirst().lowercased()
+        }
+        return address.stripping(prefix: "0x").lowercased()
     }
 
     private func hasSimilarPrefix(_ address1: String, _ address2: String) -> Bool {

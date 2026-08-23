@@ -22,9 +22,3 @@ class SpamEvaluationContext {
         storage[key] != nil
     }
 }
-
-enum SpamContextKeys {
-    static let matchedAddress = "matched_address"
-    static let matchedTimestamp = "matched_timestamp"
-    static let matchedBlockHeight = "matched_block_height"
-}

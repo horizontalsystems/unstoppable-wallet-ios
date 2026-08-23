@@ -158,9 +158,15 @@ final class SpamManager {
 
     /// Mutates .spam on each record. No return value needed —
     /// caller holds references to the same objects.
+    // EVM/Tron/Stellar hashes are hex; Solana signatures are base58 —
+    // fall back to raw bytes, as Android does (hash.toByteArray())
+    private func hashData(record: TransactionRecord) -> Data? {
+        record.transactionHash.hs.hexData ?? record.transactionHash.data(using: .utf8)
+    }
+
     private func performUpdate(records: [TransactionRecord]) {
         for record in records {
-            guard let hashData = record.transactionHash.hs.hexData else {
+            guard let hashData = hashData(record: record) else {
                 continue
             }
 
@@ -181,7 +187,7 @@ final class SpamManager {
         var lastPaginationData: String?
 
         for record in transactions {
-            guard let hashData = record.transactionHash.hs.hexData else {
+            guard let hashData = hashData(record: record) else {
                 continue
             }
 
@@ -204,23 +210,10 @@ final class SpamManager {
     /// Process single record: check spam, update caches, save to DB.
     /// Returns isSpam result.
     private func processRecord(record: TransactionRecord, hashData: Data, spamInfo: SpamTransactionInfo?) -> Bool {
-        // Outgoing transactions: save addresses to cache/DB, mark not spam
-        if let outgoingAddresses = OutputTransactionFactory.outgoingAddresses(from: record), !outgoingAddresses.isEmpty {
+        // The user's own sends: counterparties to cache/DB, trusted without scoring
+        if OutputTransactionFactory.outgoingAddresses(from: record) != nil {
             outputCache.add(record: record, accountId: accountId)
 
-            let scanned = ScannedTransaction(
-                transactionHash: hashData,
-                blockchainTypeUid: blockchainType.uid,
-                isSpam: false,
-                spamAddress: nil
-            )
-            try? storage.save(scannedTransaction: scanned)
-
-            return false
-        }
-
-        // Outgoing without addresses (Bitcoin/Monero UTXO): mark not spam, no cache
-        if OutputTransactionFactory.outgoingAddresses(from: record) != nil {
             let scanned = ScannedTransaction(
                 transactionHash: hashData,
                 blockchainTypeUid: blockchainType.uid,
@@ -246,6 +239,12 @@ final class SpamManager {
         // Evaluate spam
         let isSpam = evaluateSpam(spamInfo: spamInfo)
         let spamAddress = isSpam ? spamInfo.events.incoming.first?.address : nil
+
+        // Senders of received transfers are correlation context too (a look-alike of whoever just
+        // paid the user), but never spam senders: dust must not flush or poison the window
+        if !isSpam {
+            outputCache.add(record: record, accountId: accountId)
+        }
 
         let scanned = ScannedTransaction(
             transactionHash: hashData,

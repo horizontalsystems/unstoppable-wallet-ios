@@ -44,10 +44,27 @@ public class SpamWrapper {
             .append(OutgoingPoisoningFilter(logger: logger))
 
         let evaluator = SpamScoreEvaluator(spamThreshold: Self.spamThreshold, suspiciousThreshold: Self.suspiciousThreshold, logger: logger)
-            .append(ZeroValueCondition(score: Self.zeroValueIncoming, logger: logger))
-            .append(AddressSimilarityCondition(cache: outputCache, prefixScore: Self.addressPartScore, suffixScore: Self.addressPartScore, logger: logger))
-            .append(LowAmountCondition(spamScore: Self.spamThreshold, riskScore: Self.amountRiskScore, dangerScore: Self.amountDangerScore, logger: logger))
-            .append(TimeCorrelationCondition(blockScore: Self.correlationBlockScore, timeScore: Self.correlationTimeScore, logger: logger))
+
+        // Solana scores values per event (never a signed native aggregate) and has no zero-value
+        // bonus: a zero coin transfer is instant spam there, so ZeroValueCondition would double-score.
+        // Correlation is gated to the gray zone and matches 3 address characters, as on Android;
+        // the other chains stay ungated, so they keep the stricter 4-character match
+        if source.blockchainType == .solana {
+            evaluator.append(GrayZoneGateCondition(
+                value: SolanaLowAmountCondition(spamScore: Self.spamThreshold, riskScore: Self.amountRiskScore, dangerScore: Self.amountDangerScore, logger: logger),
+                correlation: [
+                    AddressSimilarityCondition(cache: outputCache, minMatchLength: 3, prefixScore: Self.addressPartScore, suffixScore: Self.addressPartScore, logger: logger),
+                    TimeCorrelationCondition(cache: outputCache, blockScore: Self.correlationBlockScore, timeScore: Self.correlationTimeScore, logger: logger),
+                ],
+                spamThreshold: Self.spamThreshold
+            ))
+        } else {
+            evaluator
+                .append(ZeroValueCondition(score: Self.zeroValueIncoming, logger: logger))
+                .append(AddressSimilarityCondition(cache: outputCache, prefixScore: Self.addressPartScore, suffixScore: Self.addressPartScore, logger: logger))
+                .append(LowAmountCondition(spamScore: Self.spamThreshold, riskScore: Self.amountRiskScore, dangerScore: Self.amountDangerScore, logger: logger))
+                .append(TimeCorrelationCondition(cache: outputCache, blockScore: Self.correlationBlockScore, timeScore: Self.correlationTimeScore, logger: logger))
+        }
 
         return SpamManager(
             accountId: accountId,

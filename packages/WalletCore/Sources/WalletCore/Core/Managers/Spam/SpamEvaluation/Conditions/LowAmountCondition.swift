@@ -36,7 +36,8 @@ class LowAmountCondition: SpamCondition {
             }
         }
 
-        if let nativeCode {
+        // Outgoing legs are stored negative and never score as dust, as on Android
+        if let nativeCode, nativeTotal > 0 {
             let score = evaluateWithLimits(code: nativeCode, value: nativeTotal)
             if score >= spamScore {
                 return spamScore
@@ -54,6 +55,9 @@ class LowAmountCondition: SpamCondition {
         case .raw, .eip20Token:
             return spamScore
         default:
+            guard event.value.value > 0 else {
+                return 0
+            }
             return evaluateWithLimits(code: event.value.code, value: event.value.value)
         }
     }
@@ -87,8 +91,9 @@ extension LowAmountCondition {
         "BSC-USD": .init(1),
         "TRX": .init(1),
         "ETH": .init(0.0005),
-        "BNB": .init(0.002),
+        "BNB": .init(0.0002),
         "POL": .init(1),
+        "SOL": .init(0.0001),
     ]
 
     struct AmountLimit {
