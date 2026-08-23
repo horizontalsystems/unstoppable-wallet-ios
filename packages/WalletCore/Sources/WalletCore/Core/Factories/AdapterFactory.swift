@@ -245,7 +245,7 @@ extension AdapterFactory {
         let query = TokenQuery(blockchainType: .solana, tokenType: .native)
 
         if let solanaKit = solanaKitManager.solanaKit, let baseToken = try? coinManager.token(query: query) {
-            return SolanaTransactionsAdapter(solanaKit: solanaKit, source: transactionSource, baseToken: baseToken, coinManager: coinManager)
+            return SolanaTransactionsAdapter(solanaKit: solanaKit, source: transactionSource, baseToken: baseToken, coinManager: coinManager, spamWrapper: spamWrapper)
         }
 
         return nil

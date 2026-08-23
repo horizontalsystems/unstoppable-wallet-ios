@@ -42,7 +42,7 @@ extension SolanaTransactionRecord {
     }
 }
 
-class SolanaIncomingTransactionRecord: SolanaTransactionRecord {
+class SolanaIncomingTransactionRecord: SolanaTransactionRecord, TransferEventsProvider {
     let from: String?
     let value: AppValue
 
@@ -54,6 +54,13 @@ class SolanaIncomingTransactionRecord: SolanaTransactionRecord {
 
     override var mainValue: AppValue? {
         value
+    }
+
+    var transferEvents: TransferEvents {
+        guard let from else {
+            return .init()
+        }
+        return .init(incoming: [.init(address: from, value: value)])
     }
 }
 
@@ -74,7 +81,7 @@ class SolanaOutgoingTransactionRecord: SolanaTransactionRecord {
     }
 }
 
-class SolanaUnknownTransactionRecord: SolanaTransactionRecord {
+class SolanaUnknownTransactionRecord: SolanaTransactionRecord, TransferEventsProvider {
     let incomingTransfers: [Transfer]
     let outgoingTransfers: [Transfer]
 
@@ -82,6 +89,16 @@ class SolanaUnknownTransactionRecord: SolanaTransactionRecord {
         self.incomingTransfers = incomingTransfers
         self.outgoingTransfers = outgoingTransfers
         super.init(transaction: transaction, baseToken: baseToken, source: source)
+    }
+
+    var transferEvents: TransferEvents {
+        guard !incomingTransfers.isEmpty else {
+            return .init()
+        }
+        return .init(
+            incoming: incomingTransfers.compactMap { transfer in transfer.address.map { TransferEvent(address: $0, value: transfer.value) } },
+            outgoing: outgoingTransfers.compactMap { transfer in transfer.address.map { TransferEvent(address: $0, value: transfer.value) } }
+        )
     }
 }
 
