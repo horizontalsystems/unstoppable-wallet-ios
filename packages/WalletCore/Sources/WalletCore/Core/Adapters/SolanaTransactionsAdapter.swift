@@ -7,6 +7,7 @@ import SolanaKit
 class SolanaTransactionsAdapter {
     private let solanaKit: SolanaKit.Kit
     private let converter: SolanaTransactionConverter
+    private let spamManager: SpamManager?
     private var cancellables = Set<AnyCancellable>()
 
     private let adapterStateSubject = PublishSubject<AdapterState>()
@@ -16,8 +17,9 @@ class SolanaTransactionsAdapter {
         }
     }
 
-    init(solanaKit: SolanaKit.Kit, source: TransactionSource, baseToken: Token, coinManager: CoinManager) {
+    init(solanaKit: SolanaKit.Kit, source: TransactionSource, baseToken: Token, coinManager: CoinManager, spamWrapper: SpamWrapper) {
         self.solanaKit = solanaKit
+        spamManager = spamWrapper.spamManager(source: source)
         converter = SolanaTransactionConverter(
             userAddress: solanaKit.address,
             source: source,
@@ -30,6 +32,20 @@ class SolanaTransactionsAdapter {
         solanaKit.transactionsSyncStatePublisher
             .sink { [weak self] in self?.adapterState = Self.adapterState(kitSyncState: $0) }
             .store(in: &cancellables)
+
+        spamManager?.initialize(adapter: self)
+    }
+
+    private func handleTransactions(_ transactions: [FullTransaction]) -> [TransactionRecord] {
+        // Preserve solanaKit order
+        let records = transactions.map { converter.transactionRecord(fullTransaction: $0) }
+
+        // Mutates .spam in-place via reference type.
+        // Internally sorts ascending for correct detection,
+        // but records array keeps its original order.
+        spamManager?.update(records: records)
+
+        return records
     }
 
     private func incomingFilter(filter: TransactionTypeFilter) -> Bool? {
@@ -109,9 +125,7 @@ extension SolanaTransactionsAdapter: ITransactionsAdapter {
         }
 
         return publisher
-            .map { [converter] transactions in
-                transactions.map { converter.transactionRecord(fullTransaction: $0) }
-            }
+            .map { [weak self] in self?.handleTransactions($0) ?? [] }
             .asObservable()
     }
 
@@ -129,7 +143,7 @@ extension SolanaTransactionsAdapter: ITransactionsAdapter {
         let fromHash = paginationData
         let incoming = incomingFilter(filter: filter)
 
-        return Single.create { [solanaKit, converter] observer in
+        return Single.create { [weak self, solanaKit] observer in
             Task {
                 let transactions: [FullTransaction]
 
@@ -146,8 +160,7 @@ extension SolanaTransactionsAdapter: ITransactionsAdapter {
                     transactions = solanaKit.transactions(incoming: incoming, fromHash: fromHash, limit: limit)
                 }
 
-                let records = transactions.map { converter.transactionRecord(fullTransaction: $0) }
-                observer(.success(records))
+                observer(.success(self?.handleTransactions(transactions) ?? []))
             }
 
             return Disposables.create()
