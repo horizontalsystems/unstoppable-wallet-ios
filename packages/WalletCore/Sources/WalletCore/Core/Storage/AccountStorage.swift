@@ -81,6 +81,12 @@ public class AccountStorage {
             }
 
             type = .tonAddress(address: address)
+        case .solanaAddress:
+            guard let address = record.dataKey else {
+                return nil
+            }
+
+            type = .solanaAddress(address: address)
         case .stellarAccount:
             guard let accountId = record.dataKey else {
                 return nil
@@ -174,6 +180,9 @@ public class AccountStorage {
             dataKey = try store(data: address.raw, id: id, typeName: typeName, keyName: .data)
         case let .tonAddress(address):
             typeName = .tonAddress
+            dataKey = address
+        case let .solanaAddress(address):
+            typeName = .solanaAddress
             dataKey = address
         case let .stellarAccount(accountId):
             typeName = .stellarAccount
@@ -326,6 +335,7 @@ extension AccountStorage {
         case evmAddress = "address"
         case tronAddress
         case tonAddress
+        case solanaAddress
         case stellarAccount
         case hdExtendedKey
         case btcAddress

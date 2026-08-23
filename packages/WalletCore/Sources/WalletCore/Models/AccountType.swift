@@ -15,6 +15,7 @@ public enum AccountType: Identifiable {
     case evmAddress(address: EvmKit.Address)
     case tronAddress(address: TronKit.Address)
     case tonAddress(address: String)
+    case solanaAddress(address: String)
     case stellarAccount(accountId: String)
     case hdExtendedKey(key: HDExtendedKey)
     case btcAddress(address: String, blockchainType: BlockchainType, tokenType: TokenType)
@@ -64,6 +65,8 @@ public enum AccountType: Identifiable {
         case let .tronAddress(address):
             privateData = address.hex.hs.data
         case let .tonAddress(address):
+            privateData = address.hs.data
+        case let .solanaAddress(address):
             privateData = address.hs.data
         case let .stellarAccount(accountId):
             privateData = accountId.hs.data
@@ -170,6 +173,11 @@ public enum AccountType: Identifiable {
             case (.ton, .native), (.ton, .jetton): return true
             default: return false
             }
+        case .solanaAddress:
+            switch (token.blockchainType, token.type) {
+            case (.solana, .native), (.solana, .spl): return true
+            default: return false
+            }
         case let .btcAddress(_, blockchainType, tokenType):
             return token.blockchainType == blockchainType && token.type == tokenType
         case .moneroWatchAccount:
@@ -219,6 +227,8 @@ public enum AccountType: Identifiable {
             return "TRON Address"
         case .tonAddress:
             return "TON Address"
+        case .solanaAddress:
+            return "Solana Address"
         case .stellarAccount:
             return "Stellar Account"
         case let .hdExtendedKey(key):
@@ -264,6 +274,8 @@ public enum AccountType: Identifiable {
             return "tron_address"
         case .tonAddress:
             return "ton_address"
+        case .solanaAddress:
+            return "solana_address"
         case .stellarAccount:
             return "stellar_account"
         case let .hdExtendedKey(key):
@@ -299,6 +311,8 @@ public enum AccountType: Identifiable {
             return address.base58
         case let .tonAddress(address):
             return address
+        case let .solanaAddress(address):
+            return address
         case let .stellarAccount(accountId):
             return accountId
         case let .hdExtendedKey(key):
@@ -330,6 +344,7 @@ public enum AccountType: Identifiable {
         case .evmAddress: return "EVM"
         case .tronAddress: return "TRON"
         case .tonAddress: return "TON"
+        case .solanaAddress: return "Solana"
         case .stellarAccount: return "Stellar"
         case let .hdExtendedKey(key):
             switch key {
@@ -425,6 +440,8 @@ extension AccountType {
             return address.map { AccountType.tronAddress(address: $0) }
         case .tonAddress:
             return AccountType.tonAddress(address: string)
+        case .solanaAddress:
+            return AccountType.solanaAddress(address: string)
         case .stellarAccount:
             return AccountType.stellarAccount(accountId: string)
         case .moneroWatchAccount:
@@ -458,6 +475,7 @@ extension AccountType {
         case evmAddress = "evm_address"
         case tronAddress = "tron_address"
         case tonAddress = "ton_address"
+        case solanaAddress = "solana_address"
         case stellarAccount = "stellar_account"
         case hdExtendedKey = "hd_extended_key"
         case btcAddress = "btc_address_key"
@@ -474,6 +492,7 @@ extension AccountType {
             case .evmAddress: self = .evmAddress
             case .tronAddress: self = .tronAddress
             case .tonAddress: self = .tonAddress
+            case .solanaAddress: self = .solanaAddress
             case .stellarAccount: self = .stellarAccount
             case .hdExtendedKey: self = .hdExtendedKey
             case .btcAddress: self = .btcAddress
@@ -502,6 +521,8 @@ extension AccountType: Hashable {
         case let (.tronAddress(lhsAddress), .tronAddress(rhsAddress)):
             return lhsAddress == rhsAddress
         case let (.tonAddress(lhsAddress), .tonAddress(rhsAddress)):
+            return lhsAddress == rhsAddress
+        case let (.solanaAddress(lhsAddress), .solanaAddress(rhsAddress)):
             return lhsAddress == rhsAddress
         case let (.stellarAccount(lhsAccountId), .stellarAccount(rhsAccountId)):
             return lhsAccountId == rhsAccountId
@@ -544,6 +565,9 @@ extension AccountType: Hashable {
             hasher.combine(address.raw)
         case let .tonAddress(address):
             hasher.combine("tonAddress")
+            hasher.combine(address)
+        case let .solanaAddress(address):
+            hasher.combine("solanaAddress")
             hasher.combine(address)
         case let .stellarAccount(accountId):
             hasher.combine("stellarAccount")
