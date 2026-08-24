@@ -169,22 +169,19 @@ extension SolanaSendHandler {
             ], isFlow: true)
         }
 
-        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
+        func fields(baseToken _: Token, currency _: Currency, rates _: [String: Decimal]) -> [SendField] {
             var fields = [SendField]()
 
             if let memo {
                 fields.append(.simpleValue(title: "send.confirmation.memo".localized, value: memo))
             }
 
-            return [
-                flowSection(baseToken: baseToken, currency: currency, rates: rates),
-                .init(fields + feeFields(currency: currency, feeToken: baseToken, feeTokenRate: rates[baseToken.coin.uid]), isMain: false),
-            ]
+            return fields
         }
 
-        private func feeFields(currency: Currency, feeToken: Token, feeTokenRate: Decimal?) -> [SendField] {
-            let appValue = AppValue(token: feeToken, value: fee)
-            let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: fee * $0) }
+        func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
+            let appValue = AppValue(token: baseToken, value: fee)
+            let currencyValue = rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) }
 
             return [
                 .fee(
@@ -192,6 +189,14 @@ extension SolanaSendHandler {
                     amountData: .init(appValue: appValue, currencyValue: currencyValue)
                 ),
             ]
+        }
+
+        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
+            let flow = flowSection(baseToken: baseToken, currency: currency, rates: rates)
+            let fields = fields(baseToken: baseToken, currency: currency, rates: rates)
+            let feeFields = feeFields(baseToken: baseToken, currency: currency, rates: rates)
+
+            return [flow, .init(fields + feeFields, isMain: false)].compactMap { $0 }
         }
     }
 }

@@ -78,7 +78,7 @@ extension FlipRow {
 
             let currencyValueFormatted = formatFull ? currencyValue.formattedFull : currencyValue.formattedShort
 
-            return flipped ? currencyValueFormatted : appValueFormatted
+            return flipped ? appValueFormatted : currencyValueFormatted
         }
     }
 }

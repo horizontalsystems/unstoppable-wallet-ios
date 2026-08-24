@@ -167,22 +167,21 @@ extension StellarSendHandler {
             }
         }
 
+        func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
+            StellarSendHelper.feeFields(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: rates[token.coin.uid])
+        }
+
         func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
+            let flow = flowSection(baseToken: baseToken, currency: currency, rates: rates)
             var fields = [SendField]()
 
             if let memo {
                 fields.append(.simpleValue(title: "send.confirmation.memo".localized, value: memo))
             }
 
-            return [
-                flowSection(baseToken: baseToken, currency: currency, rates: rates),
-                .init(fields + StellarSendHelper.feeFields(
-                    fee: fee,
-                    feeToken: baseToken,
-                    currency: currency,
-                    feeTokenRate: rates[token.coin.uid]
-                ), isMain: false),
-            ]
+            let feeFields = feeFields(baseToken: baseToken, currency: currency, rates: rates)
+
+            return [flow, .init(fields + feeFields, isMain: false)].compactMap { $0 }
         }
     }
 }

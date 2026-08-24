@@ -46,22 +46,25 @@ class EvmSendData: ISendData {
         return cautions
     }
 
+    func fields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
+        var fields = decoration.fields(baseToken: baseToken, currency: currency, rates: rates)
+
+        if let nonce {
+            fields.append(.simpleValue(title: "send.confirmation.nonce".localized, value: String(nonce)))
+        }
+
+        return fields
+    }
+
     func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
         EvmSendHelper.feeFields(evmFeeData: evmFeeData, gasPrice: gasPrice, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid])
     }
 
     func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
         let flow = decoration.flowSection(baseToken: baseToken, currency: currency, rates: rates)
-        var fields = decoration.fields(baseToken: baseToken, currency: currency, rates: rates)
+        let fields = fields(baseToken: baseToken, currency: currency, rates: rates)
+        let feeFields = feeFields(baseToken: baseToken, currency: currency, rates: rates)
 
-        if let nonce {
-            fields.append(
-                .simpleValue(title: "send.confirmation.nonce".localized, value: String(nonce)),
-            )
-        }
-
-        fields.append(contentsOf: feeFields(baseToken: baseToken, currency: currency, rates: rates))
-
-        return [flow, .init(fields, isMain: false)].compactMap { $0 }
+        return [flow, .init(fields + feeFields, isMain: false)].compactMap { $0 }
     }
 }

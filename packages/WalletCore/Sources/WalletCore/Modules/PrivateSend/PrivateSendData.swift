@@ -111,21 +111,18 @@ open class PrivateSendData: ISendData {
         let token = order.request.token
         let rate = rates[token.coin.uid]
 
-        var fields: [SendField] = [
-            // The real recipient. The deposit address is never shown: it would confuse and it leaks
-            // the rail.
-            .recipient(order.request.recipient, copyable: true, blockchainType: token.blockchainType),
-        ]
+        let amount = SendField.amount(
+            token: token,
+            appValueType: .regular(appValue: AppValue(token: token, value: order.amountOut)),
+            currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * order.amountOut) }
+        )
 
-        // The inner handler's own rows, in the FEE token — never summed with the rows below.
-        fields.append(contentsOf: inner.feeFields(baseToken: baseToken, currency: currency, rates: rates))
+        let to = SendField.address(
+            value: order.request.recipient,
+            blockchainType: token.blockchainType
+        )
 
-        fields.append(valueField(title: "private_send.fee".localized, value: order.privateFee, token: token, currency: currency, rate: rate))
-        fields.append(valueField(title: "private_send.max_deposit".localized, value: order.depositAmount, token: token, currency: currency, rate: rate))
-
-        if let buffer = order.refundableBuffer, buffer > 0 {
-            fields.append(valueField(title: "private_send.refundable".localized, value: buffer, token: token, currency: currency, rate: rate))
-        }
+        var fields: [SendField] = inner.fields(baseToken: baseToken, currency: currency, rates: rates)
 
         if let estimatedTime = order.estimatedTime {
             fields.append(.simpleValue(
@@ -134,14 +131,30 @@ open class PrivateSendData: ISendData {
             ))
         }
 
-        // What the recipient receives — the value the user entered, and contractual.
-        fields.append(.amount(
+        if let buffer = order.refundableBuffer, buffer > 0 {
+            fields.append(feeField(
+                title: "private_send.reserved_amount".localized,
+                info: InfoDescription(title: "private_send.reserved_amount".localized, description: "private_send.reserved_amount.info".localized),
+                value: buffer,
+                token: token,
+                currency: currency,
+                rate: rate
+            ))
+        }
+
+        fields.append(feeField(
+            title: "private_send.fee".localized,
+            info: InfoDescription(title: "private_send.fee".localized, description: "private_send.fee.info".localized),
+            value: order.privateFee,
             token: token,
-            appValueType: .regular(appValue: AppValue(token: token, value: order.amountOut)),
-            currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * order.amountOut) }
+            currency: currency,
+            rate: rate
         ))
 
-        return [.init(fields)]
+        // The inner handler's own rows, in the FEE token — never summed with the rows below.
+        fields.append(contentsOf: inner.feeFields(baseToken: baseToken, currency: currency, rates: rates))
+
+        return [.init([amount, to], isFlow: true), .init(fields, isMain: false)]
     }
 
     private func insufficientBalanceCaution() -> CautionNew {
@@ -154,12 +167,13 @@ open class PrivateSendData: ISendData {
         )
     }
 
-    private func valueField(title: String, value: Decimal, token: Token, currency: Currency, rate: Decimal?) -> SendField {
-        .value(
-            title: title,
-            appValue: AppValue(token: token, value: value),
-            currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * value) },
-            formatFull: true
+    private func feeField(title: String, info: InfoDescription, value: Decimal, token: Token, currency: Currency, rate: Decimal?) -> SendField {
+        .fee(
+            title: ComponentInformedTitle(title, info: info),
+            amountData: .init(
+                appValue: AppValue(token: token, value: value),
+                currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * value) }
+            )
         )
     }
 }
