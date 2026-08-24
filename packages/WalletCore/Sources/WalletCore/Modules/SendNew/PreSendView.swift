@@ -58,7 +58,7 @@ struct PreSendView: View {
                 buttonView()
             } keyboardContent: {
                 AmountAccessoryView(
-                    visible: focusField != nil,
+                    visible: focusField == .amount || focusField == .fiatAmount,
                     enabledPercents: (viewModel.availableBalance ?? 0) > 0,
                     onPercent: { percent in
                         viewModel.setAmountIn(percent: percent)
@@ -203,6 +203,7 @@ struct PreSendView: View {
                 font: .themeBody.italic(),
                 text: $viewModel.memo
             )
+            .focused($focusField, equals: .memo)
         }
         .modifier(CautionBorder(cautionState: .constant(cautionState)))
         .modifier(CautionPrompt(cautionState: .constant(cautionState)))
@@ -346,6 +347,7 @@ extension PreSendView {
     private enum FocusField: Int, Hashable {
         case amount
         case fiatAmount
+        case memo
     }
 
     struct ConfirmationData: Hashable, Equatable {
