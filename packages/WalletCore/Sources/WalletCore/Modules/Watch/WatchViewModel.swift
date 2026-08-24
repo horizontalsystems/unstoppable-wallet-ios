@@ -100,17 +100,13 @@ class WatchViewModel: ObservableObject {
     init() {
         name = accountFactory.generatedAccountName
 
-        addressParserChain.append(handlers:
-            AddressParserFactory.parserChainHandlers(blockchainType: .ethereum, withEns: true)
-                + BtcBlockchainManager.blockchainTypes.flatMap {
-                    AddressParserFactory.parserChainHandlers(blockchainType: $0, withEns: false)
-                }
-                + AddressParserFactory.parserChainHandlers(blockchainType: .tron)
-                + AddressParserFactory.parserChainHandlers(blockchainType: .ton)
-                + AddressParserFactory.parserChainHandlers(blockchainType: .solana)
-                + AddressParserFactory.parserChainHandlers(blockchainType: .stellar)
-                + AddressParserFactory.parserChainHandlers(blockchainType: .monero)
-        )
+        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .ethereum, withEns: true))
+        addressParserChain.append(handlers: BtcBlockchainManager.blockchainTypes.flatMap { AddressParserFactory.parserChainHandlers(blockchainType: $0, withEns: false) })
+        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .tron))
+        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .ton))
+        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .solana))
+        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .stellar))
+        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .monero))
     }
 
     private func parse(text: String) {

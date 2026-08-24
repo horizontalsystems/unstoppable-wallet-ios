@@ -37,7 +37,7 @@ struct PreSendView: View {
                         VStack(spacing: .margin8) {
                             inputView()
                             availableBalanceView(value: balanceValue())
-//                            privateSendView()
+                            privateSendView()
                         }
 
                         if viewModel.memoType != .none {
@@ -115,23 +115,26 @@ struct PreSendView: View {
     }
 
     @ViewBuilder private func privateSendView() -> some View {
-        // Not rendered at all for an unsupported token, not merely disabled. `isSupported` is a
-        // synchronous read of the already-synced confidential token cache — this screen performs no
-        // network work.
         if privateSend.isSupported {
             ListSection {
                 Cell(
+                    left: {
+                        ThemeImage("fraud", size: 24)
+                    },
                     middle: {
-                        MultiText(
-                            title: "private_send.toggle.title".localized,
-                            subtitle: "private_send.toggle.subtitle".localized
-                        )
+                        MiddleTextIcon(text: "private_send.toggle.title".localized)
+                            .modifier(Informed(infoDescription: .init(
+                                title: "private_send.info.title".localized,
+                                description: "private_send.info.description".localized,
+                                icon: "fraud"
+                            ), horizontalPadding: 0))
                     },
                     right: {
                         ThemeToggle(isOn: $privateSend.isEnabled.animation())
                     }
                 )
             }
+            .padding(.top, 8)
         }
     }
 

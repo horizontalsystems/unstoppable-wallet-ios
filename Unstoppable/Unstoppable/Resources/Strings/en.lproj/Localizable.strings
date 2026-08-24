@@ -596,10 +596,12 @@
 
 // Private Send
 
-"private_send.toggle.title" = "Private send";
-"private_send.toggle.subtitle" = "The recipient can't be linked to you on-chain";
+"private_send.toggle.title" = "Private Send";
 "private_send.amount_caption" = "Amount the recipient receives";
 "private_send.unavailable" = "Private send unavailable";
+
+"private_send.info.title" = "Private Send";
+"private_send.info.description" = "Private Send routes your transaction through a confidential intermediary, hiding the public link between your address and the recipient. Both transactions remain visible on chain, but they are not directly connected to each other.";
 
 "private_send.fee" = "Private send fee";
 "private_send.max_deposit" = "Maximum deposit";
