@@ -51,7 +51,7 @@ struct BitcoinSendSettingsView: View {
                             if viewModel.lockTimeIntervalState != .inactive {
                                 row(
                                     title: "fee_settings.time_lock".localized,
-                                    subtitle: "fee_settings.time_lock.description".localized,
+                                    subtitle: timeLockSubtitle,
                                     value: viewModel.lockTimeIntervalTitle,
                                     action: viewModel.lockTimeIntervalState == .enabled ? {
                                         Coordinator.shared.present(type: .alert) { isPresented in
@@ -116,7 +116,15 @@ struct BitcoinSendSettingsView: View {
         }
     }
 
-    @ViewBuilder private func row(title: String, subtitle: String, value: String, action: (() -> Void)?) -> some View {
+    private var timeLockSubtitle: AttibutedComponentText {
+        let description = AttributedString("fee_settings.time_lock.description".localized + " ")
+        var warning = AttributedString("fee_settings.time_lock.private_send_unavailable".localized)
+        warning.foregroundColor = Color.themeJacob
+
+        return AttibutedComponentText(text: description + warning)
+    }
+
+    @ViewBuilder private func row(title: String, subtitle: CustomStringConvertible, value: String, action: (() -> Void)?) -> some View {
         let enabled = action != nil
 
         Cell(

@@ -2251,7 +2251,8 @@
 "fee_settings.replace_by_fee" = "Replace by Fee";
 "fee_settings.replace_by_fee.description" = "This option allows you to resend a stuck transaction by increasing the amount of the fee.";
 "fee_settings.time_lock" = "Time Lock";
-"fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
+"fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1).";
+"fee_settings.time_lock.private_send_unavailable" = "Not available when Private Send is on.";
 
 "fee_settings.network_fee" = "Fee";
 "fee_settings.network_fee.info" = "Fee charged by the network for transaction execution and confirmation. The amount depends on network conditions and current congestion.";
