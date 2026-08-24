@@ -168,7 +168,7 @@ struct PreSendView: View {
         }
         .padding(.horizontal, .margin16)
         .padding(.vertical, 20)
-        .modifier(ThemeListStyleModifier(cornerRadius: 18))
+        .modifier(ThemeListStyleModifier(themeListStyle: .borderedLawrence))
     }
 
     @ViewBuilder private func addressView() -> some View {
@@ -194,7 +194,11 @@ struct PreSendView: View {
     }
 
     @ViewBuilder private func memoView(type: MemoType) -> some View {
-        let cautionState = CautionState.caution(Caution(text: memoWarningText(type: type), type: viewModel.memo.isEmpty ? .regular : .warning))
+        let privateSendConflict = privateSend.isEnabled && !viewModel.memo.isEmpty
+
+        let cautionState: CautionState = privateSendConflict
+            ? .caution(Caution(text: "private_send.memo_unavailable".localized, type: .warning))
+            : .caution(Caution(text: memoWarningText(type: type), type: .regular))
 
         InputTextRow {
             InputTextView(
@@ -205,7 +209,7 @@ struct PreSendView: View {
             )
             .focused($focusField, equals: .memo)
         }
-        .modifier(CautionBorder(cautionState: .constant(cautionState)))
+        .modifier(CautionBorder(cautionState: .constant(privateSendConflict ? cautionState : .none)))
         .modifier(CautionPrompt(cautionState: .constant(cautionState)))
     }
 

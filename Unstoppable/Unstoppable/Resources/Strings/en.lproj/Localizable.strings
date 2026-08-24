@@ -599,6 +599,7 @@
 "private_send.toggle.title" = "Private Send";
 "private_send.amount_caption" = "Amount the recipient receives";
 "private_send.unavailable" = "Private send unavailable";
+"private_send.memo_unavailable" = "Memo is not available when Private Send is on";
 
 "private_send.info.title" = "Private Send";
 "private_send.info.description" = "Private Send routes your transaction through a confidential intermediary, hiding the public link between your address and the recipient. Both transactions remain visible on chain, but they are not directly connected to each other.";
