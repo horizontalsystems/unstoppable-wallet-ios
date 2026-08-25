@@ -448,7 +448,7 @@ class ZcashSyncService {
                           Core.shared.localStorage.zcashAlwaysPendingRewind = true
                           completion?()
                       case .failure:
-                          self?.rewindQuick()
+                          self?.rewindQuick(completion: completion)
                       }
                   },
                   receiveValue: { _ in })
