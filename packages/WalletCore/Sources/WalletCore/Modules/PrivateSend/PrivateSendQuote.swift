@@ -2,8 +2,7 @@ import Foundation
 
 public struct PrivateSendQuote {
     public let providerId: String // tracking only — never shown in the UI
-    public let amountMode: PrivateSendAmountMode
-    // In exact-output mode this is the route's answer: the amount to deposit, and the affordability
+    // The route's answer to the exact-output request: the amount to deposit, and the affordability
     // ceiling the user is asked to authorize.
     public let sellAmount: Decimal
     public let minSellAmount: Decimal?
@@ -14,7 +13,6 @@ public struct PrivateSendQuote {
 
     public init(
         providerId: String,
-        amountMode: PrivateSendAmountMode,
         sellAmount: Decimal,
         minSellAmount: Decimal?,
         expectedBuyAmount: Decimal,
@@ -23,7 +21,6 @@ public struct PrivateSendQuote {
         quotedAt: Date
     ) {
         self.providerId = providerId
-        self.amountMode = amountMode
         self.sellAmount = sellAmount
         self.minSellAmount = minSellAmount
         self.expectedBuyAmount = expectedBuyAmount

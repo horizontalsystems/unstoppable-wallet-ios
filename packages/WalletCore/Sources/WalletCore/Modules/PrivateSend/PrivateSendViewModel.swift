@@ -31,7 +31,7 @@ public final class PrivateSendViewModel: ObservableObject {
     }
 
     public func request(recipient: String, amount: Decimal) -> PrivateSendRequest {
-        PrivateSendRequest(token: token, recipient: recipient, amountMode: .exactOutput(amount))
+        PrivateSendRequest(token: token, recipient: recipient, amount: amount)
     }
 
     private func syncSupported() {

@@ -6,12 +6,12 @@ import MarketKit
 public struct PrivateSendRequest {
     public let token: Token // sent == received token
     public let recipient: String // the REAL recipient, never a deposit address
-    public let amountMode: PrivateSendAmountMode
+    public let amount: Decimal // exact output — the amount the recipient receives
 
-    public init(token: Token, recipient: String, amountMode: PrivateSendAmountMode) {
+    public init(token: Token, recipient: String, amount: Decimal) {
         self.token = token
         self.recipient = recipient
-        self.amountMode = amountMode
+        self.amount = amount
     }
 }
 

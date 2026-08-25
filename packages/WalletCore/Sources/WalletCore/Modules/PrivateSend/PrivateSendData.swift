@@ -6,7 +6,7 @@ import MarketKit
 open class PrivateSendData: ISendData {
     // A committed quote is only honoured for this long. Past it the screen dead-ends rather than
     // pretending to be current — the sellAmount ceiling is what the slide-to-send authorizes.
-    public static let quoteLifetime: TimeInterval = 60
+    public static let quoteLifetime: TimeInterval = 15
 
     public let order: PrivateSendOrder
     public let inner: ISendData
@@ -36,16 +36,12 @@ open class PrivateSendData: ISendData {
         inner.amountAdjusted
     }
 
-    public var quoteExpired: Bool {
-        Date().timeIntervalSince(order.committedAt) > Self.quoteLifetime
-    }
-
     public var canSend: Bool {
-        inner.canSend && !inner.amountAdjusted && !attachmentUnsupported && !quoteExpired
+        inner.canSend && !inner.amountAdjusted && !attachmentUnsupported
     }
 
     public var customSendButtonTitle: String? {
-        quoteExpired ? "private_send.quote_expired".localized : inner.customSendButtonTitle
+        inner.customSendButtonTitle
     }
 
     // Overridden by a platform subclass that can recognise its own inner data type. The base returns
@@ -84,14 +80,6 @@ open class PrivateSendData: ISendData {
                 title: "private_send.caution.title".localized,
                 text: "private_send.caution.amount_adjusted".localized,
                 type: .error
-            ))
-        }
-
-        if quoteExpired {
-            cautions.append(CautionNew(
-                title: "private_send.caution.title".localized,
-                text: "private_send.caution.quote_expired".localized,
-                type: .warning
             ))
         }
 

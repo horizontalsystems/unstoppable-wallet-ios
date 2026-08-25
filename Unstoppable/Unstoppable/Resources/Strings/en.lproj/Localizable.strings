@@ -610,7 +610,6 @@
 "private_send.reserved_amount.info" = "An additional amount is temporarily reserved to cover possible price changes while your transaction is processed. Any unused part is returned to your wallet in a separate transaction after the send completes.";
 "private_send.estimated_time" = "Estimated arrival";
 
-"private_send.quote_expired" = "Quote expired — go back and re-enter";
 "private_send.commit_failed" = "Couldn't set up the private send. Try again.";
 
 "private_send.caution.title" = "Private send";
@@ -624,7 +623,6 @@
 "private_send.caution.token_unsupported" = "Private send is no longer available for this token.";
 "private_send.caution.attachment_unsupported" = "This private route requires a transaction tag this wallet can't attach. Private send is unavailable for this token.";
 "private_send.caution.amount_adjusted" = "The amount was adjusted to cover fees and no longer matches the private send quote. Reduce the amount and try again.";
-"private_send.caution.quote_expired" = "This quote has expired. Go back and re-enter the amount to get a fresh one.";
 "private_send.caution.buffer_unknown" = "The fee shown is an upper estimate; the final cost may be lower.";
 
 // Donate

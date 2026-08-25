@@ -43,17 +43,16 @@ public final class PrivateSendService {
         tokenManager.syncPublisher
     }
 
-    // Kept public for testing and for a future exact-input or price-preview surface. The send flow
-    // itself only ever calls `commit(request:)`.
-    public func quote(token: Token, mode: PrivateSendAmountMode) async throws -> PrivateSendQuote {
-        try await bestRoute(token: token, mode: mode).quote
+    // Kept public for testing and for a future price-preview surface. The send flow itself only
+    // ever calls `commit(request:)`. The amount is the exact output the recipient receives.
+    public func quote(token: Token, amount: Decimal) async throws -> PrivateSendQuote {
+        try await bestRoute(token: token, amount: amount).quote
     }
 
     // The single entry point used by PrivateSendHandler: quote and commit in one call, because
     // under the synchronous-pre-send decision nothing else ever holds a bare PrivateSendQuote.
     public func commit(request: PrivateSendRequest) async throws -> PrivateSendOrder {
         let token = request.token
-        let mode = request.amountMode
         let providerIds = supportedProviderIds(token: token)
 
         guard !providerIds.isEmpty else {
@@ -68,7 +67,7 @@ public final class PrivateSendService {
         var route: Route?
 
         if providerIds.count > 1 {
-            route = try await bestRoute(token: token, mode: mode)
+            route = try await bestRoute(token: token, amount: request.amount)
         }
 
         let providerId = route?.quote.providerId ?? providerIds[0]
@@ -90,9 +89,9 @@ public final class PrivateSendService {
         let swapRequest = USwapMultiSwapApi.SwapRequest(
             sellAsset: asset,
             buyAsset: asset,
-            // The same AmountSpec the quote used: re-sending sellAmount for an exact-output quote
-            // would silently change the contract from "deliver exactly X" to "spend exactly Y".
-            amount: mode.amountSpec,
+            // The same exact-output AmountSpec the quote used: re-sending sellAmount would silently
+            // change the contract from "deliver exactly X" to "spend exactly Y".
+            amount: .buy(request.amount),
             slippage: MultiSwapSlippage.default,
             chainId: builder.chainId(token: token),
             providerId: providerId,
@@ -190,7 +189,7 @@ private extension PrivateSendService {
         let asset: String
     }
 
-    func bestRoute(token: Token, mode: PrivateSendAmountMode) async throws -> Route {
+    func bestRoute(token: Token, amount: Decimal) async throws -> Route {
         let providerIds = supportedProviderIds(token: token)
 
         guard !providerIds.isEmpty else {
@@ -209,7 +208,7 @@ private extension PrivateSendService {
         let request = USwapMultiSwapApi.RateRequest(
             sellAsset: asset,
             buyAsset: asset,
-            amount: mode.amountSpec,
+            amount: .buy(amount),
             slippage: MultiSwapSlippage.default,
             chainId: builder.chainId(token: token),
             providerIds: providerIds
@@ -241,7 +240,6 @@ private extension PrivateSendService {
 
         let quote = PrivateSendQuote(
             providerId: best.providerId.isEmpty ? providerIds[0] : best.providerId,
-            amountMode: mode,
             sellAmount: sellAmount,
             minSellAmount: best.minSellAmount,
             expectedBuyAmount: best.expectedBuyAmount,
