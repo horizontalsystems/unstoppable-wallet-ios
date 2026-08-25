@@ -13,11 +13,9 @@ import ZcashLightClientKit
 class ZcashAdapter {
     static let minimalThreshold: Decimal = 0.0004 // minimal transparent balance to shielding
 
-    // RESEARCH SHIM: upstream has no ZcashSDK.defaultZip317MarginalFee (HS delta, replayed in step 3).
-    static let defaultZip317MarginalFee = Zatoshi(5000) // ZCASH_MARGINAL_FEE
-    static let zip317MarginalFeeRange = (defaultZip317MarginalFee.amount) ... (defaultZip317MarginalFee.amount * 6)
-
-    static let defaultTxExpiryHeightDelta: UInt32 = 10
+    static let defaultZip317MarginalFee = ZcashSendService.defaultZip317MarginalFee
+    static let zip317MarginalFeeRange = ZcashSendService.zip317MarginalFeeRange
+    static let defaultTxExpiryHeightDelta = ZcashSendService.defaultTxExpiryHeightDelta
 
     static var networkType: NetworkType {
         Core.shared.testNetManager.testNetEnabled ? .testnet : .mainnet
@@ -33,10 +31,6 @@ class ZcashAdapter {
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).zcash-adapter", qos: .userInitiated)
 
-    private var cancellables: [AnyCancellable] = []
-    private var deferredStopCancellable: AnyCancellable?
-    private var resubmitTask: Task<Void, Never>? // main-confined; dedupes concurrent startSynchronizer kicks
-
     private let token: Token
     private let transactionSource: TransactionSource
 
@@ -44,81 +38,19 @@ class ZcashAdapter {
     private let zCashAdapterStorage: ZcashAdapterStorage
     private let migrator: ZcashMigrator
 
-    private var accountId: AccountUUID?
-    private(set) var uAddress: UnifiedAddress?
-    private(set) var tAddress: TransparentAddress?
-    private var transactionPool: ZcashTransactionPool?
+    private let syncService: ZcashSyncService
+    private let balanceService: ZcashBalanceService
+    private let historyService: ZcashHistoryService
+    private let sendService: ZcashSendService
+    private let endpointService: ZcashEndpointService
+    private let recordFactory: ZcashTransactionRecordFactory
 
     private let uniqueId: String
-    private let seedData: [UInt8]
     private let birthday: BlockHeight
     private let initMode: WalletInitMode
-    private var viewingKey: UnifiedFullViewingKey? // this being a single account does not need to be an array
-    private var spendingKey: UnifiedSpendingKey?
     private var logger: HsToolKit.Logger?
 
     private(set) var network: ZcashNetwork
-    private(set) var currentEndpoint: LightWalletEndpoint
-
-    private let lastBlockUpdatedSubject = PublishSubject<Void>()
-    private let balanceStateSubject = PublishSubject<AdapterState>()
-    private let balanceSubject = PublishSubject<BalanceData>()
-    private let transactionSubject = PublishSubject<[ZcashTransactionWrapper]>()
-    private let depositAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
-
-    private var started = false
-    private var lastBlockHeight: Int = 0
-    private(set) var areFundsSpendable: Bool = false
-
-    var spendMode: BalanceAdapterSpendMode {
-        areFundsSpendable ? .allowedWhenSyncing : .fromBalanceState
-    }
-
-    @PostPublished var zCashBalanceData: ZcashBalanceData {
-        didSet {
-            balanceSubject.onNext(zCashBalanceData.balanceData)
-        }
-    }
-
-    private var synchronizerState: SynchronizerState? {
-        didSet {
-            lastBlockUpdatedSubject.onNext(())
-            syncZcashBalanceData()
-        }
-    }
-
-    private var state: ZCashAdapterState = .idle {
-        didSet {
-            balanceStateSubject.onNext(balanceState)
-            syncing = balanceState.syncing
-        }
-    }
-
-    var balanceState: AdapterState {
-        state.adapterState
-    }
-
-    var isIronwoodActive: Bool {
-        migrator.ironwoodActive(latestHeight: lastBlockHeight)
-    }
-
-    func getSingleUseTransparentAddress() async throws -> SingleUseTransparentAddress? {
-        guard let account = try await synchronizer.listAccounts().first else {
-            throw AppError.ZcashError.noReceiveAddress
-        }
-
-        return try await synchronizer.getSingleUseTransparentAddress(accountUUID: account.id)
-    }
-
-    func getCustomUnifiedAddress() async throws -> UnifiedAddress? {
-        guard let account = try await synchronizer.listAccounts().first else {
-            throw AppError.ZcashError.noReceiveAddress
-        }
-
-        return try await synchronizer.getCustomUnifiedAddress(accountUUID: account.id, receivers: [.orchard, .sapling])
-    }
-
-    private(set) var syncing: Bool = true
 
     init(wallet: Wallet, restoreSettings: RestoreSettings, endpoint: LightWalletEndpoint) throws {
         logger = Core.shared.logger.scoped(with: "ZCashKit")
@@ -130,14 +62,13 @@ class ZcashAdapter {
 
         network = ZcashNetworkBuilder.network(for: Self.networkType)
 
-        currentEndpoint = endpoint
         token = wallet.token
         transactionSource = wallet.transactionSource
         uniqueId = wallet.account.id
 
         var existingMode: WalletInitMode?
-        if let dbUrl = try? Self.dataDbURL(uniqueId: uniqueId, network: network),
-           Self.exist(url: dbUrl)
+        if let dbUrl = try? ZcashFileStore.dataDbURL(uniqueId: uniqueId, network: network),
+           ZcashFileStore.exist(url: dbUrl)
         {
             existingMode = .existingWallet
         }
@@ -146,8 +77,10 @@ class ZcashAdapter {
             // The height saved at account creation (and rewritten by a rescan) wins;
             // ignoring it here made a created wallet's rescan height silently vanish.
             // A saved height older than the freshest checkpoint means the user rescanned
-            // for history: sync must run in restore mode — in newWallet mode the SDK
-            // snaps the birthday to the chain tip and skips scanning entirely.
+            // for history: sync must run in restore mode. In newWallet mode the SDK creates
+            // the account from the latest BUNDLED checkpoint (it does NOT snap to the chain
+            // tip — verified against SDK 2.7 sources), so a fresh wallet still scans the
+            // bundled-checkpoint→tip gap, which grows as the frozen pin ages.
             if let height = restoreSettings.birthdayHeight {
                 birthday = max(height, network.constants.saplingActivationHeight)
                 // Account creation writes exactly newBirthdayHeight, so any other value can
@@ -167,14 +100,7 @@ class ZcashAdapter {
             initMode = existingMode ?? .restoreWallet
         }
 
-        var aliasedDataDbExists = false
-        if let url = try? Self.dataDbURL(uniqueId: uniqueId, network: network) {
-            let aliased = url.deletingLastPathComponent().appendingPathComponent("c_\(uniqueId)_" + url.lastPathComponent)
-            aliasedDataDbExists = FileManager.default.fileExists(atPath: aliased.path)
-        }
-
         let seedData = [UInt8](seed)
-        self.seedData = seedData
 
         // initialize DB and get cached balances
         let databaseURL = try FileManager.default
@@ -182,661 +108,115 @@ class ZcashAdapter {
             .appendingPathComponent("zCash.storage")
         let dbPool = try DatabasePool(path: databaseURL.path)
         zCashAdapterStorage = try ZcashAdapterStorage(dbPool: dbPool)
-        zCashBalanceData = try zCashAdapterStorage.balanceData(id: uniqueId) ?? .empty(id: uniqueId)
         migrator = ZcashMigrator(uniqueId: uniqueId, threshold: Self.minimalThreshold, network: network, storage: zCashAdapterStorage, logger: logger)
 
         let initializer = try ZcashAdapter.initializer(network: network, uniqueId: uniqueId, endpoint: endpoint)
         synchronizer = SDKSynchronizer(initializer: initializer)
-        // subscribe on sync states
-        synchronizer
-            .stateStream
-            .throttle(for: .seconds(0.3), scheduler: DispatchQueue.main, latest: true)
-            .sink(receiveValue: { [weak self] state in self?.sync(state: state) })
-            .store(in: &cancellables)
 
-        // subscribe on new transactions
-        synchronizer
-            .eventStream
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] event in self?.sync(event: event) })
-            .store(in: &cancellables)
+        balanceService = try ZcashBalanceService(uniqueId: uniqueId, storage: zCashAdapterStorage, migrator: migrator, logger: logger)
+        historyService = ZcashHistoryService(synchronizer: synchronizer, queue: queue, logger: logger)
+        let terminalStore = ZcashTerminalResubmissionStore(uniqueId: uniqueId, network: network.networkType.chainName, storage: zCashAdapterStorage)
+        sendService = ZcashSendService(synchronizer: synchronizer, migrator: migrator, terminalStore: terminalStore, logger: logger)
+        endpointService = ZcashEndpointService(synchronizer: synchronizer, network: network, endpoint: endpoint, logger: logger)
+        recordFactory = ZcashTransactionRecordFactory(token: token, transactionSource: transactionSource, migrator: migrator)
 
-        Core.shared.appManager.didEnterBackgroundPublisher
-            .sink { [weak self] in self?.didEnterBackground() }
-            .store(in: &cancellables)
+        syncService = ZcashSyncService(
+            synchronizer: synchronizer,
+            network: network,
+            seedData: seedData,
+            birthday: birthday,
+            initMode: initMode,
+            queue: queue,
+            balanceService: balanceService,
+            historyService: historyService,
+            sendService: sendService,
+            migrator: migrator,
+            logger: logger
+        )
+
+        balanceService.syncService = syncService
+        sendService.syncService = syncService
+        sendService.endpointService = endpointService
+        sendService.historyService = historyService
+        endpointService.syncService = syncService
+        recordFactory.syncService = syncService
     }
 
-    // Pre-warm sapling params unconditionally: the SDK sync-time download is gated by
-    // sapling/transparent balances only, so a wallet with orchard-only funds would pay
-    // the ~50 MB download synchronously inside its first send. Idempotent: validates and
-    // returns when the files are already on disk.
-    private func warmUpSaplingParams() {
-        Task { [logger] in
-            do {
-                try await SaplingParameterDownloader.downloadParamsIfnotPresent(
-                    retryEnabled: true,
-                    spendURL: Self.spendParamsURL(),
-                    spendSourceURL: SaplingParamsSourceURL.default.spendParamFileURL,
-                    outputURL: Self.outputParamsURL(),
-                    outputSourceURL: SaplingParamsSourceURL.default.outputParamFileURL,
-                    logger: OSLogger(logLevel: .error)
-                )
-            } catch {
-                // send path re-downloads just-in-time, so failure here only loses the pre-warm
-                logger?.log(level: .error, message: "Sapling params pre-warm failed: \(error)")
-            }
+    var uAddress: UnifiedAddress? {
+        syncService.uAddress
+    }
+
+    var tAddress: TransparentAddress? {
+        syncService.tAddress
+    }
+
+    var areFundsSpendable: Bool {
+        syncService.areFundsSpendable
+    }
+
+    var spendMode: BalanceAdapterSpendMode {
+        areFundsSpendable ? .allowedWhenSyncing : .fromBalanceState
+    }
+
+    var zCashBalanceData: ZcashBalanceData {
+        balanceService.zCashBalanceData
+    }
+
+    var zCashBalanceDataPublisher: AnyPublisher<ZcashBalanceData, Never> {
+        balanceService.$zCashBalanceData
+    }
+
+    var balanceState: AdapterState {
+        syncService.state.adapterState
+    }
+
+    var syncing: Bool {
+        syncService.syncing
+    }
+
+    var isIronwoodActive: Bool {
+        migrator.ironwoodActive(latestHeight: syncService.lastBlockHeight)
+    }
+
+    var isPreparing: Bool {
+        syncService.isPreparing
+    }
+
+    func getSingleUseTransparentAddress() async throws -> SingleUseTransparentAddress? {
+        guard let account = try await synchronizer.listAccounts().first else {
+            throw AppError.ZcashError.noReceiveAddress
         }
+
+        return try await synchronizer.getSingleUseTransparentAddress(accountUUID: account.id)
+    }
+
+    func getCustomUnifiedAddress() async throws -> UnifiedAddress? {
+        guard let account = try await synchronizer.listAccounts().first else {
+            throw AppError.ZcashError.noReceiveAddress
+        }
+
+        return try await synchronizer.getCustomUnifiedAddress(accountUUID: account.id, receivers: [.orchard, .sapling])
     }
 
     // Used by AdapterManager to revert the stored selection on switch failure.
     var currentEndpointURL: URL? {
-        URL(string: "\(currentEndpoint.secure ? "https" : "http")://\(currentEndpoint.host):\(currentEndpoint.port)")
+        endpointService.currentEndpointURL
     }
 
     func isEndpointAvailable(_ endpoint: LightWalletEndpoint) async -> Bool {
-        // hard cap on the whole check: fetchThresholdSeconds bounds only the fetch phase,
-        // while gRPC connect/TLS retries against a dead host spin far beyond it
-        await withTaskGroup(of: Bool.self) { group in
-            group.addTask { [synchronizer, network] in
-                let endpoints = await synchronizer.evaluateBestOf(
-                    endpoints: [endpoint],
-                    fetchThresholdSeconds: 20,
-                    nBlocksToFetch: 1,
-                    kServers: 1,
-                    network: network.networkType
-                )
-
-                return endpoints.contains {
-                    $0.host == endpoint.host && $0.port == endpoint.port && $0.secure == endpoint.secure
-                }
-            }
-
-            group.addTask {
-                try? await Task.sleep(seconds: 10)
-                return false
-            }
-
-            let first = await group.next() ?? false
-            group.cancelAll()
-            return first
-        }
+        await endpointService.isEndpointAvailable(endpoint)
     }
 
     func switchEndpoint(_ endpoint: LightWalletEndpoint) async throws {
-        guard endpoint.host != currentEndpoint.host || endpoint.port != currentEndpoint.port || endpoint.secure != currentEndpoint.secure else {
-            return
-        }
-
-        // defense for non-UI callers (backup restore, node deletion): never reconfigure the
-        // synchronizer while background-finishing work (a send/migration broadcast) is active — "try again later"
-        let busy = await MainActor.run { Core.shared.backgroundTaskManager.isCriticalActive }
-        guard !busy else {
-            throw AppError.zcash(reason: .sendInProgress)
-        }
-
-        do {
-            try await synchronizer.switchTo(endpoint: endpoint)
-            currentEndpoint = endpoint
-            startSynchronizer()
-        } catch {
-            logger?.log(level: .error, message: "Failed to switch endpoint to \(endpoint.host):\(endpoint.port): \(error)")
-            try? await synchronizer.switchTo(endpoint: currentEndpoint)
-            startSynchronizer()
-            throw error
-        }
-    }
-
-    private func prepare(seedData: [UInt8], walletBirthday: BlockHeight, for initMode: WalletInitMode) {
-        guard !state.isPrepairing else {
-            return
-        }
-        state = .preparing
-
-        depositAddressSubject.send(.loading)
-        let networkType = network.networkType
-        Task { [weak self, synchronizer] in
-            do {
-                let tool = DerivationTool(networkType: networkType)
-                guard let unifiedSpendingKey = try? tool.deriveUnifiedSpendingKey(seed: seedData, accountIndex: .zero),
-                      let unifiedViewingKey = try? tool.deriveUnifiedFullViewingKey(from: unifiedSpendingKey)
-                else {
-                    throw AppError.ZcashError.cantCreateKeys
-                }
-
-                self?.spendingKey = unifiedSpendingKey
-                self?.viewingKey = unifiedViewingKey
-
-                let result = try await synchronizer.prepare(with: seedData, walletBirthday: walletBirthday, for: initMode, name: "", keySource: nil)
-                if case .seedRequired = result {
-                    throw AppError.ZcashError.seedRequired
-                }
-
-                guard let account = try await synchronizer.listAccounts().first else {
-                    throw AppError.ZcashError.noReceiveAddress
-                }
-
-                self?.logger?.log(level: .debug, message: "Successful prepared!")
-                guard let uAddress = try? await synchronizer.getUnifiedAddress(accountUUID: account.id),
-                      let tAddress = try? await synchronizer.getTransparentAddress(accountUUID: account.id),
-                      let saplingAddress = try? uAddress.saplingReceiver()
-                else {
-                    throw AppError.ZcashError.noReceiveAddress
-                }
-
-                self?.accountId = account.id
-                self?.uAddress = uAddress
-                self?.tAddress = tAddress
-                self?.migrator.engine = ZcashMigrationEngine(synchronizer: synchronizer, accountUUID: account.id, spendingKey: unifiedSpendingKey)
-
-                self?.depositAddressSubject.send(.completed(DepositAddress(uAddress.stringEncoded)))
-
-                self?.logger?.log(level: .debug, message: "Successful get address for 0 account! \(saplingAddress.stringEncoded)")
-
-                let transactionPool = ZcashTransactionPool(accountId: account.id, receiveAddress: saplingAddress, synchronizer: synchronizer)
-                self?.transactionPool = transactionPool
-
-                self?.logger?.log(level: .debug, message: "Starting fetch transactions.")
-                await transactionPool.initTransactions()
-                let wrapped = transactionPool.all
-
-                if !wrapped.isEmpty {
-                    self?.logger?.log(level: .debug, message: "Send to pool all transactions \(wrapped.count)")
-                    self?.transactionSubject.onNext(wrapped)
-                }
-
-                let height = try await synchronizer.latestHeight()
-                self?.lastBlockHeight = height
-
-                self?.lastBlockUpdatedSubject.onNext(())
-
-                self?.finishPrepare()
-            } catch {
-                self?.setPreparing(error: error)
-            }
-        }
-    }
-
-    private func setPreparing(error: Error) {
-        state = .notSynced(error: error)
-        logger?.log(level: .error, message: "Has preparing error! \(error)")
-    }
-
-    private func finishPrepare() {
-        state = .idle
-
-        logger?.log(level: .debug, message: "Start kit after finish preparing!")
-
-        startSynchronizer()
-    }
-
-    private func startSynchronizer() {
-        guard !state.isPrepairing else { // postpone start library until preparing will finish
-            logger?.log(level: .debug, message: "Can't start because preparing!")
-            return
-        }
-
-        // `.unprepared` with an address means a wipe failed after tearing the synchronizer
-        // down: start() would only throw notPrepared, so re-prepare instead — this makes
-        // pull-to-refresh and foregrounding recover the wallet without an app restart.
-        if uAddress == nil || synchronizer.latestState.syncStatus == .unprepared {
-            logger?.log(level: .debug, message: "Not prepared, try to prepare kit again!")
-            prepare(seedData: seedData, walletBirthday: birthday, for: initMode)
-
-            return
-        }
-
-        // Sapling parameters are downloaded by the SDK on demand
-        // (conditionally during sync when balance > 0, and just-in-time before any spend).
-        logger?.log(level: .debug, message: "Start syncing kit!")
-        syncMain()
-
-        DispatchQueue.main.async { [weak self] in
-            guard let self, resubmitTask == nil else { return }
-
-            resubmitTask = Task { [weak self] in
-                await self?.resubmitPendingTransactions()
-                DispatchQueue.main.async { [weak self] in self?.resubmitTask = nil }
-            }
-        }
-    }
-
-    private func didEnterBackground() {
-        let backgroundTaskManager = Core.shared.backgroundTaskManager
-
-        // subscribe BEFORE checking activity: a critical section completing in between still triggers stop()
-        deferredStopCancellable = backgroundTaskManager.criticalCompletedPublisher
-            .first()
-            .sink { [weak self] in
-                self?.stop()
-            }
-
-        guard backgroundTaskManager.isCriticalActive else {
-            deferredStopCancellable = nil
-            stop()
-            return
-        }
-        // send in flight: let the critical window finish the broadcast, the sink above stops after it
-    }
-
-    private func sync(state: SynchronizerState) {
-        synchronizerState = state
-
-        var syncStatus = self.state
-
-        switch state.syncStatus {
-        case .unprepared:
-            if started {
-                logger?.log(level: .debug, message: "State: Disconnected")
-                syncStatus = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
-            } else {
-                syncStatus = .idle
-            }
-        case .stopped:
-            logger?.log(level: .debug, message: "State: Disconnected")
-            syncStatus = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
-        case .upToDate:
-            if !started {
-                started = true
-            }
-            logger?.log(level: .debug, message: "State: Synced")
-            syncStatus = .synced
-            lastBlockHeight = max(state.latestBlockHeight, lastBlockHeight)
-            logger?.log(level: .debug, message: "Update BlockHeight = \(lastBlockHeight)")
-            checkFailingTransactions()
-        case let .syncing(progress, areFundsSpendable):
-            if !started {
-                started = true
-            }
-            logger?.log(level: .debug, message: "State: Syncing")
-            logger?.log(level: .debug, message: "State progress: \(progress) | spendable: \(areFundsSpendable)")
-            lastBlockHeight = max(state.latestBlockHeight, lastBlockHeight)
-            self.areFundsSpendable = areFundsSpendable
-
-            logger?.log(level: .debug, message: "Update BlockHeight = \(lastBlockHeight)")
-
-            lastBlockUpdatedSubject.onNext(())
-
-            // Progress 0 (nothing scanned yet — the real scan range is unknown, and for a
-            // new wallet the SDK starts near the tip, not at the nominal birthday) and
-            // progress 1 (pre-scan housekeeping) carry no usable numbers: show an
-            // indeterminate spinner instead of a count extrapolated from the birthday.
-            if progress == 0 || progress == 1 {
-                syncStatus = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
-            } else {
-                let newProgress = min(99, Int(progress * 100))
-                let newRemaining = max(1, Int(Float(lastBlockHeight - birthday) * (1 - progress)))
-
-                syncStatus = .syncing(progress: newProgress, remaining: newRemaining, lastBlockDate: nil)
-            }
-        case let .error(error):
-            if !started, case .synchronizerDisconnected = error as? ZcashError {
-                syncStatus = .idle
-            } else {
-                started = true
-                logger?.log(level: .error, message: "State: Error: \(error)")
-                syncStatus = .notSynced(error: AppError.unknownError)
-            }
-        }
-
-        if syncStatus != self.state {
-            self.state = syncStatus
-        }
-    }
-
-    private func sync(event: SynchronizerEvent) {
-        switch event {
-        case let .foundTransactions(transactions, inRange):
-            logger?.log(level: .debug, message: "found \(transactions.count) mined txs in range: \(String(describing: inRange))")
-            for overview in transactions {
-                logger?.log(level: .debug, message: "tx: v =\(overview.value.decimalValue.decimalString) : fee = \(overview.fee?.decimalString() ?? "N/A") : height = \(overview.minedHeight?.description ?? "N/A")")
-            }
-            let lastBlockHeight = max(inRange?.upperBound ?? 0, lastBlockHeight)
-            Task {
-                let newTxs = await transactionPool?.sync(transactions: transactions, lastBlockHeight: lastBlockHeight) ?? []
-                transactionSubject.onNext(newTxs)
-            }
-        case let .minedTransaction(pendingEntity):
-            logger?.log(level: .debug, message: "found pending tx: v =\(pendingEntity.value.decimalValue.decimalString) : fee = \(pendingEntity.fee?.decimalString() ?? "N/A")")
-            Task {
-                try await update(transactions: [pendingEntity])
-            }
-        default:
-            logger?.log(level: .debug, message: "Event: \(event)")
-        }
-    }
-
-    private func checkFailingTransactions() {
-        reSyncPending()
-    }
-
-    private func reSyncPending() {
-        Task {
-            let pending = await synchronizer.transactions.filter { overview in overview.minedHeight == nil }
-            logger?.log(level: .debug, message: "Resync pending txs: \(pending.count)")
-            for entity in pending {
-                logger?.log(level: .debug, message: "TX : \(entity.value.decimalValue.description)")
-            }
-            if !pending.isEmpty {
-                try await update(transactions: pending)
-            }
-        }
-    }
-
-    private func update(transactions: [ZcashTransaction.Overview]) async throws {
-        let newTxs = await transactionPool?.sync(transactions: transactions, lastBlockHeight: lastBlockHeight) ?? []
-        logger?.log(level: .debug, message: "pool will update txs: \(newTxs.count)")
-        transactionSubject.onNext(newTxs)
-    }
-
-    private func update(balanceData: ZcashBalanceData) {
-        let oldTransparent = zCashBalanceData.transparent
-
-        if balanceData != zCashBalanceData {
-            zCashBalanceData = balanceData
-            do {
-                try zCashAdapterStorage.save(balanceData: balanceData)
-                logger?.log(level: .debug, message: "Saved balance: transparent=\(balanceData.transparent)")
-            } catch {
-                logger?.log(level: .warning, message: "Failed to save balance to DB: \(error)")
-            }
-        }
-
-        // migration takes precedence over shielding: at most one alert per update
-        let migrationSuggested = migrator.handleCheck(orchardBalance: balanceData.orchard, latestHeight: lastBlockHeight, syncStatus: synchronizerState?.syncStatus)
-
-        if !migrationSuggested {
-            handleTransparentUpdates(oldBalance: oldTransparent, newBalance: balanceData.transparent)
-        }
-    }
-
-    private func handleTransparentUpdates(oldBalance _: Decimal, newBalance: Decimal) {
-        // handle only after syncing adapter
-        guard let synchronizerState,
-              synchronizerState.syncStatus == .upToDate
-        else {
-            return
-        }
-
-        let alertState = try? zCashAdapterStorage.alertState(id: uniqueId)
-        let lastAlerted = alertState?.lastAlertedBalance ?? 0
-
-        if newBalance <= Self.minimalThreshold, lastAlerted > 0 {
-            let resetState = ZcashTransparentAlertState(id: uniqueId, lastAlertedBalance: 0)
-            try? zCashAdapterStorage.save(state: resetState)
-            return
-        }
-
-        // show alert only when new
-        if newBalance > lastAlerted, newBalance > Self.minimalThreshold {
-            logger?.log(level: .debug, message: "Received transparent funds: \(lastAlerted) → \(newBalance), showing shielding alert")
-            showShieldingAlert(balance: newBalance)
-
-            let newState = ZcashTransparentAlertState(id: uniqueId, lastAlertedBalance: newBalance)
-            try? zCashAdapterStorage.save(state: newState)
-        }
-    }
-
-    private func showShieldingAlert(balance: Decimal) {
-        let ownAddress = uAddress?.stringEncoded
-        Coordinator.shared.present(type: .bottomSheet) { isPresented in
-            BottomSheetView(
-                items: [
-                    .title(icon: ThemeImage.shieldOff, title: "balance.token.transparent.detected.title".localized),
-                    .text(text: "balance.token.transparent.detected.description".localized),
-                    .buttonGroup(.init(buttons: [
-                            .init(style: .gray, title: "button.cancel".localized) {
-                                isPresented.wrappedValue = false
-                            },
-                            .init(style: .yellow, title: "balance.token.shield".localized) {
-                                isPresented.wrappedValue = false
-
-                                Coordinator.shared.present { _ in
-                                    ThemeNavigationStack {
-                                        ShieldSendView(amount: balance, address: ownAddress)
-                                    }
-                                }
-                            },
-                        ],
-                        alignment: .horizontal)),
-                ],
-            )
-        }
-    }
-
-    private func isOwner(address: String?) -> Bool {
-        if let uAddress {
-            if uAddress.stringEncoded.lowercased() == address?.lowercased() {
-                return true
-            }
-        }
-        if let tAddress {
-            if tAddress.stringEncoded.lowercased() == address?.lowercased() {
-                return true
-            }
-        }
-        return false
+        try await endpointService.switchEndpoint(endpoint)
     }
 
     func transactionRecord(fromTransaction transaction: ZcashTransactionWrapper) -> TransactionRecord {
-        let showRawTransaction = transaction.minedHeight == nil || transaction.failed
-
-        // a migration tx is an internal fully-shielded self-send: without the txId match
-        // it would fall into the internal branch below and display as Unshield
-        if migrator.isMigrationTx(hash: transaction.transactionHash) {
-            // the SDK records the migration PCZT without recipients, so the wrapper's internal-branch
-            // math (value = received, fee = spent − received) never triggers; raw tx.value is just −fee
-            let migratedAmount: Decimal
-            let migrationFee: Decimal?
-            if let spent = transaction.totalSpent, let received = transaction.totalReceived, received > .zero {
-                migratedAmount = received.decimalValue.decimalValue
-                migrationFee = (spent - received).decimalValue.decimalValue
-            } else {
-                migratedAmount = abs(transaction.value.decimalValue.decimalValue)
-                migrationFee = transaction.fee?.decimalValue.decimalValue
-            }
-
-            return ZcashShieldingTransactionRecord(
-                token: token,
-                source: transactionSource,
-                uid: transaction.transactionHash,
-                transactionHash: transaction.transactionHash,
-                transactionIndex: transaction.transactionIndex,
-                blockHeight: transaction.minedHeight,
-                confirmationsThreshold: ZcashSDK.defaultRewindDistance,
-                date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                fee: migrationFee,
-                failed: transaction.failed,
-                lockInfo: nil,
-                conflictingHash: nil,
-                showRawTransaction: showRawTransaction,
-                amount: migratedAmount,
-                direction: .migrate,
-                memo: transaction.memo
-            )
-        }
-
-        // TODO: Should have it's own transactions with memo
-        if let direction = transaction.shieldDirection {
-            return ZcashShieldingTransactionRecord(
-                token: token,
-                source: transactionSource,
-                uid: transaction.transactionHash,
-                transactionHash: transaction.transactionHash,
-                transactionIndex: transaction.transactionIndex,
-                blockHeight: transaction.minedHeight,
-                confirmationsThreshold: ZcashSDK.defaultRewindDistance,
-                date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                fee: transaction.fee?.decimalValue.decimalValue,
-                failed: transaction.failed,
-                lockInfo: nil,
-                conflictingHash: nil,
-                showRawTransaction: showRawTransaction,
-                amount: abs(transaction.value.decimalValue.decimalValue),
-                direction: .init(direction: direction),
-                memo: transaction.memo
-            )
-        }
-        if !transaction.isSentTransaction {
-            let isOwner = isOwner(address: transaction.recipientAddress)
-            return BitcoinIncomingTransactionRecord(
-                token: token,
-                source: transactionSource,
-                uid: transaction.transactionHash,
-                transactionHash: transaction.transactionHash,
-                transactionIndex: transaction.transactionIndex,
-                blockHeight: transaction.minedHeight,
-                confirmationsThreshold: ZcashSDK.defaultRewindDistance,
-                date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                fee: transaction.fee?.decimalValue.decimalValue,
-                failed: transaction.failed,
-                lockInfo: nil,
-                conflictingHash: nil,
-                showRawTransaction: showRawTransaction,
-                amount: abs(transaction.value.decimalValue.decimalValue),
-                from: isOwner ? nil : transaction.recipientAddress,
-                to: isOwner ? transaction.recipientAddress : nil,
-                memo: transaction.memo
-            )
-        } else {
-            return ZcashOutgoingTransactionRecord(
-                token: token,
-                source: transactionSource,
-                uid: transaction.transactionHash,
-                transactionHash: transaction.transactionHash,
-                transactionIndex: transaction.transactionIndex,
-                blockHeight: transaction.minedHeight,
-                confirmationsThreshold: ZcashSDK.defaultRewindDistance,
-                date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                fee: transaction.fee?.decimalValue.decimalValue,
-                failed: transaction.failed,
-                lockInfo: nil,
-                conflictingHash: nil,
-                showRawTransaction: showRawTransaction,
-                amount: abs(transaction.value.decimalValue.decimalValue),
-                to: transaction.recipientAddress,
-                sentToSelf: false,
-                memo: transaction.memo,
-                replaceable: false,
-                recipients: transaction.recipients,
-                isShielding: transaction.shieldDirection != nil
-            )
-        }
-    }
-
-    func fixPendingTransactionsIfNeeded(completion: (() -> Void)? = nil) {
-        // check if we need to perform the fix or leave
-        // get all the pending transactions
-        guard !Core.shared.localStorage.zcashAlwaysPendingRewind else {
-            completion?()
-            return
-        }
-
-        Task {
-            let txs = await synchronizer.transactions.filter { overview in overview.minedHeight == nil }
-            // fetch the first one that's reported to be unmined
-            guard let firstUnmined = txs.filter({ $0.minedHeight == nil }).first else {
-                Core.shared.localStorage.zcashAlwaysPendingRewind = true
-                completion?()
-                return
-            }
-
-            rewind(unmined: firstUnmined, completion: completion)
-        }
-    }
-
-    private func rewind(unmined: ZcashTransaction.Overview, completion: (() -> Void)? = nil) {
-        synchronizer
-            .rewind(.transaction(unmined))
-            .sink(receiveCompletion: { [weak self] result in
-                      switch result {
-                      case .finished:
-                          Core.shared.localStorage.zcashAlwaysPendingRewind = true
-                          completion?()
-                      case .failure:
-                          self?.rewindQuick()
-                      }
-                  },
-                  receiveValue: { _ in })
-            .store(in: &cancellables)
-    }
-
-    private func rewindQuick(completion: (() -> Void)? = nil) {
-        synchronizer
-            .rewind(.quick)
-            .sink(receiveCompletion: { [weak self] result in
-                      switch result {
-                      case .finished:
-                          Core.shared.localStorage.zcashAlwaysPendingRewind = true
-                          self?.logger?.log(level: .debug, message: "rewind Successful")
-                          completion?()
-                      case let .failure(error):
-                          self?.state = .notSynced(error: error)
-                          completion?()
-                          self?.logger?.log(level: .error, message: "attempt to fix pending transactions failed with error: \(error)")
-                      }
-                  },
-                  receiveValue: { _ in })
-            .store(in: &cancellables)
-    }
-
-    // The SDK's wipe is self-serializing: called mid-sync it registers an after-sync hook,
-    // stops the processor and wipes once the loop has fully wound down; called idle it wipes
-    // immediately. Stopping manually and waiting for a `.stopped` emission here used to hang
-    // forever on an idle synchronizer (the event is only produced by cancelling a running
-    // sync loop) and raced the SDK's own teardown when sync was active.
-    var isPreparing: Bool {
-        state.isPrepairing
+        recordFactory.transactionRecord(fromTransaction: transaction)
     }
 
     public func wipe() -> AnyPublisher<Void, Error> {
-        let logger = logger
-        let migrator = migrator
-
-        return synchronizer.wipe()
-            .handleEvents(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    // Cleared only on success: a failed wipe leaves the wallet data in
-                    // place, and the migration markers must stay consistent with it.
-                    migrator.clearOnWipe()
-                    logger?.log(level: .debug, message: "[ZcashAdapter] wipe: completed successfully")
-                case let .failure(error):
-                    logger?.log(level: .error, message: "[ZcashAdapter] wipe: completed with error: \(error)")
-                }
-            })
-            .eraseToAnyPublisher()
-    }
-
-    private func syncZcashBalanceData() {
-        guard let synchronizerState, let accountId, let balances = synchronizerState.accountsBalances[accountId] else {
-            zCashBalanceData = (try? zCashAdapterStorage.balanceData(id: uniqueId)) ?? .empty(id: uniqueId)
-            return
-        }
-
-        let full = balances.saplingBalance.total() + balances.orchardBalance.total() + balances.ironwoodBalance.total()
-        let available = balances.saplingBalance.spendableValue + balances.orchardBalance.spendableValue + balances.ironwoodBalance.spendableValue
-        logger?.log(level: .debug, message: "Full balance from syncer: \(full.decimalValue.decimalValue.description)")
-        logger?.log(level: .debug, message: "Available balance from syncer: \(available.decimalValue.decimalValue.description)")
-
-//        print("BALANCE: t = \(balances.unshielded.decimalValue.decimalValue)")
-        let orchard = balances.orchardBalance.spendableValue.decimalValue.decimalValue
-
-        let zCashBalanceData = ZcashBalanceData(
-            id: uniqueId,
-            full: full.decimalValue.decimalValue,
-            available: available.decimalValue.decimalValue,
-            transparent: balances.unshielded.decimalValue.decimalValue,
-            orchard: orchard
-        )
-
-        update(balanceData: zCashBalanceData)
-    }
-
-    deinit {
-        Task { [weak self] in
-            self?.synchronizer.stop()
-            self?.logger?.log(level: .debug, message: "Synchronizer Was Stopped")
-        }
+        syncService.wipe()
     }
 }
 
@@ -912,18 +292,18 @@ extension ZcashAdapter {
         // One-time cleanup: promote any pre-existing per-wallet sapling params
         // ("sapling-{spend,output}_<uniqueId>.params") to the shared, wallet-agnostic
         // location so existing users don't have to re-download ~51MB.
-        migrateSharedSaplingParamsIfNeeded()
+        ZcashFileStore.migrateSharedSaplingParamsIfNeeded()
 
         return try Initializer(
             cacheDbURL: nil,
-            fsBlockDbRoot: fsBlockDbRootURL(uniqueId: uniqueId, network: network),
-            generalStorageURL: generalStorageURL(uniqueId: uniqueId, network: network),
-            dataDbURL: dataDbURL(uniqueId: uniqueId, network: network),
-            torDirURL: torDirURL(uniqueId: uniqueId, network: network),
+            fsBlockDbRoot: ZcashFileStore.fsBlockDbRootURL(uniqueId: uniqueId, network: network),
+            generalStorageURL: ZcashFileStore.generalStorageURL(uniqueId: uniqueId, network: network),
+            dataDbURL: ZcashFileStore.dataDbURL(uniqueId: uniqueId, network: network),
+            torDirURL: ZcashFileStore.torDirURL(uniqueId: uniqueId, network: network),
             endpoint: endpoint,
             network: network,
-            spendParamsURL: spendParamsURL(),
-            outputParamsURL: outputParamsURL(),
+            spendParamsURL: ZcashFileStore.spendParamsURL(),
+            outputParamsURL: ZcashFileStore.outputParamsURL(),
             saplingParamsSourceURL: SaplingParamsSourceURL.default,
             alias: .custom(uniqueId),
             loggingPolicy: .noLogging,
@@ -933,98 +313,8 @@ extension ZcashAdapter {
         )
     }
 
-    private static func dataDirectoryUrl() throws -> URL {
-        let fileManager = FileManager.default
-
-        let url = try fileManager
-            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            .appendingPathComponent("z-cash-kit", isDirectory: true)
-
-        try fileManager.createDirectory(at: url, withIntermediateDirectories: true)
-
-        return url
-    }
-
-    private static func exist(url: URL) -> Bool {
-        let fileManager = FileManager.default
-
-        do {
-            return try fileManager.fileExists(coordinatingAccessAt: url).exists
-        } catch {
-            return false
-        }
-    }
-
-    private static func fsBlockDbRootURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
-        try dataDirectoryUrl().appendingPathComponent(network.networkType.chainName + uniqueId + ZcashSDK.defaultFsCacheName, isDirectory: true)
-    }
-
-    private static func generalStorageURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
-        try dataDirectoryUrl().appendingPathComponent(network.networkType.chainName + uniqueId + "general_storage", isDirectory: true)
-    }
-
-    private static func dataDbURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
-        try dataDirectoryUrl().appendingPathComponent(network.constants.defaultDbNamePrefix + uniqueId + ZcashSDK.defaultDataDbName, isDirectory: false)
-    }
-
-    private static func torDirURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
-        try dataDirectoryUrl().appendingPathComponent(network.constants.defaultDbNamePrefix + uniqueId + ZcashSDK.defaultTorDirName, isDirectory: true)
-    }
-
-    // Sapling parameters are identical across all wallets, so they live in a single shared
-    // location (no per-wallet suffix). The SDK downloads and SHA1-validates them on demand;
-    // we just hand it the destination path.
-    static let spendParamsFilename = "sapling-spend.params"
-    static let outputParamsFilename = "sapling-output.params"
-
-    private static func spendParamsURL() throws -> URL {
-        try dataDirectoryUrl().appendingPathComponent(spendParamsFilename)
-    }
-
-    private static func outputParamsURL() throws -> URL {
-        try dataDirectoryUrl().appendingPathComponent(outputParamsFilename)
-    }
-
-    private static func migrateSharedSaplingParamsIfNeeded() {
-        let fileManager = FileManager.default
-        guard let dir = try? dataDirectoryUrl(),
-              let files = try? fileManager.contentsOfDirectory(atPath: dir.path)
-        else { return }
-
-        for (legacyPrefix, sharedName) in [
-            ("sapling-spend_", spendParamsFilename),
-            ("sapling-output_", outputParamsFilename),
-        ] {
-            let legacy = files.filter { $0.hasPrefix(legacyPrefix) && $0.hasSuffix(".params") }
-            guard !legacy.isEmpty else { continue }
-
-            let sharedURL = dir.appendingPathComponent(sharedName)
-            if !fileManager.fileExists(atPath: sharedURL.path), let first = legacy.first {
-                // Promote one legacy copy to the shared location; SDK will SHA1-validate it.
-                try? fileManager.moveItem(at: dir.appendingPathComponent(first), to: sharedURL)
-            }
-            // Remove any remaining per-wallet copies (including the one we just moved if move failed).
-            let remaining = (try? fileManager.contentsOfDirectory(atPath: dir.path)) ?? []
-            for filename in remaining where filename.hasPrefix(legacyPrefix) && filename.hasSuffix(".params") {
-                try? fileManager.removeItem(at: dir.appendingPathComponent(filename))
-            }
-        }
-    }
-
     public static func clear(except excludedWalletIds: [String]) throws {
-        let fileManager = FileManager.default
-        let fileUrls = try fileManager.contentsOfDirectory(at: dataDirectoryUrl(), includingPropertiesForKeys: nil)
-
-        let preservedFilenames: Set<String> = [spendParamsFilename, outputParamsFilename]
-
-        for filename in fileUrls {
-            if preservedFilenames.contains(filename.lastPathComponent) {
-                continue
-            }
-            if !excludedWalletIds.contains(where: { filename.lastPathComponent.contains($0) }) {
-                try fileManager.removeItem(at: filename)
-            }
-        }
+        try ZcashFileStore.clear(except: excludedWalletIds)
     }
 }
 
@@ -1034,54 +324,21 @@ extension ZcashAdapter: IAdapter {
     }
 
     func start() {
-        cancelDeferredStop()
-        warmUpSaplingParams()
-        prepare(seedData: seedData, walletBirthday: birthday, for: initMode)
+        syncService.start()
     }
 
     func stop() {
-        synchronizer.stop()
-        logger?.log(level: .debug, message: "Synchronizer will stop")
+        syncService.stop()
     }
 
     func refresh() {
-        cancelDeferredStop()
-        startSynchronizer()
-    }
-
-    // foreground resume goes through refresh() (start() only on creation) — deferred stop must not kill a live sync.
-    // deferredStopCancellable is main-confined: start()/refresh() arrive on background queues, subscription and fire are on main
-    private func cancelDeferredStop() {
-        DispatchQueue.main.async { [weak self] in
-            self?.deferredStopCancellable = nil
-        }
-    }
-
-    private func syncMain() {
-        DispatchQueue.main.async { [weak self] in
-            self?.sync()
-        }
-    }
-
-    private func sync() {
-        syncZcashBalanceData()
-
-        fixPendingTransactionsIfNeeded { [weak self] in
-            self?.logger?.log(level: .debug, message: "\(Date()) Try to start synchronizer :by Thread:\(Thread.current)")
-            Task { [weak self] in
-                do {
-                    try await self?.synchronizer.start(retry: true)
-                } catch {
-                    self?.state = .notSynced(error: error)
-                }
-            }
-        }
+        syncService.refresh()
     }
 
     var statusInfo: [(String, Any)] {
         [
-            ("Last Block Info", lastBlockHeight),
-            ("Sync State", state.description),
+            ("Last Block Info", syncService.lastBlockHeight),
+            ("Sync State", syncService.state.description),
             ("Birthday Height", birthday.description),
             ("Init Mode", initMode.description),
         ]
@@ -1091,7 +348,7 @@ extension ZcashAdapter: IAdapter {
         let zAddress = uAddress?.stringEncoded ?? "No Info"
         var balanceState = "No Balance Information yet"
 
-        if let status = synchronizerState, let accountId {
+        if let status = syncService.synchronizerState, let accountId = syncService.accountId {
             balanceState = """
             shielded balance (BalanceData)
                 accountId: \(accountId)
@@ -1103,7 +360,7 @@ extension ZcashAdapter: IAdapter {
         return """
         ZcashAdapter
         z-address: \(String(describing: zAddress))
-        spendingKeys: \(spendingKey?.description ?? "N/A")
+        spendingKeys: \(syncService.spendingKey?.description ?? "N/A")
         balanceState: \(balanceState)
         """
     }
@@ -1111,15 +368,15 @@ extension ZcashAdapter: IAdapter {
 
 extension ZcashAdapter: ITransactionsAdapter {
     var lastBlockInfo: LastBlockInfo? {
-        LastBlockInfo(height: lastBlockHeight, timestamp: nil)
+        LastBlockInfo(height: syncService.lastBlockHeight, timestamp: nil)
     }
 
     var syncingObservable: Observable<Void> {
-        balanceStateSubject.map { _ in () }
+        syncService.balanceStateUpdatedObservable.map { _ in () }
     }
 
     var lastBlockUpdatedObservable: Observable<Void> {
-        lastBlockUpdatedSubject.asObservable()
+        syncService.lastBlockUpdatedObservable
     }
 
     var explorerTitle: String {
@@ -1135,7 +392,7 @@ extension ZcashAdapter: ITransactionsAdapter {
     }
 
     func transactionsObservable(token _: Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
-        transactionSubject.asObservable()
+        historyService.transactionsObservable
             .map { [weak self] transactions in
                 transactions.compactMap { transaction -> TransactionRecord? in
                     if let address, let recipient = transaction.recipientAddress, address.lowercased() != recipient.lowercased() {
@@ -1158,33 +415,33 @@ extension ZcashAdapter: ITransactionsAdapter {
     }
 
     func transactionsSingle(paginationData: String?, token _: Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
-        transactionPool?.transactionsSingle(paginationData: paginationData, filter: filter, descending: true, address: address, limit: limit).map { [weak self] txs in
+        historyService.transactionsSingle(paginationData: paginationData, filter: filter, descending: true, address: address, limit: limit).map { [weak self] txs in
             txs.compactMap { self?.transactionRecord(fromTransaction: $0) }
-        } ?? .just([])
+        }
     }
 
     func allTransactionsAfter(paginationData: String?) -> Single<[TransactionRecord]> {
-        transactionPool?.transactionsSingle(paginationData: paginationData, filter: .all, descending: false, address: nil, limit: nil).map { [weak self] txs in
+        historyService.transactionsSingle(paginationData: paginationData, filter: .all, descending: false, address: nil, limit: nil).map { [weak self] txs in
             txs.compactMap { self?.transactionRecord(fromTransaction: $0) }
-        } ?? .just([])
+        }
     }
 
     func rawTransaction(hash: String) -> String? {
-        transactionPool?.transaction(by: hash)?.raw?.hs.hex
+        historyService.rawTransaction(hash: hash)
     }
 }
 
 extension ZcashAdapter: IBalanceAdapter {
     var balanceStateUpdatedObservable: Observable<AdapterState> {
-        balanceStateSubject.asObservable()
+        syncService.balanceStateUpdatedObservable
     }
 
     var balanceData: BalanceData {
-        zCashBalanceData.balanceData
+        balanceService.balanceData
     }
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
-        balanceSubject.asObservable()
+        balanceService.balanceDataUpdatedObservable
     }
 }
 
@@ -1194,7 +451,7 @@ extension ZcashAdapter: IDepositAdapter {
     }
 
     public var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
-        depositAddressSubject.eraseToAnyPublisher()
+        syncService.receiveAddressPublisher
     }
 }
 
@@ -1202,6 +459,12 @@ extension ZcashAdapter {
     public enum AddressType {
         case shielded
         case transparent
+    }
+
+    struct TransferOutput {
+        let amount: Decimal
+        let address: Recipient
+        let memo: Memo?
     }
 
     var availableBalance: Decimal {
@@ -1212,111 +475,25 @@ extension ZcashAdapter {
         amount: Decimal,
         address: Recipient,
         memo: Memo?,
-        zip317MarginalFee _: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) async throws -> Proposal {
-        guard let accountId else {
-            throw AppError.ZcashError.noAccountId
-        }
-
-        let amountInZatoshi = Zatoshi.from(decimal: amount)
-
-        do {
-            return try await synchronizer.proposeTransfer(
-                accountUUID: accountId,
-                recipient: address,
-                amount: amountInZatoshi,
-                memo: memo
-            )
-        } catch {
-            throw ZcashSendHelper.converted(error)
-        }
+        try await sendService.sendProposal(amount: amount, address: address, memo: memo, zip317MarginalFee: zip317MarginalFee)
     }
 
     func sendProposal(
         outputs: [TransferOutput],
-        zip317MarginalFee _: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) async throws -> Proposal {
-        guard let accountId else {
-            throw AppError.ZcashError.noAccountId
-        }
-
-        let paymentURI = createPaymentURI(outputs: outputs)
-
-        do {
-            return try await synchronizer.proposefulfillingPaymentURI(
-                paymentURI,
-                accountUUID: accountId
-            )
-        } catch {
-            throw ZcashSendHelper.converted(error)
-        }
-    }
-
-    private func createPaymentURI(outputs: [TransferOutput]) -> String {
-        var components = URLComponents()
-        components.scheme = "zcash"
-        components.path = ""
-
-        var queryItems: [URLQueryItem] = []
-
-        for (index, output) in outputs.enumerated() {
-            if index == 0 {
-                queryItems.append(URLQueryItem(name: "address", value: output.address.stringEncoded))
-                queryItems.append(URLQueryItem(name: "amount", value: output.amount.description))
-
-                if let memo = output.memo, let string = memo.toString() {
-                    let base64url = encodeBase64URL(string)
-                    queryItems.append(URLQueryItem(name: "memo", value: base64url))
-                }
-            } else {
-                queryItems.append(URLQueryItem(name: "address.\(index)", value: output.address.stringEncoded))
-                queryItems.append(URLQueryItem(name: "amount.\(index)", value: output.amount.description))
-
-                if let memo = output.memo, let string = memo.toString() {
-                    let base64url = encodeBase64URL(string)
-                    queryItems.append(URLQueryItem(name: "memo.\(index)", value: base64url))
-                }
-            }
-        }
-
-        components.queryItems = queryItems
-        return components.string ?? ""
-    }
-
-    private func encodeBase64URL(_ string: String) -> String {
-        let data = string.data(using: .utf8)!
-        return data.base64EncodedString()
-            .replacingOccurrences(of: "+", with: "-")
-            .replacingOccurrences(of: "/", with: "_")
-            .replacingOccurrences(of: "=", with: "")
+        try await sendService.sendProposal(outputs: outputs, zip317MarginalFee: zip317MarginalFee)
     }
 
     func shieldProposal(
         threshold: Decimal,
         address: Recipient?,
         memo: Memo?,
-        zip317MarginalFee _: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) async throws -> Proposal? {
-        guard let accountId else {
-            throw AppError.ZcashError.noAccountId
-        }
-
-        let requiredMemo = try memo ?? Memo(string: "")
-
-        var transparentAddress: TransparentAddress?
-        switch address {
-        case let .transparent(tAddress): transparentAddress = tAddress
-        default: ()
-        }
-
-        let amountInZatoshi = Zatoshi.from(decimal: threshold)
-
-        return try await synchronizer.proposeShielding(
-            accountUUID: accountId,
-            shieldingThreshold: amountInZatoshi,
-            memo: requiredMemo,
-            transparentReceiver: transparentAddress
-        )
+        try await sendService.shieldProposal(threshold: threshold, address: address, memo: memo, zip317MarginalFee: zip317MarginalFee)
     }
 
     func validate(address: String, checkSendToSelf: Bool = true) throws -> AddressType {
@@ -1341,185 +518,49 @@ extension ZcashAdapter {
         amount: Decimal,
         address: Recipient,
         memo: Memo?,
-        zip317MarginalFee _: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) -> Single<Void> {
-        guard let accountId else {
-            return .error(AppError.ZcashError.noAccountId)
-        }
-
-        return Single.create { [weak self] observer in
-            Task { [weak self] in
-                do {
-                    guard let proposal = try await self?.synchronizer.proposeTransfer(
-                        accountUUID: accountId,
-                        recipient: address,
-                        amount: Zatoshi.from(decimal: amount),
-                        memo: memo /* , zip317MarginalFee: zip317MarginalFee */
-                    ) else {
-                        observer(.error(AppError.unknownError))
-                        return
-                    }
-
-                    try await self?.send(proposal: proposal /* , zip317MarginalFee: zip317MarginalFee */ )
-                    observer(.success(()))
-                } catch {
-                    observer(.error(error))
-                }
-            }
-            return Disposables.create()
-        }
+        sendService.sendSingle(amount: amount, address: address, memo: memo, zip317MarginalFee: zip317MarginalFee)
     }
 
     func send(
         amount: Decimal,
         address: Recipient,
         memo: Memo?,
-        zip317MarginalFee _: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) async throws {
-        let proposal = try await sendProposal(amount: amount, address: address, memo: memo /* , zip317MarginalFee: zip317MarginalFee */ )
-        try await send(proposal: proposal /* , zip317MarginalFee: zip317MarginalFee */ )
+        try await sendService.send(amount: amount, address: address, memo: memo, zip317MarginalFee: zip317MarginalFee)
     }
 
     @discardableResult func send(
         proposal: Proposal,
-        zip317MarginalFee _: Zatoshi = ZcashAdapter.defaultZip317MarginalFee,
+        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) async throws -> String? {
-        guard let spendingKey else {
-            throw AppError.ZcashError.noReceiveAddress
-        }
-
-        return try await Core.shared.backgroundTaskManager.performCritical(name: "zcash-send") {
-            try await send(proposal: proposal, spendingKey: spendingKey)
-        }
+        try await sendService.send(proposal: proposal, zip317MarginalFee: zip317MarginalFee)
     }
 
     func migrationProposal() async throws -> (amount: Decimal, fee: Decimal) {
-        try await migrator.migrationProposal(orchardBalance: zCashBalanceData.orchard)
+        try await sendService.migrationProposal(orchardBalance: zCashBalanceData.orchard)
     }
 
     func clearMigrationHistory() {
         migrator.clearOnWipe()
     }
 
-    // send-max sweep to the wallet's own UA. It is an ordinary send: no stop-sync, no privacy buffer.
-    // Runs under the same "zcash-send" critical section as every send, so background survivability and
-    // same-bytes resubmit apply for free.
     func performMigration() async throws -> String? {
-        let txId = try await Core.shared.backgroundTaskManager.performCritical(name: "zcash-send") {
-            try await migrator.performMigration()
-        }
-        reSyncPending()
-        return txId
-    }
-
-    private func send(proposal: Proposal, spendingKey: UnifiedSpendingKey) async throws -> String? {
-        let stream = try await synchronizer.createProposedTransactions(
-            proposal: proposal,
-            spendingKey: spendingKey
-        )
-
-        let transactionCount = proposal.transactionCount()
-        var successCount = 0
-        var iterator = stream.makeAsyncIterator()
-
-        var txIds: [String] = []
-        var resubmitableFailure = false
-
-        for _ in 1 ... transactionCount {
-            if let transactionSubmitResult = try await iterator.next() {
-                switch transactionSubmitResult {
-                case let .success(txId: id):
-                    successCount += 1
-                    txIds.append(id.toHexStringTxId())
-                    logger?.log(level: .debug, message: "-> Successful send TX: \(id.toHexStringTxId())")
-                case let .grpcFailure(txId: id, error: error):
-                    txIds.append(id.toHexStringTxId())
-                    logger?.log(level: .error, message: "-> Error with send TX: \(error.localizedDescription)")
-                    resubmitableFailure = true
-                case let .submitFailure(txId: id, code: code, description: description):
-                    txIds.append(id.toHexStringTxId())
-                    logger?.log(level: .error, message: "-> Error submit TX: \(id.toHexStringTxId()) | code: \(code) | desc: \(description)")
-                case let .notAttempted(txId: id):
-                    txIds.append(id.toHexStringTxId())
-                    logger?.log(level: .error, message: "-> notAttempted TX: \(id.toHexStringTxId())")
-                }
-            }
-        }
-
-        if successCount == 0 {
-            if resubmitableFailure {
-                logger?.log(level: .debug, message: "Grpc Failure! \(txIds.count)")
-            } else {
-                logger?.log(level: .debug, message: "Failure sended TXs! \(txIds.count)")
-            }
-        } else if successCount == transactionCount {
-            logger?.log(level: .debug, message: "Successful sended All TXs")
-        } else {
-            logger?.log(level: .debug, message: "Partial success TXs \(txIds.count)")
-        }
-
-        reSyncPending()
-
-        return txIds.first
+        try await sendService.performMigration()
     }
 
     func recipient(from stringEncodedAddress: String) -> ZcashLightClientKit.Recipient? {
         try? Recipient(stringEncodedAddress, network: network.networkType)
     }
 
-    // Directly re-broadcasts created-but-undelivered transactions with their original bytes.
-    // Runs on foreground start: the SDK sync-loop resubmission is gated by a 5-minute uptime
-    // threshold, so a short "check the app" session would never deliver without this.
-    // Same-bytes resubmit is safe: an already-delivered transaction comes back as .rejected.
     func resubmitPendingTransactions() async {
-        let latestHeight = synchronizer.latestState.latestBlockHeight
-        let overviews = await synchronizer.transactions
-
-        let candidates = overviews.filter {
-            Self.isResubmissionCandidate(
-                isSentTransaction: $0.isSentTransaction,
-                minedHeight: $0.minedHeight,
-                hasRaw: $0.raw != nil,
-                expiryHeight: $0.expiryHeight,
-                latestHeight: latestHeight
-            )
-        }
-
-        guard !candidates.isEmpty else {
-            return
-        }
-
-        for overview in candidates {
-            guard let raw = overview.raw else {
-                logger?.log(level: .error, message: "Resubmit skip \(overview.rawID.toHexStringTxId()): missing raw bytes")
-                continue
-            }
-
-            do {
-                try await synchronizer.broadcaster.submit(raw, to: currentEndpoint)
-                logger?.log(level: .debug, message: "Resubmit accepted: \(overview.rawID.toHexStringTxId())")
-            } catch {
-                // duplicate ("already in block chain") or transient failure — retried on next foreground anyway
-                logger?.log(level: .error, message: "Resubmit not delivered: \(overview.rawID.toHexStringTxId()) | \(error)")
-            }
-        }
+        await sendService.resubmitPendingTransactions()
     }
 
     static func isResubmissionCandidate(isSentTransaction: Bool, minedHeight: BlockHeight?, hasRaw: Bool, expiryHeight: BlockHeight?, latestHeight: BlockHeight) -> Bool {
-        guard isSentTransaction, minedHeight == nil, hasRaw,
-              let expiryHeight, expiryHeight > 0
-        else {
-            return false
-        }
-        return latestHeight == 0 || expiryHeight > latestHeight
-    }
-}
-
-extension ZcashAdapter {
-    struct TransferOutput {
-        let amount: Decimal
-        let address: Recipient
-        let memo: Memo?
+        ZcashSendService.isResubmissionCandidate(isSentTransaction: isSentTransaction, minedHeight: minedHeight, hasRaw: hasRaw, expiryHeight: expiryHeight, latestHeight: latestHeight)
     }
 }
 
@@ -1546,15 +587,6 @@ extension Recipient {
         case .tex, .transparent: return true
         case .sapling, .unified: return false
         }
-    }
-}
-
-extension EnhancementProgress {
-    var progress: Int {
-        guard totalTransactions <= 0 else {
-            return 0
-        }
-        return Int(Double(enhancedTransactions) / Double(totalTransactions)) * 100
     }
 }
 

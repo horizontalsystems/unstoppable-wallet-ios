@@ -3,6 +3,8 @@ import RxSwift
 import ZcashLightClientKit
 
 class ZcashTransactionPool {
+    // internal lock: pool is mutated from serialized history operations and read from Rx threads
+    private let stateQueue = DispatchQueue(label: "\(AppConfig.label).zcash-transaction-pool", qos: .userInitiated)
     private var confirmedTransactions = Set<ZcashTransactionWrapper>()
     private var pendingTransactions = Set<ZcashTransactionWrapper>()
 
@@ -17,8 +19,11 @@ class ZcashTransactionPool {
     }
 
     private func transactions(filter: TransactionTypeFilter, address: String?) -> [ZcashTransactionWrapper] {
-        var confirmedTransactions = confirmedTransactions
-        var pendingTransactions = pendingTransactions
+        let snapshot: (confirmed: Set<ZcashTransactionWrapper>, pending: Set<ZcashTransactionWrapper>) = stateQueue.sync {
+            (confirmed: self.confirmedTransactions, pending: self.pendingTransactions)
+        }
+        var confirmedTransactions = snapshot.confirmed
+        var pendingTransactions = snapshot.pending
         switch filter {
         case .all: ()
         case .incoming:
@@ -72,13 +77,14 @@ class ZcashTransactionPool {
 //        let pending = await synchronizer.pendingTransactions
 
 //        pendingTransactions = await Set(zcashTransactions(pending, lastBlockHeight: 0))
-        confirmedTransactions = await Set(zcashTransactions(overviews, lastBlockHeight: 0))
+        let confirmed = await Set(zcashTransactions(overviews, lastBlockHeight: 0))
+        stateQueue.sync { confirmedTransactions = confirmed }
     }
 
     func sync(transactions: [ZcashTransaction.Overview], lastBlockHeight: Int) async -> [ZcashTransactionWrapper] {
         let txs = await zcashTransactions(transactions, lastBlockHeight: lastBlockHeight)
         // TODO: sync pending and confirmed but How?
-        sync(own: &confirmedTransactions, incoming: txs)
+        stateQueue.sync { sync(own: &confirmedTransactions, incoming: txs) }
         return txs
     }
 
