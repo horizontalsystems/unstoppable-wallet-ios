@@ -223,39 +223,57 @@ private extension PrivateSendHandler {
         return action()
     }
 
-    // Committing is memoised for the handler's lifetime, and it is mandatory rather than an
-    // optimisation: sendData(transactionSettings:) is re-invoked on every settings change and
-    // manual refresh, and each /v2/swap creates a REAL order. Two concurrent callers await the same
-    // task rather than each issuing their own commit.
+    // Committing is memoised while the order is alive, and the memo is mandatory rather than an
+    // optimisation: sendData(transactionSettings:) is re-invoked on every settings change, and each
+    // /v2/swap creates a REAL order. Two concurrent callers await the same task rather than each
+    // issuing their own commit. An order past its quoteLifetime is discarded and re-committed — the
+    // "Refresh" the UI shows at expiry must produce a fresh order, not re-serve one the provider no
+    // longer honours.
     func committedOrder() async throws -> PrivateSendOrder {
-        let pending: (task: Task<PrivateSendOrder, Error>, generation: Int) = withLock {
-            if let commitTask = self.commitTask {
-                return (commitTask, self.commitGeneration)
+        // The loop terminates: a stale memo is cleared exactly once per iteration, and a task
+        // created after that returns an order stamped `committedAt: Date()` — always fresh.
+        while true {
+            let pending: (task: Task<PrivateSendOrder, Error>, generation: Int) = withLock {
+                if let commitTask = self.commitTask {
+                    return (commitTask, self.commitGeneration)
+                }
+
+                self.commitGeneration += 1
+                let generation = self.commitGeneration
+                let request = self.request
+                let service = self.service
+                let task = Task { try await service.commit(request: request) }
+                self.commitTask = task
+
+                return (task, generation)
             }
 
-            self.commitGeneration += 1
-            let generation = self.commitGeneration
-            let request = self.request
-            let service = self.service
-            let task = Task { try await service.commit(request: request) }
-            self.commitTask = task
+            let order: PrivateSendOrder
 
-            return (task, generation)
-        }
+            do {
+                // Not cached on `self`: the order reaches send(data:) on the PrivateSendData it
+                // produced, so there is no second, unsynchronised copy to disagree with it.
+                order = try await pending.task.value
+            } catch {
+                // A failed commit created no order, so a refresh is allowed to retry. Only clear
+                // the memo if it is still the one this call started.
+                withLock {
+                    if self.commitGeneration == pending.generation {
+                        self.commitTask = nil
+                    }
+                }
+                throw error
+            }
 
-        do {
-            // Not cached on `self`: the order reaches send(data:) on the PrivateSendData it produced,
-            // so there is no second, unsynchronised copy to disagree with it.
-            return try await pending.task.value
-        } catch {
-            // A failed commit created no order, so a refresh is allowed to retry. Only clear the
-            // memo if it is still the one this call started.
+            if Date().timeIntervalSince(order.committedAt) < PrivateSendData.quoteLifetime {
+                return order
+            }
+
             withLock {
                 if self.commitGeneration == pending.generation {
                     self.commitTask = nil
                 }
             }
-            throw error
         }
     }
 }

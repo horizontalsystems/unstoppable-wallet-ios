@@ -37,7 +37,9 @@ extension EvmSendHandler: ISendHandler {
             let evmBalance = evmKitWrapper.evmKit.accountState?.balance ?? 0
 
             do {
-                if transactionData.input.isEmpty, transactionData.value == evmBalance {
+                if transactionData.value > evmBalance {
+                    throw AppError.ethereum(reason: .insufficientBalanceWithFee)
+                } else if transactionData.input.isEmpty, transactionData.value == evmBalance {
                     let stubTransactionData = TransactionData(to: transactionData.to, value: 1, input: transactionData.input)
                     let stubFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: stubTransactionData, gasPriceData: gasPriceData)
                     let totalFee = stubFeeData.totalFee(gasPrice: gasPriceData.userDefined)
