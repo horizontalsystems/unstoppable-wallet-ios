@@ -28,7 +28,7 @@ class ZcashWalletTokenViewModel: ObservableObject {
 
         birthdayHeight = restoreSettingsService.settings(accountId: wallet.account.id, blockchainType: wallet.token.blockchainType).birthdayHeight
 
-        adapter.$zCashBalanceData
+        adapter.zCashBalanceDataPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.zCashBalanceData = $0 }
             .store(in: &cancellables)

@@ -43,6 +43,21 @@ class ZcashAdapterStorage {
             }
         }
 
+        migrator.registerMigration("create ZcashTerminalResubmission") { db in
+            try db.create(table: ZcashTerminalResubmission.databaseTableName) { t in
+                t.column(ZcashTerminalResubmission.Columns.accountId.name, .text).notNull()
+                t.column(ZcashTerminalResubmission.Columns.txId.name, .text).notNull()
+                t.column(ZcashTerminalResubmission.Columns.network.name, .text).notNull()
+                t.column(ZcashTerminalResubmission.Columns.reason.name, .text).notNull()
+                t.column(ZcashTerminalResubmission.Columns.expiryHeight.name, .integer).notNull()
+                t.primaryKey([
+                    ZcashTerminalResubmission.Columns.accountId.name,
+                    ZcashTerminalResubmission.Columns.txId.name,
+                    ZcashTerminalResubmission.Columns.network.name,
+                ], onConflict: .replace)
+            }
+        }
+
         return migrator
     }
 }
@@ -131,6 +146,31 @@ extension ZcashAdapterStorage {
         _ = try dbPool.write { db in
             try ZcashMigrationTx
                 .filter(ZcashMigrationTx.Columns.accountId == accountId)
+                .deleteAll(db)
+        }
+    }
+}
+
+extension ZcashAdapterStorage {
+    func save(terminalResubmission: ZcashTerminalResubmission) throws {
+        try dbPool.write { db in
+            try terminalResubmission.insert(db)
+        }
+    }
+
+    func terminalResubmissions(accountId: String) throws -> [ZcashTerminalResubmission] {
+        try dbPool.read { db in
+            try ZcashTerminalResubmission
+                .filter(ZcashTerminalResubmission.Columns.accountId == accountId)
+                .fetchAll(db)
+        }
+    }
+
+    func deleteTerminalResubmissions(accountId: String, txIds: [String]) throws {
+        _ = try dbPool.write { db in
+            try ZcashTerminalResubmission
+                .filter(ZcashTerminalResubmission.Columns.accountId == accountId)
+                .filter(txIds.contains(ZcashTerminalResubmission.Columns.txId))
                 .deleteAll(db)
         }
     }
