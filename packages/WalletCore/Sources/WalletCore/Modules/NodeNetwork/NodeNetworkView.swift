@@ -2,13 +2,18 @@ import Kingfisher
 import MarketKit
 import SwiftUI
 
-struct ZcashNetworkView: View {
-    @StateObject private var viewModel: ZcashNetworkViewModel
+struct NodeNetworkView: View {
+    @StateObject private var viewModel: NodeNetworkViewModel
     @Binding private var isPresented: Bool
 
     init(blockchain: Blockchain, isPresented: Binding<Bool>) {
-        _viewModel = .init(wrappedValue: ZcashNetworkViewModel(blockchain: blockchain))
+        _viewModel = .init(wrappedValue: NodeNetworkViewModel(blockchain: blockchain))
         _isPresented = isPresented
+    }
+
+    // Per-chain localization keys follow the "<uid>_network.*" convention
+    private var keyPrefix: String {
+        "\(viewModel.blockchain.type.uid)_network"
     }
 
     var body: some View {
@@ -17,18 +22,20 @@ struct ZcashNetworkView: View {
                 BottomGradientWrapper {
                     ScrollView {
                         VStack(spacing: 32) {
-                            ThemeText("zcash_network.description".localized, style: .subhead)
+                            ThemeText("\(keyPrefix).description".localized, style: .subhead)
                                 .padding(.horizontal, 16)
 
-                            ListSection {
-                                Cell(
-                                    middle: {
-                                        MultiText(title: "zcash_network.auto_select".localized, subtitle: "zcash_network.auto_select.description".localized)
-                                    },
-                                    right: {
-                                        ThemeToggle(isOn: $viewModel.autoSelectEnabled)
-                                    }
-                                )
+                            if viewModel.autoSelectAvailable {
+                                ListSection {
+                                    Cell(
+                                        middle: {
+                                            MultiText(title: "\(keyPrefix).auto_select".localized, subtitle: "\(keyPrefix).auto_select.description".localized)
+                                        },
+                                        right: {
+                                            ThemeToggle(isOn: $viewModel.autoSelectEnabled)
+                                        }
+                                    )
+                                }
                             }
 
                             ListSection {
@@ -39,7 +46,7 @@ struct ZcashNetworkView: View {
 
                             if !viewModel.customItems.isEmpty {
                                 VStack(spacing: 0) {
-                                    ThemeText("zcash_network.added".localized, style: .subheadSB, colorStyle: .secondary)
+                                    ThemeText("\(keyPrefix).added".localized, style: .subheadSB, colorStyle: .secondary)
                                         .padding(.horizontal, 16)
                                         .padding(.bottom, 12)
                                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -60,21 +67,20 @@ struct ZcashNetworkView: View {
                                 }
                             }
 
-                            ListSection {
-                                Cell(
-                                    left: {
-                                        ThemeImage("plus", size: 24, colorStyle: .yellow)
-                                    },
-                                    middle: {
-                                        ThemeText("zcash_network.add_new".localized, style: .body, colorStyle: .yellow)
-                                    },
-                                    action: {
-                                        Coordinator.shared.present { isPresented in
-                                            AddZcashNodeView(blockchainType: viewModel.blockchain.type, isPresented: isPresented)
+                            if viewModel.addNodeAvailable {
+                                ListSection {
+                                    Cell(
+                                        left: {
+                                            ThemeImage("plus", size: 24, colorStyle: .yellow)
+                                        },
+                                        middle: {
+                                            ThemeText("\(keyPrefix).add_new".localized, style: .body, colorStyle: .yellow)
+                                        },
+                                        action: {
+                                            viewModel.addNode()
                                         }
-                                        stat(page: .blockchainSettingsZcash, event: .openBlockchainSettingsZcashAdd(chainUid: viewModel.blockchain.type.uid))
-                                    }
-                                )
+                                    )
+                                }
                             }
                         }
                         .padding(EdgeInsets(top: 12, leading: 16, bottom: 32, trailing: 16))
@@ -92,7 +98,7 @@ struct ZcashNetworkView: View {
                         }
                     }
                     .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                    .disabled(!viewModel.saveEnabled || viewModel.processing)
+                    .disabled(!viewModel.saveEnabled || viewModel.processing || (viewModel.autoSelectEnabled && viewModel.pingsInFlight))
                     .animation(.default, value: viewModel.processing)
                 }
             }
@@ -115,13 +121,13 @@ struct ZcashNetworkView: View {
         }
     }
 
-    @ViewBuilder private func nodeCell(item: ZcashNetworkViewModel.NodeItem) -> some View {
+    @ViewBuilder private func nodeCell(item: NodeNetworkViewModel.NodeItem) -> some View {
         Cell(
             middle: {
                 MultiText(title: item.name, subtitle: item.url)
             },
             right: {
-                pingBadge(state: viewModel.pingStates[item.url])
+                pingBadge(state: viewModel.pingStates[item.id])
 
                 if item.selected {
                     Image.checkIcon
@@ -134,14 +140,14 @@ struct ZcashNetworkView: View {
         )
     }
 
-    @ViewBuilder private func pingBadge(state: ZcashNetworkViewModel.PingState?) -> some View {
+    @ViewBuilder private func pingBadge(state: NodeNetworkViewModel.PingState?) -> some View {
         // Plain font/color instead of themeSubhead2, which expands to full width and would
         // float the badge mid-cell instead of keeping it at the trailing edge
         switch state {
         case .loading:
             ProgressView()
         case .unreachable:
-            Text("zcash_network.unreachable".localized).font(.themeSubhead2).foregroundColor(.themeLucian)
+            Text("\(keyPrefix).unreachable".localized).font(.themeSubhead2).foregroundColor(.themeLucian)
         case let .reachable(text, level):
             switch level {
             case .good: Text(text).font(.themeSubhead2).foregroundColor(.themeRemus)

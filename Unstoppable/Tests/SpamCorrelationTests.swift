@@ -55,7 +55,7 @@ struct SpamCorrelationTests {
     // MARK: - Window
 
     @Test func windowKeepsTenMostRecentDistinctAddresses() throws {
-        let rows = (0 ..< 15).map { ("0xcounterparty$0", $0 * 10, Int?.none) }
+        let rows = (0 ..< 15).map { ("0xcounterparty\($0)", $0 * 10, Int?.none) }
         let cache = try makeCache(rows: rows)
 
         let window = cache.get(blockchainType: .ethereum)

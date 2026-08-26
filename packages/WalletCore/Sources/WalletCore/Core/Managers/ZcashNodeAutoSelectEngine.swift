@@ -27,7 +27,8 @@ class ZcashNodeAutoSelectEngine {
 
 extension ZcashNodeAutoSelectEngine: INodeAutoSelectEngine {
     var autoSelectEnabled: Bool {
-        nodeManager.autoSelectEnabled
+        get { nodeManager.autoSelectEnabled }
+        set { nodeManager.autoSelectEnabled = newValue }
     }
 
     var currentNodeId: String {
@@ -35,7 +36,7 @@ extension ZcashNodeAutoSelectEngine: INodeAutoSelectEngine {
     }
 
     func pingNodes() async -> [NodeAutoSelector.PingResult] {
-        await ZcashNodeManager.candidates(from: nodeManager.pingNodes(blockchainType: .zcash))
+        await nodeManager.pingNodes(blockchainType: .zcash)
     }
 
     // Persist-only-on-success: switchEndpoint carries its own busy gate and reverts on failure,
