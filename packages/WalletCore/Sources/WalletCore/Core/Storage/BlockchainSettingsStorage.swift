@@ -12,6 +12,7 @@ public class BlockchainSettingsStorage {
     private let keyMoneroAutoSelect = "monero-auto-select"
     private let keyZanoNode = "zano-node"
     private let keyZcashNode = "zcash-node"
+    private let keyEndpointAutoSelect = "endpoint-auto-select"
 
     public init(storage: BlockchainSettingRecordStorage) {
         self.storage = storage
@@ -98,6 +99,28 @@ extension BlockchainSettingsStorage {
     func save(zanoNodeUrl: String, blockchainType: BlockchainType) {
         let record = BlockchainSettingRecord(blockchainUid: blockchainType.uid, key: keyZanoNode, value: zanoNodeUrl)
         try? storage.save(record: record)
+    }
+
+    // Chain-agnostic flag: explicit values win, absent/malformed falls back to the chain's
+    // default (a corrupted record must not flip the feature). Monero keeps its legacy key.
+    func endpointAutoSelectEnabled(blockchainType: BlockchainType) -> Bool {
+        switch try? storage.record(blockchainUid: blockchainType.uid, key: keyEndpointAutoSelect)?.value {
+        case "true": return true
+        case "false": return false
+        default: return Self.defaultEndpointAutoSelect(blockchainType: blockchainType)
+        }
+    }
+
+    func save(endpointAutoSelectEnabled: Bool, blockchainType: BlockchainType) {
+        let record = BlockchainSettingRecord(blockchainUid: blockchainType.uid, key: keyEndpointAutoSelect, value: endpointAutoSelectEnabled ? "true" : "false")
+        try? storage.save(record: record)
+    }
+
+    private static func defaultEndpointAutoSelect(blockchainType: BlockchainType) -> Bool {
+        switch blockchainType {
+        case .zcash: return true
+        default: return false
+        }
     }
 
     func zcashNodeUrl(blockchainType: BlockchainType) -> String? {

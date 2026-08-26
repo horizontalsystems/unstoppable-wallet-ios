@@ -190,13 +190,13 @@ class AppBackupProvider {
             syncSources = EvmSyncSourceManager.SyncSourceBackup(selected: evmSyncSourceManager.selectedSources, custom: [])
             moneroNodeBackup = MoneroNodeManager.NodeBackup(selected: moneroNodeManager.selectedNodes, custom: [])
             zanoNodeBackup = ZanoNodeManager.NodeBackup(selected: zanoNodeManager.selectedNodes, custom: [])
-            zcashNodeBackup = ZcashNodeManager.NodeBackup(selected: zcashNodeManager.selectedNodes, custom: [])
+            zcashNodeBackup = ZcashNodeManager.NodeBackup(selected: zcashNodeManager.selectedNodes, custom: [], autoSelect: zcashNodeManager.autoSelectEnabled)
             thorChainEndpointBackup = thorChainEndpointManager.backup
         } else {
             syncSources = .init(selected: [], custom: [])
             moneroNodeBackup = .init(selected: [], custom: [])
             zanoNodeBackup = .init(selected: [], custom: [])
-            zcashNodeBackup = .init(selected: [], custom: [])
+            zcashNodeBackup = .init(selected: [], custom: [], autoSelect: nil)
             thorChainEndpointBackup = .init(familyId: nil)
         }
 
@@ -290,7 +290,7 @@ extension AppBackupProvider {
             evmSyncSourceManager.restore(selected: raw.settings.evmSyncSources.selected, custom: raw.customSyncSources)
             moneroNodeManager.restore(selected: raw.settings.moneroNodes.selected, custom: raw.customMoneroNodes)
             zanoNodeManager.restore(selected: raw.settings.zanoNodes.selected, custom: raw.customZanoNodes)
-            zcashNodeManager.restore(selected: raw.settings.zcashEndpoints.selected, custom: raw.customZcashNodes)
+            zcashNodeManager.restore(selected: raw.settings.zcashEndpoints.selected, custom: raw.customZcashNodes, autoSelect: raw.settings.zcashEndpoints.autoSelect)
             thorChainEndpointManager.restore(backup: raw.settings.thorChainEndpoint)
         }
 
@@ -377,7 +377,7 @@ extension AppBackupProvider {
             evmSyncSources: .init(selected: raw.settings.evmSyncSources.selected, custom: customEvmSyncSource),
             moneroNodes: .init(selected: raw.settings.moneroNodes.selected, custom: customMoneroNode),
             zanoNodes: .init(selected: raw.settings.zanoNodes.selected, custom: customZanoNode),
-            zcashEndpoints: .init(selected: raw.settings.zcashEndpoints.selected, custom: customZcashNode)
+            zcashEndpoints: .init(selected: raw.settings.zcashEndpoints.selected, custom: customZcashNode, autoSelect: raw.settings.zcashEndpoints.autoSelect)
         )
 
         return FullBackup(

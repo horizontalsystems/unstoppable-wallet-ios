@@ -1,5 +1,6 @@
 import BitcoinCore
 import Combine
+import Foundation
 import MarketKit
 import RxRelay
 import RxSwift
@@ -16,6 +17,7 @@ class BlockchainSettingsViewModel: ObservableObject {
     private let mayaChainEndpointManager: ThorChainEndpointManager
     private let marketKit: MarketKit.Kit
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     @Published var evmItems: [Item] = []
     @Published var btcItems: [Item] = []
@@ -44,7 +46,12 @@ class BlockchainSettingsViewModel: ObservableObject {
         }
         subscribe(MainScheduler.instance, disposeBag, moneroNodeManager.nodeObservable) { [weak self] _ in self?.syncBtcItems() }
         subscribe(MainScheduler.instance, disposeBag, zanoNodeManager.nodeObservable) { [weak self] _ in self?.syncBtcItems() }
-        subscribe(MainScheduler.instance, disposeBag, zcashNodeManager.nodeObservable) { [weak self] _ in self?.syncBtcItems() }
+        zcashNodeManager.nodeUpdatedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.syncBtcItems()
+            }
+            .store(in: &cancellables)
         subscribe(MainScheduler.instance, disposeBag, thorChainEndpointManager.endpointObservable) { [weak self] in self?.syncThorChainItem() }
         subscribe(MainScheduler.instance, disposeBag, mayaChainEndpointManager.endpointObservable) { [weak self] in self?.syncMayaChainItem() }
 

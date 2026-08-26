@@ -26,6 +26,7 @@ public class AppManager {
     private let solanaKitManager: SolanaKitManager
     private let swapHistoryManager: SwapHistoryManager
     private let moneroNodeManager: MoneroNodeManager
+    private let zcashNodeAutoSelector: NodeAutoSelector
 
     private let didBecomeActiveSubjectOld = PublishSubject<Void>()
     private let willEnterForegroundSubjectOld = PublishSubject<Void>()
@@ -43,7 +44,7 @@ public class AppManager {
          evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager, statManager: StatManager,
          nftMetadataSyncer: NftMetadataSyncer, tonKitManager: TonKitManager,
          stellarKitManager: StellarKitManager, solanaKitManager: SolanaKitManager,
-         swapHistoryManager: SwapHistoryManager, moneroNodeManager: MoneroNodeManager)
+         swapHistoryManager: SwapHistoryManager, moneroNodeManager: MoneroNodeManager, zcashNodeAutoSelector: NodeAutoSelector)
     {
         self.widgetRefresher = widgetRefresher
         self.accountManager = accountManager
@@ -67,6 +68,7 @@ public class AppManager {
         self.solanaKitManager = solanaKitManager
         self.swapHistoryManager = swapHistoryManager
         self.moneroNodeManager = moneroNodeManager
+        self.zcashNodeAutoSelector = zcashNodeAutoSelector
     }
 
     private func warmUp() {
@@ -92,6 +94,14 @@ public extension AppManager {
             Task { [moneroNodeManager, adapterManager] in
                 await moneroNodeManager.autoSelectFastestNodeOnStartup()
                 adapterManager.initMissingAdapters()
+            }
+        }
+
+        // Fire-and-forget, no adapter deferral: the adapter starts on the stored node and the
+        // probe switches it in place only when a faster node wins. Gated on a ZEC wallet existing.
+        if walletManager.activeWallets.contains(where: { $0.token.blockchainType == .zcash }) {
+            Task { [zcashNodeAutoSelector] in
+                await zcashNodeAutoSelector.autoSelectFastestNodeOnStartup()
             }
         }
 

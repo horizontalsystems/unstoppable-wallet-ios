@@ -24,7 +24,10 @@ class ZcashSyncService {
     private var resubmitWhenHeightIsAvailable = false // queue-confined with `sync(state:)`
 
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
+    // Combine is primary; the Rx subject stays only to bridge the IBalanceAdapter contract
+    // (AppManager's parallel-pair idiom).
     private let balanceStateSubject = PublishSubject<AdapterState>()
+    private let balanceStateUpdatedSubject = PassthroughSubject<AdapterState, Never>()
     private let depositAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
 
     private var started = false
@@ -52,6 +55,7 @@ class ZcashSyncService {
 
     private(set) var state: ZCashAdapterState = .idle {
         didSet {
+            balanceStateUpdatedSubject.send(state.adapterState)
             balanceStateSubject.onNext(state.adapterState)
             syncing = state.adapterState.syncing
         }
@@ -117,6 +121,10 @@ class ZcashSyncService {
 
     var balanceStateUpdatedObservable: Observable<AdapterState> {
         balanceStateSubject.asObservable()
+    }
+
+    var balanceStateUpdatedPublisher: AnyPublisher<AdapterState, Never> {
+        balanceStateUpdatedSubject.eraseToAnyPublisher()
     }
 
     var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {

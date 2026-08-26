@@ -2218,6 +2218,9 @@
 "zcash_network.added" = "Added";
 "zcash_network.add_new" = "Add New";
 "zcash_network.description" = "Choose the lightwallet server Unstoppable app should use for synchronizing wallet(s).";
+"zcash_network.auto_select" = "Auto-Select Server";
+"zcash_network.auto_select.description" = "Connect to the fastest up-to-date server";
+"zcash_network.unreachable" = "Unreachable";
 
 "add_zcash_node.title" = "Add Server";
 "add_zcash_node.description" = "Enter the lightwalletd server address (host or host:port).";

@@ -51,9 +51,12 @@ class BackupPromptManager {
             .sink { [weak self] in self?.showIfNeeded() }
             .store(in: &cancellables)
 
-        subscribe(disposeBag, adapterManager.adapterDataReadyObservable) { [weak self] _ in
-            DispatchQueue.main.async { self?.sync() }
-        }
+        adapterManager.adapterDataReadyPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.sync()
+            }
+            .store(in: &cancellables)
 
         sync()
     }

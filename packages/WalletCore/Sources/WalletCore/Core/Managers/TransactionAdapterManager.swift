@@ -1,15 +1,16 @@
+import Combine
 import Foundation
-import RxRelay
-import RxSwift
 
 public class TransactionAdapterManager {
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
+    // serial: replaces the SerialDispatchQueueScheduler the Rx subscription used
+    private let initQueue = DispatchQueue(label: "\(AppConfig.label).transaction-adapter-manager", qos: .userInitiated)
 
     private let adapterManager: AdapterManager
     private let evmBlockchainManager: EvmBlockchainManager
     private let adapterFactory: AdapterFactory
 
-    private let adaptersReadyRelay = PublishRelay<Void>()
+    private let adaptersReadySubject = PassthroughSubject<Void, Never>()
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).transactions_adapter_manager", qos: .userInitiated)
     private var _adapterMap = [TransactionSource: ITransactionsAdapter]()
@@ -19,12 +20,12 @@ public class TransactionAdapterManager {
         self.evmBlockchainManager = evmBlockchainManager
         self.adapterFactory = adapterFactory
 
-        adapterManager.adapterDataReadyObservable
-            .observeOn(SerialDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe(onNext: { [weak self] adapterData in
+        adapterManager.adapterDataReadyPublisher
+            .receive(on: initQueue)
+            .sink { [weak self] adapterData in
                 self?.initAdapters(adapterMap: adapterData.adapterMap)
-            })
-            .disposed(by: disposeBag)
+            }
+            .store(in: &cancellables)
     }
 
     private func initAdapters(adapterMap: [Wallet: IAdapter]) {
@@ -62,7 +63,7 @@ public class TransactionAdapterManager {
 
         queue.async {
             self._adapterMap = newAdapterMap
-            self.adaptersReadyRelay.accept(())
+            self.adaptersReadySubject.send(())
         }
     }
 }
@@ -72,8 +73,8 @@ public extension TransactionAdapterManager {
         queue.sync { _adapterMap }
     }
 
-    var adaptersReadyObservable: Observable<Void> {
-        adaptersReadyRelay.asObservable()
+    var adaptersReadyPublisher: AnyPublisher<Void, Never> {
+        adaptersReadySubject.eraseToAnyPublisher()
     }
 
     func adapter(for source: TransactionSource) -> ITransactionsAdapter? {
