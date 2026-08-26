@@ -12,6 +12,7 @@ public class Core {
 
         SendHandlerFactory.unstoppableHandlers.forEach { SendHandlerFactory.register($0) }
         SendHandlerFactory.unstoppablePreSendHandlers.forEach { SendHandlerFactory.register($0) }
+        NodeNetworkHandlerFactory.unstoppableHandlers.forEach { NodeNetworkHandlerFactory.register($0) }
         TransactionServiceFactory.unstoppableTransactionServices.forEach { TransactionServiceFactory.register($0) }
         SwapBroadcasterFactory.register(SwapBroadcasterFactory.unstoppableBroadcasters)
         // EvmKit syncers/decorators are registered by each app (no shared fallback): stable in StableCore, the

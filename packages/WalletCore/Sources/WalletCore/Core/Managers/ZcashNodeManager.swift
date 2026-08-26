@@ -143,35 +143,20 @@ extension ZcashNodeManager {
         blockchainSettingsStorage.save(zcashNodeUrl: node.url.absoluteString, blockchainType: blockchainType)
     }
 
-    // One probe serves both consumers: settings-screen badges (all nodes, nil = unreachable
-    // or failed chain validation) and, via candidates(from:), the auto-select policy.
-    func pingNodes(blockchainType: BlockchainType) async -> [NodePing] {
+    // One probe serves both consumers: settings-screen badges and the auto-select policy.
+    // nil responseTime = unreachable or failed chain validation — the selector skips those.
+    func pingNodes(blockchainType: BlockchainType) async -> [NodeAutoSelector.PingResult] {
         let nodes = allNodes(blockchainType: blockchainType)
         let validated = await validatedProbe(nodes: nodes)
 
         return nodes.map { node in
             let probe = validated.first { $0.node == node }
-            return NodePing(node: node, responseTime: probe?.responseTime, height: probe?.height ?? 0)
-        }
-    }
-
-    // Auto-select candidates in the engine's projection: reachable, chain-valid nodes only.
-    // Customs are https-only by construction (customNodes), so every reachable node qualifies.
-    static func candidates(from pings: [NodePing]) -> [NodeAutoSelector.PingResult] {
-        pings.compactMap { ping in
-            guard let responseTime = ping.responseTime else { return nil }
             return NodeAutoSelector.PingResult(
-                id: ping.node.url.absoluteString,
-                responseTime: responseTime,
-                height: UInt64(max(0, ping.height))
+                id: node.url.absoluteString,
+                responseTime: probe?.responseTime,
+                height: probe.map { UInt64(max(0, $0.height)) } ?? 0
             )
         }
-    }
-
-    struct NodePing {
-        let node: ZcashNode
-        let responseTime: TimeInterval?
-        let height: BlockHeight
     }
 
     private func validatedProbe(nodes: [ZcashNode]) async -> [(node: ZcashNode, responseTime: TimeInterval, height: BlockHeight)] {

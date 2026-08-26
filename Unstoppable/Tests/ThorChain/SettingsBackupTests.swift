@@ -27,7 +27,7 @@ struct SettingsBackupTests {
             evmSyncSources: .init(selected: [], custom: []),
             moneroNodes: .init(selected: [], custom: []),
             zanoNodes: .init(selected: [], custom: []),
-            zcashEndpoints: .init(selected: [], custom: []),
+            zcashEndpoints: .init(selected: [], custom: [], autoSelect: nil),
             thorChainEndpoint: thorChainEndpoint,
             btcModes: [],
             remoteContactsSync: nil,

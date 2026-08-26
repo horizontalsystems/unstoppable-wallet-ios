@@ -41,7 +41,7 @@ struct NodeAutoSelectorTests {
     @Test func hugeHeightDoesNotTrap() {
         let winner = NodeAutoSelector.fastestNodeId(
             results: [result("a", time: 0.5, height: UInt64.max), result("b", time: 0.1, height: 100)],
-            currentId: "b"
+            currentId: "a"
         )
         #expect(winner == nil)
     }
@@ -79,25 +79,35 @@ struct NodeAutoSelectorTests {
         #expect(winner == "b")
     }
 
-    // MARK: - Zcash candidate projection
+    // MARK: - Unreachable results (nil responseTime)
 
-    @Test func unreachableNodesAreNotCandidates() {
-        let node = ZcashNode(name: "a", url: URL(string: "https://a.example:443")!)
-        let candidates = ZcashNodeManager.candidates(from: [
-            .init(node: node, responseTime: nil, height: 0),
-            .init(node: node, responseTime: 0.2, height: 50),
-        ])
-        #expect(candidates.count == 1)
-        #expect(candidates[0].responseTime == 0.2)
-        #expect(candidates[0].height == 50)
+    @Test func unreachableNodeIsNeverSelected() {
+        let winner = NodeAutoSelector.fastestNodeId(
+            results: [result("a", time: 0.5, height: 100), NodeAutoSelector.PingResult(id: "b", responseTime: nil, height: 100)],
+            currentId: "a"
+        )
+        #expect(winner == nil)
     }
 
-    @Test func negativeHeightClampsToZero() {
-        let node = ZcashNode(name: "a", url: URL(string: "https://a.example:443")!)
-        let candidates = ZcashNodeManager.candidates(from: [
-            .init(node: node, responseTime: 0.2, height: -5),
-        ])
-        #expect(candidates[0].height == 0)
+    @Test func unreachableHeightDoesNotRaiseTheTip() {
+        // A dead node's height must not push reachable nodes past the lag threshold
+        let winner = NodeAutoSelector.fastestNodeId(
+            results: [
+                NodeAutoSelector.PingResult(id: "x", responseTime: nil, height: UInt64.max),
+                result("a", time: 0.5, height: 100),
+                result("b", time: 0.2, height: 100),
+            ],
+            currentId: "a"
+        )
+        #expect(winner == "b")
+    }
+
+    @Test func unreachableCurrentGetsNoHysteresis() {
+        let winner = NodeAutoSelector.fastestNodeId(
+            results: [NodeAutoSelector.PingResult(id: "a", responseTime: nil, height: 100), result("b", time: 0.9, height: 100)],
+            currentId: "a"
+        )
+        #expect(winner == "b")
     }
 
     // MARK: - Backup codec

@@ -2,28 +2,37 @@ import Combine
 import Foundation
 import HsToolKit
 
-// Generic "time to re-check the node" signal; the conforming class encapsulates its own
+// Generic "time to re-check" signal; the conforming class encapsulates its own
 // source composition (sync state, foreground, ...) so new sources never grow this contract.
-protocol IUpdateSignalProvider: AnyObject {
+public protocol IUpdateSignalProvider: AnyObject {
     var updateSignalPublisher: AnyPublisher<Void, Never> { get }
 }
 
 // Chain-side operations behind the seam (analog: ZcashMigrator ↔ IZcashMigrationEngine);
-// pingNodes() returns ONLY auto-select candidates — validity/eligibility are the chain's job.
-protocol INodeAutoSelectEngine: AnyObject {
-    var autoSelectEnabled: Bool { get }
+// pingNodes() reports every node (nil responseTime = unreachable or chain-invalid) —
+// eligibility filtering is the selector's job.
+public protocol INodeAutoSelectEngine: AnyObject {
+    var autoSelectEnabled: Bool { get set }
     var currentNodeId: String { get }
     func pingNodes() async -> [NodeAutoSelector.PingResult]
+    // Switches the live adapter itself and persists WITHOUT firing the node-updated relay —
+    // the relay consumer would switch the adapter a second time (see INodeProvider).
     func switchNode(id: String) async throws
 }
 
 // App-scoped orchestrator: fire → single-flight → probe → policy → switch; pacing lives in
 // the signal provider, and a nil provider degrades the chain to startup-only auto-select.
-class NodeAutoSelector {
-    struct PingResult {
-        let id: String
-        let responseTime: TimeInterval
-        let height: UInt64
+public class NodeAutoSelector {
+    public struct PingResult {
+        public let id: String
+        public let responseTime: TimeInterval?
+        public let height: UInt64
+
+        public init(id: String, responseTime: TimeInterval?, height: UInt64) {
+            self.id = id
+            self.responseTime = responseTime
+            self.height = height
+        }
     }
 
     // Nodes lagging more than this many blocks behind the best-known tip are never
@@ -53,14 +62,18 @@ class NodeAutoSelector {
             .store(in: &cancellables)
     }
 
-    // Picks the fastest of the candidates that are not lagging behind the best-known tip.
+    // Picks the fastest reachable candidate that is not lagging behind the best-known tip.
     // Returns nil when the current node should be kept (hysteresis) or no candidate qualifies.
     static func fastestNodeId(results: [PingResult], currentId: String) -> String? {
-        guard let maxHeight = results.map(\.height).max() else { return nil }
+        let reachable = results.compactMap { result in
+            result.responseTime.map { (id: result.id, responseTime: $0, height: result.height) }
+        }
+
+        guard let maxHeight = reachable.map(\.height).max() else { return nil }
 
         // Subtraction, not `height + threshold`: a height near UInt64.max would trap the
         // addition; maxHeight is the candidate maximum, so the difference cannot underflow.
-        let fresh = results.filter { maxHeight - $0.height <= heightLagThreshold }
+        let fresh = reachable.filter { maxHeight - $0.height <= heightLagThreshold }
 
         guard let fastest = fresh.min(by: { $0.responseTime < $1.responseTime }) else { return nil }
 

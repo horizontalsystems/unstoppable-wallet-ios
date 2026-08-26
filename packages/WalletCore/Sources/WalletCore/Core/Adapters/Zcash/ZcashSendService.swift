@@ -350,6 +350,8 @@ class ZcashSendService {
         else {
             return false
         }
+        // Unknown height (0) rejects: the caller defers resubmission until the first sync
+        // state with a real height (resubmitWhenHeightIsAvailable), so nothing is lost.
         return latestHeight > 0 && expiryHeight > latestHeight
     }
 

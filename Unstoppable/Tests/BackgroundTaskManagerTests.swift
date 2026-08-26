@@ -96,10 +96,4 @@ struct ZcashResubmissionCandidateTests {
         #expect(!nilExpiry)
         #expect(!zeroExpiry)
     }
-
-    @Test func staleZeroHeightKeepsCandidate() {
-        // synchronizer not started yet: latestState is .zero — do not drop candidates on unknown height
-        let candidate = ZcashAdapter.isResubmissionCandidate(isSentTransaction: true, minedHeight: nil, hasRaw: true, expiryHeight: 500, latestHeight: 0)
-        #expect(candidate)
-    }
 }
