@@ -2218,6 +2218,9 @@
 "zcash_network.added" = "Adicionado";
 "zcash_network.add_new" = "Adicionar novo";
 "zcash_network.description" = "Escolha o servidor lightwallet que o app Unstoppable deve usar para sincronizar a(s) carteira(s).";
+"zcash_network.auto_select" = "Selecionar servidor automaticamente";
+"zcash_network.auto_select.description" = "Conectar ao servidor atualizado mais rápido";
+"zcash_network.unreachable" = "Inacessível";
 
 "add_zcash_node.title" = "Adicionar servidor";
 "add_zcash_node.description" = "Insira o endereço do servidor lightwalletd (host ou host:porta).";
