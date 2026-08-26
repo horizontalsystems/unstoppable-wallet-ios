@@ -436,6 +436,10 @@ extension ZcashAdapter: IBalanceAdapter {
         syncService.balanceStateUpdatedObservable
     }
 
+    var balanceStateUpdatedPublisher: AnyPublisher<AdapterState, Never> {
+        syncService.balanceStateUpdatedPublisher
+    }
+
     var balanceData: BalanceData {
         balanceService.balanceData
     }

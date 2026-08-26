@@ -35,7 +35,7 @@ public class MultiSwapViewModel: ObservableObject {
     private let autoResolveTokenOut: Bool
     private var tokensManuallySet = false
     private var currentAccountId: String?
-    private var defaultTokensDisposeBag = DisposeBag()
+    private var defaultTokensCancellable: AnyCancellable?
 
     private var enteringFiat = false
 
@@ -376,7 +376,14 @@ public class MultiSwapViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
-        subscribe(disposeBag, adapterManager.adapterDataReadyObservable) { [weak self] _ in self?.syncAdapter() }
+        adapterManager.adapterDataReadyPublisher
+            // off the sender's serial queue: syncAdapter re-enters adapterManager.queue.sync
+            // (the Rx subscribe helper hopped via observeOn(Concurrent...) — keep that semantic)
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
+            .sink { [weak self] _ in
+                self?.syncAdapter()
+            }
+            .store(in: &cancellables)
 
         subscribeToProviders()
 
@@ -415,7 +422,7 @@ public class MultiSwapViewModel: ObservableObject {
 
     // one-shot: resolve now if adapters are ready or there is nothing to wait for, otherwise once on ready
     private func scheduleDefaultTokensSync() {
-        defaultTokensDisposeBag = DisposeBag()
+        defaultTokensCancellable = nil
 
         let wallets = walletManager.activeWallets
         let resolvesImmediately = wallets.isEmpty || wallets.contains { adapterManager.balanceAdapter(for: $0) != nil }
@@ -425,11 +432,12 @@ public class MultiSwapViewModel: ObservableObject {
             return
         }
 
-        subscribe(defaultTokensDisposeBag, adapterManager.adapterDataReadyObservable.take(1)) { [weak self] _ in
-            DispatchQueue.main.async {
+        defaultTokensCancellable = adapterManager.adapterDataReadyPublisher
+            .prefix(1)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
                 self?.syncDefaultTokens()
             }
-        }
     }
 
     private func syncDefaultTokens() {

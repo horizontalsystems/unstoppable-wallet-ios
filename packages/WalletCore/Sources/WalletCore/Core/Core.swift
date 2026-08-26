@@ -104,6 +104,8 @@ public class Core {
     let moneroNodeManager: MoneroNodeManager
     let zanoNodeManager: ZanoNodeManager
     let zcashNodeManager: ZcashNodeManager
+    let zcashNodeAutoSelector: NodeAutoSelector
+    private let zcashNodeUpdateSignalProvider: ZcashNodeUpdateSignalProvider
     let thorChainEndpointManager: ThorChainEndpointManager
     let mayaChainEndpointManager: ThorChainEndpointManager
     let restoreStateManager: RestoreStateManager
@@ -509,6 +511,13 @@ public class Core {
 
         backgroundTaskManager = BackgroundTaskManager()
 
+        zcashNodeUpdateSignalProvider = ZcashNodeUpdateSignalProvider(adapterManager: adapterManager)
+        zcashNodeAutoSelector = NodeAutoSelector(
+            engine: ZcashNodeAutoSelectEngine(nodeManager: zcashNodeManager, coinManager: coinManager, adapterManager: adapterManager),
+            updateSignalProvider: zcashNodeUpdateSignalProvider,
+            reachabilityManager: reachabilityManager
+        )
+
         appManager = AppManager(
             widgetRefresher: widgetRefresher,
             accountManager: accountManager,
@@ -531,7 +540,8 @@ public class Core {
             stellarKitManager: stellarKitManager,
             solanaKitManager: solanaKitManager,
             swapHistoryManager: swapHistoryManager,
-            moneroNodeManager: moneroNodeManager
+            moneroNodeManager: moneroNodeManager,
+            zcashNodeAutoSelector: zcashNodeAutoSelector
         )
 
         appWorkerRegistry = AppWorkerRegistry(appManager: appManager)

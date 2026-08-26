@@ -21,6 +21,17 @@ struct ZcashNetworkView: View {
                                 .padding(.horizontal, 16)
 
                             ListSection {
+                                Cell(
+                                    middle: {
+                                        MultiText(title: "zcash_network.auto_select".localized, subtitle: "zcash_network.auto_select.description".localized)
+                                    },
+                                    right: {
+                                        ThemeToggle(isOn: $viewModel.autoSelectEnabled)
+                                    }
+                                )
+                            }
+
+                            ListSection {
                                 ForEach(viewModel.defaultItems) { item in
                                     nodeCell(item: item)
                                 }
@@ -110,13 +121,35 @@ struct ZcashNetworkView: View {
                 MultiText(title: item.name, subtitle: item.url)
             },
             right: {
+                pingBadge(state: viewModel.pingStates[item.url])
+
                 if item.selected {
                     Image.checkIcon
                 }
             },
-            action: {
+            // While auto-select is on, the fastest node wins - manual choice is disabled
+            action: viewModel.autoSelectEnabled ? nil : {
                 viewModel.selectNode(item)
             }
         )
+    }
+
+    @ViewBuilder private func pingBadge(state: ZcashNetworkViewModel.PingState?) -> some View {
+        // Plain font/color instead of themeSubhead2, which expands to full width and would
+        // float the badge mid-cell instead of keeping it at the trailing edge
+        switch state {
+        case .loading:
+            ProgressView()
+        case .unreachable:
+            Text("zcash_network.unreachable".localized).font(.themeSubhead2).foregroundColor(.themeLucian)
+        case let .reachable(text, level):
+            switch level {
+            case .good: Text(text).font(.themeSubhead2).foregroundColor(.themeRemus)
+            case .medium: Text(text).font(.themeSubhead2).foregroundColor(.themeJacob)
+            case .slow: Text(text).font(.themeSubhead2).foregroundColor(.themeGray)
+            }
+        case nil:
+            EmptyView()
+        }
     }
 }

@@ -106,7 +106,7 @@ class SettingsBackup: Codable {
         evmSyncSources = (try? container.decode(EvmSyncSourceManager.SyncSourceBackup.self, forKey: .evmSyncSources)) ?? .init(selected: [], custom: [])
         moneroNodes = (try? container.decode(MoneroNodeManager.NodeBackup.self, forKey: .moneroNodes)) ?? .init(selected: [], custom: [])
         zanoNodes = (try? container.decode(ZanoNodeManager.NodeBackup.self, forKey: .zanoNodes)) ?? .init(selected: [], custom: [])
-        zcashEndpoints = (try? container.decode(ZcashNodeManager.NodeBackup.self, forKey: .zcashEndpoints)) ?? .init(selected: [], custom: [])
+        zcashEndpoints = (try? container.decode(ZcashNodeManager.NodeBackup.self, forKey: .zcashEndpoints)) ?? .init(selected: [], custom: [], autoSelect: nil)
         thorChainEndpoint = (try? container.decode(ThorChainEndpointManager.EndpointBackup.self, forKey: .thorChainEndpoint)) ?? .init(familyId: nil)
         btcModes = (try? container.decode([BtcBlockchainManager.BtcRestoreModeBackup].self, forKey: .btcModes)) ?? []
         remoteContactsSync = try? container.decode(Bool.self, forKey: .remoteContactsSync)

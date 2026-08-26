@@ -40,12 +40,12 @@ class ZcashWalletTokenViewModel: ObservableObject {
             })
             .disposed(by: disposeBag)
 
-        adapter.balanceStateUpdatedObservable
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
+        adapter.balanceStateUpdatedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
                 self?.ironwoodActive = self?.adapter.isIronwoodActive ?? false
-            })
-            .disposed(by: disposeBag)
+            }
+            .store(in: &cancellables)
     }
 
     private func recreateAdapter(birthdayHeight: Int) {

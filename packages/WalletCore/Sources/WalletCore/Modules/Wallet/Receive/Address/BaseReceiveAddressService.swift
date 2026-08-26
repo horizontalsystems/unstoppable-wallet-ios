@@ -2,15 +2,13 @@ import Combine
 import Foundation
 import HsExtensions
 import MarketKit
-import RxCocoa
-import RxSwift
 
 class BaseReceiveAddressService {
     private let adapterManager = Core.shared.adapterManager
     let wallet: Wallet
 
-    private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
+    private var adapterDataCancellable: AnyCancellable?
 
     private(set) var state: DataStatus<ReceiveAddress> = .loading {
         didSet {
@@ -25,9 +23,12 @@ class BaseReceiveAddressService {
     init(wallet: Wallet) {
         self.wallet = wallet
 
-        subscribe(disposeBag, adapterManager.adapterDataReadyObservable) { [weak self] adapterData in
-            self?.sync(adapterData: adapterData)
-        }
+        // permanent, unlike `cancellables` which prepare() clears per adapter
+        adapterDataCancellable = adapterManager.adapterDataReadyPublisher
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
+            .sink { [weak self] adapterData in
+                self?.sync(adapterData: adapterData)
+            }
 
         sync(adapterData: adapterManager.adapterData)
     }

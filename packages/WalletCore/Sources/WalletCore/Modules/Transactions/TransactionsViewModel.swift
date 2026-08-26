@@ -94,7 +94,12 @@ class TransactionsViewModel: ObservableObject {
 
         viewItemFactory = TransactionsViewItemFactory(contactLabelService: contactLabelService)
 
-        subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] _ in self?.syncPoolGroup() }
+        adapterManager.adaptersReadyPublisher
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
+            .sink { [weak self] _ in
+                self?.syncPoolGroup()
+            }
+            .store(in: &cancellables)
         subscribe(disposeBag, rateService.ratesChangedObservable) { [weak self] in self?.handleRatesChanged() }
         subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
         subscribe(disposeBag, nftMetadataService.assetsBriefMetadataObservable) { [weak self] in self?.handle(assetsBriefMetadata: $0) }
