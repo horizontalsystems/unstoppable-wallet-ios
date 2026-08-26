@@ -2218,6 +2218,9 @@
 "zcash_network.added" = "Добавлен";
 "zcash_network.add_new" = "Добавить новый";
 "zcash_network.description" = "Выберите сервер lightwallet, который приложение Unstoppable будет использовать для синхронизации кошелька(ов).";
+"zcash_network.auto_select" = "Автовыбор сервера";
+"zcash_network.auto_select.description" = "Подключиться к самому быстрому актуальному серверу";
+"zcash_network.unreachable" = "Недоступен";
 
 "add_zcash_node.title" = "Добавить сервер";
 "add_zcash_node.description" = "Введите адрес сервера lightwalletd (хост или хост:порт).";

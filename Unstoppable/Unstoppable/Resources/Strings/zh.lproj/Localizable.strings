@@ -2218,6 +2218,9 @@
 "zcash_network.added" = "已添加";
 "zcash_network.add_new" = "添加新服务器";
 "zcash_network.description" = "选择 Unstoppable 应用用于同步钱包的轻钱包服务器。";
+"zcash_network.auto_select" = "自动选择服务器";
+"zcash_network.auto_select.description" = "连接到最快的最新服务器";
+"zcash_network.unreachable" = "无法连接";
 
 "add_zcash_node.title" = "添加服务器";
 "add_zcash_node.description" = "输入 lightwalletd 服务器地址（主机或主机:端口）。";

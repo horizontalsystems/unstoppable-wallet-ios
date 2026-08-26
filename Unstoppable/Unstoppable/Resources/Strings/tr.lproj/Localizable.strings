@@ -2218,6 +2218,9 @@
 "zcash_network.added" = "Eklendi";
 "zcash_network.add_new" = "Yeni Ekle";
 "zcash_network.description" = "Unstoppable uygulamasının cüzdan(ları) senkronize etmek için kullanacağı lightwallet sunucusunu seçin.";
+"zcash_network.auto_select" = "Sunucuyu Otomatik Seç";
+"zcash_network.auto_select.description" = "En hızlı güncel sunucuya bağlan";
+"zcash_network.unreachable" = "Ulaşılamıyor";
 
 "add_zcash_node.title" = "Sunucu Ekle";
 "add_zcash_node.description" = "lightwalletd sunucu adresini girin (ana bilgisayar veya ana bilgisayar:port).";
