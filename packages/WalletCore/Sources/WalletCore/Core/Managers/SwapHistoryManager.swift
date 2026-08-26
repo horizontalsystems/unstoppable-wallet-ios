@@ -141,6 +141,22 @@ public extension SwapHistoryManager {
         }
     }
 
+    // mechanism-agnostic hook: the broadcast succeeded but the mechanism can never yield a ref
+    // (e.g. TonKit's send returns Void). Clearing the handle releases the record from
+    // isAwaitingTxHash() so the provider tracks it by providerSwapId alone — without this the
+    // swap would sit "awaiting tx hash" forever.
+    func beginProviderTracking(trackingHandle: String) {
+        do {
+            guard try storage.clearTrackingHandle(trackingHandle) else {
+                return
+            }
+
+            sync()
+        } catch {
+            print(error)
+        }
+    }
+
     // mechanism-agnostic hook: the mechanism itself learned the swap failed (e.g. a reverted /
     // never-mined userOp) — no server tracking involved. Targeted update scoped to pending
     // statuses; a settled swap is never downgraded, a re-delivery is a no-op.

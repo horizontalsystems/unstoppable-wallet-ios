@@ -81,13 +81,20 @@ extension StellarSendHandler: ISendHandler {
     }
 
     func send(data: ISendData) async throws {
+        _ = try await sendCapturingRef(data: data)
+    }
+}
+
+extension StellarSendHandler: ISendHandlerRefCapturing {
+    // Same broadcast path as `send`, returning the on-chain tx hash.
+    func sendCapturingRef(data: ISendData) async throws -> String {
         guard let data = data as? SendData, let operations = data.operations else {
             throw StellarSendHelper.SendError.noStellarKit
         }
 
         let memo = data.memo.map { Memo.text($0) } ?? Memo.none
 
-        _ = try await StellarSendHelper.send(
+        return try await StellarSendHelper.send(
             operations: operations,
             memo: memo,
             keyPair: keyPair

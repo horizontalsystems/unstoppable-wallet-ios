@@ -197,8 +197,11 @@ extension PrivateSendHandler: ISendHandler {
             if let capturing = innerHandler as? ISendHandlerRefCapturing {
                 ref = try await capturing.sendCapturingRef(data: data.inner)
             } else {
+                // A mechanism that can never yield a ref (TonKit's send returns Void). The record
+                // must not stay behind isAwaitingTxHash() — beginProviderTracking below releases it
+                // to providerSwapId-based tracking. Handlers whose mechanism does yield a ref should
+                // conform to ISendHandlerRefCapturing instead: a txHash makes tracking precise.
                 try await innerHandler.send(data: data.inner)
-                // Tracking still works without a hash: NEAR_CONFIDENTIAL polls by uuid alone.
                 ref = nil
             }
         } catch {
@@ -209,7 +212,7 @@ extension PrivateSendHandler: ISendHandler {
         if let ref {
             swapHistoryManager.resolve(trackingHandle: uid, txHash: ref)
         } else {
-            swapHistoryManager.sync()
+            swapHistoryManager.beginProviderTracking(trackingHandle: uid)
         }
 
         // Deliberately no wallet auto-add for tokenOut (unlike a swap): tokenOut == tokenIn.

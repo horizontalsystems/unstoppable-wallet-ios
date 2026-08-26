@@ -165,6 +165,18 @@ extension SwapStorage {
         }
     }
 
+    // releases a mechanism-pending swap whose mechanism broadcast successfully but can never yield
+    // a ref (e.g. TonKit's send returns Void): clearing the handle hands tracking to the provider
+    // by providerSwapId alone, the same way deposit-based swaps are tracked from the start.
+    // Scoped to a nil txHash so it never races a resolve() that already landed
+    func clearTrackingHandle(_ trackingHandle: String) throws -> Bool {
+        try dbPool.write { db in
+            try SwapRecord
+                .filter(SwapRecord.Columns.trackingHandle == trackingHandle && SwapRecord.Columns.txHash == nil)
+                .updateAll(db, SwapRecord.Columns.trackingHandle.set(to: nil)) > 0
+        }
+    }
+
     // targeted status update for a swap whose mechanism reported failure; scoped to pending
     // statuses so a settled swap can never be downgraded and a re-delivery is a no-op
     func markFailed(trackingHandle: String) throws -> Bool {

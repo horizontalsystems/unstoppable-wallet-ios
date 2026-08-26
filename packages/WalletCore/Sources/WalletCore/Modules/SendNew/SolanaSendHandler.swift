@@ -69,17 +69,26 @@ extension SolanaSendHandler: ISendHandler {
     }
 
     func send(data: ISendData) async throws {
+        _ = try await sendCapturingRef(data: data)
+    }
+}
+
+extension SolanaSendHandler: ISendHandlerRefCapturing {
+    // Same broadcast path as `send`, returning the on-chain tx hash.
+    func sendCapturingRef(data: ISendData) async throws -> String {
         guard let data = data as? SendData else {
             throw SendError.invalidData
         }
 
+        let fullTransaction: FullTransaction
+
         if token.type.isNative {
-            try await adapter.sendSol(toAddress: data.address, amount: data.amount, signer: signer)
+            fullTransaction = try await adapter.sendSol(toAddress: data.address, amount: data.amount, signer: signer)
         } else {
             guard case let .spl(mintAddress) = token.type else {
                 throw SendError.invalidData
             }
-            try await adapter.sendSpl(
+            fullTransaction = try await adapter.sendSpl(
                 mintAddress: mintAddress,
                 toAddress: data.address,
                 amount: data.amount,
@@ -87,6 +96,8 @@ extension SolanaSendHandler: ISendHandler {
                 signer: signer
             )
         }
+
+        return fullTransaction.transaction.hash
     }
 }
 

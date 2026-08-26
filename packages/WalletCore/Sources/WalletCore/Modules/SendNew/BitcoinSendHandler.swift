@@ -64,11 +64,20 @@ extension BitcoinSendHandler: ISendHandler {
     }
 
     func send(data: ISendData) async throws {
+        _ = try await sendCapturingRef(data: data)
+    }
+}
+
+extension BitcoinSendHandler: ISendHandlerRefCapturing {
+    // Same broadcast path as `send`, returning the on-chain tx hash.
+    func sendCapturingRef(data: ISendData) async throws -> String {
         guard let data = data as? SendData else {
             throw SendError.invalidData
         }
 
-        try adapter.send(params: data.params)
+        let fullTransaction = try adapter.send(params: data.params)
+
+        return fullTransaction.header.dataHash.hs.reversedHex
     }
 }
 

@@ -62,6 +62,17 @@ final class ThorChainSendHandler: SendHandler, ISendHandler {
     }
 
     func send(data: ISendData) async throws {
+        _ = try await sendCapturingRef(data: data)
+    }
+
+    enum SendError: Error {
+        case invalidData
+    }
+}
+
+extension ThorChainSendHandler: ISendHandlerRefCapturing {
+    // Same broadcast path as `send`, returning the on-chain tx hash.
+    func sendCapturingRef(data: ISendData) async throws -> String {
         guard let data = data as? ThorChainSendData,
               let quote = data.quote
         else {
@@ -72,13 +83,9 @@ final class ThorChainSendHandler: SendHandler, ISendHandler {
 
         switch submission.state {
         case .checkTxAccepted:
-            return
+            return submission.transactionId.hash
         case .unknown:
             throw ThorChainSendHelper.Error.submissionUnknown
         }
-    }
-
-    enum SendError: Error {
-        case invalidData
     }
 }
