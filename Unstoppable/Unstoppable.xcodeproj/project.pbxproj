@@ -1411,7 +1411,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/HsToolKit.Swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.5;
+				version = 2.0.6;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
