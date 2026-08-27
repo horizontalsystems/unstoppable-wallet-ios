@@ -29,7 +29,7 @@ let package = Package(
         .package(url: "https://github.com/horizontalsystems/HdWalletKit.Swift", exact: "1.3.2"),
         .package(url: "https://github.com/horizontalsystems/Hodler.Swift", exact: "2.0.3"),
         .package(url: "https://github.com/horizontalsystems/HsCryptoKit.Swift", exact: "1.3.2"),
-        .package(url: "https://github.com/horizontalsystems/HsToolKit.Swift.git", exact: "2.0.5"),
+        .package(url: "https://github.com/horizontalsystems/HsToolKit.Swift.git", exact: "2.0.6"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess.git", from: "4.0.0"),
         .package(url: "https://github.com/onevcat/Kingfisher.git", from: "8.6.2"),
         .package(url: "https://github.com/horizontalsystems/LitecoinKit.Swift", exact: "3.0.2"),

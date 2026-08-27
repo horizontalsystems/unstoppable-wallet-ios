@@ -6,7 +6,7 @@ import MarketKit
 // carries no inner SendData, so no anti-nesting guard is needed.
 public final class PrivateSendHandlerProvider: SendHandler {
     override public class func instance(sendData: SendData) -> ISendHandler? {
-        handler(sendData: sendData) { PrivateSendData(order: $0, inner: $1, innerHandler: $2, attachmentUnsupported: $3) }
+        handler(sendData: sendData) { PrivateSendData(order: $0, inner: $1, innerHandler: $2) }
     }
 }
 
@@ -15,7 +15,7 @@ public extension PrivateSendHandlerProvider {
     // own data builder without copying any of this.
     static func handler(
         sendData: SendData,
-        dataBuilder: @escaping (PrivateSendOrder, ISendData, ISendHandler, Bool) -> PrivateSendData
+        dataBuilder: @escaping (PrivateSendOrder, ISendData, ISendHandler) -> PrivateSendData
     ) -> ISendHandler? {
         guard case let .privateSend(request) = sendData else { return nil }
         guard let service = Core.privateSendService else { return nil }

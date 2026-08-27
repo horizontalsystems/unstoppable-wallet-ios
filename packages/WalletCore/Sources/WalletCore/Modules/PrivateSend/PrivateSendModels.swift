@@ -60,7 +60,7 @@ public struct PrivateSendOrder {
 
     // The route's cost, NOT `depositAmount - amountOut`: the gap up to `depositAmount` is a
     // refundable deposit ceiling, not a price. With `minSellAmount` unknown this over-states rather
-    // than under-states, and PrivateSendData raises `buffer_unknown` alongside it.
+    // than under-states — an upper bound, never a lowball.
     public var privateFee: Decimal {
         max(0, (minSellAmount ?? depositAmount) - amountOut)
     }

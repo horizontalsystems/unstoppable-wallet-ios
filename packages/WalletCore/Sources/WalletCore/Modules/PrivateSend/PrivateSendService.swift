@@ -139,7 +139,7 @@ public final class PrivateSendService {
 
         // Nil when /v2/swap omits it and there is no rate quote to fall back on. That is a known,
         // handled state, not a substitutable one: `PrivateSendOrder.privateFee` then over-states the
-        // fee from `depositAmount` and `PrivateSendData` raises `buffer_unknown` alongside it.
+        // fee from `depositAmount` — shown as an upper bound rather than substituted with a guess.
         let minSellAmount = response.minSellAmount ?? route?.quote.minSellAmount
 
         // A deposit below the floor is refunded whole and no swap happens.

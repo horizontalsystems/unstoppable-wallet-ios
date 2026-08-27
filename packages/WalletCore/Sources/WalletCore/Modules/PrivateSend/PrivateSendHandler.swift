@@ -6,7 +6,7 @@ import MarketKit
 // build the inner send through the platform's own IPreSendHandler -> delegate estimation and
 // broadcast to the inner handler. The handler never builds a transaction itself.
 final class PrivateSendHandler {
-    typealias DataBuilder = (PrivateSendOrder, ISendData, ISendHandler, Bool) -> PrivateSendData
+    typealias DataBuilder = (PrivateSendOrder, ISendData, ISendHandler) -> PrivateSendData
 
     let baseToken: Token
 
@@ -37,7 +37,7 @@ final class PrivateSendHandler {
         service: PrivateSendService,
         swapHistoryManager: SwapHistoryManager,
         accountManager: AccountManager,
-        dataBuilder: @escaping DataBuilder = { PrivateSendData(order: $0, inner: $1, innerHandler: $2, attachmentUnsupported: $3) }
+        dataBuilder: @escaping DataBuilder = { PrivateSendData(order: $0, inner: $1, innerHandler: $2) }
     ) {
         self.request = request
         self.baseToken = baseToken
@@ -145,7 +145,7 @@ extension PrivateSendHandler: ISendHandler {
 
         // The handler travels WITH the data it produced, so send(data:) broadcasts through exactly
         // the handler that estimated this data rather than whatever self.innerHandler holds later.
-        return dataBuilder(order, inner, innerHandler, false)
+        return dataBuilder(order, inner, innerHandler)
     }
 
     func send(data: ISendData) async throws {

@@ -15,13 +15,11 @@ open class PrivateSendData: ISendData {
     // handler/data pair, and broadcasting through the wrong one would send a transaction built
     // against different TransactionSettings than the user confirmed. Never rendered.
     public let innerHandler: ISendHandler
-    public let attachmentUnsupported: Bool
 
-    public init(order: PrivateSendOrder, inner: ISendData, innerHandler: ISendHandler, attachmentUnsupported: Bool) {
+    public init(order: PrivateSendOrder, inner: ISendData, innerHandler: ISendHandler) {
         self.order = order
         self.inner = inner
         self.innerHandler = innerHandler
-        self.attachmentUnsupported = attachmentUnsupported
     }
 
     public var feeData: FeeData? {
@@ -37,62 +35,18 @@ open class PrivateSendData: ISendData {
     }
 
     public var canSend: Bool {
-        inner.canSend && !inner.amountAdjusted && !attachmentUnsupported
+        // No caution accompanies the amountAdjusted veto: the handler forbids adjustment before
+        // estimation, so it cannot legitimately be true. It stays only as a structural guard,
+        // because the failure mode is the recipient receiving nothing.
+        inner.canSend && !inner.amountAdjusted
     }
 
     public var customSendButtonTitle: String? {
         inner.customSendButtonTitle
     }
 
-    // Overridden by a platform subclass that can recognise its own inner data type. The base returns
-    // false because WalletCore's inners report a shortfall as an opaque transactionError caution,
-    // which cannot be identified — let alone replaced — from here.
-    open var innerInsufficientBalance: Bool {
-        false
-    }
-
     open func cautions(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [CautionNew] {
-        var cautions: [CautionNew]
-
-        if innerInsufficientBalance {
-            // Replaces the inner's message instead of adding to it: the inner names no amount, and
-            // under exact output the figure the user needs is the DEPOSIT, not what they entered.
-            // This is the only signal that makes an otherwise baffling rejection intelligible —
-            // MAX always fails here by design.
-            cautions = [insufficientBalanceCaution()]
-        } else {
-            cautions = inner.cautions(baseToken: baseToken, currency: currency, rates: rates)
-        }
-
-        if attachmentUnsupported {
-            cautions.append(CautionNew(
-                title: "private_send.caution.title".localized,
-                text: "private_send.caution.attachment_unsupported".localized,
-                type: .error
-            ))
-        }
-
-        // Redundant by design: the handler already forbade adjustment on the inner handler. Kept
-        // because the failure mode is the recipient receiving nothing while the user believes the
-        // send succeeded.
-        if inner.amountAdjusted {
-            cautions.append(CautionNew(
-                title: "private_send.caution.title".localized,
-                text: "private_send.caution.amount_adjusted".localized,
-                type: .error
-            ))
-        }
-
-        // The fee shown falls back to the deposit ceiling, so it is an upper bound.
-        if order.minSellAmount == nil {
-            cautions.append(CautionNew(
-                title: "private_send.caution.title".localized,
-                text: "private_send.caution.buffer_unknown".localized,
-                type: .warning
-            ))
-        }
-
-        return cautions
+        inner.cautions(baseToken: baseToken, currency: currency, rates: rates)
     }
 
     open func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
@@ -143,16 +97,6 @@ open class PrivateSendData: ISendData {
         fields.append(contentsOf: inner.feeFields(baseToken: baseToken, currency: currency, rates: rates))
 
         return [.init([amount, to], isFlow: true), .init(fields, isMain: false)]
-    }
-
-    private func insufficientBalanceCaution() -> CautionNew {
-        let formatted = AppValue(token: order.request.token, value: order.depositAmount).formattedFull() ?? ""
-
-        return CautionNew(
-            title: "private_send.caution.title".localized,
-            text: "private_send.caution.insufficient_balance %@".localized(formatted),
-            type: .error
-        )
     }
 
     private func feeField(title: String, info: InfoDescription, value: Decimal, token: Token, currency: Currency, rate: Decimal?) -> SendField {

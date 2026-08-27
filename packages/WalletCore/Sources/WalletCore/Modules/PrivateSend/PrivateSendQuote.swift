@@ -107,17 +107,9 @@ extension PrivateSendUnavailableReason: UserFacingError {
 
 extension PrivateSendError: UserFacingError {
     public var errorDescription: String? {
-        switch self {
-        case .attachmentUnsupported:
-            return "private_send.caution.attachment_unsupported".localized
-        case .notQuoted, .missingUuid, .unsupportedExecution, .chainMismatch,
-             .missingDepositAmount, .depositBelowMinimum, .invalidAmountOut, .missingRefundAddress,
-             .innerSendDataUnavailable, .noInnerHandler, .noBaseToken, .alreadySending, .invalidData:
-            // One message for every internal/protocol failure: each is a "we could not set this up"
-            // from the user's side, and naming the internals would leak route detail without
-            // helping them act.
-            return "private_send.commit_failed".localized
-        }
+        // One message for every case: each is a "we could not set this up" from the user's side,
+        // and naming the internals would leak route detail without helping them act.
+        "private_send.commit_failed".localized
     }
 
     public var failureReason: String? {
