@@ -596,17 +596,20 @@
 
 // Private Send
 
-"private_send.toggle.title" = "Gizli gönderim";
-"private_send.toggle.subtitle" = "Alıcı zincir üzerinde sizinle ilişkilendirilemez";
+"private_send.toggle.title" = "Gizli Gönderim";
 "private_send.amount_caption" = "Alıcının aldığı tutar";
 "private_send.unavailable" = "Gizli gönderim kullanılamıyor";
+"private_send.memo_unavailable" = "Gizli Gönderim açıkken memo kullanılamaz";
+
+"private_send.info.title" = "Gizli Gönderim";
+"private_send.info.description" = "Gizli Gönderim, işleminizi gizli bir aracı üzerinden yönlendirerek adresiniz ile alıcı arasındaki herkese açık bağlantıyı gizler. Her iki işlem de blok zincirinde görünür kalır ancak birbirine doğrudan bağlı değildir.";
 
 "private_send.fee" = "Gizli gönderim ücreti";
-"private_send.max_deposit" = "Maksimum yatırma";
-"private_send.refundable" = "Kullanılmazsa iade edilir";
+"private_send.fee.info" = "Bu ücret, işleminizin gizli olarak işlenmesinin maliyetini karşılar. Ağ ücretine ek olarak tahsil edilir ve gönderdiğiniz tutara bağlıdır.";
+"private_send.reserved_amount" = "Ayrılan tutar";
+"private_send.reserved_amount.info" = "İşleminiz işlenirken olası fiyat değişikliklerini karşılamak için ek bir tutar geçici olarak ayrılır. Kullanılmayan kısım, gönderim tamamlandıktan sonra ayrı bir işlemle cüzdanınıza iade edilir.";
 "private_send.estimated_time" = "Tahmini varış süresi";
 
-"private_send.quote_expired" = "Teklif süresi doldu — geri dönüp tutarı yeniden girin";
 "private_send.commit_failed" = "Gizli gönderim ayarlanamadı. Tekrar deneyin.";
 
 "private_send.caution.title" = "Gizli gönderim";
@@ -620,7 +623,6 @@
 "private_send.caution.token_unsupported" = "Bu token için gizli gönderim artık kullanılamıyor.";
 "private_send.caution.attachment_unsupported" = "Bu gizli rota, bu cüzdanın ekleyemeyeceği bir işlem etiketi gerektiriyor. Bu token için gizli gönderim kullanılamıyor.";
 "private_send.caution.amount_adjusted" = "Tutar, ücretleri karşılamak için ayarlandı ve artık gizli gönderim teklifiyle eşleşmiyor. Tutarı azaltıp tekrar deneyin.";
-"private_send.caution.quote_expired" = "Bu teklifin süresi doldu. Geri dönüp yeni bir teklif almak için tutarı yeniden girin.";
 "private_send.caution.buffer_unknown" = "Gösterilen ücret üst tahmindir; nihai maliyet daha düşük olabilir.";
 
 // Donate
@@ -2248,9 +2250,10 @@
 "fee_settings.replace_by_fee" = "Ücretle Değiştir";
 "fee_settings.replace_by_fee.description" = "Bu seçenek, takılı kalmış bir işlemi ücret miktarını artırarak yeniden göndermenizi sağlar.";
 "fee_settings.time_lock" = "TimeLock";
-"fee_settings.time_lock.description" = "TimeLock yalnızca BIP44 adreslerine (1 ile başlar) göndermek için çalışır";
+"fee_settings.time_lock.description" = "TimeLock yalnızca BIP44 adreslerine (1 ile başlayan) gönderim için çalışır.";
+"fee_settings.time_lock.private_send_unavailable" = "Gizli Gönderim açıkken kullanılamaz.";
 
-"fee_settings.network_fee" = "Ücret";
+"fee_settings.network_fee" = "Ağ Ücreti";
 "fee_settings.network_fee.info" = "Ağda belirli bir işlemi göndermenin tahmini maliyeti.";
 "fee_settings.zcash_marginal_fee" = "Marjinal Ücret";
 "fee_settings.zcash_marginal_fee.info" = "Marjinal Ücret, işlem tarafından kullanılan her çıktı için ödenen zatoshi miktarıdır.\n\nCüzdan çok sayıda küçük çıktı kullanırsa, toplam ağ ücreti daha yüksek olacaktır.";

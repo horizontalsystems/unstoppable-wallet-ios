@@ -596,17 +596,20 @@
 
 // Private Send
 
-"private_send.toggle.title" = "Envio privado";
-"private_send.toggle.subtitle" = "O destinatário não pode ser vinculado a você on-chain";
+"private_send.toggle.title" = "Envio Privado";
 "private_send.amount_caption" = "Valor que o destinatário recebe";
 "private_send.unavailable" = "Envio privado indisponível";
+"private_send.memo_unavailable" = "O memo não está disponível quando o Envio Privado está ativado";
+
+"private_send.info.title" = "Envio Privado";
+"private_send.info.description" = "O Envio Privado roteia sua transação por meio de um intermediário confidencial, ocultando o vínculo público entre seu endereço e o destinatário. Ambas as transações permanecem visíveis na blockchain, mas não estão diretamente conectadas entre si.";
 
 "private_send.fee" = "Taxa de envio privado";
-"private_send.max_deposit" = "Depósito máximo";
-"private_send.refundable" = "Reembolsado se não utilizado";
+"private_send.fee.info" = "Esta taxa cobre o custo de processar sua transação de forma privada. Ela é cobrada além da taxa de rede e depende do valor que você enviar.";
+"private_send.reserved_amount" = "Valor reservado";
+"private_send.reserved_amount.info" = "Um valor adicional é temporariamente reservado para cobrir possíveis variações de preço enquanto sua transação é processada. Qualquer parte não utilizada é devolvida à sua wallet em uma transação separada após a conclusão do envio.";
 "private_send.estimated_time" = "Chegada estimada";
 
-"private_send.quote_expired" = "Cotação expirada — volte e insira novamente";
 "private_send.commit_failed" = "Não foi possível configurar o envio privado. Tente novamente.";
 
 "private_send.caution.title" = "Envio privado";
@@ -620,7 +623,6 @@
 "private_send.caution.token_unsupported" = "O envio privado não está mais disponível para este token.";
 "private_send.caution.attachment_unsupported" = "Esta rota privada requer uma tag de transação que esta wallet não pode anexar. O envio privado está indisponível para este token.";
 "private_send.caution.amount_adjusted" = "O valor foi ajustado para cobrir taxas e não corresponde mais à cotação do envio privado. Reduza o valor e tente novamente.";
-"private_send.caution.quote_expired" = "Esta cotação expirou. Volte e insira o valor novamente para obter uma nova.";
 "private_send.caution.buffer_unknown" = "A taxa exibida é uma estimativa máxima; o custo final pode ser menor.";
 
 // Donate
@@ -2248,9 +2250,10 @@
 "fee_settings.replace_by_fee" = "Substituir pela taxa";
 "fee_settings.replace_by_fee.description" = "Essa opção permite que você reenvie uma transação travada aumentando o valor da taxa.";
 "fee_settings.time_lock" = "TimeLock";
-"fee_settings.time_lock.description" = "TimeLock funciona apenas para enviar para endereços BIP44 (começando com 1)";
+"fee_settings.time_lock.description" = "O TimeLock funciona apenas para envios a endereços BIP44 (que começam com 1).";
+"fee_settings.time_lock.private_send_unavailable" = "Não disponível quando o Envio Privado está ativado.";
 
-"fee_settings.network_fee" = "Taxa";
+"fee_settings.network_fee" = "Taxa de Rede";
 "fee_settings.network_fee.info" = "O custo estimado do envio de determinada transação na rede.";
 "fee_settings.zcash_marginal_fee" = "Taxa marginal";
 "fee_settings.zcash_marginal_fee.info" = "A taxa marginal é a quantidade de zatoshi paga por cada saída utilizada pela transação.\n\nSe a carteira usar muitas saídas pequenas, a taxa de rede total será maior.";

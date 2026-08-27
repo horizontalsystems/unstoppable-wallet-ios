@@ -597,16 +597,19 @@
 // Private Send
 
 "private_send.toggle.title" = "프라이빗 전송";
-"private_send.toggle.subtitle" = "수신자가 온체인에서 귀하와 연결될 수 없습니다";
 "private_send.amount_caption" = "수신자가 받는 금액";
 "private_send.unavailable" = "프라이빗 전송을 사용할 수 없습니다";
+"private_send.memo_unavailable" = "프라이빗 전송이 활성화되어 있으면 메모를 사용할 수 없습니다";
+
+"private_send.info.title" = "프라이빗 전송";
+"private_send.info.description" = "프라이빗 전송은 기밀 중개자를 통해 거래를 라우팅하여 귀하의 주소와 수신자 간의 공개적 연결을 숨깁니다. 두 거래 모두 블록체인에서 확인할 수 있지만 서로 직접적으로 연결되지는 않습니다.";
 
 "private_send.fee" = "프라이빗 전송 수수료";
-"private_send.max_deposit" = "최대 입금액";
-"private_send.refundable" = "미사용 시 환불";
+"private_send.fee.info" = "이 수수료는 거래를 비공개로 처리하는 비용을 충당합니다. 네트워크 수수료에 추가로 부과되며 전송 금액에 따라 달라집니다.";
+"private_send.reserved_amount" = "예약 금액";
+"private_send.reserved_amount.info" = "거래가 처리되는 동안 발생할 수 있는 가격 변동을 대비하여 추가 금액이 일시적으로 예약됩니다. 사용되지 않은 부분은 전송 완료 후 별도의 거래를 통해 지갑으로 반환됩니다.";
 "private_send.estimated_time" = "예상 도착 시간";
 
-"private_send.quote_expired" = "견적이 만료되었습니다 — 뒤로 가서 다시 입력하세요";
 "private_send.commit_failed" = "프라이빗 전송을 설정할 수 없습니다. 다시 시도해 주세요.";
 
 "private_send.caution.title" = "프라이빗 전송";
@@ -620,7 +623,6 @@
 "private_send.caution.token_unsupported" = "이 토큰에 대해 프라이빗 전송을 더 이상 사용할 수 없습니다.";
 "private_send.caution.attachment_unsupported" = "이 프라이빗 경로에는 이 지갑이 첨부할 수 없는 트랜잭션 태그가 필요합니다. 이 토큰에 대해 프라이빗 전송을 사용할 수 없습니다.";
 "private_send.caution.amount_adjusted" = "수수료를 충당하기 위해 금액이 조정되어 프라이빗 전송 견적과 더 이상 일치하지 않습니다. 금액을 줄이고 다시 시도하세요.";
-"private_send.caution.quote_expired" = "이 견적이 만료되었습니다. 뒤로 가서 금액을 다시 입력하여 새 견적을 받으세요.";
 "private_send.caution.buffer_unknown" = "표시된 수수료는 상한 추정치이며, 최종 비용은 더 낮을 수 있습니다.";
 
 // Donate
@@ -2248,9 +2250,10 @@
 "fee_settings.replace_by_fee" = "수수료로 대체";
 "fee_settings.replace_by_fee.description" = "이 옵션을 통해 거래가 멈춘 상태에서 수수료를 증가시켜 거래를 다시 보낼 수 있습니다.";
 "fee_settings.time_lock" = "TimeLock";
-"fee_settings.time_lock.description" = "TimeLock은 BIP44 주소(1부터 시작)로 전송하는 경우에만 작동합니다.";
+"fee_settings.time_lock.description" = "TimeLock은 BIP44 주소(1로 시작)로 전송할 때만 작동합니다.";
+"fee_settings.time_lock.private_send_unavailable" = "프라이빗 전송이 활성화되어 있으면 사용할 수 없습니다.";
 
-"fee_settings.network_fee" = "수수료";
+"fee_settings.network_fee" = "네트워크 수수료";
 "fee_settings.network_fee.info" = "네트워크에서 주어진 거래를 보내는 데 예상되는 비용.";
 "fee_settings.zcash_marginal_fee" = "한계 수수료";
 "fee_settings.zcash_marginal_fee.info" = "한계 수수료는 트랜잭션에서 사용되는 각 출력(output)에 대해 지불하는 자토시(zatoshi) 금액입니다.\n\n지갑이 많은 소액 출력을 사용하면 총 네트워크 수수료가 더 높아집니다.";

@@ -597,16 +597,19 @@
 // Private Send
 
 "private_send.toggle.title" = "隐私发送";
-"private_send.toggle.subtitle" = "收款方无法在链上与您关联";
 "private_send.amount_caption" = "收款方收到的金额";
 "private_send.unavailable" = "隐私发送不可用";
+"private_send.memo_unavailable" = "开启隐私发送时，备注不可用";
+
+"private_send.info.title" = "隐私发送";
+"private_send.info.description" = "隐私发送通过一个保密中介来路由您的交易，隐藏您的地址与收款人之间的公开链接。两笔交易在链上仍然可见，但它们之间没有直接关联。";
 
 "private_send.fee" = "隐私发送费用";
-"private_send.max_deposit" = "最大存款金额";
-"private_send.refundable" = "未使用时退还";
+"private_send.fee.info" = "此费用用于支付私密处理您的交易的成本。它在网络费用之外收取，具体取决于您发送的金额。";
+"private_send.reserved_amount" = "预留金额";
+"private_send.reserved_amount.info" = "在处理您的交易期间，会临时预留一笔额外金额以应对可能的价格变动。未使用的部分将在发送完成后通过单独的交易返回到您的钱包。";
 "private_send.estimated_time" = "预计到账时间";
 
-"private_send.quote_expired" = "报价已过期 — 请返回并重新输入";
 "private_send.commit_failed" = "无法设置隐私发送，请重试。";
 
 "private_send.caution.title" = "隐私发送";
@@ -620,7 +623,6 @@
 "private_send.caution.token_unsupported" = "此代币已不再支持隐私发送。";
 "private_send.caution.attachment_unsupported" = "此隐私路由需要一个此钱包无法附加的交易标签。此代币无法使用隐私发送。";
 "private_send.caution.amount_adjusted" = "金额已调整以涵盖手续费，不再与隐私发送报价匹配。请减少金额后重试。";
-"private_send.caution.quote_expired" = "此报价已过期。请返回并重新输入金额以获取新报价。";
 "private_send.caution.buffer_unknown" = "显示的费用为上限估算值，实际费用可能更低。";
 
 // Donate
@@ -2248,9 +2250,10 @@
 "fee_settings.replace_by_fee" = "替换交易";
 "fee_settings.replace_by_fee.description" = "此选项允许您通过增加手续费金额来重新发送卡住的交易。";
 "fee_settings.time_lock" = "TimeLock";
-"fee_settings.time_lock.description" = "时间锁（TimeLock）只适用于发送到BIP44地址（从1开始）";
+"fee_settings.time_lock.description" = "TimeLock 仅适用于发送到 BIP44 地址（以 1 开头）。";
+"fee_settings.time_lock.private_send_unavailable" = "开启隐私发送时不可用。";
 
-"fee_settings.network_fee" = "费用";
+"fee_settings.network_fee" = "网络费用";
 "fee_settings.network_fee.info" = "在网络上发送给定交易的估计费用。";
 "fee_settings.zcash_marginal_fee" = "边际费用";
 "fee_settings.zcash_marginal_fee.info" = "边际费用是交易中每个输出所支付的 zatoshi 数量。\n\n如果钱包使用了许多小额输出，总网络费用将会更高。";
