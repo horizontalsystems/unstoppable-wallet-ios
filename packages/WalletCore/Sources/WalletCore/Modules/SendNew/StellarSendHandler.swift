@@ -175,7 +175,7 @@ extension StellarSendHandler {
         }
 
         func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
-            StellarSendHelper.feeFields(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: rates[token.coin.uid])
+            StellarSendHelper.feeFields(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid])
         }
 
         func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
