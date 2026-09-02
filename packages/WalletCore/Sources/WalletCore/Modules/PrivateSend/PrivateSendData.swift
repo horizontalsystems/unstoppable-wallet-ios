@@ -31,12 +31,13 @@ open class PrivateSendData: ISendData {
     }
 
     public var amountAdjusted: Bool {
-        order.amountIntent.isExactInput && order.amountOut < order.request.amount
+        inner.amountAdjusted
     }
 
     public var canSend: Bool {
-        // An outer exact-input order is a valid recommit. Only an adjustment performed inside the
-        // committed deposit transaction remains forbidden.
+        // No caution accompanies the amountAdjusted veto: the handler forbids adjustment before
+        // estimation, so it cannot legitimately be true. It stays only as a structural guard,
+        // because the failure mode is the recipient receiving nothing.
         inner.canSend && !inner.amountAdjusted
     }
 
