@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import MarketKit
 
 public class SwapHistoryManager {
     private let accountManager: AccountManager
@@ -109,9 +110,9 @@ public extension SwapHistoryManager {
         try? storage.lastSwap(accountId: accountId)
     }
 
-    func swaps(accountId: String, from: Date? = nil, limit: Int) -> [Swap] {
+    func swaps(accountId: String, token: Token? = nil, from: Date? = nil, limit: Int) -> [Swap] {
         do {
-            return try storage.swaps(accountId: accountId, from: from, limit: limit)
+            return try storage.swaps(accountId: accountId, token: token, from: from, limit: limit)
         } catch {
             return []
         }
