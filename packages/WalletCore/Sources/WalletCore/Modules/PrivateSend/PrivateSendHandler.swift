@@ -10,16 +10,13 @@ final class PrivateSendHandler {
 
     let baseToken: Token
 
-    private let request: PrivateSendRequest
     private let preSendHandler: IPreSendHandler
-    private let service: PrivateSendService
+    private let orderCache: PrivateSendOrderCache
     private let swapHistoryManager: SwapHistoryManager
     private let accountManager: AccountManager
     private let dataBuilder: DataBuilder
 
     private let stateLock = NSLock()
-    private var commitTask: Task<PrivateSendOrder, Error>?
-    private var commitGeneration = 0
     // Everything AFTER the commit is per-call: a settings change racing a refresh gives two
     // concurrent sendData(...) calls, each resolving its own inner handler. Only the newest is
     // allowed to publish, so a superseded handler never becomes the one a later render reads.
@@ -39,10 +36,18 @@ final class PrivateSendHandler {
         accountManager: AccountManager,
         dataBuilder: @escaping DataBuilder = { PrivateSendData(order: $0, inner: $1, innerHandler: $2) }
     ) {
-        self.request = request
         self.baseToken = baseToken
         self.preSendHandler = preSendHandler
-        self.service = service
+        orderCache = PrivateSendOrderCache(
+            initialCommit: { try await service.commit(request: request) },
+            adjustedCommit: { initialOrder, maximumAmount in
+                try await service.commit(
+                    request: request,
+                    amountIntent: .exactInput(maximumAmount),
+                    pinnedProviderId: initialOrder.providerId
+                )
+            }
+        )
         self.swapHistoryManager = swapHistoryManager
         self.accountManager = accountManager
         self.dataBuilder = dataBuilder
@@ -74,78 +79,28 @@ extension PrivateSendHandler: ISendHandler {
             self.syncGeneration += 1
             return self.syncGeneration
         }
-
-        let order = try await committedOrder()
-
+        let initial = try await orderCache.current()
         try Task.checkCancellation()
 
-        // Re-evaluated here rather than at handler-resolution time, because the deposit address only
-        // exists after the commit.
-        let memoText: String?
-
-        switch order.attachment {
-        case .none:
-            memoText = nil
-        case let .some(.text(value)):
-            // The same gate the USwap deposit builders apply, through the same predicate — see
-            // MemoType.deliversAttachment for why only .onChainPublic is safe here. The handler is
-            // asked rather than the chain because it can narrow the answer by address (shielded vs
-            // transparent Zcash).
-            guard preSendHandler.memoType(address: order.depositAddress).deliversAttachment else {
-                throw PrivateSendError.attachmentUnsupported
-            }
-            memoText = value
-        case .some:
-            // No SendData case carries a destination tag, and an unknown attachment kind cannot be
-            // carried at all.
-            throw PrivateSendError.attachmentUnsupported
+        let finalAttempt: PreparedPrivateSendAttempt
+        do {
+            finalAttempt = try await prepare(order: initial.order, adjustmentPolicy: .report, transactionSettings: transactionSettings)
+        } catch let adjustment as SendAmountAdjustmentRequired {
+            finalAttempt = try await prepareAdjustedAttempt(
+                from: initial,
+                maximumAmount: adjustment.maximumAmount,
+                transactionSettings: transactionSettings
+            )
         }
-
-        // order.depositAmount, never the entered amount: under exact output they are structurally
-        // different quantities.
-        let result = preSendHandler.sendData(
-            amount: order.depositAmount,
-            address: order.depositAddress,
-            memo: memoText
-        )
-
-        guard case let .valid(innerSendData) = result else {
-            throw PrivateSendError.innerSendDataUnavailable
-        }
-
-        guard let innerHandler = SendHandlerFactory.handler(sendData: innerSendData) else {
-            throw PrivateSendError.noInnerHandler
-        }
-
-        // Before any estimation runs: this is what makes the deposit exact. A handler that reduced
-        // the amount to fit the balance could drop it below minSellAmount, in which case the deposit
-        // is refunded whole and the recipient receives nothing.
-        (innerHandler as? IAmountAdjustingSendHandler)?.allowsAmountAdjustment = false
 
         try Task.checkCancellation()
-
-        // Only the newest call publishes its handler. A superseded one is discarded here rather than
-        // overwriting `self.innerHandler` with a handler prepared against different
-        // TransactionSettings.
         let current = withLock { () -> Bool in
             guard self.syncGeneration == generation else { return false }
-            self.innerHandler = innerHandler
+            self.innerHandler = finalAttempt.innerHandler
             return true
         }
-
         guard current else { throw CancellationError() }
-
-        let inner = try await innerHandler.sendData(transactionSettings: transactionSettings)
-
-        try Task.checkCancellation()
-
-        // Re-checked after the estimation await: a newer call may have started (and published) while
-        // this one was in flight, and a stale PrivateSendData must never reach SendViewModel.sendData.
-        guard withLock({ self.syncGeneration == generation }) else { throw CancellationError() }
-
-        // The handler travels WITH the data it produced, so send(data:) broadcasts through exactly
-        // the handler that estimated this data rather than whatever self.innerHandler holds later.
-        return dataBuilder(order, inner, innerHandler)
+        return dataBuilder(finalAttempt.order, finalAttempt.innerData, finalAttempt.innerHandler)
     }
 
     func send(data: ISendData) async throws {
@@ -220,63 +175,70 @@ extension PrivateSendHandler: ISendHandler {
 }
 
 private extension PrivateSendHandler {
+    struct PreparedPrivateSendAttempt {
+        let order: PrivateSendOrder
+        let innerData: ISendData
+        let innerHandler: ISendHandler
+    }
+
     func withLock<T>(_ action: () -> T) -> T {
         stateLock.lock()
         defer { stateLock.unlock() }
         return action()
     }
 
-    // Committing is memoised while the order is alive, and the memo is mandatory rather than an
-    // optimisation: sendData(transactionSettings:) is re-invoked on every settings change, and each
-    // /v2/swap creates a REAL order. Two concurrent callers await the same task rather than each
-    // issuing their own commit. An order past its quoteLifetime is discarded and re-committed — the
-    // "Refresh" the UI shows at expiry must produce a fresh order, not re-serve one the provider no
-    // longer honours.
-    func committedOrder() async throws -> PrivateSendOrder {
-        // The loop terminates: a stale memo is cleared exactly once per iteration, and a task
-        // created after that returns an order stamped `committedAt: Date()` — always fresh.
-        while true {
-            let pending: (task: Task<PrivateSendOrder, Error>, generation: Int) = withLock {
-                if let commitTask = self.commitTask {
-                    return (commitTask, self.commitGeneration)
-                }
+    func prepare(
+        order: PrivateSendOrder,
+        adjustmentPolicy: SendAmountAdjustmentPolicy,
+        transactionSettings: TransactionSettings?
+    ) async throws -> PreparedPrivateSendAttempt {
+        let memo = try memoText(for: order)
+        let sendData = preSendHandler.sendData(amount: order.depositAmount, address: order.depositAddress, memo: memo)
+        guard case let .valid(innerSendData) = sendData else { throw PrivateSendError.innerSendDataUnavailable }
+        guard let handler = SendHandlerFactory.handler(sendData: innerSendData) else { throw PrivateSendError.noInnerHandler }
+        configure(handler: handler, adjustmentPolicy: adjustmentPolicy)
+        try Task.checkCancellation()
 
-                self.commitGeneration += 1
-                let generation = self.commitGeneration
-                let request = self.request
-                let service = self.service
-                let task = Task { try await service.commit(request: request) }
-                self.commitTask = task
+        let inner = try await handler.sendData(transactionSettings: transactionSettings)
+        return PreparedPrivateSendAttempt(order: order, innerData: inner, innerHandler: handler)
+    }
 
-                return (task, generation)
+    func prepareAdjustedAttempt(
+        from source: PrivateSendOrderCache.Entry,
+        maximumAmount: Decimal,
+        transactionSettings: TransactionSettings?
+    ) async throws -> PreparedPrivateSendAttempt {
+        let adjusted = try await orderCache.adjusted(from: source, maximumAmount: maximumAmount)
+        try Task.checkCancellation()
+
+        do {
+            return try await prepare(order: adjusted.order, adjustmentPolicy: .report, transactionSettings: transactionSettings)
+        } catch let adjustment as SendAmountAdjustmentRequired {
+            let corrected = try await orderCache.adjusted(from: adjusted, maximumAmount: adjustment.maximumAmount)
+            try Task.checkCancellation()
+            return try await prepare(order: corrected.order, adjustmentPolicy: .disabled, transactionSettings: transactionSettings)
+        }
+    }
+
+    func configure(handler: ISendHandler, adjustmentPolicy: SendAmountAdjustmentPolicy) {
+        if let handler = handler as? IAmountAdjustmentPolicySendHandler {
+            handler.amountAdjustmentPolicy = adjustmentPolicy
+        } else if let handler = handler as? IAmountAdjustingSendHandler {
+            handler.allowsAmountAdjustment = adjustmentPolicy == .apply
+        }
+    }
+
+    func memoText(for order: PrivateSendOrder) throws -> String? {
+        switch order.attachment {
+        case .none:
+            return nil
+        case let .some(.text(value)):
+            guard preSendHandler.memoType(address: order.depositAddress).deliversAttachment else {
+                throw PrivateSendError.attachmentUnsupported
             }
-
-            let order: PrivateSendOrder
-
-            do {
-                // Not cached on `self`: the order reaches send(data:) on the PrivateSendData it
-                // produced, so there is no second, unsynchronised copy to disagree with it.
-                order = try await pending.task.value
-            } catch {
-                // A failed commit created no order, so a refresh is allowed to retry. Only clear
-                // the memo if it is still the one this call started.
-                withLock {
-                    if self.commitGeneration == pending.generation {
-                        self.commitTask = nil
-                    }
-                }
-                throw error
-            }
-
-            if Date().timeIntervalSince(order.committedAt) < PrivateSendData.quoteLifetime {
-                return order
-            }
-
-            withLock {
-                if self.commitGeneration == pending.generation {
-                    self.commitTask = nil
-                }
-            }
+            return value
+        case .some:
+            throw PrivateSendError.attachmentUnsupported
         }
     }
 }
