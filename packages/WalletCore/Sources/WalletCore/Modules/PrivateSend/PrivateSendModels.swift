@@ -1,29 +1,6 @@
 import Foundation
 import MarketKit
 
-public enum PrivateSendAmountIntent: Equatable {
-    case exactOutput(Decimal)
-    case exactInput(Decimal)
-
-    public var amount: Decimal {
-        switch self {
-        case let .exactOutput(amount), let .exactInput(amount): amount
-        }
-    }
-
-    public var isExactInput: Bool {
-        if case .exactInput = self { return true }
-        return false
-    }
-
-    var amountSpec: USwapMultiSwapApi.AmountSpec {
-        switch self {
-        case let .exactOutput(amount): .buy(amount)
-        case let .exactInput(amount): .sell(amount)
-        }
-    }
-}
-
 // The intent, known at pre-send time. This is what the `.privateSend` SendData case carries: neither
 // the deposit address nor the amount to transfer exists until the order is committed.
 public struct PrivateSendRequest {
@@ -41,7 +18,6 @@ public struct PrivateSendRequest {
 // The committed order, produced by /v2/swap inside the handler on the confirmation screen.
 public struct PrivateSendOrder {
     public let request: PrivateSendRequest
-    public let amountIntent: PrivateSendAmountIntent
     public let depositAmount: Decimal // execution.amount — EXACTLY what to transfer
     public let minSellAmount: Decimal? // below it the deposit is refunded and no swap happens
     public let amountOut: Decimal // what the recipient gets
@@ -56,7 +32,6 @@ public struct PrivateSendOrder {
 
     public init(
         request: PrivateSendRequest,
-        amountIntent: PrivateSendAmountIntent? = nil,
         depositAmount: Decimal,
         minSellAmount: Decimal?,
         amountOut: Decimal,
@@ -70,7 +45,6 @@ public struct PrivateSendOrder {
         committedAt: Date
     ) {
         self.request = request
-        self.amountIntent = amountIntent ?? .exactOutput(request.amount)
         self.depositAmount = depositAmount
         self.minSellAmount = minSellAmount
         self.amountOut = amountOut
@@ -88,16 +62,10 @@ public struct PrivateSendOrder {
     // refundable deposit ceiling, not a price. With `minSellAmount` unknown this over-states rather
     // than under-states — an upper bound, never a lowball.
     public var privateFee: Decimal {
-        switch amountIntent {
-        case .exactOutput:
-            max(0, (minSellAmount ?? depositAmount) - amountOut)
-        case .exactInput:
-            max(0, depositAmount - amountOut)
-        }
+        max(0, (minSellAmount ?? depositAmount) - amountOut)
     }
 
     public var refundableBuffer: Decimal? {
-        guard case .exactOutput = amountIntent else { return nil }
-        return minSellAmount.map { max(0, depositAmount - $0) }
+        minSellAmount.map { max(0, depositAmount - $0) }
     }
 }

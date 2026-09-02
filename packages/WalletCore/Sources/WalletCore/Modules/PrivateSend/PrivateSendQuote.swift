@@ -55,7 +55,6 @@ public enum PrivateSendError: Error {
     case chainMismatch
     case missingDepositAmount
     case depositBelowMinimum
-    case depositExceedsMaximum
     case invalidAmountOut
     case missingRefundAddress
     case attachmentUnsupported
@@ -64,7 +63,6 @@ public enum PrivateSendError: Error {
     case noBaseToken
     case alreadySending
     case invalidData
-    case orderSuperseded
 }
 
 // Both error types are thrown out of PrivateSendHandler.sendData(transactionSettings:) and land in

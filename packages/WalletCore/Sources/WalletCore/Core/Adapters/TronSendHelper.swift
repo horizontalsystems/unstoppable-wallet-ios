@@ -77,6 +77,15 @@ extension TronSendHelper {
                 title = "fee_settings.errors.insufficient_balance".localized
                 text = "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? "")
 
+            case let .insufficientTokenBalance(balance, token):
+                // The sent token, not feeToken: a TRC20 shortfall formatted with TRX decimals would
+                // show a wrong figure, not merely a wrong symbol.
+                let appValue = AppValue(token: token, value: balance)
+                let balanceString = appValue.formattedShort()
+
+                title = "fee_settings.errors.insufficient_balance".localized
+                text = "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? "")
+
             case .zeroAmount:
                 title = "alert.error".localized
                 text = "fee_settings.errors.zero_amount.info".localized
@@ -161,6 +170,7 @@ extension TronSendHelper {
 
     enum TransactionError: Error {
         case insufficientBalance(balance: BigUInt)
+        case insufficientTokenBalance(balance: Decimal, token: Token)
         case zeroAmount
     }
 }
