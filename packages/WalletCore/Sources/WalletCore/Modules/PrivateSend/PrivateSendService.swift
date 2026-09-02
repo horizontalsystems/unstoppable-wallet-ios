@@ -49,137 +49,25 @@ public final class PrivateSendService {
         try await bestRoute(token: token, amount: amount).quote
     }
 
-    // The single entry point used by PrivateSendHandler: quote and commit in one call, because
-    // under the synchronous-pre-send decision nothing else ever holds a bare PrivateSendQuote.
+    // The initial Private Send contract is exact output. A balance fallback uses the internal
+    // amount-intent overload below and stays pinned to the provider that created this first order.
     public func commit(request: PrivateSendRequest) async throws -> PrivateSendOrder {
-        let token = request.token
-        let providerIds = supportedProviderIds(token: token)
+        try await commit(request: request, amountIntent: .exactOutput(request.amount))
+    }
 
-        guard !providerIds.isEmpty else {
-            throw PrivateSendUnavailableReason.tokenUnsupported
-        }
-
-        // /v2/rate exists here only to *choose* a provider for /v2/swap to commit against: every
-        // economic value below already prefers the swap response and treats the rate quote as a
-        // fallback. With a single candidate there is nothing to select between, so the round trip is
-        // pure latency on the screen where the user is already waiting. The fan-out is not removed —
-        // it runs again the moment a second confidential provider maps this token.
-        var route: Route?
-
-        if providerIds.count > 1 {
-            route = try await bestRoute(token: token, amount: request.amount)
-        }
-
-        let providerId = route?.quote.providerId ?? providerIds[0]
-        let builder = commitRequestBuilder(providerId)
-
-        // The committing provider's own identifier for the token, in case two confidential providers
-        // name it differently. Without a rate response there is no second source for it, and no
-        // identifier at all is exactly what `isSupported(token:)` gates the toggle on, so the reason
-        // matches.
-        guard let asset = assetRepository(providerId).asset(token: token) ?? route?.asset else {
-            throw PrivateSendUnavailableReason.tokenUnsupported
-        }
-
-        guard let refundAddress = try await builder.refundAddress(token: token), !refundAddress.isEmpty else {
-            // Omitting it forfeits the buffer refund, which lands on the success path too.
-            throw PrivateSendError.missingRefundAddress
-        }
-
-        let swapRequest = USwapMultiSwapApi.SwapRequest(
-            sellAsset: asset,
-            buyAsset: asset,
-            // The same exact-output AmountSpec the quote used: re-sending sellAmount would silently
-            // change the contract from "deliver exactly X" to "spend exactly Y".
-            amount: .buy(request.amount),
-            slippage: MultiSwapSlippage.default,
-            chainId: builder.chainId(token: token),
-            providerId: providerId,
-            destinationAddress: request.recipient,
-            // Omitted deliberately: optional for transfer providers, and handing the provider the
-            // sender's address defeats the point of a private send.
-            sourceAddress: nil,
-            refundAddress: refundAddress
-        )
-
-        let response: USwapMultiSwapApi.SwapResponse
-
-        do {
-            response = try await api.swap(swapRequest)
-        } catch {
-            // Wrapped exactly like the `/v2/rate` call in `bestRoute`: a raw NetworkManager
-            // .ResponseError carries the pretty-printed server response body in its
-            // `errorDescription`, and this error is rendered verbatim on the confirmation screen.
-            // Only authored reasons may leave this method. `reason(networkError:)` reads the
-            // structured provider-error fields out of the failure body, so a below-minimum amount
-            // still names the floor even when no /v2/rate call was made.
-            throw Self.reason(networkError: error)
-        }
-
-        guard let uuid = response.uuid, !uuid.isEmpty else {
-            throw PrivateSendError.missingUuid
-        }
-
-        guard let execution = response.execution, case let .transfer(chain, depositAddress, amount, attachment, _) = execution else {
-            throw PrivateSendError.unsupportedExecution
-        }
-
-        // `execution.chain` is sometimes a chain id ("56") and sometimes a name ("bsc"), so only a
-        // recognised chain that resolves to a *different* blockchain is treated as a mismatch. An
-        // unrecognised string is not evidence of disagreement.
-        if let executionBlockchainType = USwapAssetRepository.blockchainTypeMap[chain], executionBlockchainType != token.blockchainType {
-            throw PrivateSendError.chainMismatch
-        }
-
-        // Never substituted with the entered amount: in exact-output mode that is the *output*, a
-        // structurally different quantity.
-        guard let depositAmount = amount else {
-            throw PrivateSendError.missingDepositAmount
-        }
-
-        // Nil when /v2/swap omits it and there is no rate quote to fall back on. That is a known,
-        // handled state, not a substitutable one: `PrivateSendOrder.privateFee` then over-states the
-        // fee from `depositAmount` — shown as an upper bound rather than substituted with a guess.
-        let minSellAmount = response.minSellAmount ?? route?.quote.minSellAmount
-
-        // A deposit below the floor is refunded whole and no swap happens.
-        if let minSellAmount, depositAmount < minSellAmount {
-            throw PrivateSendError.depositBelowMinimum
-        }
-
-        // Never falls back to the entered amount: in exact-output mode that is the *output* the user
-        // asked for, not a value the provider has agreed to deliver.
-        let amountOut = response.expectedBuyAmount > 0 ? response.expectedBuyAmount : (route?.quote.expectedBuyAmount ?? 0)
-
-        guard amountOut > 0 else {
-            throw PrivateSendError.invalidAmountOut
-        }
-
-        let minAmountOut = response.minBuyAmount ?? route?.quote.minBuyAmount
-
-        if route == nil, let minAmountOut, minAmountOut != amountOut {
-            // The same contractual check `bestRoute` runs on the rate quote, kept alive on the path
-            // that never asks for one. A discrepancy is a provider bug worth a log, not a reason to
-            // abandon a committed order. The amounts are deliberately not logged: they are live
-            // transfer values for an in-flight private send.
-            Core.instance?.logError(message: "PrivateSend: minBuyAmount != expectedBuyAmount (provider: \(providerId))", save: false)
-        }
-
-        return PrivateSendOrder(
+    func commit(
+        request: PrivateSendRequest,
+        amountIntent: PrivateSendAmountIntent,
+        pinnedProviderId: String? = nil
+    ) async throws -> PrivateSendOrder {
+        let context = try await commitContext(
             request: request,
-            depositAmount: depositAmount,
-            minSellAmount: minSellAmount,
-            amountOut: amountOut,
-            minAmountOut: minAmountOut,
-            providerId: providerId,
-            depositAddress: depositAddress,
-            attachment: attachment,
-            providerSwapId: uuid,
-            refundAddress: refundAddress,
-            // Nil is acceptable: PrivateSendData simply omits the "arrives in" row.
-            estimatedTime: response.estimatedTime ?? route?.quote.estimatedTime,
-            committedAt: Date()
+            amountIntent: amountIntent,
+            pinnedProviderId: pinnedProviderId
         )
+        let swapRequest = makeSwapRequest(request: request, amountIntent: amountIntent, context: context)
+        let response = try await swap(request: swapRequest)
+        return try makeOrder(request: request, amountIntent: amountIntent, context: context, response: response)
     }
 }
 
@@ -187,6 +75,146 @@ private extension PrivateSendService {
     struct Route {
         let quote: PrivateSendQuote
         let asset: String
+    }
+
+    struct CommitContext {
+        let providerId: String
+        let asset: String
+        let builder: USwapCommitRequestBuilder
+        let refundAddress: String
+        let route: Route?
+    }
+
+    struct ExecutionDetails {
+        let depositAddress: String
+        let depositAmount: Decimal
+        let attachment: USwapMultiSwapApi.Attachment?
+    }
+
+    func commitContext(
+        request: PrivateSendRequest,
+        amountIntent: PrivateSendAmountIntent,
+        pinnedProviderId: String?
+    ) async throws -> CommitContext {
+        let providerIds = supportedProviderIds(token: request.token)
+        if pinnedProviderId == nil, providerIds.isEmpty {
+            throw PrivateSendUnavailableReason.tokenUnsupported
+        }
+
+        let route = try await selectedRoute(token: request.token, amountIntent: amountIntent, providerIds: providerIds, pinnedProviderId: pinnedProviderId)
+        let providerId = pinnedProviderId ?? route?.quote.providerId ?? providerIds[0]
+        let builder = commitRequestBuilder(providerId)
+        guard let asset = assetRepository(providerId).asset(token: request.token) ?? route?.asset else {
+            throw PrivateSendUnavailableReason.tokenUnsupported
+        }
+        guard let refundAddress = try await builder.refundAddress(token: request.token), !refundAddress.isEmpty else {
+            throw PrivateSendError.missingRefundAddress
+        }
+        return CommitContext(providerId: providerId, asset: asset, builder: builder, refundAddress: refundAddress, route: route)
+    }
+
+    func selectedRoute(
+        token: Token,
+        amountIntent: PrivateSendAmountIntent,
+        providerIds: [String],
+        pinnedProviderId: String?
+    ) async throws -> Route? {
+        guard !amountIntent.isExactInput, pinnedProviderId == nil, providerIds.count > 1 else {
+            return nil
+        }
+        return try await bestRoute(token: token, amount: amountIntent.amount)
+    }
+
+    func makeSwapRequest(
+        request: PrivateSendRequest,
+        amountIntent: PrivateSendAmountIntent,
+        context: CommitContext
+    ) -> USwapMultiSwapApi.SwapRequest {
+        USwapMultiSwapApi.SwapRequest(
+            sellAsset: context.asset,
+            buyAsset: context.asset,
+            amount: amountIntent.amountSpec,
+            slippage: MultiSwapSlippage.default,
+            chainId: context.builder.chainId(token: request.token),
+            providerId: context.providerId,
+            destinationAddress: request.recipient,
+            sourceAddress: nil,
+            refundAddress: context.refundAddress
+        )
+    }
+
+    func swap(request: USwapMultiSwapApi.SwapRequest) async throws -> USwapMultiSwapApi.SwapResponse {
+        do {
+            return try await api.swap(request)
+        } catch {
+            throw Self.reason(networkError: error)
+        }
+    }
+
+    func makeOrder(
+        request: PrivateSendRequest,
+        amountIntent: PrivateSendAmountIntent,
+        context: CommitContext,
+        response: USwapMultiSwapApi.SwapResponse
+    ) throws -> PrivateSendOrder {
+        guard let uuid = response.uuid, !uuid.isEmpty else { throw PrivateSendError.missingUuid }
+        let execution = try executionDetails(response: response, token: request.token)
+        let minSellAmount = response.minSellAmount ?? context.route?.quote.minSellAmount
+        try validateDeposit(execution.depositAmount, minimum: minSellAmount, amountIntent: amountIntent)
+        let output = try outputAmounts(response: response, route: context.route)
+        logUnexpectedExactOutputMinimum(amountIntent: amountIntent, route: context.route, output: output, providerId: context.providerId)
+
+        return PrivateSendOrder(
+            request: request,
+            amountIntent: amountIntent,
+            depositAmount: execution.depositAmount,
+            minSellAmount: minSellAmount,
+            amountOut: output.expected,
+            minAmountOut: output.minimum,
+            providerId: context.providerId,
+            depositAddress: execution.depositAddress,
+            attachment: execution.attachment,
+            providerSwapId: uuid,
+            refundAddress: context.refundAddress,
+            estimatedTime: response.estimatedTime ?? context.route?.quote.estimatedTime,
+            committedAt: Date()
+        )
+    }
+
+    func executionDetails(response: USwapMultiSwapApi.SwapResponse, token: Token) throws -> ExecutionDetails {
+        guard let execution = response.execution,
+              case let .transfer(chain, depositAddress, amount, attachment, _) = execution
+        else {
+            throw PrivateSendError.unsupportedExecution
+        }
+        if let type = USwapAssetRepository.blockchainTypeMap[chain], type != token.blockchainType {
+            throw PrivateSendError.chainMismatch
+        }
+        guard let depositAmount = amount else { throw PrivateSendError.missingDepositAmount }
+        return ExecutionDetails(depositAddress: depositAddress, depositAmount: depositAmount, attachment: attachment)
+    }
+
+    func validateDeposit(_ deposit: Decimal, minimum: Decimal?, amountIntent: PrivateSendAmountIntent) throws {
+        if let minimum, deposit < minimum { throw PrivateSendError.depositBelowMinimum }
+        if case let .exactInput(maximum) = amountIntent, deposit > maximum {
+            throw PrivateSendError.depositExceedsMaximum
+        }
+    }
+
+    func outputAmounts(response: USwapMultiSwapApi.SwapResponse, route: Route?) throws -> (expected: Decimal, minimum: Decimal?) {
+        let expected = response.expectedBuyAmount > 0 ? response.expectedBuyAmount : (route?.quote.expectedBuyAmount ?? 0)
+        guard expected > 0 else { throw PrivateSendError.invalidAmountOut }
+        return (expected, response.minBuyAmount ?? route?.quote.minBuyAmount)
+    }
+
+    func logUnexpectedExactOutputMinimum(
+        amountIntent: PrivateSendAmountIntent,
+        route: Route?,
+        output: (expected: Decimal, minimum: Decimal?),
+        providerId: String
+    ) {
+        guard !amountIntent.isExactInput, route == nil, let minimum = output.minimum, minimum != output.expected else { return }
+        Core.instance?.logError(message: "PrivateSend: minBuyAmount != expectedBuyAmount (provider: \(providerId))", save: false)
     }
 
     func bestRoute(token: Token, amount: Decimal) async throws -> Route {
