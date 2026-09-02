@@ -3,7 +3,7 @@ import Foundation
 import MarketKit
 import RxSwift
 
-class WalletTokenViewModel: ObservableObject {
+public class WalletTokenViewModel: ObservableObject {
     private let coinPriceService = WalletCoinPriceService()
     private let walletService: WalletService
     private let cloudBackupManager = Core.shared.cloudBackupManager
@@ -15,17 +15,17 @@ class WalletTokenViewModel: ObservableObject {
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
 
-    let wallet: Wallet
+    public let wallet: Wallet
 
-    @Published var balanceHidden: Bool
+    @Published public var balanceHidden: Bool
     @Published var isMainNet: Bool
-    @Published var balanceData: BalanceData
+    @Published public var balanceData: BalanceData
     @Published var state: AdapterState
     @Published var caution: CautionNew?
     @Published var priceItem: WalletCoinPriceService.Item?
     @Published private(set) var isReachable: Bool = true
 
-    init(wallet: Wallet) {
+    public init(wallet: Wallet) {
         self.wallet = wallet
         isReachable = reachabilityManager.isReachable
         walletService = WalletServiceFactory().walletService(account: wallet.account)
@@ -59,7 +59,7 @@ class WalletTokenViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    func refresh() async {
+    public func refresh() async {
         walletService.refresh()
         coinPriceService.refresh()
 
