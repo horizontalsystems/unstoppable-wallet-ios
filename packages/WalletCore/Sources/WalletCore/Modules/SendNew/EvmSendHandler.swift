@@ -1,3 +1,4 @@
+import Eip20Kit
 import EvmKit
 import Foundation
 import MarketKit
