@@ -2595,3 +2595,20 @@
 "open_crypto_pay.tx_info.proof_status.submitted" = "Gönderildi";
 "open_crypto_pay.tx_info.proof_status.pending" = "Beklemede";
 "open_crypto_pay.tx_info.proof_status.reconciliation" = "Mutabakat gerekli";
+
+"balance.pay" = "Öde";
+"cross_pay.title" = "Öde";
+"cross_pay.send_to" = "Gönder";
+"cross_pay.select_token" = "Token Seç";
+"cross_pay.review" = "İncele";
+"cross_pay.you_pay" = "Ödediğiniz";
+"cross_pay.you_pay.info" = "Bu ödemeyi finanse etmek için yatırılan tutar; sağlayıcının döviz maliyeti ve iade edilebilir kayma payı rezervi dahildir. Rezervin kullanılmayan kısmı cüzdanınıza iade edilir.";
+"cross_pay.caution.insufficient_balance %@" = "Bu ödeme, ücretler dahil cüzdanınızda %@ gerektirir.";
+"cross_pay.error.token_unsupported" = "Bu token ödemeler için desteklenmiyor.";
+"cross_pay.error.below_minimum %@" = "Minimum ödeme tutarı %@.";
+"cross_pay.error.above_maximum %@" = "Maksimum ödeme tutarı %@.";
+"cross_pay.error.no_route" = "Bu token ve tutar için kullanılabilir bir ödeme rotası yok.";
+"cross_pay.error.provider_suspended" = "Ödeme sağlayıcısı geçici olarak askıya alındı. Daha sonra tekrar deneyin.";
+"cross_pay.error.network" = "Bir ağ hatası oluştu. Bağlantınızı kontrol edip tekrar deneyin.";
+"cross_pay.error.commit_failed" = "Bu ödeme ayarlanamadı. Tekrar denemek için yenileyin.";
+"cross_pay.unavailable" = "Ödeme kullanılamıyor";

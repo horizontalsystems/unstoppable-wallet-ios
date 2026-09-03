@@ -2595,3 +2595,20 @@
 "open_crypto_pay.tx_info.proof_status.submitted" = "Отправлено";
 "open_crypto_pay.tx_info.proof_status.pending" = "В ожидании";
 "open_crypto_pay.tx_info.proof_status.reconciliation" = "Требуется сверка";
+
+"balance.pay" = "Оплатить";
+"cross_pay.title" = "Оплата";
+"cross_pay.send_to" = "Отправить";
+"cross_pay.select_token" = "Выбрать токен";
+"cross_pay.review" = "Проверить";
+"cross_pay.you_pay" = "Вы платите";
+"cross_pay.you_pay.info" = "Сумма, внесённая для финансирования этого платежа, включая стоимость обмена провайдера и возвращаемый резерв на проскальзывание. Любая неиспользованная часть резерва возвращается в ваш кошелёк.";
+"cross_pay.caution.insufficient_balance %@" = "Для этого платежа необходимо %@ в вашем кошельке, включая комиссии.";
+"cross_pay.error.token_unsupported" = "Этот токен не поддерживается для платежей.";
+"cross_pay.error.below_minimum %@" = "Минимальная сумма платежа — %@.";
+"cross_pay.error.above_maximum %@" = "Максимальная сумма платежа — %@.";
+"cross_pay.error.no_route" = "Для этого токена и суммы маршрут оплаты недоступен.";
+"cross_pay.error.provider_suspended" = "Платёжный провайдер временно приостановлен. Попробуйте позже.";
+"cross_pay.error.network" = "Произошла сетевая ошибка. Проверьте подключение и попробуйте снова.";
+"cross_pay.error.commit_failed" = "Не удалось настроить этот платёж. Обновите, чтобы попробовать снова.";
+"cross_pay.unavailable" = "Оплата недоступна";

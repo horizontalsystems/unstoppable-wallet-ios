@@ -2595,3 +2595,20 @@
 "open_crypto_pay.tx_info.proof_status.submitted" = "제출됨";
 "open_crypto_pay.tx_info.proof_status.pending" = "대기 중";
 "open_crypto_pay.tx_info.proof_status.reconciliation" = "조정 필요";
+
+"balance.pay" = "결제";
+"cross_pay.title" = "결제";
+"cross_pay.send_to" = "받는 곳";
+"cross_pay.select_token" = "토큰 선택";
+"cross_pay.review" = "검토";
+"cross_pay.you_pay" = "결제 금액";
+"cross_pay.you_pay.info" = "이 결제를 위해 입금되는 금액으로, 제공업체의 환전 비용과 환불 가능한 슬리피지 준비금이 포함됩니다. 사용되지 않은 준비금은 지갑으로 반환됩니다.";
+"cross_pay.caution.insufficient_balance %@" = "이 결제에는 수수료를 포함하여 지갑에 %@이(가) 필요합니다.";
+"cross_pay.error.token_unsupported" = "이 토큰은 결제에 지원되지 않습니다.";
+"cross_pay.error.below_minimum %@" = "최소 결제 금액은 %@입니다.";
+"cross_pay.error.above_maximum %@" = "최대 결제 금액은 %@입니다.";
+"cross_pay.error.no_route" = "이 토큰과 금액에 대해 사용 가능한 결제 경로가 없습니다.";
+"cross_pay.error.provider_suspended" = "결제 제공업체가 일시적으로 중단되었습니다. 나중에 다시 시도하세요.";
+"cross_pay.error.network" = "네트워크 오류가 발생했습니다. 연결을 확인하고 다시 시도하세요.";
+"cross_pay.error.commit_failed" = "이 결제를 설정할 수 없습니다. 새로고침하여 다시 시도하세요.";
+"cross_pay.unavailable" = "결제를 사용할 수 없습니다";

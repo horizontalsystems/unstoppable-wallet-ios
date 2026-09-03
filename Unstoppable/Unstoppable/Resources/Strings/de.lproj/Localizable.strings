@@ -2595,3 +2595,20 @@
 "open_crypto_pay.tx_info.proof_status.submitted" = "Eingereicht";
 "open_crypto_pay.tx_info.proof_status.pending" = "Ausstehend";
 "open_crypto_pay.tx_info.proof_status.reconciliation" = "Abgleich erforderlich";
+
+"balance.pay" = "Bezahlen";
+"cross_pay.title" = "Bezahlen";
+"cross_pay.send_to" = "Senden an";
+"cross_pay.select_token" = "Token auswählen";
+"cross_pay.review" = "Überprüfen";
+"cross_pay.you_pay" = "Sie zahlen";
+"cross_pay.you_pay.info" = "Der eingezahlte Betrag zur Finanzierung dieser Zahlung, einschließlich der Umtauschkosten des Anbieters und einer erstattungsfähigen Slippage-Reserve. Nicht verwendete Teile der Reserve werden an Ihre Wallet zurückgegeben.";
+"cross_pay.caution.insufficient_balance %@" = "Diese Zahlung erfordert %@ in Ihrer Wallet, einschließlich Gebühren.";
+"cross_pay.error.token_unsupported" = "Dieser Token wird für Zahlungen nicht unterstützt.";
+"cross_pay.error.below_minimum %@" = "Der Mindestzahlungsbetrag beträgt %@.";
+"cross_pay.error.above_maximum %@" = "Der Höchstzahlungsbetrag beträgt %@.";
+"cross_pay.error.no_route" = "Für diesen Token und Betrag ist keine Zahlungsroute verfügbar.";
+"cross_pay.error.provider_suspended" = "Der Zahlungsanbieter ist vorübergehend ausgesetzt. Versuchen Sie es später erneut.";
+"cross_pay.error.network" = "Ein Netzwerkfehler ist aufgetreten. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.";
+"cross_pay.error.commit_failed" = "Diese Zahlung konnte nicht eingerichtet werden. Aktualisieren Sie, um es erneut zu versuchen.";
+"cross_pay.unavailable" = "Zahlung nicht verfügbar";

@@ -2595,3 +2595,20 @@
 "open_crypto_pay.tx_info.proof_status.submitted" = "Soumis";
 "open_crypto_pay.tx_info.proof_status.pending" = "En attente";
 "open_crypto_pay.tx_info.proof_status.reconciliation" = "Réconciliation nécessaire";
+
+"balance.pay" = "Payer";
+"cross_pay.title" = "Payer";
+"cross_pay.send_to" = "Envoyer à";
+"cross_pay.select_token" = "Sélectionner un token";
+"cross_pay.review" = "Vérifier";
+"cross_pay.you_pay" = "Vous payez";
+"cross_pay.you_pay.info" = "Le montant déposé pour financer ce paiement, y compris le coût de change du fournisseur et une réserve de glissement remboursable. Toute partie inutilisée de la réserve est retournée à votre wallet.";
+"cross_pay.caution.insufficient_balance %@" = "Ce paiement nécessite %@ dans votre wallet, frais inclus.";
+"cross_pay.error.token_unsupported" = "Ce token n'est pas pris en charge pour les paiements.";
+"cross_pay.error.below_minimum %@" = "Le montant minimum de paiement est de %@.";
+"cross_pay.error.above_maximum %@" = "Le montant maximum de paiement est de %@.";
+"cross_pay.error.no_route" = "Aucune route de paiement n'est disponible pour ce token et ce montant.";
+"cross_pay.error.provider_suspended" = "Le fournisseur de paiement est temporairement suspendu. Réessayez plus tard.";
+"cross_pay.error.network" = "Une erreur réseau s'est produite. Vérifiez votre connexion et réessayez.";
+"cross_pay.error.commit_failed" = "Ce paiement n'a pas pu être configuré. Actualisez pour réessayer.";
+"cross_pay.unavailable" = "Paiement indisponible";

@@ -2595,3 +2595,20 @@
 "open_crypto_pay.tx_info.proof_status.submitted" = "已提交";
 "open_crypto_pay.tx_info.proof_status.pending" = "待处理";
 "open_crypto_pay.tx_info.proof_status.reconciliation" = "需要对账";
+
+"balance.pay" = "支付";
+"cross_pay.title" = "支付";
+"cross_pay.send_to" = "发送至";
+"cross_pay.select_token" = "选择代币";
+"cross_pay.review" = "审核";
+"cross_pay.you_pay" = "您支付";
+"cross_pay.you_pay.info" = "为此支付存入的金额，包括提供商的兑换费用和可退还的滑点准备金。准备金中未使用的部分将退回到您的钱包。";
+"cross_pay.caution.insufficient_balance %@" = "此支付需要您的钱包中有 %@（含手续费）。";
+"cross_pay.error.token_unsupported" = "此代币不支持用于支付。";
+"cross_pay.error.below_minimum %@" = "最低支付金额为 %@。";
+"cross_pay.error.above_maximum %@" = "最高支付金额为 %@。";
+"cross_pay.error.no_route" = "此代币和金额没有可用的支付路径。";
+"cross_pay.error.provider_suspended" = "支付提供商暂时停止服务，请稍后重试。";
+"cross_pay.error.network" = "发生网络错误。请检查您的连接并重试。";
+"cross_pay.error.commit_failed" = "无法设置此支付。请刷新后重试。";
+"cross_pay.unavailable" = "支付不可用";
