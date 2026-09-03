@@ -158,6 +158,24 @@ public extension SwapHistoryManager {
         }
     }
 
+    // mechanism-agnostic hook: a retried broadcast reuses the row it failed on. Scoped to the
+    // failed status — never resurrects a settled swap; false = nothing to retry.
+    func retryFailed(trackingHandle: String) -> Bool {
+        do {
+            guard try storage.markNotStarted(trackingHandle: trackingHandle) else {
+                return false
+            }
+
+            if let swap = try storage.swap(trackingHandle: trackingHandle) {
+                swapUpdateSubject.send(swap)
+            }
+
+            return true
+        } catch {
+            return false
+        }
+    }
+
     // mechanism-agnostic hook: the mechanism itself learned the swap failed (e.g. a reverted /
     // never-mined userOp) — no server tracking involved. Targeted update scoped to pending
     // statuses; a settled swap is never downgraded, a re-delivery is a no-op.

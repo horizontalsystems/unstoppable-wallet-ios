@@ -55,6 +55,7 @@ enum StatPage: String {
     case contactNew = "contact_new"
     case contacts
     case contactUs = "contact_us"
+    case crossPay = "cross_pay"
     case deepLink = "deep_link"
     case donate
     case donateAddressList = "donate_address_list"

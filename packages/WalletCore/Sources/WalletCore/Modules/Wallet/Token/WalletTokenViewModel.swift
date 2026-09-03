@@ -57,6 +57,12 @@ public class WalletTokenViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.isReachable = $0 }
             .store(in: &cancellables)
+
+        // `buttons` is computed off swapEnabled; re-render when the flag flips mid-session.
+        appStateManager.$swapEnabled
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.objectWillChange.send() }
+            .store(in: &cancellables)
     }
 
     public func refresh() async {
@@ -139,9 +145,17 @@ extension WalletTokenViewModel {
     var buttons: [WalletButton] {
         if wallet.account.watchAccount {
             return []
-        } else {
-            return [.chart, .receive, .send, .swap]
         }
+
+        var buttons: [WalletButton] = [.chart, .receive, .send]
+
+        // ZEC only, behind the same gate as swapping — the flow funds the payment through the swap rail.
+        if wallet.token.blockchainType == .zcash, swapEnabled, Core.crossPayService != nil {
+            buttons.append(.pay)
+        }
+
+        buttons.append(.swap)
+        return buttons
     }
 
     var swapEnabled: Bool {

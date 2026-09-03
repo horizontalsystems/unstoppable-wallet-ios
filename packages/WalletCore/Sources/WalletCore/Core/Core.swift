@@ -44,6 +44,7 @@ public class Core {
     // Set by each app, because the service needs a USwapMultiSwapApi the app configures. Left nil,
     // private send is simply unavailable and nothing else changes.
     public static var privateSendService: PrivateSendService?
+    public static var crossPayService: CrossPayService?
 
     let config: Config
 

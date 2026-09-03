@@ -51,6 +51,7 @@ public enum SendHandlerFactory {
 public extension SendHandlerFactory {
     static let unstoppableHandlers: [SendHandler.Type] = [
         PrivateSendHandlerProvider.self,
+        CrossPayHandlerProvider.self,
         EvmSendHandler.self,
         BitcoinSendHandler.self,
         ZcashSendHandler.self,

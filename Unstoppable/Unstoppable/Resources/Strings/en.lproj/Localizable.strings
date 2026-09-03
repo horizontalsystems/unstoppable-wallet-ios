@@ -2595,3 +2595,20 @@
 "open_crypto_pay.tx_info.proof_status.submitted" = "Submitted";
 "open_crypto_pay.tx_info.proof_status.pending" = "Pending";
 "open_crypto_pay.tx_info.proof_status.reconciliation" = "Reconciliation needed";
+
+"balance.pay" = "Pay";
+"cross_pay.title" = "Pay";
+"cross_pay.send_to" = "Send To";
+"cross_pay.select_token" = "Select Token";
+"cross_pay.review" = "Review";
+"cross_pay.you_pay" = "You Pay";
+"cross_pay.you_pay.info" = "The amount deposited to fund this payment, including the provider's exchange cost and a refundable slippage reserve. Any unused part of the reserve is returned to your wallet.";
+"cross_pay.caution.insufficient_balance %@" = "This payment needs %@ in your wallet, including fees.";
+"cross_pay.error.token_unsupported" = "This token is not supported for payments.";
+"cross_pay.error.below_minimum %@" = "Minimum payment amount is %@.";
+"cross_pay.error.above_maximum %@" = "Maximum payment amount is %@.";
+"cross_pay.error.no_route" = "No payment route is available for this token and amount.";
+"cross_pay.error.provider_suspended" = "The payment provider is temporarily suspended. Try again later.";
+"cross_pay.error.network" = "A network error occurred. Check your connection and try again.";
+"cross_pay.error.commit_failed" = "This payment could not be set up. Refresh to try again.";
+"cross_pay.unavailable" = "Payment unavailable";

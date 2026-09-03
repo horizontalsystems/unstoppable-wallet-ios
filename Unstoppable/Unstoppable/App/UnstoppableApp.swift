@@ -97,6 +97,14 @@ struct UnstoppableApp: App {
             // handing the provider the sender's address defeats the point of a private send.
             commitRequestBuilder: { USwapCommitRequestBuilder(providerId: $0, shouldIncludeSourceAddress: { _ in false }) }
         )
+
+        // Shares the API and repository cache; the factory keeps the NEAR repository (and its
+        // first /v2/tokens fetch) uncreated until the CrossPay screen opens.
+        Core.crossPayService = CrossPayService(
+            api: uSwapApi,
+            assetRepository: repositoryCache.repository(providerId:),
+            commitRequestBuilder: USwapCommitRequestBuilder(providerId: CrossPayService.providerId, shouldIncludeSourceAddress: { _ in false })
+        )
     }
 }
 

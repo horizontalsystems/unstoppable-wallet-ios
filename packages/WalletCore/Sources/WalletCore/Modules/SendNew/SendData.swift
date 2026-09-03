@@ -39,6 +39,9 @@ public enum SendData {
     // quoting and exact-output semantics, neither the deposit address nor the amount to transfer
     // exists yet. Both are the commit's answer, so the inner send is built inside the handler.
     case privateSend(request: PrivateSendRequest)
+    // Same shape as .privateSend, for the cross-asset exact-output payment: the deposit is the
+    // commit's answer, so the inner ZEC send is built inside the handler.
+    case crossPay(request: CrossPayRequest)
 }
 
 // App-agnostic display + reporting payload attached to a merchant payment send. Carried through the

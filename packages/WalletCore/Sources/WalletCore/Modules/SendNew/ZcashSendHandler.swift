@@ -105,6 +105,16 @@ extension ZcashSendHandler {
             [token.coin]
         }
 
+        // Protocol member (default []) so a decorating handler's data can render the ZIP-317 row.
+        func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
+            UtxoSendHelper.feeFields(
+                fee: proposal?.totalFeeRequired().decimalValue.decimalValue,
+                feeToken: baseToken,
+                currency: currency,
+                feeTokenRate: rates[baseToken.coin.uid]
+            )
+        }
+
         func cautions(baseToken: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
             var cautions = [CautionNew]()
 
@@ -159,6 +169,19 @@ extension ZcashSendHandler {
                 .init(fields + feeFields, isMain: false),
             ]
         }
+    }
+}
+
+extension ZcashSendHandler: ISendHandlerRefCapturing {
+    // Same broadcast path as `send`, returning the txid. Empty string = submitted but id unknown
+    // (resubmit path) — caller falls back to provider-side tracking.
+    func sendCapturingRef(data: ISendData) async throws -> String {
+        guard let data = data as? SendData, let proposal = data.proposal else {
+            throw SendError.invalidData
+        }
+
+        let txId = try await adapter.send(proposal: proposal, zip317MarginalFee: data.zip317MarginalFee)
+        return txId ?? ""
     }
 }
 

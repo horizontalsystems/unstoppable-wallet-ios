@@ -184,6 +184,16 @@ extension SwapStorage {
         }
     }
 
+    // the inverse of markFailed for a broadcast retry: only a failed row goes back to notStarted,
+    // so a settled or in-flight swap can never be reset
+    func markNotStarted(trackingHandle: String) throws -> Bool {
+        try dbPool.write { db in
+            try SwapRecord
+                .filter(SwapRecord.Columns.trackingHandle == trackingHandle && SwapRecord.Columns.status == Swap.Status.failed.rawValue)
+                .updateAll(db, SwapRecord.Columns.status.set(to: Swap.Status.notStarted.rawValue)) > 0
+        }
+    }
+
     // targeted status update for a swap whose mechanism reported failure; scoped to pending
     // statuses so a settled swap can never be downgraded and a re-delivery is a no-op
     func markFailed(trackingHandle: String) throws -> Bool {
