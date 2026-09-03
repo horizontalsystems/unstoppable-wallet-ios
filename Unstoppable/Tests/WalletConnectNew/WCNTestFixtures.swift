@@ -1,3 +1,4 @@
+import BigInt
 import Foundation
 import ReownWalletKit
 import WalletConnectUtils
@@ -35,5 +36,43 @@ final class WCNSpySignClient: IWCNSignClient {
             throw error
         }
         calls.append(Call(topic: topic, requestId: requestId, response: response))
+    }
+}
+
+extension WCNTestFixtures {
+    static func account(_ caip10: String) -> WalletConnectUtils.Account {
+        WalletConnectUtils.Account(caip10)!
+    }
+
+    static let approvedMainnet = account("eip155:1:\(address)")
+    static let approvedOptimism = account("eip155:10:\(address)")
+    static let oneInchRouter = "0x1111111254EEB25477B68fb85Ed929f73A960582"
+}
+
+final class WCNStubParsedRequest: WCNParsedRequest, IWCNTypedDataRequest {
+    var stubTo: String?
+    var stubValue: BigUInt?
+    var stubData: Data?
+    var stubMessage: Data?
+    var stubSwapInfo: WCNSwapInfo?
+    var stubDomain: WCNTypedDataDomain?
+
+    override var to: String? { stubTo }
+    override var value: BigUInt? { stubValue }
+    override var data: Data? { stubData }
+    override var message: Data? { stubMessage }
+    override var decodedSwapInfo: WCNSwapInfo? { stubSwapInfo }
+    var typedDataDomain: WCNTypedDataDomain? { stubDomain }
+
+    static func make(method: String = "eth_sendTransaction", chainId: String = "eip155:1", kind: WCNParsedRequest.Kind = .transaction, from: String? = WCNTestFixtures.address) throws -> WCNStubParsedRequest {
+        try WCNStubParsedRequest(request: WCNTestFixtures.request(method: method, chainId: chainId), kind: kind, from: from)
+    }
+}
+
+final class WCNStubSwapRouterProvider: IWCNSwapRouterProvider {
+    var routers = [String: String]()
+
+    func routerAddress(provider _: WCNSwapInfo.Provider, chainId: Blockchain) -> String? {
+        routers[chainId.absoluteString]
     }
 }

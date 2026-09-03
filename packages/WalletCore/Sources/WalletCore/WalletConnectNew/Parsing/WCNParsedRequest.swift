@@ -28,6 +28,8 @@ class WCNParsedRequest {
     var to: String? { nil }
     var value: BigUInt? { nil }
     var data: Data? { nil }
+    var message: Data? { nil }
+    var decodedSwapInfo: WCNSwapInfo? { nil }
 
     func makeSendData() -> SendData? {
         nil
