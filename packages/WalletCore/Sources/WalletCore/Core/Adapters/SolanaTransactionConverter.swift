@@ -8,7 +8,13 @@ class SolanaTransactionConverter {
     private static let swapProgramLabels: [String: String] = [
         KnownPrograms.jupiterV6: "Jupiter",
         KnownPrograms.lifi: "LI.FI",
+        KnownPrograms.dflow: "DFlow",
     ]
+
+    // ≈ one account's rent: classic ATA (165 bytes) ~0.00204 SOL, Token-2022 with extensions
+    // 0.00207–0.00220 (mainnet 0.00210888 for a Pump.fun ATA). Applied to the NET SOL change, so a
+    // real payment bundled with a create pushes past the bound and stays visible.
+    private static let maxSolRent = Decimal(string: "0.0023")!
 
     private let userAddress: String
     private let source: TransactionSource
@@ -32,6 +38,21 @@ class SolanaTransactionConverter {
     // (token-account rent), otherwise the single/first leg (a genuinely-SOL swap side).
     private func primaryTransfer(among transfers: [SolanaTransactionRecord.Transfer]) -> SolanaTransactionRecord.Transfer? {
         transfers.first { $0.value.token != baseToken } ?? transfers.first
+    }
+
+    // A side that is exactly one token leg plus small SOL legs (each ≤ maxSolRent) is one logical
+    // transfer plus token-account rent — reduce it to the token leg. createdTokenAccount decides:
+    // true → rent, false → real SOL transfer (kept), nil (row synced before the flag) → treat as rent.
+    private func collapseTokenWithSolRent(_ transfers: [SolanaTransactionRecord.Transfer], createdTokenAccount: Bool?) -> [SolanaTransactionRecord.Transfer] {
+        guard transfers.count > 1 else { return transfers }
+
+        let solLegs = transfers.filter { $0.value.token == baseToken }
+        let tokenLegs = transfers.filter { $0.value.token != baseToken }
+
+        guard tokenLegs.count == 1, !solLegs.isEmpty else { return transfers }
+        guard solLegs.allSatisfy({ abs($0.value.value) <= Self.maxSolRent }) else { return transfers }
+
+        return (createdTokenAccount ?? true) ? tokenLegs : transfers
     }
 
     private func convertAmount(rawAmount: Decimal, decimals: Int, sign: FloatingPointSign) -> Decimal {
@@ -107,9 +128,15 @@ class SolanaTransactionConverter {
             )
         }
 
+        // A plain SPL send/receive also moves a little SOL for token-account rent (when the
+        // recipient's account has to be created) — without the collapse such sends fall through
+        // to "Unknown Transaction".
+        let effectiveIncoming = collapseTokenWithSolRent(incomingTransfers, createdTokenAccount: transaction.createdTokenAccount)
+        let effectiveOutgoing = collapseTokenWithSolRent(outgoingTransfers, createdTokenAccount: transaction.createdTokenAccount)
+
         // Classify the transaction
-        if incomingTransfers.count == 1, outgoingTransfers.isEmpty {
-            let transfer = incomingTransfers[0]
+        if effectiveIncoming.count == 1, effectiveOutgoing.isEmpty {
+            let transfer = effectiveIncoming[0]
             return SolanaIncomingTransactionRecord(
                 transaction: transaction,
                 baseToken: baseToken,
@@ -117,8 +144,8 @@ class SolanaTransactionConverter {
                 from: transfer.address,
                 value: transfer.value
             )
-        } else if incomingTransfers.isEmpty, outgoingTransfers.count == 1 {
-            let transfer = outgoingTransfers[0]
+        } else if effectiveIncoming.isEmpty, effectiveOutgoing.count == 1 {
+            let transfer = effectiveOutgoing[0]
             return SolanaOutgoingTransactionRecord(
                 transaction: transaction,
                 baseToken: baseToken,
