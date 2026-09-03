@@ -1,3 +1,4 @@
+import MarketKit
 import Testing
 @testable import WalletCore
 
@@ -35,7 +36,7 @@ struct WCNSendHandlerRegistryTests {
         #expect(WCNSendHandlerProvider.instance(sendData: .zcashMigration) == nil)
         #expect(factory.calls == 0)
 
-        let handler = WCNSendHandlerProvider.instance(sendData: .walletConnectNew(inner: .zcashMigration, request: try request()))
+        let handler = WCNSendHandlerProvider.instance(sendData: .walletConnectNew(inner: nil, request: try request()))
         #expect(handler != nil)
         #expect(factory.calls == 1)
     }
@@ -54,7 +55,7 @@ private final class StubFactory: IWCNSendHandlerFactory {
         self.handles = handles
     }
 
-    func handler(request _: WCNRequest, inner _: SendData) -> ISendHandler? {
+    func handler(request _: WCNRequest, inner _: SendData?) -> ISendHandler? {
         calls += 1
         return handles ? StubHandler() : nil
     }

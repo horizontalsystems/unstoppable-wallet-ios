@@ -1,3 +1,3 @@
 protocol IWCNSendHandlerFactory: AnyObject {
-    func handler(request: WCNRequest, inner: SendData) -> ISendHandler?
+    func handler(request: WCNRequest, inner: SendData?) -> ISendHandler?
 }

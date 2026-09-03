@@ -1,4 +1,6 @@
 import BigInt
+import EvmKit
+import Foundation
 import Testing
 import WalletConnectSign
 @testable import WalletCore

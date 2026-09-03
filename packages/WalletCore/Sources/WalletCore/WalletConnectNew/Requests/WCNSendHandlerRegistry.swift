@@ -5,7 +5,7 @@ class WCNSendHandlerRegistry {
         factories.append(factory)
     }
 
-    func handler(request: WCNRequest, inner: SendData) -> ISendHandler? {
+    func handler(request: WCNRequest, inner: SendData?) -> ISendHandler? {
         for factory in factories {
             if let handler = factory.handler(request: request, inner: inner) {
                 return handler

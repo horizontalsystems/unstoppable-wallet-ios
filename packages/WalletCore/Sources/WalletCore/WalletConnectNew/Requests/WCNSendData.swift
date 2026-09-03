@@ -1,3 +1,4 @@
+import Foundation
 import MarketKit
 
 // Wraps the chain handler's send data: the verdict gates the confirm button and adds its banner
