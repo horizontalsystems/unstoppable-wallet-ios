@@ -2,9 +2,9 @@ import stellarsdk
 import WalletConnectSign
 
 class WCNStellarTransactionParser: IWCNParser {
-    func parse(request: Request) throws -> WCNParsedRequest? {
+    func parse(request: Request) throws -> WCNRequestPayload? {
         guard request.chainId.namespace == WCNNamespace.stellar,
-              [WCNStellarTransactionParsed.signMethod, WCNStellarTransactionParsed.submitMethod].contains(request.method)
+              [WCNStellarTransactionPayload.signMethod, WCNStellarTransactionPayload.submitMethod].contains(request.method)
         else {
             return nil
         }
@@ -17,7 +17,7 @@ class WCNStellarTransactionParser: IWCNParser {
             throw ParsingError.invalidEnvelope
         }
 
-        return WCNStellarTransactionParsed(request: request, xdr: xdr, sourceAccountId: transaction.sourceAccount.keyPair.accountId)
+        return WCNStellarTransactionPayload(request: request, xdr: xdr, sourceAccountId: transaction.sourceAccount.keyPair.accountId)
     }
 }
 

@@ -12,13 +12,13 @@ struct WCNSolanaSendDataTests {
         decimals: 9
     )
 
-    private func parsed(method: String = WCNSolanaTransactionParsed.signAndSendMethod, from: String? = SolanaRawSigningFixtures.ours) throws -> WCNSolanaTransactionParsed {
+    private func payload(method: String = WCNSolanaTransactionPayload.signAndSendMethod, from: String? = SolanaRawSigningFixtures.ours) throws -> WCNSolanaTransactionPayload {
         let request = try WCNTestFixtures.request(method: method, chainId: "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp")
-        return WCNSolanaTransactionParsed(request: request, rawTransactions: [SolanaRawSigningFixtures.partiallySigned], requiredSigners: [[SolanaRawSigningFixtures.other, SolanaRawSigningFixtures.ours]], from: from)
+        return WCNSolanaTransactionPayload(request: request, rawTransactions: [SolanaRawSigningFixtures.partiallySigned], requiredSigners: [[SolanaRawSigningFixtures.other, SolanaRawSigningFixtures.ours]], from: from)
     }
 
     @Test func insufficientBalanceBlocksSend() throws {
-        let data = try WCNSolanaSendData(token: Self.token, parsed: parsed(), fee: 0.000005, transactionError: WCNSolanaSendHandler.TransactionError.insufficientBalance(balance: 0))
+        let data = try WCNSolanaSendData(token: Self.token, payload: payload(), fee: 0.000005, transactionError: WCNSolanaSendHandler.TransactionError.insufficientBalance(balance: 0))
 
         #expect(data.canSend == false)
         let cautions = data.cautions(baseToken: Self.token, currency: currency, rates: [:])
@@ -27,7 +27,7 @@ struct WCNSolanaSendDataTests {
     }
 
     @Test func sectionsListSignersAccountAndFee() throws {
-        let data = try WCNSolanaSendData(token: Self.token, parsed: parsed(), fee: 0.000005, transactionError: nil)
+        let data = try WCNSolanaSendData(token: Self.token, payload: payload(), fee: 0.000005, transactionError: nil)
         let sections = data.sections(baseToken: Self.token, currency: currency, rates: [:])
 
         #expect(data.canSend)
@@ -36,7 +36,7 @@ struct WCNSolanaSendDataTests {
     }
 
     @Test func missingFromOmitsAccountSection() throws {
-        let data = try WCNSolanaSendData(token: Self.token, parsed: parsed(from: nil), fee: nil, transactionError: nil)
+        let data = try WCNSolanaSendData(token: Self.token, payload: payload(from: nil), fee: nil, transactionError: nil)
         let sections = data.sections(baseToken: Self.token, currency: currency, rates: [:])
         #expect(sections.count == 1)
     }

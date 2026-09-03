@@ -4,8 +4,8 @@ import Testing
 @testable import WalletCore
 
 struct WCNSendDataTests {
-    private func request(verdict: WCNVerificationVerdict, parsed: WCNParsedRequest? = nil) throws -> WCNRequest {
-        try WCNRequest(parsed: parsed ?? WCNStubParsedRequest.make(), verdict: verdict, dAppName: "React App")
+    private func request(verdict: WCNVerificationVerdict, payload: WCNRequestPayload? = nil) throws -> WCNRequest {
+        try WCNRequest(payload: payload ?? WCNStubRequestPayload.make(), verdict: verdict, dAppName: "React App")
     }
 
     private let currency = Currency(code: "USD", symbol: "$", decimal: 2)
@@ -26,19 +26,19 @@ struct WCNSendDataTests {
     }
 
     @Test func blockDisablesSendAndAddsErrorCaution() throws {
-        let data = try WCNSendData(inner: StubSendData(canSend: true), request: request(verdict: .block(reason: "to != router")))
+        let data = try WCNSendData(inner: StubSendData(canSend: true), request: request(verdict: .block(reason: .swapNotToCanonicalRouter)))
 
         #expect(data.canSend == false)
         let cautions = data.cautions(baseToken: WCNSendDataTests.token, currency: currency, rates: [:])
-        #expect(cautions == [CautionNew(text: "to != router", type: .error)])
+        #expect(cautions == [CautionNew(text: WCNVerdictReason.swapNotToCanonicalRouter.text, type: .error)])
     }
 
     @Test func cautionKeepsSendAndAddsWarning() throws {
-        let data = try WCNSendData(inner: StubSendData(canSend: true), request: request(verdict: .caution(reason: "origin mismatch")))
+        let data = try WCNSendData(inner: StubSendData(canSend: true), request: request(verdict: .caution(reason: .originInvalid)))
 
         #expect(data.canSend)
         let cautions = data.cautions(baseToken: WCNSendDataTests.token, currency: currency, rates: [:])
-        #expect(cautions == [CautionNew(text: "origin mismatch", type: .warning)])
+        #expect(cautions == [CautionNew(text: WCNVerdictReason.originInvalid.text, type: .warning)])
     }
 
     @Test func innerCannotSendStaysDisabledOnPass() throws {
@@ -56,9 +56,9 @@ struct WCNSendDataTests {
     }
 
     @Test func signOnlyRequestUsesSignButton() throws {
-        let parsed = try WCNStubParsedRequest.make(method: "eth_signTransaction")
-        parsed.stubSignOnly = true
-        let data = try WCNSendData(inner: StubSendData(canSend: true), request: request(verdict: .pass, parsed: parsed))
+        let payload = try WCNStubRequestPayload.make(method: "eth_signTransaction")
+        payload.stubSignOnly = true
+        let data = try WCNSendData(inner: StubSendData(canSend: true), request: request(verdict: .pass, payload: payload))
         #expect(data.customSendButtonTitle == "button.sign".localized)
     }
 }

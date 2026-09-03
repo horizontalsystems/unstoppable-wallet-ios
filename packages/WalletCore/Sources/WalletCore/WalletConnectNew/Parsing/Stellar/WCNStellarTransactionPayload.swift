@@ -1,6 +1,6 @@
 import WalletConnectSign
 
-class WCNStellarTransactionParsed: WCNParsedRequest {
+class WCNStellarTransactionPayload: WCNRequestPayload {
     static let signMethod = "stellar_signXDR"
     static let submitMethod = "stellar_signAndSubmitXDR"
 

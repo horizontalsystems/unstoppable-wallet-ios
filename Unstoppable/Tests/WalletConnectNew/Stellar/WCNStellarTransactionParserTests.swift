@@ -9,21 +9,21 @@ struct WCNStellarTransactionParserTests {
         let request = try WCNStellarFixtures.request(params: ["xdr": envelope.xdr])
 
         let result = try parser.parse(request: request)
-        let parsed = try #require(result as? WCNStellarTransactionParsed)
+        let payload = try #require(result as? WCNStellarTransactionPayload)
 
-        #expect(parsed.xdr == envelope.xdr)
-        #expect(parsed.from == envelope.sourceAccountId)
-        #expect(parsed.kind == .transaction)
-        #expect(parsed.isSignOnly == false)
-        #expect(parsed.makeSendData() == nil)
+        #expect(payload.xdr == envelope.xdr)
+        #expect(payload.from == envelope.sourceAccountId)
+        #expect(payload.kind == .transaction)
+        #expect(payload.isSignOnly == false)
+        #expect(payload.makeSendData() == nil)
     }
 
     @Test func signMethodIsSignOnly() throws {
         let envelope = try WCNStellarFixtures.envelope()
-        let request = try WCNStellarFixtures.request(method: WCNStellarTransactionParsed.signMethod, params: ["xdr": envelope.xdr])
+        let request = try WCNStellarFixtures.request(method: WCNStellarTransactionPayload.signMethod, params: ["xdr": envelope.xdr])
         let result = try parser.parse(request: request)
-        let parsed = try #require(result)
-        #expect(parsed.isSignOnly)
+        let payload = try #require(result)
+        #expect(payload.isSignOnly)
     }
 
     @Test func ignoresOtherNamespaceAndMethods() throws {

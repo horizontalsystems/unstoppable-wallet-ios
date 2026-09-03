@@ -8,7 +8,7 @@ struct WCNNamespaceBuilderSessionTests {
 
     // golden: exactly what the old wallet sent on approve during the 2026-09-02 spike
     @Test func spikeGoldenNamespace() {
-        let selected = builder.candidates(required: [:], optional: WCNChainSupportFixtures.spikeOptional, account: account)
+        let selected = builder.proposals(required: [:], optional: WCNChainSupportFixtures.spikeOptional, account: account)
         let namespaces = builder.sessionNamespaces(selected: selected)
 
         let expected = SessionNamespace(
@@ -20,12 +20,12 @@ struct WCNNamespaceBuilderSessionTests {
         #expect(namespaces["eip155"]?.chains == nil)
     }
 
-    @Test func groupsSelectedCandidatesByNamespace() {
+    @Test func groupsSelectedProposalsByNamespace() {
         let optional = [
             "eip155": WCNChainSupportFixtures.namespace(["eip155:1"], methods: ["personal_sign"], events: []),
             "stellar": WCNChainSupportFixtures.namespace(["stellar:pubnet"], methods: ["stellar_signXDR"], events: ["message"]),
         ]
-        let selected = builder.candidates(required: [:], optional: optional, account: account)
+        let selected = builder.proposals(required: [:], optional: optional, account: account)
         let namespaces = builder.sessionNamespaces(selected: selected)
 
         #expect(Set(namespaces.keys) == ["eip155", "stellar"])

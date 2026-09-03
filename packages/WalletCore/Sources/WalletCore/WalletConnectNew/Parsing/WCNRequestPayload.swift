@@ -2,7 +2,7 @@ import BigInt
 import Foundation
 import WalletConnectSign
 
-class WCNParsedRequest {
+class WCNRequestPayload {
     enum Kind {
         case transaction
         case signMessage

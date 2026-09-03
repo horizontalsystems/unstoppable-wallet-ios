@@ -15,9 +15,9 @@ class WCNEvmTransactionParser: IWCNParser {
         self.accountManager = accountManager
     }
 
-    func parse(request: Request) throws -> WCNParsedRequest? {
+    func parse(request: Request) throws -> WCNRequestPayload? {
         guard request.chainId.namespace == WCNNamespace.eip155,
-              [WCNEvmTransactionParsed.sendMethod, WCNEvmTransactionParsed.signMethod].contains(request.method)
+              [WCNEvmTransactionPayload.sendMethod, WCNEvmTransactionPayload.signMethod].contains(request.method)
         else {
             return nil
         }
@@ -33,7 +33,7 @@ class WCNEvmTransactionParser: IWCNParser {
         let kitWrapper = accountManager.activeAccount.flatMap { evmBlockchainManager.kitWrapper(chainId: chainId, account: $0) }
         let swapInfo = kitWrapper.flatMap { Self.swapInfo(decoration: $0.evmKit.decorate(transactionData: transaction.transactionData)) }
 
-        return WCNEvmTransactionParsed(request: request, transaction: transaction, blockchainType: blockchain.type, baseToken: baseToken, swapInfo: swapInfo)
+        return WCNEvmTransactionPayload(request: request, transaction: transaction, blockchainType: blockchain.type, baseToken: baseToken, swapInfo: swapInfo)
     }
 
     private static func swapInfo(decoration: TransactionDecoration?) -> WCNSwapInfo? {

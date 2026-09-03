@@ -12,12 +12,12 @@ enum WCNTestFixtures {
         try Request(topic: topic, method: method, params: params, chainId: Blockchain(chainId)!)
     }
 
-    static func parsed(method: String = "eth_sendTransaction", kind: WCNParsedRequest.Kind = .transaction, from: String? = address) throws -> WCNParsedRequest {
-        try WCNParsedRequest(request: request(method: method), kind: kind, from: from)
+    static func payload(method: String = "eth_sendTransaction", kind: WCNRequestPayload.Kind = .transaction, from: String? = address) throws -> WCNRequestPayload {
+        try WCNRequestPayload(request: request(method: method), kind: kind, from: from)
     }
 
-    static func context(parsed: WCNParsedRequest? = nil, verifyContext: VerifyContext? = nil, approvedAccounts: [WalletConnectUtils.Account] = []) throws -> WCNVerificationContext {
-        try WCNVerificationContext(parsed: parsed ?? self.parsed(), verifyContext: verifyContext, accountId: "account-1", approvedAccounts: approvedAccounts)
+    static func context(payload: WCNRequestPayload? = nil, verifyContext: VerifyContext? = nil, approvedAccounts: [WalletConnectUtils.Account] = []) throws -> WCNVerificationContext {
+        try WCNVerificationContext(payload: payload ?? self.payload(), verifyContext: verifyContext, accountId: "account-1", approvedAccounts: approvedAccounts)
     }
 }
 
@@ -49,7 +49,7 @@ extension WCNTestFixtures {
     static let oneInchRouter = "0x1111111254EEB25477B68fb85Ed929f73A960582"
 }
 
-final class WCNStubParsedRequest: WCNParsedRequest, IWCNTypedDataRequest {
+final class WCNStubRequestPayload: WCNRequestPayload, IWCNTypedDataRequest {
     var stubTo: String?
     var stubValue: BigUInt?
     var stubData: Data?
@@ -66,8 +66,8 @@ final class WCNStubParsedRequest: WCNParsedRequest, IWCNTypedDataRequest {
     override var decodedSwapInfo: WCNSwapInfo? { stubSwapInfo }
     var typedDataDomain: WCNTypedDataDomain? { stubDomain }
 
-    static func make(method: String = "eth_sendTransaction", chainId: String = "eip155:1", kind: WCNParsedRequest.Kind = .transaction, from: String? = WCNTestFixtures.address) throws -> WCNStubParsedRequest {
-        try WCNStubParsedRequest(request: WCNTestFixtures.request(method: method, chainId: chainId), kind: kind, from: from)
+    static func make(method: String = "eth_sendTransaction", chainId: String = "eip155:1", kind: WCNRequestPayload.Kind = .transaction, from: String? = WCNTestFixtures.address) throws -> WCNStubRequestPayload {
+        try WCNStubRequestPayload(request: WCNTestFixtures.request(method: method, chainId: chainId), kind: kind, from: from)
     }
 }
 

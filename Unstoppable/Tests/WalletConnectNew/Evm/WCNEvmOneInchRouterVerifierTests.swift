@@ -11,54 +11,54 @@ struct WCNEvmOneInchRouterVerifierTests {
 
     @Test func handlesOnlyOneInchSwaps() throws {
         let verifier = makeVerifier()
-        let uniswap = try WCNStubParsedRequest.make()
+        let uniswap = try WCNStubRequestPayload.make()
         uniswap.stubSwapInfo = WCNSwapInfo(provider: .uniswap, tokenInIsNative: true)
-        let oneInch = try WCNStubParsedRequest.make()
+        let oneInch = try WCNStubRequestPayload.make()
         oneInch.stubSwapInfo = WCNSwapInfo(provider: .oneInch, tokenInIsNative: true)
 
-        let uniswapContext = try WCNTestFixtures.context(parsed: uniswap)
+        let uniswapContext = try WCNTestFixtures.context(payload: uniswap)
 
         #expect(verifier.handles(uniswapContext) == false)
-        let oneInchContext = try WCNTestFixtures.context(parsed: oneInch)
+        let oneInchContext = try WCNTestFixtures.context(payload: oneInch)
         #expect(verifier.handles(oneInchContext))
     }
 
     @Test func blocksSwapToForeignAddress() throws {
         let verifier = makeVerifier()
-        let parsed = try WCNStubParsedRequest.make()
-        parsed.stubSwapInfo = WCNSwapInfo(provider: .oneInch, tokenInIsNative: false)
-        parsed.stubTo = "0x000000000000000000000000000000000000dEaD"
+        let payload = try WCNStubRequestPayload.make()
+        payload.stubSwapInfo = WCNSwapInfo(provider: .oneInch, tokenInIsNative: false)
+        payload.stubTo = "0x000000000000000000000000000000000000dEaD"
 
-        let verdict = try verifier.verify(WCNTestFixtures.context(parsed: parsed))
-        #expect(verdict == .block(reason: "1inch swap is not addressed to the canonical router"))
+        let verdict = try verifier.verify(WCNTestFixtures.context(payload: payload))
+        #expect(verdict == .block(reason: .swapNotToCanonicalRouter))
     }
 
     @Test func passesCanonicalRouterCaseInsensitively() throws {
         let verifier = makeVerifier()
-        let parsed = try WCNStubParsedRequest.make()
-        parsed.stubSwapInfo = WCNSwapInfo(provider: .oneInch, tokenInIsNative: false)
-        parsed.stubTo = WCNTestFixtures.oneInchRouter.lowercased()
+        let payload = try WCNStubRequestPayload.make()
+        payload.stubSwapInfo = WCNSwapInfo(provider: .oneInch, tokenInIsNative: false)
+        payload.stubTo = WCNTestFixtures.oneInchRouter.lowercased()
 
-        let verdict = try verifier.verify(WCNTestFixtures.context(parsed: parsed))
+        let verdict = try verifier.verify(WCNTestFixtures.context(payload: payload))
         #expect(verdict == .pass)
     }
 
     @Test func blocksChainWithoutRouter() throws {
         let verifier = makeVerifier()
-        let parsed = try WCNStubParsedRequest.make(chainId: "eip155:999")
-        parsed.stubSwapInfo = WCNSwapInfo(provider: .oneInch, tokenInIsNative: false)
-        parsed.stubTo = WCNTestFixtures.oneInchRouter
+        let payload = try WCNStubRequestPayload.make(chainId: "eip155:999")
+        payload.stubSwapInfo = WCNSwapInfo(provider: .oneInch, tokenInIsNative: false)
+        payload.stubTo = WCNTestFixtures.oneInchRouter
 
-        let verdict = try verifier.verify(WCNTestFixtures.context(parsed: parsed))
-        #expect(verdict == .block(reason: "1inch is not supported on eip155:999"))
+        let verdict = try verifier.verify(WCNTestFixtures.context(payload: payload))
+        #expect(verdict == .block(reason: .swapRouterUnsupported(chain: "eip155:999")))
     }
 
     @Test func blocksMissingTo() throws {
         let verifier = makeVerifier()
-        let parsed = try WCNStubParsedRequest.make()
-        parsed.stubSwapInfo = WCNSwapInfo(provider: .oneInch, tokenInIsNative: false)
+        let payload = try WCNStubRequestPayload.make()
+        payload.stubSwapInfo = WCNSwapInfo(provider: .oneInch, tokenInIsNative: false)
 
-        let verdict = try verifier.verify(WCNTestFixtures.context(parsed: parsed))
-        #expect(verdict == .block(reason: "1inch swap is not addressed to the canonical router"))
+        let verdict = try verifier.verify(WCNTestFixtures.context(payload: payload))
+        #expect(verdict == .block(reason: .swapNotToCanonicalRouter))
     }
 }

@@ -12,7 +12,7 @@ struct WCNSolanaTransactionParserTests {
         WCNSolanaTransactionParser(accountProvider: StubAccountProvider(address: address))
     }
 
-    private func request(method: String = WCNSolanaTransactionParsed.signMethod, chainId: String = "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp", params: Any) throws -> Request {
+    private func request(method: String = WCNSolanaTransactionPayload.signMethod, chainId: String = "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp", params: Any) throws -> Request {
         try WCNTestFixtures.request(method: method, chainId: chainId, params: AnyCodable(any: params))
     }
 
@@ -23,44 +23,44 @@ struct WCNSolanaTransactionParserTests {
     @Test func spikeVectorWithOurAccountAmongSigners() throws {
         let request = try request(params: ["transaction": SolanaRawSigningFixtures.partiallySigned.base64EncodedString()])
         let result = try parser(address: ours).parse(request: request)
-        let parsed = try #require(result as? WCNSolanaTransactionParsed)
+        let payload = try #require(result as? WCNSolanaTransactionPayload)
 
-        #expect(parsed.rawTransactions == [SolanaRawSigningFixtures.partiallySigned])
-        #expect(parsed.requiredSigners == [[other, ours]])
-        #expect(parsed.from == ours)
-        #expect(parsed.isSignOnly)
-        #expect(parsed.makeSendData() == nil)
+        #expect(payload.rawTransactions == [SolanaRawSigningFixtures.partiallySigned])
+        #expect(payload.requiredSigners == [[other, ours]])
+        #expect(payload.from == ours)
+        #expect(payload.isSignOnly)
+        #expect(payload.makeSendData() == nil)
     }
 
     @Test func foreignSignersLeaveFromNil() throws {
         let request = try request(params: ["transaction": SolanaRawSigningFixtures.partiallySigned.base64EncodedString()])
         let result = try parser(address: "11111111111111111111111111111111").parse(request: request)
-        let parsed = try #require(result)
-        #expect(parsed.from == nil)
+        let payload = try #require(result)
+        #expect(payload.from == nil)
     }
 
     @Test func signAllRequiresOurAccountInEveryTransaction() throws {
         let both = try raw([ours]).base64EncodedString()
         let foreign = try raw([other]).base64EncodedString()
 
-        let allOurs = try request(method: WCNSolanaTransactionParsed.signAllMethod, params: ["transactions": [both, both]])
-        let mixed = try request(method: WCNSolanaTransactionParsed.signAllMethod, params: ["transactions": [both, foreign]])
+        let allOurs = try request(method: WCNSolanaTransactionPayload.signAllMethod, params: ["transactions": [both, both]])
+        let mixed = try request(method: WCNSolanaTransactionPayload.signAllMethod, params: ["transactions": [both, foreign]])
 
         let allOursResult = try parser(address: ours).parse(request: allOurs)
         let mixedResult = try parser(address: ours).parse(request: mixed)
-        let allOursParsed = try #require(allOursResult as? WCNSolanaTransactionParsed)
-        let mixedParsed = try #require(mixedResult)
+        let allOursPayload = try #require(allOursResult as? WCNSolanaTransactionPayload)
+        let mixedPayload = try #require(mixedResult)
 
-        #expect(allOursParsed.rawTransactions.count == 2)
-        #expect(allOursParsed.from == ours)
-        #expect(mixedParsed.from == nil)
+        #expect(allOursPayload.rawTransactions.count == 2)
+        #expect(allOursPayload.from == ours)
+        #expect(mixedPayload.from == nil)
     }
 
     @Test func signAndSendIsNotSignOnly() throws {
-        let request = try request(method: WCNSolanaTransactionParsed.signAndSendMethod, params: ["transaction": try raw([ours]).base64EncodedString(), "sendOptions": ["skipPreflight": true]])
+        let request = try request(method: WCNSolanaTransactionPayload.signAndSendMethod, params: ["transaction": try raw([ours]).base64EncodedString(), "sendOptions": ["skipPreflight": true]])
         let result = try parser(address: ours).parse(request: request)
-        let parsed = try #require(result)
-        #expect(parsed.isSignOnly == false)
+        let payload = try #require(result)
+        #expect(payload.isSignOnly == false)
     }
 
     @Test func ignoresOtherNamespaceAndMethods() throws {
@@ -75,7 +75,7 @@ struct WCNSolanaTransactionParserTests {
     @Test func malformedParamsAreRejected() throws {
         let missing = try request(params: ["foo": "bar"])
         let badBase64 = try request(params: ["transaction": "not base64!!"])
-        let emptyBatch = try request(method: WCNSolanaTransactionParsed.signAllMethod, params: ["transactions": [String]()])
+        let emptyBatch = try request(method: WCNSolanaTransactionPayload.signAllMethod, params: ["transactions": [String]()])
 
         #expect(throws: WCNSolanaTransactionParser.ParsingError.malformedParams) { try parser(address: ours).parse(request: missing) }
         #expect(throws: WCNSolanaTransactionParser.ParsingError.malformedParams) { try parser(address: ours).parse(request: badBase64) }

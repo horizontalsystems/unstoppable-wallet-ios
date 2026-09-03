@@ -12,7 +12,7 @@ class WCNSolanaSendHandlerFactory: IWCNSendHandlerFactory {
     }
 
     func handler(request: WCNRequest, inner _: SendData?) -> ISendHandler? {
-        guard let parsed = request.parsed as? WCNSolanaTransactionParsed,
+        guard let payload = request.payload as? WCNSolanaTransactionPayload,
               let account = accountManager.activeAccount,
               let solanaKit = try? solanaKitManager.solanaKit(account: account),
               let signer = try? SolanaKitManager.signer(accountType: account.type),
@@ -21,6 +21,6 @@ class WCNSolanaSendHandlerFactory: IWCNSendHandlerFactory {
             return nil
         }
 
-        return WCNSolanaSendHandler(parsed: parsed, request: request, baseToken: baseToken, solanaKit: solanaKit, signer: signer, responder: responder)
+        return WCNSolanaSendHandler(payload: payload, request: request, baseToken: baseToken, solanaKit: solanaKit, signer: signer, responder: responder)
     }
 }

@@ -6,9 +6,9 @@ class WCNSessionScopeVerifier: IWCNVerifier {
     }
 
     func verify(_ context: WCNVerificationContext) -> WCNVerificationVerdict {
-        let chainId = context.parsed.chainId.absoluteString
+        let chainId = context.payload.chainId.absoluteString
         let inScope = context.approvedAccounts.contains { $0.blockchainIdentifier == chainId }
 
-        return inScope ? .pass : .block(reason: "Chain \(chainId) is not part of the approved session")
+        return inScope ? .pass : .block(reason: .chainNotInSession(chain: chainId))
     }
 }

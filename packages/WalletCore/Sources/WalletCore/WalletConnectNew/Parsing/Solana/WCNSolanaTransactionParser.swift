@@ -14,15 +14,15 @@ class WCNSolanaTransactionParser: IWCNParser {
         self.accountProvider = accountProvider
     }
 
-    func parse(request: Request) throws -> WCNParsedRequest? {
+    func parse(request: Request) throws -> WCNRequestPayload? {
         guard request.chainId.namespace == WCNNamespace.solana,
-              [WCNSolanaTransactionParsed.signMethod, WCNSolanaTransactionParsed.signAllMethod, WCNSolanaTransactionParsed.signAndSendMethod].contains(request.method)
+              [WCNSolanaTransactionPayload.signMethod, WCNSolanaTransactionPayload.signAllMethod, WCNSolanaTransactionPayload.signAndSendMethod].contains(request.method)
         else {
             return nil
         }
 
         let params = try? request.params.get(Params.self)
-        let encoded = request.method == WCNSolanaTransactionParsed.signAllMethod ? params?.transactions : params?.transaction.map { [$0] }
+        let encoded = request.method == WCNSolanaTransactionPayload.signAllMethod ? params?.transactions : params?.transaction.map { [$0] }
 
         guard let encoded, !encoded.isEmpty else {
             throw ParsingError.malformedParams
@@ -46,7 +46,7 @@ class WCNSolanaTransactionParser: IWCNParser {
         let address = accountProvider.address
         let from = address.flatMap { address in requiredSigners.allSatisfy { $0.contains(address) } ? address : nil }
 
-        return WCNSolanaTransactionParsed(request: request, rawTransactions: rawTransactions, requiredSigners: requiredSigners, from: from)
+        return WCNSolanaTransactionPayload(request: request, rawTransactions: rawTransactions, requiredSigners: requiredSigners, from: from)
     }
 }
 

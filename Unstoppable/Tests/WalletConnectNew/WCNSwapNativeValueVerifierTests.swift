@@ -6,35 +6,35 @@ struct WCNSwapNativeValueVerifierTests {
     private let verifier = WCNSwapNativeValueVerifier()
 
     @Test func ignoresNonSwapTransactions() throws {
-        let parsed = try WCNStubParsedRequest.make()
-        parsed.stubValue = 1
-        let parsedContext = try WCNTestFixtures.context(parsed: parsed)
+        let payload = try WCNStubRequestPayload.make()
+        payload.stubValue = 1
+        let parsedContext = try WCNTestFixtures.context(payload: payload)
         #expect(verifier.handles(parsedContext) == false)
     }
 
     @Test func blocksTokenSwapWithNativeValue() throws {
-        let parsed = try WCNStubParsedRequest.make()
-        parsed.stubSwapInfo = WCNSwapInfo(provider: .oneInch, tokenInIsNative: false)
-        parsed.stubValue = BigUInt(1_000_000_000_000_000)
-        let context = try WCNTestFixtures.context(parsed: parsed)
+        let payload = try WCNStubRequestPayload.make()
+        payload.stubSwapInfo = WCNSwapInfo(provider: .oneInch, tokenInIsNative: false)
+        payload.stubValue = BigUInt(1_000_000_000_000_000)
+        let context = try WCNTestFixtures.context(payload: payload)
 
         #expect(verifier.handles(context))
-        #expect(verifier.verify(context) == .block(reason: "Token swap carries native value"))
+        #expect(verifier.verify(context) == .block(reason: .tokenSwapCarriesNativeValue))
     }
 
     @Test func passesTokenSwapWithZeroValue() throws {
-        let parsed = try WCNStubParsedRequest.make()
-        parsed.stubSwapInfo = WCNSwapInfo(provider: .uniswap, tokenInIsNative: false)
-        parsed.stubValue = 0
-        let verdict = try verifier.verify(WCNTestFixtures.context(parsed: parsed))
+        let payload = try WCNStubRequestPayload.make()
+        payload.stubSwapInfo = WCNSwapInfo(provider: .uniswap, tokenInIsNative: false)
+        payload.stubValue = 0
+        let verdict = try verifier.verify(WCNTestFixtures.context(payload: payload))
         #expect(verdict == .pass)
     }
 
     @Test func passesNativeSwapWithValue() throws {
-        let parsed = try WCNStubParsedRequest.make()
-        parsed.stubSwapInfo = WCNSwapInfo(provider: .oneInch, tokenInIsNative: true)
-        parsed.stubValue = BigUInt(1_000_000_000_000_000)
-        let verdict = try verifier.verify(WCNTestFixtures.context(parsed: parsed))
+        let payload = try WCNStubRequestPayload.make()
+        payload.stubSwapInfo = WCNSwapInfo(provider: .oneInch, tokenInIsNative: true)
+        payload.stubValue = BigUInt(1_000_000_000_000_000)
+        let verdict = try verifier.verify(WCNTestFixtures.context(payload: payload))
         #expect(verdict == .pass)
     }
 }

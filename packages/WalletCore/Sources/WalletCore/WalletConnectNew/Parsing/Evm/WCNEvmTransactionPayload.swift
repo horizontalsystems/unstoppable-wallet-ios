@@ -3,7 +3,7 @@ import Foundation
 import MarketKit
 import WalletConnectSign
 
-class WCNEvmTransactionParsed: WCNParsedRequest {
+class WCNEvmTransactionPayload: WCNRequestPayload {
     static let sendMethod = "eth_sendTransaction"
     static let signMethod = "eth_signTransaction"
 

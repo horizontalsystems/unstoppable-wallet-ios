@@ -1,7 +1,7 @@
 enum WCNVerificationVerdict: Equatable {
     case pass
-    case caution(reason: String)
-    case block(reason: String)
+    case caution(reason: WCNVerdictReason)
+    case block(reason: WCNVerdictReason)
 
     private var severity: Int {
         switch self {

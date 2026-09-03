@@ -1,5 +1,5 @@
 public struct WCNRequest {
-    let parsed: WCNParsedRequest
+    let payload: WCNRequestPayload
     let verdict: WCNVerificationVerdict
     let dAppName: String
 

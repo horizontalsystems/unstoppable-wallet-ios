@@ -7,12 +7,12 @@ struct WCNVerifyOriginVerifierTests {
 
     @Test func blocksScam() throws {
         let context = try WCNTestFixtures.context(verifyContext: VerifyContext(origin: "https://evil.example", validation: .scam))
-        #expect(verifier.verify(context) == .block(reason: "Origin is flagged as scam"))
+        #expect(verifier.verify(context) == .block(reason: .originScam))
     }
 
     @Test func cautionsInvalid() throws {
         let context = try WCNTestFixtures.context(verifyContext: VerifyContext(origin: "https://mismatch.example", validation: .invalid))
-        #expect(verifier.verify(context) == .caution(reason: "Origin does not match the verified domain"))
+        #expect(verifier.verify(context) == .caution(reason: .originInvalid))
     }
 
     @Test func passesValidUnknownAndMissing() throws {

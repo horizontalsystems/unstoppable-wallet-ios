@@ -22,9 +22,9 @@ struct WCNParserRegistryTests {
         registry.register(first)
         registry.register(second)
 
-        let parsed = try registry.parse(request: WCNTestFixtures.request(method: "eth_sendTransaction"))
+        let payload = try registry.parse(request: WCNTestFixtures.request(method: "eth_sendTransaction"))
 
-        #expect(parsed.method == "eth_sendTransaction")
+        #expect(payload.method == "eth_sendTransaction")
         #expect(first.parseCount == 1)
         #expect(second.parseCount == 0)
     }
@@ -45,15 +45,15 @@ struct WCNParserRegistryTests {
 
     @Test func parsedCarriesRequestIdentity() throws {
         let request = try WCNTestFixtures.request(method: "personal_sign", chainId: "eip155:10")
-        let parsed = WCNParsedRequest(request: request, kind: .signMessage, from: WCNTestFixtures.address)
+        let payload = WCNRequestPayload(request: request, kind: .signMessage, from: WCNTestFixtures.address)
 
-        #expect(parsed.id == request.id)
-        #expect(parsed.topic == request.topic)
-        #expect(parsed.chainId.absoluteString == "eip155:10")
-        #expect(parsed.kind == .signMessage)
-        #expect(parsed.to == nil)
-        #expect(parsed.value == nil)
-        #expect(parsed.makeSendData() == nil)
+        #expect(payload.id == request.id)
+        #expect(payload.topic == request.topic)
+        #expect(payload.chainId.absoluteString == "eip155:10")
+        #expect(payload.kind == .signMessage)
+        #expect(payload.to == nil)
+        #expect(payload.value == nil)
+        #expect(payload.makeSendData() == nil)
     }
 }
 
@@ -69,10 +69,10 @@ private final class StubParser: IWCNParser {
         self.error = error
     }
 
-    func parse(request: Request) throws -> WCNParsedRequest? {
+    func parse(request: Request) throws -> WCNRequestPayload? {
         guard request.method == method else { return nil }
         parseCount += 1
         if let error { throw error }
-        return WCNParsedRequest(request: request, kind: .transaction, from: nil)
+        return WCNRequestPayload(request: request, kind: .transaction, from: nil)
     }
 }

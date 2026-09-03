@@ -8,20 +8,20 @@ class WCNNamespaceBuilder {
         self.registry = registry
     }
 
-    func candidates(required: [String: ProposalNamespace], optional: [String: ProposalNamespace]?, account: Account) -> [WCNChainCandidate] {
-        var candidates = [WCNChainCandidate]()
+    func proposals(required: [String: ProposalNamespace], optional: [String: ProposalNamespace]?, account: Account) -> [WCNBlockchainProposal] {
+        var proposals = [WCNBlockchainProposal]()
 
         for (key, namespace) in Self.sorted(required) {
-            append(key: key, namespace: namespace, required: true, account: account, into: &candidates)
+            append(key: key, namespace: namespace, required: true, account: account, into: &proposals)
         }
         for (key, namespace) in Self.sorted(optional ?? [:]) {
-            append(key: key, namespace: namespace, required: false, account: account, into: &candidates)
+            append(key: key, namespace: namespace, required: false, account: account, into: &proposals)
         }
 
-        return candidates
+        return proposals
     }
 
-    func validate(required: [String: ProposalNamespace], selected: [WCNChainCandidate]) throws {
+    func validate(required: [String: ProposalNamespace], selected: [WCNBlockchainProposal]) throws {
         for (key, namespace) in required {
             let namespaceName = Self.namespaceName(key: key)
             let selectedInNamespace = selected.filter { $0.chain.namespace == namespaceName }
@@ -44,23 +44,23 @@ class WCNNamespaceBuilder {
         }
     }
 
-    func sessionNamespaces(selected: [WCNChainCandidate]) -> [String: SessionNamespace] {
+    func sessionNamespaces(selected: [WCNBlockchainProposal]) -> [String: SessionNamespace] {
         var result = [String: SessionNamespace]()
 
-        for candidate in selected {
-            let namespace = candidate.chain.namespace
+        for proposal in selected {
+            let namespace = proposal.chain.namespace
             let existing = result[namespace]
             result[namespace] = SessionNamespace(
-                accounts: (existing?.accounts ?? []) + [candidate.account],
-                methods: (existing?.methods ?? []).union(candidate.methods),
-                events: (existing?.events ?? []).union(candidate.events)
+                accounts: (existing?.accounts ?? []) + [proposal.account],
+                methods: (existing?.methods ?? []).union(proposal.methods),
+                events: (existing?.events ?? []).union(proposal.events)
             )
         }
 
         return result
     }
 
-    private func append(key: String, namespace: ProposalNamespace, required: Bool, account: Account, into candidates: inout [WCNChainCandidate]) {
+    private func append(key: String, namespace: ProposalNamespace, required: Bool, account: Account, into proposals: inout [WCNBlockchainProposal]) {
         guard let support = registry.support(namespace: Self.namespaceName(key: key)) else {
             return
         }
@@ -70,10 +70,10 @@ class WCNNamespaceBuilder {
         let events = namespace.events.intersection(support.supportedEvents)
 
         for chain in Self.chains(key: key, namespace: namespace) where supportedChains.contains(chain) {
-            if let index = candidates.firstIndex(where: { $0.chain == chain }) {
-                candidates[index].methods.formUnion(methods)
-                candidates[index].events.formUnion(events)
-                candidates[index].required = candidates[index].required || required
+            if let index = proposals.firstIndex(where: { $0.chain == chain }) {
+                proposals[index].methods.formUnion(methods)
+                proposals[index].events.formUnion(events)
+                proposals[index].required = proposals[index].required || required
                 continue
             }
 
@@ -81,7 +81,7 @@ class WCNNamespaceBuilder {
                 continue
             }
 
-            candidates.append(WCNChainCandidate(chain: chain, account: caipAccount, methods: methods, events: events, required: required))
+            proposals.append(WCNBlockchainProposal(chain: chain, account: caipAccount, methods: methods, events: events, required: required))
         }
     }
 

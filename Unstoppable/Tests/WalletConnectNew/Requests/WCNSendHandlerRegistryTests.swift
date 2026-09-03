@@ -2,9 +2,11 @@ import MarketKit
 import Testing
 @testable import WalletCore
 
+// WCNSendHandlerProvider.registry is process-wide state, so these tests must not run in parallel
+@Suite(.serialized)
 struct WCNSendHandlerRegistryTests {
     private func request() throws -> WCNRequest {
-        try WCNRequest(parsed: WCNStubParsedRequest.make(), verdict: .pass, dAppName: "dApp")
+        try WCNRequest(payload: WCNStubRequestPayload.make(), verdict: .pass, dAppName: "dApp")
     }
 
     @Test func firstMatchingFactoryWins() throws {
@@ -14,7 +16,8 @@ struct WCNSendHandlerRegistryTests {
         registry.register(skipping)
         registry.register(matching)
 
-        let handler = registry.handler(request: try request(), inner: .zcashMigration)
+        let request = try request()
+        let handler = registry.handler(request: request, inner: .zcashMigration)
 
         #expect(handler != nil)
         #expect(skipping.calls == 1)
@@ -23,7 +26,9 @@ struct WCNSendHandlerRegistryTests {
 
     @Test func emptyRegistryYieldsNil() throws {
         let registry = WCNSendHandlerRegistry()
-        #expect(registry.handler(request: try request(), inner: .zcashMigration) == nil)
+        let request = try request()
+        let handler = registry.handler(request: request, inner: .zcashMigration)
+        #expect(handler == nil)
     }
 
     @Test func providerMatchesOnlyWalletConnectNewCase() throws {
@@ -33,17 +38,21 @@ struct WCNSendHandlerRegistryTests {
         WCNSendHandlerProvider.registry = registry
         defer { WCNSendHandlerProvider.registry = nil }
 
-        #expect(WCNSendHandlerProvider.instance(sendData: .zcashMigration) == nil)
+        let unrelated = WCNSendHandlerProvider.instance(sendData: .zcashMigration)
+        #expect(unrelated == nil)
         #expect(factory.calls == 0)
 
-        let handler = WCNSendHandlerProvider.instance(sendData: .walletConnectNew(inner: nil, request: try request()))
+        let request = try request()
+        let handler = WCNSendHandlerProvider.instance(sendData: .walletConnectNew(inner: nil, request: request))
         #expect(handler != nil)
         #expect(factory.calls == 1)
     }
 
     @Test func providerWithoutRegistryYieldsNil() throws {
         WCNSendHandlerProvider.registry = nil
-        #expect(WCNSendHandlerProvider.instance(sendData: .walletConnectNew(inner: .zcashMigration, request: try request())) == nil)
+        let request = try request()
+        let handler = WCNSendHandlerProvider.instance(sendData: .walletConnectNew(inner: .zcashMigration, request: request))
+        #expect(handler == nil)
     }
 }
 

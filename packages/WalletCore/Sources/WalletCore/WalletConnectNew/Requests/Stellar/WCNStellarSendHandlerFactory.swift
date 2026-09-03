@@ -12,7 +12,7 @@ class WCNStellarSendHandlerFactory: IWCNSendHandlerFactory {
     }
 
     func handler(request: WCNRequest, inner _: SendData?) -> ISendHandler? {
-        guard let parsed = request.parsed as? WCNStellarTransactionParsed,
+        guard let payload = request.payload as? WCNStellarTransactionPayload,
               let account = accountManager.activeAccount,
               let stellarKit = try? stellarKitManager.stellarKit(account: account),
               let keyPair = try? StellarKitManager.keyPair(accountType: account.type),
@@ -21,6 +21,6 @@ class WCNStellarSendHandlerFactory: IWCNSendHandlerFactory {
             return nil
         }
 
-        return WCNStellarSendHandler(parsed: parsed, request: request, baseToken: baseToken, stellarKit: stellarKit, keyPair: keyPair, responder: responder)
+        return WCNStellarSendHandler(payload: payload, request: request, baseToken: baseToken, stellarKit: stellarKit, keyPair: keyPair, responder: responder)
     }
 }

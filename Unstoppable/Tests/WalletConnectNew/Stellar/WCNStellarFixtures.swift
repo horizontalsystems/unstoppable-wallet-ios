@@ -25,7 +25,7 @@ enum WCNStellarFixtures {
         return (try transaction.encodedEnvelope(), source.accountId, transaction)
     }
 
-    static func request(method: String = WCNStellarTransactionParsed.submitMethod, chainId: String = "stellar:pubnet", params: [String: String]) throws -> Request {
+    static func request(method: String = WCNStellarTransactionPayload.submitMethod, chainId: String = "stellar:pubnet", params: [String: String]) throws -> Request {
         guard let blockchain = WalletConnectUtils.Blockchain(chainId) else {
             throw FixtureError.invalidChain
         }

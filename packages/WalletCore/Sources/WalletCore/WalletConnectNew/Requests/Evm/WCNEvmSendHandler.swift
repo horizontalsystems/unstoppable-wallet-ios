@@ -6,15 +6,15 @@ import WalletConnectSign
 
 // Mirrors EvmSendHandler on the same primitives, but honors the dApp's gas limit and never adjusts the value
 class WCNEvmSendHandler {
-    private let parsed: WCNEvmTransactionParsed
+    private let payload: WCNEvmTransactionPayload
     private let request: WCNRequest
     private let evmKitWrapper: EvmKitWrapper
     private let responder: WCNResponder
     private let decorator = EvmDecorator()
     private let evmFeeEstimator = EvmFeeEstimator()
 
-    init(parsed: WCNEvmTransactionParsed, request: WCNRequest, evmKitWrapper: EvmKitWrapper, responder: WCNResponder) {
-        self.parsed = parsed
+    init(payload: WCNEvmTransactionPayload, request: WCNRequest, evmKitWrapper: EvmKitWrapper, responder: WCNResponder) {
+        self.payload = payload
         self.request = request
         self.evmKitWrapper = evmKitWrapper
         self.responder = responder
@@ -22,20 +22,20 @@ class WCNEvmSendHandler {
 }
 
 extension WCNEvmSendHandler: ISendHandler {
-    var baseToken: Token { parsed.baseToken }
+    var baseToken: Token { payload.baseToken }
 
     var initialTransactionSettings: InitialTransactionSettings? {
-        .evm(gasPrice: parsed.transaction.initialGasPrice, nonce: parsed.transaction.nonce)
+        .evm(gasPrice: payload.transaction.initialGasPrice, nonce: payload.transaction.nonce)
     }
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
-        let transactionData = parsed.transaction.transactionData
+        let transactionData = payload.transaction.transactionData
         let gasPriceData = transactionSettings?.gasPriceData
         var evmFeeData: EvmFeeData?
         var transactionError: Error?
 
         if let gasPriceData {
-            if let gasLimit = parsed.transaction.gasLimit {
+            if let gasLimit = payload.transaction.gasLimit {
                 evmFeeData = EvmFeeData(gasLimit: gasLimit, surchargedGasLimit: gasLimit)
             } else {
                 do {
@@ -75,11 +75,11 @@ extension WCNEvmSendHandler: ISendHandler {
             throw SendError.noGasLimit
         }
 
-        if parsed.isSignOnly {
+        if payload.isSignOnly {
             guard let signer = evmKitWrapper.signer else {
                 throw SendError.noSigner
             }
-            guard let nonce = data.nonce ?? parsed.transaction.nonce else {
+            guard let nonce = data.nonce ?? payload.transaction.nonce else {
                 throw SendError.noNonce
             }
 
@@ -91,7 +91,7 @@ extension WCNEvmSendHandler: ISendHandler {
                 gasLimit: gasLimit,
                 nonce: nonce
             )
-            try await responder.respond(request: parsed, result: AnyCodable(signedTransaction.hs.hexString))
+            try await responder.respond(request: payload, result: AnyCodable(signedTransaction.hs.hexString))
         } else {
             let fullTransaction = try await evmKitWrapper.send(
                 transactionData: transactionData,
@@ -100,7 +100,7 @@ extension WCNEvmSendHandler: ISendHandler {
                 privateSend: false,
                 nonce: data.nonce
             )
-            try await responder.respond(request: parsed, result: AnyCodable(fullTransaction.transaction.hash.hs.hexString))
+            try await responder.respond(request: payload, result: AnyCodable(fullTransaction.transaction.hash.hs.hexString))
         }
     }
 }

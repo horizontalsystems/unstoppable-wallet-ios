@@ -2041,6 +2041,19 @@
 "wallet_connect.sign.message" = "Message to sign";
 "wallet_connect.request.transactions" = "Transactions";
 "wallet_connect.request.signer" = "Signer";
+"wallet_connect.verdict.token_swap_native_value" = "This token swap also sends native coins";
+"wallet_connect.verdict.swap_router_unsupported" = "1inch is not supported on %@";
+"wallet_connect.verdict.swap_not_canonical_router" = "1inch swap is not addressed to the official router";
+"wallet_connect.verdict.missing_signer" = "Request does not specify the signing address";
+"wallet_connect.verdict.malformed_signer" = "Signing address is malformed";
+"wallet_connect.verdict.signer_not_approved" = "Signing address is not approved for %@";
+"wallet_connect.verdict.chain_not_in_session" = "Chain %@ is not part of the approved session";
+"wallet_connect.verdict.origin_scam" = "This dApp is flagged as a scam";
+"wallet_connect.verdict.origin_invalid" = "dApp origin does not match the verified domain";
+"wallet_connect.verdict.typed_data_no_chain" = "Typed data has no chain id, the signature can be replayed on other chains";
+"wallet_connect.verdict.typed_data_chain_not_approved" = "Typed data chain id %@ is not approved";
+"wallet_connect.verdict.eth_sign_blind_hash" = "eth_sign over a raw 32-byte hash is blind signing";
+"wallet_connect.verdict.eth_sign_unreadable" = "eth_sign message is not readable text";
 
 "wallet_connect.send.transaction" = "Send Transaction";
 

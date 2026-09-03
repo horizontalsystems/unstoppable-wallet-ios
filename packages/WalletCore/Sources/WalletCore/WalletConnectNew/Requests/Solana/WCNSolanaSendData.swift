@@ -3,13 +3,13 @@ import MarketKit
 
 class WCNSolanaSendData: ISendData {
     private let token: Token
-    private let parsed: WCNSolanaTransactionParsed
+    private let payload: WCNSolanaTransactionPayload
     private let fee: Decimal?
     private let transactionError: Error?
 
-    init(token: Token, parsed: WCNSolanaTransactionParsed, fee: Decimal?, transactionError: Error?) {
+    init(token: Token, payload: WCNSolanaTransactionPayload, fee: Decimal?, transactionError: Error?) {
         self.token = token
-        self.parsed = parsed
+        self.payload = payload
         self.fee = fee
         self.transactionError = transactionError
     }
@@ -38,16 +38,16 @@ class WCNSolanaSendData: ISendData {
     func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
         var transactionFields = [SendField]()
 
-        if parsed.rawTransactions.count > 1 {
-            transactionFields.append(.simpleValue(title: "wallet_connect.request.transactions".localized, value: String(parsed.rawTransactions.count)))
+        if payload.rawTransactions.count > 1 {
+            transactionFields.append(.simpleValue(title: "wallet_connect.request.transactions".localized, value: String(payload.rawTransactions.count)))
         }
-        for signer in Set(parsed.requiredSigners.flatMap { $0 }).sorted() {
+        for signer in Set(payload.requiredSigners.flatMap { $0 }).sorted() {
             transactionFields.append(.simpleValue(title: "wallet_connect.request.signer".localized, value: signer.shortened))
         }
 
         var sections = [SendDataSection(transactionFields)]
 
-        if let from = parsed.from {
+        if let from = payload.from {
             sections.append(SendDataSection([.simpleValue(title: WCNNamespace.solana.capitalized, value: from.shortened)], isMain: false))
         }
 

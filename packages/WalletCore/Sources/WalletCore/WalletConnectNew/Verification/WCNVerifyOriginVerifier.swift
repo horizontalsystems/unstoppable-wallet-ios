@@ -8,8 +8,8 @@ class WCNVerifyOriginVerifier: IWCNVerifier {
 
     func verify(_ context: WCNVerificationContext) -> WCNVerificationVerdict {
         switch context.verifyContext?.validation {
-        case .scam: return .block(reason: "Origin is flagged as scam")
-        case .invalid: return .caution(reason: "Origin does not match the verified domain")
+        case .scam: return .block(reason: .originScam)
+        case .invalid: return .caution(reason: .originInvalid)
         case .valid, .unknown, nil: return .pass
         }
     }

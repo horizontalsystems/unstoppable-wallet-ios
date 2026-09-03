@@ -19,6 +19,6 @@ struct WCNVerificationContextTests {
         #expect(context.verifyContext?.origin == "https://react-app.walletconnect.com")
         #expect(context.verifyContext?.validation == .valid)
         #expect(context.approvedAccounts == [account])
-        #expect(context.parsed.from == WCNTestFixtures.address)
+        #expect(context.payload.from == WCNTestFixtures.address)
     }
 }

@@ -2,7 +2,7 @@ import WalletConnectSign
 
 // nil = not this parser's method; throw = this parser's method, but params are malformed
 protocol IWCNParser: AnyObject {
-    func parse(request: Request) throws -> WCNParsedRequest?
+    func parse(request: Request) throws -> WCNRequestPayload?
 }
 
 class WCNParserRegistry {
@@ -12,10 +12,10 @@ class WCNParserRegistry {
         parsers.append(parser)
     }
 
-    func parse(request: Request) throws -> WCNParsedRequest {
+    func parse(request: Request) throws -> WCNRequestPayload {
         for parser in parsers {
-            if let parsed = try parser.parse(request: request) {
-                return parsed
+            if let payload = try parser.parse(request: request) {
+                return payload
             }
         }
 

@@ -1,7 +1,7 @@
 import Foundation
 import WalletConnectSign
 
-class WCNSolanaTransactionParsed: WCNParsedRequest {
+class WCNSolanaTransactionPayload: WCNRequestPayload {
     static let signMethod = "solana_signTransaction"
     static let signAllMethod = "solana_signAllTransactions"
     static let signAndSendMethod = "solana_signAndSendTransaction"

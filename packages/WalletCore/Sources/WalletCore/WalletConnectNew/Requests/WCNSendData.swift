@@ -17,7 +17,7 @@ class WCNSendData: ISendData {
     var amountAdjusted: Bool { inner.amountAdjusted }
 
     var customSendButtonTitle: String? {
-        request.parsed.isSignOnly ? "button.sign".localized : inner.customSendButtonTitle
+        request.payload.isSignOnly ? "button.sign".localized : inner.customSendButtonTitle
     }
 
     func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
@@ -29,8 +29,8 @@ class WCNSendData: ISendData {
 
         switch request.verdict {
         case .pass: return innerCautions
-        case let .caution(reason): return innerCautions + [CautionNew(text: reason, type: .warning)]
-        case let .block(reason): return innerCautions + [CautionNew(text: reason, type: .error)]
+        case let .caution(reason): return innerCautions + [CautionNew(text: reason.text, type: .warning)]
+        case let .block(reason): return innerCautions + [CautionNew(text: reason.text, type: .error)]
         }
     }
 

@@ -10,15 +10,15 @@ class WCNEvmSendHandlerFactory: IWCNSendHandlerFactory {
     }
 
     func handler(request: WCNRequest, inner: SendData?) -> ISendHandler? {
-        guard let parsed = request.parsed as? WCNEvmTransactionParsed,
+        guard let payload = request.payload as? WCNEvmTransactionPayload,
               case .evm? = inner,
               let account = accountManager.activeAccount,
-              let chainId = Int(parsed.chainId.reference),
+              let chainId = Int(payload.chainId.reference),
               let evmKitWrapper = evmBlockchainManager.kitWrapper(chainId: chainId, account: account)
         else {
             return nil
         }
 
-        return WCNEvmSendHandler(parsed: parsed, request: request, evmKitWrapper: evmKitWrapper, responder: responder)
+        return WCNEvmSendHandler(payload: payload, request: request, evmKitWrapper: evmKitWrapper, responder: responder)
     }
 }

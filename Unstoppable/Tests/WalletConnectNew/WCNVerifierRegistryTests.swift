@@ -10,31 +10,31 @@ struct WCNVerifierRegistryTests {
 
     @Test func onlyHandlingVerifiersRun() throws {
         let registry = WCNVerifierRegistry()
-        let skipped = StubVerifier(handles: false, verdict: .block(reason: "skipped"))
-        let active = StubVerifier(handles: true, verdict: .caution(reason: "active"))
+        let skipped = StubVerifier(handles: false, verdict: .block(reason: .originScam))
+        let active = StubVerifier(handles: true, verdict: .caution(reason: .originInvalid))
         registry.register(skipped)
         registry.register(active)
 
         let verdict = try registry.verify(WCNTestFixtures.context())
 
-        #expect(verdict == .caution(reason: "active"))
+        #expect(verdict == .caution(reason: .originInvalid))
         #expect(skipped.verifyCount == 0)
         #expect(active.verifyCount == 1)
     }
 
     @Test func worstVerdictWinsRegardlessOfOrder() throws {
         let registry = WCNVerifierRegistry()
-        registry.register(StubVerifier(handles: true, verdict: .caution(reason: "c")))
-        registry.register(StubVerifier(handles: true, verdict: .block(reason: "b")))
+        registry.register(StubVerifier(handles: true, verdict: .caution(reason: .originInvalid)))
+        registry.register(StubVerifier(handles: true, verdict: .block(reason: .originScam)))
         registry.register(StubVerifier(handles: true, verdict: .pass))
 
         let verdict = try registry.verify(WCNTestFixtures.context())
-        #expect(verdict == .block(reason: "b"))
+        #expect(verdict == .block(reason: .originScam))
     }
 
     @Test func allHandlingVerifiersRunEvenAfterBlock() throws {
         let registry = WCNVerifierRegistry()
-        let first = StubVerifier(handles: true, verdict: .block(reason: "b"))
+        let first = StubVerifier(handles: true, verdict: .block(reason: .originScam))
         let second = StubVerifier(handles: true, verdict: .pass)
         registry.register(first)
         registry.register(second)

@@ -7,17 +7,17 @@ struct WCNVerificationVerdictTests {
     }
 
     @Test func worstPicksBlockOverCautionAndPass() {
-        let verdict = WCNVerificationVerdict.worst([.pass, .block(reason: "b"), .caution(reason: "c")])
-        #expect(verdict == .block(reason: "b"))
+        let verdict = WCNVerificationVerdict.worst([.pass, .block(reason: .originScam), .caution(reason: .originInvalid)])
+        #expect(verdict == .block(reason: .originScam))
     }
 
     @Test func worstPicksCautionOverPass() {
-        let verdict = WCNVerificationVerdict.worst([.pass, .caution(reason: "c"), .pass])
-        #expect(verdict == .caution(reason: "c"))
+        let verdict = WCNVerificationVerdict.worst([.pass, .caution(reason: .originInvalid), .pass])
+        #expect(verdict == .caution(reason: .originInvalid))
     }
 
     @Test func worstKeepsFirstOfEqualSeverity() {
-        let verdict = WCNVerificationVerdict.worst([.block(reason: "first"), .block(reason: "second")])
-        #expect(verdict == .block(reason: "first"))
+        let verdict = WCNVerificationVerdict.worst([.block(reason: .originScam), .block(reason: .missingSigner)])
+        #expect(verdict == .block(reason: .originScam))
     }
 }

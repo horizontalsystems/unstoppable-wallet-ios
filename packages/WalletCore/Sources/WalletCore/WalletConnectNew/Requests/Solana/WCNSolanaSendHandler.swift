@@ -5,7 +5,7 @@ import SolanaKit
 import WalletConnectSign
 
 class WCNSolanaSendHandler {
-    private let parsed: WCNSolanaTransactionParsed
+    private let payload: WCNSolanaTransactionPayload
     private let request: WCNRequest
     private let solanaKit: SolanaKit.Kit
     private let signer: SolanaKit.Signer
@@ -13,8 +13,8 @@ class WCNSolanaSendHandler {
 
     let baseToken: Token
 
-    init(parsed: WCNSolanaTransactionParsed, request: WCNRequest, baseToken: Token, solanaKit: SolanaKit.Kit, signer: SolanaKit.Signer, responder: WCNResponder) {
-        self.parsed = parsed
+    init(payload: WCNSolanaTransactionPayload, request: WCNRequest, baseToken: Token, solanaKit: SolanaKit.Kit, signer: SolanaKit.Signer, responder: WCNResponder) {
+        self.payload = payload
         self.request = request
         self.baseToken = baseToken
         self.solanaKit = solanaKit
@@ -25,42 +25,42 @@ class WCNSolanaSendHandler {
 
 extension WCNSolanaSendHandler: ISendHandler {
     func sendData(transactionSettings _: TransactionSettings?) async throws -> ISendData {
-        let fees = parsed.rawTransactions.compactMap { try? SolanaKit.Kit.estimateFee(rawTransaction: $0) }
-        let fee: Decimal? = fees.count == parsed.rawTransactions.count ? fees.reduce(0, +) : nil
+        let fees = payload.rawTransactions.compactMap { try? SolanaKit.Kit.estimateFee(rawTransaction: $0) }
+        let fee: Decimal? = fees.count == payload.rawTransactions.count ? fees.reduce(0, +) : nil
 
         var transactionError: Error?
-        if !parsed.isSignOnly, let fee, solanaKit.balance < fee {
+        if !payload.isSignOnly, let fee, solanaKit.balance < fee {
             transactionError = TransactionError.insufficientBalance(balance: solanaKit.balance)
         }
 
-        let inner = WCNSolanaSendData(token: baseToken, parsed: parsed, fee: fee, transactionError: transactionError)
+        let inner = WCNSolanaSendData(token: baseToken, payload: payload, fee: fee, transactionError: transactionError)
         return WCNSendData(inner: inner, request: request)
     }
 
     func send(data _: ISendData) async throws {
-        switch parsed.method {
-        case WCNSolanaTransactionParsed.signMethod:
-            guard let raw = parsed.rawTransactions.first else {
+        switch payload.method {
+        case WCNSolanaTransactionPayload.signMethod:
+            guard let raw = payload.rawTransactions.first else {
                 throw SendError.invalidData
             }
             let signed = try SolanaKit.Kit.sign(rawTransaction: raw, signer: signer)
             let result = ["transaction": signed.transaction.base64EncodedString(), "signature": HsCryptoKit.Base58.encode(signed.signature)]
-            try await responder.respond(request: parsed, result: AnyCodable(result))
+            try await responder.respond(request: payload, result: AnyCodable(any: result))
 
-        case WCNSolanaTransactionParsed.signAllMethod:
-            let signed = try parsed.rawTransactions.map { try SolanaKit.Kit.sign(rawTransaction: $0, signer: signer).transaction.base64EncodedString() }
-            try await responder.respond(request: parsed, result: AnyCodable(["transactions": signed]))
+        case WCNSolanaTransactionPayload.signAllMethod:
+            let signed = try payload.rawTransactions.map { try SolanaKit.Kit.sign(rawTransaction: $0, signer: signer).transaction.base64EncodedString() }
+            try await responder.respond(request: payload, result: AnyCodable(any: ["transactions": signed]))
 
-        case WCNSolanaTransactionParsed.signAndSendMethod:
-            guard let raw = parsed.rawTransactions.first else {
+        case WCNSolanaTransactionPayload.signAndSendMethod:
+            guard let raw = payload.rawTransactions.first else {
                 throw SendError.invalidData
             }
             // the kit's broadcast path signs the fee-payer slot only
-            guard parsed.requiredSigners.first?.first == signer.address.base58 else {
+            guard payload.requiredSigners.first?.first == signer.address.base58 else {
                 throw SendError.walletIsNotFeePayer
             }
             let fullTransaction = try await solanaKit.sendRawTransaction(rawTransaction: raw, signer: signer)
-            try await responder.respond(request: parsed, result: AnyCodable(["signature": fullTransaction.transaction.hash]))
+            try await responder.respond(request: payload, result: AnyCodable(any: ["signature": fullTransaction.transaction.hash]))
 
         default:
             throw SendError.invalidData
