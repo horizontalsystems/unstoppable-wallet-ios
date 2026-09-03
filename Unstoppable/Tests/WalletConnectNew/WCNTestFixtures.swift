@@ -56,7 +56,9 @@ final class WCNStubParsedRequest: WCNParsedRequest, IWCNTypedDataRequest {
     var stubMessage: Data?
     var stubSwapInfo: WCNSwapInfo?
     var stubDomain: WCNTypedDataDomain?
+    var stubSignOnly = false
 
+    override var isSignOnly: Bool { stubSignOnly }
     override var to: String? { stubTo }
     override var value: BigUInt? { stubValue }
     override var data: Data? { stubData }

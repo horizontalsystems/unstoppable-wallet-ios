@@ -25,6 +25,8 @@ class WCNParsedRequest {
         self.from = from
     }
 
+    // true when the result goes back to the dApp without broadcasting
+    var isSignOnly: Bool { false }
     var to: String? { nil }
     var value: BigUInt? { nil }
     var data: Data? { nil }
