@@ -2039,6 +2039,8 @@
 "wallet_connect.sign.domain" = "Domain";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Message to sign";
+"wallet_connect.request.transactions" = "Transactions";
+"wallet_connect.request.signer" = "Signer";
 
 "wallet_connect.send.transaction" = "Send Transaction";
 

@@ -22,3 +22,19 @@ enum SolanaRawSigningFixtures {
         return Data(bytes)
     }
 }
+
+extension SolanaRawSigningFixtures {
+    // minimal legacy transaction: given signer keys + system program, one empty instruction, zero signatures
+    static func rawTransaction(signerKeys: [Data]) -> Data {
+        var message = Data([UInt8(signerKeys.count), 0, 1, UInt8(signerKeys.count + 1)])
+        signerKeys.forEach { message.append($0) }
+        message.append(Data(repeating: 0, count: 32))
+        message.append(Data(repeating: 0x11, count: 32))
+        message.append(contentsOf: [1, UInt8(signerKeys.count), 1, 0, 0])
+
+        var transaction = Data([UInt8(signerKeys.count)])
+        transaction.append(Data(repeating: 0, count: 64 * signerKeys.count))
+        transaction.append(message)
+        return transaction
+    }
+}
