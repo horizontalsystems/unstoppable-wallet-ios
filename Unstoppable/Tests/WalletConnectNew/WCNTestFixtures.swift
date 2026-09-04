@@ -1,4 +1,5 @@
 import BigInt
+import Combine
 import Foundation
 import ReownWalletKit
 import WalletConnectUtils
@@ -29,7 +30,26 @@ final class WCNSpySignClient: IWCNSignClient {
     }
 
     private(set) var calls = [Call]()
+    private(set) var disconnectedTopics = [String]()
     var error: Error?
+
+    var sessions = [Session]() {
+        didSet { sessionsSubject.send(sessions) }
+    }
+
+    let sessionsSubject = PassthroughSubject<[Session], Never>()
+    let sessionUpdateSubject = PassthroughSubject<(topic: String, namespaces: [String: SessionNamespace]), Never>()
+
+    var sessionsPublisher: AnyPublisher<[Session], Never> { sessionsSubject.eraseToAnyPublisher() }
+    var sessionUpdatePublisher: AnyPublisher<(topic: String, namespaces: [String: SessionNamespace]), Never> { sessionUpdateSubject.eraseToAnyPublisher() }
+
+    func disconnect(topic: String) async throws {
+        if let error {
+            throw error
+        }
+        disconnectedTopics.append(topic)
+        sessions.removeAll { $0.topic == topic }
+    }
 
     func respond(topic: String, requestId: RPCID, response: RPCResult) async throws {
         if let error {
