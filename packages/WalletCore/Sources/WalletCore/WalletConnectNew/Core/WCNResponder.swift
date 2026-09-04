@@ -22,6 +22,7 @@ extension WCNResponder {
         case blocked(reason: String)
         case unsupportedMethod
         case invalidParams(reason: String)
+        case unrecognizedChain
 
         var rpcError: JSONRPCError {
             switch self {
@@ -29,6 +30,7 @@ extension WCNResponder {
             case let .blocked(reason): return JSONRPCError(code: 5000, message: "Request blocked by wallet: \(reason)")
             case .unsupportedMethod: return JSONRPCError(code: 5101, message: "Unsupported wallet method.")
             case let .invalidParams(reason): return JSONRPCError(code: -32602, message: "Invalid params: \(reason)")
+            case .unrecognizedChain: return JSONRPCError(code: 4902, message: "Unrecognized chain ID")
             }
         }
     }
