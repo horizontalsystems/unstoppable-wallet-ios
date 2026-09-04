@@ -1,4 +1,5 @@
 import EvmKit
+import MarketKit
 import WalletConnectUtils
 
 class WCNEvmChainSupport: IWCNChainSupport {
@@ -45,6 +46,13 @@ class WCNEvmChainSupport: IWCNChainSupport {
         }
 
         return try? WalletConnectUtils.Account(blockchain: chain, accountAddress: address.eip55)
+    }
+
+    func blockchainType(chain: WalletConnectUtils.Blockchain) -> BlockchainType? {
+        guard chain.namespace == namespace, let chainId = Int(chain.reference) else {
+            return nil
+        }
+        return evmBlockchainManager.blockchain(chainId: chainId)?.type
     }
 
     private static func canSign(account: Account) -> Bool {

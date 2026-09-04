@@ -26,16 +26,20 @@ class WCNManager {
         self.directHandlerRegistry = directHandlerRegistry
         self.signMessageHandlerRegistry = signMessageHandlerRegistry
         self.logger = logger
+        WCNLog.log("manager created")
     }
 
     // persisted sessions mean a relay reconnect may deliver a request right away: subscribe before it happens
     func start() {
-        guard let count = try? storage.sessions().count, count > 0 else {
+        let count = (try? storage.sessions().count) ?? 0
+        WCNLog.log("manager start: stored sessions=\(count)")
+        guard count > 0 else {
             return
         }
         do {
             _ = try kit()
         } catch {
+            WCNLog.log("manager start: eager kit failed \(error)")
             logger?.error("eager WalletConnect start failed: \(error)")
         }
     }
@@ -50,11 +54,14 @@ class WCNManager {
 
     func kit() throws -> WCNKit {
         if let kit = kitSubject.value {
+            WCNLog.log("manager kit: reuse")
             return kit
         }
+        WCNLog.log("manager kit: creating")
         let kit = try kitFactory.makeKit()
         kit.start()
         kitSubject.send(kit)
+        WCNLog.log("manager kit: started and published")
         return kit
     }
 }
@@ -82,6 +89,8 @@ extension WCNManager {
         verifiers.register(WCNTypedDataDomainVerifier())
         verifiers.register(WCNEvmOneInchRouterVerifier(routerProvider: WCNEvmSwapRouterProvider(evmBlockchainManager: evmBlockchainManager)))
         verifiers.register(WCNEvmEthSignVerifier())
+        verifiers.register(WCNEvmPermitVerifier())
+        verifiers.register(WCNSolanaSignMessageVerifier())
 
         let chainSupports = WCNChainSupportRegistry()
         chainSupports.register(WCNEvmChainSupport(evmBlockchainManager: evmBlockchainManager))
@@ -107,6 +116,7 @@ extension WCNManager {
             parsers: parsers,
             verifiers: verifiers,
             chainSupports: chainSupports,
+            directHandlers: directHandlers,
             accountManager: accountManager,
             lockManager: lockManager,
             securityManager: securityManager,

@@ -52,6 +52,8 @@ private final class SpyKitFactory: IWCNKitFactory {
             signClient: client,
             sessionService: WCNSessionService(signClient: client, storage: try WCNSessionFixtures.storage(), accountProvider: accounts),
             requestService: WCNRequestService(parsers: WCNParserRegistry(), verifiers: WCNVerifierRegistry(), responder: responder),
+            directHandlers: WCNDirectHandlerRegistry(),
+            responder: responder,
             pairingService: WCNPairingService(signClient: client),
             verifyService: WCNVerifyService(),
             namespaceBuilder: WCNNamespaceBuilder(registry: WCNChainSupportRegistry()),

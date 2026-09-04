@@ -41,6 +41,9 @@ struct WCNStellarSendDataTests {
 
         #expect(data.canSend)
         #expect(data.customSendButtonTitle == "button.sign".localized)
-        #expect(data.sections(baseToken: WCNStellarFixtures.token, currency: currency, rates: [:]).count == 3)
+        // transaction + account + dApp + sign-only note
+        let sections = data.sections(baseToken: WCNStellarFixtures.token, currency: currency, rates: [:])
+        #expect(sections.count == 4)
+        #expect(sections[3].isMain == false)
     }
 }

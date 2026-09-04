@@ -102,8 +102,9 @@ class DeepLinkViewManager {
 
             default: ()
             }
-        // WalletConnectNew screens are wired in the UI node
-        case .walletConnectNewPair, .walletConnectNewProposal, .walletConnectNewRequest: ()
+        case let .walletConnectNewPair(uri): WCNPresenter.pair(uri: uri)
+        case let .walletConnectNewProposal(item): WCNPresenter.present(proposal: item)
+        case let .walletConnectNewRequest(item): WCNPresenter.present(request: item)
         case let .tonConnect(params):
             Coordinator.shared.present { _ in
                 TonConnectConnectView(config: params.config, returnDeepLink: params.returnDeepLink)

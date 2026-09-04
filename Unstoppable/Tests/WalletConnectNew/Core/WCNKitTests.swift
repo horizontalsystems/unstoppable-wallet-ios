@@ -9,6 +9,7 @@ struct WCNKitTests {
     private let accounts = WCNStubAccountProvider(activeAccountId: "a1")
     private let lock = StubLockProvider(isLocked: false)
     private let parsers = WCNParserRegistry()
+    private let directHandlers = WCNDirectHandlerRegistry()
 
     private func makeKit(storage: WCNSessionStorage) -> WCNKit {
         let responder = WCNResponder(signClient: client)
@@ -18,6 +19,8 @@ struct WCNKitTests {
             signClient: client,
             sessionService: WCNSessionService(signClient: client, storage: storage, accountProvider: accounts),
             requestService: WCNRequestService(parsers: parsers, verifiers: WCNVerifierRegistry(), responder: responder),
+            directHandlers: directHandlers,
+            responder: responder,
             pairingService: WCNPairingService(signClient: client, proposalTimeout: 0.2),
             verifyService: WCNVerifyService(),
             namespaceBuilder: WCNNamespaceBuilder(registry: chainSupports),
@@ -174,6 +177,68 @@ struct WCNKitTests {
         #expect(item.blockchainProposals.count == 2)
     }
 
+    @Test func directRequestIsAnsweredWithoutPublishing() async throws {
+        parsers.register(DirectStubParser())
+        let handler = SpyDirectHandler()
+        directHandlers.register(handler)
+        let (kit, _) = try storedKit()
+        let box = Box<[WCNRequestItem]>([])
+        let cancellable = collect(kit.requestPublisher, into: box)
+        defer { cancellable.cancel() }
+
+        client.sessionRequestSubject.send((request: try WCNTestFixtures.request(method: "wallet_switchEthereumChain"), context: nil))
+        try await waitUntil { handler.responded == 1 }
+
+        #expect(box.value.isEmpty)
+    }
+
+    @Test func unregisteredDirectRequestIsRefused() async throws {
+        parsers.register(DirectStubParser())
+        let (kit, _) = try storedKit()
+        _ = kit
+
+        let request = try WCNTestFixtures.request(method: "wallet_switchEthereumChain")
+        client.sessionRequestSubject.send((request: request, context: nil))
+        try await waitUntil { client.calls.count == 1 }
+
+        #expect(client.calls[0].response == .error(JSONRPCError(code: 5101, message: "Unsupported wallet method.")))
+    }
+
+    @Test func pendingRequestsAreListedPerTopicAndReopenable() async throws {
+        let storage = try WCNSessionFixtures.storage()
+        let session = try WCNSessionFixtures.session(topic: WCNTestFixtures.topic)
+        client.sessions = [session]
+        parsers.register(StubParser())
+        try WCNSessionService(signClient: client, storage: storage, accountProvider: accounts).store(session: session, accountId: "a1")
+        let request = try WCNTestFixtures.request()
+        let foreign = try Request(topic: "other", method: "eth_sendTransaction", params: AnyCodable([String]()), chainId: WalletConnectUtils.Blockchain("eip155:1")!)
+        client.pendingRequests = [(request: request, context: nil), (request: foreign, context: nil)]
+        let kit = makeKit(storage: storage)
+        let box = Box<[WCNRequestItem]>([])
+        let cancellable = collect(kit.requestPublisher, into: box)
+        defer { cancellable.cancel() }
+
+        #expect(kit.pendingRequests(topic: WCNTestFixtures.topic) == [WCNPendingRequestItem(id: request.id, method: "eth_sendTransaction")])
+
+        kit.open(requestId: request.id)
+        try await waitUntil { box.value.count == 1 }
+        #expect(box.value.first?.requestId == request.id)
+    }
+
+    @Test func rejectAnswersUserRejected() async throws {
+        let (kit, _) = try storedKit()
+        let box = Box<[WCNRequestItem]>([])
+        let cancellable = collect(kit.requestPublisher, into: box)
+        defer { cancellable.cancel() }
+        client.sessionRequestSubject.send((request: try WCNTestFixtures.request(), context: nil))
+        try await waitUntil { box.value.count == 1 }
+        let item = try #require(box.value.first)
+
+        try await kit.reject(item: item)
+
+        #expect(client.calls.last?.response == .error(JSONRPCError(code: 5000, message: "User rejected.")))
+    }
+
     private func waitUntil(timeout: TimeInterval = 2, _ condition: () -> Bool) async throws {
         let deadline = Date().addingTimeInterval(timeout)
         while !condition(), Date() < deadline {
@@ -218,6 +283,23 @@ private final class StubLockProvider: IWCNLockProvider {
     }
 
     var isLockedPublisher: AnyPublisher<Bool, Never> { subject.eraseToAnyPublisher() }
+}
+
+private final class DirectStubParser: IWCNParser {
+    func parse(request: Request) throws -> WCNRequestPayload? {
+        guard request.method == "wallet_switchEthereumChain" else { return nil }
+        return WCNRequestPayload(request: request, kind: .direct, from: nil)
+    }
+}
+
+private final class SpyDirectHandler: IWCNDirectHandler {
+    private(set) var responded = 0
+
+    func handles(_ payload: WCNRequestPayload) -> Bool { payload.kind == .direct }
+
+    func respond(request _: WCNRequest, session _: WCNSessionInfo) async throws {
+        responded += 1
+    }
 }
 
 private final class StubParser: IWCNParser {

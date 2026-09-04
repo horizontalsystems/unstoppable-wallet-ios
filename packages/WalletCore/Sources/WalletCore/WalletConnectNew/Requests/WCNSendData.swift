@@ -35,7 +35,11 @@ class WCNSendData: ISendData {
     }
 
     func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
-        let dAppSection = SendDataSection([.simpleValue(title: "wallet_connect.sign.dapp_name".localized, value: request.dAppName)], isMain: false)
-        return inner.sections(baseToken: baseToken, currency: currency, rates: rates) + [dAppSection]
+        var sections = inner.sections(baseToken: baseToken, currency: currency, rates: rates)
+        sections.append(SendDataSection([.simpleValue(title: "wallet_connect.sign.dapp_name".localized, value: request.dAppName)], isMain: false))
+        if request.payload.isSignOnly {
+            sections.append(SendDataSection([.note(iconName: nil, title: "wallet_connect.sign_transaction.description".localized(request.dAppName))], isMain: false))
+        }
+        return sections
     }
 }

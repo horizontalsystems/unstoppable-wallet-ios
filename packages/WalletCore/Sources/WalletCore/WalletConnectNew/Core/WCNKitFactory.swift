@@ -9,6 +9,7 @@ class WCNKitFactory: IWCNKitFactory {
     private let parsers: WCNParserRegistry
     private let verifiers: WCNVerifierRegistry
     private let chainSupports: WCNChainSupportRegistry
+    private let directHandlers: WCNDirectHandlerRegistry
     private let accountManager: AccountManager
     private let lockManager: LockManager
     private let securityManager: SecurityManager
@@ -16,13 +17,14 @@ class WCNKitFactory: IWCNKitFactory {
     private let networkManager: NetworkManager
     private let logger: Logger
 
-    init(signClient: WCNSignClient, responder: WCNResponder, storage: WCNSessionStorage, parsers: WCNParserRegistry, verifiers: WCNVerifierRegistry, chainSupports: WCNChainSupportRegistry, accountManager: AccountManager, lockManager: LockManager, securityManager: SecurityManager, purchaseManager: PurchaseManager, networkManager: NetworkManager, logger: Logger) {
+    init(signClient: WCNSignClient, responder: WCNResponder, storage: WCNSessionStorage, parsers: WCNParserRegistry, verifiers: WCNVerifierRegistry, chainSupports: WCNChainSupportRegistry, directHandlers: WCNDirectHandlerRegistry, accountManager: AccountManager, lockManager: LockManager, securityManager: SecurityManager, purchaseManager: PurchaseManager, networkManager: NetworkManager, logger: Logger) {
         self.signClient = signClient
         self.responder = responder
         self.storage = storage
         self.parsers = parsers
         self.verifiers = verifiers
         self.chainSupports = chainSupports
+        self.directHandlers = directHandlers
         self.accountManager = accountManager
         self.lockManager = lockManager
         self.securityManager = securityManager
@@ -40,7 +42,9 @@ class WCNKitFactory: IWCNKitFactory {
             icons: ["https://raw.githubusercontent.com/horizontalsystems/HS-Design/master/PressKit/UW-AppIcon-on-light.png"],
             redirectScheme: DeepLinkManager.deepLinkScheme + "://"
         )
+        WCNLog.log("factory: configuring sdk projectId=\(info.projectId.prefix(6))… bundle=\(Bundle.main.bundleIdentifier ?? "")")
         try WCNConfigurator(sdk: WCNSdkConfigurator()).configure(info: info, bundleIdentifier: Bundle.main.bundleIdentifier ?? "")
+        WCNLog.log("factory: sdk configured, building kit")
 
         let verifyService = WCNVerifyService(
             whitelist: WCNDappWhitelist(provider: WhitelistDappProvider(networkManager: networkManager)),
@@ -51,6 +55,8 @@ class WCNKitFactory: IWCNKitFactory {
             signClient: signClient,
             sessionService: WCNSessionService(signClient: signClient, storage: storage, accountProvider: accountManager, logger: logger.scoped(with: "WCN.Session")),
             requestService: WCNRequestService(parsers: parsers, verifiers: verifiers, responder: responder, logger: logger.scoped(with: "WCN.Request")),
+            directHandlers: directHandlers,
+            responder: responder,
             pairingService: WCNPairingService(signClient: signClient),
             verifyService: verifyService,
             namespaceBuilder: WCNNamespaceBuilder(registry: chainSupports),

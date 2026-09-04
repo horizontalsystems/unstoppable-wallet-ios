@@ -12,6 +12,8 @@ enum WCNVerdictReason: Equatable {
     case typedDataDomainChainNotApproved(chainId: Int)
     case ethSignBlindHash
     case ethSignUnreadable
+    case solanaMessageIsTransaction
+    case permitUnlimitedAllowance(spender: String)
 
     var text: String {
         switch self {
@@ -28,6 +30,8 @@ enum WCNVerdictReason: Equatable {
         case let .typedDataDomainChainNotApproved(chainId): return "wallet_connect.verdict.typed_data_chain_not_approved".localized(String(chainId))
         case .ethSignBlindHash: return "wallet_connect.verdict.eth_sign_blind_hash".localized
         case .ethSignUnreadable: return "wallet_connect.verdict.eth_sign_unreadable".localized
+        case .solanaMessageIsTransaction: return "wallet_connect.verdict.solana_message_is_transaction".localized
+        case let .permitUnlimitedAllowance(spender): return "wallet_connect.verdict.permit_unlimited".localized(spender)
         }
     }
 }

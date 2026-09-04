@@ -1,18 +1,27 @@
+import Combine
 import WalletConnectSign
 
 class WCNResponder {
     private let signClient: IWCNSignClient
+    private let answeredSubject = PassthroughSubject<RPCID, Never>()
 
     init(signClient: IWCNSignClient) {
         self.signClient = signClient
     }
 
+    // fires once the dApp has been answered, so pending-request lists can drop the request
+    var answeredPublisher: AnyPublisher<RPCID, Never> {
+        answeredSubject.eraseToAnyPublisher()
+    }
+
     func respond(request: WCNRequestPayload, result: AnyCodable) async throws {
         try await signClient.respond(topic: request.topic, requestId: request.id, response: .response(result))
+        answeredSubject.send(request.id)
     }
 
     func reject(request: WCNRequestPayload, reason: RejectReason) async throws {
         try await signClient.respond(topic: request.topic, requestId: request.id, response: .error(reason.rpcError))
+        answeredSubject.send(request.id)
     }
 }
 

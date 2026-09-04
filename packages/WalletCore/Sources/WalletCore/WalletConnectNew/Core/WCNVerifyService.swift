@@ -22,6 +22,33 @@ class WCNVerifyService {
         }
     }
 
+    func defenseState(context: VerifyContext?) -> WCNDefenseState {
+        let verifyState = state(context: context)
+        if case .scam = verifyState {
+            return .scam
+        }
+        if case .trusted = verifyState {
+            return whitelistDefenseState(trusted: true)
+        }
+        return whitelistDefenseState(trusted: false)
+    }
+
+    // an approved session has no attestation any more: the check runs against the peer url, as Android does
+    func defenseState(peerUrl: String) -> WCNDefenseState {
+        whitelistDefenseState(trusted: isTrusted(origin: peerUrl))
+    }
+
+    private func whitelistDefenseState(trusted: Bool) -> WCNDefenseState {
+        guard premiumGate?.scamProtectionEnabled == true, let whitelist else {
+            return .disabled
+        }
+        switch whitelist.state {
+        case .loading: return .loading
+        case .unavailable: return .notAvailable
+        case .loaded: return trusted ? .safe : .danger
+        }
+    }
+
     private func isTrusted(origin: String) -> Bool {
         guard premiumGate?.scamProtectionEnabled == true, let whitelist,
               let host = URLComponents(string: origin)?.host?.lowercased(),

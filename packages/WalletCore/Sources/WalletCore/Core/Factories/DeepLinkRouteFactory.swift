@@ -45,22 +45,22 @@ public enum DeepLinkRouteFactory {
     // DeepLinkRoute.tonConnect has no entry: TonConnectEventHandler is disabled in Core, so the route
     // must not be registered until the handler is re-enabled (and mapped here).
     static func assertCoherence(handlerKinds: Set<AppEventHandlerKind>) {
-        let consumers: [DeepLinkRoute: AppEventHandlerKind] = [
-            .walletConnect: .walletConnect,
-            .tonTransfer: .address,
-            .coin: .widgetCoin,
-            .referral: .telegramUser,
-            .openCryptoPay: .openCryptoPay,
-            .transfer: .address,
-            .appTransfer: .address,
+        let consumers: [DeepLinkRoute: [AppEventHandlerKind]] = [
+            .walletConnect: [.walletConnect, .walletConnectNew],
+            .tonTransfer: [.address],
+            .coin: [.widgetCoin],
+            .referral: [.telegramUser],
+            .openCryptoPay: [.openCryptoPay],
+            .transfer: [.address],
+            .appTransfer: [.address],
         ]
 
         for route in routes {
-            guard let kind = consumers[route], !handlerKinds.contains(kind) else {
+            guard let kinds = consumers[route], !kinds.contains(where: handlerKinds.contains) else {
                 continue
             }
 
-            assertionFailure("DeepLink route '\(route.id)' is registered but its consuming handler '\(kind.id)' is not")
+            assertionFailure("DeepLink route '\(route.id)' is registered but none of its consuming handlers '\(kinds.map(\.id))' is")
         }
     }
 }

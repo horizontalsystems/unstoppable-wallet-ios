@@ -48,6 +48,16 @@ struct WCNPairingServiceTests {
         #expect(client.pairedUris[0].topic == WCNTestFixtures.topic)
     }
 
+    @Test func proposalDeliveredDuringPairIsNotMissed() async throws {
+        let service = WCNPairingService(signClient: client, proposalTimeout: 0.2)
+        let proposal = try WCNPairingFixtures.proposal()
+        client.onPair = { [client] in client.sessionProposalSubject.send((proposal: proposal, context: nil)) }
+
+        try await service.pair(uri: uri())
+
+        #expect(client.pairedUris.count == 1)
+    }
+
     @Test func missingProposalTimesOut() async {
         let service = WCNPairingService(signClient: client, proposalTimeout: 0.2)
         await #expect(throws: WCNPairingService.PairingError.proposalTimeout) {

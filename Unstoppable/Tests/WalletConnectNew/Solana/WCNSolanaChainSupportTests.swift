@@ -7,7 +7,7 @@ struct WCNSolanaChainSupportTests {
 
     @Test func offersMainnetForMnemonicAccount() throws {
         let chains = support.supportedChains(account: WCNChainSupportFixtures.walletAccount)
-        #expect(chains.map(\.absoluteString) == ["solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp"])
+        #expect(chains.map(\.absoluteString) == ["solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp", "solana:4sGjMW1sUnHzSxGspuhpqLDx6wiyjNtZ"])
 
         let account = try #require(support.account(chain: chains[0], account: WCNChainSupportFixtures.walletAccount))
         #expect(account.namespace == "solana")

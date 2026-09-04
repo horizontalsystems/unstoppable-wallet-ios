@@ -1,4 +1,5 @@
 import Foundation
+import MarketKit
 import WalletConnectSign
 @testable import WalletCore
 
@@ -24,6 +25,10 @@ final class WCNStubChainSupport: IWCNChainSupport {
     func account(chain: WalletConnectUtils.Blockchain, account _: WalletCore.Account) -> WalletConnectUtils.Account? {
         guard chains.contains(chain) else { return nil }
         return try? WalletConnectUtils.Account(blockchain: chain, accountAddress: address)
+    }
+
+    func blockchainType(chain _: WalletConnectUtils.Blockchain) -> BlockchainType? {
+        namespace == "eip155" ? .ethereum : nil
     }
 }
 

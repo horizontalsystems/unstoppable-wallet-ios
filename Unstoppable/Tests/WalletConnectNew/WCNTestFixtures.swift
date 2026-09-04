@@ -45,6 +45,7 @@ final class WCNSpySignClient: IWCNSignClient {
     var pendingRequests = [(request: Request, context: VerifyContext?)]()
     private(set) var pairedUris = [WalletConnectURI]()
     var pairError: Error?
+    var onPair: (() -> Void)?
 
     var sessionsPublisher: AnyPublisher<[Session], Never> { sessionsSubject.eraseToAnyPublisher() }
     var sessionUpdatePublisher: AnyPublisher<(topic: String, namespaces: [String: SessionNamespace]), Never> { sessionUpdateSubject.eraseToAnyPublisher() }
@@ -60,6 +61,7 @@ final class WCNSpySignClient: IWCNSignClient {
             throw pairError
         }
         pairedUris.append(uri)
+        onPair?()
     }
 
     func approve(proposalId: String, namespaces: [String: SessionNamespace]) async throws -> Session {

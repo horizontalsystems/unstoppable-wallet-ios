@@ -34,22 +34,28 @@ class WCNSignClient: IWCNSignClient {
     }
 
     func pair(uri: WalletConnectURI) async throws {
+        WCNLog.log("sdk pair: \(uri.topic.prefix(8))")
         try await WalletKit.instance.pair(uri: uri)
+        WCNLog.log("sdk pair: returned")
     }
 
     func approve(proposalId: String, namespaces: [String: SessionNamespace]) async throws -> Session {
-        try await WalletKit.instance.approve(proposalId: proposalId, namespaces: namespaces)
+        WCNLog.log("sdk approve: \(proposalId) namespaces=\(namespaces.mapValues { $0.accounts.map(\.absoluteString) })")
+        return try await WalletKit.instance.approve(proposalId: proposalId, namespaces: namespaces)
     }
 
     func rejectSession(proposalId: String) async throws {
+        WCNLog.log("sdk rejectSession: \(proposalId)")
         try await WalletKit.instance.rejectSession(proposalId: proposalId, reason: .userRejected)
     }
 
     func disconnect(topic: String) async throws {
+        WCNLog.log("sdk disconnect: \(topic.prefix(8))")
         try await WalletKit.instance.disconnect(topic: topic)
     }
 
     func respond(topic: String, requestId: RPCID, response: RPCResult) async throws {
+        WCNLog.log("sdk respond: id=\(requestId.string) topic=\(topic.prefix(8)) response=\(response)")
         try await WalletKit.instance.respond(topic: topic, requestId: requestId, response: response)
     }
 }

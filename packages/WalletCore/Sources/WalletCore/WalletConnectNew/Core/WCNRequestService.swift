@@ -16,6 +16,7 @@ class WCNRequestService {
     }
 
     func process(request: Request, context: VerifyContext?, session: WCNSessionInfo) async -> WCNRequestResult {
+        WCNLog.log("request service: \(request.method) id=\(request.id.string) params=\(String(describing: request.params).prefix(300))")
         logger?.debug("request \(request.method) id=\(request.id.string) topic=\(request.topic) chain=\(request.chainId.absoluteString)")
 
         let payload: WCNRequestPayload
@@ -29,6 +30,7 @@ class WCNRequestService {
 
         let verificationContext = WCNVerificationContext(payload: payload, verifyContext: context, accountId: session.accountId, approvedAccounts: session.approvedAccounts)
         let verdict = verifiers.verify(verificationContext)
+        WCNLog.log("request service: parsed kind=\(payload.kind) from=\(payload.from ?? "nil") verdict=\(verdict)")
         logger?.debug("verdict \(verdict) for id=\(request.id.string)")
 
         let wcnRequest = WCNRequest(payload: payload, verdict: verdict, dAppName: session.dAppName)
@@ -44,6 +46,7 @@ class WCNRequestService {
     }
 
     private func reject(request: Request, reason: WCNResponder.RejectReason, error: Error) async -> WCNRequestResult {
+        WCNLog.log("request service: rejecting id=\(request.id.string) reason=\(reason) error=\(error)")
         logger?.warning("rejecting id=\(request.id.string): \(error)")
         let unparsed = WCNRequestPayload(request: request, kind: .direct, from: nil)
 

@@ -25,7 +25,10 @@ class WCNSessionService {
             .sink { [weak self] in self?.handleDeleted(accountId: $0) }
             .store(in: &cancellables)
         signClient.sessionsPublisher
-            .sink { [weak self] _ in self?.sync() }
+            .sink { [weak self] in
+                WCNLog.log("sessions: sdk sessionsPublisher count=\($0.count)")
+                self?.sync()
+            }
             .store(in: &cancellables)
         signClient.sessionUpdatePublisher
             .sink { [weak self] in self?.handleUpdate(topic: $0.topic, namespaces: $0.namespaces) }
@@ -46,6 +49,7 @@ class WCNSessionService {
     func store(session: Session, accountId: String) throws {
         let namespaces = WCNSessionNamespaces(sessionNamespaces: session.namespaces)
         try storage.save(session: WCNSessionRecord(topic: session.topic, accountId: accountId, dAppName: session.peer.name, namespaces: namespaces))
+        WCNLog.log("sessions: stored topic=\(session.topic.prefix(8)) account=\(accountId)")
         logger?.info("stored session \(session.topic) for account \(accountId)")
         sync()
     }
@@ -80,16 +84,20 @@ class WCNSessionService {
             }
 
             let activeAccountId = accountProvider.activeAccountId
+            WCNLog.log("sessions sync: live=\(live.count) records=\(records.count) stale=\(stale.count) active=\(activeAccountId ?? "nil")")
             let items = try records
                 .filter { $0.accountId == activeAccountId && live[$0.topic] != nil }
                 .map { try WCNSessionItem(topic: $0.topic, accountId: $0.accountId, dAppName: $0.dAppName, peer: live[$0.topic]?.peer, namespaces: $0.sessionNamespaces()) }
+            WCNLog.log("sessions sync: items=\(items.count)")
             sessionsSubject.send(items)
         } catch {
+            WCNLog.log("sessions sync: failed \(error)")
             logger?.error("session sync failed: \(error)")
         }
     }
 
     private func handleDeleted(accountId: String) {
+        WCNLog.log("sessions: account deleted \(accountId)")
         Task { [weak self] in
             await self?.disconnectAll(accountId: accountId)
         }
@@ -110,6 +118,7 @@ class WCNSessionService {
 
     // dApp-driven updates never touch the persisted approval; verifiers read the snapshot
     private func handleUpdate(topic: String, namespaces: [String: SessionNamespace]) {
+        WCNLog.log("sessions: dApp update topic=\(topic.prefix(8)) namespaces=\(Array(namespaces.keys))")
         guard let record = try? storage.session(topic: topic), let persisted = try? record.sessionNamespaces() else {
             return
         }

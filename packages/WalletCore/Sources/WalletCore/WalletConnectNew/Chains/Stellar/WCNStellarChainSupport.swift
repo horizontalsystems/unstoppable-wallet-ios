@@ -1,3 +1,4 @@
+import MarketKit
 import WalletConnectUtils
 
 class WCNStellarChainSupport: IWCNChainSupport {
@@ -23,6 +24,10 @@ class WCNStellarChainSupport: IWCNChainSupport {
         }
 
         return try? WalletConnectUtils.Account(blockchain: chain, accountAddress: accountId)
+    }
+
+    func blockchainType(chain: WalletConnectUtils.Blockchain) -> BlockchainType? {
+        chain == Self.pubnet ? .stellar : nil
     }
 
     private static func canSign(account: Account) -> Bool {

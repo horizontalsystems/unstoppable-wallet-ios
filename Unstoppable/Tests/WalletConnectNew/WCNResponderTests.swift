@@ -1,8 +1,39 @@
+import Combine
 import Testing
 import WalletConnectSign
 @testable import WalletCore
 
 struct WCNResponderTests {
+    @Test func answeredIsPublishedAfterRespondAndReject() async throws {
+        let client = WCNSpySignClient()
+        let responder = WCNResponder(signClient: client)
+        let payload = try WCNTestFixtures.payload()
+        var answered = [RPCID]()
+        let cancellable = responder.answeredPublisher.sink { answered.append($0) }
+
+        try await responder.respond(request: payload, result: AnyCodable("0xsigned"))
+        try await responder.reject(request: payload, reason: .userRejected)
+
+        cancellable.cancel()
+        #expect(answered == [payload.id, payload.id])
+    }
+
+    @Test func answeredIsNotPublishedWhenClientFails() async throws {
+        let client = WCNSpySignClient()
+        client.error = RelayDown()
+        let responder = WCNResponder(signClient: client)
+        let payload = try WCNTestFixtures.payload()
+        var answered = [RPCID]()
+        let cancellable = responder.answeredPublisher.sink { answered.append($0) }
+
+        await #expect(throws: RelayDown.self) {
+            try await responder.respond(request: payload, result: AnyCodable("0xsigned"))
+        }
+
+        cancellable.cancel()
+        #expect(answered.isEmpty)
+    }
+
     @Test func respondForwardsTopicIdAndResult() async throws {
         let client = WCNSpySignClient()
         let responder = WCNResponder(signClient: client)
