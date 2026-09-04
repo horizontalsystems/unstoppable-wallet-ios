@@ -15,6 +15,11 @@ public class Core {
         NodeNetworkHandlerFactory.unstoppableHandlers.forEach { NodeNetworkHandlerFactory.register($0) }
         TransactionServiceFactory.unstoppableTransactionServices.forEach { TransactionServiceFactory.register($0) }
         SwapBroadcasterFactory.register(SwapBroadcasterFactory.unstoppableBroadcasters)
+        if let walletConnectNew = core.walletConnectNew {
+            WCNSendHandlerProvider.registry = walletConnectNew.sendHandlerRegistry
+            SendHandlerFactory.register(WCNSendHandlerProvider.self)
+            walletConnectNew.start()
+        }
         // EvmKit syncers/decorators are registered by each app (no shared fallback): stable in StableCore, the
         // unstoppable app in its own initCore (registers a provider over defaultSyncers/defaultDecorators).
 
@@ -24,6 +29,7 @@ public class Core {
             marketKit: core.marketKit,
             walletConnectSessionManager: core.walletConnectSessionManager,
             walletConnectRequestHandler: core.walletConnectRequestHandler,
+            walletConnectNew: core.walletConnectNew,
             cloudBackupManager: core.cloudBackupManager,
             accountManager: core.accountManager,
             lockManager: core.lockManager
@@ -136,6 +142,7 @@ public class Core {
     let walletConnectRequestHandler: WalletConnectRequestChain?
     let walletConnectManager: WalletConnectManager?
     let walletConnectSessionManager: WalletConnectSessionManager?
+    let walletConnectNew: WCNManager?
 
     public let adapterManager: AdapterManager
     public let transactionAdapterManager: TransactionAdapterManager
@@ -455,6 +462,26 @@ public class Core {
         )
 
         purchaseManager = PurchaseManager(localStorage: localStorage)
+
+        if AppEventHandlerFactory.resolved().contains(.walletConnectNew) {
+            // both stacks subscribe to the same WalletKit instance and would answer the same requests
+            assert(!AppEventHandlerFactory.resolved().contains(.walletConnect), "walletConnect and walletConnectNew handlers cannot be registered together")
+            walletConnectNew = try WCNManager.instance(
+                dbPool: dbPool,
+                evmBlockchainManager: evmBlockchainManager,
+                stellarKitManager: stellarKitManager,
+                solanaKitManager: solanaKitManager,
+                accountManager: accountManager,
+                coinManager: coinManager,
+                lockManager: lockManager,
+                securityManager: securityManager,
+                purchaseManager: purchaseManager,
+                networkManager: networkManager,
+                logger: logger
+            )
+        } else {
+            walletConnectNew = nil
+        }
 
         recentAddressStorage = try RecentAddressStorage(dbPool: dbPool)
 

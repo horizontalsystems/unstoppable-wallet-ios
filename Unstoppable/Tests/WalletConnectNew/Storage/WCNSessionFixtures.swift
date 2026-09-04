@@ -26,7 +26,12 @@ final class WCNStubAccountProvider: IWCNAccountProvider {
         activeAccountSubject = CurrentValueSubject(activeAccountId)
     }
 
-    var activeAccountId: String? { activeAccountSubject.value }
+    var activeAccount: WalletCore.Account? {
+        activeAccountSubject.value.map { id in
+            WalletCore.Account(id: id, level: 0, name: id, type: WCNChainSupportFixtures.walletAccount.type, origin: .restored, backedUp: true, fileBackedUp: false)
+        }
+    }
+
     var activeAccountIdPublisher: AnyPublisher<String?, Never> { activeAccountSubject.eraseToAnyPublisher() }
     var deletedAccountIdPublisher: AnyPublisher<String, Never> { deletedAccountSubject.eraseToAnyPublisher() }
 }

@@ -5,10 +5,10 @@ class WCNConfigurator {
     // the SDK's telemetry storage writes `true` on first access, so the key must exist before Networking.configure
     static let telemetryKey = "com.walletconnect.sdk.telemetryEnabled"
 
-    private let sdk: IWCNSdkConfigurer
+    private let sdk: IWCNSdkConfigurator
     private let userDefaults: UserDefaults
 
-    init(sdk: IWCNSdkConfigurer, userDefaults: UserDefaults = .standard) {
+    init(sdk: IWCNSdkConfigurator, userDefaults: UserDefaults = .standard) {
         self.sdk = sdk
         self.userDefaults = userDefaults
     }

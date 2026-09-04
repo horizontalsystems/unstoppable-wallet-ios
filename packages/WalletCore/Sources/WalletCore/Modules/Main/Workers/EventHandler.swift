@@ -18,6 +18,9 @@ enum EventHandlerSignal {
 
     case walletConnectProposal(WalletConnectSign.Session.Proposal)
     case walletConnectRequest(WalletConnectRequest)
+    case walletConnectNewPair(String)
+    case walletConnectNewProposal(WCNProposalItem)
+    case walletConnectNewRequest(WCNRequestItem)
     case tonConnectRequest(TonConnectSendTransactionRequest)
     case tonConnectRequestFailed(TonConnectSendTransactionRequestError)
 

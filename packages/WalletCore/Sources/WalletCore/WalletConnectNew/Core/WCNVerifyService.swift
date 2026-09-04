@@ -3,11 +3,11 @@ import ReownWalletKit
 
 // Bug-bounty #3: the badge is derived from the SDK-attested origin, never from dApp metadata
 class WCNVerifyService {
-    private let allowlist: IWCNDappAllowlist?
+    private let whitelist: IWCNDappWhitelist?
     private let premiumGate: IWCNPremiumGate?
 
-    init(allowlist: IWCNDappAllowlist? = nil, premiumGate: IWCNPremiumGate? = nil) {
-        self.allowlist = allowlist
+    init(whitelist: IWCNDappWhitelist? = nil, premiumGate: IWCNPremiumGate? = nil) {
+        self.whitelist = whitelist
         self.premiumGate = premiumGate
     }
 
@@ -23,18 +23,18 @@ class WCNVerifyService {
     }
 
     private func isTrusted(origin: String) -> Bool {
-        guard premiumGate?.scamProtectionEnabled == true, let allowlist,
+        guard premiumGate?.scamProtectionEnabled == true, let whitelist,
               let host = URLComponents(string: origin)?.host?.lowercased(),
               host.allSatisfy(\.isASCII)
         else {
             return false
         }
-        return allowlist.isTrusted(host: host)
+        return whitelist.isTrusted(host: host)
     }
 }
 
-// exact host or a subdomain of an allowlisted domain; suffix tricks like evil-uniswap.org do not match
-enum WCNAllowlistMatcher {
+// exact host or a subdomain of an whitelisted domain; suffix tricks like evil-uniswap.org do not match
+enum WCNWhitelistMatcher {
     static func matches(host: String, allowed: String) -> Bool {
         let allowed = allowed.lowercased()
         return host == allowed || host.hasSuffix("." + allowed)

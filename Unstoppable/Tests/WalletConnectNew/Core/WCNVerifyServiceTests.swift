@@ -19,33 +19,33 @@ struct WCNVerifyServiceTests {
         #expect(service.state(context: context(.valid, origin: nil)) == .unknown)
     }
 
-    @Test func premiumAllowlistTrustsAttestedOrigin() {
-        let service = WCNVerifyService(allowlist: StubAllowlist(domains: ["uniswap.org"]), premiumGate: StubGate(enabled: true))
+    @Test func premiumWhitelistTrustsAttestedOrigin() {
+        let service = WCNVerifyService(whitelist: StubWhitelist(domains: ["uniswap.org"]), premiumGate: StubGate(enabled: true))
         #expect(service.state(context: context(.valid)) == .trusted(origin: origin))
         #expect(service.state(context: context(.valid, origin: "https://uniswap.org")) == .trusted(origin: "https://uniswap.org"))
     }
 
-    @Test func allowlistNeverUpgradesUnverifiedOrigin() {
-        let service = WCNVerifyService(allowlist: StubAllowlist(domains: ["uniswap.org"]), premiumGate: StubGate(enabled: true))
+    @Test func whitelistNeverUpgradesUnverifiedOrigin() {
+        let service = WCNVerifyService(whitelist: StubWhitelist(domains: ["uniswap.org"]), premiumGate: StubGate(enabled: true))
         #expect(service.state(context: context(.unknown)) == .unknown)
         #expect(service.state(context: context(.invalid)) == .invalid)
         #expect(service.state(context: context(.scam)) == .scam)
     }
 
     @Test func suffixSpoofAndPunycodeAreNotTrusted() {
-        let service = WCNVerifyService(allowlist: StubAllowlist(domains: ["uniswap.org"]), premiumGate: StubGate(enabled: true))
+        let service = WCNVerifyService(whitelist: StubWhitelist(domains: ["uniswap.org"]), premiumGate: StubGate(enabled: true))
         #expect(service.state(context: context(.valid, origin: "https://evil-uniswap.org")) == .verified(origin: "https://evil-uniswap.org"))
         #expect(service.state(context: context(.valid, origin: "https://uniswap.org.evil.com")) == .verified(origin: "https://uniswap.org.evil.com"))
         #expect(service.state(context: context(.valid, origin: "https://uniswаp.org")) == .verified(origin: "https://uniswаp.org"))
     }
 
     @Test func premiumOffKeepsVerifiedOnly() {
-        let service = WCNVerifyService(allowlist: StubAllowlist(domains: ["uniswap.org"]), premiumGate: StubGate(enabled: false))
+        let service = WCNVerifyService(whitelist: StubWhitelist(domains: ["uniswap.org"]), premiumGate: StubGate(enabled: false))
         #expect(service.state(context: context(.valid)) == .verified(origin: origin))
     }
 }
 
-private final class StubAllowlist: IWCNDappAllowlist {
+private final class StubWhitelist: IWCNDappWhitelist {
     private let domains: [String]
 
     init(domains: [String]) {
@@ -53,7 +53,7 @@ private final class StubAllowlist: IWCNDappAllowlist {
     }
 
     func isTrusted(host: String) -> Bool {
-        domains.contains { WCNAllowlistMatcher.matches(host: host, allowed: $0) }
+        domains.contains { WCNWhitelistMatcher.matches(host: host, allowed: $0) }
     }
 }
 

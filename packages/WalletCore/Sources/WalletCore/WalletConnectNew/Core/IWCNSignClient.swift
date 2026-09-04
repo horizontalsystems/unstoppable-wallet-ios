@@ -10,6 +10,8 @@ protocol IWCNSignClient: AnyObject {
     var requestExpirationPublisher: AnyPublisher<RPCID, Never> { get }
     var pendingRequests: [(request: Request, context: VerifyContext?)] { get }
     func pair(uri: WalletConnectURI) async throws
+    func approve(proposalId: String, namespaces: [String: SessionNamespace]) async throws -> Session
+    func rejectSession(proposalId: String) async throws
     func disconnect(topic: String) async throws
     func respond(topic: String, requestId: RPCID, response: RPCResult) async throws
 }

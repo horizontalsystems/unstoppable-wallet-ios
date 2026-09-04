@@ -2,7 +2,7 @@ import Combine
 import ReownWalletKit
 
 // The only place that touches WalletKit.instance
-class WCNSignClientAdapter: IWCNSignClient {
+class WCNSignClient: IWCNSignClient {
     var sessions: [Session] {
         WalletKit.instance.getSessions()
     }
@@ -35,6 +35,14 @@ class WCNSignClientAdapter: IWCNSignClient {
 
     func pair(uri: WalletConnectURI) async throws {
         try await WalletKit.instance.pair(uri: uri)
+    }
+
+    func approve(proposalId: String, namespaces: [String: SessionNamespace]) async throws -> Session {
+        try await WalletKit.instance.approve(proposalId: proposalId, namespaces: namespaces)
+    }
+
+    func rejectSession(proposalId: String) async throws {
+        try await WalletKit.instance.rejectSession(proposalId: proposalId, reason: .userRejected)
     }
 
     func disconnect(topic: String) async throws {

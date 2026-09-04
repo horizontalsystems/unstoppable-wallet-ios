@@ -52,11 +52,30 @@ final class WCNSpySignClient: IWCNSignClient {
     var sessionRequestPublisher: AnyPublisher<(request: Request, context: VerifyContext?), Never> { sessionRequestSubject.eraseToAnyPublisher() }
     var requestExpirationPublisher: AnyPublisher<RPCID, Never> { requestExpirationSubject.eraseToAnyPublisher() }
 
+    private(set) var approvals = [(proposalId: String, namespaces: [String: SessionNamespace])]()
+    private(set) var rejectedProposalIds = [String]()
+
     func pair(uri: WalletConnectURI) async throws {
         if let pairError {
             throw pairError
         }
         pairedUris.append(uri)
+    }
+
+    func approve(proposalId: String, namespaces: [String: SessionNamespace]) async throws -> Session {
+        if let error {
+            throw error
+        }
+        approvals.append((proposalId: proposalId, namespaces: namespaces))
+        let redirect = try AppMetadata.Redirect(native: "reactapp://", universal: nil)
+        let peer = AppMetadata(name: "React App", description: "", url: "https://react-app.walletconnect.com", icons: [], redirect: redirect)
+        let session = Session(topic: "settled-\(proposalId)", pairingTopic: "pairing", peer: peer, requiredNamespaces: [:], namespaces: namespaces, sessionProperties: nil, scopedProperties: nil, expiryDate: Date().addingTimeInterval(3600))
+        sessions.append(session)
+        return session
+    }
+
+    func rejectSession(proposalId: String) async throws {
+        rejectedProposalIds.append(proposalId)
     }
 
     func disconnect(topic: String) async throws {

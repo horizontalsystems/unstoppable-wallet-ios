@@ -1,13 +1,13 @@
 import ReownWalletKit
 
 // Slice over the SDK statics so the configuration order can be verified
-protocol IWCNSdkConfigurer: AnyObject {
+protocol IWCNSdkConfigurator: AnyObject {
     func configureNetworking(groupIdentifier: String, projectId: String)
     func configureWalletKit(metadata: AppMetadata)
     func setTelemetryEnabled(_ enabled: Bool)
 }
 
-class WCNSdkConfigurer: IWCNSdkConfigurer {
+class WCNSdkConfigurator: IWCNSdkConfigurator {
     func configureNetworking(groupIdentifier: String, projectId: String) {
         Networking.configure(groupIdentifier: groupIdentifier, projectId: projectId, socketFactory: WCNSocketFactory(), socketConnectionType: .automatic)
     }

@@ -16,6 +16,7 @@ public class AppEventHandlerFactory {
     private let marketKit: MarketKit.Kit
     private let walletConnectSessionManager: WalletConnectSessionManager?
     private let walletConnectRequestHandler: WalletConnectRequestChain?
+    private let walletConnectNew: WCNManager?
     private let cloudBackupManager: CloudBackupManager
     private let accountManager: AccountManager
     private let lockManager: LockManager
@@ -24,6 +25,7 @@ public class AppEventHandlerFactory {
         marketKit: MarketKit.Kit,
         walletConnectSessionManager: WalletConnectSessionManager?,
         walletConnectRequestHandler: WalletConnectRequestChain?,
+        walletConnectNew: WCNManager?,
         cloudBackupManager: CloudBackupManager,
         accountManager: AccountManager,
         lockManager: LockManager
@@ -31,6 +33,7 @@ public class AppEventHandlerFactory {
         self.marketKit = marketKit
         self.walletConnectSessionManager = walletConnectSessionManager
         self.walletConnectRequestHandler = walletConnectRequestHandler
+        self.walletConnectNew = walletConnectNew
         self.cloudBackupManager = cloudBackupManager
         self.accountManager = accountManager
         self.lockManager = lockManager
@@ -50,6 +53,9 @@ public class AppEventHandlerFactory {
                 accountManager: accountManager,
                 lockManager: lockManager
             ))
+        }
+        if kinds.contains(.walletConnectNew), let walletConnectNew {
+            handlers.append(WCNEventHandler(manager: walletConnectNew))
         }
         // TonConnectEventHandler is disabled — DeepLinkRoute.tonConnect stays a known dangling route:
         // handlers.append(TonConnectEventHandler(tonConnectManager: tonConnectManager))

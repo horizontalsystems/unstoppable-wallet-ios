@@ -1,4 +1,4 @@
-protocol IWCNDappAllowlist: AnyObject {
+protocol IWCNDappWhitelist: AnyObject {
     func isTrusted(host: String) -> Bool
 }
 

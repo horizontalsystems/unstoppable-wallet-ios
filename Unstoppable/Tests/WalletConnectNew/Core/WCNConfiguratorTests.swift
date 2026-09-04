@@ -10,7 +10,7 @@ struct WCNConfiguratorTests {
         let suite = "wcn-configurator-\(UUID().uuidString)"
         let defaults = try #require(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
-        let sdk = SpyConfigurer(defaults: defaults)
+        let sdk = SpyConfigurator(defaults: defaults)
 
         try WCNConfigurator(sdk: sdk, userDefaults: defaults).configure(info: info, bundleIdentifier: "io.horizontalsystems.bank-wallet")
 
@@ -20,14 +20,14 @@ struct WCNConfiguratorTests {
     }
 
     @Test func metadataCarriesRedirectScheme() throws {
-        let sdk = SpyConfigurer(defaults: .standard)
+        let sdk = SpyConfigurator(defaults: .standard)
         try WCNConfigurator(sdk: sdk, userDefaults: .standard).configure(info: info, bundleIdentifier: "b")
         #expect(sdk.metadata?.redirect?.native == "unstoppable.money://")
         #expect(sdk.metadata?.url == "https://unstoppable.money")
     }
 }
 
-private final class SpyConfigurer: IWCNSdkConfigurer {
+private final class SpyConfigurator: IWCNSdkConfigurator {
     private let defaults: UserDefaults
     private(set) var steps = [String]()
     private(set) var telemetryKeyAtNetworkingConfigure: Bool?
