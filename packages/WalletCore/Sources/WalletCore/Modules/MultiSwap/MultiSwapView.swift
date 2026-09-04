@@ -47,6 +47,7 @@ struct MultiSwapView: View {
                     AmountAccessoryView(
                         visible: isInputActive,
                         enabledPercents: (viewModel.availableBalance ?? 0) > 0,
+                        percents: viewModel.percentOptions,
                         onPercent: { percent in
                             viewModel.setAmountIn(percent: percent)
                             focusedField = nil

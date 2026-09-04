@@ -5,6 +5,7 @@ struct AmountAccessoryView: View {
 
     let visible: Bool
     let enabledPercents: Bool
+    var percents: [Int] = [25, 50, 75, 100]
     let onPercent: (Int) -> Void
     let onTrash: () -> Void
 
@@ -12,9 +13,7 @@ struct AmountAccessoryView: View {
         VStack {
             HStack(spacing: 6) {
                 HStack(spacing: 12) {
-                    ForEach(1 ... 4, id: \.self) { multiplier in
-                        let percent = multiplier * 25
-
+                    ForEach(percents, id: \.self) { percent in
                         ThemeButton(text: percent == 100 ? "send.max_button".localized : "\(percent)%", style: .secondary, size: .small) {
                             onPercent(percent)
                         }

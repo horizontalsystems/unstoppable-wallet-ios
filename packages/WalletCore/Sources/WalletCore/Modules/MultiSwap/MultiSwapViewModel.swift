@@ -817,6 +817,18 @@ public extension MultiSwapViewModel {
         syncPrice()
     }
 
+    // The network fee is only estimated on the confirmation screen, so 100% of an asset that also
+    // pays its own fee always ends in an insufficient balance error — offer it only for tokens
+    // whose fee is paid with a separate native asset.
+    var percentOptions: [Int] {
+        let feePaidFromAsset: Bool
+        switch tokenIn?.type {
+        case nil, .native, .derived, .addressType, .unsupported: feePaidFromAsset = true
+        default: feePaidFromAsset = false
+        }
+        return feePaidFromAsset ? [25, 50, 75] : [25, 50, 75, 100]
+    }
+
     func setAmountIn(percent: Int) {
         guard let tokenIn, let availableBalance else {
             return
