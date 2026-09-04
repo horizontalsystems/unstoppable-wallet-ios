@@ -581,7 +581,7 @@ public extension Core {
         let autoEnableTokensOnReceive: Bool
         let autoEnableStats: Bool
 
-        public init(autoEnableTokensOnReceive: Bool = true, autoEnableStats: Bool = true) {
+        public init(autoEnableTokensOnReceive: Bool = true, autoEnableStats: Bool = false) {
             self.autoEnableTokensOnReceive = autoEnableTokensOnReceive
             self.autoEnableStats = autoEnableStats
         }
