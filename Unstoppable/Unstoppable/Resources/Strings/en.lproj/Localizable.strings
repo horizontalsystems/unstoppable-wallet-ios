@@ -2001,6 +2001,7 @@
 
 "wallet_connect.title" = "WalletConnect";
 "wallet_connect.error.invalid_url" = "Invalid URL Address";
+"wallet_connect.error.expired_url" = "Connection link has expired, generate a new one in the dApp";
 "wallet_connect.active_account" = "Active Wallet";
 "wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Pending Requests";

@@ -39,9 +39,25 @@ final class WCNSpySignClient: IWCNSignClient {
 
     let sessionsSubject = PassthroughSubject<[Session], Never>()
     let sessionUpdateSubject = PassthroughSubject<(topic: String, namespaces: [String: SessionNamespace]), Never>()
+    let sessionProposalSubject = PassthroughSubject<(proposal: Session.Proposal, context: VerifyContext?), Never>()
+    let sessionRequestSubject = PassthroughSubject<(request: Request, context: VerifyContext?), Never>()
+    let requestExpirationSubject = PassthroughSubject<RPCID, Never>()
+    var pendingRequests = [(request: Request, context: VerifyContext?)]()
+    private(set) var pairedUris = [WalletConnectURI]()
+    var pairError: Error?
 
     var sessionsPublisher: AnyPublisher<[Session], Never> { sessionsSubject.eraseToAnyPublisher() }
     var sessionUpdatePublisher: AnyPublisher<(topic: String, namespaces: [String: SessionNamespace]), Never> { sessionUpdateSubject.eraseToAnyPublisher() }
+    var sessionProposalPublisher: AnyPublisher<(proposal: Session.Proposal, context: VerifyContext?), Never> { sessionProposalSubject.eraseToAnyPublisher() }
+    var sessionRequestPublisher: AnyPublisher<(request: Request, context: VerifyContext?), Never> { sessionRequestSubject.eraseToAnyPublisher() }
+    var requestExpirationPublisher: AnyPublisher<RPCID, Never> { requestExpirationSubject.eraseToAnyPublisher() }
+
+    func pair(uri: WalletConnectURI) async throws {
+        if let pairError {
+            throw pairError
+        }
+        pairedUris.append(uri)
+    }
 
     func disconnect(topic: String) async throws {
         if let error {
