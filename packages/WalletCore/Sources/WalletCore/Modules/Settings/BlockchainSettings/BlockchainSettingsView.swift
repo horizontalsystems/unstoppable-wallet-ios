@@ -77,9 +77,7 @@ struct BlockchainSettingsView: View {
                 }
 
             }) {
-                KFImage.url(URL(string: item.blockchain.type.imageUrl))
-                    .resizable()
-                    .frame(width: .iconSize32, height: .iconSize32)
+                BlockchainIcon(blockchain: item.blockchain)
 
                 VStack(spacing: 1) {
                     Text(item.blockchain.name).themeBody()
@@ -89,5 +87,17 @@ struct BlockchainSettingsView: View {
                 Image.disclosureIcon
             }
         }
+    }
+}
+
+struct BlockchainIcon: View {
+    let blockchain: Blockchain
+
+    var body: some View {
+        KFImage.url(URL(string: blockchain.type.imageUrl))
+            .resizable()
+            .placeholder { RoundedRectangle(cornerRadius: 8).fill(Color.themeBlade) }
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .frame(size: .iconSize32)
     }
 }

@@ -60,11 +60,7 @@ struct RestoreCoinsView: View {
     @ViewBuilder private func cell(item: RestoreCoinsViewModel.Item) -> some View {
         Cell(
             left: {
-                KFImage.url(URL(string: item.blockchain.type.imageUrl))
-                    .resizable()
-                    .placeholder { RoundedRectangle(cornerRadius: 8).fill(Color.themeBlade) }
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                    .frame(size: 32)
+                BlockchainIcon(blockchain: item.blockchain)
             },
             middle: {
                 MultiText(

@@ -146,6 +146,7 @@ extension BlockchainType {
         case .fantom: return [.oneInch]
         case .base: return [.oneInch, .uniswap, .uniswapV3]
         case .zkSync: return [.uniswapV3, .pancakeV3]
+        case .robinhood: return [.uniswapV3]
         default: return []
         }
     }
@@ -174,7 +175,7 @@ extension SwapModule.Dex {
         var allowedBlockchainTypes: [BlockchainType] {
             switch self {
             case .uniswap: return [.ethereum, .base]
-            case .uniswapV3: return [.ethereum, .binanceSmartChain, .arbitrumOne, .polygon, .base, .zkSync]
+            case .uniswapV3: return [.ethereum, .binanceSmartChain, .arbitrumOne, .polygon, .base, .zkSync, .robinhood]
             case .oneInch: return [.ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .base]
             case .pancake: return [.binanceSmartChain]
             case .pancakeV3: return [.ethereum, .binanceSmartChain, .base, .zkSync]

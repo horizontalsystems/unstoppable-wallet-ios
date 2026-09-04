@@ -42,6 +42,7 @@ enum AppConfig {
         .optimism: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .base: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .zkSync: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
+        .robinhood: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .arbitrumOne: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .gnosis: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .fantom: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
@@ -108,6 +109,10 @@ enum AppConfig {
 
     static var eraZkSyncKeys: [String] {
         ((Bundle.main.object(forInfoDictionaryKey: "EraZkSyncApiKeys") as? String) ?? "").components(separatedBy: ",")
+    }
+
+    static var robinhoodKeys: [String] {
+        ((Bundle.main.object(forInfoDictionaryKey: "RobinhoodApiKeys") as? String) ?? "").components(separatedBy: ",")
     }
 
     static var bscscanKeys: [String] {

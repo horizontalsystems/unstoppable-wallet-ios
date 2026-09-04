@@ -15,11 +15,7 @@ struct WatchSelectView: View {
                     ThemeList(blockchains, bottomSpacing: 16) { blockchain in
                         Cell(
                             left: {
-                                KFImage.url(URL(string: blockchain.type.imageUrl))
-                                    .resizable()
-                                    .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
-                                    .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
-                                    .frame(width: .iconSize32, height: .iconSize32)
+                                BlockchainIcon(blockchain: blockchain)
                             },
                             middle: {
                                 MultiText(

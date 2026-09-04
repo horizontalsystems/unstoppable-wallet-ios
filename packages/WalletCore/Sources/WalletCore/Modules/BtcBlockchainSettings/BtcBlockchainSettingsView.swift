@@ -30,9 +30,7 @@ struct BtcBlockchainSettingsView: View {
                                             case .hybrid:
                                                 Image("api_placeholder_32")
                                             case .blockchain:
-                                                KFImage.url(URL(string: viewModel.blockchain.type.imageUrl))
-                                                    .resizable()
-                                                    .frame(size: 32)
+                                                BlockchainIcon(blockchain: viewModel.blockchain)
                                             }
                                         },
                                         middle: {
@@ -70,10 +68,11 @@ struct BtcBlockchainSettingsView: View {
             }
             .navigationTitle(viewModel.blockchain.name)
             .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    KFImage.url(URL(string: viewModel.blockchain.type.imageUrl))
-                        .resizable()
-                        .frame(size: 24)
+                if #available(iOS 26, *) {
+                    ToolbarItem(placement: .topBarTrailing) { BlockchainIcon(blockchain: viewModel.blockchain) }
+                        .sharedBackgroundVisibility(.hidden)
+                } else {
+                    ToolbarItem(placement: .topBarTrailing) { BlockchainIcon(blockchain: viewModel.blockchain) }
                 }
 
                 ToolbarItem(placement: .cancellationAction) {

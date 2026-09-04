@@ -114,9 +114,7 @@ struct ManageWalletListView: View {
     @ViewBuilder private func contractRow(token: Token, value: String, explorerUrl: String?) -> some View {
         Cell(
             left: {
-                KFImage.url(URL(string: token.blockchain.type.imageUrl))
-                    .resizable()
-                    .frame(width: .iconSize32, height: .iconSize32)
+                BlockchainIcon(blockchain: token.blockchain)
             },
             middle: {
                 MiddleTextIcon(text: value)

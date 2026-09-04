@@ -51,7 +51,7 @@ public extension BlockchainType {
         // Nothing on these paths carries a memo: EvmPreSendHandler ignores `memo` entirely, the Tron
         // and Solana handlers drop it before it reaches the transaction.
         case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne,
-             .gnosis, .fantom, .base, .zkSync, .tron, .solana: .none
+             .gnosis, .fantom, .base, .zkSync, .robinhood, .tron, .solana: .none
         // Public payloads: a TON comment, a Stellar text memo and a THORChain memo are all plainly
         // readable on-chain.
         case .ton, .stellar, .thorChain, .mayaChain: .onChainPublic

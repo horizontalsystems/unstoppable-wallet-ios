@@ -15,6 +15,7 @@ public class EvmBlockchainManager {
         .fantom,
         .base,
         .zkSync,
+        .robinhood,
     ]
 
     private let syncSourceManager: EvmSyncSourceManager
@@ -108,6 +109,7 @@ extension EvmBlockchainManager {
         case .fantom: return .fantom
         case .base: return .base
         case .zkSync: return .zkSync
+        case .robinhood: return .robinhood
         default: throw ChainError.unsupportedBlockchain
         }
     }

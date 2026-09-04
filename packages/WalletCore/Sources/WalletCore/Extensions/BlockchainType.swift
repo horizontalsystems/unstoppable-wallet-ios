@@ -23,6 +23,7 @@ extension BlockchainType {
         .fantom,
         .base,
         .zkSync,
+        .robinhood,
         .binanceSmartChain,
         .tron,
         .thorChain,
@@ -76,6 +77,7 @@ extension BlockchainType {
             .ton,
             .ecash,
             .zkSync,
+            .robinhood,
             .gnosis,
             .fantom,
         ]
@@ -139,7 +141,7 @@ extension BlockchainType {
         case .evmPrivateKey, .evmAddress:
             switch self {
             case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne,
-                 .gnosis, .fantom, .base, .zkSync:
+                 .gnosis, .fantom, .base, .zkSync, .robinhood:
                 return true
             default: return false
             }
@@ -167,7 +169,7 @@ extension BlockchainType {
 
     public var isEvm: Bool {
         switch self {
-        case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum, .fantom, .gnosis, .optimism, .polygon, .zkSync: return true
+        case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum, .fantom, .gnosis, .optimism, .polygon, .zkSync, .robinhood: return true
         default: return false
         }
     }
@@ -189,6 +191,7 @@ extension BlockchainType {
         case .optimism: return "L2 chain"
         case .base: return "L2 chain"
         case .zkSync: return "L2 chain"
+        case .robinhood: return "L2 chain"
         case .arbitrumOne: return "L2 chain"
         case .zcash: return "ZEC"
         case .monero: return "XMR"
@@ -282,7 +285,7 @@ extension BlockchainType {
         switch self {
         case .ethereum: return 12
         case .tron: return 3
-        case .polygon, .avalanche, .optimism, .fantom, .base, .zkSync: return 2
+        case .polygon, .avalanche, .optimism, .fantom, .base, .zkSync, .robinhood: return 2
         case .gnosis, .stellar, .ton: return 5
         case .bitcoin, .bitcoinCash, .ecash: return 600
         case .dash, .litecoin: return 150

@@ -93,16 +93,19 @@ struct MoneroNetworkView: View {
             }
             .navigationTitle(viewModel.blockchain.name)
             .toolbar {
-                ToolbarItem(placement: .primaryAction) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button(action: { viewModel.refreshPings() }) {
                         Image(systemName: "arrow.clockwise")
                     }
                 }
-                ToolbarItem(placement: .primaryAction) {
-                    KFImage.url(URL(string: viewModel.blockchain.type.imageUrl))
-                        .resizable()
-                        .frame(size: 24)
+
+                if #available(iOS 26, *) {
+                    ToolbarItem(placement: .topBarTrailing) { BlockchainIcon(blockchain: viewModel.blockchain) }
+                        .sharedBackgroundVisibility(.hidden)
+                } else {
+                    ToolbarItem(placement: .topBarTrailing) { BlockchainIcon(blockchain: viewModel.blockchain) }
                 }
+
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: { isPresented = false }) {
                         Image("close")

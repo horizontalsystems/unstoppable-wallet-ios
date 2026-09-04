@@ -8,6 +8,7 @@ extension Token {
         case .native:
             switch blockchainType {
             case .optimism, .arbitrumOne, .base, .zkSync: return blockchain.name
+            case .robinhood: return "Robinhood"
             default: return nil
             }
         case .eip20:
@@ -15,6 +16,7 @@ extension Token {
             case .ethereum: return "ERC20"
             case .binanceSmartChain: return "BEP20"
             case .tron: return "TRC20"
+            case .robinhood: return "Robinhood"
             default: return blockchain.name
             }
         case .jetton:

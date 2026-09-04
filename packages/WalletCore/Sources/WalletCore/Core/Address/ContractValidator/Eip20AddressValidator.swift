@@ -21,7 +21,7 @@ class Eip20AddressValidator {
             }
         case "usd-coin":
             switch blockchainType {
-            case .ethereum, .optimism, .avalanche, .arbitrumOne, .polygon, .zkSync, .base: return .isBlacklisted
+            case .ethereum, .optimism, .avalanche, .arbitrumOne, .polygon, .zkSync, .base, .robinhood: return .isBlacklisted
             default: return nil
             }
         case "paypal-usd":

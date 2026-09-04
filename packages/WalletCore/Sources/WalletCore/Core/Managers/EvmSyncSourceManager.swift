@@ -30,6 +30,7 @@ public class EvmSyncSourceManager {
         case .fantom: return .fantom(apiKeys: AppConfig.ftmscanKeys)
         case .base: return .basescan(apiKeys: AppConfig.basescanKeys)
         case .zkSync: return .eraZkSync(apiKeys: AppConfig.eraZkSyncKeys)
+        case .robinhood: return .robinhood(apiKeys: AppConfig.robinhoodKeys)
         case .tron: return EvmKit.TransactionSource(name: "trongrid", type: .etherscan(apiBaseUrl: "", txBaseUrl: "", apiKeys: []))
         default: fatalError("Non-supported EVM blockchain")
         }
@@ -220,6 +221,14 @@ extension EvmSyncSourceManager {
                 EvmSyncSource(
                     name: "ZKsync",
                     rpcSource: .zkSyncRpcHttp(),
+                    transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+            ]
+        case .robinhood:
+            return [
+                EvmSyncSource(
+                    name: "Robinhood Chain",
+                    rpcSource: .http(urls: [URL(string: "https://rpc.mainnet.chain.robinhood.com")!], auth: nil),
                     transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
             ]

@@ -21,7 +21,7 @@ public class UniswapV3MultiSwapProvider: BaseUniswapV3MultiSwapProvider {
         }
 
         switch tokenIn.blockchainType {
-        case .ethereum, .polygon, .optimism, .arbitrumOne, .binanceSmartChain, .base, .zkSync: return true
+        case .ethereum, .polygon, .optimism, .arbitrumOne, .binanceSmartChain, .base, .zkSync, .robinhood: return true
         default: return false
         }
     }

@@ -30,9 +30,7 @@ struct TransactionBlockchainSelectView: View {
                         viewModel.set(currentBlockchain: blockchain)
                         isPresented = false
                     }) {
-                        KFImage.url(URL(string: blockchain.type.imageUrl))
-                            .resizable()
-                            .frame(width: .iconSize32, height: .iconSize32)
+                        BlockchainIcon(blockchain: blockchain)
 
                         Text(blockchain.name).themeBody()
 
