@@ -37,7 +37,7 @@ struct PreSendView: View {
                         VStack(spacing: .margin8) {
                             inputView()
                             availableBalanceView(value: balanceValue())
-                            privateSendView()
+//                            privateSendView()
                         }
 
                         if viewModel.memoType != .none {
