@@ -1,4 +1,5 @@
 import Kingfisher
+import MarketKit
 import SwiftUI
 
 public struct ThemeImage: View {
@@ -23,6 +24,10 @@ public struct ThemeImage: View {
                 self.colorStyle = .primary
             case let .remote(url, placeholder, localSize):
                 image = .remote(url: url, placeholder: placeholder)
+                self.size = localSize ?? size
+                self.colorStyle = .primary
+            case let .coin(coin, placeholder, localSize):
+                image = .coin(coin: coin, placeholder: placeholder)
                 self.size = localSize ?? size
                 self.colorStyle = .primary
             }
@@ -62,6 +67,8 @@ public struct ThemeImage: View {
                     }
                 }
                 .applyFrame(size: size)
+        case let .coin(coin, placeholder):
+            CoinIconView(coin: coin, placeholderImage: placeholder, size: size?.width ?? .iconSize32)
         }
     }
 }
@@ -71,6 +78,7 @@ extension ThemeImage {
         case icon(name: String)
         case image(name: String, contentMode: SwiftUICore.ContentMode)
         case remote(url: String, placeholder: String?)
+        case coin(coin: Coin, placeholder: String?)
     }
 }
 

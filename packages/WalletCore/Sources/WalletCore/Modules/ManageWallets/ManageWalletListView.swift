@@ -98,7 +98,7 @@ struct ManageWalletListView: View {
     private func showContract(token: Token, value: String, explorerUrl: String?) {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
             BottomSheetView(items: [
-                .title(icon: ComponentImage(url: token.coin.imageUrl), title: token.coin.code),
+                .title(icon: ComponentImage(coin: token.coin), title: token.coin.code),
                 .customList(views: [
                     AnyView(contractRow(token: token, value: value, explorerUrl: explorerUrl)),
                 ]),

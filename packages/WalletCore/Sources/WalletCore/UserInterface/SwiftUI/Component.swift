@@ -1,3 +1,4 @@
+import MarketKit
 import SwiftUI
 
 public struct ComponentText: CustomStringConvertible {
@@ -48,6 +49,7 @@ enum ComponentImage: CustomStringConvertible {
     case icon(name: String, size: CGSize?, colorStyle: ColorStyle?)
     case image(name: String, contentMode: ContentMode, size: CGSize?)
     case remote(url: String, placeholder: String?, size: CGSize?)
+    case coin(coin: Coin, placeholder: String?, size: CGSize?)
 
     init(_ name: String, colorStyle: ColorStyle? = nil) {
         self = .icon(name: name, size: nil, colorStyle: colorStyle)
@@ -69,11 +71,16 @@ enum ComponentImage: CustomStringConvertible {
         self = .remote(url: url, placeholder: placeholder, size: size)
     }
 
+    init(coin: Coin, placeholder: String? = nil, size: CGSize? = nil) {
+        self = .coin(coin: coin, placeholder: placeholder, size: size)
+    }
+
     var description: String {
         switch self {
         case let .icon(name, _, _): return name
         case let .image(name, _, _): return name
         case let .remote(url, _, _): return url
+        case let .coin(coin, _, _): return coin.code
         }
     }
 }
