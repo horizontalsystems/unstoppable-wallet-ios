@@ -7,7 +7,7 @@ class FeeRateProvider {
 
     init() {
         let providerConfig = FeeProviderConfig(
-            ethEvmUrl: "\(AppConfig.marketApiUrl)/v1/ethereum-rpc/mainnet",
+            ethEvmUrl: "https://ethereum-rpc.unstoppable.money",
             bscEvmUrl: FeeProviderConfig.defaultBscEvmUrl,
             mempoolSpaceUrl: AppConfig.mempoolSpaceUrl
         )

@@ -64,7 +64,7 @@ extension EvmSyncSourceManager {
                 return [
                     EvmSyncSource(
                         name: "BlocksDecoded",
-                        rpcSource: .http(urls: [URL(string: "\(AppConfig.marketApiUrl)/v1/ethereum-rpc/mainnet")!], auth: nil),
+                        rpcSource: .http(urls: [URL(string: "https://ethereum-rpc.unstoppable.money")!], auth: nil),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                     ),
                     EvmSyncSource(
@@ -226,6 +226,11 @@ extension EvmSyncSourceManager {
             ]
         case .robinhood:
             return [
+                EvmSyncSource(
+                    name: "Unstoppable",
+                    rpcSource: .http(urls: [URL(string: "https://robinhood-rpc.unstoppable.money")!], auth: nil),
+                    transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
                 EvmSyncSource(
                     name: "Robinhood Chain",
                     rpcSource: .http(urls: [URL(string: "https://rpc.mainnet.chain.robinhood.com")!], auth: nil),

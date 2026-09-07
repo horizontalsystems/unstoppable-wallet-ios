@@ -12,6 +12,7 @@ public final class LifiUSwapSubProvider: DefaultUSwapSubProvider {
         .base: "BASE",
         .avalanche: "AVAX",
         .binanceSmartChain: "BSC",
+        .robinhood: "ROBINHOOD",
     ]
 
     private let supportsSourceToken: (Token) -> Bool
