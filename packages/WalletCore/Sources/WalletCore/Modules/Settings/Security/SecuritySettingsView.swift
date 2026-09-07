@@ -107,6 +107,10 @@ struct SecuritySettingsView: View {
                 }
 
                 premiumSection()
+
+                ListSection {
+                    robberyRow()
+                }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
@@ -174,8 +178,6 @@ struct SecuritySettingsView: View {
                             }
                         }
                 }
-
-                robberyRow()
             }
             .themeListStyle(.borderedPremium)
         }
