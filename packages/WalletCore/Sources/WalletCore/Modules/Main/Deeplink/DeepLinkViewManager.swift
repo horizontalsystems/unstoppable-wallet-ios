@@ -43,9 +43,9 @@ class DeepLinkViewManager {
             Coordinator.shared.present { isPresented in
                 CryptoPaySendTokenListView(url: url, isPresented: isPresented)
             }
-        case let .walletConnectNewPair(uri): WCNPresenter.pair(uri: uri)
-        case let .walletConnectNewProposal(item): WCNPresenter.present(proposal: item)
-        case let .walletConnectNewRequest(item): WCNPresenter.present(request: item)
+        case let .walletConnectPair(uri): WCPresenter.pair(uri: uri)
+        case let .walletConnectProposal(item): WCPresenter.present(proposal: item)
+        case let .walletConnectRequest(item): WCPresenter.present(request: item)
         case let .tonConnect(params):
             Coordinator.shared.present { _ in
                 TonConnectConnectView(config: params.config, returnDeepLink: params.returnDeepLink)

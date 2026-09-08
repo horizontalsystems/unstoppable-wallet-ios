@@ -42,7 +42,7 @@ struct UnstoppableApp: App {
         // only die in the handler chain. Register it together with re-enabling the handler.
         [DeepLinkRoute.walletConnect, .tonTransfer, .coin, .referral, .openCryptoPay, .transfer]
             .forEach { DeepLinkRouteFactory.register($0) }
-        [AppEventHandlerKind.walletConnectNew, .widgetCoin, .address, .telegramUser, .openCryptoPay]
+        [AppEventHandlerKind.walletConnect, .widgetCoin, .address, .telegramUser, .openCryptoPay]
             .forEach { AppEventHandlerFactory.register($0) }
         DeepLinkPresenterFactory.register(sendPresenter: DeepLinkPresenterFactory.sendPresenter)
 

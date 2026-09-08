@@ -46,7 +46,7 @@ public enum DeepLinkRouteFactory {
     // must not be registered until the handler is re-enabled (and mapped here).
     static func assertCoherence(handlerKinds: Set<AppEventHandlerKind>) {
         let consumers: [DeepLinkRoute: [AppEventHandlerKind]] = [
-            .walletConnect: [.walletConnectNew],
+            .walletConnect: [.walletConnect],
             .tonTransfer: [.address],
             .coin: [.widgetCoin],
             .referral: [.telegramUser],

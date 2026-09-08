@@ -54,7 +54,7 @@ struct MainView: View {
                 }
             }
             .navigationDestination(isPresented: $walletConnectPresented) {
-                WCNSessionsView()
+                WCSessionsView()
                     .onFirstAppear {
                         stat(page: .settings, event: .open(page: .walletConnect))
                     }

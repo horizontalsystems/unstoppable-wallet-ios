@@ -15,10 +15,10 @@ public class Core {
         NodeNetworkHandlerFactory.unstoppableHandlers.forEach { NodeNetworkHandlerFactory.register($0) }
         TransactionServiceFactory.unstoppableTransactionServices.forEach { TransactionServiceFactory.register($0) }
         SwapBroadcasterFactory.register(SwapBroadcasterFactory.unstoppableBroadcasters)
-        if let walletConnectNew = core.walletConnectNew {
-            WCNSendHandlerProvider.registry = walletConnectNew.sendHandlerRegistry
-            SendHandlerFactory.register(WCNSendHandlerProvider.self)
-            walletConnectNew.start()
+        if let walletConnect = core.walletConnect {
+            WCSendHandlerProvider.registry = walletConnect.sendHandlerRegistry
+            SendHandlerFactory.register(WCSendHandlerProvider.self)
+            walletConnect.start()
         }
         // EvmKit syncers/decorators are registered by each app (no shared fallback): stable in StableCore, the
         // unstoppable app in its own initCore (registers a provider over defaultSyncers/defaultDecorators).
@@ -27,7 +27,7 @@ public class Core {
         // and this keeps one attach point for both built-in and future app-registered handlers.
         let appEventHandlerFactory = AppEventHandlerFactory(
             marketKit: core.marketKit,
-            walletConnectNew: core.walletConnectNew,
+            walletConnect: core.walletConnect,
             cloudBackupManager: core.cloudBackupManager,
             accountManager: core.accountManager,
             lockManager: core.lockManager
@@ -134,7 +134,7 @@ public class Core {
     let nftAdapterManager: NftAdapterManager
     let nftMetadataSyncer: NftMetadataSyncer
 
-    let walletConnectNew: WCNManager?
+    let walletConnect: WCManager?
 
     public let adapterManager: AdapterManager
     public let transactionAdapterManager: TransactionAdapterManager
@@ -506,8 +506,8 @@ public class Core {
             zcashNodeAutoSelector: zcashNodeAutoSelector
         )
 
-        if AppEventHandlerFactory.resolved().contains(.walletConnectNew) {
-            walletConnectNew = try WCNManager.instance(
+        if AppEventHandlerFactory.resolved().contains(.walletConnect) {
+            walletConnect = try WCManager.instance(
                 dbPool: dbPool,
                 evmBlockchainManager: evmBlockchainManager,
                 stellarKitManager: stellarKitManager,
@@ -522,7 +522,7 @@ public class Core {
                 logger: logger
             )
         } else {
-            walletConnectNew = nil
+            walletConnect = nil
         }
 
         appWorkerRegistry = AppWorkerRegistry(appManager: appManager)

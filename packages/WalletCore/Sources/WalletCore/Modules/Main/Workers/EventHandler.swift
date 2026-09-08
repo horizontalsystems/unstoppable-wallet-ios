@@ -13,9 +13,9 @@ enum EventHandlerSignal {
     case sendPage(SendTokenListViewModel.SendOptions)
     case cryptoPaySendPage(URL)
     case tonConnect(EventHandler.TonConnectParams)
-    case walletConnectNewPair(String)
-    case walletConnectNewProposal(WCNProposalItem)
-    case walletConnectNewRequest(WCNRequestItem)
+    case walletConnectPair(String)
+    case walletConnectProposal(WCProposalItem)
+    case walletConnectRequest(WCRequestItem)
     case tonConnectRequest(TonConnectSendTransactionRequest)
     case tonConnectRequestFailed(TonConnectSendTransactionRequestError)
 

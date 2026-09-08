@@ -27,7 +27,7 @@ public enum SendData {
     // shared box rather than a value so a recipient edited on the confirmation screen is
     // visible to the swap screen that opened it.
     case swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, multiSwapQuote: MultiSwapQuote, recipientHolder: SwapExternalRecipientHolder)
-    indirect case walletConnectNew(inner: SendData?, request: WCNRequest)
+    indirect case walletConnect(inner: SendData?, request: WCRequest)
     case tonConnect(request: TonConnectSendTransactionRequest)
     case monero(token: Token, amount: MoneroSendAmount, address: String, memo: String?, selectedKeyImages: [String]?)
     case zano(token: Token, amount: ZanoSendAmount, address: String, memo: String?)

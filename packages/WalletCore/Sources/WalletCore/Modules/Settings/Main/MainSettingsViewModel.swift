@@ -15,7 +15,7 @@ class MainSettingsViewModel: ObservableObject {
     private let passcodeManager = Core.shared.passcodeManager
     private let termsManager = Core.shared.termsManager
     private let systemInfoManager = Core.shared.systemInfoManager
-    private let walletConnectNew = Core.shared.walletConnectNew
+    private let walletConnect = Core.shared.walletConnect
     private let rateAppManager = Core.shared.rateAppManager
     private let localStorage = Core.shared.localStorage
     private let testNetManager = Core.shared.testNetManager
@@ -113,9 +113,9 @@ class MainSettingsViewModel: ObservableObject {
         debuggingAmlResult = localStorage.debuggingAmlCheckResult
 
         subscribe(MainScheduler.instance, disposeBag, backupManager.allBackedUpObservable) { [weak self] _ in self?.syncManageWalletsAlert() }
-        if let walletConnectNew {
-            subscribe(&cancellables, walletConnectNew.sessionCountPublisher) { [weak self] _ in self?.syncWalletConnectSessionCount() }
-            subscribe(&cancellables, walletConnectNew.pendingRequestCountPublisher) { [weak self] _ in self?.syncWalletConnectPendingRequestCount() }
+        if let walletConnect {
+            subscribe(&cancellables, walletConnect.sessionCountPublisher) { [weak self] _ in self?.syncWalletConnectSessionCount() }
+            subscribe(&cancellables, walletConnect.pendingRequestCountPublisher) { [weak self] _ in self?.syncWalletConnectPendingRequestCount() }
         }
         subscribe(MainScheduler.instance, disposeBag, contactManager.iCloudErrorObservable) { [weak self] error in
             if error != nil, self?.contactManager.remoteSync ?? false {
@@ -169,11 +169,11 @@ class MainSettingsViewModel: ObservableObject {
     }
 
     private func syncWalletConnectSessionCount() {
-        walletConnectSessionCount = walletConnectNew?.sessionCount ?? 0
+        walletConnectSessionCount = walletConnect?.sessionCount ?? 0
     }
 
     private func syncWalletConnectPendingRequestCount() {
-        walletConnectPendingRequestCount = walletConnectNew?.pendingRequestCount ?? 0
+        walletConnectPendingRequestCount = walletConnect?.pendingRequestCount ?? 0
     }
 
     private func syncSecurityAlert() {

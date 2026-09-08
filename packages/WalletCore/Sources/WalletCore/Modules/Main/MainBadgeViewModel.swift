@@ -7,7 +7,7 @@ class MainBadgeViewModel: ObservableObject {
     private let accountRestoreWarningManager = Core.shared.accountRestoreWarningManager
     private let passcodeManager = Core.shared.passcodeManager
     private let termsManager = Core.shared.termsManager
-    private let walletConnectNew = Core.shared.walletConnectNew
+    private let walletConnect = Core.shared.walletConnect
     private let contactManager = Core.shared.contactManager
 
     private var cancellables = Set<AnyCancellable>()
@@ -36,7 +36,7 @@ class MainBadgeViewModel: ObservableObject {
             .sink { [weak self] _ in self?.syncSettingsBadge() }
             .store(in: &cancellables)
 
-        walletConnectNew?.pendingRequestCountPublisher
+        walletConnect?.pendingRequestCountPublisher
             .sink { [weak self] _ in self?.syncSettingsBadge() }
             .store(in: &cancellables)
 
@@ -52,7 +52,7 @@ class MainBadgeViewModel: ObservableObject {
     }
 
     private var resolvedBadge: String? {
-        let count = walletConnectNew?.pendingRequestCount ?? 0
+        let count = walletConnect?.pendingRequestCount ?? 0
 
         if count > 0 {
             return count.description

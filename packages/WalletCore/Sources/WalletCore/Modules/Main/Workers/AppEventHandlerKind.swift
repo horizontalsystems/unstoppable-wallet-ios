@@ -7,7 +7,7 @@ public struct AppEventHandlerKind: Hashable {
 }
 
 public extension AppEventHandlerKind {
-    static let walletConnectNew = AppEventHandlerKind(id: "wallet_connect_new")
+    static let walletConnect = AppEventHandlerKind(id: "wallet_connect")
     static let widgetCoin = AppEventHandlerKind(id: "widget_coin")
     static let address = AppEventHandlerKind(id: "address")
     static let telegramUser = AppEventHandlerKind(id: "telegram_user")
