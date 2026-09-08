@@ -38,6 +38,9 @@ public class AccountManager {
 
         accountsSubject.send(storage.accounts)
         activeAccountSubject.send(storage.activeAccount)
+        if lostAccountRecords != nil {
+            handleLaunch()
+        }
     }
 
     private func handleDisableDuress() {
@@ -137,8 +140,14 @@ extension AccountManager {
         }
     }
 
+    func removeLostAccounts(ids: Set<String>) throws {
+        try storage.removeLostAccounts(ids: ids)
+        handleLaunch()
+    }
+
     func clear() {
         storage.clear()
+        lostAccountRecords = nil
 
         accountsSubject.send(storage.accounts)
 
@@ -146,9 +155,8 @@ extension AccountManager {
     }
 
     func handleLaunch() {
-        if !storage.lostAccountRecords.isEmpty {
-            lostAccountRecords = storage.lostAccountRecords
-        }
+        let records = storage.lostAccountRecords
+        lostAccountRecords = records.isEmpty ? nil : records
     }
 
     func set(lastCreatedAccount: Account) {
@@ -175,18 +183,26 @@ extension AccountManager {
     }
 }
 
+protocol IAccountStorage {
+    var allAccounts: ([Account], [AccountRecord]) { get }
+    func save(account: Account)
+    func delete(account: Account)
+    func delete(accountIds: Set<String>) throws
+    func clear()
+}
+
 class AccountCachedStorage {
-    private let accountStorage: AccountStorage
+    private let accountStorage: IAccountStorage
     private let activeAccountStorage: ActiveAccountStorage
 
     private var _allAccounts: [String: Account]
-    let lostAccountRecords: [AccountRecord]
+    private var _lostAccountRecords: [AccountRecord]
 
     private var level: Int
     private var _accounts = [String: Account]()
     private var _activeAccount: Account?
 
-    init(level: Int, accountStorage: AccountStorage, activeAccountStorage: ActiveAccountStorage) {
+    init(level: Int, accountStorage: IAccountStorage, activeAccountStorage: ActiveAccountStorage) {
         self.level = level
         self.accountStorage = accountStorage
         self.activeAccountStorage = activeAccountStorage
@@ -194,7 +210,7 @@ class AccountCachedStorage {
         let (accounts, lostAccountRecords) = accountStorage.allAccounts
 
         _allAccounts = accounts.reduce(into: [String: Account]()) { $0[$1.id] = $1 }
-        self.lostAccountRecords = lostAccountRecords
+        _lostAccountRecords = lostAccountRecords
 
         syncAccounts()
     }
@@ -202,6 +218,10 @@ class AccountCachedStorage {
     private func syncAccounts() {
         _accounts = _allAccounts.filter { _, account in account.level >= level }
         _activeAccount = activeAccountStorage.activeAccountId(level: level).flatMap { _accounts[$0] } ?? _accounts.first?.value
+    }
+
+    var lostAccountRecords: [AccountRecord] {
+        _lostAccountRecords.filter { $0.level >= level }
     }
 
     var allAccounts: [Account] {
@@ -247,14 +267,23 @@ class AccountCachedStorage {
         _accounts.removeValue(forKey: account.id)
     }
 
-    func delete(accountId: String) {
-        accountStorage.delete(accountId: accountId)
-        _allAccounts.removeValue(forKey: accountId)
-        _accounts.removeValue(forKey: accountId)
+    // Only an explicit user action may discard an unavailable account's local record.
+    func removeLostAccounts(ids: Set<String>) throws {
+        let removableIds = Set(lostAccountRecords.compactMap { record in
+            ids.contains(record.id) && _allAccounts[record.id] == nil ? record.id : nil
+        })
+        guard !removableIds.isEmpty else {
+            return
+        }
+
+        // Keep the snapshot intact if the persistent transaction fails.
+        try accountStorage.delete(accountIds: removableIds)
+        _lostAccountRecords.removeAll { removableIds.contains($0.id) }
     }
 
     func clear() {
         accountStorage.clear()
+        _lostAccountRecords = []
         _allAccounts = [:]
         _accounts = [:]
     }
