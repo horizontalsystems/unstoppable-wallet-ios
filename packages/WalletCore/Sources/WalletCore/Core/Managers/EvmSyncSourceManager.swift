@@ -63,7 +63,7 @@ extension EvmSyncSourceManager {
             } else {
                 return [
                     EvmSyncSource(
-                        name: "BlocksDecoded",
+                        name: "Unstoppable",
                         rpcSource: .http(urls: [URL(string: "https://ethereum-rpc.unstoppable.money")!], auth: nil),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                     ),
