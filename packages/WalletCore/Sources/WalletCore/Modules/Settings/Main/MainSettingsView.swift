@@ -8,11 +8,6 @@ struct MainSettingsView: View {
 
     @Binding var walletConnectPresented: Bool
 
-    @StateObject var walletConnectVerificationModel = WalletConnectVerificationModel(
-        accountManager: Core.shared.accountManager,
-        cloudBackupManager: Core.shared.cloudBackupManager
-    )
-
     @State private var currentSlideIndex: Int = 0
     @State private var isFirstAppear = true
 
@@ -222,9 +217,7 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func dAppConnection() -> some View {
         ClickableRow(spacing: .margin8) {
-            walletConnectVerificationModel.handle {
-                walletConnectPresented = true
-            }
+            walletConnectPresented = true
         } content: {
             HStack(spacing: .margin16) {
                 ThemeImage("link", size: .iconSize24)

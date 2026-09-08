@@ -90,6 +90,9 @@ class WCNKit {
         seen = Set(signClient.pendingRequests.map(\.request.id))
         stateLock.unlock()
         WCNLog.log("kit start: done, seeded=\(signClient.pendingRequests.count)")
+
+        // drop sessions left behind by the old module (live on the SDK, no approval record)
+        sessionService.disconnectOrphans()
     }
 
     var requestPublisher: AnyPublisher<WCNRequestItem, Never> { requestSubject.eraseToAnyPublisher() }

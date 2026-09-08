@@ -28,8 +28,6 @@ public enum SendHandlerFactory {
         }
 
         switch sendData {
-        case let .walletConnect(request):
-            return WalletConnectSendHandler.instance(request: request)
         case let .openCryptoPay(payment, entry, inner):
             return OpenCryptoPaySendHandlerFactory.handler(payment: payment, entry: entry, inner: inner)
         default:

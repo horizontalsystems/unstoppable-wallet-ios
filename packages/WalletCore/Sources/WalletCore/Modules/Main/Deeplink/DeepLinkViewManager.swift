@@ -2,21 +2,14 @@ import Combine
 import Foundation
 import MarketKit
 import SwiftUI
-import WalletConnectSign
 
 class DeepLinkViewManager {
     private var cancellables = Set<AnyCancellable>()
 
-    let walletConnectVerificationModel: WalletConnectVerificationModel
-
     private let eventHandler: EventHandler
-    private let walletConnectManager: WalletConnectManager?
 
-    init(eventHandler: EventHandler, walletConnectManager: WalletConnectManager?, accountManager: AccountManager, cloudBackupManager: CloudBackupManager) {
+    init(eventHandler: EventHandler) {
         self.eventHandler = eventHandler
-        self.walletConnectManager = walletConnectManager
-
-        walletConnectVerificationModel = WalletConnectVerificationModel(accountManager: accountManager, cloudBackupManager: cloudBackupManager)
 
         eventHandler.signal
             .subscribe(on: DispatchQueue.global(qos: .userInitiated))
@@ -25,24 +18,6 @@ class DeepLinkViewManager {
                 self?.handleAsync(signal)
             }
             .store(in: &cancellables)
-
-        if let walletConnectManager {
-            walletConnectManager.$isWaitingForSession
-                .subscribe(on: DispatchQueue.global(qos: .userInitiated))
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] waitingForSession in
-                    self?.showWaitingForSession(waitingForSession)
-                }
-                .store(in: &cancellables)
-
-            walletConnectManager.errorPublisher
-                .subscribe(on: DispatchQueue.global(qos: .userInitiated))
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] error in
-                    self?.show(error: error)
-                }
-                .store(in: &cancellables)
-        }
     }
 
     private func handleAsync(_ signal: EventHandlerSignal) {
@@ -68,40 +43,6 @@ class DeepLinkViewManager {
             Coordinator.shared.present { isPresented in
                 CryptoPaySendTokenListView(url: url, isPresented: isPresented)
             }
-        case let .walletConnectHandleUrl(url):
-            walletConnectVerificationModel.handle { [weak self] in
-                self?.handleWalletConnect(url: url)
-            }
-        case let .walletConnectProposal(proposal): ()
-            guard let account = Core.shared.accountManager.activeAccount else {
-                walletConnectVerificationModel.handle(onSuccess: {}) // just show - No Account
-                return
-            }
-
-            Coordinator.shared.present { _ in
-                WalletConnectMainView(account: account, session: nil, proposal: proposal)
-                    .ignoresSafeArea()
-            }
-        case let .walletConnectRequest(request):
-            switch request.payload {
-            case is WCSignEthereumTransactionPayload,
-                 is WCSendEthereumTransactionPayload,
-                 is WCSendStellarTransactionPayload,
-                 is WCSignStellarTransactionPayload,
-                 is WCSignMessagePayload:
-                Coordinator.shared.present { _ in
-                    switch request.payload {
-                    case is WCSignEthereumTransactionPayload: WCSignEthereumTransactionPayload.view(request: request)
-                    case is WCSendEthereumTransactionPayload: WCSendEthereumTransactionPayload.view(request: request)
-                    case is WCSendStellarTransactionPayload: WCSendStellarTransactionPayload.view(request: request)
-                    case is WCSignStellarTransactionPayload: WCSignStellarTransactionPayload.view(request: request)
-                    case is WCSignMessagePayload: WCSignMessagePayload.view(request: request)
-                    default: EmptyView()
-                    }
-                }
-
-            default: ()
-            }
         case let .walletConnectNewPair(uri): WCNPresenter.pair(uri: uri)
         case let .walletConnectNewProposal(item): WCNPresenter.present(proposal: item)
         case let .walletConnectNewRequest(item): WCNPresenter.present(request: item)
@@ -120,17 +61,5 @@ class DeepLinkViewManager {
         DispatchQueue.main.async {
             HudHelper.instance.show(banner: .error(string: error.smartDescription))
         }
-    }
-
-    private func showWaitingForSession(_ show: Bool) {
-        if show {
-            HudHelper.instance.show(banner: .waitingForSession)
-        } else if HUD.instance.tag == HudHelper.BannerType.waitingForSessionKey {
-            HudHelper.instance.hide()
-        }
-    }
-
-    private func handleWalletConnect(url: String) {
-        walletConnectManager?.pair(url: url)
     }
 }

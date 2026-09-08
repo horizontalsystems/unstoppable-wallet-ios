@@ -14,8 +14,6 @@ public class AppEventHandlerFactory {
     }
 
     private let marketKit: MarketKit.Kit
-    private let walletConnectSessionManager: WalletConnectSessionManager?
-    private let walletConnectRequestHandler: WalletConnectRequestChain?
     private let walletConnectNew: WCNManager?
     private let cloudBackupManager: CloudBackupManager
     private let accountManager: AccountManager
@@ -23,16 +21,12 @@ public class AppEventHandlerFactory {
 
     init(
         marketKit: MarketKit.Kit,
-        walletConnectSessionManager: WalletConnectSessionManager?,
-        walletConnectRequestHandler: WalletConnectRequestChain?,
         walletConnectNew: WCNManager?,
         cloudBackupManager: CloudBackupManager,
         accountManager: AccountManager,
         lockManager: LockManager
     ) {
         self.marketKit = marketKit
-        self.walletConnectSessionManager = walletConnectSessionManager
-        self.walletConnectRequestHandler = walletConnectRequestHandler
         self.walletConnectNew = walletConnectNew
         self.cloudBackupManager = cloudBackupManager
         self.accountManager = accountManager
@@ -45,15 +39,6 @@ public class AppEventHandlerFactory {
         let kinds = Self.kinds
         var handlers = [IEventHandler]()
 
-        if kinds.contains(.walletConnect), let walletConnectSessionManager, let walletConnectRequestHandler {
-            handlers.append(WalletConnectHandlerModule.handler(
-                walletConnectManager: walletConnectSessionManager,
-                walletConnectRequestHandler: walletConnectRequestHandler,
-                cloudAccountBackupManager: cloudBackupManager,
-                accountManager: accountManager,
-                lockManager: lockManager
-            ))
-        }
         if kinds.contains(.walletConnectNew), let walletConnectNew {
             handlers.append(WCNEventHandler(manager: walletConnectNew))
         }

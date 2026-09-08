@@ -56,6 +56,23 @@ class WCNManager {
         kitSubject.value?.pendingRequestCount ?? 0
     }
 
+    var sessionCount: Int {
+        kitSubject.value?.sessions.count ?? 0
+    }
+
+    var sessionCountPublisher: AnyPublisher<Int, Never> {
+        kitSubject
+            .map { kit -> AnyPublisher<Int, Never> in
+                guard let kit else { return Just(0).eraseToAnyPublisher() }
+                return kit.sessionsPublisher
+                    .map(\.count)
+                    .prepend(kit.sessions.count)
+                    .eraseToAnyPublisher()
+            }
+            .switchToLatest()
+            .eraseToAnyPublisher()
+    }
+
     // emits the active-account pending-request count as the kit starts and as its pending list changes
     var pendingRequestCountPublisher: AnyPublisher<Int, Never> {
         kitSubject

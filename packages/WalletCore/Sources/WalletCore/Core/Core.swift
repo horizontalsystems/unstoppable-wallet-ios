@@ -27,8 +27,6 @@ public class Core {
         // and this keeps one attach point for both built-in and future app-registered handlers.
         let appEventHandlerFactory = AppEventHandlerFactory(
             marketKit: core.marketKit,
-            walletConnectSessionManager: core.walletConnectSessionManager,
-            walletConnectRequestHandler: core.walletConnectRequestHandler,
             walletConnectNew: core.walletConnectNew,
             cloudBackupManager: core.cloudBackupManager,
             accountManager: core.accountManager,
@@ -136,12 +134,6 @@ public class Core {
     let nftAdapterManager: NftAdapterManager
     let nftMetadataSyncer: NftMetadataSyncer
 
-    // The WC stack is assembled only when AppEventHandlerKind.walletConnect is registered:
-    // WalletConnectService.init configures the relay networking and opens a socket, which
-    // an app without WalletConnect must not do.
-    let walletConnectRequestHandler: WalletConnectRequestChain?
-    let walletConnectManager: WalletConnectManager?
-    let walletConnectSessionManager: WalletConnectSessionManager?
     let walletConnectNew: WCNManager?
 
     public let adapterManager: AdapterManager
@@ -344,40 +336,6 @@ public class Core {
         )
         nftMetadataSyncer = NftMetadataSyncer(nftAdapterManager: nftAdapterManager, nftMetadataManager: nftMetadataManager, nftStorage: nftStorage)
 
-        if AppEventHandlerFactory.resolved().contains(.walletConnect) {
-            let requestHandler = WalletConnectRequestChain.instance(evmBlockchainManager: evmBlockchainManager, stellarKitManager: stellarKitManager, accountManager: accountManager)
-
-            let walletClientInfo = WalletConnectClientInfo(
-                projectId: AppConfig.walletConnectV2ProjectKey ?? "c4f79cc821944d9680842e34466bfb",
-                relayHost: "relay.walletconnect.com",
-                name: AppConfig.appName,
-                description: "",
-                url: AppConfig.appWebPageLink,
-                icons: ["https://raw.githubusercontent.com/horizontalsystems/HS-Design/master/PressKit/UW-AppIcon-on-light.png"]
-            )
-
-            let walletConnectService = WalletConnectService(
-                info: walletClientInfo,
-                logger: logger
-            )
-            let walletConnectSessionStorage = WalletConnectSessionStorage(dbPool: dbPool)
-            let sessionManager = WalletConnectSessionManager(
-                service: walletConnectService,
-                storage: walletConnectSessionStorage,
-                accountManager: accountManager,
-                requestHandler: requestHandler,
-                currentDateProvider: CurrentDateProvider()
-            )
-
-            walletConnectRequestHandler = requestHandler
-            walletConnectSessionManager = sessionManager
-            walletConnectManager = WalletConnectManager(walletConnectSessionManager: sessionManager)
-        } else {
-            walletConnectRequestHandler = nil
-            walletConnectSessionManager = nil
-            walletConnectManager = nil
-        }
-
         let scannedTransactionStorage = try ScannedTransactionStorage(dbPool: dbPool)
         spamWrapper = SpamWrapper(
             storage: scannedTransactionStorage,
@@ -478,12 +436,7 @@ public class Core {
 
         appEventHandler = EventHandler(deepLinkManager: deepLinkManager)
 
-        deepLinkViewManager = DeepLinkViewManager(
-            eventHandler: appEventHandler,
-            walletConnectManager: walletConnectManager,
-            accountManager: accountManager,
-            cloudBackupManager: cloudBackupManager
-        )
+        deepLinkViewManager = DeepLinkViewManager(eventHandler: appEventHandler)
 
         startScreenAlertManager = StartScreenAlertManager(
             accountManager: accountManager,
@@ -554,8 +507,6 @@ public class Core {
         )
 
         if AppEventHandlerFactory.resolved().contains(.walletConnectNew) {
-            // both stacks subscribe to the same WalletKit instance and would answer the same requests
-            assert(!AppEventHandlerFactory.resolved().contains(.walletConnect), "walletConnect and walletConnectNew handlers cannot be registered together")
             walletConnectNew = try WCNManager.instance(
                 dbPool: dbPool,
                 evmBlockchainManager: evmBlockchainManager,

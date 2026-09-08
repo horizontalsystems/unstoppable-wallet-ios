@@ -68,6 +68,23 @@ class WCNSessionService {
         sync()
     }
 
+    // legacy sessions from the removed old module have no approval record; disconnect them once at start so
+    // they do not linger as live-but-invisible sessions the dApp still considers connected
+    func disconnectOrphans() {
+        Task { [weak self] in
+            guard let self else { return }
+            let known = Set((try? storage.sessions().map(\.topic)) ?? [])
+            for session in signClient.sessions where !known.contains(session.topic) {
+                do {
+                    try await signClient.disconnect(topic: session.topic)
+                    WCNLog.log("sessions: disconnected orphan topic=\(session.topic.prefix(8))")
+                } catch {
+                    logger?.error("orphan disconnect \(session.topic) failed: \(error)")
+                }
+            }
+        }
+    }
+
     func sync() {
         do {
             let live = Dictionary(uniqueKeysWithValues: signClient.sessions.map { ($0.topic, $0) })
