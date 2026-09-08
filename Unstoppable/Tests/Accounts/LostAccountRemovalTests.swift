@@ -83,6 +83,92 @@ struct LostAccountRemovalTests {
         #expect(cache.account(id: "lost") != nil)
     }
 
+    @Test func loweringPasscodeLevelRevealsPreviouslyHiddenLostRecords() throws {
+        let env = try Environment()
+        let cache = env.cache()
+        try cache.removeLostAccounts(ids: ["other-lost"])
+        cache.set(level: 1)
+        #expect(cache.lostAccountRecords.isEmpty)
+
+        cache.set(level: 0)
+
+        #expect(cache.lostAccountRecords.map(\.id) == ["lost"])
+    }
+
+    @Test func successfulRemovalPreservesRefreshedRecordsUntilAfterDismissal() throws {
+        let env = try Environment()
+        let cache = env.cache()
+        cache.set(level: 1)
+        var publishedRecords: [AccountRecord]? = cache.lostAccountRecords
+        let displayedIds = Set(cache.lostAccountRecords.map(\.id))
+        let state = LostAccountsAlertState()
+        state.beginPresentation()
+
+        // Another record becomes visible while this sheet still shows the previous IDs.
+        cache.set(level: 0)
+        try state.remove {
+            try cache.removeLostAccounts(ids: displayedIds)
+            publishedRecords = cache.lostAccountRecords
+            #expect(state.isPresented)
+        }
+
+        var presentedIds = [String]()
+        state.dismiss {
+            publishedRecords = nil
+        } showNextAlert: {
+            #expect(!state.isPresented)
+            presentedIds = publishedRecords?.map(\.id) ?? []
+            state.beginPresentation()
+        }
+        #expect(presentedIds == ["lost"])
+        #expect(publishedRecords?.map(\.id) == ["lost"])
+        #expect(state.isPresented)
+        #expect(env.cache().lostAccountRecords.map(\.id) == ["lost"])
+
+        // The follow-up sheet can still be acknowledged normally.
+        state.dismiss {
+            publishedRecords = nil
+        } showNextAlert: {
+            #expect(publishedRecords == nil)
+        }
+        #expect(!state.isPresented)
+    }
+
+    @Test func acknowledgementClearsWarningBeforeProcessingNextAlert() {
+        let state = LostAccountsAlertState()
+        state.beginPresentation()
+        var cleared = false
+        var nextAlertHandled = false
+
+        state.dismiss {
+            #expect(state.isPresented)
+            cleared = true
+        } showNextAlert: {
+            #expect(cleared)
+            #expect(!state.isPresented)
+            nextAlertHandled = true
+        }
+        #expect(nextAlertHandled)
+    }
+
+    @Test func failedRemovalDoesNotChangeAcknowledgementBehavior() {
+        enum RemovalError: Error { case failed }
+        let state = LostAccountsAlertState()
+        state.beginPresentation()
+        #expect(throws: RemovalError.self) {
+            try state.remove { throw RemovalError.failed }
+        }
+        #expect(state.isPresented)
+
+        var cleared = false
+        state.dismiss {
+            cleared = true
+        } showNextAlert: {
+            #expect(cleared)
+            #expect(!state.isPresented)
+        }
+    }
+
     @Test func clearingAccountsAlsoClearsLostSnapshot() throws {
         let env = try Environment()
         let cache = env.cache()

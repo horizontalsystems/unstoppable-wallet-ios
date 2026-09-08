@@ -38,9 +38,7 @@ public class AccountManager {
 
         accountsSubject.send(storage.accounts)
         activeAccountSubject.send(storage.activeAccount)
-        if lostAccountRecords != nil {
-            handleLaunch()
-        }
+        handleLaunch()
     }
 
     private func handleDisableDuress() {
