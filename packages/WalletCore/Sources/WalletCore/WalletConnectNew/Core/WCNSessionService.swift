@@ -58,7 +58,8 @@ class WCNSessionService {
         guard let record = try storage.session(topic: topic), record.accountId == accountId else {
             return nil
         }
-        return try WCNSessionInfo(topic: topic, accountId: accountId, dAppName: record.dAppName, approvedAccounts: record.sessionNamespaces().accounts)
+        let peer = signClient.sessions.first { $0.topic == topic }?.peer
+        return try WCNSessionInfo(topic: topic, accountId: accountId, dAppName: record.dAppName, approvedAccounts: record.sessionNamespaces().accounts, peerUrl: peer?.url, peerIconUrl: peer?.icons.first)
     }
 
     func disconnect(topic: String) async throws {

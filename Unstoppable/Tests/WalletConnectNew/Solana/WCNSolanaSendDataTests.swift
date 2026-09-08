@@ -26,18 +26,28 @@ struct WCNSolanaSendDataTests {
         #expect(cautions[0].type == .error)
     }
 
-    @Test func sectionsListSignersAccountAndFee() throws {
+    // the fixture is a 1000-lamport system transfer: Method, Value, To
+    @Test func sectionsListDecodedTransferAndFee() throws {
         let data = try WCNSolanaSendData(token: Self.token, payload: payload(), fee: 0.000005, transactionError: nil)
         let sections = data.sections(baseToken: Self.token, currency: currency, rates: [:])
 
         #expect(data.canSend)
-        #expect(sections.count == 3)
-        #expect(sections[0].fields.count == 2)
+        #expect(sections.count == 1)
+        #expect(sections[0].fields.count == 3)
+        #expect(data.feeFields(baseToken: Self.token, currency: currency, rates: [:]).count == 1)
+        #expect(data.cautions(baseToken: Self.token, currency: currency, rates: [:]).isEmpty)
     }
 
-    @Test func missingFromOmitsAccountSection() throws {
-        let data = try WCNSolanaSendData(token: Self.token, payload: payload(from: nil), fee: nil, transactionError: nil)
-        let sections = data.sections(baseToken: Self.token, currency: currency, rates: [:])
-        #expect(sections.count == 1)
+    @Test func opaqueTransactionWarnsButStaysSendable() throws {
+        let request = try WCNTestFixtures.request(method: WCNSolanaTransactionPayload.signAndSendMethod, chainId: "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp")
+        let raw = SolanaRawSigningFixtures.rawTransaction(signerKeys: [SolanaRawSigningFixtures.oursPublicKey])
+        let payload = WCNSolanaTransactionPayload(request: request, rawTransactions: [raw], requiredSigners: [[SolanaRawSigningFixtures.ours]], from: SolanaRawSigningFixtures.ours)
+        let data = WCNSolanaSendData(token: Self.token, payload: payload, fee: nil, transactionError: nil)
+
+        let cautions = data.cautions(baseToken: Self.token, currency: currency, rates: [:])
+        #expect(data.canSend)
+        #expect(cautions.count == 1)
+        #expect(cautions[0].type == .warning)
+        #expect(data.sections(baseToken: Self.token, currency: currency, rates: [:])[0].fields.isEmpty)
     }
 }

@@ -10,10 +10,12 @@ class WCNStellarSendHandler {
     private let stellarKit: StellarKit.Kit
     private let keyPair: KeyPair
     private let responder: WCNResponder
+    private let accountName: String?
 
     let baseToken: Token
 
-    init(payload: WCNStellarTransactionPayload, request: WCNRequest, baseToken: Token, stellarKit: StellarKit.Kit, keyPair: KeyPair, responder: WCNResponder) {
+    init(payload: WCNStellarTransactionPayload, request: WCNRequest, baseToken: Token, stellarKit: StellarKit.Kit, keyPair: KeyPair, responder: WCNResponder, accountName: String?) {
+        self.accountName = accountName
         self.payload = payload
         self.request = request
         self.baseToken = baseToken
@@ -31,7 +33,7 @@ extension WCNStellarSendHandler: ISendHandler {
 
         if payload.isSignOnly {
             let inner = WCNStellarSignData(xdr: payload.xdr, transaction: transaction, sourceAccountId: payload.from ?? "")
-            return WCNSendData(inner: inner, request: request)
+            return WCNSendData(inner: inner, request: request, accountName: accountName)
         }
 
         let fee = Decimal(transaction.fee) / pow(10, baseToken.decimals)
@@ -39,10 +41,11 @@ extension WCNStellarSendHandler: ISendHandler {
         let transactionError: Error? = balance < fee ? TransactionError.insufficientBalance(balance: balance) : nil
 
         let inner = WCNStellarSubmitData(token: baseToken, xdr: payload.xdr, transaction: transaction, sourceAccountId: payload.from ?? "", fee: fee, transactionError: transactionError)
-        return WCNSendData(inner: inner, request: request)
+        return WCNSendData(inner: inner, request: request, accountName: accountName)
     }
 
     func send(data: ISendData) async throws {
+        guard !request.isBlocked else { throw SendError.blocked }
         switch (data as? WCNSendData)?.inner {
         case let data as WCNStellarSignData:
             let signedXdr = try StellarKit.Kit.sign(transactionEnvelope: data.xdr, keyPair: keyPair)
@@ -58,6 +61,7 @@ extension WCNStellarSendHandler: ISendHandler {
 
 extension WCNStellarSendHandler {
     enum SendError: Error {
+        case blocked
         case invalidData
     }
 

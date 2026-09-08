@@ -35,3 +35,18 @@ final class WCNStubAccountProvider: IWCNAccountProvider {
     var activeAccountIdPublisher: AnyPublisher<String?, Never> { activeAccountSubject.eraseToAnyPublisher() }
     var deletedAccountIdPublisher: AnyPublisher<String, Never> { deletedAccountSubject.eraseToAnyPublisher() }
 }
+
+final class WCNStubForegroundProvider: IWCNForegroundProvider {
+    private let subject: CurrentValueSubject<Bool, Never>
+
+    init(isActive: Bool) {
+        subject = CurrentValueSubject(isActive)
+    }
+
+    var isActive: Bool {
+        get { subject.value }
+        set { subject.send(newValue) }
+    }
+
+    var isActivePublisher: AnyPublisher<Bool, Never> { subject.eraseToAnyPublisher() }
+}

@@ -12,12 +12,13 @@ class WCNKitFactory: IWCNKitFactory {
     private let directHandlers: WCNDirectHandlerRegistry
     private let accountManager: AccountManager
     private let lockManager: LockManager
+    private let appManager: AppManager
     private let securityManager: SecurityManager
     private let purchaseManager: PurchaseManager
     private let networkManager: NetworkManager
     private let logger: Logger
 
-    init(signClient: WCNSignClient, responder: WCNResponder, storage: WCNSessionStorage, parsers: WCNParserRegistry, verifiers: WCNVerifierRegistry, chainSupports: WCNChainSupportRegistry, directHandlers: WCNDirectHandlerRegistry, accountManager: AccountManager, lockManager: LockManager, securityManager: SecurityManager, purchaseManager: PurchaseManager, networkManager: NetworkManager, logger: Logger) {
+    init(signClient: WCNSignClient, responder: WCNResponder, storage: WCNSessionStorage, parsers: WCNParserRegistry, verifiers: WCNVerifierRegistry, chainSupports: WCNChainSupportRegistry, directHandlers: WCNDirectHandlerRegistry, accountManager: AccountManager, lockManager: LockManager, appManager: AppManager, securityManager: SecurityManager, purchaseManager: PurchaseManager, networkManager: NetworkManager, logger: Logger) {
         self.signClient = signClient
         self.responder = responder
         self.storage = storage
@@ -27,6 +28,7 @@ class WCNKitFactory: IWCNKitFactory {
         self.directHandlers = directHandlers
         self.accountManager = accountManager
         self.lockManager = lockManager
+        self.appManager = appManager
         self.securityManager = securityManager
         self.purchaseManager = purchaseManager
         self.networkManager = networkManager
@@ -62,6 +64,7 @@ class WCNKitFactory: IWCNKitFactory {
             namespaceBuilder: WCNNamespaceBuilder(registry: chainSupports),
             accountProvider: accountManager,
             lockProvider: lockManager,
+            foregroundProvider: appManager,
             logger: logger.scoped(with: "WCN.Kit")
         )
     }

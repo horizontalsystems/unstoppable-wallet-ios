@@ -8,6 +8,7 @@ struct WCNKitTests {
     private let client = WCNSpySignClient()
     private let accounts = WCNStubAccountProvider(activeAccountId: "a1")
     private let lock = StubLockProvider(isLocked: false)
+    private let foreground = WCNStubForegroundProvider(isActive: true)
     private let parsers = WCNParserRegistry()
     private let directHandlers = WCNDirectHandlerRegistry()
 
@@ -25,7 +26,8 @@ struct WCNKitTests {
             verifyService: WCNVerifyService(),
             namespaceBuilder: WCNNamespaceBuilder(registry: chainSupports),
             accountProvider: accounts,
-            lockProvider: lock
+            lockProvider: lock,
+            foregroundProvider: foreground
         )
     }
 
@@ -59,6 +61,21 @@ struct WCNKitTests {
             return
         }
         #expect(item.session.topic == WCNTestFixtures.topic)
+    }
+
+    @Test func replayedRequestIsPublishedOnce() async throws {
+        let (kit, _) = try storedKit()
+        let box = Box<[WCNRequestItem]>([])
+        let cancellable = collect(kit.requestPublisher, into: box)
+        defer { cancellable.cancel() }
+
+        let request = try WCNTestFixtures.request()
+        client.sessionRequestSubject.send((request: request, context: nil))
+        client.sessionRequestSubject.send((request: request, context: nil))
+        try await waitUntil { box.value.count == 1 }
+        try await Task.sleep(nanoseconds: 200_000_000)
+
+        #expect(box.value.count == 1)
     }
 
     @Test func requestOfForeignTopicIsIgnored() async throws {
@@ -121,20 +138,131 @@ struct WCNKitTests {
         #expect(expired.value == [request.id])
     }
 
-    @Test func pendingRequestsAreReplayedOnStart() async throws {
+    @Test func pendingRequestsAtStartAreNotShownButListed() async throws {
         let storage = try WCNSessionFixtures.storage()
         let session = try WCNSessionFixtures.session(topic: WCNTestFixtures.topic)
         client.sessions = [session]
         parsers.register(StubParser())
         try WCNSessionService(signClient: client, storage: storage, accountProvider: accounts).store(session: session, accountId: "a1")
-        client.pendingRequests = [(request: try WCNTestFixtures.request(), context: nil)]
+        let request = try WCNTestFixtures.request()
+        client.pendingRequests = [(request: request, context: nil)]
         let kit = makeKit(storage: storage)
         let box = Box<[WCNRequestItem]>([])
         let cancellable = collect(kit.requestPublisher, into: box)
         defer { cancellable.cancel() }
 
         kit.start()
+        try await Task.sleep(nanoseconds: 200_000_000)
+
+        // seeded at start: only counted, never popped up (points 7 and 8, cold start)
+        #expect(box.value.isEmpty)
+        #expect(kit.pendingRequests(topic: WCNTestFixtures.topic) == [WCNPendingRequestItem(id: request.id, method: "eth_sendTransaction")])
+    }
+
+    @Test func backgroundRequestIsShownOnForeground() async throws {
+        foreground.isActive = false
+        let (kit, _) = try storedKit()
+        let box = Box<[WCNRequestItem]>([])
+        let cancellable = collect(kit.requestPublisher, into: box)
+        defer { cancellable.cancel() }
+
+        client.sessionRequestSubject.send((request: try WCNTestFixtures.request(), context: nil))
+        try await Task.sleep(nanoseconds: 150_000_000)
+        #expect(box.value.isEmpty)
+
+        foreground.isActive = true
         try await waitUntil { box.value.count == 1 }
+    }
+
+    @Test func openedRequestIsNotRepresentedOnSdkReplay() async throws {
+        let storage = try WCNSessionFixtures.storage()
+        let session = try WCNSessionFixtures.session(topic: WCNTestFixtures.topic)
+        client.sessions = [session]
+        parsers.register(StubParser())
+        try WCNSessionService(signClient: client, storage: storage, accountProvider: accounts).store(session: session, accountId: "a1")
+        let request = try WCNTestFixtures.request()
+        client.pendingRequests = [(request: request, context: nil)]
+        let kit = makeKit(storage: storage)
+        kit.start()
+        let box = Box<[WCNRequestItem]>([])
+        let cancellable = collect(kit.requestPublisher, into: box)
+        defer { cancellable.cancel() }
+
+        kit.open(requestId: request.id)
+        try await waitUntil { box.value.count == 1 }
+
+        // reown replays the pending request on reconnect; opening it from the list must not stack a second sheet
+        client.sessionRequestSubject.send((request: request, context: nil))
+        try await Task.sleep(nanoseconds: 200_000_000)
+        #expect(box.value.count == 1)
+    }
+
+    @Test func newRequestSurfacesWhenSdkReplaysOldPending() async throws {
+        let (kit, _) = try storedKit()
+        let box = Box<[WCNRequestItem]>([])
+        let cancellable = collect(kit.requestPublisher, into: box)
+        defer { cancellable.cancel() }
+
+        let first = try WCNTestFixtures.request()
+        client.pendingRequests = [(request: first, context: nil)]
+        client.sessionRequestSubject.send((request: first, context: nil))
+        try await waitUntil { box.value.count == 1 }
+        #expect(box.value.first?.requestId == first.id)
+
+        // a genuinely new request arrives but reown replays the old head; it becomes active
+        let second = try WCNTestFixtures.request()
+        client.pendingRequests = [(request: first, context: nil), (request: second, context: nil)]
+        client.sessionRequestSubject.send((request: first, context: nil))
+        try await Task.sleep(nanoseconds: 200_000_000)
+        // one sheet at a time: it shows only after the first is dismissed
+        #expect(box.value.count == 1)
+        kit.notifyRequestDismissed()
+        try await waitUntil { box.value.count == 2 }
+        #expect(box.value.last?.requestId == second.id)
+    }
+
+    @Test func secondRequestWaitsUntilFirstIsDismissed() async throws {
+        let (kit, _) = try storedKit()
+        let box = Box<[WCNRequestItem]>([])
+        let cancellable = collect(kit.requestPublisher, into: box)
+        defer { cancellable.cancel() }
+
+        let first = try WCNTestFixtures.request()
+        let second = try WCNTestFixtures.request()
+        client.pendingRequests = [(request: first, context: nil)]
+        client.sessionRequestSubject.send((request: first, context: nil))
+        try await waitUntil { box.value.count == 1 }
+        #expect(box.value.first?.requestId == first.id)
+
+        // a second request arrives while the first sheet is up: it must not stack
+        client.pendingRequests = [(request: first, context: nil), (request: second, context: nil)]
+        client.sessionRequestSubject.send((request: second, context: nil))
+        try await Task.sleep(nanoseconds: 200_000_000)
+        #expect(box.value.count == 1)
+
+        // dismissing the first releases the slot and the second appears
+        kit.notifyRequestDismissed()
+        try await waitUntil { box.value.count == 2 }
+        #expect(box.value.last?.requestId == second.id)
+    }
+
+    @Test func onlyLastBackgroundRequestIsShown() async throws {
+        foreground.isActive = false
+        let (kit, _) = try storedKit()
+        let box = Box<[WCNRequestItem]>([])
+        let cancellable = collect(kit.requestPublisher, into: box)
+        defer { cancellable.cancel() }
+
+        let first = try WCNTestFixtures.request()
+        let second = try WCNTestFixtures.request()
+        client.sessionRequestSubject.send((request: first, context: nil))
+        client.sessionRequestSubject.send((request: second, context: nil))
+        try await Task.sleep(nanoseconds: 200_000_000)
+        #expect(box.value.isEmpty)
+
+        foreground.isActive = true
+        try await waitUntil { box.value.count == 1 }
+        #expect(box.value.first?.requestId == second.id)
     }
 
     @Test func approveStoresApprovedSnapshot() async throws {
@@ -214,6 +342,7 @@ struct WCNKitTests {
         let foreign = try Request(topic: "other", method: "eth_sendTransaction", params: AnyCodable([String]()), chainId: WalletConnectUtils.Blockchain("eip155:1")!)
         client.pendingRequests = [(request: request, context: nil), (request: foreign, context: nil)]
         let kit = makeKit(storage: storage)
+        kit.start()
         let box = Box<[WCNRequestItem]>([])
         let cancellable = collect(kit.requestPublisher, into: box)
         defer { cancellable.cancel() }

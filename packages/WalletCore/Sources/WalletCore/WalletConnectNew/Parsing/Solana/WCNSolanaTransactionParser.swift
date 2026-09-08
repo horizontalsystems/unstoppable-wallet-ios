@@ -27,6 +27,12 @@ class WCNSolanaTransactionParser: IWCNParser {
         guard let encoded, !encoded.isEmpty else {
             throw ParsingError.malformedParams
         }
+        // bound count and per-item size before any base64 decode/sign
+        guard encoded.count <= WCNSolanaLimits.maxTransactionsPerRequest,
+              encoded.allSatisfy({ $0.count <= WCNSolanaLimits.maxTransactionBase64Length })
+        else {
+            throw ParsingError.malformedParams
+        }
 
         let rawTransactions = try encoded.map { base64 in
             guard let data = Data(base64Encoded: base64) else {

@@ -28,8 +28,9 @@ struct WCNStellarSendDataTests {
         #expect(data.canSend)
         #expect(data.cautions(baseToken: WCNStellarFixtures.token, currency: currency, rates: [:]).isEmpty)
         let sections = data.sections(baseToken: WCNStellarFixtures.token, currency: currency, rates: [:])
-        #expect(sections.count == 3)
+        #expect(sections.count == 2)
         #expect(sections[0].fields.count == 2)
+        #expect(data.feeFields(baseToken: WCNStellarFixtures.token, currency: currency, rates: [:]).count == 1)
     }
 
     @Test func signDataIsSignOnlyThroughWrapper() throws {
@@ -41,9 +42,10 @@ struct WCNStellarSendDataTests {
 
         #expect(data.canSend)
         #expect(data.customSendButtonTitle == "button.sign".localized)
-        // transaction + account + dApp + sign-only note
+        // header + one card (transaction, account, network)
         let sections = data.sections(baseToken: WCNStellarFixtures.token, currency: currency, rates: [:])
-        #expect(sections.count == 4)
-        #expect(sections[3].isMain == false)
+        #expect(sections.count == 2)
+        #expect(sections[1].isMain == false)
+        #expect(sections[1].fields.count == 4)
     }
 }

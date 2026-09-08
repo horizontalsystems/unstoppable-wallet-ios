@@ -8,6 +8,7 @@ class MainBadgeViewModel: ObservableObject {
     private let passcodeManager = Core.shared.passcodeManager
     private let termsManager = Core.shared.termsManager
     private let walletConnectSessionManager = Core.shared.walletConnectSessionManager
+    private let walletConnectNew = Core.shared.walletConnectNew
     private let contactManager = Core.shared.contactManager
 
     private var cancellables = Set<AnyCancellable>()
@@ -44,6 +45,10 @@ class MainBadgeViewModel: ObservableObject {
             })
             .disposed(by: disposeBag)
 
+        walletConnectNew?.pendingRequestCountPublisher
+            .sink { [weak self] _ in self?.syncSettingsBadge() }
+            .store(in: &cancellables)
+
         contactManager.iCloudErrorObservable
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -56,7 +61,7 @@ class MainBadgeViewModel: ObservableObject {
     }
 
     private var resolvedBadge: String? {
-        let count = walletConnectSessionManager?.activePendingRequests.count ?? 0
+        let count = (walletConnectSessionManager?.activePendingRequests.count ?? 0) + (walletConnectNew?.pendingRequestCount ?? 0)
 
         if count > 0 {
             return count.description

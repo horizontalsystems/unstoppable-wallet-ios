@@ -5,10 +5,14 @@ import MarketKit
 class WCNSendData: ISendData {
     let inner: ISendData
     private let request: WCNRequest
+    private let header: WCNSendHeader?
+    private let accountName: String?
 
-    init(inner: ISendData, request: WCNRequest) {
+    init(inner: ISendData, request: WCNRequest, header: WCNSendHeader? = nil, accountName: String? = nil) {
         self.inner = inner
         self.request = request
+        self.header = header
+        self.accountName = accountName
     }
 
     var feeData: FeeData? { inner.feeData }
@@ -34,12 +38,23 @@ class WCNSendData: ISendData {
         }
     }
 
+    // header, then one card: the chain rows, network, wallet and fee, as Android WCSendEthScreen
     func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
-        var sections = inner.sections(baseToken: baseToken, currency: currency, rates: rates)
-        sections.append(SendDataSection([.simpleValue(title: "wallet_connect.sign.dapp_name".localized, value: request.dAppName)], isMain: false))
-        if request.payload.isSignOnly {
-            sections.append(SendDataSection([.note(iconName: nil, title: "wallet_connect.sign_transaction.description".localized(request.dAppName))], isMain: false))
+        let signOnly = request.payload.isSignOnly
+        let headerField = WCNSendHeaderField(
+            iconUrl: request.dAppIconUrl,
+            title: header?.title ?? (signOnly ? "wallet_connect.sign.request_title" : "wallet_connect.transaction.title").localized,
+            host: request.dAppUrl.map { URLComponents(string: $0)?.host ?? $0 } ?? request.dAppName,
+            description: header?.description ?? (signOnly ? "wallet_connect.sign_transaction.description".localized(request.dAppName) : nil)
+        )
+
+        var fields = inner.sections(baseToken: baseToken, currency: currency, rates: rates).flatMap(\.fields)
+        fields.append(.simpleValue(title: "wallet_connect.sign.network".localized, value: baseToken.blockchain.name))
+        if let accountName {
+            fields.append(.simpleValue(title: "wallet_connect.connect.wallet".localized, value: accountName))
         }
-        return sections
+        fields.append(contentsOf: inner.feeFields(baseToken: baseToken, currency: currency, rates: rates))
+
+        return [SendDataSection([SendField(headerField)], isList: false), SendDataSection(fields, isMain: false)]
     }
 }

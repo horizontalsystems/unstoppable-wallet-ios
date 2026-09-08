@@ -6,4 +6,6 @@ struct WCNSessionInfo {
     let accountId: String
     let dAppName: String
     let approvedAccounts: [WalletConnectUtils.Account]
+    var peerUrl: String?
+    var peerIconUrl: String?
 }

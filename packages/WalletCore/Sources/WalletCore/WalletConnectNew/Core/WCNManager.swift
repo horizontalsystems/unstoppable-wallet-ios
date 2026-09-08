@@ -52,6 +52,24 @@ class WCNManager {
         kitSubject.value
     }
 
+    var pendingRequestCount: Int {
+        kitSubject.value?.pendingRequestCount ?? 0
+    }
+
+    // emits the active-account pending-request count as the kit starts and as its pending list changes
+    var pendingRequestCountPublisher: AnyPublisher<Int, Never> {
+        kitSubject
+            .map { kit -> AnyPublisher<Int, Never> in
+                guard let kit else { return Just(0).eraseToAnyPublisher() }
+                return kit.pendingRequestsPublisher
+                    .map { _ in kit.pendingRequestCount }
+                    .prepend(kit.pendingRequestCount)
+                    .eraseToAnyPublisher()
+            }
+            .switchToLatest()
+            .eraseToAnyPublisher()
+    }
+
     func kit() throws -> WCNKit {
         if let kit = kitSubject.value {
             WCNLog.log("manager kit: reuse")
@@ -67,7 +85,7 @@ class WCNManager {
 }
 
 extension WCNManager {
-    static func instance(dbPool: DatabasePool, evmBlockchainManager: EvmBlockchainManager, stellarKitManager: StellarKitManager, solanaKitManager: SolanaKitManager, accountManager: AccountManager, coinManager: CoinManager, lockManager: LockManager, securityManager: SecurityManager, purchaseManager: PurchaseManager, networkManager: NetworkManager, logger: Logger) throws -> WCNManager {
+    static func instance(dbPool: DatabasePool, evmBlockchainManager: EvmBlockchainManager, stellarKitManager: StellarKitManager, solanaKitManager: SolanaKitManager, accountManager: AccountManager, coinManager: CoinManager, lockManager: LockManager, appManager: AppManager, securityManager: SecurityManager, purchaseManager: PurchaseManager, networkManager: NetworkManager, logger: Logger) throws -> WCNManager {
         let logger = logger.scoped(with: "WCN")
         let storage = try WCNSessionStorage(dbPool: dbPool)
         let signClient = WCNSignClient()
@@ -119,6 +137,7 @@ extension WCNManager {
             directHandlers: directHandlers,
             accountManager: accountManager,
             lockManager: lockManager,
+            appManager: appManager,
             securityManager: securityManager,
             purchaseManager: purchaseManager,
             networkManager: networkManager,

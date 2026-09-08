@@ -39,6 +39,20 @@ struct WCNSolanaTransactionParserTests {
         #expect(payload.from == nil)
     }
 
+    @Test func tooManyTransactionsAreRejected() throws {
+        let request = try request(method: WCNSolanaTransactionPayload.signAllMethod, params: ["transactions": Array(repeating: "AA==", count: WCNSolanaLimits.maxTransactionsPerRequest + 1)])
+        #expect(throws: WCNSolanaTransactionParser.ParsingError.malformedParams) {
+            try parser(address: ours).parse(request: request)
+        }
+    }
+
+    @Test func oversizedTransactionIsRejectedBeforeDecode() throws {
+        let request = try request(params: ["transaction": String(repeating: "A", count: WCNSolanaLimits.maxTransactionBase64Length + 1)])
+        #expect(throws: WCNSolanaTransactionParser.ParsingError.malformedParams) {
+            try parser(address: ours).parse(request: request)
+        }
+    }
+
     @Test func signAllRequiresOurAccountInEveryTransaction() throws {
         let both = try raw([ours]).base64EncodedString()
         let foreign = try raw([other]).base64EncodedString()

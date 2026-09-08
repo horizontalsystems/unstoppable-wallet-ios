@@ -15,6 +15,7 @@ class WCNKit {
     private let namespaceBuilder: WCNNamespaceBuilder
     private let accountProvider: IWCNAccountProvider
     private let lockProvider: IWCNLockProvider
+    private let foregroundProvider: IWCNForegroundProvider
     private let logger: Logger?
     private var cancellables = Set<AnyCancellable>()
 
@@ -23,11 +24,19 @@ class WCNKit {
     private let expiredRequestSubject = PassthroughSubject<RPCID, Never>()
     private let pendingChangedSubject = PassthroughSubject<Void, Never>()
 
-    // requests that arrived while the app was locked; released on unlock, dropped on expiration
-    private let queueLock = NSLock()
-    private var queued = [WCNRequestItem]()
+    private let stateLock = NSLock()
+    // requests already surfaced this session or already pending at start: counted in the list, never auto-shown again
+    private var seen = Set<RPCID>()
+    // the latest request waiting for a foreground+unlocked moment; a newer one overwrites it (last wins)
+    private var activeRequest: WCNRequestItem?
+    // arrival order, so the last request to arrive wins even if an earlier one finishes parsing later
+    private var arrivalCounter: UInt64 = 0
+    private var activeSeq: UInt64 = 0
+    private var isForeground = false
+    // one request sheet at a time: a new request waits until the current one is dismissed
+    private var isPresenting = false
 
-    init(signClient: IWCNSignClient, sessionService: WCNSessionService, requestService: WCNRequestService, directHandlers: WCNDirectHandlerRegistry, responder: WCNResponder, pairingService: WCNPairingService, verifyService: WCNVerifyService, namespaceBuilder: WCNNamespaceBuilder, accountProvider: IWCNAccountProvider, lockProvider: IWCNLockProvider, logger: Logger? = nil) {
+    init(signClient: IWCNSignClient, sessionService: WCNSessionService, requestService: WCNRequestService, directHandlers: WCNDirectHandlerRegistry, responder: WCNResponder, pairingService: WCNPairingService, verifyService: WCNVerifyService, namespaceBuilder: WCNNamespaceBuilder, accountProvider: IWCNAccountProvider, lockProvider: IWCNLockProvider, foregroundProvider: IWCNForegroundProvider, logger: Logger? = nil) {
         self.signClient = signClient
         self.sessionService = sessionService
         self.requestService = requestService
@@ -38,12 +47,14 @@ class WCNKit {
         self.namespaceBuilder = namespaceBuilder
         self.accountProvider = accountProvider
         self.lockProvider = lockProvider
+        self.foregroundProvider = foregroundProvider
         self.logger = logger
     }
 
-    // subscriptions are attached before pending requests are replayed, so a request arriving mid-start is not lost
+    // pending requests present at start are only counted; the active-request pointer surfaces one on the next foreground+unlocked moment
     func start() {
         WCNLog.log("kit start: subscribing, pending=\(signClient.pendingRequests.count) sessions=\(signClient.sessions.count)")
+        isForeground = foregroundProvider.isActive
         signClient.sessionRequestPublisher
             .sink { [weak self] in self?.handle(request: $0.request, context: $0.context) }
             .store(in: &cancellables)
@@ -55,18 +66,30 @@ class WCNKit {
             .store(in: &cancellables)
         lockProvider.isLockedPublisher
             .sink { [weak self] locked in
-                if !locked { self?.flushQueue() }
+                if !locked { self?.presentActiveIfPossible() }
+            }
+            .store(in: &cancellables)
+        foregroundProvider.isActivePublisher
+            .sink { [weak self] active in
+                guard let self else { return }
+                stateLock.lock()
+                isForeground = active
+                stateLock.unlock()
+                if active { presentActiveIfPossible() }
             }
             .store(in: &cancellables)
         responder.answeredPublisher
-            .sink { [weak self] _ in self?.pendingChangedSubject.send() }
+            .sink { [weak self] in
+                self?.forget(requestId: $0)
+                self?.pendingChangedSubject.send()
+            }
             .store(in: &cancellables)
 
-        for pending in signClient.pendingRequests {
-            WCNLog.log("kit start: replaying pending id=\(pending.request.id.string) method=\(pending.request.method)")
-            handle(request: pending.request, context: pending.context)
-        }
-        WCNLog.log("kit start: done")
+        // seed the seen set so requests that were already pending are shown only in the list, never popped up
+        stateLock.lock()
+        seen = Set(signClient.pendingRequests.map(\.request.id))
+        stateLock.unlock()
+        WCNLog.log("kit start: done, seeded=\(signClient.pendingRequests.count)")
     }
 
     var requestPublisher: AnyPublisher<WCNRequestItem, Never> { requestSubject.eraseToAnyPublisher() }
@@ -111,6 +134,12 @@ class WCNKit {
             .map { WCNPendingRequestItem(id: $0.request.id, method: $0.request.method) }
     }
 
+    // pending requests bound to the active account: the badge count for parked (unanswered) requests
+    var pendingRequestCount: Int {
+        guard let accountId = accountProvider.activeAccountId else { return 0 }
+        return signClient.pendingRequests.filter { (try? sessionService.sessionInfo(topic: $0.request.topic, accountId: accountId)) != nil }.count
+    }
+
     // re-runs a pending request through the service so the user can open it from the sessions list
     func open(requestId: RPCID) {
         guard let pending = signClient.pendingRequests.first(where: { $0.request.id == requestId }) else {
@@ -118,7 +147,7 @@ class WCNKit {
             return
         }
         WCNLog.log("kit open: id=\(requestId.string) method=\(pending.request.method)")
-        handle(request: pending.request, context: pending.context)
+        handle(request: pending.request, context: pending.context, forced: true)
     }
 
     func reject(item: WCNRequestItem) async throws {
@@ -167,14 +196,54 @@ class WCNKit {
         proposalSubject.send(WCNProposalItem(proposal: proposal, context: context, verifyState: verifyService.state(context: context), blockchainProposals: blockchainProposals(for: proposal)))
     }
 
-    // visibility gate: only requests of a session bound to the active account reach the service
-    private func handle(request: Request, context: VerifyContext?) {
-        WCNLog.log("kit request: id=\(request.id.string) method=\(request.method) topic=\(request.topic.prefix(8)) chain=\(request.chainId.absoluteString)")
+    // reown hands the publisher the head of the pending queue, not necessarily the request that just arrived
+    // (while an earlier request is unanswered it keeps replaying the old one), so an explicit open aside, treat
+    // every signal as "pending changed" and reconcile against the full pending list to find the new requests
+    private func handle(request: Request, context: VerifyContext?, forced: Bool = false) {
+        WCNLog.log("kit request: id=\(request.id.string) method=\(request.method) topic=\(request.topic.prefix(8)) chain=\(request.chainId.absoluteString) forced=\(forced)")
+        if forced {
+            stateLock.lock()
+            // keep it in the seen set: an explicit open shows it once, the reconcile scan must not re-present it
+            seen.insert(request.id)
+            arrivalCounter += 1
+            let seq = arrivalCounter
+            stateLock.unlock()
+            gateAndProcess(request: request, context: context, seq: seq)
+            return
+        }
+
         pendingChangedSubject.send()
+
+        var candidates = signClient.pendingRequests
+        if !candidates.contains(where: { $0.request.id == request.id }) {
+            candidates.append((request: request, context: context))
+        }
+
+        stateLock.lock()
+        let fresh = candidates.filter { seen.insert($0.request.id).inserted }
+        stateLock.unlock()
+
+        guard !fresh.isEmpty else {
+            WCNLog.log("kit request: nothing new among \(candidates.count) pending")
+            return
+        }
+
+        for pending in fresh {
+            stateLock.lock()
+            arrivalCounter += 1
+            let seq = arrivalCounter
+            stateLock.unlock()
+            gateAndProcess(request: pending.request, context: pending.context, seq: seq)
+        }
+    }
+
+    // visibility gate: only requests of a session bound to the active account reach the service
+    private func gateAndProcess(request: Request, context: VerifyContext?, seq: UInt64) {
+        // requests of another account stay in the seen set on purpose: switching to that account must not pop them up
         guard let accountId = accountProvider.activeAccountId,
               let session = try? sessionService.sessionInfo(topic: request.topic, accountId: accountId)
         else {
-            WCNLog.log("kit request: ignored, topic not bound to active account \(accountProvider.activeAccountId ?? "nil")")
+            WCNLog.log("kit request: id=\(request.id.string) ignored, topic not bound to active account \(accountProvider.activeAccountId ?? "nil")")
             logger?.warning("request \(request.method) for topic \(request.topic) does not belong to the active account, ignoring")
             return
         }
@@ -183,11 +252,11 @@ class WCNKit {
             guard let self else { return }
             let result = await requestService.process(request: request, context: context, session: session)
             WCNLog.log("kit request: id=\(request.id.string) result=\(result)")
-            emit(WCNRequestItem(requestId: request.id, result: result, session: session))
+            emit(WCNRequestItem(requestId: request.id, result: result, session: session), seq: seq)
         }
     }
 
-    private func emit(_ incoming: WCNRequestItem) {
+    private func emit(_ incoming: WCNRequestItem, seq: UInt64 = 0) {
         switch incoming.result {
         case .rejected:
             return
@@ -197,15 +266,40 @@ class WCNKit {
         case .transaction, .signMessage:
             break
         }
-        if lockProvider.isLocked {
-            queueLock.lock()
-            queued.append(incoming)
-            queueLock.unlock()
-            WCNLog.log("kit emit: locked, queued id=\(incoming.requestId.string)")
-            logger?.info("app is locked, queued request id=\(incoming.requestId.string)")
-        } else {
-            WCNLog.log("kit emit: id=\(incoming.requestId.string)")
-            requestSubject.send(incoming)
+        stateLock.lock()
+        // keep the last request to have arrived, regardless of which finished parsing first
+        if seq >= activeSeq {
+            activeRequest = incoming
+            activeSeq = seq
+        }
+        stateLock.unlock()
+        WCNLog.log("kit emit: id=\(incoming.requestId.string) queued as active seq=\(seq)")
+        presentActiveIfPossible()
+    }
+
+    // shows the pending active request when foreground, unlocked and no request sheet is already up
+    private func presentActiveIfPossible() {
+        stateLock.lock()
+        guard isForeground, !lockProvider.isLocked, !isPresenting, let item = activeRequest else {
+            stateLock.unlock()
+            return
+        }
+        activeRequest = nil
+        isPresenting = true
+        stateLock.unlock()
+        WCNLog.log("kit present: id=\(item.requestId.string)")
+        requestSubject.send(item)
+    }
+
+    // the request sheet was dismissed (answered, rejected or swiped): release the slot and show the next, if any
+    func notifyRequestDismissed() {
+        stateLock.lock()
+        isPresenting = false
+        stateLock.unlock()
+        WCNLog.log("kit dismissed: presenting slot released")
+        // let the dismissal animation finish before presenting the next queued request, or SwiftUI drops it
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
+            self?.presentActiveIfPossible()
         }
     }
 
@@ -226,20 +320,19 @@ class WCNKit {
         }
     }
 
-    private func flushQueue() {
-        queueLock.lock()
-        let pending = queued
-        queued.removeAll()
-        queueLock.unlock()
-        WCNLog.log("kit unlock: flushing \(pending.count) queued")
-        pending.forEach { requestSubject.send($0) }
+    private func forget(requestId: RPCID) {
+        stateLock.lock()
+        seen.remove(requestId)
+        if activeRequest?.requestId == requestId { activeRequest = nil }
+        stateLock.unlock()
     }
 
     private func expire(requestId: RPCID) {
         WCNLog.log("kit expire: id=\(requestId.string)")
-        queueLock.lock()
-        queued.removeAll { $0.requestId == requestId }
-        queueLock.unlock()
+        stateLock.lock()
+        if activeRequest?.requestId == requestId { activeRequest = nil }
+        seen.remove(requestId)
+        stateLock.unlock()
         expiredRequestSubject.send(requestId)
         pendingChangedSubject.send()
     }

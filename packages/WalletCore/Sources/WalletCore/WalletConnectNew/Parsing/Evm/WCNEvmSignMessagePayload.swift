@@ -37,7 +37,7 @@ class WCNEvmSignMessagePayload: WCNRequestPayload, IWCNTypedDataRequest {
 
     private static func chainId(json: JSON?) -> Int? {
         if let number = json?.doubleValue {
-            return Int(number)
+            return Int(exactly: number)
         }
         guard let string = json?.stringValue else {
             return nil

@@ -72,21 +72,21 @@ class WCNStellarSubmitData: WCNStellarData, ISendData {
         return [CautionNew(title: "ethereum_transaction.error.title".localized, text: transactionError.convertedError.smartDescription, type: .error)]
     }
 
-    func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
-        var sections = baseSections
-
-        if let fee {
-            let infoDescription = InfoDescription(title: "send.max_fee".localized, description: "fee_settings.network_fee.info".localized)
-            sections.append(SendDataSection([
-                .value(
-                    title: ComponentInformedTitle("send.max_fee".localized, info: infoDescription),
-                    appValue: AppValue(token: baseToken, value: fee),
-                    currencyValue: rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) },
-                    formatFull: true
-                ),
-            ], isMain: false))
+    func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
+        guard let fee else {
+            return []
         }
+        return [
+            .value(
+                title: ComponentInformedTitle("send.confirmation.fee".localized, info: .fee),
+                appValue: AppValue(token: baseToken, value: fee),
+                currencyValue: rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) },
+                formatFull: true
+            ),
+        ]
+    }
 
-        return sections
+    func sections(baseToken _: Token, currency _: Currency, rates _: [String: Decimal]) -> [SendDataSection] {
+        baseSections
     }
 }

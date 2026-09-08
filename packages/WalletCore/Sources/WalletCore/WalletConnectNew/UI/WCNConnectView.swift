@@ -1,123 +1,141 @@
 import MarketKit
 import SwiftUI
 
+// Connect proposal as a bottom sheet: no size-changing blocks, so it sizes stably
 struct WCNConnectView: View {
-    @StateObject private var viewModel: WCNConnectViewModel
-    @Environment(\.presentationMode) private var presentationMode
+    // owned by WCNPresenter so reject-on-dismiss can go through Coordinator.onDismiss, not the view lifecycle
+    @ObservedObject private var viewModel: WCNConnectViewModel
+    @Binding private var isPresented: Bool
 
-    init(item: WCNProposalItem) {
-        _viewModel = StateObject(wrappedValue: WCNConnectViewModel(item: item))
-    }
-
-    init(session: WCNSessionItem) {
-        _viewModel = StateObject(wrappedValue: WCNConnectViewModel(session: session))
+    init(viewModel: WCNConnectViewModel, isPresented: Binding<Bool>) {
+        self.viewModel = viewModel
+        _isPresented = isPresented
     }
 
     var body: some View {
-        ThemeNavigationStack {
-            ThemeView {
-                BottomGradientWrapper {
-                    ScrollView {
-                        VStack(spacing: 0) {
-                            WCNDAppTitleView(iconUrl: viewModel.iconUrl, title: (viewModel.connected ? "wallet_connect.session.title" : "wallet_connect.connect.title").localized(viewModel.dAppName))
-                            BSModule.view(for: .subtitle(text: viewModel.dAppHost))
+        ThemeView(style: .list) {
+            VStack(spacing: 0) {
+                content
+                buttons
+                    .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin16, trailing: .margin24))
+            }
+        }
+        .onReceive(viewModel.finishPublisher) {
+            HudHelper.instance.show(banner: .done)
+            isPresented = false
+        }
+        .onReceive(viewModel.errorPublisher) { error in
+            HudHelper.instance.show(banner: .error(string: error))
+        }
+        .interactiveDismissDisabled(viewModel.connecting)
+    }
 
-                            ListSection {
-                                Cell(
-                                    middle: {
-                                        MiddleTextIcon(text: "wallet_connect.connect.wallet".localized)
-                                    },
-                                    right: {
-                                        RightTextIcon(text: ComponentText(text: viewModel.accountName ?? "", colorStyle: .primary))
-                                    }
-                                )
-                                Cell(
-                                    middle: {
-                                        MiddleTextIcon(text: "wallet_connect.networks".localized)
-                                    },
-                                    right: {
-                                        blockchainIcons
-                                        Image.disclosureIcon
-                                    },
-                                    action: {
-                                        Coordinator.shared.present { _ in
-                                            WCNBlockchainsView(blockchainTypes: viewModel.blockchainTypes)
-                                        }
-                                    }
-                                )
-                            }
-                            .themeListStyle(.bordered)
-                            .padding(.horizontal, .margin16)
-                            .padding(.vertical, .margin8)
+    @ViewBuilder private var content: some View {
+        WCNDAppTitleView(iconUrl: viewModel.iconUrl, title: "wallet_connect.connect.title".localized(viewModel.dAppName), showGrabber: true)
+        BSModule.view(for: .subtitle(text: viewModel.dAppHost))
 
-                            BSModule.view(for: .footer(text: "wallet_connect.connect.description".localized))
+        if let caution = viewModel.verificationCaution {
+            AlertCardView(caution: caution)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, .margin16)
+                .padding(.top, .margin16)
+        }
 
-                            if viewModel.unsupported {
-                                BSModule.view(for: .error(text: "wallet_connect.connect.unsupported".localized))
-                            }
-                        }
-                        .padding(.bottom, .margin32)
-                    }
-                } bottomContent: {
-                    VStack(spacing: .margin16) {
-                        WCNDefenseBlock(state: viewModel.defenseState) {
-                            Coordinator.shared.performAfterPurchase(premiumFeature: .scamProtection, page: .walletConnect, trigger: .getPremium) {
-                                viewModel.refreshDefense()
-                            }
-                        }
+        DefenseSystemHeader(icon: Image.defenseIcon, title: "wallet_connect.scam_protection".localized)
+            .padding(.horizontal, .margin16)
+            .padding(.top, .margin24)
 
-                        if viewModel.connected {
-                            Button(action: { viewModel.disconnect() }) {
-                                HStack(spacing: .margin8) {
-                                    if viewModel.connecting { ProgressView().progressViewStyle(.circular) }
-                                    Text("wallet_connect.button_disconnect".localized)
-                                }
-                            }
-                            .buttonStyle(PrimaryButtonStyle(style: .gray))
-                            .disabled(viewModel.connecting)
-                        } else {
-                            HStack(spacing: .margin8) {
-                                Button(action: {
-                                    viewModel.reject()
-                                    presentationMode.wrappedValue.dismiss()
-                                }) {
-                                    Text("button.cancel".localized)
-                                }
-                                .buttonStyle(PrimaryButtonStyle(style: .gray))
+        ListSection {
+            Cell(
+                middle: {
+                    MiddleTextIcon(text: "wallet_connect.dapp_check".localized)
+                },
+                right: {
+                    dAppCheckValue
+                },
+                action: viewModel.dAppCheck == .locked ? { activateScamProtection() } : nil
+            )
+        }
+        .themeListStyle(.bordered)
+        .padding(.horizontal, .margin16)
+        .padding(.top, .margin12)
 
-                                Button(action: { viewModel.connect() }) {
-                                    HStack(spacing: .margin8) {
-                                        if viewModel.connecting { ProgressView().progressViewStyle(.circular) }
-                                        Text("button.connect".localized)
-                                    }
-                                }
-                                .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                                .disabled(!viewModel.connectEnabled)
-                            }
-                        }
+        ListSection {
+            Cell(
+                middle: {
+                    MiddleTextIcon(text: "wallet_connect.connect.wallet".localized)
+                },
+                right: {
+                    RightTextIcon(text: ComponentText(text: viewModel.accountName ?? "", colorStyle: .primary))
+                }
+            )
+            Cell(
+                middle: {
+                    MiddleTextIcon(text: "wallet_connect.networks".localized)
+                },
+                right: {
+                    blockchainIcons
+                    Image.disclosureIcon
+                },
+                action: {
+                    Coordinator.shared.present { _ in
+                        WCNBlockchainsView(blockchainTypes: viewModel.blockchainTypes)
                     }
                 }
+            )
+        }
+        .themeListStyle(.bordered)
+        .padding(.horizontal, .margin16)
+        .padding(.top, .margin16)
+
+        BSModule.view(for: .footer(text: "wallet_connect.connect.description".localized))
+
+        if viewModel.unsupported {
+            BSModule.view(for: .error(text: "wallet_connect.connect.unsupported".localized))
+        }
+
+        if viewModel.showDanger {
+            AlertCardView(caution: CautionNew(title: "wallet_connect.defense.danger.title".localized, text: "wallet_connect.defense.danger.text".localized, type: .error))
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, .margin16)
+                .padding(.top, .margin8)
+        }
+    }
+
+    @ViewBuilder private var dAppCheckValue: some View {
+        switch viewModel.dAppCheck {
+        case .locked:
+            Image("lock").themeIcon()
+        case .secure:
+            RightTextIcon(text: ComponentText(text: "wallet_connect.scam_protection.secure".localized, colorStyle: .green))
+        case .risky:
+            RightTextIcon(text: ComponentText(text: "wallet_connect.scam_protection.risky".localized, colorStyle: .red))
+        case .unavailable:
+            RightTextIcon(text: ComponentText(text: "wallet_connect.scam_protection.not_available".localized, colorStyle: .secondary))
+        case .hidden:
+            EmptyView()
+        }
+    }
+
+    @ViewBuilder private var buttons: some View {
+        HStack(spacing: .margin8) {
+            Button(action: {
+                viewModel.reject()
+                isPresented = false
+            }) {
+                Text("button.cancel".localized)
             }
-            .onReceive(viewModel.finishPublisher) {
-                HudHelper.instance.show(banner: viewModel.connected ? .disconnectedWalletConnect : .done)
-                presentationMode.wrappedValue.dismiss()
-            }
-            .onReceive(viewModel.errorPublisher) { error in
-                HudHelper.instance.show(banner: .error(string: error))
-            }
-            .onDisappear { viewModel.reject() }
-            .navigationTitle("wallet_connect.title".localized)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(action: {
-                        viewModel.reject()
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Image("close")
-                    }
+            .buttonStyle(PrimaryButtonStyle(style: .gray))
+            .disabled(viewModel.connecting)
+
+            Button(action: { viewModel.connect() }) {
+                HStack(spacing: .margin8) {
+                    if viewModel.connecting { ProgressView().progressViewStyle(.circular) }
+                    Text("button.connect".localized)
                 }
             }
+            .buttonStyle(PrimaryButtonStyle(style: .yellow))
+            .disabled(!viewModel.connectEnabled)
         }
     }
 
@@ -126,6 +144,12 @@ struct WCNConnectView: View {
             ForEach(Array(viewModel.blockchainTypes.prefix(6)), id: \.self) { type in
                 IconView(url: type.imageUrl, placeholderImage: "rectangle_placeholder", type: .circle, size: .iconSize24)
             }
+        }
+    }
+
+    private func activateScamProtection() {
+        Coordinator.shared.performAfterPurchase(premiumFeature: .scamProtection, page: .walletConnect, trigger: .getPremium) {
+            viewModel.refreshDefense()
         }
     }
 }

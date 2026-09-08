@@ -10,14 +10,16 @@ class WCNEvmSendHandler {
     private let request: WCNRequest
     private let evmKitWrapper: EvmKitWrapper
     private let responder: WCNResponder
+    private let accountName: String?
     private let decorator = EvmDecorator()
     private let evmFeeEstimator = EvmFeeEstimator()
 
-    init(payload: WCNEvmTransactionPayload, request: WCNRequest, evmKitWrapper: EvmKitWrapper, responder: WCNResponder) {
+    init(payload: WCNEvmTransactionPayload, request: WCNRequest, evmKitWrapper: EvmKitWrapper, responder: WCNResponder, accountName: String?) {
         self.payload = payload
         self.request = request
         self.evmKitWrapper = evmKitWrapper
         self.responder = responder
+        self.accountName = accountName
     }
 }
 
@@ -58,11 +60,16 @@ extension WCNEvmSendHandler: ISendHandler {
             nonce: transactionSettings?.nonce
         )
 
-        return WCNSendData(inner: inner, request: request)
+        var header: WCNSendHeader?
+        if case .approveEip20 = decoration.type {
+            header = WCNSendHeader(title: "wallet_connect.allowance.title".localized, description: "wallet_connect.allowance.description".localized(request.dAppName))
+        }
+        return WCNSendData(inner: WCNEvmSendData(evmSendData: inner), request: request, header: header, accountName: accountName)
     }
 
     func send(data: ISendData) async throws {
-        guard let data = (data as? WCNSendData)?.inner as? EvmSendData else {
+        guard !request.isBlocked else { throw SendError.blocked }
+        guard let data = ((data as? WCNSendData)?.inner as? WCNEvmSendData)?.evmSendData else {
             throw SendError.invalidData
         }
         guard let transactionData = data.transactionData else {
@@ -107,6 +114,7 @@ extension WCNEvmSendHandler: ISendHandler {
 
 extension WCNEvmSendHandler {
     enum SendError: Error {
+        case blocked
         case invalidData
         case noTransactionData
         case noGasPrice

@@ -46,13 +46,31 @@ struct WCNSendDataTests {
         #expect(data.canSend == false)
     }
 
-    @Test func appendsDAppSection() throws {
+    @Test func headerThenOneCardWithNetworkRow() throws {
         let data = try WCNSendData(inner: StubSendData(canSend: true), request: request(verdict: .pass))
         let sections = data.sections(baseToken: WCNSendDataTests.token, currency: currency, rates: [:])
 
         #expect(sections.count == 2)
+        #expect(sections[0].isList == false)
+        #expect((sections[0].fields[0].content as? WCNSendHeaderField)?.title == "wallet_connect.transaction.title".localized)
         #expect(sections[1].isMain == false)
-        #expect(sections[1].fields.count == 1)
+        #expect(sections[1].fields.count == 2)
+    }
+
+    @Test func walletRowFollowsNetworkWhenAccountNamed() throws {
+        let data = try WCNSendData(inner: StubSendData(canSend: true), request: request(verdict: .pass), accountName: "Main")
+        let sections = data.sections(baseToken: WCNSendDataTests.token, currency: currency, rates: [:])
+
+        #expect(sections[1].fields.count == 3)
+    }
+
+    @Test func headerFromHandlerOverridesTitle() throws {
+        let header = WCNSendHeader(title: "Token Allowance", description: "desc")
+        let data = try WCNSendData(inner: StubSendData(canSend: true), request: request(verdict: .pass), header: header)
+        let field = data.sections(baseToken: WCNSendDataTests.token, currency: currency, rates: [:])[0].fields[0].content as? WCNSendHeaderField
+
+        #expect(field?.title == "Token Allowance")
+        #expect(field?.description == "desc")
     }
 
     @Test func signOnlyRequestUsesSignButton() throws {
@@ -60,6 +78,10 @@ struct WCNSendDataTests {
         payload.stubSignOnly = true
         let data = try WCNSendData(inner: StubSendData(canSend: true), request: request(verdict: .pass, payload: payload))
         #expect(data.customSendButtonTitle == "button.sign".localized)
+
+        let field = data.sections(baseToken: WCNSendDataTests.token, currency: currency, rates: [:])[0].fields[0].content as? WCNSendHeaderField
+        #expect(field?.title == "wallet_connect.sign.request_title".localized)
+        #expect(field?.description == "wallet_connect.sign_transaction.description".localized("React App"))
     }
 }
 

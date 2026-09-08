@@ -21,6 +21,6 @@ class WCNStellarSendHandlerFactory: IWCNSendHandlerFactory {
             return nil
         }
 
-        return WCNStellarSendHandler(payload: payload, request: request, baseToken: baseToken, stellarKit: stellarKit, keyPair: keyPair, responder: responder)
+        return WCNStellarSendHandler(payload: payload, request: request, baseToken: baseToken, stellarKit: stellarKit, keyPair: keyPair, responder: responder, accountName: account.name)
     }
 }

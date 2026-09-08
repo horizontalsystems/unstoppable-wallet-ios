@@ -16,6 +16,7 @@ class WCNEvmSignMessageHandler: IWCNSignMessageHandler {
     }
 
     func sign(request: WCNRequest) async throws {
+        guard !request.isBlocked else { throw SignError.blocked }
         guard let payload = request.payload as? WCNEvmSignMessagePayload, let message = payload.message else {
             throw SignError.invalidPayload
         }
@@ -38,6 +39,7 @@ class WCNEvmSignMessageHandler: IWCNSignMessageHandler {
 
 extension WCNEvmSignMessageHandler {
     enum SignError: Error {
+        case blocked
         case invalidPayload
         case noSigner
     }

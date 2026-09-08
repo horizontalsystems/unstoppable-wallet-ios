@@ -21,6 +21,6 @@ class WCNSolanaSendHandlerFactory: IWCNSendHandlerFactory {
             return nil
         }
 
-        return WCNSolanaSendHandler(payload: payload, request: request, baseToken: baseToken, solanaKit: solanaKit, signer: signer, responder: responder)
+        return WCNSolanaSendHandler(payload: payload, request: request, baseToken: baseToken, solanaKit: solanaKit, signer: signer, responder: responder, accountName: account.name)
     }
 }

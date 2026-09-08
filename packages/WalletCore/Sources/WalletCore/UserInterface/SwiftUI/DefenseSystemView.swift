@@ -110,10 +110,13 @@ struct DefenseSystemView: View {
 }
 
 struct DefenseSystemHeader: View {
+    var icon: CustomStringConvertible = Image.defenseIcon
+    var title: String = "purchases.defense_system".localized
+
     var body: some View {
         HStack(spacing: 8) {
-            ThemeImage(Image.defenseIcon, size: 20)
-            ThemeText("purchases.defense_system".localized, style: .subhead, colorStyle: .primary)
+            ThemeImage(icon, size: 20)
+            ThemeText(title, style: .subhead, colorStyle: .primary)
             Spacer()
         }
     }

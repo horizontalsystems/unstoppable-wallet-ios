@@ -6,12 +6,14 @@ class WCNSolanaSendData: ISendData {
     private let payload: WCNSolanaTransactionPayload
     private let fee: Decimal?
     private let transactionError: Error?
+    private let summaries: [WCNSolanaTransactionSummary]
 
     init(token: Token, payload: WCNSolanaTransactionPayload, fee: Decimal?, transactionError: Error?) {
         self.token = token
         self.payload = payload
         self.fee = fee
         self.transactionError = transactionError
+        summaries = payload.rawTransactions.map { WCNSolanaTransactionSummary(rawTransaction: $0) }
     }
 
     var feeData: FeeData? { nil }
@@ -19,50 +21,53 @@ class WCNSolanaSendData: ISendData {
     var rateCoins: [Coin] { [token.coin] }
 
     func cautions(baseToken: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
-        guard let transactionError else {
-            return []
+        var cautions = [CautionNew]()
+
+        // a transaction the card cannot read is still signable, as on Android; the user is told they sign blind
+        if summaries.contains(where: \.opaque) {
+            cautions.append(CautionNew(title: "wallet_connect.solana.unreadable_transaction.title".localized, text: "wallet_connect.solana.unreadable_transaction.text".localized, type: .warning))
         }
 
-        if case let WCNSolanaSendHandler.TransactionError.insufficientBalance(balance) = transactionError {
-            let balanceString = AppValue(token: baseToken, value: balance).formattedShort() ?? ""
-            return [CautionNew(
-                title: "fee_settings.errors.insufficient_balance".localized,
-                text: "fee_settings.errors.insufficient_balance.info".localized(balanceString),
-                type: .error
-            )]
+        if let transactionError {
+            if case let WCNSolanaSendHandler.TransactionError.insufficientBalance(balance) = transactionError {
+                let balanceString = AppValue(token: baseToken, value: balance).formattedShort() ?? ""
+                cautions.append(CautionNew(
+                    title: "fee_settings.errors.insufficient_balance".localized,
+                    text: "fee_settings.errors.insufficient_balance.info".localized(balanceString),
+                    type: .error
+                ))
+            } else {
+                cautions.append(CautionNew(title: "ethereum_transaction.error.title".localized, text: transactionError.convertedError.smartDescription, type: .error))
+            }
         }
 
-        return [CautionNew(title: "ethereum_transaction.error.title".localized, text: transactionError.convertedError.smartDescription, type: .error)]
+        return cautions
     }
 
-    func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
-        var transactionFields = [SendField]()
+    func sections(baseToken: Token, currency _: Currency, rates _: [String: Decimal]) -> [SendDataSection] {
+        var fields = [SendField]()
 
         if payload.rawTransactions.count > 1 {
-            transactionFields.append(.simpleValue(title: "wallet_connect.request.transactions".localized, value: String(payload.rawTransactions.count)))
+            fields.append(.simpleValue(title: "wallet_connect.request.transactions".localized, value: String(payload.rawTransactions.count)))
         }
-        for signer in Set(payload.requiredSigners.flatMap { $0 }).sorted() {
-            transactionFields.append(.simpleValue(title: "wallet_connect.request.signer".localized, value: signer.shortened))
-        }
-
-        var sections = [SendDataSection(transactionFields)]
-
-        if let from = payload.from {
-            sections.append(SendDataSection([.simpleValue(title: WCNNamespace.solana.capitalized, value: from.shortened)], isMain: false))
+        for summary in summaries {
+            fields.append(contentsOf: summary.fields(baseToken: baseToken))
         }
 
-        if let fee {
-            let infoDescription = InfoDescription(title: "send.max_fee".localized, description: "fee_settings.network_fee.info".localized)
-            sections.append(SendDataSection([
-                .value(
-                    title: ComponentInformedTitle("send.max_fee".localized, info: infoDescription),
-                    appValue: AppValue(token: baseToken, value: fee),
-                    currencyValue: rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) },
-                    formatFull: true
-                ),
-            ], isMain: false))
-        }
+        return [SendDataSection(fields)]
+    }
 
-        return sections
+    func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
+        guard let fee else {
+            return []
+        }
+        return [
+            .value(
+                title: ComponentInformedTitle("send.confirmation.fee".localized, info: .fee),
+                appValue: AppValue(token: baseToken, value: fee),
+                currencyValue: rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) },
+                formatFull: true
+            ),
+        ]
     }
 }

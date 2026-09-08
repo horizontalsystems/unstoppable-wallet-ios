@@ -19,6 +19,6 @@ class WCNEvmSendHandlerFactory: IWCNSendHandlerFactory {
             return nil
         }
 
-        return WCNEvmSendHandler(payload: payload, request: request, evmKitWrapper: evmKitWrapper, responder: responder)
+        return WCNEvmSendHandler(payload: payload, request: request, evmKitWrapper: evmKitWrapper, responder: responder, accountName: account.name)
     }
 }

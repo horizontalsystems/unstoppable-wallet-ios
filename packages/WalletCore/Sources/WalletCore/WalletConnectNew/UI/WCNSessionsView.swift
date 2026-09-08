@@ -14,11 +14,8 @@ struct WCNSessionsView: View {
                         VStack(spacing: .margin16) {
                             ForEach(viewModel.items) { item in
                                 ListSection {
-                                    ClickableRow(action: {
-                                        Coordinator.shared.present { _ in
-                                            WCNConnectView(session: item.session)
-                                        }
-                                    }) {
+                                    // an approved session is never opened as a screen (parity with Android): the row only lists it
+                                    ListRow {
                                         KFImage.url(item.iconUrl)
                                             .resizable()
                                             .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }

@@ -10,10 +10,12 @@ class WCNSolanaSendHandler {
     private let solanaKit: SolanaKit.Kit
     private let signer: SolanaKit.Signer
     private let responder: WCNResponder
+    private let accountName: String?
 
     let baseToken: Token
 
-    init(payload: WCNSolanaTransactionPayload, request: WCNRequest, baseToken: Token, solanaKit: SolanaKit.Kit, signer: SolanaKit.Signer, responder: WCNResponder) {
+    init(payload: WCNSolanaTransactionPayload, request: WCNRequest, baseToken: Token, solanaKit: SolanaKit.Kit, signer: SolanaKit.Signer, responder: WCNResponder, accountName: String?) {
+        self.accountName = accountName
         self.payload = payload
         self.request = request
         self.baseToken = baseToken
@@ -34,10 +36,11 @@ extension WCNSolanaSendHandler: ISendHandler {
         }
 
         let inner = WCNSolanaSendData(token: baseToken, payload: payload, fee: fee, transactionError: transactionError)
-        return WCNSendData(inner: inner, request: request)
+        return WCNSendData(inner: inner, request: request, accountName: accountName)
     }
 
     func send(data _: ISendData) async throws {
+        guard !request.isBlocked else { throw SendError.blocked }
         switch payload.method {
         case WCNSolanaTransactionPayload.signMethod:
             guard let raw = payload.rawTransactions.first else {
@@ -70,6 +73,7 @@ extension WCNSolanaSendHandler: ISendHandler {
 
 extension WCNSolanaSendHandler {
     enum SendError: Error {
+        case blocked
         case invalidData
         case walletIsNotFeePayer
     }

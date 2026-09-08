@@ -33,7 +33,7 @@ class WCNRequestService {
         WCNLog.log("request service: parsed kind=\(payload.kind) from=\(payload.from ?? "nil") verdict=\(verdict)")
         logger?.debug("verdict \(verdict) for id=\(request.id.string)")
 
-        let wcnRequest = WCNRequest(payload: payload, verdict: verdict, dAppName: session.dAppName)
+        let wcnRequest = WCNRequest(payload: payload, verdict: verdict, dAppName: session.dAppName, dAppUrl: session.peerUrl, dAppIconUrl: session.peerIconUrl)
 
         switch payload.kind {
         case .transaction:

@@ -82,4 +82,41 @@ struct WCNEvmTransactionTests {
             try WCNEvmTransaction.parse(params: AnyCodable(any: [[String: String]]()))
         }
     }
+
+    @Test func negativeQuantityIsDroppedNotTrapped() throws {
+        var params = spikeParams
+        params[0]["nonce"] = "-1"
+        let transaction = try WCNEvmTransaction.parse(params: AnyCodable(any: params))
+        #expect(transaction.nonce == nil) // BigUInt rejects the sign, so no RLP BigUInt(-1) trap downstream
+    }
+
+    @Test func overflowingIntQuantityIsDroppedNotTrapped() throws {
+        var params = spikeParams
+        params[0]["gasPrice"] = "0x" + String(repeating: "f", count: 40) // far beyond Int.max
+        let transaction = try WCNEvmTransaction.parse(params: AnyCodable(any: params))
+        #expect(transaction.gasPrice == nil) // Int(exactly:) returns nil instead of trapping
+    }
+
+    @Test func overflowingValueStaysUnboundedBigUInt() throws {
+        var params = spikeParams
+        params[0]["value"] = "0x" + String(repeating: "f", count: 40)
+        let transaction = try WCNEvmTransaction.parse(params: AnyCodable(any: params))
+        #expect(transaction.value > BigUInt(UInt64.max))
+    }
+
+    @Test func oddLengthCalldataIsRejected() {
+        var params = spikeParams
+        params[0]["data"] = "0xabc"
+        #expect(throws: WCNEvmTransaction.ParsingError.malformedParams) {
+            try WCNEvmTransaction.parse(params: AnyCodable(any: params))
+        }
+    }
+
+    @Test func nonHexCalldataIsRejected() {
+        var params = spikeParams
+        params[0]["data"] = "0xzzzz"
+        #expect(throws: WCNEvmTransaction.ParsingError.malformedParams) {
+            try WCNEvmTransaction.parse(params: AnyCodable(any: params))
+        }
+    }
 }

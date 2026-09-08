@@ -35,6 +35,7 @@ public class AppManager {
     private let willResignActiveSubject = PassthroughSubject<Void, Never>()
     private let didEnterBackgroundSubject = PassthroughSubject<Void, Never>()
     private let willEnterForegroundSubject = PassthroughSubject<Void, Never>()
+    private let isActiveSubject = CurrentValueSubject<Bool, Never>(false)
 
     init(widgetRefresher: IWidgetRefresher?, accountManager: AccountManager, walletManager: WalletManager, adapterManager: AdapterManager, lockManager: LockManager,
          keychainManager: KeychainManager, passcodeLockManager: PasscodeLockManager,
@@ -112,6 +113,7 @@ public extension AppManager {
 
     func willResignActive() {
         willResignActiveSubject.send()
+        isActiveSubject.send(false)
 
         coverManager.willResignActive()
         rateAppManager.onResignActive()
@@ -119,6 +121,7 @@ public extension AppManager {
 
     func didBecomeActive() {
         didBecomeActiveSubject.send()
+        isActiveSubject.send(true)
         didBecomeActiveSubjectOld.onNext(())
 
         coverManager.didBecomeActive()
@@ -180,6 +183,14 @@ extension AppManager {
 
     var willEnterForegroundPublisher: AnyPublisher<Void, Never> {
         willEnterForegroundSubject.eraseToAnyPublisher()
+    }
+
+    var isActive: Bool {
+        isActiveSubject.value
+    }
+
+    var isActivePublisher: AnyPublisher<Bool, Never> {
+        isActiveSubject.eraseToAnyPublisher()
     }
 }
 

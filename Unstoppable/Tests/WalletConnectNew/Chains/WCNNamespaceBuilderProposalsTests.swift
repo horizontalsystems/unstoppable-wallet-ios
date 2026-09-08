@@ -41,6 +41,16 @@ struct WCNNamespaceBuilderProposalsTests {
         #expect(builder.proposals(required: [:], optional: optional, account: account).isEmpty)
     }
 
+    @Test func emptyNamespaceKeyIsSkippedNotCrashed() {
+        let optional = ["": WCNChainSupportFixtures.namespace(["eip155:1"], methods: ["personal_sign"], events: [])]
+        #expect(builder.proposals(required: [:], optional: optional, account: account).isEmpty)
+    }
+
+    @Test func colonOnlyNamespaceKeyIsSkippedNotCrashed() {
+        let optional = [":": WCNChainSupportFixtures.namespace(["eip155:1"], methods: ["personal_sign"], events: [])]
+        #expect(builder.proposals(required: [:], optional: optional, account: account).isEmpty)
+    }
+
     @Test func unsupportedChainIsSkipped() {
         let optional = ["eip155": WCNChainSupportFixtures.namespace(["eip155:999", "eip155:56"], methods: ["personal_sign"], events: [])]
         let proposals = builder.proposals(required: [:], optional: optional, account: account)

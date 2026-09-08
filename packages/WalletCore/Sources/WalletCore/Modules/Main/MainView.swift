@@ -54,9 +54,7 @@ struct MainView: View {
                 }
             }
             .navigationDestination(isPresented: $walletConnectPresented) {
-                WalletConnectListView()
-                    .navigationTitle("wallet_connect_list.title".localized)
-                    .ignoresSafeArea()
+                WCNSessionsView()
                     .onFirstAppear {
                         stat(page: .settings, event: .open(page: .walletConnect))
                     }

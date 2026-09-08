@@ -39,8 +39,12 @@ enum WCNPresenter {
     static func present(proposal item: WCNProposalItem) {
         WCNLog.log("presenter: present proposal \(item.proposal.id) verify=\(item.verifyState) chains=\(item.blockchainProposals.count)")
         hideWaiting()
-        Coordinator.shared.present { _ in
-            WCNConnectView(item: item)
+        let viewModel = WCNConnectViewModel(item: item)
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            WCNConnectView(viewModel: viewModel, isPresented: isPresented)
+        } onDismiss: {
+            // reject on any dismissal (swipe/cancel); a no-op once connect finished (guarded by `finished`)
+            viewModel.reject()
         }
     }
 
@@ -48,12 +52,16 @@ enum WCNPresenter {
         WCNLog.log("presenter: present request \(item.requestId.string) result=\(item.result)")
         switch item.result {
         case let .transaction(_, sendData):
-            Coordinator.shared.present { _ in
-                WCNSendView(item: item, sendData: sendData)
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                WCNSendSheetView(item: item, sendData: sendData, isPresented: isPresented)
+            } onDismiss: {
+                Core.shared.walletConnectNew?.startedKit?.notifyRequestDismissed()
             }
         case .signMessage:
-            Coordinator.shared.present { _ in
-                WCNSignMessageView(item: item)
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                WCNSignMessageSheetView(item: item, isPresented: isPresented)
+            } onDismiss: {
+                Core.shared.walletConnectNew?.startedKit?.notifyRequestDismissed()
             }
         case .direct, .rejected:
             ()

@@ -5,6 +5,7 @@
 "button.confirm" = "Confirm";
 "button.continue" = "Continue";
 "button.done" = "Done";
+"button.back" = "Back";
 "button.reset" = "Reset";
 "button.import" = "Import";
 "button.next" = "Next";
@@ -2012,6 +2013,7 @@
 "wallet_connect.main.premium_alert.subtitle.risky" = "This site is not verified. Connecting could expose you to phishing and loss of funds.";
 "wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check failed. Connection allowed, but domain may be unsafe.";
 "wallet_connect.scam_protection" = "Scam Protection";
+"wallet_connect.dapp_check" = "dApp Check";
 "wallet_connect.scam_protection.deactivated" = "Deactivated";
 "wallet_connect.scam_protection.risky" = "Risky";
 "wallet_connect.scam_protection.secure" = "Secure";
@@ -2037,11 +2039,20 @@
 "wallet_connect.request_title" = "Contract Call";
 "wallet_connect.button.confirm" = "Confirm";
 "wallet_connect.sign.request_title" = "Sign Request";
+"wallet_connect.transaction.title" = "Confirm Transaction";
+"wallet_connect.sign_transaction.title" = "Sign Transaction";
+"wallet_connect.allowance.title" = "Token Allowance";
+"wallet_connect.allowance.description" = "%@ will be able to move these tokens on your behalf.";
+"wallet_connect.allowance.amount" = "Allowance Amount";
 "wallet_connect.sign.domain" = "Domain";
 "wallet_connect.sign.dapp_name" = "dApp";
-"wallet_connect.sign.message" = "Message to sign";
+"wallet_connect.sign.message" = "Message";
 "wallet_connect.request.transactions" = "Transactions";
 "wallet_connect.request.signer" = "Signer";
+"wallet_connect.solana.method_transfer" = "Transfer";
+"wallet_connect.solana.value" = "Value";
+"wallet_connect.solana.unreadable_transaction.title" = "Unreadable transaction";
+"wallet_connect.solana.unreadable_transaction.text" = "This transaction's details could not be decoded, so you cannot see what it does: the recipient, amount and programs are hidden. Only continue if you fully trust this app.";
 "wallet_connect.verdict.token_swap_native_value" = "This token swap also sends native coins";
 "wallet_connect.verdict.swap_router_unsupported" = "1inch is not supported on %@";
 "wallet_connect.verdict.swap_not_canonical_router" = "1inch swap is not addressed to the official router";
@@ -2056,6 +2067,7 @@
 "wallet_connect.verdict.eth_sign_blind_hash" = "eth_sign over a raw 32-byte hash is blind signing";
 "wallet_connect.verdict.eth_sign_unreadable" = "eth_sign message is not readable text";
 "wallet_connect.verdict.solana_message_is_transaction" = "This message is a transaction in disguise, signing it would authorize it";
+"wallet_connect.verdict.solana_message_unreadable" = "solana_signMessage message is not readable text";
 "wallet_connect.verdict.permit_unlimited" = "Signing lets %@ move any amount of this token from your wallet at any time until the allowance is revoked";
 "wallet_connect.sign_transaction.description" = "%@ will receive the signed transaction and can broadcast it at any time.";
 "wallet_connect.connect.title" = "Connect to %@";
@@ -2087,6 +2099,11 @@
 "wallet_connect.error.invalid_url.description" = "Unable to connect using this link. Please double-check it and try again.";
 "wallet_connect.error.request_failed.title" = "Request Failed";
 "wallet_connect.error.request_failed.description" = "Something went wrong and the request couldn't be completed";
+"wallet_connect.verify.mismatch.title" = "Impersonation Detected!";
+"wallet_connect.verify.mismatch.text" = "This request comes from %@, which does not match the site it claims to be. This is a common phishing technique.";
+"wallet_connect.verify.mismatch.no_origin" = "This request comes from a different site than the one it claims to be. This is a common phishing technique.";
+"wallet_connect.verify.unknown.title" = "Unverified Site";
+"wallet_connect.verify.unknown.text" = "The identity of this site could not be confirmed. Check the address carefully before connecting.";
 "button.try_again" = "Try Again";
 
 "wallet_connect.send.transaction" = "Send Transaction";

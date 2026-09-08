@@ -4,14 +4,18 @@ import MarketKit
 import ReownWalletKit
 import WalletConnectUtils
 
-// One screen for both a pending proposal and an approved session, as Android WCSessionSheet
+// The connect (proposal) screen. An approved session is never opened as a screen (parity with Android),
+// so this view model only ever describes a pending proposal.
 class WCNConnectViewModel: ObservableObject {
-    private enum Mode {
-        case proposal(WCNProposalItem)
-        case session(WCNSessionItem)
+    enum DAppCheck {
+        case locked // scam protection off: tapping the row opens the purchase flow
+        case secure
+        case risky
+        case unavailable
+        case hidden // still loading, nothing to show yet
     }
 
-    private let mode: Mode
+    private let item: WCNProposalItem
     private let manager: WCNManager?
     private let accountManager = Core.shared.accountManager
 
@@ -21,6 +25,8 @@ class WCNConnectViewModel: ObservableObject {
     let accountName: String?
     let blockchainTypes: [BlockchainType]
     let unsupported: Bool
+    // protocol origin attestation shown on top (Android VerificationAlert); nil = nothing to report
+    let verificationCaution: CautionNew?
 
     @Published private(set) var defenseState: WCNDefenseState = .disabled
     @Published private(set) var connecting = false
@@ -29,27 +35,19 @@ class WCNConnectViewModel: ObservableObject {
     private let errorSubject = PassthroughSubject<String, Never>()
     private(set) var finished = false
 
-    convenience init(item: WCNProposalItem) {
-        let proposer = item.proposal.proposer
-        self.init(mode: .proposal(item), name: proposer.name, url: proposer.url, iconUrl: proposer.icons.first, chains: item.blockchainProposals.map(\.chain))
-    }
-
-    convenience init(session: WCNSessionItem) {
-        self.init(mode: .session(session), name: session.dAppName, url: session.peer?.url ?? "", iconUrl: session.peer?.icons.first, chains: session.namespaces.accounts.map(\.blockchain))
-    }
-
-    private init(mode: Mode, name: String, url: String, iconUrl: String?, chains: [WalletConnectUtils.Blockchain]) {
-        self.mode = mode
+    init(item: WCNProposalItem) {
+        self.item = item
         manager = Core.shared.walletConnectNew
 
-        dAppName = name
-        dAppHost = URLComponents(string: url)?.host ?? url
-        self.iconUrl = iconUrl
+        let proposer = item.proposal.proposer
+        dAppName = proposer.name
+        dAppHost = URLComponents(string: proposer.url)?.host ?? proposer.url
+        iconUrl = proposer.icons.first
         accountName = accountManager.activeAccount?.name
 
         let registry = manager?.chainSupportRegistry
         var types = [BlockchainType]()
-        for chain in chains {
+        for chain in item.blockchainProposals.map(\.chain) {
             if let type = registry?.support(namespace: chain.namespace)?.blockchainType(chain: chain), !types.contains(type) {
                 types.append(type)
             }
@@ -57,23 +55,45 @@ class WCNConnectViewModel: ObservableObject {
         blockchainTypes = types
 
         let kit = try? manager?.kit()
-        switch mode {
-        case let .proposal(item):
-            unsupported = item.blockchainProposals.isEmpty || kit?.validationError(for: item.proposal) != nil
-            defenseState = kit?.defenseState(context: item.context) ?? .disabled
-        case .session:
-            unsupported = false
-            defenseState = kit?.defenseState(peerUrl: url) ?? .disabled
+        unsupported = item.blockchainProposals.isEmpty || kit?.validationError(for: item.proposal) != nil
+        defenseState = kit?.defenseState(context: item.context) ?? .disabled
+        verificationCaution = Self.verificationCaution(for: item.verifyState, origin: item.context?.origin)
+
+        WCNLog.log("connect vm: \(dAppName) host=\(dAppHost) account=\(accountName ?? "nil") types=\(types.map(\.uid)) unsupported=\(unsupported) defense=\(defenseState)")
+    }
+
+    // scam and mismatch are red, an unverified origin is a yellow caution; a valid origin shows nothing
+    private static func verificationCaution(for state: WCNVerifyState, origin: String?) -> CautionNew? {
+        switch state {
+        case .scam:
+            return CautionNew(title: "wallet_connect.defense.scam.title".localized, text: "wallet_connect.defense.scam.text".localized, type: .error)
+        case .invalid:
+            let host = origin.flatMap { URLComponents(string: $0)?.host }
+            let text = host.map { "wallet_connect.verify.mismatch.text".localized($0) } ?? "wallet_connect.verify.mismatch.no_origin".localized
+            return CautionNew(title: "wallet_connect.verify.mismatch.title".localized, text: text, type: .error)
+        case .unknown:
+            return CautionNew(title: "wallet_connect.verify.unknown.title".localized, text: "wallet_connect.verify.unknown.text".localized, type: .warning)
+        case .verified, .trusted:
+            return nil
         }
-        WCNLog.log("connect vm: \(dAppName) connected=\(connected) host=\(dAppHost) account=\(accountName ?? "nil") types=\(types.map(\.uid)) unsupported=\(unsupported) defense=\(defenseState)")
     }
 
     var finishPublisher: AnyPublisher<Void, Never> { finishSubject.eraseToAnyPublisher() }
     var errorPublisher: AnyPublisher<String, Never> { errorSubject.eraseToAnyPublisher() }
 
-    var connected: Bool {
-        if case .session = mode { return true }
-        return false
+    var dAppCheck: DAppCheck {
+        switch defenseState {
+        case .disabled: return .locked
+        case .loading: return .hidden
+        case .notAvailable: return .unavailable
+        case .safe: return .secure
+        case .danger, .scam: return .risky
+        }
+    }
+
+    // the premium "Danger!" plaque; scam is surfaced by the top alert instead, so it is never doubled here
+    var showDanger: Bool {
+        defenseState == .danger
     }
 
     var connectEnabled: Bool {
@@ -82,14 +102,11 @@ class WCNConnectViewModel: ObservableObject {
 
     func refreshDefense() {
         guard let kit = try? manager?.kit() else { return }
-        switch mode {
-        case let .proposal(item): defenseState = kit.defenseState(context: item.context)
-        case let .session(session): defenseState = kit.defenseState(peerUrl: session.peer?.url ?? "")
-        }
+        defenseState = kit.defenseState(context: item.context)
     }
 
     func connect() {
-        guard case let .proposal(item) = mode, let kit = try? manager?.kit() else { return }
+        guard let kit = try? manager?.kit() else { return }
         WCNLog.log("connect vm: connect tapped")
         connecting = true
 
@@ -103,23 +120,8 @@ class WCNConnectViewModel: ObservableObject {
         }
     }
 
-    func disconnect() {
-        guard case let .session(session) = mode, let kit = manager?.startedKit else { return }
-        WCNLog.log("connect vm: disconnect tapped")
-        connecting = true
-
-        Task { [weak self] in
-            do {
-                try await kit.disconnect(topic: session.topic)
-                await self?.finish()
-            } catch {
-                await self?.fail(error)
-            }
-        }
-    }
-
     func reject() {
-        guard case let .proposal(item) = mode, !finished, let kit = try? manager?.kit() else { return }
+        guard !finished, let kit = try? manager?.kit() else { return }
         WCNLog.log("connect vm: reject")
         finished = true
         Task {

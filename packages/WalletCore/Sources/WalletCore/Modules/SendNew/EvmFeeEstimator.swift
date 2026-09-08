@@ -21,7 +21,7 @@ struct EvmFeeEstimator {
         }
 
         let txAmount = transactionData.value
-        let feeAmount = BigUInt(gasLimit * gasPrice.max)
+        let feeAmount = BigUInt(gasLimit) * BigUInt(gasPrice.max)
         var totalAmount = txAmount + feeAmount
 
         var l1Fee: BigUInt?
@@ -42,7 +42,7 @@ struct EvmFeeEstimator {
 
             var additionalGasLimit = Int(Double(gasLimit) / 100.0 * Self.surchargePercent)
 
-            if remainingBalance < BigUInt(additionalGasLimit * gasPrice.max) {
+            if remainingBalance < BigUInt(additionalGasLimit) * BigUInt(gasPrice.max) {
                 additionalGasLimit = Int((remainingBalance / BigUInt(gasPrice.max)).description) ?? 0
             }
 

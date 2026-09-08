@@ -58,7 +58,8 @@ private final class SpyKitFactory: IWCNKitFactory {
             verifyService: WCNVerifyService(),
             namespaceBuilder: WCNNamespaceBuilder(registry: WCNChainSupportRegistry()),
             accountProvider: accounts,
-            lockProvider: NeverLocked()
+            lockProvider: NeverLocked(),
+            foregroundProvider: WCNStubForegroundProvider(isActive: true)
         )
     }
 }

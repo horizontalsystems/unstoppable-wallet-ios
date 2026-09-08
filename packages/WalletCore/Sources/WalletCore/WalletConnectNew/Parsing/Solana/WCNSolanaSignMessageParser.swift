@@ -19,6 +19,10 @@ class WCNSolanaSignMessageParser: IWCNParser {
         guard (try? SolanaKit.PublicKey(params.pubkey)) != nil else {
             throw ParsingError.malformedParams
         }
+        // bound the message before the O(n²) Base58 decode
+        guard params.message.count <= WCNSolanaLimits.maxParamsLength else {
+            throw ParsingError.malformedParams
+        }
 
         return WCNSolanaSignMessagePayload(request: request, publicKey: params.pubkey, message: HsCryptoKit.Base58.decode(params.message))
     }

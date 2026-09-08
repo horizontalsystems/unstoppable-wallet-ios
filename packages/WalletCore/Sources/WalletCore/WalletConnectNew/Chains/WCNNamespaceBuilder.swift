@@ -23,7 +23,9 @@ class WCNNamespaceBuilder {
 
     func validate(required: [String: ProposalNamespace], selected: [WCNBlockchainProposal]) throws {
         for (key, namespace) in required {
-            let namespaceName = Self.namespaceName(key: key)
+            guard let namespaceName = Self.namespaceName(key: key) else {
+                throw ValidationError.requiredNamespaceUnsupported(key)
+            }
             let selectedInNamespace = selected.filter { $0.chain.namespace == namespaceName }
 
             guard !selectedInNamespace.isEmpty else {
@@ -61,7 +63,7 @@ class WCNNamespaceBuilder {
     }
 
     private func append(key: String, namespace: ProposalNamespace, required: Bool, account: Account, into proposals: inout [WCNBlockchainProposal]) {
-        guard let support = registry.support(namespace: Self.namespaceName(key: key)) else {
+        guard let namespaceName = Self.namespaceName(key: key), let support = registry.support(namespace: namespaceName) else {
             return
         }
 
@@ -93,8 +95,9 @@ class WCNNamespaceBuilder {
         return [WalletConnectUtils.Blockchain(key)].compactMap { $0 }
     }
 
-    private static func namespaceName(key: String) -> String {
-        String(key.split(separator: ":", maxSplits: 1)[0])
+    // a malformed optional-namespace key ("" or ":") must not crash: return nil and let callers skip it
+    private static func namespaceName(key: String) -> String? {
+        key.split(separator: ":", maxSplits: 1).first.map(String.init)
     }
 
     private static func sorted(_ namespaces: [String: ProposalNamespace]) -> [(String, ProposalNamespace)] {

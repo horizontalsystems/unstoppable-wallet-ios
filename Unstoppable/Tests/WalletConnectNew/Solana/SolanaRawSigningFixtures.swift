@@ -24,13 +24,16 @@ enum SolanaRawSigningFixtures {
 }
 
 extension SolanaRawSigningFixtures {
-    // minimal legacy transaction: given signer keys + system program, one empty instruction, zero signatures
-    static func rawTransaction(signerKeys: [Data]) -> Data {
+    // minimal legacy transaction: given signer keys + one program, one instruction, zero signatures
+    static func rawTransaction(signerKeys: [Data], programKey: Data = Data(repeating: 0, count: 32), accountIndices: [UInt8] = [0], instructionData: Data = Data()) -> Data {
         var message = Data([UInt8(signerKeys.count), 0, 1, UInt8(signerKeys.count + 1)])
         signerKeys.forEach { message.append($0) }
-        message.append(Data(repeating: 0, count: 32))
+        message.append(programKey)
         message.append(Data(repeating: 0x11, count: 32))
-        message.append(contentsOf: [1, UInt8(signerKeys.count), 1, 0, 0])
+        message.append(contentsOf: [1, UInt8(signerKeys.count), UInt8(accountIndices.count)])
+        message.append(contentsOf: accountIndices)
+        message.append(UInt8(instructionData.count))
+        message.append(instructionData)
 
         var transaction = Data([UInt8(signerKeys.count)])
         transaction.append(Data(repeating: 0, count: 64 * signerKeys.count))

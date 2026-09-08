@@ -1,3 +1,4 @@
+import BigInt
 import WalletConnectSign
 
 class WCNEvmWalletChainParser: IWCNParser {
@@ -13,7 +14,8 @@ class WCNEvmWalletChainParser: IWCNParser {
         }
 
         guard let chainId = (try? request.params.get([Params].self))?.first?.chainId,
-              let targetChainId = Int(chainId.hasPrefix("0x") ? String(chainId.dropFirst(2)) : chainId, radix: 16)
+              let value = BigUInt(chainId.hasPrefix("0x") ? String(chainId.dropFirst(2)) : chainId, radix: 16),
+              let targetChainId = Int(exactly: value)
         else {
             throw ParsingError.malformedParams
         }

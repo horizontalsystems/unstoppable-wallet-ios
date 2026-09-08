@@ -13,6 +13,7 @@ enum WCNVerdictReason: Equatable {
     case ethSignBlindHash
     case ethSignUnreadable
     case solanaMessageIsTransaction
+    case solanaMessageUnreadable
     case permitUnlimitedAllowance(spender: String)
 
     var text: String {
@@ -31,6 +32,7 @@ enum WCNVerdictReason: Equatable {
         case .ethSignBlindHash: return "wallet_connect.verdict.eth_sign_blind_hash".localized
         case .ethSignUnreadable: return "wallet_connect.verdict.eth_sign_unreadable".localized
         case .solanaMessageIsTransaction: return "wallet_connect.verdict.solana_message_is_transaction".localized
+        case .solanaMessageUnreadable: return "wallet_connect.verdict.solana_message_unreadable".localized
         case let .permitUnlimitedAllowance(spender): return "wallet_connect.verdict.permit_unlimited".localized(spender)
         }
     }

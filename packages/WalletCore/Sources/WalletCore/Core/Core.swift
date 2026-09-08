@@ -463,26 +463,6 @@ public class Core {
 
         purchaseManager = PurchaseManager(localStorage: localStorage)
 
-        if AppEventHandlerFactory.resolved().contains(.walletConnectNew) {
-            // both stacks subscribe to the same WalletKit instance and would answer the same requests
-            assert(!AppEventHandlerFactory.resolved().contains(.walletConnect), "walletConnect and walletConnectNew handlers cannot be registered together")
-            walletConnectNew = try WCNManager.instance(
-                dbPool: dbPool,
-                evmBlockchainManager: evmBlockchainManager,
-                stellarKitManager: stellarKitManager,
-                solanaKitManager: solanaKitManager,
-                accountManager: accountManager,
-                coinManager: coinManager,
-                lockManager: lockManager,
-                securityManager: securityManager,
-                purchaseManager: purchaseManager,
-                networkManager: networkManager,
-                logger: logger
-            )
-        } else {
-            walletConnectNew = nil
-        }
-
         recentAddressStorage = try RecentAddressStorage(dbPool: dbPool)
 
         let statStorage = StatStorage(dbPool: dbPool)
@@ -572,6 +552,27 @@ public class Core {
             moneroNodeManager: moneroNodeManager,
             zcashNodeAutoSelector: zcashNodeAutoSelector
         )
+
+        if AppEventHandlerFactory.resolved().contains(.walletConnectNew) {
+            // both stacks subscribe to the same WalletKit instance and would answer the same requests
+            assert(!AppEventHandlerFactory.resolved().contains(.walletConnect), "walletConnect and walletConnectNew handlers cannot be registered together")
+            walletConnectNew = try WCNManager.instance(
+                dbPool: dbPool,
+                evmBlockchainManager: evmBlockchainManager,
+                stellarKitManager: stellarKitManager,
+                solanaKitManager: solanaKitManager,
+                accountManager: accountManager,
+                coinManager: coinManager,
+                lockManager: lockManager,
+                appManager: appManager,
+                securityManager: securityManager,
+                purchaseManager: purchaseManager,
+                networkManager: networkManager,
+                logger: logger
+            )
+        } else {
+            walletConnectNew = nil
+        }
 
         appWorkerRegistry = AppWorkerRegistry(appManager: appManager)
         appWorkerRegistry.register(provider: openCryptoPay.proofWorkerProvider)

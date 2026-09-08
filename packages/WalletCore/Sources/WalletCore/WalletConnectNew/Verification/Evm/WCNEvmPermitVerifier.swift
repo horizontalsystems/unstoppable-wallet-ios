@@ -37,7 +37,7 @@ class WCNEvmPermitVerifier: IWCNVerifier {
 
     private static func amount(_ json: JSON?) -> BigUInt? {
         if let number = json?.doubleValue {
-            return BigUInt(number)
+            return BigUInt(exactly: number)
         }
         guard let string = json?.stringValue else {
             return nil
