@@ -6,6 +6,8 @@ struct WCSendSheetView: View {
     @StateObject private var sendViewModel: SendViewModel
     @Binding private var isPresented: Bool
     @State private var finished = false
+    // decoded rows shown immediately while the fee is estimated, so the sheet opens full (Android parity)
+    @State private var previewData: ISendData?
 
     init(item: WCRequestItem, sendData: SendData, isPresented: Binding<Bool>) {
         self.item = item
@@ -24,6 +26,16 @@ struct WCSendSheetView: View {
         .onReceive(sendViewModel.errorPublisher) { error in
             HudHelper.instance.show(banner: .error(string: error))
         }
+        .onFirstAppear {
+            previewData = (sendViewModel.handler as? IWCPreviewSendHandler)?.previewSendData()
+            // seed the fee-token rate from the local cache so the preview fee already shows fiat; the
+            // view model's async syncRates refreshes it shortly after
+            if sendViewModel.rates.isEmpty, let baseToken = sendViewModel.handler?.baseToken {
+                sendViewModel.rates = Core.shared.marketKit
+                    .coinPriceMap(coinUids: [baseToken.coin.uid], currencyCode: sendViewModel.currency.code)
+                    .mapValues(\.value)
+            }
+        }
         .onDisappear {
             // a blocked request is answered with an error as soon as the sheet goes away
             if !finished, item.request?.isBlocked == true { reject() }
@@ -34,7 +46,7 @@ struct WCSendSheetView: View {
     @ViewBuilder private var content: some View {
         switch sendViewModel.state {
         case .syncing, .success:
-            if let sendData = sendViewModel.sendData, let handler = sendViewModel.handler {
+            if let sendData = sendViewModel.sendData ?? previewData, let handler = sendViewModel.handler {
                 sectionViews(sendData: sendData, handler: handler)
             } else {
                 ProgressView()
@@ -62,7 +74,10 @@ struct WCSendSheetView: View {
             }
         }
 
-        let cautions = sendViewModel.cautions
+        // cautions from the displayed data (preview or synced), not sendViewModel.cautions — the latter is
+        // gated on the synced sendData, so the insufficient-balance / trustline alert would appear only
+        // after the sync and grow the fixed-size bottom sheet
+        let cautions = sendData.cautions(baseToken: handler.baseToken, currency: sendViewModel.currency, rates: sendViewModel.rates)
         ForEach(cautions.indices, id: \.self) { index in
             AlertCardView(caution: cautions[index])
                 .padding(.horizontal, .margin16)
@@ -83,7 +98,12 @@ struct WCSendSheetView: View {
 
             switch sendViewModel.state {
             case .syncing:
-                EmptyView()
+                // shown disabled (not hidden) so the button row stays put while the fee estimates
+                Button(action: {}) {
+                    Text((previewData ?? sendViewModel.sendData)?.customSendButtonTitle ?? "wallet_connect.button.confirm".localized)
+                }
+                .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                .disabled(true)
             case .success:
                 Button(action: { send() }) {
                     HStack(spacing: .margin8) {

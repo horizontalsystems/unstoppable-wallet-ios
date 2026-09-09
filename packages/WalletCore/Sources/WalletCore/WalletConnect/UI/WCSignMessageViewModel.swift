@@ -35,7 +35,7 @@ class WCSignMessageViewModel: ObservableObject {
         dAppName = item.session.dAppName
         let peer = manager?.startedKit?.sessions.first { $0.topic == item.session.topic }?.peer
         dAppHost = peer.map { URLComponents(string: $0.url)?.host ?? $0.url }
-        iconUrl = peer?.icons.first
+        iconUrl = peer?.icons.last
         isBlocked = request?.isBlocked ?? true
 
         var rows = [Row]()

@@ -31,17 +31,41 @@ extension WCStellarSendHandler: ISendHandler {
             throw SendError.invalidData
         }
 
+        // the trustline pre-flight is the only async part; run it and fold it into the otherwise-sync build
+        let trustlineError = payload.isSignOnly ? nil : await noTrustlineError(operations: transaction.operations)
+        return makeSendData(transaction: transaction, extraError: trustlineError)
+    }
+
+    // Synchronous build (XDR parse, fee and reserve-aware balance are local), so the preview opens the
+    // sheet complete; `extraError` carries the async trustline result (nil for the preview).
+    private func makeSendData(transaction: stellarsdk.Transaction, extraError: Error?) -> ISendData {
         if payload.isSignOnly {
             let inner = WCStellarSignData(xdr: payload.xdr, transaction: transaction, sourceAccountId: payload.from ?? "")
             return WCSendData(inner: inner, request: request, accountName: accountName)
         }
 
         let fee = Decimal(transaction.fee) / pow(10, baseToken.decimals)
-        let balance = stellarKit.account?.assetBalanceMap[.native]?.balance ?? 0
-        let transactionError: Error? = balance < fee ? TransactionError.insufficientBalance(balance: balance) : nil
+        // reserve-aware balance (matches StellarSendHelper), so the fee check can't pass while dipping
+        // below the account's minimum-balance reserve
+        let balance = stellarKit.account?.availableBalance ?? 0
+        let transactionError: Error? = balance < fee ? TransactionError.insufficientBalance(balance: balance) : extraError
 
         let inner = WCStellarSubmitData(token: baseToken, xdr: payload.xdr, transaction: transaction, sourceAccountId: payload.from ?? "", fee: fee, transactionError: transactionError)
         return WCSendData(inner: inner, request: request, accountName: accountName)
+    }
+
+    // Pre-flight (mirrors StellarSendHelper.preparePayment): a payment of a non-native asset needs the
+    // destination to already hold a trustline for it; Horizon rejects otherwise, so warn up front.
+    private func noTrustlineError(operations: [stellarsdk.Operation]) async -> Error? {
+        for case let payment as stellarsdk.PaymentOperation in operations {
+            guard payment.asset.type != AssetType.ASSET_TYPE_NATIVE else { continue }
+            let asset = StellarKit.Asset.asset(code: payment.asset.code ?? "", issuer: payment.asset.issuer?.accountId ?? "")
+            let destination = try? await StellarKit.Kit.account(accountId: payment.destinationAccountId)
+            if destination?.assetBalanceMap[asset] == nil {
+                return TransactionError.noTrustline
+            }
+        }
+        return nil
     }
 
     func send(data: ISendData) async throws {
@@ -59,6 +83,15 @@ extension WCStellarSendHandler: ISendHandler {
     }
 }
 
+extension WCStellarSendHandler: IWCPreviewSendHandler {
+    func previewSendData() -> ISendData? {
+        guard let transaction = try? stellarKit.transaction(transactionEnvelope: payload.xdr) else {
+            return nil
+        }
+        return makeSendData(transaction: transaction, extraError: nil)
+    }
+}
+
 extension WCStellarSendHandler {
     enum SendError: Error {
         case blocked
@@ -67,5 +100,6 @@ extension WCStellarSendHandler {
 
     enum TransactionError: Error {
         case insufficientBalance(balance: Decimal)
+        case noTrustline
     }
 }

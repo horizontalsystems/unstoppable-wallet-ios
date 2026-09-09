@@ -69,6 +69,14 @@ class WCStellarSubmitData: WCStellarData, ISendData {
             )]
         }
 
+        if case WCStellarSendHandler.TransactionError.noTrustline = transactionError {
+            return [CautionNew(
+                title: "send.stellar.no_trustline.title".localized,
+                text: "send.stellar.no_trustline.description".localized,
+                type: .error
+            )]
+        }
+
         return [CautionNew(title: "ethereum_transaction.error.title".localized, text: transactionError.convertedError.smartDescription, type: .error)]
     }
 

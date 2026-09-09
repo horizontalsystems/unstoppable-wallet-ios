@@ -42,7 +42,7 @@ class WCConnectViewModel: ObservableObject {
         let proposer = item.proposal.proposer
         dAppName = proposer.name
         dAppHost = URLComponents(string: proposer.url)?.host ?? proposer.url
-        iconUrl = proposer.icons.first
+        iconUrl = proposer.icons.last
         accountName = accountManager.activeAccount?.name
 
         let registry = manager?.chainSupportRegistry
@@ -59,7 +59,7 @@ class WCConnectViewModel: ObservableObject {
         defenseState = kit?.defenseState(context: item.context) ?? .disabled
         verificationCaution = Self.verificationCaution(for: item.verifyState, origin: item.context?.origin)
 
-        WCLog.log("connect vm: \(dAppName) host=\(dAppHost) account=\(accountName ?? "nil") types=\(types.map(\.uid)) unsupported=\(unsupported) defense=\(defenseState)")
+        WCLog.log("connect vm: \(dAppName) host=\(dAppHost) account=\(accountName ?? "nil") types=\(types.map(\.uid)) unsupported=\(unsupported) defense=\(defenseState) icons=\(proposer.icons)")
     }
 
     // scam and mismatch are red, an unverified origin is a yellow caution; a valid origin shows nothing

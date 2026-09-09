@@ -324,23 +324,17 @@ public struct HexField: SendFieldContent {
     }
 
     @ViewBuilder @MainActor public func listRow() -> some View {
-        ListRow {
-            Text(title).textSubhead2()
-
-            Spacer()
-
-            Text(value)
-                .textSubhead1(color: .themeLeah)
-                .lineLimit(3)
-                .truncationMode(.middle)
-
-            Button(action: {
-                CopyHelper.copyAndNotify(value: value)
-            }) {
-                Image("copy_20").renderingMode(.template)
+        Cell(
+            style: .secondary,
+            middle: {
+                MiddleTextIcon(text: title)
+            },
+            right: {
+                RightButtonText(text: ComponentText(text: value.shortened, colorStyle: .primary), textStyle: .subhead, icon: "copy_filled") {
+                    CopyHelper.copyAndNotify(value: value)
+                }
             }
-            .buttonStyle(SecondaryCircleButtonStyle(style: .default))
-        }
+        )
     }
 }
 
@@ -394,7 +388,7 @@ extension SendField {
         private func formatted(full: Bool, showCode: Bool = true) -> String? {
             switch self {
             case let .regular(appValue): return full ? appValue.formattedFull(showCode: showCode) : appValue.formattedShort()
-            case let .infinity(code): return "swap.unlock.unlimited".localized + (showCode ? "\(code)" : "")
+            case let .infinity(code): return "∞" + (showCode ? " \(code)" : "")
             case let .withoutAmount(code): return "\(code)"
             }
         }

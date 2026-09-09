@@ -31,20 +31,43 @@ extension WCEvmSendHandler: ISendHandler {
     }
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
-        let transactionData = payload.transaction.transactionData
-        let gasPriceData = transactionSettings?.gasPriceData
+        // Prefer the service gas price once it arrives, but fall back to the dApp's own gas price so the
+        // fee renders without waiting for the service's recommended gas price (Android parity).
+        let gasPrice = transactionSettings?.gasPriceData?.userDefined ?? payload.transaction.initialGasPrice
         var evmFeeData: EvmFeeData?
         var transactionError: Error?
 
-        if let gasPriceData {
+        if let gasPrice {
             if let gasLimit = payload.transaction.gasLimit {
                 evmFeeData = EvmFeeData(gasLimit: gasLimit, surchargedGasLimit: gasLimit)
             } else {
                 do {
-                    evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData)
+                    let gasPriceData = transactionSettings?.gasPriceData ?? GasPriceData(recommended: gasPrice, userDefined: gasPrice)
+                    evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: payload.transaction.transactionData, gasPriceData: gasPriceData)
                 } catch {
                     transactionError = error
                 }
+            }
+        }
+
+        return makeSendData(gasPrice: gasPrice, evmFeeData: evmFeeData, nonce: transactionSettings?.nonce, transactionError: transactionError)
+    }
+
+    // The rows are decoded synchronously from the fixed dApp transaction; only the fee needs the network.
+    // Shared by the async send path (fee estimated) and the sync preview (fee nil) so both render identically.
+    private func makeSendData(gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?, transactionError: Error?) -> ISendData {
+        let transactionData = payload.transaction.transactionData
+
+        // Same guard as EvmSendHandler: once the fee is known, block signing when the wallet can't cover
+        // value + fee. A dApp-fixed gas limit skips estimation, so this local check is the only place the
+        // shortfall surfaces. Set as transactionError so EvmSendData renders the caution and disables send.
+        var transactionError = transactionError
+        // only assert insufficiency when the balance is actually known (accountState loaded); treating an
+        // unknown balance as 0 would flash a false alert in the preview that clears after sync (and resizes
+        // the fixed-size sheet)
+        if transactionError == nil, let gasPrice, let evmFeeData, let evmBalance = evmKitWrapper.evmKit.accountState?.balance {
+            if evmBalance < transactionData.value + evmFeeData.totalFee(gasPrice: gasPrice) {
+                transactionError = AppError.ethereum(reason: .insufficientBalanceWithFee)
             }
         }
 
@@ -55,9 +78,9 @@ extension WCEvmSendHandler: ISendHandler {
             decoration: decoration,
             transactionData: transactionData,
             transactionError: transactionError,
-            gasPrice: gasPriceData?.userDefined,
+            gasPrice: gasPrice,
             evmFeeData: evmFeeData,
-            nonce: transactionSettings?.nonce
+            nonce: nonce
         )
 
         var header: WCSendHeader?
@@ -109,6 +132,19 @@ extension WCEvmSendHandler: ISendHandler {
             )
             try await responder.respond(request: payload, result: AnyCodable(fullTransaction.transaction.hash.hs.hexString))
         }
+    }
+}
+
+extension WCEvmSendHandler: IWCPreviewSendHandler {
+    func previewSendData() -> ISendData? {
+        makeSendData(gasPrice: payload.transaction.initialGasPrice, evmFeeData: dAppFixedFeeData(), nonce: payload.transaction.nonce, transactionError: nil)
+    }
+
+    // The fee needs no network call only when the dApp fixed both gas price and gas limit; otherwise nil,
+    // so the fee row stays pending (spinner) until sendData() estimates it.
+    private func dAppFixedFeeData() -> EvmFeeData? {
+        guard payload.transaction.initialGasPrice != nil, let gasLimit = payload.transaction.gasLimit else { return nil }
+        return EvmFeeData(gasLimit: gasLimit, surchargedGasLimit: gasLimit)
     }
 }
 

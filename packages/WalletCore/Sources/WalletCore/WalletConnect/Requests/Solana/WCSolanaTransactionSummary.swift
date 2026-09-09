@@ -27,6 +27,8 @@ struct WCSolanaTransactionSummary {
 
     let method: Method?
     let transfers: [Transfer]
+    // the account that pays the network fee (accountKeys[0]); nil when the transaction cannot be read
+    let feePayer: String?
 
     // nothing material decoded: the user would be signing blind
     var opaque: Bool {
@@ -37,6 +39,7 @@ struct WCSolanaTransactionSummary {
         guard let (_, message) = try? SolanaSerializer.deserialize(transactionData: rawTransaction) else {
             method = nil
             transfers = []
+            feePayer = nil
             return
         }
 
@@ -83,6 +86,7 @@ struct WCSolanaTransactionSummary {
 
         method = isSwap ? .swap : (transfers.isEmpty ? nil : .transfer)
         self.transfers = transfers
+        feePayer = keys.first
     }
 
     func fields(baseToken: Token) -> [SendField] {

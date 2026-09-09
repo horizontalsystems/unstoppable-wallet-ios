@@ -59,7 +59,7 @@ class WCSessionService {
             return nil
         }
         let peer = signClient.sessions.first { $0.topic == topic }?.peer
-        return try WCSessionInfo(topic: topic, accountId: accountId, dAppName: record.dAppName, approvedAccounts: record.sessionNamespaces().accounts, peerUrl: peer?.url, peerIconUrl: peer?.icons.first)
+        return try WCSessionInfo(topic: topic, accountId: accountId, dAppName: record.dAppName, approvedAccounts: record.sessionNamespaces().accounts, peerUrl: peer?.url, peerIconUrl: peer?.icons.last)
     }
 
     func disconnect(topic: String) async throws {

@@ -61,6 +61,11 @@ class WCSolanaSendData: ISendData {
         guard let fee else {
             return []
         }
+        // the network fee is paid by the transaction's fee payer (accountKeys[0]); a dApp can set a
+        // different fee payer (sponsored tx), so only show the fee when this wallet actually pays it
+        guard let signer = payload.from, summaries.allSatisfy({ $0.feePayer == signer }) else {
+            return []
+        }
         return [
             .value(
                 title: ComponentInformedTitle("send.confirmation.fee".localized, info: .fee),
