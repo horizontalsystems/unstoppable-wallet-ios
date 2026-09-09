@@ -84,6 +84,9 @@ class WCKit {
                 self?.pendingChangedSubject.send()
             }
             .store(in: &cancellables)
+        accountProvider.activeAccountIdPublisher
+            .sink { [weak self] _ in self?.pendingChangedSubject.send() }
+            .store(in: &cancellables)
 
         // seed the seen set so requests that were already pending are shown only in the list, never popped up
         stateLock.lock()
