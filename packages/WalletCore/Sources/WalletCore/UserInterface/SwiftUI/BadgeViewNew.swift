@@ -38,6 +38,8 @@ public struct BadgeViewNew: View {
         switch mode {
         case .solid:
             content().background(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(Color.themeBlade))
+        case let .solidWith(backgroundColorStyle):
+            content().background(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(backgroundColorStyle.color()))
         case .transparent:
             content().background(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).stroke(colorStyle.color(), lineWidth: .heightOneDp))
         }
@@ -69,6 +71,7 @@ public struct BadgeViewNew: View {
 public extension BadgeViewNew {
     enum Mode {
         case solid
+        case solidWith(colorStyle: ColorStyle)
         case transparent
     }
 }
