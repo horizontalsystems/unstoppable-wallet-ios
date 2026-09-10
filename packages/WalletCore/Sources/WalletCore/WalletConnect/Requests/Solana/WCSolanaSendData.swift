@@ -23,9 +23,17 @@ class WCSolanaSendData: ISendData {
     func cautions(baseToken: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
         var cautions = [CautionNew]()
 
-        // a transaction the card cannot read is still signable, as on Android; the user is told they sign blind
-        if summaries.contains(where: \.opaque) {
-            cautions.append(CautionNew(title: "wallet_connect.solana.unreadable_transaction.title".localized, text: "wallet_connect.solana.unreadable_transaction.text".localized, type: .warning))
+        // Display all distinct warnings in severity order; their color does not change canSend.
+        let warnings = summaries.reduce(into: Set<WCSolanaTransactionSummary.Warning>()) { $0.formUnion($1.warnings) }
+        for warning in WCSolanaTransactionSummary.Warning.allCases where warnings.contains(warning) {
+            switch warning {
+            case .hiddenRecipient:
+                cautions.append(CautionNew(title: "wallet_connect.solana.hidden_recipient.title".localized, text: "wallet_connect.solana.hidden_recipient.text".localized, type: .error))
+            case .unreadable:
+                cautions.append(CautionNew(title: "wallet_connect.solana.unreadable_transaction.title".localized, text: "wallet_connect.solana.unreadable_transaction.text".localized, type: .warning))
+            case .unknownInstructions:
+                cautions.append(CautionNew(title: "wallet_connect.solana.unknown_instructions.title".localized, text: "wallet_connect.solana.unknown_instructions.text".localized, type: .warning))
+            }
         }
 
         if let transactionError {
@@ -51,7 +59,7 @@ class WCSolanaSendData: ISendData {
             fields.append(.simpleValue(title: "wallet_connect.request.transactions".localized, value: String(payload.rawTransactions.count)))
         }
         for summary in summaries {
-            fields.append(contentsOf: summary.fields(baseToken: baseToken))
+            fields.append(contentsOf: summary.fields(baseToken: baseToken, signer: payload.from))
         }
 
         return [SendDataSection(fields)]

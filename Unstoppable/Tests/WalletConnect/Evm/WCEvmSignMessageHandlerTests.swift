@@ -64,6 +64,19 @@ struct WCEvmSignMessageHandlerTests {
         #expect(client.calls.isEmpty)
     }
 
+    @Test func expiredRequestIsRejectedBeforeLookingUpSigner() async throws {
+        var raw = try WCTestFixtures.request(method: "personal_sign", params: AnyCodable(any: ["Sign in", EvmKit.Signer.address(privateKey: Self.privateKey).eip55]))
+        raw.expiryTimestamp = 0
+        let parsed = try parser.parse(request: raw)
+        let payload = try #require(parsed)
+        let request = WCRequest(payload: payload, verdict: .pass, dAppName: "dApp")
+
+        await #expect(throws: WCRequest.RequestError.expired) {
+            try await handler(provider: StubSignerProvider(signer: nil)).sign(request: request)
+        }
+        #expect(client.calls.isEmpty)
+    }
+
     @Test func handlesOnlySignMessagePayloads() throws {
         let sign = try request(method: "personal_sign", params: ["Sign in", EvmKit.Signer.address(privateKey: Self.privateKey).eip55]).payload
         let other = try WCStubRequestPayload.make()

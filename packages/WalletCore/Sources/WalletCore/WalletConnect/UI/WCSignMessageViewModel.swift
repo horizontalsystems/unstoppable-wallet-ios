@@ -16,6 +16,7 @@ class WCSignMessageViewModel: ObservableObject {
     let dAppHost: String?
     let iconUrl: String?
     let rows: [Row]
+    let contextRows: [Row]
     let message: String
     let cautions: [CautionNew]
     let isBlocked: Bool
@@ -50,13 +51,16 @@ class WCSignMessageViewModel: ObservableObject {
         } else if let from = payload?.from {
             rows.append(Row(title: "wallet_connect.sign.domain".localized, value: from.shortened, copyable: true))
         }
+        self.rows = rows
+
+        var contextRows = [Row]()
         if let payload, let type = manager?.chainSupportRegistry.support(namespace: payload.chainId.namespace)?.blockchainType(chain: payload.chainId) {
-            rows.append(Row(title: "wallet_connect.sign.network".localized, value: WCBlockchainsView.name(type: type), copyable: false))
+            contextRows.append(Row(title: "wallet_connect.sign.network".localized, value: WCBlockchainsView.name(type: type), copyable: false))
         }
         if let accountName = Core.shared.accountManager.activeAccount?.name {
-            rows.append(Row(title: "wallet_connect.connect.wallet".localized, value: accountName, copyable: false))
+            contextRows.append(Row(title: "wallet_connect.connect.wallet".localized, value: accountName, copyable: false))
         }
-        self.rows = rows
+        self.contextRows = contextRows
 
         switch payload {
         case let evm as WCEvmSignMessagePayload: message = evm.readableMessage
@@ -74,9 +78,11 @@ class WCSignMessageViewModel: ObservableObject {
     var finishPublisher: AnyPublisher<Void, Never> { finishSubject.eraseToAnyPublisher() }
     var errorPublisher: AnyPublisher<String, Never> { errorSubject.eraseToAnyPublisher() }
 
-    var signEnabled: Bool { !isBlocked && !signing }
+    var isExpired: Bool { item.request?.isExpired ?? false }
+    var signEnabled: Bool { !isBlocked && !signing && !isExpired }
 
     func sign() {
+        guard signEnabled else { return }
         guard let request = item.request, let handler = manager?.signMessageHandlerRegistry.handler(for: request.payload) else { return }
         signing = true
 

@@ -16,9 +16,6 @@ class WCRequestService {
     }
 
     func process(request: Request, context: VerifyContext?, session: WCSessionInfo) async -> WCRequestResult {
-        WCLog.log("request service: \(request.method) id=\(request.id.string) params=\(String(describing: request.params).prefix(300))")
-        logger?.debug("request \(request.method) id=\(request.id.string) topic=\(request.topic) chain=\(request.chainId.absoluteString)")
-
         let payload: WCRequestPayload
         do {
             payload = try parsers.parse(request: request)
@@ -30,8 +27,6 @@ class WCRequestService {
 
         let verificationContext = WCVerificationContext(payload: payload, verifyContext: context, accountId: session.accountId, approvedAccounts: session.approvedAccounts)
         let verdict = verifiers.verify(verificationContext)
-        WCLog.log("request service: parsed kind=\(payload.kind) from=\(payload.from ?? "nil") verdict=\(verdict)")
-        logger?.debug("verdict \(verdict) for id=\(request.id.string)")
 
         let wcnRequest = WCRequest(payload: payload, verdict: verdict, dAppName: session.dAppName, dAppUrl: session.peerUrl, dAppIconUrl: session.peerIconUrl)
 
@@ -46,7 +41,6 @@ class WCRequestService {
     }
 
     private func reject(request: Request, reason: WCResponder.RejectReason, error: Error) async -> WCRequestResult {
-        WCLog.log("request service: rejecting id=\(request.id.string) reason=\(reason) error=\(error)")
         logger?.warning("rejecting id=\(request.id.string): \(error)")
         let unparsed = WCRequestPayload(request: request, kind: .direct, from: nil)
 

@@ -65,10 +65,10 @@ class MainBadgeViewModel: ObservableObject {
     }
 
     private func syncSettingsBadge() {
-        let badge = resolvedBadge
-
-        DispatchQueue.main.async {
-            self.badge = badge
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            // Resolve on delivery: a queued snapshot can outlive the request's deadline.
+            badge = resolvedBadge
         }
     }
 }

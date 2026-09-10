@@ -10,7 +10,6 @@ class WCEventHandler {
 
     init(manager: WCManager) {
         self.manager = manager
-        WCLog.log("event handler created")
 
         manager.kitPublisher
             .compactMap { $0 }
@@ -19,20 +18,17 @@ class WCEventHandler {
     }
 
     private func subscribe(kit: WCKit) {
-        WCLog.log("event handler: subscribed to kit")
         kitCancellables.removeAll()
 
         kit.proposalPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-                WCLog.log("event handler: proposal signal \($0.proposal.id)")
                 self?.signalSubject.send(.walletConnectProposal($0))
             }
             .store(in: &kitCancellables)
         kit.requestPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-                WCLog.log("event handler: request signal \($0.requestId.string)")
                 self?.signalSubject.send(.walletConnectRequest($0))
             }
             .store(in: &kitCancellables)
@@ -52,7 +48,6 @@ extension WCEventHandler: IEventHandler {
         default: uri = nil
         }
 
-        WCLog.log("event handler: handle event=\(type(of: event)) uri=\(uri.map { String($0.prefix(40)) } ?? "nil")")
         guard let uri else {
             throw EventHandler.HandleError.noSuitableHandler
         }
@@ -65,7 +60,6 @@ extension WCEventHandler: IEventHandler {
             throw EventHandler.HandleError.noSuitableHandler
         }
 
-        WCLog.log("event handler: pair signal")
         signalSubject.send(.walletConnectPair(uri))
     }
 }

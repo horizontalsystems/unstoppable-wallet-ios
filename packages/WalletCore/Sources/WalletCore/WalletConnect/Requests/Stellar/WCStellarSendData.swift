@@ -6,22 +6,44 @@ class WCStellarData {
     let xdr: String
     let transaction: stellarsdk.Transaction
     let sourceAccountId: String
+    let summary: WCStellarTransactionSummary
 
     init(xdr: String, transaction: stellarsdk.Transaction, sourceAccountId: String) {
         self.xdr = xdr
         self.transaction = transaction
         self.sourceAccountId = sourceAccountId
+        summary = WCStellarTransactionSummary(transaction: transaction)
     }
 
     var baseSections: [SendDataSection] {
-        var transactionFields = transaction.operations.map {
-            SendField.simpleValue(title: "send.confirmation.operation".localized, value: String(describing: type(of: $0)))
+        var transactionFields = summary.operations.flatMap { operation in
+            [SendField.simpleValue(title: "send.confirmation.operation".localized, value: operation.title.localized)] + operation.fields.map(Self.sendField)
         }
-        transactionFields.append(.simpleValue(title: "send.confirmation.transaction_xdr".localized, value: xdr.shortened))
+        transactionFields += summary.memoFields.map(Self.sendField)
+        transactionFields.append(.hex(title: "send.confirmation.transaction_xdr".localized, value: xdr))
 
         let accountFields = [SendField.simpleValue(title: WCNamespace.stellar.capitalized, value: sourceAccountId.shortened)]
 
         return [SendDataSection(transactionFields), SendDataSection(accountFields, isMain: false)]
+    }
+
+    var summaryCautions: [CautionNew] {
+        summary.warnings.map { warning in
+            switch warning {
+            case .accountPermissions:
+                return CautionNew(title: "wallet_connect.stellar.permissions.title".localized, text: "wallet_connect.stellar.permissions.description".localized, type: .error)
+            case .unknownOperations:
+                return CautionNew(title: "wallet_connect.stellar.unknown.title".localized, text: "wallet_connect.stellar.unknown.description".localized, type: .warning)
+            }
+        }
+    }
+
+    private static func sendField(_ field: WCStellarTransactionSummary.Field) -> SendField {
+        switch field.style {
+        case .text: return .simpleValue(title: field.titleKey.localized, value: field.value)
+        case .address: return .recipient(title: field.titleKey.localized, value: field.value, copyable: true, blockchainType: .stellar)
+        case .hex: return .hex(title: field.titleKey.localized, value: field.value)
+        }
     }
 }
 
@@ -31,7 +53,7 @@ class WCStellarSignData: WCStellarData, ISendData {
     var rateCoins: [Coin] { [] }
 
     func cautions(baseToken _: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
-        []
+        summaryCautions
     }
 
     func sections(baseToken _: Token, currency _: Currency, rates _: [String: Decimal]) -> [SendDataSection] {
@@ -56,6 +78,10 @@ class WCStellarSubmitData: WCStellarData, ISendData {
     var rateCoins: [Coin] { [token.coin] }
 
     func cautions(baseToken: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
+        summaryCautions + transactionCautions(baseToken: baseToken)
+    }
+
+    private func transactionCautions(baseToken: Token) -> [CautionNew] {
         guard let transactionError else {
             return []
         }

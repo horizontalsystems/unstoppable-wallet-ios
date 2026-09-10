@@ -16,6 +16,7 @@ class WCSolanaSignMessageHandler: IWCSignMessageHandler {
     }
 
     func sign(request: WCRequest) async throws {
+        try request.checkExpiration()
         guard !request.isBlocked else { throw SignError.blocked }
         guard let payload = request.payload as? WCSolanaSignMessagePayload, let message = payload.message else {
             throw SignError.invalidPayload

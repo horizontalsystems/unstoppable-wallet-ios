@@ -13,6 +13,7 @@ class WCRequestPayload {
     let topic: String
     let method: String
     let chainId: Blockchain
+    let expiryTimestamp: UInt64?
     let kind: Kind
     let from: String?
 
@@ -21,6 +22,7 @@ class WCRequestPayload {
         topic = request.topic
         method = request.method
         chainId = request.chainId
+        expiryTimestamp = request.expiryTimestamp
         self.kind = kind
         self.from = from
     }

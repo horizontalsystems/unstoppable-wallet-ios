@@ -58,8 +58,6 @@ class WCConnectViewModel: ObservableObject {
         unsupported = item.blockchainProposals.isEmpty || kit?.validationError(for: item.proposal) != nil
         defenseState = kit?.defenseState(context: item.context) ?? .disabled
         verificationCaution = Self.verificationCaution(for: item.verifyState, origin: item.context?.origin)
-
-        WCLog.log("connect vm: \(dAppName) host=\(dAppHost) account=\(accountName ?? "nil") types=\(types.map(\.uid)) unsupported=\(unsupported) defense=\(defenseState) icons=\(proposer.icons)")
     }
 
     // scam and mismatch are red, an unverified origin is a yellow caution; a valid origin shows nothing
@@ -107,7 +105,6 @@ class WCConnectViewModel: ObservableObject {
 
     func connect() {
         guard let kit = try? manager?.kit() else { return }
-        WCLog.log("connect vm: connect tapped")
         connecting = true
 
         Task { [weak self] in
@@ -122,7 +119,6 @@ class WCConnectViewModel: ObservableObject {
 
     func reject() {
         guard !finished, let kit = try? manager?.kit() else { return }
-        WCLog.log("connect vm: reject")
         finished = true
         Task {
             try? await kit.reject(proposal: item.proposal)
@@ -130,14 +126,12 @@ class WCConnectViewModel: ObservableObject {
     }
 
     @MainActor private func finish() {
-        WCLog.log("connect vm: finished")
         connecting = false
         finished = true
         finishSubject.send()
     }
 
     @MainActor private func fail(_ error: Error) {
-        WCLog.log("connect vm: failed \(error)")
         connecting = false
         errorSubject.send(error.smartDescription)
     }

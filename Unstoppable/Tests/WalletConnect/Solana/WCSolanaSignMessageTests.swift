@@ -29,6 +29,19 @@ struct WCSolanaSignMessageTests {
         #expect(throws: WCSolanaSignMessageParser.ParsingError.malformedParams) { try parser.parse(request: request) }
     }
 
+    @Test func expiredRequestIsRejectedBeforeLookingUpSigner() async throws {
+        var raw = try request()
+        raw.expiryTimestamp = 0
+        let parsed = try parser.parse(request: raw)
+        let payload = try #require(parsed)
+        let handler = WCSolanaSignMessageHandler(signerProvider: StubSignerProvider(signer: nil), responder: WCResponder(signClient: client))
+
+        await #expect(throws: WCRequest.RequestError.expired) {
+            try await handler.sign(request: WCRequest(payload: payload, verdict: .pass, dAppName: "dApp"))
+        }
+        #expect(client.calls.isEmpty)
+    }
+
     @Test func signsAndAnswersBase58Signature() async throws {
         let raw = try request()
         let parsed = try parser.parse(request: raw)

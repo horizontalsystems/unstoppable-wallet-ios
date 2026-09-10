@@ -42,7 +42,16 @@ final class WCSpySignClient: IWCSignClient {
     let sessionProposalSubject = PassthroughSubject<(proposal: Session.Proposal, context: VerifyContext?), Never>()
     let sessionRequestSubject = PassthroughSubject<(request: Request, context: VerifyContext?), Never>()
     let requestExpirationSubject = PassthroughSubject<RPCID, Never>()
-    var pendingRequests = [(request: Request, context: VerifyContext?)]()
+    private var storedPendingRequests = [(request: Request, context: VerifyContext?)]()
+    private(set) var pendingRequestsReadCount = 0
+    var pendingRequests: [(request: Request, context: VerifyContext?)] {
+        get {
+            pendingRequestsReadCount += 1
+            return storedPendingRequests
+        }
+        set { storedPendingRequests = newValue }
+    }
+
     private(set) var pairedUris = [WalletConnectURI]()
     var pairError: Error?
     var onPair: (() -> Void)?

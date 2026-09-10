@@ -69,6 +69,7 @@ extension WCStellarSendHandler: ISendHandler {
     }
 
     func send(data: ISendData) async throws {
+        try request.checkExpiration()
         guard !request.isBlocked else { throw SendError.blocked }
         switch (data as? WCSendData)?.inner {
         case let data as WCStellarSignData:

@@ -3,10 +3,12 @@ import SwiftUI
 // Sign request as a bottom sheet: dApp header, one bordered card of request rows, Reject | Sign
 struct WCSignMessageSheetView: View {
     @StateObject private var viewModel: WCSignMessageViewModel
+    @StateObject private var expirationViewModel: WCRequestExpirationViewModel
     @Binding private var isPresented: Bool
 
     init(item: WCRequestItem, isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: WCSignMessageViewModel(item: item))
+        _expirationViewModel = StateObject(wrappedValue: WCRequestExpirationViewModel(request: item.request))
         _isPresented = isPresented
     }
 
@@ -44,6 +46,18 @@ struct WCSignMessageSheetView: View {
                             }
                         }
                     )
+                    ForEach(viewModel.contextRows) { row in
+                        Cell(
+                            style: .secondary,
+                            middle: {
+                                MiddleTextIcon(text: row.title)
+                            },
+                            right: {
+                                RightTextIcon(text: ComponentText(text: row.value, colorStyle: .primary), icon: row.copyable ? "copy_filled" : nil)
+                            },
+                            action: row.copyable ? { CopyHelper.copyAndNotify(value: row.value) } : nil
+                        )
+                    }
                 }
                 .themeListStyle(.borderedPlain)
                 .padding(.horizontal, .margin16)
@@ -68,11 +82,11 @@ struct WCSignMessageSheetView: View {
                     Button(action: { viewModel.sign() }) {
                         HStack(spacing: .margin8) {
                             if viewModel.signing { ProgressView().progressViewStyle(.circular) }
-                            Text("button.sign".localized)
+                            Text((expirationViewModel.isExpired && !viewModel.signing ? "wallet_connect.button.expired" : "button.sign").localized)
                         }
                     }
                     .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                    .disabled(!viewModel.signEnabled)
+                    .disabled(expirationViewModel.isExpired || !viewModel.signEnabled)
                 }
                 .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin16, trailing: .margin24))
             }

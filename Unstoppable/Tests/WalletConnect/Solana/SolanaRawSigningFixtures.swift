@@ -24,6 +24,43 @@ enum SolanaRawSigningFixtures {
 }
 
 extension SolanaRawSigningFixtures {
+    struct Instruction {
+        let program: UInt8
+        let accounts: [UInt8]
+        let data: Data
+    }
+
+    // Independent wire fixture: deliberately allows malformed indices/versions for negative cases.
+    static func summaryTransaction(keys: [Data], instructions: [Instruction], version: UInt8? = nil, writableLookupIndices: [UInt8] = [], readonlyLookupIndices: [UInt8] = []) -> Data {
+        var transaction = Data([1])
+        transaction.append(Data(repeating: 0, count: 64))
+        if let version { transaction.append(version) }
+        transaction.append(contentsOf: [1, 0, 0, UInt8(keys.count)])
+        keys.forEach { transaction.append($0) }
+        transaction.append(Data(repeating: 0x11, count: 32))
+        transaction.append(UInt8(instructions.count))
+        for instruction in instructions {
+            transaction.append(contentsOf: [instruction.program, UInt8(instruction.accounts.count)])
+            transaction.append(contentsOf: instruction.accounts)
+            transaction.append(UInt8(instruction.data.count))
+            transaction.append(instruction.data)
+        }
+        if version != nil {
+            let hasLookup = !writableLookupIndices.isEmpty || !readonlyLookupIndices.isEmpty
+            transaction.append(hasLookup ? 1 : 0)
+            if hasLookup {
+                transaction.append(Data(repeating: 0x33, count: 32))
+                transaction.append(UInt8(writableLookupIndices.count))
+                transaction.append(contentsOf: writableLookupIndices)
+                transaction.append(UInt8(readonlyLookupIndices.count))
+                transaction.append(contentsOf: readonlyLookupIndices)
+            }
+        }
+        return transaction
+    }
+
+    static let systemTransferData = Data([2, 0, 0, 0, 0xE8, 3, 0, 0, 0, 0, 0, 0])
+
     // minimal legacy transaction: given signer keys + one program, one instruction, zero signatures
     static func rawTransaction(signerKeys: [Data], programKey: Data = Data(repeating: 0, count: 32), accountIndices: [UInt8] = [0], instructionData: Data = Data()) -> Data {
         var message = Data([UInt8(signerKeys.count), 0, 1, UInt8(signerKeys.count + 1)])

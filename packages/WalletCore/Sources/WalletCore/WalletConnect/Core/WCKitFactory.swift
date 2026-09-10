@@ -44,9 +44,7 @@ class WCKitFactory: IWCKitFactory {
             icons: ["https://raw.githubusercontent.com/horizontalsystems/HS-Design/master/PressKit/UW-AppIcon-on-light.png"],
             redirectScheme: DeepLinkManager.deepLinkScheme + "://"
         )
-        WCLog.log("factory: configuring sdk projectId=\(info.projectId.prefix(6))… bundle=\(Bundle.main.bundleIdentifier ?? "")")
         try WCConfigurator(sdk: WCSdkConfigurator()).configure(info: info, bundleIdentifier: Bundle.main.bundleIdentifier ?? "")
-        WCLog.log("factory: sdk configured, building kit")
 
         let verifyService = WCVerifyService(
             whitelist: WCDappWhitelist(provider: WhitelistDappProvider(networkManager: networkManager)),

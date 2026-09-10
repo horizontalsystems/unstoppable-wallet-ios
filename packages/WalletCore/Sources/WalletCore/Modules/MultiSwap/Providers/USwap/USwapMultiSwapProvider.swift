@@ -88,6 +88,10 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
             throw SwapError.missingDestinationAddress
         }
 
+        if case let .thorchainDeposit(_, _, memo, _) = result.response.execution {
+            try ThorChainSwapMemo.validate(memo, expectedDestination: result.destinationAddress, blockchainType: tokenOut.blockchainType)
+        }
+
         let effectiveSlippage: Decimal? = result.response.minBuyAmount != nil ? slippage : nil
         let finalQuote = try await finalQuoteFactory.build(
             input: .init(
@@ -104,6 +108,9 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
 
         finalQuote.refundAddress = result.refundAddress
         finalQuote.minAmountOut = result.response.minBuyAmount
+        if let deposit = result.response.execution?.depositInstruction() {
+            finalQuote.setDeposit(address: deposit.address, memo: deposit.attachment?.text)
+        }
         return finalQuote
     }
 

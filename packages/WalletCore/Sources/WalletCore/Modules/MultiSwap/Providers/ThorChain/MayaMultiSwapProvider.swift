@@ -64,7 +64,7 @@ public class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         return SwapQuote(quote: swapQuote, unifiedAddress: unifiedAddress)
     }
 
-    private func proposal(adapter: ZcashAdapter, tokenIn _: Token, swapQuote: SwapQuote, amountIn: Decimal) async throws -> Proposal {
+    private func proposal(adapter: ZcashAdapter, tokenIn _: Token, swapQuote: SwapQuote, amountIn: Decimal, memo: String) async throws -> Proposal {
         // Zcash always pays into a vault, so the address is required here.
         guard let inboundAddress = swapQuote.quote.inboundAddress,
               let tRecipient = adapter.recipient(from: inboundAddress),
@@ -74,12 +74,11 @@ public class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         }
 
         let transparentOutput = ZcashAdapter.TransferOutput(amount: amountIn.rounded(decimal: 8), address: tRecipient, memo: nil)
-        // Memo(string: "") is a valid empty memo, so this must reject a missing memo before
-        // building the output — a vault deposit carrying no swap instruction is unrecoverable.
+        // confirmationQuote has already required and validated this memo.
         let memoOutput = try ZcashAdapter.TransferOutput(
             amount: 0,
             address: uRecipient,
-            memo: .init(string: swapQuote.quote.requiredMemo())
+            memo: .init(string: memo)
         )
 
         return try await adapter.sendProposal(outputs: [transparentOutput, memoOutput])
@@ -96,12 +95,14 @@ public class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         }
 
         let swapQuote = try await zcashSwapQuote(adapter: adapter, tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient)
+        let destination = try await resolveDestination(recipient: recipient, token: tokenOut)
+        let memo = try swapQuote.quote.requiredMemo(expectedDestination: destination, blockchainType: tokenOut.blockchainType)
 
         var transactionError: Error?
 
         var result: Proposal?
         do {
-            result = try await proposal(adapter: adapter, tokenIn: tokenIn, swapQuote: swapQuote, amountIn: amountIn)
+            result = try await proposal(adapter: adapter, tokenIn: tokenIn, swapQuote: swapQuote, amountIn: amountIn, memo: memo)
         } catch {
             transactionError = error
         }
@@ -112,7 +113,7 @@ public class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
             transactionError = BitcoinCoreErrors.SendValueErrors.dust(dustThreshold + 1)
         }
 
-        return ZcashSwapFinalQuote(
+        let finalQuote = ZcashSwapFinalQuote(
             expectedBuyAmount: swapQuote.quote.expectedAmountOut,
             proposal: result,
             slippage: slippage,
@@ -122,6 +123,8 @@ public class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
             fee: result?.totalFeeRequired().decimalValue.decimalValue,
             toAddress: adapter.receiveAddress.address
         )
+        finalQuote.setDeposit(address: swapQuote.quote.inboundAddress, memo: memo)
+        return finalQuote
     }
 
     private func inboundUnifiedAddress(tokenIn: Token) async throws -> String {

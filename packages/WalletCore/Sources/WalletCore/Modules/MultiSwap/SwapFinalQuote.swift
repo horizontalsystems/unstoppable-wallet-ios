@@ -9,7 +9,8 @@ public class SwapFinalQuote {
     private let transactionError: Error?
 
     public let toAddress: String
-    public let depositAddress: String?
+    public private(set) var depositAddress: String?
+    public private(set) var depositMemo: String?
     public let providerSwapId: String?
     public var refundAddress: String?
     public var minAmountOut: Decimal?
@@ -43,6 +44,12 @@ public class SwapFinalQuote {
 
     public var amountOut: Decimal {
         expectedBuyAmount
+    }
+
+    // Display metadata only; executable payloads retain their original address and memo.
+    func setDeposit(address: String?, memo: String?) {
+        depositAddress = address.flatMap { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? nil : $0 }
+        depositMemo = memo.flatMap { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? nil : $0 }
     }
 
     // server-enforced floor when the provider reports one, slippage estimate otherwise
@@ -84,7 +91,7 @@ public class SwapFinalQuote {
         nil
     }
 
-    public func fields(tokenIn _: Token, tokenOut: Token, baseToken _: Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate _: Decimal?) -> [SendField] {
+    public func fields(tokenIn: Token, tokenOut: Token, baseToken _: Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate _: Decimal?) -> [SendField] {
         var fields = [SendField]()
 
         if let slippage {
@@ -99,6 +106,13 @@ public class SwapFinalQuote {
 
         if let recipient {
             fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
+        }
+
+        if let depositAddress, !depositAddress.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            fields.append(.recipient(title: "swap.deposit_address".localized, value: depositAddress, copyable: true, blockchainType: tokenIn.blockchainType))
+        }
+        if let depositMemo {
+            fields.append(.hex(title: "swap.deposit_memo".localized, value: depositMemo))
         }
 
         // Single route on the confirm screen: no baseline, absolute threshold only.

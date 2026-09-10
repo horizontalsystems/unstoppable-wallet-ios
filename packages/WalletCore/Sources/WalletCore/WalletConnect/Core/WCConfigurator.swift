@@ -15,10 +15,8 @@ class WCConfigurator {
 
     func configure(info: WCClientInfo, bundleIdentifier: String) throws {
         userDefaults.set(false, forKey: Self.telemetryKey)
-        WCLog.log("configurator: telemetry key set false")
 
         sdk.configureNetworking(groupIdentifier: "group.\(bundleIdentifier)", projectId: info.projectId)
-        WCLog.log("configurator: networking configured group=group.\(bundleIdentifier)")
 
         let metadata = try AppMetadata(
             name: info.name,
@@ -28,9 +26,7 @@ class WCConfigurator {
             redirect: AppMetadata.Redirect(native: info.redirectScheme, universal: nil)
         )
         sdk.configureWalletKit(metadata: metadata)
-        WCLog.log("configurator: walletkit configured name=\(info.name) redirect=\(info.redirectScheme)")
 
         sdk.setTelemetryEnabled(false)
-        WCLog.log("configurator: telemetry disabled")
     }
 }

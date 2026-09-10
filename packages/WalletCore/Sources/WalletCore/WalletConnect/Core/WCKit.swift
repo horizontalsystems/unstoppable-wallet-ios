@@ -18,6 +18,7 @@ class WCKit {
     private let foregroundProvider: IWCForegroundProvider
     private let logger: Logger?
     private var cancellables = Set<AnyCancellable>()
+    private var expirationCancellable: AnyCancellable?
 
     private let requestSubject = PassthroughSubject<WCRequestItem, Never>()
     private let proposalSubject = PassthroughSubject<WCProposalItem, Never>()
@@ -53,7 +54,6 @@ class WCKit {
 
     // pending requests present at start are only counted; the active-request pointer surfaces one on the next foreground+unlocked moment
     func start() {
-        WCLog.log("kit start: subscribing, pending=\(signClient.pendingRequests.count) sessions=\(signClient.sessions.count)")
         isForeground = foregroundProvider.isActive
         signClient.sessionRequestPublisher
             .sink { [weak self] in self?.handle(request: $0.request, context: $0.context) }
@@ -75,6 +75,7 @@ class WCKit {
                 stateLock.lock()
                 isForeground = active
                 stateLock.unlock()
+                pendingChangedSubject.send()
                 if active { presentActiveIfPossible() }
             }
             .store(in: &cancellables)
@@ -88,11 +89,17 @@ class WCKit {
             .sink { [weak self] _ in self?.pendingChangedSubject.send() }
             .store(in: &cancellables)
 
+        // Replan on SDK changes, answers, foreground changes, and once at start — no periodic polling.
+        pendingChangedSubject
+            .prepend(())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.scheduleNextExpiration() }
+            .store(in: &cancellables)
+
         // seed the seen set so requests that were already pending are shown only in the list, never popped up
         stateLock.lock()
         seen = Set(signClient.pendingRequests.map(\.request.id))
         stateLock.unlock()
-        WCLog.log("kit start: done, seeded=\(signClient.pendingRequests.count)")
 
         // drop sessions left behind by the old module (live on the SDK, no approval record)
         sessionService.disconnectOrphans()
@@ -107,18 +114,10 @@ class WCKit {
     var sessions: [WCSessionItem] { sessionService.sessions }
 
     func pair(uri: String) async throws {
-        WCLog.log("kit pair: start")
-        do {
-            try await pairingService.pair(uri: uri)
-            WCLog.log("kit pair: done")
-        } catch {
-            WCLog.log("kit pair: failed \(error)")
-            throw error
-        }
+        try await pairingService.pair(uri: uri)
     }
 
     func disconnect(topic: String) async throws {
-        WCLog.log("kit disconnect: topic=\(topic.prefix(8))")
         try await sessionService.disconnect(topic: topic)
     }
 
@@ -134,8 +133,27 @@ class WCKit {
         verifyService.defenseState(peerUrl: peerUrl)
     }
 
+    private var unexpiredPendingRequests: [(request: Request, context: VerifyContext?)] {
+        signClient.pendingRequests.filter { !WCRequest.isExpired(expiryTimestamp: $0.request.expiryTimestamp) }
+    }
+
+    // Owned by the main queue through the pendingChangedSubject subscription.
+    private func scheduleNextExpiration() {
+        expirationCancellable = nil
+        guard foregroundProvider.isActive else { return }
+        let now = Date().timeIntervalSince1970
+        guard let next = signClient.pendingRequests.compactMap(\.request.expiryTimestamp)
+            .filter({ TimeInterval($0) > now }).min()
+        else { return }
+
+        expirationCancellable = Timer.publish(every: TimeInterval(next) - now, on: .main, in: .common)
+            .autoconnect()
+            .first() // Cancels the timer after this deadline; the event schedules the next one, if any.
+            .sink { [weak self] _ in self?.pendingChangedSubject.send() }
+    }
+
     func pendingRequests(topic: String) -> [WCPendingRequestItem] {
-        signClient.pendingRequests
+        unexpiredPendingRequests
             .filter { $0.request.topic == topic }
             .map { WCPendingRequestItem(id: $0.request.id, method: $0.request.method) }
     }
@@ -143,22 +161,19 @@ class WCKit {
     // pending requests bound to the active account: the badge count for parked (unanswered) requests
     var pendingRequestCount: Int {
         guard let accountId = accountProvider.activeAccountId else { return 0 }
-        return signClient.pendingRequests.filter { (try? sessionService.sessionInfo(topic: $0.request.topic, accountId: accountId)) != nil }.count
+        return unexpiredPendingRequests.filter { (try? sessionService.sessionInfo(topic: $0.request.topic, accountId: accountId)) != nil }.count
     }
 
     // re-runs a pending request through the service so the user can open it from the sessions list
     func open(requestId: RPCID) {
-        guard let pending = signClient.pendingRequests.first(where: { $0.request.id == requestId }) else {
-            WCLog.log("kit open: pending id=\(requestId.string) not found")
+        guard let pending = unexpiredPendingRequests.first(where: { $0.request.id == requestId }) else {
             return
         }
-        WCLog.log("kit open: id=\(requestId.string) method=\(pending.request.method)")
         handle(request: pending.request, context: pending.context, forced: true)
     }
 
     func reject(item: WCRequestItem) async throws {
         guard let request = item.request else { return }
-        WCLog.log("kit reject request: id=\(request.payload.id.string)")
         try await responder.reject(request: request.payload, reason: .userRejected)
     }
 
@@ -181,24 +196,18 @@ class WCKit {
     // the only path that writes the approved set: an explicit user approve
     func approve(proposal: Session.Proposal, selected: [WCBlockchainProposal]) async throws {
         guard let accountId = accountProvider.activeAccountId else {
-            WCLog.log("kit approve: no active account")
             throw KitError.noActiveAccount
         }
-        WCLog.log("kit approve: proposal=\(proposal.id) selected=\(selected.map(\.chain.absoluteString))")
         try namespaceBuilder.validate(required: proposal.requiredNamespaces, selected: selected)
         let session = try await signClient.approve(proposalId: proposal.id, namespaces: namespaceBuilder.sessionNamespaces(selected: selected))
-        WCLog.log("kit approve: sdk session topic=\(session.topic.prefix(8)) peer=\(session.peer.name)")
         try sessionService.store(session: session, accountId: accountId)
-        WCLog.log("kit approve: stored")
     }
 
     func reject(proposal: Session.Proposal) async throws {
-        WCLog.log("kit reject proposal: \(proposal.id)")
         try await signClient.rejectSession(proposalId: proposal.id)
     }
 
     private func handle(proposal: Session.Proposal, context: VerifyContext?) {
-        WCLog.log("kit proposal: id=\(proposal.id) name=\(proposal.proposer.name) url=\(proposal.proposer.url) verify=\(String(describing: context?.validation)) origin=\(context?.origin ?? "-") required=\(Array(proposal.requiredNamespaces.keys)) optional=\(Array((proposal.optionalNamespaces ?? [:]).keys))")
         proposalSubject.send(WCProposalItem(proposal: proposal, context: context, verifyState: verifyService.state(context: context), blockchainProposals: blockchainProposals(for: proposal)))
     }
 
@@ -206,7 +215,6 @@ class WCKit {
     // (while an earlier request is unanswered it keeps replaying the old one), so an explicit open aside, treat
     // every signal as "pending changed" and reconcile against the full pending list to find the new requests
     private func handle(request: Request, context: VerifyContext?, forced: Bool = false) {
-        WCLog.log("kit request: id=\(request.id.string) method=\(request.method) topic=\(request.topic.prefix(8)) chain=\(request.chainId.absoluteString) forced=\(forced)")
         if forced {
             stateLock.lock()
             // keep it in the seen set: an explicit open shows it once, the reconcile scan must not re-present it
@@ -230,7 +238,6 @@ class WCKit {
         stateLock.unlock()
 
         guard !fresh.isEmpty else {
-            WCLog.log("kit request: nothing new among \(candidates.count) pending")
             return
         }
 
@@ -245,11 +252,11 @@ class WCKit {
 
     // visibility gate: only requests of a session bound to the active account reach the service
     private func gateAndProcess(request: Request, context: VerifyContext?, seq: UInt64) {
+        guard !WCRequest.isExpired(expiryTimestamp: request.expiryTimestamp) else { return }
         // requests of another account stay in the seen set on purpose: switching to that account must not pop them up
         guard let accountId = accountProvider.activeAccountId,
               let session = try? sessionService.sessionInfo(topic: request.topic, accountId: accountId)
         else {
-            WCLog.log("kit request: id=\(request.id.string) ignored, topic not bound to active account \(accountProvider.activeAccountId ?? "nil")")
             logger?.warning("request \(request.method) for topic \(request.topic) does not belong to the active account, ignoring")
             return
         }
@@ -257,12 +264,12 @@ class WCKit {
         Task { [weak self] in
             guard let self else { return }
             let result = await requestService.process(request: request, context: context, session: session)
-            WCLog.log("kit request: id=\(request.id.string) result=\(result)")
             emit(WCRequestItem(requestId: request.id, result: result, session: session), seq: seq)
         }
     }
 
     private func emit(_ incoming: WCRequestItem, seq: UInt64 = 0) {
+        guard incoming.request?.isExpired != true else { return }
         switch incoming.result {
         case .rejected:
             return
@@ -279,7 +286,6 @@ class WCKit {
             activeSeq = seq
         }
         stateLock.unlock()
-        WCLog.log("kit emit: id=\(incoming.requestId.string) queued as active seq=\(seq)")
         presentActiveIfPossible()
     }
 
@@ -291,9 +297,12 @@ class WCKit {
             return
         }
         activeRequest = nil
+        guard item.request?.isExpired != true else {
+            stateLock.unlock()
+            return
+        }
         isPresenting = true
         stateLock.unlock()
-        WCLog.log("kit present: id=\(item.requestId.string)")
         requestSubject.send(item)
     }
 
@@ -302,7 +311,6 @@ class WCKit {
         stateLock.lock()
         isPresenting = false
         stateLock.unlock()
-        WCLog.log("kit dismissed: presenting slot released")
         // let the dismissal animation finish before presenting the next queued request, or SwiftUI drops it
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
             self?.presentActiveIfPossible()
@@ -314,7 +322,6 @@ class WCKit {
         Task { [weak self] in
             guard let self else { return }
             do {
-                WCLog.log("kit direct: id=\(request.payload.id.string) method=\(request.payload.method) handler=\(directHandlers.handler(for: request.payload) != nil)")
                 if let handler = directHandlers.handler(for: request.payload) {
                     try await handler.respond(request: request, session: session)
                 } else {
@@ -334,7 +341,6 @@ class WCKit {
     }
 
     private func expire(requestId: RPCID) {
-        WCLog.log("kit expire: id=\(requestId.string)")
         stateLock.lock()
         if activeRequest?.requestId == requestId { activeRequest = nil }
         seen.remove(requestId)

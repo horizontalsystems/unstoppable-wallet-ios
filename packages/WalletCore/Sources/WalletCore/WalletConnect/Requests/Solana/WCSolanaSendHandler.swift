@@ -46,6 +46,7 @@ extension WCSolanaSendHandler: ISendHandler {
     }
 
     func send(data _: ISendData) async throws {
+        try request.checkExpiration()
         guard !request.isBlocked else { throw SendError.blocked }
         switch payload.method {
         case WCSolanaTransactionPayload.signMethod:

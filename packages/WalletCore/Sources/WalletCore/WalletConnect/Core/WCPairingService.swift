@@ -14,8 +14,7 @@ class WCPairingService {
 
         // subscribed up front: the relay can deliver the proposal before pair() returns
         signClient.sessionProposalPublisher
-            .sink { [proposalCount] in
-                WCLog.log("pairing: proposal event id=\($0.proposal.id) count=\(proposalCount.value + 1)")
+            .sink { [proposalCount] _ in
                 proposalCount.send(proposalCount.value + 1)
             }
             .store(in: &cancellables)
@@ -27,10 +26,8 @@ class WCPairingService {
         do {
             uri = try WalletConnectURI(uriString: uriString)
         } catch WalletConnectURI.Errors.expired {
-            WCLog.log("pairing: expired uri \(uriString.prefix(120))")
             throw PairingError.expiredUri
         } catch {
-            WCLog.log("pairing: invalid uri \(error) raw=\(uriString.prefix(120)) length=\(uriString.count)")
             throw PairingError.invalidUri
         }
         guard uri.version == "2" else {
@@ -38,7 +35,6 @@ class WCPairingService {
         }
 
         let seen = proposalCount.value
-        WCLog.log("pairing: uri topic=\(uri.topic.prefix(8)) relay=\(uri.relay.protocol) seen=\(seen)")
 
         // the SDK's pair() may never return even though the proposal arrives, so only its failure is raced against the proposal
         let pairFailure = Future<Void, Error> { [signClient] promise in
@@ -51,7 +47,6 @@ class WCPairingService {
             }
         }
         try await waitForProposal(after: seen, pairFailure: pairFailure)
-        WCLog.log("pairing: proposal received")
     }
 
     private func waitForProposal(after seen: Int, pairFailure: Future<Void, Error>) async throws {

@@ -37,8 +37,8 @@ struct WCKitTests {
         client.sessions = [session]
         parsers.register(StubParser())
         let kit = makeKit(storage: storage)
-        kit.start()
         try WCSessionService(signClient: client, storage: storage, accountProvider: accounts).store(session: session, accountId: accountId)
+        kit.start()
         return (kit, storage)
     }
 
@@ -157,6 +157,195 @@ struct WCKitTests {
         // seeded at start: only counted, never popped up (points 7 and 8, cold start)
         #expect(box.value.isEmpty)
         #expect(kit.pendingRequests(topic: WCTestFixtures.topic) == [WCPendingRequestItem(id: request.id, method: "eth_sendTransaction")])
+    }
+
+    @Test func expiredPendingRequestsAreHiddenAndNotCounted() throws {
+        let (kit, _) = try storedKit()
+        var expired = try WCTestFixtures.request()
+        expired.expiryTimestamp = 0
+        var valid = try WCTestFixtures.request()
+        valid.expiryTimestamp = UInt64(Date().timeIntervalSince1970) + 3600
+        var withoutDeadline = try WCTestFixtures.request()
+        withoutDeadline.expiryTimestamp = nil
+        client.pendingRequests = [(expired, nil), (valid, nil), (withoutDeadline, nil)]
+
+        #expect(kit.pendingRequests(topic: WCTestFixtures.topic).map(\.id) == [valid.id, withoutDeadline.id])
+        #expect(kit.pendingRequestCount == 2)
+    }
+
+    @Test func expiredPendingRequestCannotBeOpened() async throws {
+        let (kit, _) = try storedKit()
+        var expired = try WCTestFixtures.request()
+        expired.expiryTimestamp = 0
+        client.pendingRequests = [(expired, nil)]
+        let requests = Box<[WCRequestItem]>([])
+        let cancellable = collect(kit.requestPublisher, into: requests)
+        defer { cancellable.cancel() }
+
+        kit.open(requestId: expired.id)
+        client.sessionRequestSubject.send((expired, nil))
+        try await Task.sleep(nanoseconds: 150_000_000)
+
+        #expect(requests.value.isEmpty)
+        #expect(client.calls.isEmpty)
+    }
+
+    @Test func foregroundRefreshesPendingListsWithoutSdkExpirationEvent() throws {
+        foreground.isActive = false
+        let (kit, _) = try storedKit()
+        var expired = try WCTestFixtures.request()
+        expired.expiryTimestamp = 0
+        client.pendingRequests = [(expired, nil)]
+        let counts = Box<[Int]>([])
+        let cancellable = kit.pendingRequestsPublisher.sink { counts.value.append(kit.pendingRequestCount) }
+        defer { cancellable.cancel() }
+
+        foreground.isActive = true
+
+        #expect(counts.value == [0])
+    }
+
+    @MainActor @Test func timerRefreshesBadgeWithoutSdkExpirationEvent() async throws {
+        let (kit, _) = try storedKit()
+        var request = try WCTestFixtures.request()
+        request.expiryTimestamp = UInt64(Date().timeIntervalSince1970) + 3
+        client.pendingRequests = [(request, nil)]
+        let parsed = WCRequest(payload: WCRequestPayload(request: request, kind: .signMessage, from: nil), verdict: .pass, dAppName: "dApp")
+        let expirationViewModel = WCRequestExpirationViewModel(request: parsed, updates: kit.pendingRequestsPublisher)
+        let expirationStates = Box<[Bool]>([])
+        let expirationCancellable = expirationViewModel.$isExpired.sink {
+            #expect(Thread.isMainThread)
+            expirationStates.value.append($0)
+        }
+        defer { expirationCancellable.cancel() }
+        let counts = Box<[Int]>([])
+        let cancellable = kit.pendingRequestsPublisher.sink { counts.value.append(kit.pendingRequestCount) }
+        defer { cancellable.cancel() }
+        try #require(kit.pendingRequestCount == 1)
+
+        try await waitUntil(timeout: 5) { counts.value.last == 0 }
+
+        #expect(kit.pendingRequests(topic: WCTestFixtures.topic).isEmpty)
+        try await waitUntil { expirationViewModel.isExpired }
+        #expect(expirationStates.value == [false, true])
+        client.requestExpirationSubject.send(request.id)
+        try await Task.sleep(nanoseconds: 100_000_000)
+        #expect(expirationStates.value == [false, true])
+    }
+
+    @MainActor @Test func expirationTimerDoesNotPollAfterLastDeadline() async throws {
+        let (kit, _) = try storedKit()
+        var request = try WCTestFixtures.request()
+        request.expiryTimestamp = UInt64(Date().timeIntervalSince1970) + 2
+        client.pendingRequests = [(request, nil)]
+        let counts = Box<[Int]>([])
+        let cancellable = kit.pendingRequestsPublisher.sink { counts.value.append(kit.pendingRequestCount) }
+        defer { cancellable.cancel() }
+
+        try await waitUntil(timeout: 4) { counts.value.last == 0 }
+        // Let the expiration callback finish replanning, then observe a quiet interval longer than a tick.
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let readCount = client.pendingRequestsReadCount
+        try await Task.sleep(nanoseconds: 1_200_000_000)
+
+        #expect(client.pendingRequestsReadCount == readCount)
+    }
+
+    @MainActor @Test(arguments: [nil, UInt64(0)])
+    func noFutureDeadlineDoesNotStartPolling(expiryTimestamp: UInt64?) async throws {
+        let (kit, _) = try storedKit()
+        var request = try WCTestFixtures.request()
+        request.expiryTimestamp = expiryTimestamp
+        client.pendingRequests = [(request, nil)]
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let readCount = client.pendingRequestsReadCount
+        try await Task.sleep(nanoseconds: 1_200_000_000)
+
+        #expect(client.pendingRequestsReadCount == readCount)
+        withExtendedLifetime(kit) {}
+    }
+
+    @MainActor @Test func newEarlierDeadlineReplacesTimerAndSchedulesNext() async throws {
+        let (kit, _) = try storedKit()
+        let now = UInt64(Date().timeIntervalSince1970)
+        var later = try WCTestFixtures.request()
+        later.expiryTimestamp = now + 4
+        client.pendingRequests = [(later, nil)]
+        // Allow the initial schedule to be installed before a nearer deadline arrives.
+        try await Task.sleep(nanoseconds: 100_000_000)
+        var earlier = try WCTestFixtures.request()
+        earlier.expiryTimestamp = now + 2
+        client.pendingRequests = [(later, nil), (earlier, nil)]
+        let counts = Box<[Int]>([])
+        let cancellable = kit.pendingRequestsPublisher.sink { counts.value.append(kit.pendingRequestCount) }
+        defer { cancellable.cancel() }
+
+        client.sessionRequestSubject.send((earlier, nil))
+        try await waitUntil(timeout: 6) { counts.value.last == 0 }
+
+        #expect(counts.value == [2, 1, 0])
+    }
+
+    @MainActor @Test func sdkRemovalCancelsScheduledExpiration() async throws {
+        let (kit, _) = try storedKit()
+        var request = try WCTestFixtures.request()
+        request.expiryTimestamp = UInt64(Date().timeIntervalSince1970) + 2
+        client.pendingRequests = [(request, nil)]
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let updates = Box<[Void]>([])
+        let cancellable = collect(kit.pendingRequestsPublisher, into: updates)
+        defer { cancellable.cancel() }
+
+        client.pendingRequests = []
+        client.requestExpirationSubject.send(request.id)
+        try await Task.sleep(nanoseconds: 2_200_000_000)
+
+        #expect(updates.value.count == 1)
+        withExtendedLifetime(kit) {}
+    }
+
+    @MainActor @Test func backgroundCancelsTimerAndForegroundRefreshesExpiredList() async throws {
+        let (kit, _) = try storedKit()
+        var request = try WCTestFixtures.request()
+        request.expiryTimestamp = UInt64(Date().timeIntervalSince1970) + 2
+        client.pendingRequests = [(request, nil)]
+        let parsed = WCRequest(payload: WCRequestPayload(request: request, kind: .transaction, from: nil), verdict: .pass, dAppName: "dApp")
+        let expirationViewModel = WCRequestExpirationViewModel(request: parsed, updates: kit.pendingRequestsPublisher)
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let counts = Box<[Int]>([])
+        let cancellable = kit.pendingRequestsPublisher.sink { counts.value.append(kit.pendingRequestCount) }
+        defer { cancellable.cancel() }
+
+        foreground.isActive = false
+        try await Task.sleep(nanoseconds: 100_000_000)
+        let readCount = client.pendingRequestsReadCount
+        try await Task.sleep(nanoseconds: 2_200_000_000)
+        #expect(client.pendingRequestsReadCount == readCount)
+        #expect(expirationViewModel.isExpired == false)
+
+        foreground.isActive = true
+        #expect(counts.value.last == 0)
+        #expect(kit.pendingRequests(topic: WCTestFixtures.topic).isEmpty)
+        try await waitUntil { expirationViewModel.isExpired }
+    }
+
+    @MainActor @Test func requestExpiringInBackgroundDoesNotOccupyPresentationSlot() async throws {
+        foreground.isActive = false
+        let (kit, _) = try storedKit()
+        var request = try WCTestFixtures.request()
+        request.expiryTimestamp = UInt64(Date().timeIntervalSince1970) + 2
+        let requests = Box<[WCRequestItem]>([])
+        let cancellable = kit.requestPublisher.receive(on: DispatchQueue.main).sink { requests.value.append($0) }
+        defer { cancellable.cancel() }
+        client.sessionRequestSubject.send((request, nil))
+
+        try await waitUntil(timeout: 4) { WCRequest.isExpired(expiryTimestamp: request.expiryTimestamp) }
+        foreground.isActive = true
+        let valid = try WCTestFixtures.request()
+        client.sessionRequestSubject.send((valid, nil))
+        try await waitUntil { requests.value.count == 1 }
+
+        #expect(requests.value.first?.requestId == valid.id)
     }
 
     @Test func backgroundRequestIsShownOnForeground() async throws {

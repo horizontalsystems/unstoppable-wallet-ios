@@ -4,6 +4,7 @@ import SwiftUI
 struct WCSendSheetView: View {
     private let item: WCRequestItem
     @StateObject private var sendViewModel: SendViewModel
+    @StateObject private var expirationViewModel: WCRequestExpirationViewModel
     @Binding private var isPresented: Bool
     @State private var finished = false
     // decoded rows shown immediately while the fee is estimated, so the sheet opens full (Android parity)
@@ -12,6 +13,7 @@ struct WCSendSheetView: View {
     init(item: WCRequestItem, sendData: SendData, isPresented: Binding<Bool>) {
         self.item = item
         _sendViewModel = StateObject(wrappedValue: SendViewModel(sendData: sendData))
+        _expirationViewModel = StateObject(wrappedValue: WCRequestExpirationViewModel(request: item.request))
         _isPresented = isPresented
     }
 
@@ -96,33 +98,42 @@ struct WCSendSheetView: View {
             .buttonStyle(PrimaryButtonStyle(style: .gray))
             .disabled(sendViewModel.sending)
 
-            switch sendViewModel.state {
-            case .syncing:
-                // shown disabled (not hidden) so the button row stays put while the fee estimates
+            if expirationViewModel.isExpired, !sendViewModel.sending {
                 Button(action: {}) {
-                    Text((previewData ?? sendViewModel.sendData)?.customSendButtonTitle ?? "wallet_connect.button.confirm".localized)
+                    Text("wallet_connect.button.expired".localized)
                 }
                 .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 .disabled(true)
-            case .success:
-                Button(action: { send() }) {
-                    HStack(spacing: .margin8) {
-                        if sendViewModel.sending { ProgressView().progressViewStyle(.circular) }
-                        Text(sendViewModel.sendData?.customSendButtonTitle ?? "wallet_connect.button.confirm".localized)
+            } else {
+                switch sendViewModel.state {
+                case .syncing:
+                    // shown disabled (not hidden) so the button row stays put while the fee estimates
+                    Button(action: {}) {
+                        Text((previewData ?? sendViewModel.sendData)?.customSendButtonTitle ?? "wallet_connect.button.confirm".localized)
                     }
+                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                    .disabled(true)
+                case .success:
+                    Button(action: { send() }) {
+                        HStack(spacing: .margin8) {
+                            if sendViewModel.sending { ProgressView().progressViewStyle(.circular) }
+                            Text(sendViewModel.sendData?.customSendButtonTitle ?? "wallet_connect.button.confirm".localized)
+                        }
+                    }
+                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                    .disabled(sendViewModel.sending || !(sendViewModel.sendData?.canSend ?? false))
+                case .failed:
+                    Button(action: { sendViewModel.sync() }) {
+                        Text("send.confirmation.refresh".localized)
+                    }
+                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                .disabled(sendViewModel.sending || !(sendViewModel.sendData?.canSend ?? false))
-            case .failed:
-                Button(action: { sendViewModel.sync() }) {
-                    Text("send.confirmation.refresh".localized)
-                }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
             }
         }
     }
 
     private func send() {
+        guard item.request?.isExpired != true else { return }
         Task {
             // the error is already surfaced through errorPublisher; close either way so a confirmed
             // transaction can never be broadcast a second time (matches Android)

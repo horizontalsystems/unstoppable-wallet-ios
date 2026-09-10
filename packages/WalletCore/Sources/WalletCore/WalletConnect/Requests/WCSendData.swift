@@ -16,7 +16,7 @@ class WCSendData: ISendData {
     }
 
     var feeData: FeeData? { inner.feeData }
-    var canSend: Bool { inner.canSend && !request.isBlocked }
+    var canSend: Bool { inner.canSend && !request.isBlocked && !request.isExpired }
     var rateCoins: [Coin] { inner.rateCoins }
     var amountAdjusted: Bool { inner.amountAdjusted }
 

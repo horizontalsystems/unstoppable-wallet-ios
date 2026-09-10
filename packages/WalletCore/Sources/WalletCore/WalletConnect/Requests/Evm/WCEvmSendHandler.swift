@@ -91,6 +91,7 @@ extension WCEvmSendHandler: ISendHandler {
     }
 
     func send(data: ISendData) async throws {
+        try request.checkExpiration()
         guard !request.isBlocked else { throw SendError.blocked }
         guard let data = ((data as? WCSendData)?.inner as? WCEvmSendData)?.evmSendData else {
             throw SendError.invalidData

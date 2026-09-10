@@ -4,7 +4,6 @@ import SwiftUI
 // Routes module events to screens; the only place UI knows how requests and proposals are shown
 enum WCPresenter {
     static func pair(uri: String) {
-        WCLog.log("presenter pair: manager=\(Core.shared.walletConnect != nil) account=\(Core.shared.accountManager.activeAccount != nil)")
         guard let manager = Core.shared.walletConnect else { return }
         guard Core.shared.accountManager.activeAccount != nil else {
             presentNoAccount()
@@ -15,20 +14,16 @@ enum WCPresenter {
             do {
                 let kit = try manager.kit()
                 await MainActor.run {
-                    WCLog.log("presenter pair: show waiting hud")
                     HudHelper.instance.show(banner: .waitingForSession)
                 }
                 try await kit.pair(uri: uri)
-                WCLog.log("presenter pair: paired")
             } catch let error as WCPairingService.PairingError where error != .proposalTimeout {
                 await MainActor.run {
-                    WCLog.log("presenter pair: pairing error \(error)")
                     hideWaiting()
                     presentInvalidUrl(error: error)
                 }
             } catch {
                 await MainActor.run {
-                    WCLog.log("presenter pair: error \(error)")
                     hideWaiting()
                     HudHelper.instance.show(banner: .error(string: error.smartDescription))
                 }
@@ -37,7 +32,6 @@ enum WCPresenter {
     }
 
     static func present(proposal item: WCProposalItem) {
-        WCLog.log("presenter: present proposal \(item.proposal.id) verify=\(item.verifyState) chains=\(item.blockchainProposals.count)")
         hideWaiting()
         let viewModel = WCConnectViewModel(item: item)
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
@@ -49,7 +43,10 @@ enum WCPresenter {
     }
 
     static func present(request item: WCRequestItem) {
-        WCLog.log("presenter: present request \(item.requestId.string) result=\(item.result)")
+        guard item.request?.isExpired != true else {
+            Core.shared.walletConnect?.startedKit?.notifyRequestDismissed()
+            return
+        }
         switch item.result {
         case let .transaction(_, sendData):
             Coordinator.shared.present(type: .bottomSheet) { isPresented in
@@ -149,7 +146,6 @@ enum WCPresenter {
     }
 
     private static func hideWaiting() {
-        WCLog.log("presenter hideWaiting: hud tag=\(HUD.instance.tag ?? "nil")")
         if HUD.instance.tag == HudHelper.BannerType.waitingForSessionKey {
             HudHelper.instance.hide()
         }

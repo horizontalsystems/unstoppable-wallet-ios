@@ -34,7 +34,6 @@ class WCSessionsViewModel: ObservableObject {
     }
 
     private func subscribe(kit: WCKit) {
-        WCLog.log("sessions vm: subscribed to kit")
         kitCancellables.removeAll()
         kit.sessionsPublisher
             .receive(on: DispatchQueue.main)
@@ -47,7 +46,6 @@ class WCSessionsViewModel: ObservableObject {
     }
 
     private func sync(sessions: [WCSessionItem], kit: WCKit) {
-        WCLog.log("sessions vm: sync sessions=\(sessions.count)")
         items = sessions.map { session in
             Item(
                 session: session,
@@ -61,7 +59,6 @@ class WCSessionsViewModel: ObservableObject {
     var invalidUrlPublisher: AnyPublisher<Void, Never> { invalidUrlSubject.eraseToAnyPublisher() }
 
     func refresh() {
-        WCLog.log("sessions vm: refresh startedKit=\(manager?.startedKit != nil)")
         guard let kit = manager?.startedKit else { return }
         sync(sessions: kit.sessions, kit: kit)
     }

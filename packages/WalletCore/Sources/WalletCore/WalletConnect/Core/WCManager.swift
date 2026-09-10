@@ -26,20 +26,17 @@ class WCManager {
         self.directHandlerRegistry = directHandlerRegistry
         self.signMessageHandlerRegistry = signMessageHandlerRegistry
         self.logger = logger
-        WCLog.log("manager created")
     }
 
     // persisted sessions mean a relay reconnect may deliver a request right away: subscribe before it happens
     func start() {
         let count = (try? storage.sessions().count) ?? 0
-        WCLog.log("manager start: stored sessions=\(count)")
         guard count > 0 else {
             return
         }
         do {
             _ = try kit()
         } catch {
-            WCLog.log("manager start: eager kit failed \(error)")
             logger?.error("eager WalletConnect start failed: \(error)")
         }
     }
@@ -89,14 +86,11 @@ class WCManager {
 
     func kit() throws -> WCKit {
         if let kit = kitSubject.value {
-            WCLog.log("manager kit: reuse")
             return kit
         }
-        WCLog.log("manager kit: creating")
         let kit = try kitFactory.makeKit()
         kit.start()
         kitSubject.send(kit)
-        WCLog.log("manager kit: started and published")
         return kit
     }
 }

@@ -25,10 +25,7 @@ class WCSessionService {
             .sink { [weak self] in self?.handleDeleted(accountId: $0) }
             .store(in: &cancellables)
         signClient.sessionsPublisher
-            .sink { [weak self] in
-                WCLog.log("sessions: sdk sessionsPublisher count=\($0.count)")
-                self?.sync()
-            }
+            .sink { [weak self] _ in self?.sync() }
             .store(in: &cancellables)
         signClient.sessionUpdatePublisher
             .sink { [weak self] in self?.handleUpdate(topic: $0.topic, namespaces: $0.namespaces) }
@@ -49,7 +46,6 @@ class WCSessionService {
     func store(session: Session, accountId: String) throws {
         let namespaces = WCSessionNamespaces(sessionNamespaces: session.namespaces)
         try storage.save(session: WCSessionRecord(topic: session.topic, accountId: accountId, dAppName: session.peer.name, namespaces: namespaces))
-        WCLog.log("sessions: stored topic=\(session.topic.prefix(8)) account=\(accountId)")
         logger?.info("stored session \(session.topic) for account \(accountId)")
         sync()
     }
@@ -77,7 +73,6 @@ class WCSessionService {
             for session in signClient.sessions where !known.contains(session.topic) {
                 do {
                     try await signClient.disconnect(topic: session.topic)
-                    WCLog.log("sessions: disconnected orphan topic=\(session.topic.prefix(8))")
                 } catch {
                     logger?.error("orphan disconnect \(session.topic) failed: \(error)")
                 }
@@ -102,20 +97,16 @@ class WCSessionService {
             }
 
             let activeAccountId = accountProvider.activeAccountId
-            WCLog.log("sessions sync: live=\(live.count) records=\(records.count) stale=\(stale.count) active=\(activeAccountId ?? "nil")")
             let items = try records
                 .filter { $0.accountId == activeAccountId && live[$0.topic] != nil }
                 .map { try WCSessionItem(topic: $0.topic, accountId: $0.accountId, dAppName: $0.dAppName, peer: live[$0.topic]?.peer, namespaces: $0.sessionNamespaces()) }
-            WCLog.log("sessions sync: items=\(items.count)")
             sessionsSubject.send(items)
         } catch {
-            WCLog.log("sessions sync: failed \(error)")
             logger?.error("session sync failed: \(error)")
         }
     }
 
     private func handleDeleted(accountId: String) {
-        WCLog.log("sessions: account deleted \(accountId)")
         Task { [weak self] in
             await self?.disconnectAll(accountId: accountId)
         }
@@ -136,7 +127,6 @@ class WCSessionService {
 
     // dApp-driven updates never touch the persisted approval; verifiers read the snapshot
     private func handleUpdate(topic: String, namespaces: [String: SessionNamespace]) {
-        WCLog.log("sessions: dApp update topic=\(topic.prefix(8)) namespaces=\(Array(namespaces.keys))")
         guard let record = try? storage.session(topic: topic), let persisted = try? record.sessionNamespaces() else {
             return
         }

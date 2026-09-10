@@ -1,8 +1,34 @@
 import Testing
+import WalletConnectUtils
 @testable import WalletCore
 
 struct WCStellarTransactionParserTests {
     private let parser = WCStellarTransactionParser()
+
+    @Test(arguments: [WCStellarTransactionPayload.signMethod, WCStellarTransactionPayload.submitMethod], [true, false])
+    func parsesEnvelopeWithWaitForInclusion(method: String, waitForInclusion: Bool) throws {
+        let envelope = try WCStellarFixtures.envelope()
+        let params: [String: AnyCodable] = [
+            "xdr": AnyCodable(envelope.xdr),
+            "account": AnyCodable("stellar:pubnet:\(envelope.sourceAccountId)"),
+            "chain": AnyCodable("stellar:pubnet"),
+            "waitForInclusion": AnyCodable(waitForInclusion),
+        ]
+        let request = try WCTestFixtures.request(method: method, chainId: "stellar:pubnet", params: AnyCodable(params))
+        let result = try parser.parse(request: request)
+        let payload = try #require(result as? WCStellarTransactionPayload)
+
+        #expect(payload.xdr == envelope.xdr)
+        #expect(payload.from == envelope.sourceAccountId)
+        #expect(payload.isSignOnly == (method == WCStellarTransactionPayload.signMethod))
+    }
+
+    @Test func nonStringXdrIsMalformed() throws {
+        let request = try WCTestFixtures.request(method: WCStellarTransactionPayload.submitMethod, chainId: "stellar:pubnet", params: AnyCodable(["xdr": 123]))
+        #expect(throws: WCStellarTransactionParser.ParsingError.malformedParams) {
+            try parser.parse(request: request)
+        }
+    }
 
     @Test func parsesEnvelopeAndExtractsSourceAccount() throws {
         let envelope = try WCStellarFixtures.envelope()

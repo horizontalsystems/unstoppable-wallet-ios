@@ -1,6 +1,7 @@
 import Foundation
 import MarketKit
 import Testing
+import WalletConnectSign
 @testable import WalletCore
 
 struct WCSendDataTests {
@@ -43,6 +44,15 @@ struct WCSendDataTests {
 
     @Test func innerCannotSendStaysDisabledOnPass() throws {
         let data = try WCSendData(inner: StubSendData(canSend: false), request: request(verdict: .pass))
+        #expect(data.canSend == false)
+    }
+
+    @Test func expiredRequestCannotSendEvenWithValidInnerData() throws {
+        var raw = try WCTestFixtures.request()
+        raw.expiryTimestamp = 0
+        let payload = WCRequestPayload(request: raw, kind: .transaction, from: nil)
+        let data = try WCSendData(inner: StubSendData(canSend: true), request: request(verdict: .pass, payload: payload))
+
         #expect(data.canSend == false)
     }
 
