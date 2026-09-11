@@ -12,6 +12,7 @@ import ZcashLightClientKit
 
 public enum SendData {
     case evm(blockchainType: BlockchainType, transactionData: TransactionData, token: Token)
+    case evmResend(blockchainType: BlockchainType, transaction: EvmKit.Transaction, type: ResendTransactionType)
     case bitcoin(token: Token, params: SendParameters)
     case zcash(amount: Decimal, recipient: Recipient, memo: String?)
     case zcashResend(amount: Decimal, recipient: Recipient, memo: String?, initialTransactionSettings: InitialTransactionSettings)

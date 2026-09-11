@@ -108,20 +108,16 @@ enum SendEvmConfirmationModule {
 
     static func resendViewController(adapter: ITransactionsAdapter, type: ResendTransactionType, transactionHash: String) throws -> UIViewController {
         guard let adapter = adapter as? EvmTransactionsAdapter, let hash = transactionHash.hs.hexData, let fullTransaction = adapter.evmKit.transaction(hash: hash) else {
-            throw CreateModuleError.wrongTransaction
-        }
-
-        let transaction = fullTransaction.transaction
-
-        guard let value = transaction.value, let input = transaction.input, let to = transaction.to else {
-            throw CreateModuleError.wrongTransaction
-        }
-
-        guard transaction.blockNumber == nil else {
-            throw CreateModuleError.alreadyInBlock
+            throw EvmReplacementData.ValidationError.wrongTransaction
         }
 
         let evmKitWrapper = adapter.evmKitWrapper
+        let transaction = fullTransaction.transaction
+        let replacementData = try EvmResendHandler.prepare(
+            transaction: transaction, blockchainType: evmKitWrapper.blockchainType,
+            receiveAddress: adapter.evmKit.receiveAddress,
+            isProtected: MerkleTransactionAdapter.isProtected(transaction: fullTransaction), type: type
+        )
         guard let coinServiceFactory = EvmCoinServiceFactory(
             blockchainType: evmKitWrapper.blockchainType,
             marketKit: Core.shared.marketKit,
@@ -131,32 +127,16 @@ enum SendEvmConfirmationModule {
             throw CreateModuleError.cantCreateFeeRateProvider
         }
 
-        let sendData: SendEvmData
-        let gasLimit: Int?
-        switch type {
-        case .speedUp:
-            let transactionData = TransactionData(to: to, value: value, input: input)
-            sendData = SendEvmData(transactionData: transactionData, additionalInfo: nil, warnings: [])
-            gasLimit = transaction.gasLimit
-        case .cancel:
-            let transactionData = TransactionData(to: adapter.evmKit.receiveAddress, value: 0, input: Data())
-            sendData = SendEvmData(transactionData: transactionData, additionalInfo: nil, warnings: [])
-            gasLimit = nil
-        }
+        let sendData = SendEvmData(transactionData: replacementData.transactionData, additionalInfo: nil, warnings: [])
 
         guard let (settingsService, settingsViewModel) = EvmSendSettingsModule.instance(
             evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory,
-            previousTransaction: transaction, predefinedGasLimit: gasLimit
+            previousTransaction: transaction, predefinedGasLimit: replacementData.predefinedGasLimit
         ) else {
             throw CreateModuleError.cantCreateFeeSettingsModule
         }
 
-        var privateSendMode: SendEvmTransactionService.PrivateSendMode = .none
-        if MerkleTransactionAdapter.isProtected(transaction: fullTransaction) {
-            privateSendMode = .cancelPrevious(transaction.hash)
-        }
-
-        let service = SendEvmTransactionService(sendData: sendData, privateSendMode: privateSendMode, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: Core.shared.evmLabelManager)
+        let service = SendEvmTransactionService(sendData: sendData, privateSendMode: .none, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: Core.shared.evmLabelManager)
         let contactLabelService = ContactLabelService(contactManager: Core.shared.contactManager, blockchainType: evmKitWrapper.blockchainType)
         let viewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService)
 
@@ -172,21 +152,13 @@ enum SendEvmConfirmationModule {
 
 extension SendEvmConfirmationModule {
     enum CreateModuleError: LocalizedError {
-        case wrongTransaction
         case cantCreateFeeRateProvider
         case cantCreateFeeSettingsModule
-        case alreadyInBlock
 
         var errorDescription: String? {
             switch self {
-            case .wrongTransaction, .cantCreateFeeRateProvider, .cantCreateFeeSettingsModule: return "alert.unknown_error".localized
-            case .alreadyInBlock: return "tx_info.transaction.already_in_block".localized
+            case .cantCreateFeeRateProvider, .cantCreateFeeSettingsModule: return "alert.unknown_error".localized
             }
         }
     }
-}
-
-enum ResendTransactionType: String {
-    case speedUp = "speed_up"
-    case cancel
 }

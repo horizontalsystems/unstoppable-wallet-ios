@@ -5,10 +5,16 @@ import MarketKit
 import SwiftUI
 
 class EvmTransactionService: TransactionService {
-    override class func instance(sendData _: SendData, baseToken: Token, initialTransactionSettings: InitialTransactionSettings?) -> ITransactionService? {
+    override class func instance(sendData: SendData, baseToken: Token, initialTransactionSettings: InitialTransactionSettings?) -> ITransactionService? {
         guard EvmBlockchainManager.blockchainTypes.contains(baseToken.blockchainType),
               let evmKit = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: baseToken.blockchainType).evmKitWrapper?.evmKit
         else { return nil }
+
+        if case let .evmResend(blockchainType, transaction, _) = sendData {
+            guard blockchainType == baseToken.blockchainType, transaction.from == evmKit.receiveAddress, transaction.nonce != nil else { return nil }
+            return EvmTransactionService(blockchainType: blockchainType, evmKit: evmKit, initialTransactionSettings: initialTransactionSettings, previousTransaction: transaction)
+        }
+
         return EvmTransactionService(blockchainType: baseToken.blockchainType, evmKit: evmKit, initialTransactionSettings: initialTransactionSettings)
     }
 
@@ -19,12 +25,19 @@ class EvmTransactionService: TransactionService {
     private let blockchainType: BlockchainType
     private let chain: Chain
     private let rpcSource: RpcSource
+    private let previousTransaction: EvmKit.Transaction?
     private let networkManager = Core.shared.networkManager
 //    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
 
     private let updateSubject = PassthroughSubject<Void, Never>()
 
-    private(set) var recommendedGasPrice: GasPrice?
+    private var networkGasPrice: GasPrice?
+    var recommendedGasPrice: GasPrice? { gasPriceData?.recommended }
+
+    private var gasPriceData: GasPriceData? {
+        networkGasPrice.map { Self.gasPriceData(network: $0, previousTransaction: previousTransaction, custom: gasPrice) }
+    }
+
     private var gasPrice: GasPrice? {
         didSet {
             validateGasPrice()
@@ -42,7 +55,7 @@ class EvmTransactionService: TransactionService {
     private var gasPriceWarnings: [EvmFeeModule.GasDataWarning] = []
     private var nonceErrors: [NonceService.NonceError] = []
 
-    init?(blockchainType: BlockchainType, evmKit: EvmKit.Kit, initialTransactionSettings: InitialTransactionSettings?) {
+    init?(blockchainType: BlockchainType, evmKit: EvmKit.Kit, initialTransactionSettings: InitialTransactionSettings?, previousTransaction: EvmKit.Transaction? = nil) {
         guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType),
               let rpcSource = Core.shared.evmSyncSourceManager.httpSyncSource(blockchainType: blockchainType)?.rpcSource
         else {
@@ -53,13 +66,15 @@ class EvmTransactionService: TransactionService {
         self.blockchainType = blockchainType
         self.evmKit = evmKit
         self.rpcSource = rpcSource
+        self.previousTransaction = previousTransaction
+        nonce = previousTransaction?.nonce
 
         if case let .evm(gasPrice, nonce) = initialTransactionSettings {
             if let gasPrice {
                 self.gasPrice = gasPrice
             }
 
-            if let nonce {
+            if let nonce, previousTransaction == nil {
                 self.nonce = nonce
             }
         }
@@ -76,18 +91,18 @@ class EvmTransactionService: TransactionService {
 
 extension EvmTransactionService: ITransactionService {
     var transactionSettings: TransactionSettings? {
-        guard let recommendedGasPrice else {
+        guard let gasPriceData else {
             return nil
         }
 
         return .evm(
-            gasPriceData: GasPriceData(recommended: recommendedGasPrice, userDefined: gasPrice ?? recommendedGasPrice),
+            gasPriceData: gasPriceData,
             nonce: nonce
         )
     }
 
     var modified: Bool {
-        gasPrice != nil || nonce != nil
+        gasPrice != nil || (nonceEditable && nonce != nil)
     }
 
     var cautions: [CautionNew] {
@@ -110,13 +125,18 @@ extension EvmTransactionService: ITransactionService {
 
     func sync() async throws {
         if isEIP1559Supported {
-            recommendedGasPrice = try await EIP1559GasPriceProvider.gasPrice(networkManager: networkManager, rpcSource: rpcSource)
+            networkGasPrice = try await EIP1559GasPriceProvider.gasPrice(networkManager: networkManager, rpcSource: rpcSource)
         } else {
-            recommendedGasPrice = try await LegacyGasPriceProvider.gasPrice(networkManager: networkManager, rpcSource: rpcSource)
+            networkGasPrice = try await LegacyGasPriceProvider.gasPrice(networkManager: networkManager, rpcSource: rpcSource)
         }
 
-        minimumNonce = try await evmKit.nonce(defaultBlockParameter: .latest)
-        nextNonce = try await evmKit.nonce(defaultBlockParameter: .pending)
+        if let previousTransaction {
+            nextNonce = previousTransaction.nonce
+            validateGasPrice()
+        } else {
+            minimumNonce = try await evmKit.nonce(defaultBlockParameter: .latest)
+            nextNonce = try await evmKit.nonce(defaultBlockParameter: .pending)
+        }
     }
 }
 
@@ -126,7 +146,15 @@ extension EvmTransactionService {
     }
 
     var currentGasPrice: GasPrice? {
-        gasPrice ?? recommendedGasPrice
+        gasPrice ?? gasPriceData?.userDefined
+    }
+
+    var defaultGasPrice: GasPrice? {
+        networkGasPrice.map { Self.gasPriceData(network: $0, previousTransaction: previousTransaction, custom: nil).userDefined }
+    }
+
+    var nonceEditable: Bool {
+        previousTransaction == nil
     }
 
     var currentNonce: Int? {
@@ -139,12 +167,35 @@ extension EvmTransactionService {
     }
 
     func set(nonce: Int?) {
+        guard nonceEditable else { return }
         self.nonce = nonce
         updateSubject.send()
     }
 }
 
 extension EvmTransactionService {
+    static func gasPriceData(network: GasPrice, previousTransaction: EvmKit.Transaction?, custom: GasPrice?) -> GasPriceData {
+        let recommended: GasPrice
+        let defaultPrice: GasPrice
+
+        switch network {
+        case let .legacy(gasPrice):
+            recommended = .legacy(gasPrice: max(gasPrice, previousTransaction?.gasPrice ?? gasPrice))
+            // Preserve LegacyGasPriceService: the recommendation is floored, the default selection is the network price.
+            defaultPrice = network
+        case let .eip1559(maxFee, tips):
+            if let previousMaxFee = previousTransaction?.maxFeePerGas, let previousTips = previousTransaction?.maxPriorityFeePerGas {
+                let recommendedTips = max(tips, previousTips)
+                recommended = .eip1559(maxFeePerGas: max(maxFee - tips + recommendedTips, previousMaxFee), maxPriorityFeePerGas: recommendedTips)
+            } else {
+                recommended = network
+            }
+            defaultPrice = recommended
+        }
+
+        return GasPriceData(recommended: recommended, userDefined: custom ?? defaultPrice)
+    }
+
     static func validateGasPrice(recommended: GasPrice?, current: GasPrice?) -> [EvmFeeModule.GasDataWarning] {
         var warnings = [EvmFeeModule.GasDataWarning]()
 

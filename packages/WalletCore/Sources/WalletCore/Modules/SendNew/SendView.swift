@@ -157,7 +157,7 @@ struct SendView: View {
                 )
             }
 
-            if let service = transactionService as? EvmTransactionService {
+            if let service = transactionService as? EvmTransactionService, service.nonceEditable {
                 menuItems.append(
                     .init(label: "send.confirmation.transaction_nonce".localized) {
                         viewModel.stopAutoQuoting()
