@@ -283,6 +283,17 @@ class ZcashSendService {
             return
         }
 
+        do {
+            try await ZcashOperationGuard.shared.withSubmission(timeout: 30) {
+                await resubmitPendingTransactions(endpointService: endpointService)
+            }
+        } catch {
+            // a node switch or rebuild is holding the guard — retried on next foreground anyway
+            logger?.log(level: .debug, message: "Resubmit skipped: \(error)")
+        }
+    }
+
+    private func resubmitPendingTransactions(endpointService: ZcashEndpointService) async {
         // snapshot once: a node switch mid-loop must not split the batch between endpoints
         let endpoint = endpointService.currentEndpoint
 
