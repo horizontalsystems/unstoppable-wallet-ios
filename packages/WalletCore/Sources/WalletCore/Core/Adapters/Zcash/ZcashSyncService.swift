@@ -32,6 +32,7 @@ class ZcashSyncService {
     private let depositAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
 
     private var started = false
+    private(set) var stallState: StallState = .none
     private(set) var lastBlockHeight: Int = 0 {
         didSet {
             historyService.lastBlockHeight = lastBlockHeight
@@ -291,6 +292,12 @@ class ZcashSyncService {
             return
         }
 
+        // Slipstream start() is not idempotent: a second start on a live engine throws
+        if case .syncing = synchronizer.latestState.syncStatus {
+            logger?.log(level: .debug, message: "Already syncing, start skipped")
+            return
+        }
+
         // Sapling parameters are downloaded by the SDK on demand
         // (conditionally during sync when balance > 0, and just-in-time before any spend).
         logger?.log(level: .debug, message: "Start syncing kit!")
@@ -367,65 +374,36 @@ class ZcashSyncService {
             schedulePendingResubmission()
         }
 
-        var syncStatus = self.state
-
         switch state.syncStatus {
-        case .unprepared:
-            if started {
-                logger?.log(level: .debug, message: "State: Disconnected")
-                syncStatus = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
-            } else {
-                syncStatus = .idle
-            }
-        case .stopped:
-            logger?.log(level: .debug, message: "State: Disconnected")
-            syncStatus = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
-        case .upToDate:
-            if !started {
-                started = true
-            }
-            logger?.log(level: .debug, message: "State: Synced")
-            syncStatus = .synced
+        case .upToDate, .syncing:
+            started = true
             lastBlockHeight = max(state.latestBlockHeight, lastBlockHeight)
-            logger?.log(level: .debug, message: "Update BlockHeight = \(lastBlockHeight)")
-            checkFailingTransactions()
-        case let .syncing(progress, areFundsSpendable):
-            if !started {
-                started = true
-            }
-            logger?.log(level: .debug, message: "State: Syncing")
-            logger?.log(level: .debug, message: "State progress: \(progress) | spendable: \(areFundsSpendable)")
-            lastBlockHeight = max(state.latestBlockHeight, lastBlockHeight)
-            self.areFundsSpendable = areFundsSpendable
-
-            logger?.log(level: .debug, message: "Update BlockHeight = \(lastBlockHeight)")
-
+            logger?.log(level: .debug, message: "State: \(state.syncStatus) | masked: \(state.isSpendableMasked) | height: \(lastBlockHeight)")
             lastBlockUpdatedSubject.onNext(())
-
-            // Progress 0 (nothing scanned yet — the real scan range is unknown, and for a
-            // new wallet the SDK starts near the tip, not at the nominal birthday) and
-            // progress 1 (pre-scan housekeeping) carry no usable numbers: show an
-            // indeterminate spinner instead of a count extrapolated from the birthday.
-            if progress == 0 || progress == 1 {
-                syncStatus = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
-            } else {
-                let newProgress = min(99, Int(progress * 100))
-                let newRemaining = max(1, Int(Float(lastBlockHeight - birthday) * (1 - progress)))
-
-                syncStatus = .syncing(progress: newProgress, remaining: newRemaining, lastBlockDate: nil)
+            if case .upToDate = state.syncStatus {
+                checkFailingTransactions()
             }
         case let .error(error):
-            if !started, case .synchronizerDisconnected = error as? ZcashError {
-                syncStatus = .idle
-            } else {
+            // a disconnect before the first sync keeps the engine "not started" (maps to .idle)
+            if (error as? ZcashError) != .synchronizerDisconnected {
                 started = true
-                logger?.log(level: .error, message: "State: Error: \(error)")
-                syncStatus = .notSynced(error: AppError.unknownError)
             }
+            logger?.log(level: .error, message: "State: Error: \(error)")
+        case .unprepared, .stopped:
+            logger?.log(level: .debug, message: "State: Disconnected")
         }
 
-        if syncStatus != self.state {
-            self.state = syncStatus
+        let mapped = Self.mapState(Snapshot(state: state), started: started, birthday: birthday, lastBlockHeight: lastBlockHeight, stallTerminal: stallState == .terminal)
+        let spendableChanged = mapped.effectiveSpendable != areFundsSpendable
+        // assigned before the state publish so the send gate reads the new value with the new state
+        areFundsSpendable = mapped.effectiveSpendable
+
+        if mapped.state != self.state {
+            self.state = mapped.state
+        } else if spendableChanged {
+            // a pure spendable flip republishes the same state so the send gate re-evaluates
+            balanceStateUpdatedSubject.send(self.state.adapterState)
+            balanceStateSubject.onNext(self.state.adapterState)
         }
     }
 
@@ -515,5 +493,95 @@ class ZcashSyncService {
                 }
             })
             .eraseToAnyPublisher()
+    }
+}
+
+extension ZcashSyncService {
+    enum StallState {
+        case none
+        case rebuilding
+        case terminal
+    }
+
+    struct Snapshot: Equatable {
+        let syncStatus: SyncStatus
+        let isSpendableMasked: Bool
+        let isRecovering: Bool
+        let latestHeight: Int
+
+        init(syncStatus: SyncStatus, isSpendableMasked: Bool, isRecovering: Bool, latestHeight: Int) {
+            self.syncStatus = syncStatus
+            self.isSpendableMasked = isSpendableMasked
+            self.isRecovering = isRecovering
+            self.latestHeight = latestHeight
+        }
+
+        init(state: SynchronizerState) {
+            self.init(syncStatus: state.syncStatus, isSpendableMasked: state.isSpendableMasked, isRecovering: state.isRecovering, latestHeight: state.latestBlockHeight)
+        }
+    }
+
+    struct Mapped: Equatable {
+        let state: ZCashAdapterState
+        let effectiveSpendable: Bool
+    }
+
+    // Pure mapping of one SDK snapshot; the caller applies side effects (heights, started flag).
+    static func mapState(_ snapshot: Snapshot, started: Bool, birthday: Int, lastBlockHeight: Int, stallTerminal: Bool) -> Mapped {
+        var state: ZCashAdapterState
+        var spendable = false
+
+        switch snapshot.syncStatus {
+        case .unprepared:
+            state = started ? .syncing(progress: nil, remaining: nil, lastBlockDate: nil) : .idle
+        case .stopped:
+            state = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
+        case .upToDate:
+            state = .synced
+            spendable = true
+        case let .syncing(progress, areFundsSpendable):
+            spendable = areFundsSpendable
+            // Progress 0 (nothing scanned yet — the real scan range is unknown, and for a
+            // new wallet the SDK starts near the tip, not at the nominal birthday) and
+            // progress 1 (pre-scan housekeeping) carry no usable numbers: show an
+            // indeterminate spinner instead of a count extrapolated from the birthday.
+            if progress == 0 || progress == 1 {
+                state = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
+            } else {
+                let newProgress = min(99, Int(progress * 100))
+                let newRemaining = max(1, Int(Float(lastBlockHeight - birthday) * (1 - progress)))
+                state = .syncing(progress: newProgress, remaining: newRemaining, lastBlockDate: nil)
+            }
+        case let .error(error):
+            if !started, case .synchronizerDisconnected = error as? ZcashError {
+                state = .idle
+            } else {
+                state = .notSynced(error: AppError.unknownError)
+            }
+        }
+
+        // terminal stall outranks repeated syncing/error snapshots
+        switch snapshot.syncStatus {
+        case .syncing, .error:
+            if stallTerminal {
+                state = .notSynced(error: AppError.zcash(reason: .syncStalled))
+            }
+        default:
+            break
+        }
+
+        // spendable mask folds into "syncing without numbers"; error/stopped are left alone so
+        // the node auto-select signal still sees .notSynced
+        if snapshot.isSpendableMasked {
+            spendable = false
+            switch state {
+            case .synced, .syncing:
+                state = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
+            default:
+                break
+            }
+        }
+
+        return Mapped(state: state, effectiveSpendable: spendable)
     }
 }

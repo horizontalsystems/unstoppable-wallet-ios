@@ -633,6 +633,11 @@ enum ZCashAdapterState: Equatable {
         default: return false
         }
     }
+
+    var isNotSynced: Bool {
+        if case .notSynced = self { return true }
+        return false
+    }
 }
 
 // SDK 4.x derives the init flow itself (nil birthday = new wallet); this stays for the
