@@ -87,7 +87,6 @@ let package = Package(
                 .product(name: "NftKit", package: "NftKit.Swift"),
                 .product(name: "ObjectMapper", package: "ObjectMapper"),
                 .product(name: "OneInchKit", package: "OneInchKit.Swift"),
-                .product(name: "ReownRouter", package: "reown-swift"),
                 .product(name: "ReownWalletKit", package: "reown-swift"),
                 .product(name: "RxSwift", package: "RxSwift"),
                 .product(name: "RxCocoa", package: "RxSwift"),
