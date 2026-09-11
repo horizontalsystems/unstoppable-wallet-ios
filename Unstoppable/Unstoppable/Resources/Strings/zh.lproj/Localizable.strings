@@ -335,6 +335,11 @@
 "balance_error.sync_error.description.without_source" = "无法从当前来源获取数据。请稍后重试。";
 "lost_accounts.warning_title" = "iOS Keychain 错误";
 "lost_accounts.warning_message" = "由于 iOS 钥匙串错误，无法访问以下钱包：\n\n%@\n\n重新启动应用通常可以解决此问题。如果问题仍然存在，您可以取消关联并恢复这些钱包。";
+"lost_accounts.recovery_message" = "无法访问以下钱包：\n\n%@\n\n转移到另一部 iPhone 后可能出现此问题。如果重启无效，你可以从此应用中移除这些无法访问的钱包，再使用备份恢复。";
+"lost_accounts.remove_title" = "移除无法访问的钱包？";
+"lost_accounts.remove_button" = "移除无法访问的钱包";
+"lost_accounts.remove_confirmation" = "是否移除以下钱包的本地记录？\n\n%@\n\n此操作不会恢复对这些钱包的访问。你需要使用对应的助记词或其他钱包备份恢复它们。此应用中的其他钱包仍可正常使用。";
+"lost_accounts.remove_failed" = "无法移除这些钱包，未删除任何记录。请重试。";
 
 // Token Balance Page
 "balance.token.locked" = "锁住";
