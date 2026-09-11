@@ -104,7 +104,13 @@ public class WalletViewModel: WalletListViewModel {
 
 extension WalletViewModel {
     var buttons: [WalletButton] {
-        [.scan, .receive, .send, .swap]
+        var buttons: [WalletButton] = [.scan, .receive, .send]
+
+        if swapEnabled {
+            buttons.append(.swap)
+        }
+
+        return buttons
     }
 
     var swapEnabled: Bool {
