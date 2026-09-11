@@ -154,7 +154,10 @@ extension WalletTokenViewModel {
 //            buttons.append(.pay)
         }
 
-        buttons.append(.swap)
+        if swapEnabled {
+            buttons.append(.swap)
+        }
+
         return buttons
     }
 
