@@ -92,8 +92,13 @@ extension EvmResendHandler: ISendHandler {
         let transactionDecoration = evmKitWrapper.evmKit.decorate(transactionData: transactionData)
         let decoration = decorator.decorate(baseToken: baseToken, transactionData: transactionData, transactionDecoration: transactionDecoration)
 
-        return EvmSendData(
+        let swap = EvmResendSwapData(decoration: transactionDecoration, baseToken: baseToken) { address in
+            try? Core.shared.coinManager.token(query: .init(blockchainType: self.baseToken.blockchainType, tokenType: .eip20(address: address.hex)))
+        }
+
+        return EvmResendData(
             decoration: decoration,
+            swap: swap,
             transactionData: transactionData,
             transactionError: transactionError,
             gasPrice: gasPriceData?.userDefined,

@@ -4,6 +4,7 @@ import SwiftUI
 
 struct SendView: View {
     @ObservedObject var viewModel: SendViewModel
+    var onSendError: ((String) -> Void)? = nil
 
     var body: some View {
         ZStack {
@@ -69,6 +70,10 @@ struct SendView: View {
             viewModel.stopAutoQuoting()
         }
         .onReceive(viewModel.errorPublisher) { error in
+            if let onSendError {
+                onSendError(error)
+                return
+            }
             Coordinator.shared.present(type: .bottomSheet) { isPresented in
                 BottomSheetView(
                     items: [

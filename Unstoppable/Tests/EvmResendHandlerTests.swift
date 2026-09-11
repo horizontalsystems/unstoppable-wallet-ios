@@ -45,7 +45,7 @@ struct EvmResendHandlerTests {
         let prices = GasPriceData(recommended: .legacy(gasPrice: 10), userDefined: .legacy(gasPrice: 15))
 
         let sendData = try await handler.sendData(transactionSettings: .evm(gasPriceData: prices, nonce: 999))
-        let data = try #require(sendData as? EvmSendData)
+        let data = try #require(sendData as? EvmResendData)
 
         #expect(data.nonce == 7)
         #expect(data.transactionData?.value == 123)

@@ -78,8 +78,6 @@ struct SendEvmData {
 }
 
 enum SendEvmConfirmationModule {
-    private static let forceMultiplier: Double = 1.2
-
     static func viewController(evmKitWrapper: EvmKitWrapper, sendData: SendEvmData) -> UIViewController? {
         let evmKit = evmKitWrapper.evmKit
 
@@ -104,61 +102,5 @@ enum SendEvmConfirmationModule {
         let controller = SendEvmConfirmationViewController(mode: .send, transactionViewModel: viewModel, settingsViewModel: settingsViewModel)
 
         return controller
-    }
-
-    static func resendViewController(adapter: ITransactionsAdapter, type: ResendTransactionType, transactionHash: String) throws -> UIViewController {
-        guard let adapter = adapter as? EvmTransactionsAdapter, let hash = transactionHash.hs.hexData, let fullTransaction = adapter.evmKit.transaction(hash: hash) else {
-            throw EvmReplacementData.ValidationError.wrongTransaction
-        }
-
-        let evmKitWrapper = adapter.evmKitWrapper
-        let transaction = fullTransaction.transaction
-        let replacementData = try EvmResendHandler.prepare(
-            transaction: transaction, blockchainType: evmKitWrapper.blockchainType,
-            receiveAddress: adapter.evmKit.receiveAddress,
-            isProtected: MerkleTransactionAdapter.isProtected(transaction: fullTransaction), type: type
-        )
-        guard let coinServiceFactory = EvmCoinServiceFactory(
-            blockchainType: evmKitWrapper.blockchainType,
-            marketKit: Core.shared.marketKit,
-            currencyManager: Core.shared.currencyManager,
-            coinManager: Core.shared.coinManager
-        ) else {
-            throw CreateModuleError.cantCreateFeeRateProvider
-        }
-
-        let sendData = SendEvmData(transactionData: replacementData.transactionData, additionalInfo: nil, warnings: [])
-
-        guard let (settingsService, settingsViewModel) = EvmSendSettingsModule.instance(
-            evmKit: evmKitWrapper.evmKit, blockchainType: evmKitWrapper.blockchainType, sendData: sendData, coinServiceFactory: coinServiceFactory,
-            previousTransaction: transaction, predefinedGasLimit: replacementData.predefinedGasLimit
-        ) else {
-            throw CreateModuleError.cantCreateFeeSettingsModule
-        }
-
-        let service = SendEvmTransactionService(sendData: sendData, privateSendMode: .none, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: Core.shared.evmLabelManager)
-        let contactLabelService = ContactLabelService(contactManager: Core.shared.contactManager, blockchainType: evmKitWrapper.blockchainType)
-        let viewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService)
-
-        let mode: SendEvmConfirmationViewController.Mode
-        switch type {
-        case .speedUp: mode = .resend
-        case .cancel: mode = .cancel
-        }
-
-        return SendEvmConfirmationViewController(mode: mode, transactionViewModel: viewModel, settingsViewModel: settingsViewModel)
-    }
-}
-
-extension SendEvmConfirmationModule {
-    enum CreateModuleError: LocalizedError {
-        case cantCreateFeeRateProvider
-        case cantCreateFeeSettingsModule
-
-        var errorDescription: String? {
-            switch self {
-            case .cantCreateFeeRateProvider, .cantCreateFeeSettingsModule: return "alert.unknown_error".localized
-            }
-        }
     }
 }
