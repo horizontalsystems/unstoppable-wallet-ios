@@ -47,7 +47,7 @@ class ZcashAdapter {
 
     private let uniqueId: String
     private let birthday: BlockHeight
-    private let initMode: WalletInitMode
+    private let initMode: ZcashInitMode
     private var logger: HsToolKit.Logger?
 
     private(set) var network: ZcashNetwork
@@ -66,7 +66,7 @@ class ZcashAdapter {
         transactionSource = wallet.transactionSource
         uniqueId = wallet.account.id
 
-        var existingMode: WalletInitMode?
+        var existingMode: ZcashInitMode?
         if let dbUrl = try? ZcashFileStore.dataDbURL(uniqueId: uniqueId, network: network),
            ZcashFileStore.exist(url: dbUrl)
         {
@@ -122,6 +122,7 @@ class ZcashAdapter {
 
         syncService = ZcashSyncService(
             synchronizer: synchronizer,
+            initializer: initializer,
             network: network,
             seedData: seedData,
             birthday: birthday,
@@ -247,18 +248,12 @@ extension ZcashAdapter {
         let initializer = try ZcashAdapter.initializer(network: network, uniqueId: uniqueId)
         let synchronizer = SDKSynchronizer(initializer: initializer)
 
-        let birthday = BlockHeight.ofLatestCheckpoint(network: network)
-
-        let result = try await synchronizer.prepare(
-            with: seedData,
-            walletBirthday: birthday,
-            for: .newWallet,
-            name: "",
-            keySource: nil
-        )
-
-        if case .seedRequired = result {
+        let result = try await synchronizer.prepare(with: seedData, walletBirthday: nil, name: "", keySource: nil)
+        switch result {
+        case .seedRequired, .seedNotRelevant:
             throw AppError.ZcashError.seedRequired
+        case .success:
+            break
         }
 
         guard let account = try await synchronizer.listAccounts().first else {
@@ -640,7 +635,13 @@ enum ZCashAdapterState: Equatable {
     }
 }
 
-extension WalletInitMode {
+// SDK 4.x derives the init flow itself (nil birthday = new wallet); this stays for the
+// birthday-vs-nil decision in prepare and for status info.
+enum ZcashInitMode {
+    case newWallet
+    case existingWallet
+    case restoreWallet
+
     var description: String {
         switch self {
         case .newWallet: return "New Wallet"

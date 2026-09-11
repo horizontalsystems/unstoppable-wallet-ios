@@ -6,10 +6,11 @@ import ZcashLightClientKit
 
 class ZcashSyncService {
     private let synchronizer: Synchronizer
+    private let initializer: Initializer
     private let network: ZcashNetwork
     private let seedData: [UInt8]
-    private let birthday: BlockHeight
-    private let initMode: WalletInitMode
+    private(set) var birthday: BlockHeight
+    private let initMode: ZcashInitMode
     private let queue: DispatchQueue
     private let logger: HsToolKit.Logger?
 
@@ -63,10 +64,11 @@ class ZcashSyncService {
 
     init(
         synchronizer: Synchronizer,
+        initializer: Initializer,
         network: ZcashNetwork,
         seedData: [UInt8],
         birthday: BlockHeight,
-        initMode: WalletInitMode,
+        initMode: ZcashInitMode,
         queue: DispatchQueue,
         balanceService: ZcashBalanceService,
         historyService: ZcashHistoryService,
@@ -75,6 +77,7 @@ class ZcashSyncService {
         logger: HsToolKit.Logger?
     ) {
         self.synchronizer = synchronizer
+        self.initializer = initializer
         self.network = network
         self.seedData = seedData
         self.birthday = birthday
@@ -138,7 +141,7 @@ class ZcashSyncService {
     func start() {
         cancelDeferredStop()
         warmUpSaplingParams()
-        prepare(seedData: seedData, walletBirthday: birthday, for: initMode)
+        prepare(seedData: seedData, walletBirthday: birthday, initMode: initMode)
     }
 
     func stop() {
@@ -173,7 +176,7 @@ class ZcashSyncService {
         }
     }
 
-    private func prepare(seedData: [UInt8], walletBirthday: BlockHeight, for initMode: WalletInitMode) {
+    private func prepare(seedData: [UInt8], walletBirthday: BlockHeight, initMode: ZcashInitMode) {
         queue.async { [weak self] in
             guard let self else { return }
 
@@ -199,9 +202,13 @@ class ZcashSyncService {
                         self?.viewingKey = unifiedViewingKey
                     }
 
-                    let result = try await synchronizer.prepare(with: seedData, walletBirthday: walletBirthday, for: initMode, name: "", keySource: nil)
-                    if case .seedRequired = result {
+                    let sdkBirthday: BlockHeight? = initMode == .newWallet ? nil : walletBirthday
+                    let result = try await synchronizer.prepare(with: seedData, walletBirthday: sdkBirthday, name: "", keySource: nil)
+                    switch result {
+                    case .seedRequired, .seedNotRelevant:
                         throw AppError.ZcashError.seedRequired
+                    case .success:
+                        break
                     }
 
                     guard let account = try await synchronizer.listAccounts().first else {
@@ -233,9 +240,12 @@ class ZcashSyncService {
                     let height = try await synchronizer.latestHeight()
 
                     queue.async { [weak self] in
-                        self?.lastBlockHeight = height
-                        self?.lastBlockUpdatedSubject.onNext(())
-                        self?.finishPrepare()
+                        guard let self else { return }
+                        // the SDK snaps a nil/new birthday to a checkpoint of its own choice
+                        birthday = initializer.walletBirthday
+                        lastBlockHeight = height
+                        lastBlockUpdatedSubject.onNext(())
+                        finishPrepare()
                     }
                 } catch {
                     queue.async { [weak self] in
@@ -276,7 +286,7 @@ class ZcashSyncService {
         // pull-to-refresh and foregrounding recover the wallet without an app restart.
         if uAddress == nil || synchronizer.latestState.syncStatus == .unprepared {
             logger?.log(level: .debug, message: "Not prepared, try to prepare kit again!")
-            prepare(seedData: seedData, walletBirthday: birthday, for: initMode)
+            prepare(seedData: seedData, walletBirthday: birthday, initMode: initMode)
 
             return
         }

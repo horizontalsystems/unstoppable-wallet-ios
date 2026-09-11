@@ -328,18 +328,18 @@ class ZcashSendService {
                 continue
             }
 
-            do {
-                try await synchronizer.broadcaster.submit(raw, to: endpoint)
+            let created = CreatedTransaction(txId: overview.rawID, raw: raw, expiryHeight: overview.expiryHeight)
+            let outcome = await synchronizer.broadcaster.submit(transaction: created, to: [endpoint])
+
+            if Self.isTerminalRejection(outcome) {
+                // marker first, then redacted diagnostics: no raw tx / node message is persisted
+                terminalStore.markNodeRejected(txId: txId, expiryHeight: overview.expiryHeight ?? 0)
+                logger?.log(level: .error, message: "Resubmit terminal node rejection (code \(Self.terminalNodeRejectionCode)): \(txId)")
+            } else if case .accepted = outcome {
                 logger?.log(level: .debug, message: "Resubmit accepted: \(txId)")
-            } catch {
-                if Self.isTerminalSubmitError(error) {
-                    // marker first, then redacted diagnostics: no raw tx / node message is persisted
-                    terminalStore.markNodeRejected(txId: txId, expiryHeight: overview.expiryHeight ?? 0)
-                    logger?.log(level: .error, message: "Resubmit terminal node rejection (code \(Self.terminalNodeRejectionCode)): \(txId)")
-                } else {
-                    // duplicate ("already in block chain") or transient failure — retried on next foreground anyway
-                    logger?.log(level: .error, message: "Resubmit not delivered: \(txId) | \(error)")
-                }
+            } else {
+                // duplicate, transient or unreachable — retried on next foreground anyway
+                logger?.log(level: .error, message: "Resubmit not delivered: \(txId) | \(outcome)")
             }
         }
     }
@@ -355,8 +355,8 @@ class ZcashSendService {
         return latestHeight > 0 && expiryHeight > latestHeight
     }
 
-    static func isTerminalSubmitError(_ error: Error) -> Bool {
-        if case let .submitError(code, _) = error as? TransactionEncoderError {
+    static func isTerminalRejection(_ outcome: TransactionSubmissionOutcome) -> Bool {
+        if case let .rejected(code, _) = outcome {
             return code == terminalNodeRejectionCode
         }
         return false
