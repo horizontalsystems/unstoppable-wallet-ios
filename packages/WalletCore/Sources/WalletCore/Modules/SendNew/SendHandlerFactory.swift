@@ -52,6 +52,7 @@ public extension SendHandlerFactory {
         CrossPayHandlerProvider.self,
         EvmSendHandler.self,
         EvmResendHandler.self,
+        BitcoinResendHandler.self,
         BitcoinSendHandler.self,
         ZcashSendHandler.self,
         ShieldSendHandler.self,

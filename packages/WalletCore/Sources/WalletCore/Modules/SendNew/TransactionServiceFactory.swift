@@ -25,6 +25,7 @@ public enum TransactionServiceFactory {
 public extension TransactionServiceFactory {
     static let unstoppableTransactionServices: [TransactionService.Type] = [
         EvmTransactionService.self,
+        BitcoinResendTransactionService.self,
         UtxoTransactionService.self,
         MoneroTransactionService.self,
         ZcashTransactionService.self,

@@ -199,11 +199,13 @@ public struct NoteField: SendFieldContent {
 }
 
 public struct SimpleValueField: SendFieldContent {
+    private let isPrimary: Bool
     public let icon: String?
     public let title: CustomStringConvertible
     public let value: CustomStringConvertible
 
-    public init(icon: String? = nil, title: CustomStringConvertible, value: CustomStringConvertible) {
+    public init(icon: String? = nil, title: CustomStringConvertible, value: CustomStringConvertible, isPrimary: Bool = false) {
+        self.isPrimary = isPrimary
         self.icon = icon
         self.title = title
         self.value = value
@@ -211,7 +213,7 @@ public struct SimpleValueField: SendFieldContent {
 
     @ViewBuilder @MainActor public func listRow() -> some View {
         Cell(
-            style: .secondary,
+            style: isPrimary ? .primary : .secondary,
             left: {
                 if let icon {
                     ThemeImage(icon, size: .iconSize20)
@@ -300,17 +302,19 @@ public struct PriceField: SendFieldContent {
 }
 
 public struct FeeField: SendFieldContent {
+    public let initialFlipped: Bool
     public let title: CustomStringConvertible
     public let amountData: AmountData?
 
-    public init(title: CustomStringConvertible, amountData: AmountData?) {
+    public init(title: CustomStringConvertible, amountData: AmountData?, initialFlipped: Bool = false) {
+        self.initialFlipped = initialFlipped
         self.title = title
         self.amountData = amountData
     }
 
     @ViewBuilder @MainActor public func listRow() -> some View {
         let feeData = FlipRow.TokenFeeData(amountData: amountData)
-        FlipRow(title: title, flipData: feeData, initialFlipped: false)
+        FlipRow(title: title, flipData: feeData, initialFlipped: initialFlipped)
     }
 }
 

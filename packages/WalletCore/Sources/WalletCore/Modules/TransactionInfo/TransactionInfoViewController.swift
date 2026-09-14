@@ -87,9 +87,8 @@ class TransactionInfoViewController: ThemeViewController {
                 try EvmResendModule.present(adapter: adapter, type: type, transactionHash: viewModel.transactionHash)
 
                 stat(page: .transactionInfo, event: .openResend(chainUid: evmAdapter.evmKitWrapper.blockchainType.uid, type: type.rawValue))
-            } else if let btcAdapter = adapter as? BitcoinBaseAdapter, let transactionRecord = viewModel.transactionRecord as? BitcoinTransactionRecord {
-                let viewController = try ResendBitcoinModule.resendViewController(adapter: adapter, type: type, transactionRecord: transactionRecord)
-                present(ThemeNavigationController(rootViewController: viewController), animated: true)
+            } else if let btcAdapter = adapter as? BitcoinBaseAdapter, let transactionRecord = viewModel.transactionRecord as? BitcoinOutgoingTransactionRecord {
+                try ResendBitcoinModule.present(adapter: btcAdapter, type: type, transactionRecord: transactionRecord)
 
                 stat(page: .transactionInfo, event: .openResend(chainUid: btcAdapter.token.blockchainType.uid, type: type.rawValue))
             }

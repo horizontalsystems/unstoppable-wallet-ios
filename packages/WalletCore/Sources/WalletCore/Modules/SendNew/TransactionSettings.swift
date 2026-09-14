@@ -6,6 +6,7 @@ import ZcashLightClientKit
 public enum TransactionSettings {
     case evm(gasPriceData: GasPriceData, nonce: Int?)
     case bitcoin(satoshiPerByte: Int)
+    case bitcoinResend(minFee: Int, recommendedFee: Int? = nil)
     case monero(priority: MoneroKit.SendPriority)
     case aa(maxFeePerGas: BigUInt, maxPriorityFeePerGas: BigUInt, nonce: BigUInt)
     case zcash(zip317MarginalFee: Zatoshi)

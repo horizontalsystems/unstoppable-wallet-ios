@@ -4,13 +4,14 @@ import SwiftUI
 
 struct SendView: View {
     @ObservedObject var viewModel: SendViewModel
+    var additionalContent: AnyView? = nil
     var onSendError: ((String) -> Void)? = nil
 
     var body: some View {
         ZStack {
             if let handler = viewModel.handler {
                 switch viewModel.state {
-                case .syncing:
+                case .syncing, .success:
                     if let sendData = viewModel.sendData {
                         dataView(sendData: sendData, handler: handler)
                     } else {
@@ -22,10 +23,6 @@ struct SendView: View {
                             }
                         }
                         .frame(maxHeight: .infinity)
-                    }
-                case .success:
-                    if let sendData = viewModel.sendData {
-                        dataView(sendData: sendData, handler: handler)
                     }
                 case let .failed(error):
                     errorView(error: error)
@@ -99,6 +96,8 @@ struct SendView: View {
                 let sections = sendData.sections(baseToken: handler.baseToken, currency: viewModel.currency, rates: viewModel.rates)
 
                 sections.sectionViews
+
+                additionalContent
 
                 let cautions = viewModel.cautions
 

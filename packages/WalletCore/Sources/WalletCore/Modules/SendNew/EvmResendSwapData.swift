@@ -11,7 +11,6 @@ struct EvmResendSwapData {
     let amountIn: SwapDecoration.Amount
     let amountOut: SwapDecoration.Amount
     let recipient: EvmKit.Address?
-    let kind: Kind
 
     init?(decoration: TransactionDecoration?, baseToken: MarketKit.Token, token: (EvmKit.Address) -> MarketKit.Token?) {
         switch decoration {
@@ -25,7 +24,6 @@ struct EvmResendSwapData {
             amountIn = swap.amountIn
             amountOut = swap.amountOut
             recipient = swap.recipient
-            kind = .uniswap
         case let swap as OneInchSwapDecoration:
             guard let tokenIn = Self.token(swap.tokenIn, baseToken: baseToken, resolve: token),
                   let tokenOut = Self.token(swap.tokenOut, baseToken: baseToken, resolve: token)
@@ -36,7 +34,6 @@ struct EvmResendSwapData {
             amountIn = .exact(value: swap.amountIn)
             amountOut = Self.amount(swap.amountOut)
             recipient = swap.recipient
-            kind = .oneInch
         case let swap as OneInchUnoswapDecoration:
             guard let output = swap.tokenOut,
                   let tokenIn = Self.token(swap.tokenIn, baseToken: baseToken, resolve: token),
@@ -48,7 +45,6 @@ struct EvmResendSwapData {
             amountIn = .exact(value: swap.amountIn)
             amountOut = Self.amount(swap.amountOut)
             recipient = nil
-            kind = .oneInch
         default:
             return nil
         }
@@ -73,10 +69,5 @@ struct EvmResendSwapData {
         case let .exact(value): return .exact(value: value)
         case let .extremum(value): return .extremum(value: value)
         }
-    }
-
-    enum Kind {
-        case uniswap
-        case oneInch
     }
 }
