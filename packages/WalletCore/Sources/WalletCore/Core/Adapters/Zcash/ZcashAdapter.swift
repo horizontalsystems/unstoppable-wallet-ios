@@ -139,7 +139,6 @@ class ZcashAdapter {
         sendService.syncService = syncService
         sendService.endpointService = endpointService
         sendService.historyService = historyService
-        endpointService.syncService = syncService
         recordFactory.syncService = syncService
     }
 
@@ -210,6 +209,10 @@ class ZcashAdapter {
 
     func switchEndpoint(_ endpoint: LightWalletEndpoint) async throws {
         try await endpointService.switchEndpoint(endpoint)
+    }
+
+    func rebuildSync(at endpoint: LightWalletEndpoint) async throws {
+        try await endpointService.rebuild(at: endpoint)
     }
 
     func transactionRecord(fromTransaction transaction: ZcashTransactionWrapper) -> TransactionRecord {

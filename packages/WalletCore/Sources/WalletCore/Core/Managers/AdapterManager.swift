@@ -8,7 +8,6 @@ public class AdapterManager {
     private enum ZcashEndpointValidationError: Error {
         case noActiveAdapter
         case unavailable
-        case sendInProgress
     }
 
     private let disposeBag = DisposeBag()
@@ -132,7 +131,7 @@ public class AdapterManager {
         })
     }
 
-    // Zcash changes the lightwalletd endpoint in place (synchronizer.switchTo), not by recreating the
+    // Zcash changes the lightwalletd endpoint in place (synchronizer.restartSync), not by recreating the
     // adapter over the same local DB (which would report synced from cache). switchTo validates the
     // server and throws on failure; on failure we revert the stored selection to the endpoint actually
     // applied so the UI stays in sync with reality.
@@ -274,14 +273,7 @@ extension AdapterManager {
             return
         }
 
-        // switching reconfigures the synchronizer under a live broadcast; background-finishing
-        // work is bounded (local proving + 30s gRPC timeout per tx), so the refusal is short-lived.
-        // a migration is an ordinary send, so it holds the same "zcash-send" critical section.
-        let busy = await MainActor.run { Core.shared.backgroundTaskManager.isCriticalActive }
-        guard !busy else {
-            throw ZcashEndpointValidationError.sendInProgress
-        }
-
+        // a live send no longer refuses the switch: ZcashOperationGuard queues it behind the broadcast
         guard await adapter.isEndpointAvailable(endpoint) else {
             throw ZcashEndpointValidationError.unavailable
         }
