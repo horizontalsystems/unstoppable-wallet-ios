@@ -2739,3 +2739,6 @@
 "cross_pay.error.network" = "네트워크 오류가 발생했습니다. 연결을 확인하고 다시 시도하세요.";
 "cross_pay.error.commit_failed" = "이 결제를 설정할 수 없습니다. 새로고침하여 다시 시도하세요.";
 "cross_pay.unavailable" = "결제를 사용할 수 없습니다";
+
+"swap.amount_min" = "(최소)";
+"swap.amount_max" = "(최대)";

@@ -2147,5 +2147,7 @@
   "cross_pay.error.provider_suspended": "The payment provider is temporarily suspended. Try again later.",
   "cross_pay.error.network": "A network error occurred. Check your connection and try again.",
   "cross_pay.error.commit_failed": "This payment could not be set up. Refresh to try again.",
-  "cross_pay.unavailable": "Payment unavailable"
+  "cross_pay.unavailable": "Payment unavailable",
+  "swap.amount_min": "(min)",
+  "swap.amount_max": "(max)"
 }

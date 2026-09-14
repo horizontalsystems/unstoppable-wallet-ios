@@ -2739,3 +2739,6 @@
 "cross_pay.error.network" = "发生网络错误。请检查您的连接并重试。";
 "cross_pay.error.commit_failed" = "无法设置此支付。请刷新后重试。";
 "cross_pay.unavailable" = "支付不可用";
+
+"swap.amount_min" = "(最小)";
+"swap.amount_max" = "(最大)";

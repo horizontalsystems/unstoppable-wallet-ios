@@ -2739,3 +2739,6 @@
 "cross_pay.error.network" = "Ocorreu um erro de rede. Verifique sua conexão e tente novamente.";
 "cross_pay.error.commit_failed" = "Não foi possível configurar este pagamento. Atualize para tentar novamente.";
 "cross_pay.unavailable" = "Pagamento indisponível";
+
+"swap.amount_min" = "(mín.)";
+"swap.amount_max" = "(máx.)";

@@ -2739,3 +2739,6 @@
 "cross_pay.error.network" = "Bir ağ hatası oluştu. Bağlantınızı kontrol edip tekrar deneyin.";
 "cross_pay.error.commit_failed" = "Bu ödeme ayarlanamadı. Tekrar denemek için yenileyin.";
 "cross_pay.unavailable" = "Ödeme kullanılamıyor";
+
+"swap.amount_min" = "(min)";
+"swap.amount_max" = "(maks)";
