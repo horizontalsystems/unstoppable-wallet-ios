@@ -335,6 +335,11 @@
 "balance_error.sync_error.description.without_source" = "Impossible d’obtenir les données depuis la source actuelle. Veuillez réessayer plus tard.";
 "lost_accounts.warning_title" = "Erreur du trousseau d’accès iOS";
 "lost_accounts.warning_message" = "En raison d’une erreur du trousseau iOS, nous n’avons pas pu accéder aux portefeuilles suivants :\n\n%@\n\nLe redémarrage de l’application résout généralement ce problème. Si celui-ci persiste, vous pouvez dissocier puis restaurer ces portefeuilles.";
+"lost_accounts.recovery_message" = "We couldn't access the following wallets:\n\n%@\n\nThis can happen after transferring to another iPhone. If restarting does not help, you can remove these unavailable wallets from this app and restore them using your backup.";
+"lost_accounts.remove_title" = "Remove unavailable wallets?";
+"lost_accounts.remove_button" = "Remove unavailable wallets";
+"lost_accounts.remove_confirmation" = "Remove the local wallet records listed below?\n\n%@\n\nThis does not restore access to these wallets. You will need their recovery phrase or another wallet backup to restore them. Other wallets in this app will remain available.";
+"lost_accounts.remove_failed" = "Could not remove these wallets. No records were removed. Please try again.";
 
 // Token Balance Page
 "balance.token.locked" = "Verrouillé";

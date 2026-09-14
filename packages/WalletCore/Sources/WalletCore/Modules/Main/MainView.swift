@@ -214,19 +214,60 @@ extension MainView {
 struct AccountsLostView: View {
     let records: [AccountRecord]
     @Binding var isPresented: Bool
+    let onRemove: () throws -> Void
+
+    @State private var confirmingRemoval = false
+    @State private var removalFailed = false
+
+    private var walletNames: String {
+        records.map { "- \($0.name)" }.joined(separator: "\n")
+    }
 
     var body: some View {
-        BottomSheetView(
-            items: [
-                .title(icon: ThemeImage.warning, title: "lost_accounts.warning_title".localized),
-                .text(text: "lost_accounts.warning_message".localized(records.map { "- \($0.name)" }.joined(separator: "\n"))),
-                .buttonGroup(.init(buttons: [
-                    .init(style: .yellow, title: "button.i_understand".localized) {
-                        isPresented = false
-                    },
-                ])),
-            ],
-        )
+        Group {
+            if confirmingRemoval {
+                BottomSheetView(items: [
+                    .title(icon: ThemeImage.warning, title: "lost_accounts.remove_title".localized),
+                    .text(text: "lost_accounts.remove_confirmation".localized(walletNames)),
+                    .custom(AnyView(Group {
+                        if removalFailed {
+                            Text("lost_accounts.remove_failed".localized)
+                                .themeBody(color: .themeLucian)
+                                .padding(.horizontal, .margin32)
+                                .accessibilityAddTraits(.updatesFrequently)
+                        }
+                    })),
+                    .buttonGroup(.init(buttons: [
+                        .init(style: .gray, title: "lost_accounts.remove_button".localized) {
+                            do {
+                                try onRemove()
+                                isPresented = false
+                                HudHelper.instance.show(banner: .deleted)
+                            } catch {
+                                removalFailed = true
+                            }
+                        },
+                        .init(style: .transparent, title: "button.cancel".localized) {
+                            confirmingRemoval = false
+                            removalFailed = false
+                        },
+                    ])),
+                ])
+            } else {
+                BottomSheetView(items: [
+                    .title(icon: ThemeImage.warning, title: "lost_accounts.warning_title".localized),
+                    .text(text: "lost_accounts.recovery_message".localized(walletNames)),
+                    .buttonGroup(.init(buttons: [
+                        .init(style: .yellow, title: "button.i_understand".localized) {
+                            isPresented = false
+                        },
+                        .init(style: .gray, title: "lost_accounts.remove_button".localized) {
+                            confirmingRemoval = true
+                        },
+                    ])),
+                ])
+            }
+        }
     }
 }
 
