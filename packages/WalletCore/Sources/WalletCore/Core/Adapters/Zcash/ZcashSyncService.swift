@@ -175,7 +175,9 @@ class ZcashSyncService {
             if stallState == .terminal {
                 stallRebuildsThisForeground = 0
                 stallState = .none
-                startStallRebuild()
+                if !startStallRebuild() {
+                    startSynchronizerOnQueue()
+                }
             } else {
                 startSynchronizerOnQueue()
             }
@@ -595,8 +597,10 @@ extension ZcashSyncService {
         state = .notSynced(error: AppError.zcash(reason: .syncStalled))
     }
 
-    private func startStallRebuild() {
-        guard stallTask == nil, let endpointService else { return }
+    // false when a rebuild is already in flight: the caller falls back to a plain start
+    @discardableResult
+    private func startStallRebuild() -> Bool {
+        guard stallTask == nil, let endpointService else { return false }
         stallState = .rebuilding
         let generation = lifecycleGeneration
         let queue = queue
@@ -625,6 +629,7 @@ extension ZcashSyncService {
                 stallState = .none
             }
         }
+        return true
     }
 }
 
