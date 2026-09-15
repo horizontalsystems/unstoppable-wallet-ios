@@ -1,8 +1,9 @@
 import Foundation
 
 // One per process: an adapter recreate must not let an old send and a new node switch miss
-// each other. Submissions and lifecycle operations (switch/rebuild/rewind/wipe) are mutually
-// exclusive; waiters are served in arrival order and give up with `.busy` after `timeout`.
+// each other. Submissions and engine rebuilds (node switch, stall recovery) are mutually
+// exclusive; rewind/wipe/start/stop stay outside, serialised by the SDK's own lifecycle queue.
+// Waiters are served in arrival order and give up with `.busy` after `timeout`.
 actor ZcashOperationGuard {
     static let shared = ZcashOperationGuard()
 

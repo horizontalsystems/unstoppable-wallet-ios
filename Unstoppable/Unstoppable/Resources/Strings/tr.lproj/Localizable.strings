@@ -361,6 +361,8 @@
 \n\nTo maintain high level of privacy you may consider using VPN or TOR when making migration transactions.";
 "balance.token.migrate" = "Geçiş Yap";
 "error.zcash.migration_failed" = "Geçiş tamamlanamadı. Hiçbir fon kaybedilmedi — daha sonra tekrar deneyebilirsiniz.";
+"error.zcash.sync_stalled" = "Senkronizasyon durdu. Yeniden denemek için aşağı çekin.";
+"error.zcash.sync_required" = "Cüzdanın senkronizasyonu tamamlamasını bekleyin ve tekrar deneyin.";
 "zcash.migration.warning.title" = "Herkese Açık Görünür Tutar";
 "zcash.migration.warning" = "Havuzlar arasında fon taşımak, taşınan tutarın blok zincirinde herkese açık olarak görünür olmasını gerektirir. Gönderen, alıcı ve adresleriniz gizli kalır.";
 

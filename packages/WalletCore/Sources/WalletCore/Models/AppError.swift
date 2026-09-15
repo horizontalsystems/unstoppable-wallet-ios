@@ -30,7 +30,6 @@ enum AppError: Error {
         case migrationFailed
         case syncStalled
         case syncRequired
-        case nodeSwitching
     }
 
     enum EthereumError: Error {
@@ -71,7 +70,6 @@ extension AppError: LocalizedError {
             case .migrationFailed: return "error.zcash.migration_failed".localized
             case .syncStalled: return "error.zcash.sync_stalled".localized
             case .syncRequired: return "error.zcash.sync_required".localized
-            case .nodeSwitching: return "error.zcash.node_switching".localized
             }
         case let .ethereum(reason):
             switch reason {

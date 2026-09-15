@@ -361,6 +361,8 @@
 \n\nTo maintain high level of privacy you may consider using VPN or TOR when making migration transactions.";
 "balance.token.migrate" = "迁移";
 "error.zcash.migration_failed" = "迁移无法完成。没有资金丢失——您可以稍后重试。";
+"error.zcash.sync_stalled" = "同步已停滞。下拉以重试。";
+"error.zcash.sync_required" = "请等待钱包完成同步后再试。";
 "zcash.migration.warning.title" = "公开可见金额";
 "zcash.migration.warning" = "在池之间转移资金需要迁移金额在区块链上公开可见。发送方、接收方和您的地址仍然保持私密。";
 

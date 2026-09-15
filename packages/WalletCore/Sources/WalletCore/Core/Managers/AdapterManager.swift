@@ -247,12 +247,6 @@ extension AdapterManager {
                 self.zanoKitManager.recreateKit()
             }
 
-            // at most one: the zcash chain has a single native token per account. The new adapter
-            // reuses the same wallet database, so wait for the old engine to stop first
-            if blockchainType == .zcash, let adapter = zcashAdapter {
-                await adapter.shutdown()
-            }
-
             let wallets = queue.sync { _adapterData.adapterMap.keys }
 
             refreshAdapters(wallets: wallets.filter {

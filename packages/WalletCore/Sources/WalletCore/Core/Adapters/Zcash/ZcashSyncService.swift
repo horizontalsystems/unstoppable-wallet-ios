@@ -167,31 +167,6 @@ class ZcashSyncService {
         logger?.log(level: .debug, message: "Synchronizer will stop")
     }
 
-    // Stops the engine and waits for the SDK to confirm, so a recreated adapter never opens the
-    // wallet database while the previous engine handle is still winding down.
-    func shutdown() async {
-        let stopped = synchronizer.stateStream
-            .map(\.syncStatus)
-            .filter { status in
-                switch status {
-                case .stopped, .unprepared, .error: return true
-                default: return false
-                }
-            }
-            .first()
-            .values
-
-        stop()
-        await withTaskGroup(of: Void.self) { group in
-            group.addTask { for await _ in stopped {
-                break
-            } }
-            group.addTask { try? await Task.sleep(seconds: 10) }
-            await group.next()
-            group.cancelAll()
-        }
-    }
-
     func refresh() {
         cancelDeferredStop()
         queue.async { [weak self] in
@@ -550,14 +525,16 @@ class ZcashSyncService {
     func wipe() -> AnyPublisher<Void, Error> {
         let logger = logger
         let migrator = migrator
+        let balanceService = balanceService
 
         return synchronizer.wipe()
             .handleEvents(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
                     // Cleared only on success: a failed wipe leaves the wallet data in
-                    // place, and the migration markers must stay consistent with it.
+                    // place, and the cached balance / migration markers must stay consistent with it.
                     migrator.clearOnWipe()
+                    balanceService.clearOnWipe()
                     logger?.log(level: .debug, message: "[ZcashAdapter] wipe: completed successfully")
                 case let .failure(error):
                     logger?.log(level: .error, message: "[ZcashAdapter] wipe: completed with error: \(error)")
@@ -625,7 +602,8 @@ extension ZcashSyncService {
         let queue = queue
 
         stallTask = Task { [weak self] in
-            defer { queue.async { [weak self] in self?.stallTask = nil } }
+            // a task cancelled on background may outlive the next foreground's rebuild: clear only our own slot
+            defer { queue.async { [weak self] in if self?.lifecycleGeneration == generation { self?.stallTask = nil } } }
             do {
                 try await endpointService.rebuild(at: endpointService.currentEndpoint)
             } catch is CancellationError {
@@ -633,15 +611,18 @@ extension ZcashSyncService {
             } catch {
                 queue.async { [weak self] in
                     guard let self, lifecycleGeneration == generation else { return }
-                    setStallTerminal()
+                    // a guard held by a send for the whole wait is not a failed rebuild
+                    if case .zcash(reason: .sendInProgress)? = error as? AppError {
+                        stallState = .none
+                    } else {
+                        setStallTerminal()
+                    }
                 }
                 return
             }
             queue.async { [weak self] in
                 guard let self, lifecycleGeneration == generation else { return }
                 stallState = .none
-                // let auto-select look for a healthier node after the rebuild
-                stallSignalSubject.send()
             }
         }
     }

@@ -1,3 +1,4 @@
+import BitcoinCore
 import Foundation
 import GRDB
 import Testing
@@ -94,7 +95,7 @@ struct ZcashMigrationTests {
         #expect(proposal.amount == Zatoshi(100_000_000).decimalValue.decimalValue - fee) // both numbers come from the SDK quote
     }
 
-    @Test func proposalThrowsNotEnoughWhenFeeConsumesBalance() async throws {
+    @Test func proposalMapsSdkInsufficientFundsToNotEnough() async throws {
         let (migrator, _) = try makeMigrator()
         // balance exactly equal to the fee → the SDK refuses to propose (boundary, not just `< fee`)
         migrator.engine = MockMigrationEngine(orchardSpendable: Self.fee)
@@ -102,11 +103,11 @@ struct ZcashMigrationTests {
         var notEnough = false
         do {
             _ = try await migrator.migrationProposal()
-        } catch AppError.ZcashError.notEnough {
+        } catch BitcoinCoreErrors.SendValueErrors.notEnough {
             notEnough = true
         }
 
-        #expect(notEnough)
+        #expect(notEnough) // the typed SDK error is converted like in the send flow, never shown raw
     }
 
     @Test func isMigrationTxMatchesOnlyStoredRecords() async throws {
@@ -164,7 +165,7 @@ private final class MockMigrationEngine: IZcashMigrationEngine {
 
     func quote() async throws -> (amount: Zatoshi, fee: Zatoshi) {
         guard orchardSpendable > Self.fee else {
-            throw AppError.ZcashError.notEnough
+            throw ZcashError.rustProposalInsufficientFunds(orchardSpendable, Self.fee) // what the SDK throws
         }
         return (orchardSpendable - Self.fee, Self.fee)
     }

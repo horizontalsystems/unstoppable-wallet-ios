@@ -212,10 +212,6 @@ class ZcashAdapter {
         try await endpointService.switchEndpoint(endpoint)
     }
 
-    func rebuildSync(at endpoint: LightWalletEndpoint) async throws {
-        try await endpointService.rebuild(at: endpoint)
-    }
-
     func transactionRecord(fromTransaction transaction: ZcashTransactionWrapper) -> TransactionRecord {
         recordFactory.transactionRecord(fromTransaction: transaction)
     }
@@ -328,10 +324,6 @@ extension ZcashAdapter: IAdapter {
 
     func stop() {
         syncService.stop()
-    }
-
-    func shutdown() async {
-        await syncService.shutdown()
     }
 
     func refresh() {

@@ -363,7 +363,6 @@
 "error.zcash.migration_failed" = "Migration could not be completed. No funds were lost — you can try again later.";
 "error.zcash.sync_stalled" = "Sync has stalled. Pull down to retry.";
 "error.zcash.sync_required" = "Wait for the wallet to finish syncing and try again.";
-"error.zcash.node_switching" = "Switching Zcash node. Try again in a moment.";
 "zcash.migration.warning.title" = "Publicly Visible Amount";
 "zcash.migration.warning" = "Moving funds between pools requires the migrated amount to be publicly visible on the blockchain. The sender, recipient and your addresses remain private.";
 

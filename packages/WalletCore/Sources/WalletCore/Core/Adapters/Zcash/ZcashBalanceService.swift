@@ -33,6 +33,14 @@ class ZcashBalanceService {
         zCashBalanceData.balanceData
     }
 
+    // a rescan starts from a clean slate: the cached balance belonged to the old birthday and the
+    // shielding alert must fire again for the same transparent amount
+    func clearOnWipe() {
+        try? storage.delete(id: uniqueId)
+        try? storage.deleteAlertState(id: uniqueId)
+        zCashBalanceData = .empty(id: uniqueId)
+    }
+
     var balanceDataUpdatedObservable: Observable<BalanceData> {
         balanceSubject.asObservable()
     }

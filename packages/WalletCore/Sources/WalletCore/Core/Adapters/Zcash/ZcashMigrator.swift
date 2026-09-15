@@ -115,7 +115,12 @@ class ZcashMigrator {
             throw AppError.ZcashError.noAccountId
         }
 
-        let quote = try await engine.quote()
+        let quote: (amount: Zatoshi, fee: Zatoshi)
+        do {
+            quote = try await engine.quote()
+        } catch {
+            throw ZcashSendHelper.converted(error)
+        }
         guard quote.amount > .zero else {
             throw AppError.ZcashError.notEnough
         }
@@ -129,7 +134,12 @@ class ZcashMigrator {
             throw AppError.ZcashError.noAccountId
         }
 
-        let txId = try await engine.migrate()
+        let txId: String?
+        do {
+            txId = try await engine.migrate()
+        } catch {
+            throw ZcashSendHelper.converted(error)
+        }
         save(txId: txId)
         logger?.log(level: .debug, message: "Migration broadcast done, txId: \(txId ?? "unrecorded")")
         return txId
