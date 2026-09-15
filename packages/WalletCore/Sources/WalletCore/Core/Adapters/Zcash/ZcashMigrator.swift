@@ -108,19 +108,18 @@ class ZcashMigrator {
         return orchardSpendable > threshold
     }
 
-    // read for the confirmation screen: fee is authoritative from the proposal, amount is the swept
-    // shielded balance minus that fee. `performMigration` re-proposes before broadcasting.
-    func migrationProposal(orchardBalance: Decimal) async throws -> (amount: Decimal, fee: Decimal) {
+    // read for the confirmation screen: both numbers come from the SDK proposal.
+    // `performMigration` re-proposes before broadcasting.
+    func migrationProposal() async throws -> (amount: Decimal, fee: Decimal) {
         guard let engine else {
             throw AppError.ZcashError.noAccountId
         }
 
-        let fee = try await engine.estimatedFee().decimalValue.decimalValue
-        let amount = orchardBalance - fee
-        guard amount > 0 else {
+        let quote = try await engine.quote()
+        guard quote.amount > .zero else {
             throw AppError.ZcashError.notEnough
         }
-        return (amount: amount, fee: fee)
+        return (amount: quote.amount.decimalValue.decimalValue, fee: quote.fee.decimalValue.decimalValue)
     }
 
     // send-max sweep to the wallet's own UA. Runs as an ordinary send (the adapter wraps it in its

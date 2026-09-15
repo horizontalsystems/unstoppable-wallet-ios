@@ -17,6 +17,7 @@ class ZcashWalletTokenViewModel: ObservableObject {
     @Published var balanceHidden: Bool
     @Published var birthdayHeight: Int?
     @Published var ironwoodActive: Bool
+    @Published var fundsSpendable: Bool
     @Published private(set) var wiping = false
 
     init(adapter: ZcashAdapter, wallet: Wallet) {
@@ -25,6 +26,7 @@ class ZcashWalletTokenViewModel: ObservableObject {
         zCashBalanceData = adapter.zCashBalanceData
         balanceHidden = balanceHiddenManager.balanceHidden
         ironwoodActive = adapter.isIronwoodActive
+        fundsSpendable = adapter.areFundsSpendable
 
         birthdayHeight = restoreSettingsService.settings(accountId: wallet.account.id, blockchainType: wallet.token.blockchainType).birthdayHeight
 
@@ -44,6 +46,7 @@ class ZcashWalletTokenViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.ironwoodActive = self?.adapter.isIronwoodActive ?? false
+                self?.fundsSpendable = self?.adapter.areFundsSpendable ?? false
             }
             .store(in: &cancellables)
     }

@@ -551,7 +551,7 @@ extension ZcashAdapter {
     }
 
     func migrationProposal() async throws -> (amount: Decimal, fee: Decimal) {
-        try await sendService.migrationProposal(orchardBalance: zCashBalanceData.orchard)
+        try await sendService.migrationProposal()
     }
 
     func clearMigrationHistory() {

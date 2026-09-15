@@ -20,12 +20,13 @@ struct ZcashWalletTokenView: View {
                             HorizontalDivider()
                         }
 
-                        if viewModel.zCashBalanceData.transparent > ZcashAdapter.minimalThreshold {
+                        // spend actions stay hidden while the SDK is not willing to state a spendable value (mask, recovery)
+                        if viewModel.fundsSpendable, viewModel.zCashBalanceData.transparent > ZcashAdapter.minimalThreshold {
                             view(transparent: viewModel.zCashBalanceData.transparent)
                             HorizontalDivider()
                         }
 
-                        if ZcashMigrator.migrationEnabled, viewModel.ironwoodActive, viewModel.zCashBalanceData.orchard > ZcashAdapter.minimalThreshold {
+                        if viewModel.fundsSpendable, ZcashMigrator.migrationEnabled, viewModel.ironwoodActive, viewModel.zCashBalanceData.orchard > ZcashAdapter.minimalThreshold {
                             view(orchard: viewModel.zCashBalanceData.orchard)
                             HorizontalDivider()
                         }

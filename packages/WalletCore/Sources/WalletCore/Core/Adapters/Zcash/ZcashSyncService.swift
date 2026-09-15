@@ -280,7 +280,7 @@ class ZcashSyncService {
                         self?.accountId = account.id
                         self?.uAddress = uAddress
                         self?.tAddress = tAddress
-                        self?.migrator.engine = ZcashMigrationEngine(synchronizer: synchronizer, accountUUID: account.id, spendingKey: unifiedSpendingKey)
+                        self?.migrator.engine = ZcashMigrationEngine(synchronizer: synchronizer, accountUUID: account.id, spendingKey: unifiedSpendingKey, endpointService: self?.endpointService)
 
                         self?.depositAddressSubject.send(.completed(DepositAddress(uAddress.stringEncoded)))
                     }

@@ -201,8 +201,8 @@ class ZcashSendService {
         }
     }
 
-    func migrationProposal(orchardBalance: Decimal) async throws -> (amount: Decimal, fee: Decimal) {
-        try await migrator.migrationProposal(orchardBalance: orchardBalance)
+    func migrationProposal() async throws -> (amount: Decimal, fee: Decimal) {
+        try await migrator.migrationProposal()
     }
 
     // send-max sweep to the wallet's own UA. It is an ordinary send: no stop-sync, no privacy buffer.
