@@ -5,8 +5,6 @@ import ZcashLightClientKit
 // Endpoint selection and switching. #7163 (server autoselect/failover) lands here:
 // evaluateBestOf over the ZcashNodeManager pool without touching the adapter contract.
 class ZcashEndpointService {
-    private static let quiescenceAttempts = 3
-    private static let quiescenceDelay: TimeInterval = 2
     private static let lifecycleTimeout: TimeInterval = 60
 
     private let synchronizer: Synchronizer
@@ -63,13 +61,6 @@ class ZcashEndpointService {
         error == nil ? target : current
     }
 
-    static func isQuiescenceRefusal(_ error: Error) -> Bool {
-        if case .slipstreamEngineNotQuiescent = error as? ZcashError {
-            return true
-        }
-        return false
-    }
-
     func switchEndpoint(_ endpoint: LightWalletEndpoint) async throws {
         guard endpoint.host != currentEndpoint.host || endpoint.port != currentEndpoint.port || endpoint.secure != currentEndpoint.secure else {
             return
@@ -84,11 +75,11 @@ class ZcashEndpointService {
             try await ZcashOperationGuard.shared.withLifecycle(timeout: Self.lifecycleTimeout) {
                 var failure: Error?
                 do {
-                    try await retryingQuiescent { try await synchronizer.restartSync(at: target) }
+                    try await synchronizer.restartSync(at: target)
                 } catch {
                     failure = error
                     logger?.log(level: .error, message: "Failed to rebuild at \(target.host):\(target.port): \(error)")
-                    try? await retryingQuiescent { try await synchronizer.restartSync(at: currentEndpoint) }
+                    try? await synchronizer.restartSync(at: currentEndpoint)
                 }
                 currentEndpoint = Self.endpointAfterRebuild(target: target, current: currentEndpoint, error: failure)
                 if let failure {
@@ -98,17 +89,6 @@ class ZcashEndpointService {
         } catch is ZcashOperationGuard.Failure {
             // a send held the guard for the whole timeout — "try again later"
             throw AppError.zcash(reason: .sendInProgress)
-        }
-    }
-
-    private func retryingQuiescent(_ body: () async throws -> Void) async throws {
-        for attempt in 1 ... Self.quiescenceAttempts {
-            do {
-                try await body()
-                return
-            } catch where Self.isQuiescenceRefusal(error) && attempt < Self.quiescenceAttempts {
-                try await Task.sleep(seconds: Self.quiescenceDelay)
-            }
         }
     }
 }

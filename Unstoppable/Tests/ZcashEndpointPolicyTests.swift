@@ -16,9 +16,4 @@ struct ZcashEndpointPolicyTests {
         #expect(ZcashEndpointService.endpointAfterRebuild(target: b, current: a, error: Boom()) == a)
         #expect(ZcashEndpointService.endpointAfterRebuild(target: b, current: a, error: ZcashError.slipstreamEngineNotQuiescent) == a)
     }
-
-    @Test func quiescenceRefusalIsRecognised() {
-        #expect(ZcashEndpointService.isQuiescenceRefusal(ZcashError.slipstreamEngineNotQuiescent))
-        #expect(!ZcashEndpointService.isQuiescenceRefusal(ZcashError.synchronizerNotPrepared))
-    }
 }
