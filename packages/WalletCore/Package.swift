@@ -53,7 +53,7 @@ let package = Package(
         .package(url: "https://github.com/horizontalsystems/UniswapKit.Swift", exact: "3.3.0"),
         // Ironwood sync/send hotfix: frozen upstream e58e14e + HS librustzcash pin (81152f63),
         // binary FFI via the 2.6.0-ironwood-hs.1 release on the fork
-        .package(url: "https://github.com/horizontalsystems/ZcashLightClientKit", exact: "2.7.0-rc.2-hs.2"),
+        .package(url: "https://github.com/horizontalsystems/zodl-swift-wallet-sdk", exact: "4.4.0-hs.1"),
     ],
     targets: [
         .target(
@@ -102,7 +102,7 @@ let package = Package(
                 .product(name: "TronKit", package: "TronKit.Swift"),
                 .product(name: "UIExtensions", package: "UIExtensions.Swift"),
                 .product(name: "UniswapKit", package: "UniswapKit.Swift"),
-                .product(name: "ZcashLightClientKit", package: "ZcashLightClientKit"),
+                .product(name: "ZcashLightClientKit", package: "zodl-swift-wallet-sdk"),
             ],
             resources: [
                 .process("Resources/Localizable.xcstrings"),

@@ -50,17 +50,17 @@ struct ZcashResubmissionTests {
     // MARK: - Terminal error classifier
 
     @Test func classifierMarksCode25Terminal() {
-        let terminal = ZcashSendService.isTerminalSubmitError(TransactionEncoderError.submitError(code: -25, message: "tx unpaid action limit exceeded"))
+        let terminal = ZcashSendService.isTerminalRejection(.rejected(code: -25, message: "tx unpaid action limit exceeded"))
         #expect(terminal == true)
     }
 
     @Test func classifierKeepsOtherNodeErrorsRetryable() {
-        let terminal = ZcashSendService.isTerminalSubmitError(TransactionEncoderError.submitError(code: -26, message: "rejected"))
+        let terminal = ZcashSendService.isTerminalRejection(.rejected(code: -26, message: "rejected"))
         #expect(terminal == false)
     }
 
     @Test func classifierKeepsTransportErrorsRetryable() {
-        let terminal = ZcashSendService.isTerminalSubmitError(URLError(.timedOut))
+        let terminal = ZcashSendService.isTerminalRejection(.unreachable)
         #expect(terminal == false)
     }
 

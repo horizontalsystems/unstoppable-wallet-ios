@@ -276,6 +276,8 @@
   "balance.token.migration.detected.description": "Zcash has upgraded to a new shielded pool. Your shielded balance must be migrated to that new pool to remain fully anonymous in future transactions.\n\\n\\nPlease note that migration transactions aren’t fully anonymous and expose the amounts involved.\n\\n\\nTo maintain high level of privacy you may consider using VPN or TOR when making migration transactions.",
   "balance.token.migrate": "Migrate",
   "error.zcash.migration_failed": "Migration could not be completed. No funds were lost — you can try again later.",
+  "error.zcash.sync_stalled": "Sync has stalled. Pull down to retry.",
+  "error.zcash.sync_required": "Wait for the wallet to finish syncing and try again.",
   "zcash.migration.warning.title": "Publicly Visible Amount",
   "zcash.migration.warning": "Moving funds between pools requires the migrated amount to be publicly visible on the blockchain. The sender, recipient and your addresses remain private.",
   "balance.token.receive_address": "Receive Address",

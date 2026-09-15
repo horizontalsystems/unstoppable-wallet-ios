@@ -201,8 +201,8 @@ class ZcashSendService {
         }
     }
 
-    func migrationProposal(orchardBalance: Decimal) async throws -> (amount: Decimal, fee: Decimal) {
-        try await migrator.migrationProposal(orchardBalance: orchardBalance)
+    func migrationProposal() async throws -> (amount: Decimal, fee: Decimal) {
+        try await migrator.migrationProposal()
     }
 
     // send-max sweep to the wallet's own UA. It is an ordinary send: no stop-sync, no privacy buffer.
@@ -217,60 +217,71 @@ class ZcashSendService {
     }
 
     private func send(proposal: Proposal, spendingKey: UnifiedSpendingKey) async throws -> String? {
-        let stream = try await synchronizer.createProposedTransactions(
-            proposal: proposal,
-            spendingKey: spendingKey
-        )
-
-        let transactionCount = proposal.transactionCount()
-        var successCount = 0
-        var iterator = stream.makeAsyncIterator()
-
-        var txIds: [String] = []
-        var resubmitableFailure = false
-        var submitFailure: Error?
-
-        for _ in 1 ... transactionCount {
-            if let transactionSubmitResult = try await iterator.next() {
-                switch transactionSubmitResult {
-                case let .success(txId: id):
-                    successCount += 1
-                    txIds.append(id.toHexStringTxId())
-                    logger?.log(level: .debug, message: "-> Successful send TX: \(id.toHexStringTxId())")
-                case let .grpcFailure(txId: id, error: error):
-                    txIds.append(id.toHexStringTxId())
-                    logger?.log(level: .error, message: "-> Error with send TX: \(error.localizedDescription)")
-                    resubmitableFailure = true
-                case let .submitFailure(txId: id, code: code, description: description):
-                    txIds.append(id.toHexStringTxId())
-                    logger?.log(level: .error, message: "-> Error submit TX: \(id.toHexStringTxId()) | code: \(code) | desc: \(description)")
-                    submitFailure = AppError.invalidResponse(reason: "Zcash node rejected transaction (code \(code)): \(description)")
-                case let .notAttempted(txId: id):
-                    txIds.append(id.toHexStringTxId())
-                    logger?.log(level: .error, message: "-> notAttempted TX: \(id.toHexStringTxId())")
-                }
-            }
+        // proving runs outside the guard; only the broadcast phase must not overlap an engine restart
+        let created = try await synchronizer.broadcaster.createProposedTransactions(proposal: proposal, spendingKey: spendingKey)
+        guard let endpoint = endpointService?.currentEndpoint else {
+            throw AppError.ZcashError.noAccountId
         }
 
-        if successCount == 0 {
-            if resubmitableFailure {
-                logger?.log(level: .debug, message: "Grpc Failure! \(txIds.count)")
-            } else {
-                logger?.log(level: .debug, message: "Failure sended TXs! \(txIds.count)")
+        let outcomes: [(txId: Data, outcome: TransactionSubmissionOutcome)]
+        do {
+            outcomes = try await ZcashOperationGuard.shared.withSubmission(timeout: 30) {
+                await Self.submit(created: created, via: synchronizer.broadcaster, endpoint: endpoint)
             }
-        } else if successCount == transactionCount {
-            logger?.log(level: .debug, message: "Successful sended All TXs")
-        } else {
-            logger?.log(level: .debug, message: "Partial success TXs \(txIds.count)")
+        } catch is ZcashOperationGuard.Failure {
+            return await handOverToBackgroundResubmission(created, endpoint: endpoint, reason: "guard busy")
         }
+
+        let mapped = Self.submitOutcomes(outcomes)
+        for (txId, outcome) in outcomes {
+            logger?.log(level: .debug, message: "-> TX \(txId.toHexStringTxId()): \(outcome)")
+        }
+        logger?.log(level: .debug, message: mapped.successCount == created.count ? "Successful sended All TXs" : "Partial/failed submit: \(mapped.successCount)/\(created.count), resubmitable: \(mapped.resubmitable)")
 
         historyService?.reSyncPending()
 
-        if let submitFailure {
+        if let submitFailure = mapped.submitFailure {
             throw submitFailure
         }
 
-        return txIds.first
+        return mapped.txIds.first
+    }
+
+    // created but never handed to a server: the SDK background resubmission owns them from here
+    private func handOverToBackgroundResubmission(_ created: [CreatedTransaction], endpoint: LightWalletEndpoint, reason: String) async -> String? {
+        logger?.log(level: .error, message: "Submit skipped (\(reason)), released \(created.count) tx to SDK resubmission")
+        await synchronizer.broadcaster.releaseForResubmission(transactions: created, to: [endpoint])
+        historyService?.reSyncPending()
+        return created.first?.txId.toHexStringTxId()
+    }
+
+    static func submitOutcomes(_ outcomes: [(txId: Data, outcome: TransactionSubmissionOutcome)]) -> (successCount: Int, txIds: [String], submitFailure: Error?, resubmitable: Bool) {
+        var successCount = 0
+        var submitFailure: Error?
+        var resubmitable = false
+
+        for (_, outcome) in outcomes {
+            switch outcome {
+            case .accepted:
+                successCount += 1
+            case let .rejected(code, description):
+                submitFailure = submitFailure ?? AppError.invalidResponse(reason: "Zcash node rejected transaction (code \(code)): \(description)")
+            case .unreachable, .timedOut, .notAttempted, .cancelled:
+                resubmitable = true
+            }
+        }
+
+        return (successCount, outcomes.map { $0.txId.toHexStringTxId() }, submitFailure, resubmitable)
+    }
+
+    static func submit(created: [CreatedTransaction], via broadcaster: Broadcaster, endpoint: LightWalletEndpoint) async -> [(txId: Data, outcome: TransactionSubmissionOutcome)] {
+        var result: [(txId: Data, outcome: TransactionSubmissionOutcome)] = []
+        for transaction in created {
+            // every created tx gets its own submit plan (.ready) — no early exit after a rejection
+            let outcome = await broadcaster.submit(transaction: transaction, to: [endpoint])
+            result.append((transaction.txId, outcome))
+        }
+        return result
     }
 
     // Directly re-broadcasts created-but-undelivered transactions with their original bytes.
@@ -283,6 +294,17 @@ class ZcashSendService {
             return
         }
 
+        do {
+            try await ZcashOperationGuard.shared.withSubmission(timeout: 30) {
+                await resubmitPendingTransactions(endpointService: endpointService)
+            }
+        } catch {
+            // a node switch or rebuild is holding the guard — retried on next foreground anyway
+            logger?.log(level: .debug, message: "Resubmit skipped: \(error)")
+        }
+    }
+
+    private func resubmitPendingTransactions(endpointService: ZcashEndpointService) async {
         // snapshot once: a node switch mid-loop must not split the batch between endpoints
         let endpoint = endpointService.currentEndpoint
 
@@ -328,18 +350,18 @@ class ZcashSendService {
                 continue
             }
 
-            do {
-                try await synchronizer.broadcaster.submit(raw, to: endpoint)
+            let created = CreatedTransaction(txId: overview.rawID, raw: raw, expiryHeight: overview.expiryHeight)
+            let outcome = await synchronizer.broadcaster.submit(transaction: created, to: [endpoint])
+
+            if Self.isTerminalRejection(outcome) {
+                // marker first, then redacted diagnostics: no raw tx / node message is persisted
+                terminalStore.markNodeRejected(txId: txId, expiryHeight: overview.expiryHeight ?? 0)
+                logger?.log(level: .error, message: "Resubmit terminal node rejection (code \(Self.terminalNodeRejectionCode)): \(txId)")
+            } else if case .accepted = outcome {
                 logger?.log(level: .debug, message: "Resubmit accepted: \(txId)")
-            } catch {
-                if Self.isTerminalSubmitError(error) {
-                    // marker first, then redacted diagnostics: no raw tx / node message is persisted
-                    terminalStore.markNodeRejected(txId: txId, expiryHeight: overview.expiryHeight ?? 0)
-                    logger?.log(level: .error, message: "Resubmit terminal node rejection (code \(Self.terminalNodeRejectionCode)): \(txId)")
-                } else {
-                    // duplicate ("already in block chain") or transient failure — retried on next foreground anyway
-                    logger?.log(level: .error, message: "Resubmit not delivered: \(txId) | \(error)")
-                }
+            } else {
+                // duplicate, transient or unreachable — retried on next foreground anyway
+                logger?.log(level: .error, message: "Resubmit not delivered: \(txId) | \(outcome)")
             }
         }
     }
@@ -355,8 +377,8 @@ class ZcashSendService {
         return latestHeight > 0 && expiryHeight > latestHeight
     }
 
-    static func isTerminalSubmitError(_ error: Error) -> Bool {
-        if case let .submitError(code, _) = error as? TransactionEncoderError {
+    static func isTerminalRejection(_ outcome: TransactionSubmissionOutcome) -> Bool {
+        if case let .rejected(code, _) = outcome {
             return code == terminalNodeRejectionCode
         }
         return false

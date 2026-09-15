@@ -361,6 +361,8 @@
 \n\nTo maintain high level of privacy you may consider using VPN or TOR when making migration transactions.";
 "balance.token.migrate" = "Migrer";
 "error.zcash.migration_failed" = "La migration n'a pas pu être effectuée. Aucun fonds n'a été perdu — vous pouvez réessayer plus tard.";
+"error.zcash.sync_stalled" = "La synchronisation est bloquée. Tirez vers le bas pour réessayer.";
+"error.zcash.sync_required" = "Attendez que le portefeuille termine la synchronisation, puis réessayez.";
 "zcash.migration.warning.title" = "Montant publiquement visible";
 "zcash.migration.warning" = "Le transfert de fonds entre les pools nécessite que le montant migré soit publiquement visible sur la blockchain. L'expéditeur, le destinataire et vos adresses restent privés.";
 

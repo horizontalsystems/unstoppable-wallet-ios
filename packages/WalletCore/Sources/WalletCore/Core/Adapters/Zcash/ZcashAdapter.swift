@@ -47,7 +47,7 @@ class ZcashAdapter {
 
     private let uniqueId: String
     private let birthday: BlockHeight
-    private let initMode: WalletInitMode
+    private let initMode: ZcashInitMode
     private var logger: HsToolKit.Logger?
 
     private(set) var network: ZcashNetwork
@@ -66,7 +66,7 @@ class ZcashAdapter {
         transactionSource = wallet.transactionSource
         uniqueId = wallet.account.id
 
-        var existingMode: WalletInitMode?
+        var existingMode: ZcashInitMode?
         if let dbUrl = try? ZcashFileStore.dataDbURL(uniqueId: uniqueId, network: network),
            ZcashFileStore.exist(url: dbUrl)
         {
@@ -111,7 +111,7 @@ class ZcashAdapter {
         migrator = ZcashMigrator(uniqueId: uniqueId, threshold: Self.minimalThreshold, network: network, storage: zCashAdapterStorage, logger: logger)
 
         let initializer = try ZcashAdapter.initializer(network: network, uniqueId: uniqueId, endpoint: endpoint)
-        synchronizer = SDKSynchronizer(initializer: initializer)
+        synchronizer = SlipstreamSynchronizer(initializer: initializer)
 
         balanceService = try ZcashBalanceService(uniqueId: uniqueId, storage: zCashAdapterStorage, migrator: migrator, logger: logger)
         historyService = ZcashHistoryService(synchronizer: synchronizer, queue: queue, logger: logger)
@@ -122,6 +122,7 @@ class ZcashAdapter {
 
         syncService = ZcashSyncService(
             synchronizer: synchronizer,
+            initializer: initializer,
             network: network,
             seedData: seedData,
             birthday: birthday,
@@ -138,7 +139,7 @@ class ZcashAdapter {
         sendService.syncService = syncService
         sendService.endpointService = endpointService
         sendService.historyService = historyService
-        endpointService.syncService = syncService
+        syncService.endpointService = endpointService
         recordFactory.syncService = syncService
     }
 
@@ -247,18 +248,12 @@ extension ZcashAdapter {
         let initializer = try ZcashAdapter.initializer(network: network, uniqueId: uniqueId)
         let synchronizer = SDKSynchronizer(initializer: initializer)
 
-        let birthday = BlockHeight.ofLatestCheckpoint(network: network)
-
-        let result = try await synchronizer.prepare(
-            with: seedData,
-            walletBirthday: birthday,
-            for: .newWallet,
-            name: "",
-            keySource: nil
-        )
-
-        if case .seedRequired = result {
+        let result = try await synchronizer.prepare(with: seedData, walletBirthday: nil, name: "", keySource: nil)
+        switch result {
+        case .seedRequired, .seedNotRelevant:
             throw AppError.ZcashError.seedRequired
+        case .success:
+            break
         }
 
         guard let account = try await synchronizer.listAccounts().first else {
@@ -440,6 +435,10 @@ extension ZcashAdapter: IBalanceAdapter {
         syncService.balanceStateUpdatedPublisher
     }
 
+    var stallSignalPublisher: AnyPublisher<Void, Never> {
+        syncService.stallSignalPublisher
+    }
+
     var balanceData: BalanceData {
         balanceService.balanceData
     }
@@ -544,7 +543,7 @@ extension ZcashAdapter {
     }
 
     func migrationProposal() async throws -> (amount: Decimal, fee: Decimal) {
-        try await sendService.migrationProposal(orchardBalance: zCashBalanceData.orchard)
+        try await sendService.migrationProposal()
     }
 
     func clearMigrationHistory() {
@@ -638,9 +637,20 @@ enum ZCashAdapterState: Equatable {
         default: return false
         }
     }
+
+    var isNotSynced: Bool {
+        if case .notSynced = self { return true }
+        return false
+    }
 }
 
-extension WalletInitMode {
+// SDK 4.x derives the init flow itself (nil birthday = new wallet); this stays for the
+// birthday-vs-nil decision in prepare and for status info.
+enum ZcashInitMode {
+    case newWallet
+    case existingWallet
+    case restoreWallet
+
     var description: String {
         switch self {
         case .newWallet: return "New Wallet"

@@ -16,7 +16,7 @@ struct WCRequestExpirationViewModelTests {
         #expect(viewModel.isExpired == (timestamp == 0))
     }
 
-    @Test func subscriptionDoesNotRetainViewModel() {
+    @Test func subscriptionDoesNotRetainViewModel() async {
         let updates = PassthroughSubject<Void, Never>()
         weak var released: WCRequestExpirationViewModel?
         do {
@@ -24,6 +24,8 @@ struct WCRequestExpirationViewModelTests {
             released = viewModel
             #expect(released != nil)
         }
+        // the prepended value is delivered on main; let that hop finish before checking the lifetime
+        await MainActor.run {}
         #expect(released == nil)
     }
 }

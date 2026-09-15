@@ -1,3 +1,4 @@
+import BitcoinCore
 import Foundation
 import GRDB
 import Testing
@@ -87,27 +88,26 @@ struct ZcashMigrationTests {
         let (migrator, _) = try makeMigrator()
         migrator.engine = MockMigrationEngine() // spendable well above fee
 
-        let orchardBalance: Decimal = 1
-        let proposal = try await migrator.migrationProposal(orchardBalance: orchardBalance)
+        let proposal = try await migrator.migrationProposal()
 
         let fee = Self.fee.decimalValue.decimalValue
-        #expect(proposal.fee == fee) // fee is authoritative from the proposal, asserted independently
-        #expect(proposal.amount == orchardBalance - fee) // amount is the swept shielded balance minus fee
+        #expect(proposal.fee == fee)
+        #expect(proposal.amount == Zatoshi(100_000_000).decimalValue.decimalValue - fee) // both numbers come from the SDK quote
     }
 
-    @Test func proposalThrowsNotEnoughWhenFeeConsumesBalance() async throws {
+    @Test func proposalMapsSdkInsufficientFundsToNotEnough() async throws {
         let (migrator, _) = try makeMigrator()
-        migrator.engine = MockMigrationEngine()
+        // balance exactly equal to the fee → the SDK refuses to propose (boundary, not just `< fee`)
+        migrator.engine = MockMigrationEngine(orchardSpendable: Self.fee)
 
-        // balance exactly equal to the fee → amount == 0 → notEnough (boundary, not just `< fee`)
         var notEnough = false
         do {
-            _ = try await migrator.migrationProposal(orchardBalance: Self.fee.decimalValue.decimalValue)
-        } catch AppError.ZcashError.notEnough {
+            _ = try await migrator.migrationProposal()
+        } catch BitcoinCoreErrors.SendValueErrors.notEnough {
             notEnough = true
         }
 
-        #expect(notEnough)
+        #expect(notEnough) // the typed SDK error is converted like in the send flow, never shown raw
     }
 
     @Test func isMigrationTxMatchesOnlyStoredRecords() async throws {
@@ -163,11 +163,11 @@ private final class MockMigrationEngine: IZcashMigrationEngine {
         self.orchardSpendable = orchardSpendable
     }
 
-    func estimatedFee() async throws -> Zatoshi {
+    func quote() async throws -> (amount: Zatoshi, fee: Zatoshi) {
         guard orchardSpendable > Self.fee else {
-            throw AppError.ZcashError.notEnough
+            throw ZcashError.rustProposalInsufficientFunds(orchardSpendable, Self.fee) // what the SDK throws
         }
-        return Self.fee
+        return (orchardSpendable - Self.fee, Self.fee)
     }
 
     func migrate() async throws -> String? {

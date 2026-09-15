@@ -33,30 +33,34 @@ class ZcashBalanceService {
         zCashBalanceData.balanceData
     }
 
+    // a rescan starts from a clean slate: the cached balance belonged to the old birthday and the
+    // shielding alert must fire again for the same transparent amount
+    func clearOnWipe() {
+        try? storage.delete(id: uniqueId)
+        try? storage.deleteAlertState(id: uniqueId)
+        zCashBalanceData = .empty(id: uniqueId)
+    }
+
     var balanceDataUpdatedObservable: Observable<BalanceData> {
         balanceSubject.asObservable()
     }
 
     func sync(synchronizerState: SynchronizerState?, accountId: AccountUUID?, lastBlockHeight: Int) {
-        guard let synchronizerState, let accountId, let balances = synchronizerState.accountsBalances[accountId] else {
+        guard let synchronizerState, let accountId, let visible = synchronizerState.accountsBalances[accountId] else {
             zCashBalanceData = (try? storage.balanceData(id: uniqueId)) ?? .empty(id: uniqueId)
             return
         }
 
-        let full = balances.saplingBalance.total() + balances.orchardBalance.total() + balances.ironwoodBalance.total()
-        let available = balances.saplingBalance.spendableValue + balances.orchardBalance.spendableValue + balances.ironwoodBalance.spendableValue
-        logger?.log(level: .debug, message: "Full balance from syncer: \(full.decimalValue.decimalValue.description)")
-        logger?.log(level: .debug, message: "Available balance from syncer: \(available.decimalValue.decimalValue.description)")
-
-        let orchard = balances.orchardBalance.spendableValue.decimalValue.decimalValue
-
-        let balanceData = ZcashBalanceData(
+        let local = synchronizerState.localAccountsBalances[accountId].map(Inputs.init(balance:))
+        let balanceData = Self.compose(
             id: uniqueId,
-            full: full.decimalValue.decimalValue,
-            available: available.decimalValue.decimalValue,
-            transparent: balances.unshielded.decimalValue.decimalValue,
-            orchard: orchard
+            local: local,
+            visible: Inputs(balance: visible),
+            isSpendableMasked: synchronizerState.isSpendableMasked,
+            isRecovering: synchronizerState.isRecovering,
+            previous: zCashBalanceData
         )
+        logger?.log(level: .debug, message: "Balance from syncer: full=\(balanceData.full) available=\(balanceData.available) transparent=\(balanceData.transparent) masked=\(synchronizerState.isSpendableMasked) recovering=\(synchronizerState.isRecovering)")
 
         update(balanceData: balanceData, syncStatus: synchronizerState.syncStatus, lastBlockHeight: lastBlockHeight)
     }
@@ -134,5 +138,50 @@ class ZcashBalanceService {
                 )
             }
         }
+    }
+}
+
+extension ZcashBalanceService {
+    struct Inputs: Equatable {
+        let shieldedTotal: Zatoshi
+        let shieldedSpendable: Zatoshi
+        let unshielded: Zatoshi
+        let awaitingResolution: Zatoshi
+        let orchardSpendable: Zatoshi
+
+        init(shieldedTotal: Zatoshi, shieldedSpendable: Zatoshi, unshielded: Zatoshi, awaitingResolution: Zatoshi, orchardSpendable: Zatoshi) {
+            self.shieldedTotal = shieldedTotal
+            self.shieldedSpendable = shieldedSpendable
+            self.unshielded = unshielded
+            self.awaitingResolution = awaitingResolution
+            self.orchardSpendable = orchardSpendable
+        }
+
+        init(balance: AccountBalance) {
+            self.init(
+                shieldedTotal: balance.shieldedTotal(),
+                shieldedSpendable: balance.shieldedSpendableValue,
+                unshielded: balance.unshielded,
+                awaitingResolution: balance.awaitingResolution,
+                orchardSpendable: balance.orchardBalance.spendableValue
+            )
+        }
+    }
+
+    // Totals from the unmasked local snapshot; during recovery from the engine-reconciled visible
+    // one, which never over-shows. Spendable only when the SDK is willing to state it: under the
+    // mask and during recovery (where "spendable" carries the whole reconciled total) the cached
+    // value stays.
+    static func compose(id: String, local: Inputs?, visible: Inputs, isSpendableMasked: Bool, isRecovering: Bool, previous: ZcashBalanceData) -> ZcashBalanceData {
+        let totals = (isRecovering ? nil : local) ?? visible
+        let available = isSpendableMasked || isRecovering ? previous.available : visible.shieldedSpendable.decimalValue.decimalValue
+
+        return ZcashBalanceData(
+            id: id,
+            full: totals.shieldedTotal.decimalValue.decimalValue,
+            available: available,
+            transparent: (totals.unshielded + totals.awaitingResolution).decimalValue.decimalValue,
+            orchard: totals.orchardSpendable.decimalValue.decimalValue
+        )
     }
 }
