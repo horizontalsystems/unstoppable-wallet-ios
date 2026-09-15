@@ -29,12 +29,12 @@ struct ZcashBalanceComposeTests {
         #expect(data.balanceData.total == 7)
     }
 
-    @Test func recoveringUsesVisibleNotLocal() {
+    @Test func recoveringUsesVisibleTotalsAndKeepsPreviousAvailable() {
         let local = inputs(shieldedTotal: 900_000_000, spendable: 900_000_000) // provisional, inflated
-        let visible = inputs(shieldedTotal: 500_000_000, spendable: 100_000_000)
+        let visible = inputs(shieldedTotal: 500_000_000, spendable: 500_000_000) // reconciled net, surfaced as "spendable"
         let data = ZcashBalanceService.compose(id: "w", local: local, visible: visible, isSpendableMasked: false, isRecovering: true, previous: previous)
         #expect(data.full == 5)
-        #expect(data.available == 1)
+        #expect(data.available == 2) // previous, never the recovery headline
     }
 
     @Test func missingLocalFallsBackToVisible() {

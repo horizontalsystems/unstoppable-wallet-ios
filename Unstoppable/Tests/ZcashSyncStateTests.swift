@@ -20,6 +20,18 @@ struct ZcashSyncStateTests {
         #expect(mapped.effectiveSpendable == true)
     }
 
+    @Test func maskedSyncingKeepsNumbersButClosesGate() {
+        let mapped = ZcashSyncService.mapState(snap(.syncing(0.5, true), masked: true), started: true, birthday: 200, lastBlockHeight: 1000, stallTerminal: false)
+        #expect(mapped.state == .syncing(progress: 50, remaining: 400, lastBlockDate: nil))
+        #expect(mapped.effectiveSpendable == false)
+    }
+
+    @Test func recoveringSyncingKeepsNumbersButClosesGate() {
+        let mapped = ZcashSyncService.mapState(snap(.syncing(0.5, true), recovering: true), started: true, birthday: 200, lastBlockHeight: 1000, stallTerminal: false)
+        #expect(mapped.state == .syncing(progress: 50, remaining: 400, lastBlockDate: nil))
+        #expect(mapped.effectiveSpendable == false)
+    }
+
     @Test func syncingSpendableThenMaskedUpToDateClosesGate() {
         let first = ZcashSyncService.mapState(snap(.syncing(0.5, true)), started: true, birthday: 100, lastBlockHeight: 1000, stallTerminal: false)
         #expect(first.effectiveSpendable == true)

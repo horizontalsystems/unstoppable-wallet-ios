@@ -111,7 +111,7 @@ class ZcashAdapter {
         migrator = ZcashMigrator(uniqueId: uniqueId, threshold: Self.minimalThreshold, network: network, storage: zCashAdapterStorage, logger: logger)
 
         let initializer = try ZcashAdapter.initializer(network: network, uniqueId: uniqueId, endpoint: endpoint)
-        synchronizer = SDKSynchronizer(initializer: initializer)
+        synchronizer = SlipstreamSynchronizer(initializer: initializer)
 
         balanceService = try ZcashBalanceService(uniqueId: uniqueId, storage: zCashAdapterStorage, migrator: migrator, logger: logger)
         historyService = ZcashHistoryService(synchronizer: synchronizer, queue: queue, logger: logger)
@@ -139,6 +139,7 @@ class ZcashAdapter {
         sendService.syncService = syncService
         sendService.endpointService = endpointService
         sendService.historyService = historyService
+        syncService.endpointService = endpointService
         recordFactory.syncService = syncService
     }
 
@@ -329,6 +330,10 @@ extension ZcashAdapter: IAdapter {
         syncService.stop()
     }
 
+    func shutdown() async {
+        await syncService.shutdown()
+    }
+
     func refresh() {
         syncService.refresh()
     }
@@ -436,6 +441,10 @@ extension ZcashAdapter: IBalanceAdapter {
 
     var balanceStateUpdatedPublisher: AnyPublisher<AdapterState, Never> {
         syncService.balanceStateUpdatedPublisher
+    }
+
+    var stallSignalPublisher: AnyPublisher<Void, Never> {
+        syncService.stallSignalPublisher
     }
 
     var balanceData: BalanceData {

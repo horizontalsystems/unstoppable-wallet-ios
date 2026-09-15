@@ -160,11 +160,13 @@ extension ZcashBalanceService {
         }
     }
 
-    // Totals from the unmasked local snapshot (recovery: from the engine-reconciled visible one),
-    // spendable only when the SDK is willing to state it — otherwise the cached value stays.
+    // Totals from the unmasked local snapshot; during recovery from the engine-reconciled visible
+    // one, which never over-shows. Spendable only when the SDK is willing to state it: under the
+    // mask and during recovery (where "spendable" carries the whole reconciled total) the cached
+    // value stays.
     static func compose(id: String, local: Inputs?, visible: Inputs, isSpendableMasked: Bool, isRecovering: Bool, previous: ZcashBalanceData) -> ZcashBalanceData {
         let totals = (isRecovering ? nil : local) ?? visible
-        let available = isSpendableMasked ? previous.available : visible.shieldedSpendable.decimalValue.decimalValue
+        let available = isSpendableMasked || isRecovering ? previous.available : visible.shieldedSpendable.decimalValue.decimalValue
 
         return ZcashBalanceData(
             id: id,

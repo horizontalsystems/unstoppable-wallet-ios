@@ -23,6 +23,13 @@ class ZcashSyncService {
     private var deferredStopCancellable: AnyCancellable?
     private var resubmitTask: Task<Void, Never>? // main-confined; dedupes concurrent startSynchronizer kicks
     private var resubmitWhenHeightIsAvailable = false // queue-confined with `sync(state:)`
+    private var stallTask: Task<Void, Never>? // queue-confined; single-flight, cancelled on background
+    private var stallRebuildsThisForeground = 0
+    private var stallAutoSelectRequested = false
+    private var lifecycleGeneration = 0 // bumped on background so a stale rebuild result is ignored
+    private let stallSignalSubject = PassthroughSubject<Void, Never>()
+
+    weak var endpointService: ZcashEndpointService?
 
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     // Combine is primary; the Rx subject stays only to bridge the IBalanceAdapter contract
@@ -33,6 +40,7 @@ class ZcashSyncService {
 
     private var started = false
     private(set) var stallState: StallState = .none
+    private var lastSyncProgress: Float = 0
     private(set) var lastBlockHeight: Int = 0 {
         didSet {
             historyService.lastBlockHeight = lastBlockHeight
@@ -101,7 +109,12 @@ class ZcashSyncService {
         synchronizer
             .eventStream
             .receive(on: queue)
-            .sink(receiveValue: { [weak self] event in self?.historyService.sync(event: event) })
+            .sink(receiveValue: { [weak self] event in
+                self?.historyService.sync(event: event)
+                if case let .syncStalled(attempt, gaveUp) = event {
+                    self?.handleStall(attempt: attempt, gaveUp: gaveUp)
+                }
+            })
             .store(in: &cancellables)
 
         Core.shared.appManager.didEnterBackgroundPublisher
@@ -127,6 +140,10 @@ class ZcashSyncService {
         balanceStateSubject.asObservable()
     }
 
+    var stallSignalPublisher: AnyPublisher<Void, Never> {
+        stallSignalSubject.eraseToAnyPublisher()
+    }
+
     var balanceStateUpdatedPublisher: AnyPublisher<AdapterState, Never> {
         balanceStateUpdatedSubject.eraseToAnyPublisher()
     }
@@ -150,9 +167,44 @@ class ZcashSyncService {
         logger?.log(level: .debug, message: "Synchronizer will stop")
     }
 
+    // Stops the engine and waits for the SDK to confirm, so a recreated adapter never opens the
+    // wallet database while the previous engine handle is still winding down.
+    func shutdown() async {
+        let stopped = synchronizer.stateStream
+            .map(\.syncStatus)
+            .filter { status in
+                switch status {
+                case .stopped, .unprepared, .error: return true
+                default: return false
+                }
+            }
+            .first()
+            .values
+
+        stop()
+        await withTaskGroup(of: Void.self) { group in
+            group.addTask { for await _ in stopped {
+                break
+            } }
+            group.addTask { try? await Task.sleep(seconds: 10) }
+            await group.next()
+            group.cancelAll()
+        }
+    }
+
     func refresh() {
         cancelDeferredStop()
-        startSynchronizer()
+        queue.async { [weak self] in
+            guard let self else { return }
+            // pull-to-refresh after a terminal stall: the user asked, so the rebuild budget resets
+            if stallState == .terminal {
+                stallRebuildsThisForeground = 0
+                stallState = .none
+                startStallRebuild()
+            } else {
+                startSynchronizerOnQueue()
+            }
+        }
     }
 
     // Pre-warm sapling params unconditionally: the SDK sync-time download is gated by
@@ -292,12 +344,6 @@ class ZcashSyncService {
             return
         }
 
-        // Slipstream start() is not idempotent: a second start on a live engine throws
-        if case .syncing = synchronizer.latestState.syncStatus {
-            logger?.log(level: .debug, message: "Already syncing, start skipped")
-            return
-        }
-
         // Sapling parameters are downloaded by the SDK on demand
         // (conditionally during sync when balance > 0, and just-in-time before any spend).
         logger?.log(level: .debug, message: "Start syncing kit!")
@@ -318,6 +364,18 @@ class ZcashSyncService {
     }
 
     private func didEnterBackground() {
+        queue.async { [weak self] in
+            guard let self else { return }
+            stallTask?.cancel()
+            stallTask = nil
+            stallRebuildsThisForeground = 0
+            stallAutoSelectRequested = false
+            lifecycleGeneration += 1
+            if stallState == .rebuilding {
+                stallState = .none
+            }
+        }
+
         let backgroundTaskManager = Core.shared.backgroundTaskManager
 
         // subscribe BEFORE checking activity: a critical section completing in between still triggers stop()
@@ -391,6 +449,19 @@ class ZcashSyncService {
             logger?.log(level: .error, message: "State: Error: \(error)")
         case .unprepared, .stopped:
             logger?.log(level: .debug, message: "State: Disconnected")
+        }
+
+        // any real progress or a synced tip ends a stall episode
+        switch state.syncStatus {
+        case .upToDate:
+            stallState = .none
+        case let .syncing(progress, _) where progress > lastSyncProgress:
+            stallState = .none
+        default:
+            break
+        }
+        if case let .syncing(progress, _) = state.syncStatus {
+            lastSyncProgress = progress
         }
 
         let mapped = Self.mapState(Snapshot(state: state), started: started, birthday: birthday, lastBlockHeight: lastBlockHeight, stallTerminal: stallState == .terminal)
@@ -497,6 +568,86 @@ class ZcashSyncService {
 }
 
 extension ZcashSyncService {
+    enum StallAction: Equatable {
+        case none
+        case requestAutoSelect
+        case rebuild
+        case terminal
+    }
+
+    static let maxStallRebuildsPerForeground = 2
+
+    // attempt >= 2 (the SDK already restarted once) asks node auto-select for a healthier server;
+    // gaveUp rebuilds the engine ourselves within a per-foreground budget, then goes terminal.
+    static func stallAction(attempt: Int, gaveUp: Bool, isActive: Bool, autoSelectEnabled: Bool, rebuildsThisForeground: Int, alreadyRequestedAutoSelect: Bool) -> StallAction {
+        guard isActive else { return .none }
+        if gaveUp {
+            return rebuildsThisForeground < maxStallRebuildsPerForeground ? .rebuild : .terminal
+        }
+        guard attempt >= 2, autoSelectEnabled, !alreadyRequestedAutoSelect else { return .none }
+        return .requestAutoSelect
+    }
+
+    private func handleStall(attempt: Int, gaveUp: Bool) {
+        let action = Self.stallAction(
+            attempt: attempt,
+            gaveUp: gaveUp,
+            isActive: Core.shared.appManager.isActive,
+            autoSelectEnabled: Core.shared.zcashNodeManager.autoSelectEnabled,
+            rebuildsThisForeground: stallRebuildsThisForeground,
+            alreadyRequestedAutoSelect: stallAutoSelectRequested
+        )
+        logger?.log(level: .error, message: "Sync stalled: attempt=\(attempt) gaveUp=\(gaveUp) -> \(action)")
+
+        switch action {
+        case .none:
+            break
+        case .requestAutoSelect:
+            stallAutoSelectRequested = true
+            stallSignalSubject.send()
+        case .rebuild:
+            stallRebuildsThisForeground += 1
+            startStallRebuild()
+        case .terminal:
+            setStallTerminal()
+        }
+    }
+
+    private func setStallTerminal() {
+        stallState = .terminal
+        state = .notSynced(error: AppError.zcash(reason: .syncStalled))
+    }
+
+    private func startStallRebuild() {
+        guard stallTask == nil, let endpointService else { return }
+        stallState = .rebuilding
+        let generation = lifecycleGeneration
+        let queue = queue
+
+        stallTask = Task { [weak self] in
+            defer { queue.async { [weak self] in self?.stallTask = nil } }
+            do {
+                try await endpointService.rebuild(at: endpointService.currentEndpoint)
+            } catch is CancellationError {
+                return
+            } catch {
+                queue.async { [weak self] in
+                    guard let self, lifecycleGeneration == generation else { return }
+                    setStallTerminal()
+                }
+                return
+            }
+            queue.async { [weak self] in
+                guard let self, lifecycleGeneration == generation else { return }
+                stallState = .none
+                // let auto-select look for a healthier node after the rebuild
+                stallSignalSubject.send()
+            }
+        }
+    }
+}
+
+extension ZcashSyncService {
     enum StallState {
         case none
         case rebuilding
@@ -570,15 +721,14 @@ extension ZcashSyncService {
             break
         }
 
-        // spendable mask folds into "syncing without numbers"; error/stopped are left alone so
-        // the node auto-select signal still sees .notSynced
-        if snapshot.isSpendableMasked {
+        // The SDK is not willing to state a spendable value: under the stale-tip mask, and during
+        // recovery (recent-first restore), where the balance is provisional and the "spendable"
+        // field carries the whole reconciled total. Progress numbers stay; only a synced tip turns
+        // into "syncing without numbers" so the UI never says synced while the send gate is shut.
+        if snapshot.isSpendableMasked || snapshot.isRecovering {
             spendable = false
-            switch state {
-            case .synced, .syncing:
+            if case .synced = state {
                 state = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
-            default:
-                break
             }
         }
 

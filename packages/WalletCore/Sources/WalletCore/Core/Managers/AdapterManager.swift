@@ -247,6 +247,12 @@ extension AdapterManager {
                 self.zanoKitManager.recreateKit()
             }
 
+            // at most one: the zcash chain has a single native token per account. The new adapter
+            // reuses the same wallet database, so wait for the old engine to stop first
+            if blockchainType == .zcash, let adapter = zcashAdapter {
+                await adapter.shutdown()
+            }
+
             let wallets = queue.sync { _adapterData.adapterMap.keys }
 
             refreshAdapters(wallets: wallets.filter {
@@ -255,14 +261,15 @@ extension AdapterManager {
         }
     }
 
+    private var zcashAdapter: ZcashAdapter? {
+        queue.sync {
+            _adapterData.adapterMap.first { wallet, _ in wallet.token.blockchainType == .zcash }?.value as? ZcashAdapter
+        }
+    }
+
     func validateZcashEndpoint(_ url: URL) async throws {
         let endpoint = ZcashAdapter.endpoint(url: url)
-
-        let adapter = queue.sync {
-            _adapterData.adapterMap.compactMap { wallet, adapter in
-                wallet.token.blockchainType == .zcash ? adapter as? ZcashAdapter : nil
-            }.first
-        }
+        let adapter = zcashAdapter
 
         guard let adapter else {
             // no live wallet: nothing to switch — validate reachability with the standalone
