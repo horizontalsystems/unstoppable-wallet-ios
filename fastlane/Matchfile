@@ -1,2 +1,2 @@
-git_url("https://github.com/horizontalsystems/certificates")
+git_url("git@github.com:horizontalsystems/certificates.git")
 storage_mode("git")

@@ -19,6 +19,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Load match deploy key
+        uses: webfactory/ssh-agent@v0.9.1
+        with:
+          ssh-private-key: ${{ secrets.MATCH_DEPLOY_KEY }}
+
       - name: Setup Ruby v3
         uses: ruby/setup-ruby@v1
         with:
@@ -42,7 +47,6 @@ jobs:
           FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 120
           BUILD_NUMBER: ${{ github.run_number }}
           APP_ID: ${{ secrets.APP_ID }}
-          GIT_AUTHORIZATION: ${{ secrets.GIT_AUTHORIZATION }}
           TEMP_KEYCHAIN_USER: ${{ secrets.TEMP_KEYCHAIN_USER }}
           TEMP_KEYCHAIN_PASSWORD: ${{ secrets.TEMP_KEYCHAIN_PASSWORD }}
           APPLE_ISSUER_ID: ${{ secrets.APPLE_ISSUER_ID }}
