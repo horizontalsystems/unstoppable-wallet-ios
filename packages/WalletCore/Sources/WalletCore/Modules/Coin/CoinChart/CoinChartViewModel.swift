@@ -169,10 +169,7 @@ extension CoinChartViewModel: IChartViewTouchDelegate {
 
 extension CoinChartViewModel {
     static func instance(coinUid: String) -> CoinChartViewModel {
-        let repository = ChartIndicatorsRepository(
-            localStorage: Core.shared.localStorage,
-            subscriptionManager: Core.shared.subscriptionManager
-        )
+        let repository = ChartIndicatorsRepository(localStorage: Core.shared.localStorage)
         let chartService = CoinChartService(
             marketKit: Core.shared.marketKit,
             currencyManager: Core.shared.currencyManager,

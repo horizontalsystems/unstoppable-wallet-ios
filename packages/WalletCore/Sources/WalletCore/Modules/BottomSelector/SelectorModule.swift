@@ -13,11 +13,6 @@ enum SelectorModule {
         let viewController = BottomSingleSelectorViewController(image: image, title: title, subtitle: subtitle, viewItems: viewItems, onSelect: onSelect)
         return viewController.toBottomSheet
     }
-
-    static func multiSelectorViewController(title: String, viewItems: [ViewItem], onFinish: @escaping ([Int]) -> Void) -> UIViewController {
-        let viewController = MultiSelectorViewController(title: title, viewItems: viewItems, onFinish: onFinish)
-        return ThemeNavigationController(rootViewController: viewController)
-    }
 }
 
 extension SelectorModule {

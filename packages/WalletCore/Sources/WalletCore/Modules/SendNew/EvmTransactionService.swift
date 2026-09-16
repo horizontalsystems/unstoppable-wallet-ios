@@ -52,8 +52,8 @@ class EvmTransactionService: TransactionService {
         }
     }
 
-    private var gasPriceWarnings: [EvmFeeModule.GasDataWarning] = []
-    private var nonceErrors: [NonceService.NonceError] = []
+    private var gasPriceWarnings: [GasDataWarning] = []
+    private var nonceErrors: [NonceError] = []
 
     init?(blockchainType: BlockchainType, evmKit: EvmKit.Kit, initialTransactionSettings: InitialTransactionSettings?, previousTransaction: EvmKit.Transaction? = nil) {
         guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType),
@@ -181,7 +181,7 @@ extension EvmTransactionService {
         switch network {
         case let .legacy(gasPrice):
             recommended = .legacy(gasPrice: max(gasPrice, previousTransaction?.gasPrice ?? gasPrice))
-            // Preserve LegacyGasPriceService: the recommendation is floored, the default selection is the network price.
+            // The recommendation is floored; the default selection is the network price.
             defaultPrice = network
         case let .eip1559(maxFee, tips):
             if let previousMaxFee = previousTransaction?.maxFeePerGas, let previousTips = previousTransaction?.maxPriorityFeePerGas {
@@ -196,8 +196,8 @@ extension EvmTransactionService {
         return GasPriceData(recommended: recommended, userDefined: custom ?? defaultPrice)
     }
 
-    static func validateGasPrice(recommended: GasPrice?, current: GasPrice?) -> [EvmFeeModule.GasDataWarning] {
-        var warnings = [EvmFeeModule.GasDataWarning]()
+    static func validateGasPrice(recommended: GasPrice?, current: GasPrice?) -> [GasDataWarning] {
+        var warnings = [GasDataWarning]()
 
         switch (recommended, current) {
         case (let .eip1559(recommendedMaxFee, recommendedTips), let .eip1559(maxFee, tips)):
@@ -228,11 +228,86 @@ extension EvmTransactionService {
         return warnings
     }
 
-    static func validateNonce(nonce: Int?, minimumNonce: Int?) -> [NonceService.NonceError] {
+    static func validateNonce(nonce: Int?, minimumNonce: Int?) -> [NonceError] {
         if let nonce, let minimumNonce, nonce < minimumNonce {
             return [.alreadyInUse]
         } else {
             return []
+        }
+    }
+}
+
+extension EvmTransactionService {
+    enum GasDataWarning: Warning {
+        case riskOfGettingStuck
+        case overpricing
+
+        var titledCaution: TitledCaution {
+            switch self {
+            case .riskOfGettingStuck:
+                return TitledCaution(title: "fee_settings.warning.risk_of_getting_stuck".localized, text: "fee_settings.warning.risk_of_getting_stuck.info".localized, type: .warning)
+            case .overpricing:
+                return TitledCaution(title: "fee_settings.warning.overpricing".localized, text: "fee_settings.warning.overpricing.info".localized, type: .warning)
+            }
+        }
+    }
+
+    enum NonceError: Error {
+        case alreadyInUse
+
+        var titledCaution: TitledCaution {
+            TitledCaution(
+                title: "evm_send_settings.nonce.errors.already_in_use".localized,
+                text: "evm_send_settings.nonce.errors.already_in_use.info".localized,
+                type: .error
+            )
+        }
+
+        var caution: CautionNew {
+            let caution = titledCaution
+            return .init(title: caution.title, text: caution.text, type: caution.type)
+        }
+    }
+
+    private struct RangeBounds {
+        enum BoundType {
+            case factor(Float)
+            case distance(Int)
+            case fixed(Int)
+        }
+
+        let lower: BoundType
+        let upper: BoundType
+
+        init(lower: BoundType, upper: BoundType) {
+            self.lower = lower
+            self.upper = upper
+        }
+
+        func range(around center: Int, containing selected: Int? = nil) -> ClosedRange<Int> {
+            var lowerBound = 0
+            var upperBound = 0
+
+            switch lower {
+            case let .factor(factor): lowerBound = Int(Float(center) * factor)
+            case let .distance(distance): lowerBound = center - distance
+            case let .fixed(value): lowerBound = value
+            }
+
+            lowerBound = max(lowerBound, 0)
+
+            switch upper {
+            case let .factor(factor): upperBound = Int(Float(center) * factor)
+            case let .distance(distance): upperBound = center + distance
+            case let .fixed(value): upperBound = value
+            }
+
+            if let selected {
+                lowerBound = min(lowerBound, selected)
+                upperBound = max(upperBound, selected)
+            }
+
+            return lowerBound ... upperBound
         }
     }
 }

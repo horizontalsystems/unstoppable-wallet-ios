@@ -206,17 +206,6 @@ protocol IAppManager {
     var willEnterForegroundObservable: Observable<Void> { get }
 }
 
-protocol IPresentDelegate: AnyObject {
-    func present(viewController: UIViewController)
-    func push(viewController: UIViewController)
-}
-
-extension IPresentDelegate {
-    func push(viewController _: UIViewController) {
-        // might be implemented by delegate
-    }
-}
-
 protocol Warning {
     var titledCaution: TitledCaution { get }
     var caution: CautionNew { get }

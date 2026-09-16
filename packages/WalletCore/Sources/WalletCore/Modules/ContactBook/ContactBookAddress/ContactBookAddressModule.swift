@@ -31,7 +31,7 @@ enum ContactBookAddressModule {
         }
 
         let viewModel = ContactBookAddressViewModel(service: service)
-        let addressViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
+        let addressViewModel = RecipientAddressViewModel(service: addressService)
         let controller = ContactBookAddressViewController(viewModel: viewModel, addressViewModel: addressViewModel, onUpdateAddress: onSaveAddress)
         return ThemeNavigationController(rootViewController: controller)
     }
