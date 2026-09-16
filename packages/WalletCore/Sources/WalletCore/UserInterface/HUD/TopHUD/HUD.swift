@@ -25,14 +25,6 @@ public class HUD {
         keyboardNotificationHandler = keyboardNotifications
     }
 
-    public func show(error: String?) {
-        HUDStatusFactory.instance.config.dismissTimeInterval = 2
-        let content = HUDStatusFactory.instance.view(type: .error, title: error)
-        showHUD(content, onTapHUD: { hud in
-            hud.hide()
-        })
-    }
-
     public func showHUD(_ content: UIView & HUDContentViewInterface, statusBarStyle: UIStatusBarStyle? = nil, animated: Bool = true, showCompletion: (() -> Void)? = nil, dismissCompletion: (() -> Void)? = nil, onTapCoverView: ((HUD) -> Void)? = nil, onTapHUD: ((HUD) -> Void)? = nil) {
         self.animated = animated
 

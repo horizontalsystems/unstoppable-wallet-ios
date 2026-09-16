@@ -31,14 +31,13 @@ enum ChartIndicatorFactory {
         ChartColor(color.withAlphaComponent(alpha))
     }
 
-    static func defaultIndicators(subscribed: Bool) -> [ChartIndicator] {
+    static var defaultIndicators: [ChartIndicator] {
         var indicators = [ChartIndicator]()
-        let maEnabledArray = [true, true, subscribed]
         let maIndicators = maPeriods.enumerated().map { index, period in
             MaIndicator(
                 id: "MA",
                 index: index,
-                enabled: maEnabledArray[index],
+                enabled: true,
                 period: period,
                 type: .ema,
                 configuration: maConfiguration(index)
@@ -49,7 +48,7 @@ enum ChartIndicatorFactory {
             RsiIndicator(
                 id: ChartIndicator.AbstractType.rsi.rawValue,
                 index: 0,
-                enabled: subscribed,
+                enabled: true,
                 period: rsiPeriod,
                 configuration: rsiConfiguration
             ),

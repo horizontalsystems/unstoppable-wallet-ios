@@ -2,26 +2,9 @@ import Foundation
 import SwiftUI
 import UIKit
 
-class ChartIndicatorRouter {
-    private let repository: IChartIndicatorsRepository
-    private let fetcher: IChartPointFetcher
-
-    init(repository: IChartIndicatorsRepository, fetcher: IChartPointFetcher) {
-        self.repository = repository
-        self.fetcher = fetcher
-    }
-
-    func viewController() -> UIViewController {
-        let service = ChartIndicatorsService(repository: repository, chartPointFetcher: fetcher, subscriptionManager: Core.shared.subscriptionManager)
-        let viewModel = ChartIndicatorsViewModel(service: service)
-
-        return ThemeNavigationController(rootViewController: ChartIndicatorsViewController(viewModel: viewModel))
-    }
-}
-
 enum ChartIndicatorsModule {
     static func view(repository: IChartIndicatorsRepository, fetcher: IChartPointFetcher) -> some View {
-        let service = ChartIndicatorsService(repository: repository, chartPointFetcher: fetcher, subscriptionManager: Core.shared.subscriptionManager)
+        let service = ChartIndicatorsService(repository: repository, chartPointFetcher: fetcher)
         let viewModel = ChartIndicatorsViewModel(service: service)
 
         return ChartIndicatorsView(viewModel: viewModel)

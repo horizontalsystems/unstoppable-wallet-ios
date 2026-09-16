@@ -358,29 +358,6 @@ public enum AccountType: Identifiable {
         default: return nil
         }
     }
-
-    func sign(message: Data, isLegacy: Bool = false) -> Data? {
-        switch self {
-        case .mnemonic:
-            guard let mnemonicSeed else {
-                return nil
-            }
-
-            guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: .ethereum),
-                  let privateKey = try? Signer.privateKey(seed: mnemonicSeed, chain: chain)
-            else {
-                return nil
-            }
-
-            return try? EvmKit.Kit.sign(message: message, privateKey: privateKey, isLegacy: isLegacy)
-        case .passkeyOwned:
-            return nil
-        case let .evmPrivateKey(data):
-            return try? EvmKit.Kit.sign(message: message, privateKey: data, isLegacy: isLegacy)
-        default:
-            return nil
-        }
-    }
 }
 
 extension AccountType {

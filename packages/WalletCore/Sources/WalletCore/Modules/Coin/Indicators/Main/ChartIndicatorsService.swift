@@ -9,17 +9,14 @@ class ChartIndicatorsService {
 
     private var repository: IChartIndicatorsRepository
     private let chartPointFetcher: IChartPointFetcher
-    private let subscriptionManager: SubscriptionManager
 
     private var cancellables = Set<AnyCancellable>()
 
-    @PostPublished private(set) var isLocked = false
     @PostPublished private(set) var items = [IndicatorItem]()
 
-    init(repository: IChartIndicatorsRepository, chartPointFetcher: IChartPointFetcher, subscriptionManager: SubscriptionManager) {
+    init(repository: IChartIndicatorsRepository, chartPointFetcher: IChartPointFetcher) {
         self.repository = repository
         self.chartPointFetcher = chartPointFetcher
-        self.subscriptionManager = subscriptionManager
 
         repository.updatedPublisher
             .sink { [weak self] in
@@ -29,12 +26,6 @@ class ChartIndicatorsService {
 
         chartPointFetcher.pointsUpdatedPublisher
             .sink { [weak self] in
-                self?.sync()
-            }
-            .store(in: &cancellables)
-
-        subscriptionManager.$isAuthenticated
-            .sink { [weak self] _ in
                 self?.sync()
             }
             .store(in: &cancellables)
@@ -52,7 +43,6 @@ class ChartIndicatorsService {
     }
 
     private func sync() {
-        isLocked = !subscriptionManager.isAuthenticated
         let userIndicators = repository.indicators
         let points = chartPointFetcher.points.data
 

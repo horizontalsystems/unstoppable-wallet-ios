@@ -95,7 +95,7 @@ public enum MultiSwapSlippage {
         }
         if slippage > MultiSwapSlippage.limitBounds.upperBound {
             return .caution(.init(
-                text: SwapSettingsModule.SlippageError.tooHigh(
+                text: MultiSwapSlippage.SlippageError.tooHigh(
                     max: MultiSwapSlippage.limitBounds.upperBound
                 ).localizedDescription,
                 type: .error
@@ -104,7 +104,7 @@ public enum MultiSwapSlippage {
         }
         if slippage < MultiSwapSlippage.limitBounds.lowerBound {
             return .caution(.init(
-                text: SwapSettingsModule.SlippageError.tooLow(
+                text: MultiSwapSlippage.SlippageError.tooLow(
                     min: MultiSwapSlippage.limitBounds.lowerBound
                 ).localizedDescription,
                 type: .error

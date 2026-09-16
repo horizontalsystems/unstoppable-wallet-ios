@@ -1,5 +1,10 @@
 import SwiftUI
 
+protocol IBottomMultiSelectorDelegate: AnyObject {
+    func bottomSelectorOnSelect(indexes: [Int])
+    func bottomSelectorOnCancel()
+}
+
 struct BottomMultiSelectorView: View {
     let config: SelectorModule.MultiConfig
     let delegate: IBottomMultiSelectorDelegate
@@ -117,70 +122,5 @@ struct BottomMultiSelectorView: View {
 
         delegate.bottomSelectorOnSelect(indexes: indices)
         isPresented = false
-    }
-}
-
-extension SelectorModule {
-    static func bottomMultiSelectorView(
-        config: MultiConfig,
-        delegate: IBottomMultiSelectorDelegate,
-        isPresented: Binding<Bool>
-    ) -> some View {
-        BottomMultiSelectorView(
-            config: config,
-            delegate: delegate,
-            isPresented: isPresented
-        )
-    }
-
-    static func bottomMultiSelectorViewController(
-        config: MultiConfig,
-        delegate: IBottomMultiSelectorDelegate
-    ) -> UIViewController {
-        let wrapper = BottomMultiSelectorHostingController(
-            config: config,
-            delegate: delegate
-        )
-        return wrapper.toBottomSheet
-    }
-
-    private class BottomMultiSelectorHostingController: UIHostingController<BottomMultiSelectorView>, ActionSheetViewDelegate {
-        weak var delegate: IBottomMultiSelectorDelegate?
-
-        init(config: SelectorModule.MultiConfig, delegate: IBottomMultiSelectorDelegate) {
-            // stubbing view for Hosting creation.
-            let stubIsPresented = Binding<Bool>(get: { true }, set: { _ in })
-            let stubView = BottomMultiSelectorView(config: config, delegate: delegate, isPresented: stubIsPresented)
-            self.delegate = delegate
-
-            super.init(rootView: stubView)
-
-            // update to view with dismissing
-            let isPresented = Binding<Bool>(
-                get: { true },
-                set: { [weak self] newValue in
-                    if !newValue {
-                        self?.dismiss(animated: true)
-                    }
-                }
-            )
-
-            let view = BottomMultiSelectorView(
-                config: config,
-                delegate: delegate,
-                isPresented: isPresented
-            )
-
-            rootView = view
-        }
-
-        @available(*, unavailable)
-        @MainActor dynamic required init?(coder _: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-
-        func didInteractiveDismissed() {
-            delegate?.bottomSelectorOnCancel()
-        }
     }
 }

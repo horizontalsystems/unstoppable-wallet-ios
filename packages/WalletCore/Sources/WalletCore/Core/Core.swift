@@ -92,7 +92,6 @@ public class Core {
     let termsManager: TermsManager
     let watchlistManager: WatchlistManager
     let contactManager: ContactBookManager
-    let subscriptionManager: SubscriptionManager
 
     public let accountManager: AccountManager
     let accountRestoreWarningManager: AccountRestoreWarningManager
@@ -240,7 +239,6 @@ public class Core {
         watchlistManager = WatchlistManager(widgetRefresher: widgetRefresher, storage: sharedLocalStorage, priceChangeModeManager: priceChangeModeManager)
 
         contactManager = ContactBookManager(localStorage: localStorage, ubiquityContainerIdentifier: AppConfig.privateCloudContainer, helper: ContactBookHelper(), logger: logger)
-        subscriptionManager = SubscriptionManager(userDefaultsStorage: userDefaultsStorage, marketKit: marketKit)
 
         let accountRecordStorage = AccountRecordStorage(dbPool: dbPool)
         let accountStorage = AccountStorage(keychainStorage: keychainStorage, storage: accountRecordStorage)
@@ -386,7 +384,7 @@ public class Core {
 
         rateAppManager = RateAppManager(walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
 
-        let chartRepository = ChartIndicatorsRepository(localStorage: localStorage, subscriptionManager: subscriptionManager)
+        let chartRepository = ChartIndicatorsRepository(localStorage: localStorage)
         appBackupProvider = AppBackupProvider(
             accountManager: accountManager,
             accountFactory: accountFactory,

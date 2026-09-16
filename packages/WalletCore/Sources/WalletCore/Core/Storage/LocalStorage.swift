@@ -103,13 +103,13 @@ extension LocalStorage {
         set { userDefaultsStorage.set(value: newValue, for: keyZCashRewind) }
     }
 
-    func defaultProvider(blockchainType: BlockchainType) -> SwapModule.Dex.Provider {
+    func defaultProvider(blockchainType: BlockchainType) -> LegacySwapProvider {
         let key = [keyDefaultProvider, blockchainType.uid].joined(separator: "|")
         let raw: String? = userDefaultsStorage.value(for: key)
-        return (raw.flatMap { SwapModule.Dex.Provider(rawValue: $0) }) ?? blockchainType.allowedProviders[0]
+        return (raw.flatMap { LegacySwapProvider(rawValue: $0) }) ?? blockchainType.legacySwapProviders[0]
     }
 
-    func setDefaultProvider(blockchainType: BlockchainType, provider: SwapModule.Dex.Provider) {
+    func setDefaultProvider(blockchainType: BlockchainType, provider: LegacySwapProvider) {
         let key = [keyDefaultProvider, blockchainType.uid].joined(separator: "|")
         userDefaultsStorage.set(value: provider.rawValue, for: key)
     }
@@ -298,7 +298,7 @@ extension LocalStorage {
         indicatorsShown = backup.indicatorsShown
         backup.swapProviders.forEach { provider in
             let blockchainType = BlockchainType(uid: provider.blockchainTypeId)
-            if let dexProvider = SwapModule.Dex.Provider(rawValue: provider.provider) {
+            if let dexProvider = LegacySwapProvider(rawValue: provider.provider) {
                 return setDefaultProvider(blockchainType: blockchainType, provider: dexProvider)
             }
         }
