@@ -12,6 +12,7 @@ class MultiSwapSendHandler: SendHandler {
     private let marketKit = Core.shared.marketKit
     private let accountManager = Core.shared.accountManager
     private let walletManager = Core.shared.walletManager
+    private let restoreSettingsManager = Core.shared.restoreSettingsManager
     private let swapHistoryManager = Core.shared.swapHistoryManager
     private let mevProtectionHelper = MevProtectionHelper()
 
@@ -192,6 +193,8 @@ extension MultiSwapSendHandler: ISendHandler {
            let activeAccount = accountManager.activeAccount,
            activeAccount.type.supports(token: tokenOut)
         {
+            restoreSettingsManager.saveDefaultSettingsIfNeeded(account: activeAccount, blockchainType: tokenOut.blockchainType)
+
             let wallet = Wallet(token: tokenOut, account: activeAccount)
             walletManager.save(wallets: [wallet])
         }

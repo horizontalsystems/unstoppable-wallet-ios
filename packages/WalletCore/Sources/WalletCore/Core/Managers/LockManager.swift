@@ -71,6 +71,10 @@ extension LockManager {
             return
         }
 
+        // The focused field stays first responder under the lock window and iOS restores
+        // its keyboard on return from background: resign before covering the app.
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+
         let window = UIWindow(windowScene: windowScene)
         window.windowLevel = UIWindow.Level.alert - 1
         window.isHidden = false

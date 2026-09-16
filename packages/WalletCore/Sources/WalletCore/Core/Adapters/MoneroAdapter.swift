@@ -29,6 +29,7 @@ class MoneroAdapter {
     private(set) var syncing: Bool = true
 
     let token: Token
+    let birthdayHeight: Int
     private let transactionSource: TransactionSource
     private let accountId: String
     private let accountsSubject = PublishSubject<[MoneroKit.AccountInfo]>()
@@ -36,13 +37,14 @@ class MoneroAdapter {
     init(wallet: Wallet, restoreSettings: RestoreSettings, node: Node) throws {
         let logger = Core.shared.logger.scoped(with: "MoneroKit")
         let activeAccount = UInt32(Core.shared.localStorage.moneroActiveAccount(accountId: wallet.account.id))
+        birthdayHeight = restoreSettings.birthdayHeight ?? 0
 
         switch wallet.account.type {
         case let .mnemonic(words, passphrase, _):
             kit = try MoneroKit.Kit(
                 wallet: .bip39(seed: words, passphrase: passphrase),
                 account: activeAccount,
-                restoreHeight: UInt64(restoreSettings.birthdayHeight ?? 0),
+                restoreHeight: UInt64(birthdayHeight),
                 walletId: wallet.account.id,
                 node: node,
                 networkType: Self.networkType,
@@ -54,7 +56,7 @@ class MoneroAdapter {
             kit = try MoneroKit.Kit(
                 wallet: .watch(address: address, viewKey: viewKey),
                 account: activeAccount,
-                restoreHeight: UInt64(restoreSettings.birthdayHeight ?? 0),
+                restoreHeight: UInt64(birthdayHeight),
                 walletId: wallet.account.id,
                 node: node,
                 networkType: Self.networkType,
@@ -66,7 +68,7 @@ class MoneroAdapter {
             kit = try MoneroKit.Kit(
                 wallet: .legacy(seed: words, passphrase: passphrase),
                 account: activeAccount,
-                restoreHeight: UInt64(restoreSettings.birthdayHeight ?? 0),
+                restoreHeight: UInt64(birthdayHeight),
                 walletId: wallet.account.id,
                 node: node,
                 networkType: Self.networkType,

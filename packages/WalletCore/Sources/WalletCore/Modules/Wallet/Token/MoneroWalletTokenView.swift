@@ -25,10 +25,8 @@ struct MoneroWalletTokenView: View {
                             HorizontalDivider()
                         }
 
-                        if let birthdayHeight = viewModel.birthdayHeight {
-                            view(birthdayHeight: birthdayHeight)
-                            HorizontalDivider()
-                        }
+                        view(birthdayHeight: viewModel.birthdayHeight)
+                        HorizontalDivider()
                     }
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets())

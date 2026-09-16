@@ -83,6 +83,13 @@ public class SolanaKitManager {
                     return
                 }
 
+                // The publisher replays its storage-seeded snapshot on subscribe; on a fresh restore
+                // that is empty and must not consume the one-shot pass — wait for the first real one
+                // (the THORChain restore pass waits the same way).
+                guard !tokenAccounts.isEmpty else {
+                    return
+                }
+
                 self?.handle(tokenAccounts: tokenAccounts, account: account)
 
                 self?.tokenAccountCancellable?.cancel()
@@ -101,9 +108,11 @@ public class SolanaKitManager {
 
         let existingWallets = walletManager.activeWallets
         let existingTokenTypeIds = existingWallets.map(\.token.type.id)
+        // Empty token accounts (closed positions, dust airdrops) are not worth a wallet row;
+        // the EVM and THORChain restore passes filter by balance the same way.
         let newTokenAccounts = tokenAccounts.filter { fullAccount in
             let tokenType = TokenType.spl(address: fullAccount.tokenAccount.mintAddress)
-            return !existingTokenTypeIds.contains(tokenType.id)
+            return !existingTokenTypeIds.contains(tokenType.id) && SplAdapter.balance(fullAccount: fullAccount) > 0
         }
 
         guard !newTokenAccounts.isEmpty else {

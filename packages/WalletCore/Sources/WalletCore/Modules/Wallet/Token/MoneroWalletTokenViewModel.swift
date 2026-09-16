@@ -9,7 +9,7 @@ class MoneroWalletTokenViewModel: ObservableObject {
 
     let wallet: Wallet
 
-    @Published var birthdayHeight: Int?
+    @Published var birthdayHeight: Int
     @Published var activeAccountTitle: String = ""
 
     // Cached: adapterManager.adapter(for:) is a cross-queue sync, too expensive to run on
@@ -20,7 +20,9 @@ class MoneroWalletTokenViewModel: ObservableObject {
         self.wallet = wallet
         adapter = Core.shared.adapterManager.adapter(for: wallet) as? MoneroAdapter
 
-        birthdayHeight = restoreSettingsService.settings(accountId: wallet.account.id, blockchainType: wallet.token.blockchainType).birthdayHeight
+        // A wallet enabled without a stored height still syncs from somewhere (the kit takes 0);
+        // showing that height keeps the rescan entry point reachable for it.
+        birthdayHeight = restoreSettingsService.settings(accountId: wallet.account.id, blockchainType: wallet.token.blockchainType).birthdayHeight ?? adapter?.birthdayHeight ?? 0
 
         syncActiveAccount()
 

@@ -5,7 +5,7 @@ import MarketKit
 class ReceiveCoinListService {
     private let provider: CoinProvider
     private let accountType: AccountType
-    private let settingsService = RestoreSettingsService(manager: Core.shared.restoreSettingsManager)
+    private let restoreSettingsManager = Core.shared.restoreSettingsManager
 
     private var filter: String = "" {
         didSet {
@@ -91,16 +91,6 @@ extension ReceiveCoinListService {
             return
         }
 
-        let blockchainType = token.blockchainType
-
-        switch blockchainType {
-        case .zcash, .monero, .zano:
-            let settings = settingsService.settings(accountId: account.id, blockchainType: blockchainType)
-
-            if settings[.birthdayHeight] == nil, let birthdayHeight = RestoreSettingType.birthdayHeight.createdAccountValue(blockchainType: blockchainType) {
-                settingsService.set(birthdayHeight: birthdayHeight, account: account, blokcchainType: blockchainType)
-            }
-        default: ()
-        }
+        restoreSettingsManager.saveDefaultSettingsIfNeeded(account: account, blockchainType: token.blockchainType)
     }
 }
