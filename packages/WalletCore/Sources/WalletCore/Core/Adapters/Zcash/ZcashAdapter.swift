@@ -183,6 +183,10 @@ class ZcashAdapter {
         syncService.isPreparing
     }
 
+    var birthdayHeight: Int {
+        syncService.birthday
+    }
+
     func getSingleUseTransparentAddress() async throws -> SingleUseTransparentAddress? {
         guard let account = try await synchronizer.listAccounts().first else {
             throw AppError.ZcashError.noReceiveAddress
