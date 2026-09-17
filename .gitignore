@@ -40,6 +40,7 @@ Config.xcconfig
 # SPM
 
 Package.resolved
+!Wallet.xcworkspace/xcshareddata/swiftpm/Package.resolved
 .swiftpm
 buildServer.json
 .sourcekit-lsp/
