@@ -54,6 +54,8 @@ let package = Package(
         // Ironwood sync/send hotfix: frozen upstream e58e14e + HS librustzcash pin (81152f63),
         // binary FFI via the 2.6.0-ironwood-hs.1 release on the fork
         .package(url: "https://github.com/horizontalsystems/zodl-swift-wallet-sdk", exact: "4.4.0-hs.1"),
+        // local checkout until XrpKit.Swift 1.0.0 is tagged
+        .package(path: "../../../XrpKit.Swift"),
     ],
     targets: [
         .target(
@@ -102,6 +104,7 @@ let package = Package(
                 .product(name: "TronKit", package: "TronKit.Swift"),
                 .product(name: "UIExtensions", package: "UIExtensions.Swift"),
                 .product(name: "UniswapKit", package: "UniswapKit.Swift"),
+                .product(name: "XrpKit", package: "XrpKit.Swift"),
                 .product(name: "ZcashLightClientKit", package: "zodl-swift-wallet-sdk"),
             ],
             resources: [

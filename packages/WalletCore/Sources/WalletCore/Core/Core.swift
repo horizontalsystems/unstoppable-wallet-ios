@@ -122,6 +122,7 @@ public class Core {
     let zanoKitManager: ZanoKitManager
     let solanaRpcSourceManager: SolanaRpcSourceManager
     let solanaKitManager: SolanaKitManager
+    let xrpKitManager: XrpKitManager
 
     let restoreSettingsManager: RestoreSettingsManager
     let predefinedBlockchainService: PredefinedBlockchainService
@@ -316,6 +317,8 @@ public class Core {
             walletManager: walletManager
         )
 
+        xrpKitManager = XrpKitManager(restoreStateManager: restoreStateManager, marketKit: marketKit, walletManager: walletManager)
+
         let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)
         restoreSettingsManager = RestoreSettingsManager(storage: restoreSettingsStorage)
 
@@ -355,6 +358,7 @@ public class Core {
             stellarKitManager: stellarKitManager,
             zanoKitManager: zanoKitManager,
             solanaKitManager: solanaKitManager,
+            xrpKitManager: xrpKitManager,
             restoreSettingsManager: restoreSettingsManager,
             coinManager: coinManager,
             spamWrapper: spamWrapper,
@@ -369,6 +373,7 @@ public class Core {
             stellarKitManager: stellarKitManager,
             zanoKitManager: zanoKitManager,
             solanaKitManager: solanaKitManager,
+            xrpKitManager: xrpKitManager,
             btcBlockchainManager: btcBlockchainManager,
             moneroNodeManager: moneroNodeManager,
             zanoNodeManager: zanoNodeManager,
@@ -499,6 +504,7 @@ public class Core {
             tonKitManager: tonKitManager,
             stellarKitManager: stellarKitManager,
             solanaKitManager: solanaKitManager,
+            xrpKitManager: xrpKitManager,
             swapHistoryManager: swapHistoryManager,
             moneroNodeManager: moneroNodeManager,
             zcashNodeAutoSelector: zcashNodeAutoSelector

@@ -49,7 +49,7 @@ public extension PrivateSendHandlerProvider {
         switch token.type {
         case .native, .derived, .addressType:
             return token
-        case .eip20, .spl, .jetton, .stellar, .zanoAsset, .thorChainAsset:
+        case .eip20, .spl, .jetton, .stellar, .zanoAsset, .thorChainAsset, .xrpAsset:
             return try? Core.shared.marketKit.token(query: TokenQuery(blockchainType: token.blockchainType, tokenType: .native))
         case .unsupported:
             return nil

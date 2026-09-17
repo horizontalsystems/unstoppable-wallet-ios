@@ -101,6 +101,8 @@ enum AddressParserFactory {
         case .zano:
             let aliasResolver = ZanoAliasResolver(zanoNodeManager: Core.shared.zanoNodeManager, networkManager: Core.shared.networkManager)
             return [ZanoAddressParserItem(), ZanoAliasAddressParserItem(resolver: aliasResolver)]
+        case .xrp:
+            return [XrpAddressParserItem()]
         case .unsupported: return []
         }
     }

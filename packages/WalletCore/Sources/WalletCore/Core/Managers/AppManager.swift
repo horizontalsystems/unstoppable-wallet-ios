@@ -24,6 +24,7 @@ public class AppManager {
     private let tonKitManager: TonKitManager
     private let stellarKitManager: StellarKitManager
     private let solanaKitManager: SolanaKitManager
+    private let xrpKitManager: XrpKitManager
     private let swapHistoryManager: SwapHistoryManager
     private let moneroNodeManager: MoneroNodeManager
     private let zcashNodeAutoSelector: NodeAutoSelector
@@ -44,7 +45,7 @@ public class AppManager {
          logRecordManager: LogRecordManager, deeplinkStorage: DeeplinkStorage,
          evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager, statManager: StatManager,
          nftMetadataSyncer: NftMetadataSyncer, tonKitManager: TonKitManager,
-         stellarKitManager: StellarKitManager, solanaKitManager: SolanaKitManager,
+         stellarKitManager: StellarKitManager, solanaKitManager: SolanaKitManager, xrpKitManager: XrpKitManager,
          swapHistoryManager: SwapHistoryManager, moneroNodeManager: MoneroNodeManager, zcashNodeAutoSelector: NodeAutoSelector)
     {
         self.widgetRefresher = widgetRefresher
@@ -67,6 +68,7 @@ public class AppManager {
         self.tonKitManager = tonKitManager
         self.stellarKitManager = stellarKitManager
         self.solanaKitManager = solanaKitManager
+        self.xrpKitManager = xrpKitManager
         self.swapHistoryManager = swapHistoryManager
         self.moneroNodeManager = moneroNodeManager
         self.zcashNodeAutoSelector = zcashNodeAutoSelector
@@ -138,6 +140,7 @@ public extension AppManager {
         tonKitManager.tonKit?.stopListener()
         stellarKitManager.stellarKit?.stopListener()
         solanaKitManager.solanaKit?.pause()
+        xrpKitManager.xrpKit?.pause()
     }
 
     func willEnterForeground() {
@@ -157,6 +160,8 @@ public extension AppManager {
         stellarKitManager.stellarKit?.startListener()
         solanaKitManager.solanaKit?.resume()
         solanaKitManager.solanaKit?.refresh()
+        xrpKitManager.xrpKit?.resume()
+        xrpKitManager.xrpKit?.refresh()
 
         AppStateManager.instance.syncIfRequired()
 

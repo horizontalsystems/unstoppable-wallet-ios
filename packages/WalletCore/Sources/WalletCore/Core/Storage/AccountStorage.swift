@@ -93,6 +93,12 @@ public class AccountStorage {
             }
 
             type = .stellarAccount(accountId: accountId)
+        case .xrpAddress:
+            guard let address = record.dataKey else {
+                return nil
+            }
+
+            type = .xrpAddress(address: address)
         case .hdExtendedKey:
             guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
                 return nil
@@ -187,6 +193,9 @@ public class AccountStorage {
         case let .stellarAccount(accountId):
             typeName = .stellarAccount
             dataKey = accountId
+        case let .xrpAddress(address):
+            typeName = .xrpAddress
+            dataKey = address
         case let .hdExtendedKey(key):
             typeName = .hdExtendedKey
             dataKey = try store(data: key.serialized, id: id, typeName: typeName, keyName: .data)
@@ -337,6 +346,7 @@ extension AccountStorage {
         case tonAddress
         case solanaAddress
         case stellarAccount
+        case xrpAddress
         case hdExtendedKey
         case btcAddress
         case moneroWatchAccount

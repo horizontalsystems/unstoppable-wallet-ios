@@ -117,6 +117,7 @@ enum CanonicalAssetId {
         .stellar: "XLM",
         .thorChain: "THOR",
         .mayaChain: "MAYA",
+        .xrp: "XRP",
     ]
 
     /// The gas asset's ticker per chain — NOT always the chain code (`BASE.ETH`, `BSC.BNB`,
@@ -144,6 +145,7 @@ enum CanonicalAssetId {
         .stellar: "XLM",
         .thorChain: "RUNE",
         .mayaChain: "CACAO",
+        .xrp: "XRP",
     ]
 
     private static let wrappedSolMint = "So11111111111111111111111111111111111111112"
@@ -183,6 +185,10 @@ enum CanonicalAssetId {
             return denom.uppercased()
 
         case .zanoAsset, .unsupported:
+            return nil
+
+        case .xrpAsset:
+            // No swap provider lists XRPL issued tokens yet.
             return nil
         }
     }

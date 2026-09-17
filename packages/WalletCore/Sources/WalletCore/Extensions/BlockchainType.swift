@@ -30,6 +30,7 @@ extension BlockchainType {
         .mayaChain,
         .ton,
         .stellar,
+        .xrp,
         .solana,
     ]
 
@@ -70,6 +71,7 @@ extension BlockchainType {
             .arbitrumOne,
             .optimism,
             .stellar,
+            .xrp,
             .dash,
             .litecoin,
             .bitcoinCash,
@@ -158,6 +160,8 @@ extension BlockchainType {
             return self == .ton
         case .solanaAddress:
             return self == .solana
+        case .xrpAddress:
+            return self == .xrp
         case let .btcAddress(_, blockchainType, _):
             return self == blockchainType
         case .moneroWatchAccount:
@@ -203,6 +207,7 @@ extension BlockchainType {
         case .tron: return "TRX, TRC20 tokens"
         case .ton: return "TON"
         case .stellar: return "Stellar"
+        case .xrp: return "XRP, XRPL tokens"
         case .thorChain: return "RUNE, THORChain assets"
         case .mayaChain: return "CACAO"
         case .solana: return "SOL, SPL tokens"
@@ -294,6 +299,7 @@ extension BlockchainType {
         case .zano: return 60
         case .binanceSmartChain, .arbitrumOne: return 1
         case .thorChain, .mayaChain: return nil
+        case .xrp: return 4
         case .solana, .unsupported: return nil
         }
     }

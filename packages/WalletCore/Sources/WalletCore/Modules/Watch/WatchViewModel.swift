@@ -6,6 +6,7 @@ import MarketKit
 import RxSwift
 import TronKit
 import UIKit
+import XrpKit
 
 class WatchViewModel: ObservableObject {
     private let accountManager = Core.shared.accountManager
@@ -195,6 +196,9 @@ class WatchViewModel: ObservableObject {
                     accountType = .solanaAddress(address: address.raw)
                 case .stellar:
                     accountType = .stellarAccount(accountId: address.raw)
+                case .xrp:
+                    // an X-address watches the account behind it; the tag is a payment detail, not an identity
+                    accountType = .xrpAddress(address: XrpKit.Kit.decode(xAddress: address.raw)?.classicAddress ?? address.raw)
                 case .monero:
                     (state, viewKeyCaution) = moneroParser.parseAndValidate(
                         address: address, viewKey: viewKey, forceRequiredFields: forceRequiredFields
@@ -254,6 +258,9 @@ class WatchViewModel: ObservableObject {
 
         case .stellarAccount:
             tokenQueries = BlockchainType.stellar.nativeTokenQueries
+
+        case .xrpAddress:
+            tokenQueries = BlockchainType.xrp.nativeTokenQueries
 
         case let .hdExtendedKey(key):
             guard case .public = key else {

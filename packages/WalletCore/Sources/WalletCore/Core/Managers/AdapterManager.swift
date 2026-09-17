@@ -20,6 +20,7 @@ public class AdapterManager {
     private let stellarKitManager: StellarKitManager
     private let zanoKitManager: ZanoKitManager
     private let solanaKitManager: SolanaKitManager
+    private let xrpKitManager: XrpKitManager
     private let moneroNodeManager: MoneroNodeManager
     private let zanoNodeManager: ZanoNodeManager
     private let zcashNodeManager: ZcashNodeManager
@@ -34,7 +35,7 @@ public class AdapterManager {
     private var _adapterData = AdapterData(adapterMap: [:], account: nil)
 
     init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager,
-         tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager, zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager,
+         tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager, zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager, xrpKitManager: XrpKitManager,
          btcBlockchainManager: BtcBlockchainManager, moneroNodeManager: MoneroNodeManager, zanoNodeManager: ZanoNodeManager, zcashNodeManager: ZcashNodeManager, thorChainKitManager: ThorChainKitManager, mayaChainKitManager: ThorChainKitManager)
     {
         self.adapterFactory = adapterFactory
@@ -45,6 +46,7 @@ public class AdapterManager {
         self.stellarKitManager = stellarKitManager
         self.zanoKitManager = zanoKitManager
         self.solanaKitManager = solanaKitManager
+        self.xrpKitManager = xrpKitManager
         self.moneroNodeManager = moneroNodeManager
         self.zanoNodeManager = zanoNodeManager
         self.zcashNodeManager = zcashNodeManager
@@ -76,6 +78,7 @@ public class AdapterManager {
         subscribe(disposeBag, mayaChainKitManager.kitUpdatedObservable) { [weak self] in self?.recreateAdapter(blockchainType: .mayaChain) }
         subscribe(disposeBag, tronKitManager.tronKitUpdatedObservable) { [weak self] in self?.handleUpdatedEvmKit(blockchainType: .tron) }
         subscribe(disposeBag, solanaKitManager.kitStoppedObservable) { [weak self] in self?.recreateAdapter(blockchainType: .solana) }
+        subscribe(disposeBag, xrpKitManager.kitStoppedObservable) { [weak self] in self?.recreateAdapter(blockchainType: .xrp) }
     }
 
     private func initAdapters(wallets: [Wallet], account: Account?) {
