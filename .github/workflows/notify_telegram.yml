@@ -4,13 +4,15 @@ on:
   pull_request:
     branches: [ version/* ]
 
+permissions: {}
+
 jobs:
   notify:
     runs-on: ubuntu-latest
 
     steps:
       - name: Send telegram message
-        uses: appleboy/telegram-action@v1.1.1
+        uses: appleboy/telegram-action@214f06cfa3d3a588c1472116889437e7c6fd29b1 # v1.1.1
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}

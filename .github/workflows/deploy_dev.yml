@@ -5,6 +5,9 @@ on:
     branches: [ version/* ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build_and_deploy:
     name: Build and Deploy to Firebase
@@ -12,26 +15,28 @@ jobs:
 
     steps:
       - name: Setup Xcode to 26.4
-        uses: maxim-lobanov/setup-xcode@v1
+        uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1.7.0
         with:
           xcode-version: '26.4'
 
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Load match deploy key
-        uses: webfactory/ssh-agent@v0.9.1
+        uses: webfactory/ssh-agent@e83874834305fe9a4a2997156cb26c5de65a8555 # v0.10.0
         with:
           ssh-private-key: ${{ secrets.MATCH_DEPLOY_KEY }}
 
       - name: Setup Ruby v3
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@984c0c890880bbf811283d6f09c4607c62d210a4 # v1.323.0
         with:
           ruby-version: 3.3.9
           bundler-cache: true
 
       - name: Setup Rust and Cargo
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # master 2026-09-12
+        with:
+          toolchain: stable
 
       - name: Install Lipo via Cargo
         run: cargo install cargo-lipo
@@ -40,7 +45,7 @@ jobs:
         run: rustup target add aarch64-apple-ios x86_64-apple-ios
 
       - name: Run Fastlane (build, upload to AppCenter)
-        uses: maierj/fastlane-action@v3.1.0
+        uses: maierj/fastlane-action@182983d8f94bad9884001c03c1c2786f4c7165ed # v3.2.0
         with:
           lane: dev
         env:
@@ -89,7 +94,7 @@ jobs:
           XCCONFIG_THORCHAIN_AFFILIATE_BPS: ${{ secrets.XCCONFIG_DEV_THORCHAIN_AFFILIATE_BPS }}
 
       - name: Upload dSYM files
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: success()
         with:
           name: dsym-files-build-${{ github.run_number }}
