@@ -153,6 +153,8 @@ protocol ISendXrpAdapter {
     /// Network fee in XRP, sampled at adapter start (default 0.000012); the kit re-reads it at send time.
     var fee: Decimal { get }
     var baseReserve: Decimal { get }
+    /// XRP locked by each owned object; a TrustSet locks one increment while the line exists.
+    var ownerReserve: Decimal { get }
     var availableXrpBalance: Decimal { get }
     func doesAccountExist(address: String) async throws -> Bool
     func requiresDestinationTag(address: String) async throws -> Bool

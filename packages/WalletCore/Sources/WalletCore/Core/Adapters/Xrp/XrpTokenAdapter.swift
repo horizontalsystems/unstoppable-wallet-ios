@@ -132,6 +132,10 @@ extension XrpTokenAdapter: ISendXrpAdapter {
         xrpKit.baseReserve
     }
 
+    var ownerReserve: Decimal {
+        xrpKit.ownerReserve
+    }
+
     var availableXrpBalance: Decimal {
         xrpKit.availableBalance
     }

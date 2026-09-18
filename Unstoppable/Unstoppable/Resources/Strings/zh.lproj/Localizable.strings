@@ -341,6 +341,9 @@
 "balance.token.locked" = "锁住";
 "balance.token.locked.stellar.description" = "Stellar 網路會鎖定 1 XLM 以啟用錢包，並為您啟用的每個代幣額外保留 0.5 XLM 作為儲備金。";
 "balance.token.locked.stellar.description.wallet_activation" = "錢包啟用";
+"balance.token.locked.xrp.description" = "XRP账本锁定1 XRP以激活钱包，并为您的钱包拥有的每条信任线或其他对象锁定0.2 XRP作为储备。删除对象时，储备将被释放。";
+"balance.token.locked.xrp.other_objects" = "其他对象 (%@)";
+"balance.token.xrp.account_not_activated" = "此账户尚未激活。首次存款必须至少为1 XRP；网络会拒绝更小的付款。";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "汇款人通过将在所显示日期失效的消费锁定汇出这些资金。\n\n无需担心，收到的比特币已经属于您，但在锁定期限结束前，您无法在比特币网络上消费它们。";
 "balance.token.not_relayed" = "广播";
@@ -414,6 +417,7 @@
 "deposit.not_active.view_address" = "查看我的地址";
 "deposit.stellar.inactive_asset.title" = "啟用代幣";
 "deposit.stellar.inactive_asset.description" = "若要接收 %@，需先激活该代币。Stellar 网络要求为每个代币建立信任线；若未建立，您的钱包将无法接收 %@，交易会被拒绝且资金无法到账。";
+"deposit.xrp.inactive_asset.description" = "要接收 %@，您需要激活代币。XRP Ledger 要求每个代币都有一条信任线，它会在存在期间锁定您余额中的 0.2 个 XRP。没有信任线，您的钱包无法接收 %@ – 交易将被拒绝，资金将不会被交付。";
 
 "deposit.used_addresses.title" = "已使用地址";
 "deposit.used_addresses.description" = "%@ 地址用于隐私和安全。以下是此钱包中已使用的地址列表。";
@@ -500,6 +504,8 @@
 "send.xrp.destination_tag.info" = "交易所和某些服务需要目标标签来记入您的存款。该标签在账本上是公开的。";
 "send.xrp.destination_tag.required" = "此地址需要目标标签。没有标签的付款会被拒绝。";
 "send.xrp.destination_tag.invalid" = "目标标签必须是0到4294967295之间的整数。";
+"send.xrp.activation.reserve_note" = "激活会将 %@ 锁定为您钱包中的准备金。如果稍后删除信任线，将释放准备金。";
+"send.xrp.activation.insufficient_balance" = "您没有足够的可用 XRP 来支付信任线准备金和网络费用。";
 "send.confirmation.fee" = "费用";
 "send.confirmation.fee_sponsored" = "已赞助";
 "send.confirmation.fee_paid_in" = "以 %@ 支付";
@@ -2011,6 +2017,8 @@
 "add_token.invalid_asset_id" = "无效的资产 ID";
 "add_token.input_placeholder.jetton_master_address" = "Jetton Master 地址";
 "add_token.input_placeholder.mint_address" = "代币铸造地址";
+"add_token.input_placeholder.xrp_currency" = "货币代码.发行方";
+"add_token.invalid_xrp_currency" = "无效的 XRP Ledger 代币引用";
 "add_token.invalid_mint_address" = "无效的 Solana 地址";
 "add_token.mint_address_not_found" = "在 %@ 区块链中未找到该代币";
 "add_token.coin_name" = "代币图片";

@@ -101,6 +101,7 @@ extension ReceiveAddressModule {
         case .bitcoin, .bitcoinCash, .litecoin, .dash, .ecash: HDReceiveAddressView(wallet: wallet, onDismiss: onDismiss)
         case .tron: TronReceiveAddressView(wallet: wallet, onDismiss: onDismiss)
         case .stellar: StellarReceiveAddressView(wallet: wallet, onDismiss: onDismiss)
+        case .xrp: XrpReceiveAddressView(wallet: wallet, onDismiss: onDismiss)
         case .monero: MoneroReceiveAddressView(wallet: wallet, onDismiss: onDismiss)
         case .zcash: ZcashReceiveAddressSelectView(wallet: wallet, path: path, onDismiss: onDismiss)
         default:

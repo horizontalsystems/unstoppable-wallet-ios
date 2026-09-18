@@ -341,6 +341,9 @@
 "balance.token.locked" = "잠김";
 "balance.token.locked.stellar.description" = "Stellar 네트워크는 지갑을 활성화하기 위해 1 XLM을 잠그며, 지갑에서 활성화된 각 토큰마다 0.5 XLM을 예치금으로 잠급니다.";
 "balance.token.locked.stellar.description.wallet_activation" = "지갑 활성화";
+"balance.token.locked.xrp.description" = "XRP 원장은 지갑 활성화를 위해 1 XRP를 잠그고 지갑이 소유한 각 신뢰선 또는 기타 객체에 대해 0.2 XRP를 예비금으로 잠급니다. 객체를 제거하면 예비금이 해제됩니다.";
+"balance.token.locked.xrp.other_objects" = "기타 객체 (%@)";
+"balance.token.xrp.account_not_activated" = "이 계정은 아직 활성화되지 않았습니다. 첫 입금은 최소 1 XRP 이상이어야 하며, 더 작은 금액은 네트워크에서 거부됩니다.";
 "balance.token.locked.info.title" = "시간 자물쇠";
 "balance.token.locked.info.description" = "발송자는 이러한 자금들을 표시된 날짜에 만료가 되는 잠금 지출과 함께 보냈습니다.\n\n걱정 하지마십시오, 수신된 비트코인은 이미 귀하의 것입니다 하지만 잠금 기간이 만료될때 까지 비트코인 네트워크에서 사용하실 수 없습니다.";
 "balance.token.not_relayed" = "방송";
@@ -414,6 +417,7 @@
 "deposit.not_active.view_address" = "내 주소 보기";
 "deposit.stellar.inactive_asset.title" = "토큰 활성화";
 "deposit.stellar.inactive_asset.description" = "%@을(를) 수신하려면 해당 토큰을 활성화해야 합니다. Stellar 네트워크는 각 토큰마다 신뢰 라인을 설정해야 하며, 설정되지 않으면 %@을 받을 수 없습니다. 거래는 거부되고 자금은 전달되지 않습니다.";
+"deposit.xrp.inactive_asset.description" = "%@을(를) 받으려면 토큰을 활성화해야 합니다. XRP 레져는 각 토큰에 대한 신뢰선이 필요하며, 이는 존재하는 동안 잔액의 0.2 XRP를 잠급니다. 신뢰선이 없으면 지갑이 %@을(를) 받을 수 없습니다. 트랜잭션이 거부되고 자금이 전달되지 않습니다.";
 
 "deposit.used_addresses.title" = "사용된 주소들";
 "deposit.used_addresses.description" = "%@ 주소는 개인 정보 보호와 보안을 위해 변경됩니다. 이 지갑에서 사용된 주소 목록은 아래와 같습니다.";
@@ -500,6 +504,8 @@
 "send.xrp.destination_tag.info" = "거래소 및 일부 서비스에서는 입금을 송금하기 위해 대상 태그가 필요합니다. 태그는 원장에 공개됩니다.";
 "send.xrp.destination_tag.required" = "이 주소에는 대상 태그가 필요합니다. 태그 없는 결제는 거부됩니다.";
 "send.xrp.destination_tag.invalid" = "대상 태그는 0부터 4294967295까지의 정수여야 합니다.";
+"send.xrp.activation.reserve_note" = "활성화하면 %@이(가) 지갑의 예비금으로 잠깁니다. 신뢰선을 나중에 제거하면 해제됩니다.";
+"send.xrp.activation.insufficient_balance" = "신뢰선 예비금과 네트워크 수수료를 충당할 수 있는 충분한 사용 가능한 XRP가 없습니다.";
 "send.confirmation.fee" = "수수료";
 "send.confirmation.fee_sponsored" = "스폰서됨";
 "send.confirmation.fee_paid_in" = "%@(으)로 지불";
@@ -2011,6 +2017,8 @@
 "add_token.invalid_asset_id" = "유효하지 않은 자산 ID";
 "add_token.input_placeholder.jetton_master_address" = "제톤 마스터 주소";
 "add_token.input_placeholder.mint_address" = "토큰 민트 주소";
+"add_token.input_placeholder.xrp_currency" = "통화 코드.발행자";
+"add_token.invalid_xrp_currency" = "잘못된 XRP Ledger 토큰 참조";
 "add_token.invalid_mint_address" = "유효하지 않은 솔라나 주소";
 "add_token.mint_address_not_found" = "%@ 블록체인에서 토큰을 찾을 수 없습니다";
 "add_token.coin_name" = "코인 이름";

@@ -341,6 +341,9 @@
 "balance.token.locked" = "Заблокировано";
 "balance.token.locked.stellar.description" = "Сеть Stellar блокирует 1 XLM для активации кошелька и 0,5 XLM в качестве резерва для каждого активированного в кошельке токена.";
 "balance.token.locked.stellar.description.wallet_activation" = "Активация кошелька:";
+"balance.token.locked.xrp.description" = "XRP Ledger блокирует 1 XRP для активации кошелька и 0,2 XRP в качестве резерва для каждой доверительной линии или другого объекта, принадлежащего вашему кошельку. Резерв освобождается при удалении объекта.";
+"balance.token.locked.xrp.other_objects" = "Другие объекты (%@)";
+"balance.token.xrp.account_not_activated" = "Этот счёт ещё не активирован. Первый депозит должен быть не менее 1 XRP; сеть отклоняет меньшие платежи.";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "Отправитель отправил эти средства с временной блокировкой, которая истекает в указанную дату.\n\nНе волнуйтесь, полученные биткоины уже принадлежат вам, но до истечения срока блокировки вы не сможете потратить их в сети Bitcoin.";
 "balance.token.not_relayed" = "Трансляция";
@@ -414,6 +417,7 @@
 "deposit.not_active.view_address" = "Посмотреть мой адрес";
 "deposit.stellar.inactive_asset.title" = "Активировать токен";
 "deposit.stellar.inactive_asset.description" = "Чтобы получить %@, необходимо активировать токен. Сеть Stellar требует установить доверительную линию (trustline) для каждого токена. Без этого ваш кошелёк не сможет принять %@ — транзакция будет отклонена, и средства не будут доставлены.";
+"deposit.xrp.inactive_asset.description" = "Чтобы получить %@, необходимо активировать токен. XRP Ledger требует доверительную линию для каждого токена, которая блокирует 0,2 XRP вашего баланса, пока она существует. Без неё ваш кошелёк не сможет получить %@ – транзакция будет отклонена и средства не будут доставлены.";
 
 "deposit.used_addresses.title" = "Использованные адреса";
 "deposit.used_addresses.description" = "%@ адресов изменены для повышения конфиденциальности и безопасности. Ниже приведен список использованных адресов в этом кошельке.";
@@ -500,6 +504,8 @@
 "send.xrp.destination_tag.info" = "Биржи и некоторые сервисы требуют тег назначения для зачисления вашего депозита. Тег является открытым в реестре.";
 "send.xrp.destination_tag.required" = "Этот адрес требует тег назначения. Платежи без тега отклоняются.";
 "send.xrp.destination_tag.invalid" = "Тег назначения должен быть целым числом от 0 до 4294967295.";
+"send.xrp.activation.reserve_note" = "Активация блокирует %@ в качестве резерва в вашем кошельке. Резерв освобождается, если доверительная линия удаляется позже.";
+"send.xrp.activation.insufficient_balance" = "У вас недостаточно доступного XRP для покрытия резерва доверительной линии и комиссии сети.";
 "send.confirmation.fee" = "Комиссия";
 "send.confirmation.fee_sponsored" = "Спонсировано";
 "send.confirmation.fee_paid_in" = "Оплачено в %@";
@@ -2011,6 +2017,8 @@
 "add_token.invalid_asset_id" = "Недопустимый ID актива";
 "add_token.input_placeholder.jetton_master_address" = "Jetton Master адрес";
 "add_token.input_placeholder.mint_address" = "Mint-адрес токена";
+"add_token.input_placeholder.xrp_currency" = "Код валюты.Эмитент";
+"add_token.invalid_xrp_currency" = "Неверная ссылка на токен XRP Ledger";
 "add_token.invalid_mint_address" = "Недействительный адрес Solana";
 "add_token.mint_address_not_found" = "Токен не найден в блокчейне %@";
 "add_token.coin_name" = "Название токена";

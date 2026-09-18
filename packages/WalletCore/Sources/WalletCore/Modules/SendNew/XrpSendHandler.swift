@@ -48,14 +48,13 @@ extension XrpSendHandler: ISendHandler {
                 transactionError = TransactionError.insufficientXrpBalance(balance: availableXrp)
             }
         case .trustSet:
-            // the new object also locks one owner reserve increment
-            let ownerReserve = Core.shared.xrpKitManager.xrpKit?.ownerReserve ?? 0
-            if fee + ownerReserve > availableXrp {
-                transactionError = TransactionError.insufficientXrpBalance(balance: availableXrp)
+            // the new object also locks one owner reserve increment (Android `validateActivation`)
+            if fee + adapter.ownerReserve > availableXrp {
+                transactionError = TransactionError.insufficientActivationBalance
             }
         }
 
-        return SendData(token: token, data: data, destinationTag: destinationTag, fee: fee, transactionError: transactionError)
+        return SendData(token: token, data: data, destinationTag: destinationTag, fee: fee, ownerReserve: adapter.ownerReserve, transactionError: transactionError)
     }
 
     func send(data: ISendData) async throws {
@@ -85,13 +84,15 @@ extension XrpSendHandler {
         let data: XrpSendData
         let destinationTag: UInt32?
         private let fee: Decimal
+        private let ownerReserve: Decimal
         private let transactionError: Error?
 
-        init(token: Token, data: XrpSendData, destinationTag: UInt32?, fee: Decimal, transactionError: Error?) {
+        init(token: Token, data: XrpSendData, destinationTag: UInt32?, fee: Decimal, ownerReserve: Decimal, transactionError: Error?) {
             self.token = token
             self.data = data
             self.destinationTag = destinationTag
             self.fee = fee
+            self.ownerReserve = ownerReserve
             self.transactionError = transactionError
         }
 
@@ -124,6 +125,9 @@ extension XrpSendHandler {
                 case .insufficientTokenBalance:
                     title = "fee_settings.errors.insufficient_balance".localized
                     text = "swap.insufficient_balance".localized
+                case .insufficientActivationBalance:
+                    title = "fee_settings.errors.insufficient_balance".localized
+                    text = "send.xrp.activation.insufficient_balance".localized
                 }
             } else {
                 title = "ethereum_transaction.error.title".localized
@@ -134,10 +138,19 @@ extension XrpSendHandler {
         }
 
         func cautions(baseToken: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
-            guard let transactionError else {
-                return []
+            var cautions = [CautionNew]()
+
+            if let transactionError {
+                cautions.append(caution(transactionError: transactionError, feeToken: baseToken))
             }
-            return [caution(transactionError: transactionError, feeToken: baseToken)]
+
+            // the reserve note of the Android activation page: locked, not spent
+            if case .trustSet = data {
+                let reserve = AppValue(token: baseToken, value: ownerReserve).formattedFull() ?? ""
+                cautions.append(CautionNew(text: "send.xrp.activation.reserve_note".localized(reserve), type: .regular))
+            }
+
+            return cautions
         }
 
         func flowSection(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> SendDataSection {
@@ -210,6 +223,7 @@ extension XrpSendHandler {
     enum TransactionError: Error {
         case insufficientXrpBalance(balance: Decimal)
         case insufficientTokenBalance
+        case insufficientActivationBalance
     }
 }
 

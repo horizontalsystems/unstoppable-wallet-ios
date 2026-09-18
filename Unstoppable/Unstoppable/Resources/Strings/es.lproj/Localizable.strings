@@ -341,6 +341,9 @@
 "balance.token.locked" = "Bloqueado";
 "balance.token.locked.stellar.description" = "La red Stellar bloquea 1 XLM para activar la billetera y 0.5 XLM como reserva por cada token activado en tu billetera.";
 "balance.token.locked.stellar.description.wallet_activation" = "Activación de la billetera";
+"balance.token.locked.xrp.description" = "XRP Ledger bloquea 1 XRP para activar la billetera y 0,2 XRP como reserva para cada línea de confianza u otro objeto que sea propiedad de tu billetera. La reserva se libera cuando se elimina el objeto.";
+"balance.token.locked.xrp.other_objects" = "Otros objetos (%@)";
+"balance.token.xrp.account_not_activated" = "Esta cuenta aún no está activada. El primer depósito debe ser de al menos 1 XRP; la red rechaza pagos más pequeños.";
 "balance.token.locked.info.title" = "Timelock";
 "balance.token.locked.info.description" = "El remitente envió estos fondos con un bloqueo del gasto que expirará en la fecha mostrada.\n\nNo te preocupes, los Bitcoins recibidos ya son tuyos, pero hasta que el período de bloqueo expire, no puedes gastarlos en la red Bitcoin.";
 "balance.token.not_relayed" = "Transmisión";
@@ -414,6 +417,7 @@
 "deposit.not_active.view_address" = "Ver mi dirección";
 "deposit.stellar.inactive_asset.title" = "Activar token";
 "deposit.stellar.inactive_asset.description" = "Para recibir %@, debes activar el token. La red Stellar requiere que se establezca una línea de confianza para cada token. Sin ella, tu billetera no podrá recibir %@ — la transacción será rechazada y los fondos no se entregarán.";
+"deposit.xrp.inactive_asset.description" = "Para recibir %@, necesita activar el token. XRP Ledger requiere una línea de confianza para cada token, que bloquea 0,2 XRP de su saldo mientras exista. Sin ella, su billetera no puede recibir %@ – la transacción será rechazada y los fondos no se entregarán.";
 
 "deposit.used_addresses.title" = "Direcciones Utilizadas";
 "deposit.used_addresses.description" = "%@ direcciones cambian por privacidad y seguridad. A continuación, una lista de las direcciones utilizadas en esta billetera.";
@@ -500,6 +504,8 @@
 "send.xrp.destination_tag.info" = "Los intercambios y algunos servicios requieren una etiqueta de destino para acreditar su depósito. La etiqueta es pública en el libro mayor.";
 "send.xrp.destination_tag.required" = "Esta dirección requiere una etiqueta de destino. Los pagos sin una son rechazados.";
 "send.xrp.destination_tag.invalid" = "La etiqueta de destino debe ser un número entero de 0 a 4294967295.";
+"send.xrp.activation.reserve_note" = "La activación bloquea %@ como reserva en su billetera. Se libera si la línea de confianza se elimina más tarde.";
+"send.xrp.activation.insufficient_balance" = "No tiene suficiente XRP disponible para cubrir la reserva de línea de confianza y la tarifa de red.";
 "send.confirmation.fee" = "Comisión";
 "send.confirmation.fee_sponsored" = "Patrocinado";
 "send.confirmation.fee_paid_in" = "Pagado en %@";
@@ -2011,6 +2017,8 @@
 "add_token.invalid_asset_id" = "ID de activo no válido";
 "add_token.input_placeholder.jetton_master_address" = "Dirección principal de Jetton";
 "add_token.input_placeholder.mint_address" = "Dirección Mint del token";
+"add_token.input_placeholder.xrp_currency" = "Código de moneda.Emisor";
+"add_token.invalid_xrp_currency" = "Referencia de token de XRP Ledger no válida";
 "add_token.invalid_mint_address" = "Dirección de Solana no válida";
 "add_token.mint_address_not_found" = "Token no encontrado en la blockchain %@";
 "add_token.coin_name" = "Nombre de moneda";
