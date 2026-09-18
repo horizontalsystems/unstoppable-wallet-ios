@@ -10,8 +10,10 @@ public class XrpKitManager {
     private let restoreStateManager: RestoreStateManager
     private let marketKit: MarketKit.Kit
     private let walletManager: WalletManager
+    private let nodeManager: XrpNodeManager
 
     private var trustLinesCancellable: AnyCancellable?
+    private var cancellables = Set<AnyCancellable>()
 
     private weak var _xrpKit: XrpKit.Kit?
     private var currentAccount: Account?
@@ -19,10 +21,32 @@ public class XrpKitManager {
     private let queue = DispatchQueue(label: "\(AppConfig.label).xrp-kit-manager", qos: .userInitiated)
     private let kitStoppedRelay = PublishRelay<Void>()
 
-    public init(restoreStateManager: RestoreStateManager, marketKit: MarketKit.Kit, walletManager: WalletManager) {
+    public init(restoreStateManager: RestoreStateManager, marketKit: MarketKit.Kit, walletManager: WalletManager, nodeManager: XrpNodeManager) {
         self.restoreStateManager = restoreStateManager
         self.marketKit = marketKit
         self.walletManager = walletManager
+        self.nodeManager = nodeManager
+
+        nodeManager.nodeUpdatedPublisher
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
+            .sink { [weak self] _ in
+                self?.handleNodeUpdate()
+            }
+            .store(in: &cancellables)
+    }
+
+    /// Drop the kit so the next adapter build reaches the new node (SolanaKitManager
+    /// `handleRpcSourceUpdate`); AdapterManager recreates the adapters on the relay.
+    private func handleNodeUpdate() {
+        queue.async { [weak self] in
+            guard let self else { return }
+
+            _xrpKit = nil
+            currentAccount = nil
+            trustLinesCancellable?.cancel()
+            trustLinesCancellable = nil
+            kitStoppedRelay.accept(())
+        }
     }
 
     private func _xrpKit(account: Account) throws -> XrpKit.Kit {
@@ -36,7 +60,7 @@ public class XrpKitManager {
         let kit = try XrpKit.Kit.instance(
             address: address,
             network: network,
-            rpcUrls: network.rpcUrls,
+            rpcUrls: nodeManager.rpcUrls(network: network),
             walletId: account.id,
             minLogLevel: .error
         )

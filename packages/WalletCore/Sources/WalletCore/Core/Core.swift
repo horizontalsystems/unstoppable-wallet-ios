@@ -109,6 +109,7 @@ public class Core {
     let moneroNodeManager: MoneroNodeManager
     let zanoNodeManager: ZanoNodeManager
     let zcashNodeManager: ZcashNodeManager
+    let xrpNodeManager: XrpNodeManager
     let zcashNodeAutoSelector: NodeAutoSelector
     private let zcashNodeUpdateSignalProvider: ZcashNodeUpdateSignalProvider
     let thorChainEndpointManager: ThorChainEndpointManager
@@ -276,6 +277,8 @@ public class Core {
         let zcashNodeStorage = ZcashNodeStorage(dbPool: dbPool)
         zcashNodeManager = ZcashNodeManager(testNetManager: testNetManager, blockchainSettingsStorage: blockchainSettingsStorage, zcashNodeStorage: zcashNodeStorage)
 
+        xrpNodeManager = XrpNodeManager(blockchainSettingsStorage: blockchainSettingsStorage)
+
         let restoreStateStorage = RestoreStateStorage(dbPool: dbPool)
         restoreStateManager = RestoreStateManager(storage: restoreStateStorage)
 
@@ -317,7 +320,7 @@ public class Core {
             walletManager: walletManager
         )
 
-        xrpKitManager = XrpKitManager(restoreStateManager: restoreStateManager, marketKit: marketKit, walletManager: walletManager)
+        xrpKitManager = XrpKitManager(restoreStateManager: restoreStateManager, marketKit: marketKit, walletManager: walletManager, nodeManager: xrpNodeManager)
 
         let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)
         restoreSettingsManager = RestoreSettingsManager(storage: restoreSettingsStorage)

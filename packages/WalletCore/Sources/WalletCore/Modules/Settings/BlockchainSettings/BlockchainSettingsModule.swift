@@ -9,6 +9,7 @@ enum BlockchainSettingsModule {
             moneroNodeManager: Core.shared.moneroNodeManager,
             zanoNodeManager: Core.shared.zanoNodeManager,
             zcashNodeManager: Core.shared.zcashNodeManager,
+            xrpNodeManager: Core.shared.xrpNodeManager,
             thorChainEndpointManager: Core.shared.thorChainEndpointManager,
             mayaChainEndpointManager: Core.shared.mayaChainEndpointManager,
             marketKit: Core.shared.marketKit

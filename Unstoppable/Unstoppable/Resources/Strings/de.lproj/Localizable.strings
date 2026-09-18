@@ -2372,6 +2372,7 @@
 "zcash_network.auto_select" = "Server automatisch auswählen";
 "zcash_network.auto_select.description" = "Verbindung zum schnellsten aktuellen Server herstellen";
 "zcash_network.unreachable" = "Nicht erreichbar";
+"xrp_network.description" = "Wählen Sie den Knoten aus, den die Unstoppable-App zur Synchronisierung der Wallet(s) verwenden soll.";
 
 "add_zcash_node.title" = "Server hinzufügen";
 "add_zcash_node.description" = "Geben Sie die Adresse des lightwalletd-Servers ein (Host oder Host:Port).";

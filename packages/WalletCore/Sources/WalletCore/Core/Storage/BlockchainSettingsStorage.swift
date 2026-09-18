@@ -12,6 +12,7 @@ public class BlockchainSettingsStorage {
     private let keyMoneroAutoSelect = "monero-auto-select"
     private let keyZanoNode = "zano-node"
     private let keyZcashNode = "zcash-node"
+    private let keyXrpNode = "xrp-node"
     private let keyEndpointAutoSelect = "endpoint-auto-select"
 
     public init(storage: BlockchainSettingRecordStorage) {
@@ -129,6 +130,15 @@ extension BlockchainSettingsStorage {
 
     func save(zcashNodeUrl: String, blockchainType: BlockchainType) {
         let record = BlockchainSettingRecord(blockchainUid: blockchainType.uid, key: keyZcashNode, value: zcashNodeUrl)
+        try? storage.save(record: record)
+    }
+
+    func xrpNodeUrl(blockchainType: BlockchainType) -> String? {
+        try? storage.record(blockchainUid: blockchainType.uid, key: keyXrpNode).map(\.value)
+    }
+
+    func save(xrpNodeUrl: String, blockchainType: BlockchainType) {
+        let record = BlockchainSettingRecord(blockchainUid: blockchainType.uid, key: keyXrpNode, value: xrpNodeUrl)
         try? storage.save(record: record)
     }
 }
