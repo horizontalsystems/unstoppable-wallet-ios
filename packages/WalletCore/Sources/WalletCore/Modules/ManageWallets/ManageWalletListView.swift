@@ -20,7 +20,7 @@ struct ManageWalletListView: View {
     @ViewBuilder private func view(item: ManageWalletsViewModel.Item, forceToggleOn _: Bool? = nil) -> some View {
         Cell(
             left: {
-                CoinIconView(coin: item.token.coin)
+                CoinIconView(token: item.token)
             },
             middle: {
                 MultiText(title: item.token.coin.code, badge: item.token.badge, subtitle: item.token.coin.name)

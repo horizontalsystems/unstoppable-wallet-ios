@@ -671,6 +671,7 @@
 "swap.price" = "Fiyat";
 "swap.estimate_short" = "(tah)";
 
+"swap.available" = "Mevcut: %@";
 "swap.rate_not_available" = "Oran mevcut değil";
 "swap.route" = "Rota";
 "swap.select" = "Seç";
@@ -678,6 +679,9 @@
 "swap.select_token_in" = "Girdi olarak jeton seçin";
 "swap.select_token_out" = "Çıktı olarak jeton seçin";
 "swap.no_providers" = "Rota Yok";
+"swap.suggested_path.no_quotes_available" = "Mevcut teklif yok";
+"swap.suggested_path.text" = "Önce %@ edebilir, ardından %@ varlığını %@ ile takas edebilirsiniz.";
+"swap.suggested_path.text.part" = "%@ varlığını %@ ile takas";
 "swap.enter_amount" = "Miktarı Girin";
 "swap.no_quotes" = "Teklif Yok";
 "swap.error.no_memo" = "Bu rota şu anda onaylanamıyor. Lütfen teklifi yenileyin veya başka bir sağlayıcı seçin.";

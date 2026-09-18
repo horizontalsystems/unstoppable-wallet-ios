@@ -33,7 +33,7 @@ struct TransactionTokenSelectView: View {
                         viewModel.set(currentToken: token)
                         isPresented = false
                     }) {
-                        CoinIconView(coin: token.coin, placeholderImage: token.placeholderImageName)
+                        CoinIconView(token: token)
 
                         VStack(spacing: 1) {
                             HStack(spacing: .margin8) {

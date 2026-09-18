@@ -671,6 +671,7 @@
 "swap.price" = "금액";
 "swap.estimate_short" = "(추정)";
 
+"swap.available" = "사용 가능: %@";
 "swap.rate_not_available" = "가격이 제공되지 않습니다";
 "swap.route" = "경로";
 "swap.select" = "선택";
@@ -678,6 +679,9 @@
 "swap.select_token_in" = "토큰 인 선택";
 "swap.select_token_out" = "토큰 아웃 선택";
 "swap.no_providers" = "경로 없음";
+"swap.suggested_path.no_quotes_available" = "사용 가능한 제안이 없습니다";
+"swap.suggested_path.text" = "먼저 %@한 다음 %@를 %@로 스왑할 수 있습니다.";
+"swap.suggested_path.text.part" = "%@를 %@로 스왑";
 "swap.enter_amount" = "금액 입력";
 "swap.no_quotes" = "제안이 없습니다";
 "swap.error.no_memo" = "이 경로는 현재 확인할 수 없습니다. 견적을 새로고침하거나 다른 제공자를 선택해 주세요.";

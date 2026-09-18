@@ -671,6 +671,7 @@
 "swap.price" = "价格";
 "swap.estimate_short" = "（美国东部时间）";
 
+"swap.available" = "可用：%@";
 "swap.rate_not_available" = "汇率不可用";
 "swap.route" = "路由";
 "swap.select" = "选择";
@@ -678,6 +679,9 @@
 "swap.select_token_in" = "选择代币输入";
 "swap.select_token_out" = "选择代币输出";
 "swap.no_providers" = "无可用路由";
+"swap.suggested_path.no_quotes_available" = "没有可用报价";
+"swap.suggested_path.text" = "您可以先%@，然后再将 %@ 兑换为 %@。";
+"swap.suggested_path.text.part" = "将 %@ 兑换为 %@";
 "swap.enter_amount" = "输入金额";
 "swap.no_quotes" = "没有报价";
 "swap.error.no_memo" = "此路由目前无法确认。请刷新报价或选择其他提供商。";

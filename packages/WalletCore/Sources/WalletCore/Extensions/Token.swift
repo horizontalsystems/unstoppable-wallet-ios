@@ -42,6 +42,19 @@ extension Token {
         }
     }
 
+    var maskImageUrl: String? {
+        switch type {
+        case .native:
+            switch blockchainType {
+            case .optimism, .arbitrumOne, .base, .zkSync, .robinhood: return blockchainType.imageUrl
+            default: return nil
+            }
+        case .derived, .addressType: return nil
+        default:
+            return blockchainType.imageUrl
+        }
+    }
+
     var fullBadge: String {
         badge ?? "coin_platforms.native".localized
     }

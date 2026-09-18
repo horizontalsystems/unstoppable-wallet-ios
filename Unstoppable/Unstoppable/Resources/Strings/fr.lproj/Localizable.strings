@@ -671,6 +671,7 @@
 "swap.price" = "Prix";
 "swap.estimate_short" = "(est)";
 
+"swap.available" = "Disponible : %@";
 "swap.rate_not_available" = "Taux non disponible";
 "swap.route" = "Route";
 "swap.select" = "Sélectionner";
@@ -678,6 +679,9 @@
 "swap.select_token_in" = "Sélectionner le token";
 "swap.select_token_out" = "Sélectionner le token";
 "swap.no_providers" = "Aucune route";
+"swap.suggested_path.no_quotes_available" = "Aucun prix disponible";
+"swap.suggested_path.text" = "Vous pouvez d'abord %@, puis %@ contre %@.";
+"swap.suggested_path.text.part" = "échanger %@ contre %@";
 "swap.enter_amount" = "Entrez le montant";
 "swap.no_quotes" = "Aucun prix disponible";
 "swap.error.no_memo" = "Cet itinéraire ne peut pas être confirmé pour le moment. Veuillez actualiser le devis ou choisir un autre fournisseur.";

@@ -27,6 +27,7 @@ public class MultiSwapViewModel: ObservableObject {
     private let walletManager = Core.shared.walletManager
     private let adapterManager = Core.shared.adapterManager
     private let localStorage = Core.shared.localStorage
+    private let pathFinder = SwapPathFinder.make()
 
     @Published var currency: Currency
     private let customDecimals: Int?
@@ -70,6 +71,13 @@ public class MultiSwapViewModel: ObservableObject {
     }
 
     @Published public var validProviders = [IMultiSwapProvider]()
+
+    // A 1-hop route offered when the pair can't be served directly: no provider supports it, or
+    // the ones that do came back with no quotes. It is never quoted itself.
+    @Published public private(set) var suggestedPath: SwapPath?
+
+    // The (pair, valid providers) of the last quote round that finished with zero quotes
+    private var emptyRoundKey: QuoteRoundKey?
 
     private var internalTokenIn: Token? {
         didSet {
@@ -617,6 +625,40 @@ public class MultiSwapViewModel: ObservableObject {
         } else {
             validProviders = []
         }
+
+        syncSuggestedPath()
+    }
+
+    private var currentRoundKey: QuoteRoundKey? {
+        guard let internalTokenIn, let internalTokenOut, !validProviders.isEmpty else {
+            return nil
+        }
+
+        return QuoteRoundKey(tokenIn: internalTokenIn, tokenOut: internalTokenOut, providerIds: Set(validProviders.map(\.id)))
+    }
+
+    // Scoped to the pair and its valid providers: a changed pair or an untried set of providers
+    // has not failed at anything yet. The amount is deliberately not part of it, so the
+    // suggestion stays put while the user edits the amount and leaves only once quotes arrive.
+    private var quotesUnavailable: Bool {
+        emptyRoundKey != nil && emptyRoundKey == currentRoundKey
+    }
+
+    private func syncSuggestedPath() {
+        var path: SwapPath?
+
+        if let internalTokenIn, let internalTokenOut, validProviders.isEmpty || quotesUnavailable {
+            path = pathFinder.find(
+                tokenIn: internalTokenIn,
+                tokenOut: internalTokenOut,
+                providers: providers,
+                suspensions: swapProviderManager.suspensions
+            )
+        }
+
+        if suggestedPath != path {
+            suggestedPath = path
+        }
     }
 
     private func syncCurrentQuote() {
@@ -698,6 +740,8 @@ public class MultiSwapViewModel: ObservableObject {
             quoting = true
         }
 
+        let roundKey = currentRoundKey
+
         quotesTask = Task { [weak self, validProviders] in
             let optionalQuotes: [Quote?] = await withTaskGroup(of: Quote?.self) { group in
                 for provider in validProviders {
@@ -747,8 +791,19 @@ public class MultiSwapViewModel: ObservableObject {
 
             if !Task.isCancelled {
                 await MainActor.run { [weak self, decorated] in
-                    self?.quoting = false
-                    self?.quotes = decorated
+                    guard let self else {
+                        return
+                    }
+
+                    quoting = false
+                    self.quotes = decorated
+
+                    let wasUnavailable = quotesUnavailable
+                    emptyRoundKey = decorated.isEmpty ? roundKey : nil
+
+                    if quotesUnavailable != wasUnavailable {
+                        syncSuggestedPath()
+                    }
                 }
             }
         }
@@ -934,6 +989,12 @@ public extension MultiSwapViewModel {
 }
 
 extension MultiSwapViewModel {
+    private struct QuoteRoundKey: Equatable {
+        let tokenIn: Token
+        let tokenOut: Token
+        let providerIds: Set<String>
+    }
+
     public struct Quote {
         public let provider: IMultiSwapProvider
         public let quote: MultiSwapQuote

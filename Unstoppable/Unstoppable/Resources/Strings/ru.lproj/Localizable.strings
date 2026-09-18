@@ -671,6 +671,7 @@
 "swap.price" = "Цена";
 "swap.estimate_short" = "(прим)";
 
+"swap.available" = "Доступно: %@";
 "swap.rate_not_available" = "Цена недоступна";
 "swap.route" = "Маршрут";
 "swap.select" = "Выбрать";
@@ -678,6 +679,9 @@
 "swap.select_token_in" = "Выберите токен для обмена";
 "swap.select_token_out" = "Выберите токен для получения";
 "swap.no_providers" = "Нет маршрутов";
+"swap.suggested_path.no_quotes_available" = "Нет доступных предложений";
+"swap.suggested_path.text" = "Вы можете сначала %@, а затем %@ на %@.";
+"swap.suggested_path.text.part" = "обменять %@ на %@";
 "swap.enter_amount" = "Введите сумму";
 "swap.no_quotes" = "Нет предложений";
 "swap.error.no_memo" = "Этот маршрут не может быть подтверждён прямо сейчас. Пожалуйста, обновите котировку или выберите другого провайдера.";

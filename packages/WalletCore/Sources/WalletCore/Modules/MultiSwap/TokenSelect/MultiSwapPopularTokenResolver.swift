@@ -1,13 +1,5 @@
 import MarketKit
 
-protocol IMarketKit {
-    func token(query: TokenQuery) throws -> Token?
-    func fullCoins(coinUids: [String]) throws -> [FullCoin]
-    func tokens(queries: [TokenQuery]) throws -> [Token]
-}
-
-extension MarketKit.Kit: IMarketKit {}
-
 enum MultiSwapPopularTokenResolver {
     private static let baseNativeTypes: [BlockchainType] = [.bitcoin, .ethereum, .monero, .zcash, .tron]
 

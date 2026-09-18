@@ -20,14 +20,21 @@ struct MultiSwapView: View {
                 ScrollView {
                     VStack(spacing: 16) {
                         VStack(spacing: 0) {
-                            amountsView()
+                            availableBalanceView(value: balanceValue())
                                 .themeListTopView()
+
+                            amountsView()
 
                             if let currentQuote = viewModel.currentQuote {
                                 quoteList(quote: currentQuote)
-                            } else {
-                                availableBalanceView(value: balanceValue())
                             }
+                        }
+
+                        if let path = viewModel.suggestedPath {
+                            MultiSwapSuggestedPathView(path: path) { token in
+                                viewModel.tokenOut = token
+                            }
+                            .padding(.horizontal, 16)
                         }
 
                         if let currentQuote = viewModel.currentQuote {
@@ -42,21 +49,6 @@ struct MultiSwapView: View {
                 }
             } bottomContent: {
                 buttonView()
-            } keyboardContent: {
-                if isInputActive {
-                    AmountAccessoryView(
-                        visible: isInputActive,
-                        enabledPercents: (viewModel.availableBalance ?? 0) > 0,
-                        percents: viewModel.percentOptions,
-                        onPercent: { percent in
-                            viewModel.setAmountIn(percent: percent)
-                            focusedField = nil
-                        },
-                        onTrash: {
-                            viewModel.clearAmountIn()
-                        }
-                    )
-                }
             }
             .animation(.easeOut(duration: 0.25), value: isInputActive)
         }
@@ -74,13 +66,21 @@ struct MultiSwapView: View {
     }
 
     @ViewBuilder private func amountsView() -> some View {
-        VStack(spacing: 8) {
-            boxInView().padding(.horizontal, 16)
+        VStack(spacing: 0) {
+            boxInView()
+                .padding(.horizontal, 16)
+                .padding(.top, 16)
+                .padding(.bottom, 8)
+
             boxSeparatorView()
-            boxOutView().padding(.horizontal, 16)
+
+            boxOutView()
+                .padding(.horizontal, 16)
+                .padding(.bottom, 24)
+
+            Color.themeBlade.frame(height: .heightOnePixel)
+//                .frame(maxWidth: .infinity)
         }
-        .padding(.vertical, 24)
-        .background(Color.themeTyler)
     }
 
     @ViewBuilder private func boxInView() -> some View {
@@ -138,25 +138,14 @@ struct MultiSwapView: View {
 
     @ViewBuilder private func boxSeparatorView() -> some View {
         HStack(spacing: 0) {
-            Rectangle()
-                .fill(Color.themeBlade)
-                .frame(height: .heightOnePixel)
-                .frame(maxWidth: .infinity)
+            Color.themeBlade.frame(height: .heightOnePixel)
 
-            // an externally-delivered tokenOut can't become the sell side — the account
-            // can't sign transactions for it
-            Button(action: {
+            IconButton(icon: "arrow_m_down", style: .secondary, size: .small) {
                 viewModel.interchange()
-            }) {
-                Image("arrow_medium_2_down_20").renderingMode(.template)
             }
-            .buttonStyle(SecondaryCircleButtonStyle(style: .default))
             .disabled(viewModel.externalRecipientRequired)
 
-            Rectangle()
-                .fill(Color.themeBlade)
-                .frame(height: .heightOnePixel)
-                .frame(maxWidth: .infinity)
+            Color.themeBlade.frame(height: .heightOnePixel)
         }
     }
 
@@ -218,7 +207,7 @@ struct MultiSwapView: View {
     @ViewBuilder private func selectorButton(token: Token?, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack(spacing: 16) {
-                CoinIconView(coin: token.map(\.coin))
+                CoinIconView(token: token)
 
                 HStack(spacing: 8) {
                     if let token {
@@ -279,12 +268,23 @@ struct MultiSwapView: View {
 
     @ViewBuilder private func availableBalanceView(value: String?) -> some View {
         HStack(spacing: 8) {
-            ThemeText("send.available_balance".localized, style: .subhead)
+            ThemeText("swap.available".localized(value ?? "----"), style: .caption, colorStyle: .blue)
             Spacer()
-            ThemeText(value ?? "----", style: .subheadSB)
-                .multilineTextAlignment(.trailing)
+
+            if let balance = viewModel.availableBalance, balance > 0 {
+                HStack(spacing: 16) {
+                    ForEach([25, 50, 75], id: \.self) { percent in
+                        ThemeText("\(percent)%", style: .caption, colorStyle: .blue)
+                            .onTapGesture {
+                                viewModel.setAmountIn(percent: percent)
+                                focusedField = nil
+                            }
+                    }
+                }
+            }
         }
-        .padding(16)
+        .padding(.top, 16)
+        .padding(.horizontal, 16)
     }
 
     @ViewBuilder private func quoteList(quote: MultiSwapViewModel.Quote) -> some View {

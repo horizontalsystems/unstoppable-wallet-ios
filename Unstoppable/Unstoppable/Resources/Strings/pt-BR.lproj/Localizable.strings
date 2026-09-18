@@ -671,6 +671,7 @@
 "swap.price" = "Preço";
 "swap.estimate_short" = "(est)";
 
+"swap.available" = "Disponível: %@";
 "swap.rate_not_available" = "Taxa não disponível";
 "swap.route" = "Rota";
 "swap.select" = "Selecionar";
@@ -678,6 +679,9 @@
 "swap.select_token_in" = "Selecionar Token em";
 "swap.select_token_out" = "Selecionar Token de Saída";
 "swap.no_providers" = "Sem rotas";
+"swap.suggested_path.no_quotes_available" = "Sem ofertas disponíveis";
+"swap.suggested_path.text" = "Você pode %@ primeiro e depois %@ por %@.";
+"swap.suggested_path.text.part" = "trocar %@ por %@";
 "swap.enter_amount" = "Inserir Quantidade";
 "swap.no_quotes" = "Sem ofertas";
 "swap.error.no_memo" = "Esta rota não pode ser confirmada no momento. Por favor, atualize a cotação ou escolha outro provedor.";
