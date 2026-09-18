@@ -67,6 +67,8 @@ extension Token {
     var sendToSelfAllowed: Bool {
         if case .native = type, blockchainType == .zcash { return false }
         if blockchainType == .tron { return false }
+        // the ledger rejects a payment to the sending account itself (temREDUNDANT)
+        if blockchainType == .xrp { return false }
 
         return true
     }

@@ -495,6 +495,11 @@
 "send.memo.public_warning" = "Dieses Memo wird öffentlich auf der Blockchain sichtbar sein.";
 "send.memo.private_warning" = "Diese Notiz wird in verschlüsselter Form auf der Blockchain veröffentlicht.";
 "send.memo.local_warning" = "Dieses Memo wird nur auf Ihrem Telefon gespeichert.";
+"send.xrp.destination_tag" = "Ziel-Tag";
+"send.xrp.destination_tag.title" = "Ziel-Tag";
+"send.xrp.destination_tag.info" = "Börsen und einige Dienste erfordern ein Ziel-Tag, um Ihre Einzahlung gutzuschreiben. Das Tag ist öffentlich im Ledger.";
+"send.xrp.destination_tag.required" = "Diese Adresse erfordert ein Ziel-Tag. Zahlungen ohne eines werden abgelehnt.";
+"send.xrp.destination_tag.invalid" = "Destination Tag muss eine ganze Zahl von 0 bis 4294967295 sein.";
 "send.confirmation.fee" = "Gebühr";
 "send.confirmation.fee_sponsored" = "Gesponsert";
 "send.confirmation.fee_paid_in" = "Bezahlt in %@";

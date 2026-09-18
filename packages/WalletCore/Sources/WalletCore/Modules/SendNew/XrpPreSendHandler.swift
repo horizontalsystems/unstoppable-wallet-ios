@@ -1,0 +1,196 @@
+import Combine
+import Foundation
+import MarketKit
+import RxSwift
+import XrpKit
+
+/// Looks up what the destination account demands before a payment is built (Android
+/// `SendXrpDestinationService`): a minimum first deposit when it does not exist yet, a destination
+/// tag when it has the RequireDestTag flag, a trust line for an issued token. A lookup that failed
+/// blocks the send: an unknown flag is not the same as no flag. Memo size is enforced by the kit.
+class XrpPreSendHandler: PreSendHandler {
+    override class func instance(wallet: Wallet, address: ResolvedAddress) -> IPreSendHandler? {
+        guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? ISendXrpAdapter & IBalanceAdapter else { return nil }
+        return XrpPreSendHandler(token: wallet.token, adapter: adapter, address: address.address)
+    }
+
+    private let token: Token
+    private let adapter: ISendXrpAdapter & IBalanceAdapter
+    private let network: XrpKit.Network
+
+    private let destination: (classic: String, tag: UInt32?)?
+    private let addressError: Error?
+
+    private var lookup: Lookup?
+    private var lookupError: Error?
+    private var lookupTask: Task<Void, Never>?
+
+    private let stateSubject = PassthroughSubject<AdapterState, Never>()
+    private let balanceSubject = PassthroughSubject<Decimal, Never>()
+    private let destinationTagStateSubject = CurrentValueSubject<DestinationTagState, Never>(.optional)
+
+    private let disposeBag = DisposeBag()
+
+    init(token: Token, adapter: ISendXrpAdapter & IBalanceAdapter, address: String) {
+        self.token = token
+        self.adapter = adapter
+        network = XrpKitManager.network
+
+        do {
+            destination = try XrpKit.Kit.resolveDestination(address: address, tag: nil, network: network)
+            addressError = nil
+        } catch {
+            destination = nil
+            addressError = error
+        }
+
+        super.init()
+
+        if let tag = destination?.tag {
+            destinationTagStateSubject.send(.fixed(tag))
+        }
+
+        adapter.balanceStateUpdatedObservable
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe { [weak self] state in
+                self?.stateSubject.send(state)
+            }
+            .disposed(by: disposeBag)
+
+        adapter.balanceDataUpdatedObservable
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe { [weak self] balanceData in
+                self?.balanceSubject.send(balanceData.available)
+            }
+            .disposed(by: disposeBag)
+
+        lookupDestination()
+    }
+
+    deinit {
+        lookupTask?.cancel()
+    }
+
+    private func lookupDestination() {
+        guard let destination else { return }
+
+        lookupTask = Task { [weak self, adapter] in
+            do {
+                let exists = try await adapter.doesAccountExist(address: destination.classic)
+                let requiresTag = try await adapter.requiresDestinationTag(address: destination.classic)
+                let canReceive = try await adapter.canReceive(address: destination.classic)
+                self?.handle(lookup: Lookup(exists: exists, requiresTag: requiresTag, canReceive: canReceive), error: nil)
+            } catch is CancellationError {
+                return
+            } catch {
+                self?.handle(lookup: nil, error: error)
+            }
+        }
+    }
+
+    private func handle(lookup: Lookup?, error: Error?) {
+        self.lookup = lookup
+        lookupError = error
+
+        // a tag packed in the X-address stays pinned whatever the account says
+        if case .fixed = destinationTagStateSubject.value {
+            return
+        }
+        destinationTagStateSubject.send(lookup?.requiresTag == true ? .required : .optional)
+    }
+
+    private func invalid(_ text: String, title: String? = nil) -> SendDataResult {
+        .invalid(cautions: [CautionNew(title: title, text: text, type: .error)])
+    }
+
+    private struct Lookup {
+        let exists: Bool
+        let requiresTag: Bool
+        let canReceive: Bool
+    }
+}
+
+extension XrpPreSendHandler: IPreSendHandler {
+    var state: AdapterState {
+        adapter.balanceState
+    }
+
+    var statePublisher: AnyPublisher<AdapterState, Never> {
+        stateSubject.eraseToAnyPublisher()
+    }
+
+    var balance: Decimal {
+        adapter.balanceData.available
+    }
+
+    var balancePublisher: AnyPublisher<Decimal, Never> {
+        balanceSubject.eraseToAnyPublisher()
+    }
+
+    // Chain-constant: an XRPL memo is a public field of the payment (.onChainPublic).
+    func memoType(address _: String?) -> MemoType {
+        token.blockchainType.memoType
+    }
+
+    var destinationTagState: DestinationTagState {
+        destinationTagStateSubject.value
+    }
+
+    var destinationTagStatePublisher: AnyPublisher<DestinationTagState, Never> {
+        destinationTagStateSubject.eraseToAnyPublisher()
+    }
+
+    func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
+        sendData(amount: amount, address: address, memo: memo, destinationTagInput: "")
+    }
+
+    func sendData(amount: Decimal, address _: String, memo: String?, destinationTagInput: String) -> SendDataResult {
+        guard let destination else {
+            return invalid((addressError ?? XrpKit.AddressError.invalidFormat).smartDescription)
+        }
+
+        // as Tron: the ledger refuses a payment to the sending account (temREDUNDANT), so refuse it
+        // here; compared on the classic address so an own X-address is caught too
+        guard destination.classic != adapter.address else {
+            return invalid("send.address_error.own_address".localized(token.coin.code), title: "send.address.invalid_address".localized)
+        }
+
+        // fail-closed: the tag, minimum deposit and trust line gates all rest on this lookup
+        guard let lookup else {
+            if let lookupError {
+                return invalid(lookupError.convertedError.smartDescription, title: "send.xrp.destination_tag".localized)
+            }
+            return .invalid(cautions: [])
+        }
+
+        let tag: UInt32?
+        if let fixed = destination.tag {
+            tag = fixed
+        } else {
+            let input = destinationTagInput.trimmingCharacters(in: .whitespacesAndNewlines)
+            if input.isEmpty {
+                tag = nil
+            } else if let parsed = XrpDestinationTag.parse(input) {
+                tag = parsed
+            } else {
+                return invalid("send.xrp.destination_tag.invalid".localized, title: "send.xrp.destination_tag".localized)
+            }
+        }
+
+        if lookup.requiresTag, tag == nil {
+            return invalid("send.xrp.destination_tag.required".localized, title: "send.xrp.destination_tag".localized)
+        }
+
+        if token.type.isNative {
+            // an unfunded account is created by its first payment, which must cover the base reserve (tecNO_DST_INSUF_XRP)
+            if !lookup.exists, amount < adapter.baseReserve {
+                let minimum = AppValue(token: token, value: adapter.baseReserve).formattedFull() ?? ""
+                return invalid("send.amount_error.minimum_amount.description".localized(minimum), title: "send.amount_error.minimum_amount.title".localized)
+            }
+        } else if !lookup.canReceive {
+            return invalid("send.stellar.no_trustline.description".localized, title: "send.stellar.no_trustline.title".localized)
+        }
+
+        return .valid(sendData: .xrp(token: token, data: .payment(amount: amount, address: destination.classic), memo: memo, destinationTag: tag))
+    }
+}

@@ -495,6 +495,11 @@
 "send.memo.public_warning" = "Este memo será público na blockchain.";
 "send.memo.private_warning" = "Esta nota será publicada na blockchain de forma criptografada.";
 "send.memo.local_warning" = "Este memo será salvo apenas no seu telefone.";
+"send.xrp.destination_tag" = "Tag de Destino";
+"send.xrp.destination_tag.title" = "Tag de destino";
+"send.xrp.destination_tag.info" = "Exchanges e alguns serviços exigem uma etiqueta de destino para creditar seu depósito. A etiqueta é pública no livro razão.";
+"send.xrp.destination_tag.required" = "Este endereço requer uma etiqueta de destino. Pagamentos sem uma são rejeitados.";
+"send.xrp.destination_tag.invalid" = "A tag de destino deve ser um número inteiro de 0 a 4294967295.";
 "send.confirmation.fee" = "Taxa";
 "send.confirmation.fee_sponsored" = "Patrocinado";
 "send.confirmation.fee_paid_in" = "Pago em %@";

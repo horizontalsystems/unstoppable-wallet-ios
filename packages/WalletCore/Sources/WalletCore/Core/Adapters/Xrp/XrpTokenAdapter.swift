@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import MarketKit
 import RxSwift
 import XrpKit
 
@@ -7,6 +8,7 @@ import XrpKit
 /// not frozen the line; a missing line means the token is not activated yet.
 class XrpTokenAdapter {
     let xrpKit: XrpKit.Kit
+    let token: Token
     let currency: String
     let issuer: String
     private var cancellables = Set<AnyCancellable>()
@@ -27,13 +29,23 @@ class XrpTokenAdapter {
 
     private let receiveAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
 
-    init(xrpKit: XrpKit.Kit, currency: String, issuer: String) {
+    private(set) var fee: Decimal = XrpAdapter.defaultFee
+    private var feeTask: Task<Void, Never>?
+
+    init(xrpKit: XrpKit.Kit, token: Token, currency: String, issuer: String) {
         self.xrpKit = xrpKit
+        self.token = token
         self.currency = currency
         self.issuer = issuer
 
         balanceState = XrpAdapter.adapterState(kitSyncState: xrpKit.syncState)
         balanceData = Self.balanceData(trustLine: Self.trustLine(xrpKit: xrpKit, currency: currency, issuer: issuer))
+
+        feeTask = Task { [weak self, xrpKit] in
+            if let fee = try? await xrpKit.estimateFee() {
+                self?.fee = fee
+            }
+        }
 
         xrpKit.syncStatePublisher
             .sink { [weak self] in self?.balanceState = XrpAdapter.adapterState(kitSyncState: $0) }
@@ -111,9 +123,48 @@ extension XrpTokenAdapter: IBalanceAdapter {
     }
 }
 
+extension XrpTokenAdapter: ISendXrpAdapter {
+    var address: String {
+        xrpKit.address
+    }
+
+    var baseReserve: Decimal {
+        xrpKit.baseReserve
+    }
+
+    var availableXrpBalance: Decimal {
+        xrpKit.availableBalance
+    }
+
+    func doesAccountExist(address: String) async throws -> Bool {
+        try await xrpKit.doesAccountExist(address: address)
+    }
+
+    func requiresDestinationTag(address: String) async throws -> Bool {
+        try await xrpKit.requiresDestinationTag(address: address)
+    }
+
+    // an issued token is rejected by the ledger unless the recipient holds a trust line for it
+    func canReceive(address: String) async throws -> Bool {
+        try await xrpKit.isTrustLineSet(currency: currency, issuer: issuer, address: address)
+    }
+
+    func send(amount: Decimal, address: String, destinationTag: UInt32?, memo: String?, signer: XrpKit.Signer) async throws -> String {
+        try await xrpKit.sendToken(currency: currency, issuer: issuer, to: address, amount: amount, destinationTag: destinationTag, memo: memo, signer: signer).hash
+    }
+
+    func setTrustLine(currency: String, issuer: String, limit: Decimal, signer: XrpKit.Signer) async throws -> String {
+        try await xrpKit.setTrustLine(currency: currency, issuer: issuer, limit: limit, signer: signer).hash
+    }
+}
+
 extension XrpTokenAdapter: IDepositAdapter {
     var receiveAddress: DepositAddress {
-        XrpDepositAddress(receiveAddress: xrpKit.address, activated: activated)
+        XrpDepositAddress(
+            receiveAddress: xrpKit.address,
+            activated: activated,
+            activationSendData: activated ? nil : .xrp(token: token, data: .trustSet(currency: currency, issuer: issuer, limit: XrpKit.Kit.defaultTrustLimit), memo: nil, destinationTag: nil)
+        )
     }
 
     var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {

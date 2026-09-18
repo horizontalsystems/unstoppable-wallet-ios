@@ -85,10 +85,17 @@ public class PreSendViewModel: ObservableObject {
     @Published public private(set) var adapterState: AdapterState?
     @Published public private(set) var availableBalance: Decimal?
     @Published var memoType: MemoType = .none
+    @Published var destinationTagState: DestinationTagState = .hidden
 
     private var enteringFiat = false
 
     @Published var memo: String = "" {
+        didSet {
+            syncSendData()
+        }
+    }
+
+    @Published var destinationTag: String = "" {
         didSet {
             syncSendData()
         }
@@ -130,6 +137,15 @@ public class PreSendViewModel: ObservableObject {
             adapterState = handler.state
             availableBalance = handler.balance
             memoType = handler.memoType(address: resolvedAddress.address)
+            destinationTagState = handler.destinationTagState
+
+            handler.destinationTagStatePublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    self?.destinationTagState = $0
+                    self?.syncSendData()
+                }
+                .store(in: &cancellables)
 
             handler.statePublisher
                 .receive(on: DispatchQueue.main)
@@ -214,7 +230,7 @@ public extension PreSendViewModel {
         let trimmedMemo = memo.trimmingCharacters(in: .whitespaces)
         let memo = memoType != .none && !trimmedMemo.isEmpty ? trimmedMemo : nil
 
-        let result = handler.sendData(amount: amount, address: resolvedAddress.address, memo: memo)
+        let result = handler.sendData(amount: amount, address: resolvedAddress.address, memo: memo, destinationTagInput: destinationTag)
 
         switch result {
         case let .valid(sendData):

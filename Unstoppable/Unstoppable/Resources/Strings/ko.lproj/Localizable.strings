@@ -495,6 +495,11 @@
 "send.memo.public_warning" = "이 메모는 블록체인에 공개됩니다.";
 "send.memo.private_warning" = "이 메모는 암호화된 형태로 블록체인에 게시됩니다.";
 "send.memo.local_warning" = "이 메모는 휴대폰에만 저장됩니다.";
+"send.xrp.destination_tag" = "수신인 태그";
+"send.xrp.destination_tag.title" = "대상 태그";
+"send.xrp.destination_tag.info" = "거래소 및 일부 서비스에서는 입금을 송금하기 위해 대상 태그가 필요합니다. 태그는 원장에 공개됩니다.";
+"send.xrp.destination_tag.required" = "이 주소에는 대상 태그가 필요합니다. 태그 없는 결제는 거부됩니다.";
+"send.xrp.destination_tag.invalid" = "대상 태그는 0부터 4294967295까지의 정수여야 합니다.";
 "send.confirmation.fee" = "수수료";
 "send.confirmation.fee_sponsored" = "스폰서됨";
 "send.confirmation.fee_paid_in" = "%@(으)로 지불";

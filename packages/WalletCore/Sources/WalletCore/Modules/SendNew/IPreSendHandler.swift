@@ -14,6 +14,19 @@ public protocol IPreSendHandler {
     func memoType(address: String?) -> MemoType
     func settingsView(onChangeSettings: @escaping () -> Void) -> AnyView
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult
+    /// Chains whose payments carry a destination tag (XRP) show a fourth input; everyone else keeps it hidden.
+    var destinationTagState: DestinationTagState { get }
+    var destinationTagStatePublisher: AnyPublisher<DestinationTagState, Never> { get }
+    func sendData(amount: Decimal, address: String, memo: String?, destinationTagInput: String) -> SendDataResult
+}
+
+/// What the destination tag input shows: nothing, an optional field, a field the destination
+/// account insists on (`RequireDestTag`), or a value pinned by the pasted X-address.
+public enum DestinationTagState: Equatable {
+    case hidden
+    case optional
+    case required
+    case fixed(UInt32)
 }
 
 public extension IPreSendHandler {
@@ -35,6 +48,18 @@ public extension IPreSendHandler {
 
     var settingsModified: Bool {
         false
+    }
+
+    var destinationTagState: DestinationTagState {
+        .hidden
+    }
+
+    var destinationTagStatePublisher: AnyPublisher<DestinationTagState, Never> {
+        Empty().eraseToAnyPublisher()
+    }
+
+    func sendData(amount: Decimal, address: String, memo: String?, destinationTagInput _: String) -> SendDataResult {
+        sendData(amount: amount, address: address, memo: memo)
     }
 
     var settingsModifiedPublisher: AnyPublisher<Bool, Never> {

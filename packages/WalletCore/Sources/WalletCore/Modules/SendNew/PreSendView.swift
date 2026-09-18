@@ -40,6 +40,11 @@ struct PreSendView: View {
 //                            privateSendView()
                         }
 
+                        // the chain's own field sits above the memo; a private send deposit cannot carry it
+                        if viewModel.destinationTagState != .hidden, !privateSend.isEnabled {
+                            destinationTagView(state: viewModel.destinationTagState)
+                        }
+
                         if viewModel.memoType != .none {
                             memoView(type: viewModel.memoType)
                         }
@@ -50,6 +55,7 @@ struct PreSendView: View {
                     }
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin16, trailing: .margin16))
                     .animation(.linear, value: viewModel.memoType)
+                    .animation(.linear, value: viewModel.destinationTagState)
                 }
                 .onTapGesture {
                     focusField = nil
@@ -191,6 +197,37 @@ struct PreSendView: View {
                 Image("arrow_small_down_20").themeIcon()
             }
         }
+    }
+
+    @ViewBuilder private func destinationTagView(state: DestinationTagState) -> some View {
+        // caption as on Android: the parse error in red, the info in yellow while the recipient
+        // insists on a tag, grey otherwise; a tag packed in the X-address is shown but not editable
+        let input = viewModel.destinationTag.trimmingCharacters(in: .whitespacesAndNewlines)
+        let invalid = !input.isEmpty && XrpDestinationTag.parse(input) == nil
+
+        let cautionState: CautionState = invalid
+            ? .caution(Caution(text: "send.xrp.destination_tag.invalid".localized, type: .error))
+            : .caution(Caution(text: "send.xrp.destination_tag.info".localized, type: state == .required ? .warning : .regular))
+
+        let fixedTag: UInt32? = {
+            if case let .fixed(tag) = state { return tag }
+            return nil
+        }()
+        let text: Binding<String> = fixedTag.map { .constant(String($0)) } ?? $viewModel.destinationTag
+
+        InputTextRow {
+            InputTextView(
+                placeholder: "send.xrp.destination_tag.title".localized,
+                multiline: false,
+                font: .themeBody,
+                text: text
+            )
+            .keyboardType(.numberPad)
+            .disabled(fixedTag != nil)
+            .focused($focusField, equals: .destinationTag)
+        }
+        .modifier(CautionBorder(cautionState: .constant(invalid ? cautionState : .none)))
+        .modifier(CautionPrompt(cautionState: .constant(cautionState)))
     }
 
     @ViewBuilder private func memoView(type: MemoType) -> some View {
@@ -352,6 +389,7 @@ extension PreSendView {
         case amount
         case fiatAmount
         case memo
+        case destinationTag
     }
 
     struct ConfirmationData: Hashable, Equatable {

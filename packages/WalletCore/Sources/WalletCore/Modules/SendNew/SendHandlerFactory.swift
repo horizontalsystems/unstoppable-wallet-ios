@@ -62,6 +62,7 @@ public extension SendHandlerFactory {
         TonSendHandler.self,
         StellarSendHandler.self,
         SolanaSendHandler.self,
+        XrpSendHandler.self,
         MoneroSendHandler.self,
         ZanoSendHandler.self,
         MultiSwapSendHandler.self,
@@ -77,6 +78,7 @@ public extension SendHandlerFactory {
         TonPreSendHandler.self,
         SolanaPreSendHandler.self,
         StellarPreSendHandler.self,
+        XrpPreSendHandler.self,
         MoneroPreSendHandler.self,
         ZanoPreSendHandler.self,
     ]

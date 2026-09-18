@@ -13,6 +13,7 @@ import TonSwift
 import TronKit
 import UIKit
 import UniswapKit
+import XrpKit
 import ZcashLightClientKit
 
 public protocol IWidgetRefresher {
@@ -144,6 +145,21 @@ public protocol ISendTronAdapter {
 
 protocol ISendTonAdapter {
     func transferData(recipient: FriendlyAddress, amount: TonAdapter.SendAmount, comment: String?) throws -> TransferData
+}
+
+protocol ISendXrpAdapter {
+    /// The wallet's own classic address; a payment to it is refused by the ledger.
+    var address: String { get }
+    /// Network fee in XRP, sampled at adapter start (default 0.000012); the kit re-reads it at send time.
+    var fee: Decimal { get }
+    var baseReserve: Decimal { get }
+    var availableXrpBalance: Decimal { get }
+    func doesAccountExist(address: String) async throws -> Bool
+    func requiresDestinationTag(address: String) async throws -> Bool
+    /// Whether `address` can receive this adapter's token: always true for XRP, a trust line for an issued token.
+    func canReceive(address: String) async throws -> Bool
+    func send(amount: Decimal, address: String, destinationTag: UInt32?, memo: String?, signer: XrpKit.Signer) async throws -> String
+    func setTrustLine(currency: String, issuer: String, limit: Decimal, signer: XrpKit.Signer) async throws -> String
 }
 
 protocol ISendSolanaAdapter {

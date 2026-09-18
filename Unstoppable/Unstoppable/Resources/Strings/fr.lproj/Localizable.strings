@@ -495,6 +495,11 @@
 "send.memo.public_warning" = "Ce mémo sera public sur la blockchain.";
 "send.memo.private_warning" = "Cette note sera publiée sur la blockchain sous forme chiffrée.";
 "send.memo.local_warning" = "Ce mémo sera enregistré uniquement sur votre téléphone.";
+"send.xrp.destination_tag" = "Balise de Destination";
+"send.xrp.destination_tag.title" = "Tag de destination";
+"send.xrp.destination_tag.info" = "Les bourses et certains services nécessitent une balise de destination pour créditer votre dépôt. La balise est publique sur le ledger.";
+"send.xrp.destination_tag.required" = "Cette adresse nécessite une balise de destination. Les paiements sans un sont rejetés.";
+"send.xrp.destination_tag.invalid" = "La balise de destination doit être un nombre entier de 0 à 4294967295.";
 "send.confirmation.fee" = "Frais";
 "send.confirmation.fee_sponsored" = "Sponsorisé";
 "send.confirmation.fee_paid_in" = "Payé en %@";

@@ -495,6 +495,11 @@
 "send.memo.public_warning" = "Bu not blok zincirinde herkese açık olacaktır.";
 "send.memo.private_warning" = "Bu not blok zincirinde şifrelenmiş biçimde yayınlanacaktır.";
 "send.memo.local_warning" = "Bu not yalnızca telefonunuzda kaydedilecektir.";
+"send.xrp.destination_tag" = "Hedef Etiketi";
+"send.xrp.destination_tag.title" = "Hedef etiketi";
+"send.xrp.destination_tag.info" = "Borsalar ve bazı hizmetler, paranızı yatırmak için bir hedef etiketi gerektirir. Etiket defter üzerinde halka açıktır.";
+"send.xrp.destination_tag.required" = "Bu adres bir hedef etiketi gerektirir. Etiketsiz ödemeler reddedilir.";
+"send.xrp.destination_tag.invalid" = "Hedef etiketi 0 ile 4294967295 arasında bir tam sayı olmalıdır.";
 "send.confirmation.fee" = "Ücret";
 "send.confirmation.fee_sponsored" = "Sponsorlu";
 "send.confirmation.fee_paid_in" = "%@ ile ödendi";

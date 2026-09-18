@@ -495,6 +495,11 @@
 "send.memo.public_warning" = "此备注将在区块链上公开显示。";
 "send.memo.private_warning" = "此备注将以加密形式发布到区块链上。";
 "send.memo.local_warning" = "此备注将仅保存在您的手机上。";
+"send.xrp.destination_tag" = "目标标签";
+"send.xrp.destination_tag.title" = "目标标签";
+"send.xrp.destination_tag.info" = "交易所和某些服务需要目标标签来记入您的存款。该标签在账本上是公开的。";
+"send.xrp.destination_tag.required" = "此地址需要目标标签。没有标签的付款会被拒绝。";
+"send.xrp.destination_tag.invalid" = "目标标签必须是0到4294967295之间的整数。";
 "send.confirmation.fee" = "费用";
 "send.confirmation.fee_sponsored" = "已赞助";
 "send.confirmation.fee_paid_in" = "以 %@ 支付";

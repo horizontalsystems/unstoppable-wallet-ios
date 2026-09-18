@@ -372,7 +372,7 @@ extension AdapterFactory {
 
         case let (.xrpAsset(currency, issuer), .xrp):
             if let xrpKit = try? xrpKitManager.xrpKit(account: wallet.account) {
-                return XrpTokenAdapter(xrpKit: xrpKit, currency: currency, issuer: issuer)
+                return XrpTokenAdapter(xrpKit: xrpKit, token: wallet.token, currency: currency, issuer: issuer)
             }
 
         default: ()

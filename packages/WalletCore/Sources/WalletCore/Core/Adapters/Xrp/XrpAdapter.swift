@@ -5,6 +5,8 @@ import XrpKit
 
 class XrpAdapter {
     static let decimals = 6
+    /// Android DEFAULT_FEE: 12 drops, the network base fee, shown until `estimateFee` answers.
+    static let defaultFee = Decimal(string: "0.000012")!
 
     let xrpKit: XrpKit.Kit
     private var cancellables = Set<AnyCancellable>()
@@ -25,11 +27,20 @@ class XrpAdapter {
 
     private let receiveAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
 
+    private(set) var fee: Decimal = XrpAdapter.defaultFee
+    private var feeTask: Task<Void, Never>?
+
     init(xrpKit: XrpKit.Kit) {
         self.xrpKit = xrpKit
 
         balanceState = Self.adapterState(kitSyncState: xrpKit.syncState)
         balanceData = Self.balanceData(xrpKit: xrpKit)
+
+        feeTask = Task { [weak self, xrpKit] in
+            if let fee = try? await xrpKit.estimateFee() {
+                self?.fee = fee
+            }
+        }
 
         xrpKit.syncStatePublisher
             .sink { [weak self] in self?.balanceState = Self.adapterState(kitSyncState: $0) }
@@ -119,6 +130,40 @@ extension XrpAdapter: IBalanceAdapter {
     }
 }
 
+extension XrpAdapter: ISendXrpAdapter {
+    var address: String {
+        xrpKit.address
+    }
+
+    var baseReserve: Decimal {
+        xrpKit.baseReserve
+    }
+
+    var availableXrpBalance: Decimal {
+        xrpKit.availableBalance
+    }
+
+    func doesAccountExist(address: String) async throws -> Bool {
+        try await xrpKit.doesAccountExist(address: address)
+    }
+
+    func requiresDestinationTag(address: String) async throws -> Bool {
+        try await xrpKit.requiresDestinationTag(address: address)
+    }
+
+    func canReceive(address _: String) async throws -> Bool {
+        true
+    }
+
+    func send(amount: Decimal, address: String, destinationTag: UInt32?, memo: String?, signer: XrpKit.Signer) async throws -> String {
+        try await xrpKit.sendXrp(to: address, amount: amount, destinationTag: destinationTag, memo: memo, signer: signer).hash
+    }
+
+    func setTrustLine(currency: String, issuer: String, limit: Decimal, signer: XrpKit.Signer) async throws -> String {
+        try await xrpKit.setTrustLine(currency: currency, issuer: issuer, limit: limit, signer: signer).hash
+    }
+}
+
 extension XrpAdapter: IDepositAdapter {
     var receiveAddress: DepositAddress {
         XrpDepositAddress(receiveAddress: xrpKit.address, activated: xrpKit.isAccountActivated)
@@ -134,9 +179,11 @@ extension XrpAdapter: IDepositAdapter {
 /// it when the wallet can send one (a TrustSet), nil when only an external deposit can (account).
 class XrpDepositAddress: DepositAddress {
     let activated: Bool
+    let activationSendData: SendData?
 
-    init(receiveAddress: String, activated: Bool) {
+    init(receiveAddress: String, activated: Bool, activationSendData: SendData? = nil) {
         self.activated = activated
+        self.activationSendData = activationSendData
         super.init(receiveAddress)
     }
 }

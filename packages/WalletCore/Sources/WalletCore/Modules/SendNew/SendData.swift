@@ -8,6 +8,7 @@ import StellarKit
 import ThorChainKit
 import TonSwift
 import TronKit
+import XrpKit
 import ZcashLightClientKit
 
 public enum SendData {
@@ -24,6 +25,8 @@ public enum SendData {
     case ton(token: Token, amount: Decimal, address: FriendlyAddress, memo: String?)
     case stellar(data: StellarSendData, token: Token, memo: String?)
     case solana(token: Token, amount: Decimal, address: String, memo: String?)
+    // address is the classic r-address; an X-address is resolved by the pre-send handler, its tag lands in destinationTag
+    case xrp(token: Token, data: XrpSendData, memo: String?, destinationTag: UInt32?)
     // recipientHolder: external delivery address entered before confirmation when the account
     // can't hold tokenOut; empty when the swap is delivered to the account's own wallet. A
     // shared box rather than a value so a recipient edited on the confirmation screen is
@@ -68,6 +71,11 @@ public struct PaymentInfo {
         self.chain = chain
         self.token = token
     }
+}
+
+public enum XrpSendData {
+    case payment(amount: Decimal, address: String)
+    case trustSet(currency: String, issuer: String, limit: Decimal)
 }
 
 public enum StellarSendData {

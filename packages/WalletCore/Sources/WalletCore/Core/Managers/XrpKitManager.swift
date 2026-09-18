@@ -104,8 +104,9 @@ extension XrpKitManager {
     /// Issued currencies carry 15 significant digits on the ledger; the catalog lists them with 8 decimals.
     static let issuedTokenDecimals = 8
 
+    /// Follows the app-wide testnet switch, like Tron: the kit keeps a separate database per network.
     static var network: XrpKit.Network {
-        .mainNet
+        Core.shared.testNetManager.testNetEnabled ? .testNet : .mainNet
     }
 
     var xrpKit: XrpKit.Kit? {
