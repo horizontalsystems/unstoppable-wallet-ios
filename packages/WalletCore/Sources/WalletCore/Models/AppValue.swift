@@ -2,6 +2,7 @@ import Foundation
 import MarketKit
 import StellarKit
 import TonKit
+import XrpKit
 
 public struct AppValue {
     let kind: Kind
@@ -91,6 +92,8 @@ public struct AppValue {
         case let .token(token):
             switch token.blockchain.type {
             case .stellar: return value == StellarAdapter.maxValue
+            // the kit's default TrustSet limit stands for "no cap"
+            case .xrp: return value == XrpKit.Kit.defaultTrustLimit
             default: ()
             }
         case .stellar: return value == StellarAdapter.maxValue

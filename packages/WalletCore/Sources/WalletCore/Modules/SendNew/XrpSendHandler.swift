@@ -4,8 +4,8 @@ import XrpKit
 
 class XrpSendHandler: SendHandler {
     override class func instance(sendData: WalletCore.SendData) -> ISendHandler? {
-        guard case let .xrp(token, data, memo, destinationTag) = sendData else { return nil }
-        return instance(token: token, data: data, memo: memo, destinationTag: destinationTag)
+        guard case let .xrp(token, data, destinationTag) = sendData else { return nil }
+        return instance(token: token, data: data, destinationTag: destinationTag)
     }
 
     private let signer: XrpKit.Signer
@@ -13,16 +13,14 @@ class XrpSendHandler: SendHandler {
     let baseToken: Token
     private let adapter: ISendXrpAdapter & IBalanceAdapter
     private let data: XrpSendData
-    private let memo: String?
     private let destinationTag: UInt32?
 
-    init(signer: XrpKit.Signer, token: Token, baseToken: Token, adapter: ISendXrpAdapter & IBalanceAdapter, data: XrpSendData, memo: String?, destinationTag: UInt32?) {
+    init(signer: XrpKit.Signer, token: Token, baseToken: Token, adapter: ISendXrpAdapter & IBalanceAdapter, data: XrpSendData, destinationTag: UInt32?) {
         self.signer = signer
         self.token = token
         self.baseToken = baseToken
         self.adapter = adapter
         self.data = data
-        self.memo = memo
         self.destinationTag = destinationTag
     }
 }
@@ -57,7 +55,7 @@ extension XrpSendHandler: ISendHandler {
             }
         }
 
-        return SendData(token: token, data: data, memo: memo, destinationTag: destinationTag, fee: fee, transactionError: transactionError)
+        return SendData(token: token, data: data, destinationTag: destinationTag, fee: fee, transactionError: transactionError)
     }
 
     func send(data: ISendData) async throws {
@@ -74,7 +72,7 @@ extension XrpSendHandler: ISendHandlerRefCapturing {
 
         switch data.data {
         case let .payment(amount, address):
-            return try await adapter.send(amount: amount, address: address, destinationTag: data.destinationTag, memo: data.memo, signer: signer)
+            return try await adapter.send(amount: amount, address: address, destinationTag: data.destinationTag, signer: signer)
         case let .trustSet(currency, issuer, limit):
             return try await adapter.setTrustLine(currency: currency, issuer: issuer, limit: limit, signer: signer)
         }
@@ -85,15 +83,13 @@ extension XrpSendHandler {
     class SendData: ISendData {
         let token: Token
         let data: XrpSendData
-        let memo: String?
         let destinationTag: UInt32?
         private let fee: Decimal
         private let transactionError: Error?
 
-        init(token: Token, data: XrpSendData, memo: String?, destinationTag: UInt32?, fee: Decimal, transactionError: Error?) {
+        init(token: Token, data: XrpSendData, destinationTag: UInt32?, fee: Decimal, transactionError: Error?) {
             self.token = token
             self.data = data
-            self.memo = memo
             self.destinationTag = destinationTag
             self.fee = fee
             self.transactionError = transactionError
@@ -180,9 +176,6 @@ extension XrpSendHandler {
             if let destinationTag {
                 fields.append(.simpleValue(title: "send.xrp.destination_tag".localized, value: String(destinationTag)))
             }
-            if let memo {
-                fields.append(.simpleValue(title: "send.confirmation.memo".localized, value: memo))
-            }
 
             return fields
         }
@@ -221,7 +214,7 @@ extension XrpSendHandler {
 }
 
 extension XrpSendHandler {
-    static func instance(token: Token, data: XrpSendData, memo: String?, destinationTag: UInt32?) -> XrpSendHandler? {
+    static func instance(token: Token, data: XrpSendData, destinationTag: UInt32?) -> XrpSendHandler? {
         guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .xrp, tokenType: .native)) else {
             return nil
         }
@@ -236,6 +229,6 @@ extension XrpSendHandler {
             return nil
         }
 
-        return XrpSendHandler(signer: signer, token: token, baseToken: baseToken, adapter: adapter, data: data, memo: memo, destinationTag: destinationTag)
+        return XrpSendHandler(signer: signer, token: token, baseToken: baseToken, adapter: adapter, data: data, destinationTag: destinationTag)
     }
 }

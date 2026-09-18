@@ -1480,6 +1480,9 @@
 
 "transactions.ton_transaction.title" = "Ton İşlemi";
 "transactions.stellar_transaction.title" = "Stellar İşlemi";
+"transactions.xrp_transaction.title" = "XRP Ledger İşlemi";
+"transactions.trust_set" = "Güven Satırı";
+"tx_info.operation_type" = "İşlem Türü";
 "transactions.contract" = "Sözleşme";
 
 // Transaction Info

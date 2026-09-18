@@ -1480,6 +1480,9 @@
 
 "transactions.ton_transaction.title" = "Transacción Ton";
 "transactions.stellar_transaction.title" = "Transacción Stellar";
+"transactions.xrp_transaction.title" = "Transacción de XRP Ledger";
+"transactions.trust_set" = "Línea de Confianza";
+"tx_info.operation_type" = "Tipo de Operación";
 "transactions.contract" = "Contrato";
 
 // Transaction Info

@@ -1480,6 +1480,9 @@
 
 "transactions.ton_transaction.title" = "Ton 거래";
 "transactions.stellar_transaction.title" = "Stellar 트랜잭션";
+"transactions.xrp_transaction.title" = "XRP 원장 거래";
+"transactions.trust_set" = "신뢰선";
+"tx_info.operation_type" = "작업 유형";
 "transactions.contract" = "계약";
 
 // Transaction Info

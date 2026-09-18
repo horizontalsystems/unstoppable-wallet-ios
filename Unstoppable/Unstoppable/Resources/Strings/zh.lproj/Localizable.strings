@@ -1480,6 +1480,9 @@
 
 "transactions.ton_transaction.title" = "Ton 交易";
 "transactions.stellar_transaction.title" = "Stellar 交易";
+"transactions.xrp_transaction.title" = "XRP账本交易";
+"transactions.trust_set" = "信任线";
+"tx_info.operation_type" = "操作类型";
 "transactions.contract" = "合同";
 
 // Transaction Info

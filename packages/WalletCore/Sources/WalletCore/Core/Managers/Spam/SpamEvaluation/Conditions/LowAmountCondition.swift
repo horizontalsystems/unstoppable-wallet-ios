@@ -82,6 +82,7 @@ class LowAmountCondition: SpamCondition {
 extension LowAmountCondition {
     static let defaultLimits: [String: AmountLimit] = [
         "XLM": .init(0.1),
+        "XRP": .init(0.001),
         "USDT": .init(1),
         "USDC": .init(1),
         "USDD": .init(1),

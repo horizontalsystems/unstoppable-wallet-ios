@@ -127,9 +127,9 @@ extension XrpPreSendHandler: IPreSendHandler {
         balanceSubject.eraseToAnyPublisher()
     }
 
-    // Chain-constant: an XRPL memo is a public field of the payment (.onChainPublic).
+    // No memo on the XRP form, as Android: the tag is the recipient-facing field.
     func memoType(address _: String?) -> MemoType {
-        token.blockchainType.memoType
+        .none
     }
 
     var destinationTagState: DestinationTagState {
@@ -144,7 +144,7 @@ extension XrpPreSendHandler: IPreSendHandler {
         sendData(amount: amount, address: address, memo: memo, destinationTagInput: "")
     }
 
-    func sendData(amount: Decimal, address _: String, memo: String?, destinationTagInput: String) -> SendDataResult {
+    func sendData(amount: Decimal, address _: String, memo _: String?, destinationTagInput: String) -> SendDataResult {
         guard let destination else {
             return invalid((addressError ?? XrpKit.AddressError.invalidFormat).smartDescription)
         }
@@ -191,6 +191,6 @@ extension XrpPreSendHandler: IPreSendHandler {
             return invalid("send.stellar.no_trustline.description".localized, title: "send.stellar.no_trustline.title".localized)
         }
 
-        return .valid(sendData: .xrp(token: token, data: .payment(amount: amount, address: destination.classic), memo: memo, destinationTag: tag))
+        return .valid(sendData: .xrp(token: token, data: .payment(amount: amount, address: destination.classic), destinationTag: tag))
     }
 }

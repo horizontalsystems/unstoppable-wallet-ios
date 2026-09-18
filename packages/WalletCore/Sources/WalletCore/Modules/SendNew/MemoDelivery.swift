@@ -55,11 +55,10 @@ public extension BlockchainType {
         // Public payloads: a TON comment, a Stellar text memo and a THORChain memo are all plainly
         // readable on-chain.
         case .ton, .stellar, .thorChain, .mayaChain: .onChainPublic
-        // An XRPL memo is public and readable, so a user's text memo is delivered. A provider's
-        // crediting identifier, however, never rides an XRP memo — on XRP it is the Payment's
-        // DestinationTag field — so the deposit gates (USwap, Private Send, CrossPay) take an
-        // explicit `.xrp` branch through XrpDestinationTag instead of asking this table.
-        case .xrp: .onChainPublic
+        // The XRP send form offers no memo (Android XrpChainPlugin): the recipient-facing field on
+        // XRP is the Payment's DestinationTag, which has its own input, and the deposit gates
+        // (USwap, Private Send, CrossPay) take an explicit `.xrp` branch through XrpDestinationTag.
+        case .xrp: .none
         case .unsupported: .none
         }
     }

@@ -25,6 +25,12 @@ class OutputTransactionFactory {
             }
             return recipients.isEmpty ? nil : recipients
 
+        case let r as XrpTransactionRecord:
+            if case let .send(_, to, sentToSelf) = r.type, !sentToSelf {
+                return [to]
+            }
+            return nil
+
         case let r as SolanaOutgoingTransactionRecord:
             guard !r.sentToSelf, let to = r.to else {
                 return nil
@@ -61,6 +67,12 @@ class OutputTransactionFactory {
                 default: return nil
                 }
             }
+
+        case let r as XrpTransactionRecord:
+            if case let .receive(_, from) = r.type {
+                return [from]
+            }
+            return []
 
         case let r as SolanaIncomingTransactionRecord:
             return r.from.map { [$0] } ?? []

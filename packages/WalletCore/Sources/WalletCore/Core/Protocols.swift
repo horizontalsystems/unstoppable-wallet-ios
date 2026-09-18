@@ -158,7 +158,7 @@ protocol ISendXrpAdapter {
     func requiresDestinationTag(address: String) async throws -> Bool
     /// Whether `address` can receive this adapter's token: always true for XRP, a trust line for an issued token.
     func canReceive(address: String) async throws -> Bool
-    func send(amount: Decimal, address: String, destinationTag: UInt32?, memo: String?, signer: XrpKit.Signer) async throws -> String
+    func send(amount: Decimal, address: String, destinationTag: UInt32?, signer: XrpKit.Signer) async throws -> String
     func setTrustLine(currency: String, issuer: String, limit: Decimal, signer: XrpKit.Signer) async throws -> String
 }
 

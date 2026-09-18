@@ -149,8 +149,8 @@ extension XrpTokenAdapter: ISendXrpAdapter {
         try await xrpKit.isTrustLineSet(currency: currency, issuer: issuer, address: address)
     }
 
-    func send(amount: Decimal, address: String, destinationTag: UInt32?, memo: String?, signer: XrpKit.Signer) async throws -> String {
-        try await xrpKit.sendToken(currency: currency, issuer: issuer, to: address, amount: amount, destinationTag: destinationTag, memo: memo, signer: signer).hash
+    func send(amount: Decimal, address: String, destinationTag: UInt32?, signer: XrpKit.Signer) async throws -> String {
+        try await xrpKit.sendToken(currency: currency, issuer: issuer, to: address, amount: amount, destinationTag: destinationTag, signer: signer).hash
     }
 
     func setTrustLine(currency: String, issuer: String, limit: Decimal, signer: XrpKit.Signer) async throws -> String {
@@ -163,7 +163,7 @@ extension XrpTokenAdapter: IDepositAdapter {
         XrpDepositAddress(
             receiveAddress: xrpKit.address,
             activated: activated,
-            activationSendData: activated ? nil : .xrp(token: token, data: .trustSet(currency: currency, issuer: issuer, limit: XrpKit.Kit.defaultTrustLimit), memo: nil, destinationTag: nil)
+            activationSendData: activated ? nil : .xrp(token: token, data: .trustSet(currency: currency, issuer: issuer, limit: XrpKit.Kit.defaultTrustLimit), destinationTag: nil)
         )
     }
 

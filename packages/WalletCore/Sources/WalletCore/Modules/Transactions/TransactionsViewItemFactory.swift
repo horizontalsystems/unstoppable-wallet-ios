@@ -620,6 +620,50 @@ class TransactionsViewItemFactory {
                 subTitle = type
             }
 
+        case let record as XrpTransactionRecord:
+            switch record.type {
+            case let .send(value, to, _sentToSelf):
+                iconType = singleValueIconType(source: record.source, kind: value.kind)
+                title = "transactions.send".localized
+                subTitle = "transactions.to".localized(mapped(address: to, blockchainType: item.record.source.blockchainType))
+                primaryValue = TransactionsViewModel.Value(text: coinString(from: value, signType: _sentToSelf ? .never : .always), type: type(value: value, condition: _sentToSelf, .neutral, .outgoing))
+
+                if let currencyValue = item.currencyValue {
+                    secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                }
+
+                sentToSelf = _sentToSelf
+            case let .receive(value, from):
+                iconType = singleValueIconType(source: record.source, kind: value.kind)
+                title = "transactions.receive".localized
+                subTitle = "transactions.from".localized(mapped(address: from, blockchainType: item.record.source.blockchainType))
+                primaryValue = TransactionsViewModel.Value(text: coinString(from: value), type: type(value: value, .incoming))
+
+                if let currencyValue = item.currencyValue {
+                    secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                }
+            case let .trustSet(value, issuer):
+                iconType = singleValueIconType(source: record.source, kind: value.kind)
+                title = "transactions.trust_set".localized
+                subTitle = mapped(address: issuer, blockchainType: item.record.source.blockchainType)
+
+                // the default limit means "no cap", as the Stellar unlimited trustline
+                if value.isMaxValue {
+                    primaryValue = TransactionsViewModel.Value(text: "∞ \(value.code)", type: .neutral)
+                    secondaryValue = TransactionsViewModel.Value(text: "transactions.value.unlimited".localized, type: .secondary)
+                } else {
+                    primaryValue = TransactionsViewModel.Value(text: coinString(from: value, signType: .never), type: .neutral)
+
+                    if let currencyValue = item.currencyValue {
+                        secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                    }
+                }
+            case let .unsupported(type):
+                iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
+                title = "transactions.xrp_transaction.title".localized
+                subTitle = type
+            }
+
         case let record as ZcashShieldingTransactionRecord:
             iconType = .localIcon(imageName: record.direction.txIconName)
             title = record.direction.txTitle

@@ -155,8 +155,8 @@ extension XrpAdapter: ISendXrpAdapter {
         true
     }
 
-    func send(amount: Decimal, address: String, destinationTag: UInt32?, memo: String?, signer: XrpKit.Signer) async throws -> String {
-        try await xrpKit.sendXrp(to: address, amount: amount, destinationTag: destinationTag, memo: memo, signer: signer).hash
+    func send(amount: Decimal, address: String, destinationTag: UInt32?, signer: XrpKit.Signer) async throws -> String {
+        try await xrpKit.sendXrp(to: address, amount: amount, destinationTag: destinationTag, signer: signer).hash
     }
 
     func setTrustLine(currency: String, issuer: String, limit: Decimal, signer: XrpKit.Signer) async throws -> String {
