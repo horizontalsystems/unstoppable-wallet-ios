@@ -35,7 +35,9 @@ struct ChartIndicatorsRepositoryTests {
         let (repository, _) = makeRepository()
         let indicators = repository.indicators
 
-        #expect(indicators.map(\.id) == ["MA", "MA", "MA", "RSI", "MACD"])
+        // Default RSI/MACD ids are the Chart package's AbstractType raw values, unlike the
+        // upper-case literals restore(backup:) writes.
+        #expect(indicators.map(\.id) == ["MA", "MA", "MA", ChartIndicator.AbstractType.rsi.rawValue, ChartIndicator.AbstractType.macd.rawValue])
         #expect(indicators.map(\.index) == [0, 1, 2, 0, 0])
         #expect(indicators.map(\.enabled) == [true, true, true, true, false])
 

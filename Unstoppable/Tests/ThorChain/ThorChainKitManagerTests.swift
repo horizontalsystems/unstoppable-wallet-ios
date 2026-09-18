@@ -101,7 +101,9 @@ struct ThorChainKitManagerTests {
                 group.leave()
             }
         }
-        #expect(group.wait(timeout: .now() + 2) == .success)
+        // Every call derives the PBKDF2 seed for the address before hitting the cache; 16 of them
+        // serialized on the manager queue take seconds in a debug, parallel test run.
+        #expect(group.wait(timeout: .now() + 10) == .success)
 
         let identities = Set(wrappers.map(ObjectIdentifier.init))
         #expect(identities.count == 1)

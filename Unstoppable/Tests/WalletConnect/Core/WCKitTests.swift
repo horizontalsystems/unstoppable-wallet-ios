@@ -4,6 +4,9 @@ import ReownWalletKit
 import Testing
 @testable import WalletCore
 
+// Deadline tests sleep on the wall clock; under the parallel test run their 0.1s setup sleeps stretched
+// past the one-second deadlines, so this suite runs alone (it passes in isolation).
+@Suite(.serialized)
 struct WCKitTests {
     private let client = WCSpySignClient()
     private let accounts = WCStubAccountProvider(activeAccountId: "a1")
@@ -164,7 +167,7 @@ struct WCKitTests {
         var expired = try WCTestFixtures.request()
         expired.expiryTimestamp = 0
         var valid = try WCTestFixtures.request()
-        valid.expiryTimestamp = UInt64(Date().timeIntervalSince1970) + 3600
+        valid.expiryTimestamp = UInt64(Date().timeIntervalSince1970.rounded(.up)) + 3600
         var withoutDeadline = try WCTestFixtures.request()
         withoutDeadline.expiryTimestamp = nil
         client.pendingRequests = [(expired, nil), (valid, nil), (withoutDeadline, nil)]
@@ -208,7 +211,7 @@ struct WCKitTests {
     @MainActor @Test func timerRefreshesBadgeWithoutSdkExpirationEvent() async throws {
         let (kit, _) = try storedKit()
         var request = try WCTestFixtures.request()
-        request.expiryTimestamp = UInt64(Date().timeIntervalSince1970) + 3
+        request.expiryTimestamp = UInt64(Date().timeIntervalSince1970.rounded(.up)) + 3
         client.pendingRequests = [(request, nil)]
         let parsed = WCRequest(payload: WCRequestPayload(request: request, kind: .signMessage, from: nil), verdict: .pass, dAppName: "dApp")
         let expirationViewModel = WCRequestExpirationViewModel(request: parsed, updates: kit.pendingRequestsPublisher)
@@ -236,7 +239,7 @@ struct WCKitTests {
     @MainActor @Test func expirationTimerDoesNotPollAfterLastDeadline() async throws {
         let (kit, _) = try storedKit()
         var request = try WCTestFixtures.request()
-        request.expiryTimestamp = UInt64(Date().timeIntervalSince1970) + 2
+        request.expiryTimestamp = UInt64(Date().timeIntervalSince1970.rounded(.up)) + 2
         client.pendingRequests = [(request, nil)]
         let counts = Box<[Int]>([])
         let cancellable = kit.pendingRequestsPublisher.sink { counts.value.append(kit.pendingRequestCount) }
@@ -267,7 +270,7 @@ struct WCKitTests {
 
     @MainActor @Test func newEarlierDeadlineReplacesTimerAndSchedulesNext() async throws {
         let (kit, _) = try storedKit()
-        let now = UInt64(Date().timeIntervalSince1970)
+        let now = UInt64(Date().timeIntervalSince1970.rounded(.up))
         var later = try WCTestFixtures.request()
         later.expiryTimestamp = now + 4
         client.pendingRequests = [(later, nil)]
@@ -289,7 +292,7 @@ struct WCKitTests {
     @MainActor @Test func sdkRemovalCancelsScheduledExpiration() async throws {
         let (kit, _) = try storedKit()
         var request = try WCTestFixtures.request()
-        request.expiryTimestamp = UInt64(Date().timeIntervalSince1970) + 2
+        request.expiryTimestamp = UInt64(Date().timeIntervalSince1970.rounded(.up)) + 2
         client.pendingRequests = [(request, nil)]
         try await Task.sleep(nanoseconds: 100_000_000)
         let updates = Box<[Void]>([])
@@ -298,7 +301,7 @@ struct WCKitTests {
 
         client.pendingRequests = []
         client.requestExpirationSubject.send(request.id)
-        try await Task.sleep(nanoseconds: 2_200_000_000)
+        try await Task.sleep(nanoseconds: 3_200_000_000)
 
         #expect(updates.value.count == 1)
         withExtendedLifetime(kit) {}
@@ -307,7 +310,7 @@ struct WCKitTests {
     @MainActor @Test func backgroundCancelsTimerAndForegroundRefreshesExpiredList() async throws {
         let (kit, _) = try storedKit()
         var request = try WCTestFixtures.request()
-        request.expiryTimestamp = UInt64(Date().timeIntervalSince1970) + 2
+        request.expiryTimestamp = UInt64(Date().timeIntervalSince1970.rounded(.up)) + 2
         client.pendingRequests = [(request, nil)]
         let parsed = WCRequest(payload: WCRequestPayload(request: request, kind: .transaction, from: nil), verdict: .pass, dAppName: "dApp")
         let expirationViewModel = WCRequestExpirationViewModel(request: parsed, updates: kit.pendingRequestsPublisher)
@@ -319,7 +322,8 @@ struct WCKitTests {
         foreground.isActive = false
         try await Task.sleep(nanoseconds: 100_000_000)
         let readCount = client.pendingRequestsReadCount
-        try await Task.sleep(nanoseconds: 2_200_000_000)
+        // The rounded-up +2 deadline lands 2-3s out; sleep past it so the foreground refresh must see it expired.
+        try await Task.sleep(nanoseconds: 3_200_000_000)
         #expect(client.pendingRequestsReadCount == readCount)
         #expect(expirationViewModel.isExpired == false)
 
@@ -333,7 +337,7 @@ struct WCKitTests {
         foreground.isActive = false
         let (kit, _) = try storedKit()
         var request = try WCTestFixtures.request()
-        request.expiryTimestamp = UInt64(Date().timeIntervalSince1970) + 2
+        request.expiryTimestamp = UInt64(Date().timeIntervalSince1970.rounded(.up)) + 2
         let requests = Box<[WCRequestItem]>([])
         let cancellable = kit.requestPublisher.receive(on: DispatchQueue.main).sink { requests.value.append($0) }
         defer { cancellable.cancel() }
