@@ -320,7 +320,7 @@ public class Core {
             walletManager: walletManager
         )
 
-        xrpKitManager = XrpKitManager(restoreStateManager: restoreStateManager, marketKit: marketKit, walletManager: walletManager, nodeManager: xrpNodeManager)
+        xrpKitManager = XrpKitManager(restoreStateManager: restoreStateManager, marketKit: marketKit, walletManager: walletManager, nodeManager: xrpNodeManager, testNetManager: testNetManager)
 
         let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)
         restoreSettingsManager = RestoreSettingsManager(storage: restoreSettingsStorage)

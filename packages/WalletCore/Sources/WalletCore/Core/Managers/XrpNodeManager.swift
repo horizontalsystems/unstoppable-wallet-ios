@@ -26,12 +26,12 @@ extension XrpNodeManager {
         XrpNode.defaultNodes(network: network)
     }
 
-    /// The stored choice, or the kit's first node. A selection made on the other network simply
-    /// does not match, so switching testnet on and off keeps both choices.
+    /// The stored choice for this network, or the kit's first node. Each network keeps its own
+    /// choice, so switching testnet on and off does not lose either.
     func node(network: XrpKit.Network) -> XrpNode {
         let nodes = allNodes(network: network)
 
-        if let urlString = blockchainSettingsStorage.xrpNodeUrl(blockchainType: .xrp),
+        if let urlString = blockchainSettingsStorage.xrpNodeUrl(blockchainType: .xrp, testNet: !network.isMainNet),
            let node = nodes.first(where: { $0.url.absoluteString == urlString })
         {
             return node
@@ -40,8 +40,8 @@ extension XrpNodeManager {
         return nodes[0]
     }
 
-    func setCurrent(node: XrpNode, network _: XrpKit.Network) {
-        blockchainSettingsStorage.save(xrpNodeUrl: node.url.absoluteString, blockchainType: .xrp)
+    func setCurrent(node: XrpNode, network: XrpKit.Network) {
+        blockchainSettingsStorage.save(xrpNodeUrl: node.url.absoluteString, blockchainType: .xrp, testNet: !network.isMainNet)
         nodeUpdatedSubject.send(.xrp)
     }
 

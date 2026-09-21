@@ -384,6 +384,7 @@ extension MultiSwapSendHandler {
         case noProposal
         case noActiveAccount
         case noSolanaAdapter
+        case noXrpAdapter
 
         case unsupportedTokenIn
         case unsupportedTokenOut

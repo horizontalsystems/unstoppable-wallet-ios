@@ -118,8 +118,13 @@ extension XrpTransactionAdapter: ITransactionsAdapter {
 
         return Single.create { [weak self, xrpKit] observer in
             Task {
-                let transactions = xrpKit.transactions(tagQuery: tagQuery, fromHash: paginationData, limit: limit)
-                observer(.success(self?.handleTransactions(transactions) ?? []))
+                do {
+                    let transactions = try xrpKit.transactions(tagQuery: tagQuery, fromHash: paginationData, limit: limit)
+                    observer(.success(self?.handleTransactions(transactions) ?? []))
+                } catch {
+                    // the kit's store is unreadable: surface it instead of showing an empty history
+                    observer(.error(error))
+                }
             }
 
             return Disposables.create()
@@ -129,12 +134,16 @@ extension XrpTransactionAdapter: ITransactionsAdapter {
     func allTransactionsAfter(paginationData: String?) -> Single<[TransactionRecord]> {
         Single.create { [xrpKit, converter] observer in
             Task {
-                let all = xrpKit.allTransactions()
-                let anchorTimestamp = paginationData.flatMap { hash in all.first { $0.hash == hash }?.timestamp }
-                let records = all
-                    .filter { transaction in anchorTimestamp.map { transaction.timestamp > $0 } ?? true }
-                    .map { converter.transactionRecord(transaction: $0) }
-                observer(.success(records))
+                do {
+                    let all = try xrpKit.allTransactions()
+                    let anchorTimestamp = paginationData.flatMap { hash in all.first { $0.hash == hash }?.timestamp }
+                    let records = all
+                        .filter { transaction in anchorTimestamp.map { transaction.timestamp > $0 } ?? true }
+                        .map { converter.transactionRecord(transaction: $0) }
+                    observer(.success(records))
+                } catch {
+                    observer(.error(error))
+                }
             }
 
             return Disposables.create()

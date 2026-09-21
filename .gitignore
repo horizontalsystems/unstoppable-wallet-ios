@@ -53,3 +53,4 @@ buildServer.json
 /.serena/
 /.venv-translate/
 /CLAUDE.md
+/.env

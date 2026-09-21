@@ -13,6 +13,7 @@ public class BlockchainSettingsStorage {
     private let keyZanoNode = "zano-node"
     private let keyZcashNode = "zcash-node"
     private let keyXrpNode = "xrp-node"
+    private let keyXrpTestNetNode = "xrp-node-testnet"
     private let keyEndpointAutoSelect = "endpoint-auto-select"
 
     public init(storage: BlockchainSettingRecordStorage) {
@@ -133,12 +134,14 @@ extension BlockchainSettingsStorage {
         try? storage.save(record: record)
     }
 
-    func xrpNodeUrl(blockchainType: BlockchainType) -> String? {
-        try? storage.record(blockchainUid: blockchainType.uid, key: keyXrpNode).map(\.value)
+    // Separate keys per network: the two node lists share no URL, so one key would let a testnet
+    // pick silently overwrite the mainnet one and drop the user back on the default node.
+    func xrpNodeUrl(blockchainType: BlockchainType, testNet: Bool) -> String? {
+        try? storage.record(blockchainUid: blockchainType.uid, key: testNet ? keyXrpTestNetNode : keyXrpNode).map(\.value)
     }
 
-    func save(xrpNodeUrl: String, blockchainType: BlockchainType) {
-        let record = BlockchainSettingRecord(blockchainUid: blockchainType.uid, key: keyXrpNode, value: xrpNodeUrl)
+    func save(xrpNodeUrl: String, blockchainType: BlockchainType, testNet: Bool) {
+        let record = BlockchainSettingRecord(blockchainUid: blockchainType.uid, key: testNet ? keyXrpTestNetNode : keyXrpNode, value: xrpNodeUrl)
         try? storage.save(record: record)
     }
 }

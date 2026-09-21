@@ -157,6 +157,17 @@ struct AddressUriParserBaselineTests {
         #expect(result.memo == "Order123")
     }
 
+    // No standard scheme exists for the XRP Ledger; this is the one Android emits, so a QR made
+    // there scans here (BlockchainType+UriScheme).
+    @Test
+    func parseXrp() throws {
+        let result = try anyParser.parse(url: "xrp:\(AddressUriFixtures.xrp)?amount=12")
+
+        #expect(result.scheme == "xrp")
+        #expect(result.address == AddressUriFixtures.xrp)
+        #expect(result.amount == .decimals(Decimal(12)))
+    }
+
     @Test
     func parseZcash() throws {
         let result = try anyParser.parse(url: "zcash:\(AddressUriFixtures.zecShielded)?amount=0.01")

@@ -107,6 +107,7 @@ class WatchViewModel: ObservableObject {
         addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .ton))
         addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .solana))
         addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .stellar))
+        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .xrp))
         addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .monero))
     }
 

@@ -33,7 +33,7 @@ let package = Package(
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess.git", from: "4.0.0"),
         .package(url: "https://github.com/onevcat/Kingfisher.git", from: "8.6.2"),
         .package(url: "https://github.com/horizontalsystems/LitecoinKit.Swift", exact: "3.0.2"),
-        .package(url: "https://github.com/horizontalsystems/MarketKit.Swift", exact: "3.6.17"),
+        .package(url: "https://github.com/horizontalsystems/MarketKit.Swift", exact: "3.6.18"),
         .package(url: "https://github.com/horizontalsystems/MoneroKit.Swift", exact: "0.2.11"),
         .package(url: "https://github.com/horizontalsystems/NftKit.Swift", exact: "2.0.2"),
         .package(url: "https://github.com/tristanhimmelman/ObjectMapper", exact: "4.2.0"),
@@ -51,11 +51,10 @@ let package = Package(
         .package(url: "https://github.com/horizontalsystems/TronKit.Swift.git", exact: "1.5.2"),
         .package(url: "https://github.com/horizontalsystems/UIExtensions.Swift", exact: "1.0.2"),
         .package(url: "https://github.com/horizontalsystems/UniswapKit.Swift", exact: "3.3.0"),
+        .package(url: "https://github.com/horizontalsystems/XrpKit.Swift", exact: "1.0.0"),
         // Ironwood sync/send hotfix: frozen upstream e58e14e + HS librustzcash pin (81152f63),
         // binary FFI via the 2.6.0-ironwood-hs.1 release on the fork
         .package(url: "https://github.com/horizontalsystems/zodl-swift-wallet-sdk", exact: "4.4.0-hs.1"),
-        // local checkout until XrpKit.Swift 1.0.0 is tagged
-        .package(path: "../../../XrpKit.Swift"),
     ],
     targets: [
         .target(

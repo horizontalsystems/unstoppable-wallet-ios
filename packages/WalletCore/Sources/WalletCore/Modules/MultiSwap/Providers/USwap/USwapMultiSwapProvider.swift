@@ -157,6 +157,7 @@ extension USwapMultiSwapProvider {
         case noMoneroAdapter
         case noZanoAdapter
         case noSolanaAdapter
+        case noXrpAdapter
     }
 }
 

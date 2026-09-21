@@ -37,20 +37,27 @@ extension XrpSendHandler: ISendHandler {
         // the fee is always paid in XRP on top of the amount; spendable XRP already excludes the reserve
         let availableXrp = adapter.availableXrpBalance
         switch data {
-        case let .payment(amount, _):
+        case let .payment(amount, address):
             if token.type.isNative {
                 if amount + fee > availableXrp {
-                    transactionError = TransactionError.insufficientXrpBalance(balance: availableXrp)
+                    transactionError = XrpSendHelper.TransactionError.insufficientXrpBalance(balance: availableXrp)
                 }
             } else if amount > adapter.balanceData.available {
-                transactionError = TransactionError.insufficientTokenBalance
+                transactionError = XrpSendHelper.TransactionError.insufficientTokenBalance
             } else if fee > availableXrp {
-                transactionError = TransactionError.insufficientXrpBalance(balance: availableXrp)
+                transactionError = XrpSendHelper.TransactionError.insufficientXrpBalance(balance: availableXrp)
+            }
+
+            if transactionError == nil {
+                transactionError = await XrpSendHelper.destinationError(
+                    adapter: adapter, token: token, amount: amount,
+                    address: address, destinationTag: destinationTag
+                )
             }
         case .trustSet:
             // the new object also locks one owner reserve increment (Android `validateActivation`)
             if fee + adapter.ownerReserve > availableXrp {
-                transactionError = TransactionError.insufficientActivationBalance
+                transactionError = XrpSendHelper.TransactionError.insufficientActivationBalance
             }
         }
 
@@ -112,36 +119,11 @@ extension XrpSendHandler {
             [token.coin]
         }
 
-        private func caution(transactionError: Error, feeToken: Token) -> CautionNew {
-            let title: String
-            let text: String
-
-            if let xrpError = transactionError as? XrpSendHandler.TransactionError {
-                switch xrpError {
-                case let .insufficientXrpBalance(balance):
-                    let balanceString = AppValue(token: feeToken, value: balance).formattedShort()
-                    title = "fee_settings.errors.insufficient_balance".localized
-                    text = "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? "")
-                case .insufficientTokenBalance:
-                    title = "fee_settings.errors.insufficient_balance".localized
-                    text = "swap.insufficient_balance".localized
-                case .insufficientActivationBalance:
-                    title = "fee_settings.errors.insufficient_balance".localized
-                    text = "send.xrp.activation.insufficient_balance".localized
-                }
-            } else {
-                title = "ethereum_transaction.error.title".localized
-                text = transactionError.convertedError.smartDescription
-            }
-
-            return CautionNew(title: title, text: text, type: .error)
-        }
-
         func cautions(baseToken: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
             var cautions = [CautionNew]()
 
             if let transactionError {
-                cautions.append(caution(transactionError: transactionError, feeToken: baseToken))
+                cautions.append(XrpSendHelper.caution(transactionError: transactionError, feeToken: baseToken))
             }
 
             // the reserve note of the Android activation page: locked, not spent
@@ -194,15 +176,7 @@ extension XrpSendHandler {
         }
 
         func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
-            let appValue = AppValue(token: baseToken, value: fee)
-            let currencyValue = rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) }
-
-            return [
-                .fee(
-                    title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
-                    amountData: .init(appValue: appValue, currencyValue: currencyValue)
-                ),
-            ]
+            XrpSendHelper.feeFields(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid])
         }
 
         func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
@@ -218,12 +192,6 @@ extension XrpSendHandler {
 extension XrpSendHandler {
     enum SendError: Error {
         case invalidData
-    }
-
-    enum TransactionError: Error {
-        case insufficientXrpBalance(balance: Decimal)
-        case insufficientTokenBalance
-        case insufficientActivationBalance
     }
 }
 

@@ -16,6 +16,9 @@ extension BlockchainType {
         case .zano: return "zano"
         case .stellar: return "stellar"
         case .solana: return "solana"
+        // No standard exists: XLS-32 proposed `xrpl:` and is stagnant, `ripple:` was never
+        // specified. This is the Android scheme, so a QR from either app scans in both.
+        case .xrp: return "xrp"
         default: return nil
         }
     }
@@ -25,7 +28,7 @@ extension BlockchainType {
     var removeScheme: Bool {
         if isEvm { return true }
         switch self {
-        case .bitcoin, .litecoin, .dash, .zcash, .tron, .ton, .monero, .zano, .stellar, .solana: return true
+        case .bitcoin, .litecoin, .dash, .zcash, .tron, .ton, .monero, .zano, .stellar, .solana, .xrp: return true
         case .bitcoinCash, .ecash: return false
         default: return false
         }

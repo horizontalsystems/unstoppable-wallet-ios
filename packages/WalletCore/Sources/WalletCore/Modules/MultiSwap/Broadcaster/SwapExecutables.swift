@@ -114,6 +114,14 @@ public struct ThorChainExecutable: ISwapExecutable {
     let memo: String
 }
 
+public struct XrpExecutable: ISwapExecutable {
+    public let token: Token
+    public let address: String
+    public let amount: Decimal
+    /// The provider's crediting identifier: a field of the Payment, never a memo.
+    public let destinationTag: UInt32?
+}
+
 public struct MoneroExecutable: ISwapExecutable {
     public let token: Token
     public let address: String

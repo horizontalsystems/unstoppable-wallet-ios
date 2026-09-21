@@ -75,16 +75,29 @@ struct XrpNodeManagerTests {
         #expect(env.manager.rpcUrls(network: mainNet) == mainNet.rpcUrls)
     }
 
-    // A node stored for one network does not exist on the other, so each keeps its own choice
+    // Each network keeps its own choice: one shared key let a testnet pick overwrite the mainnet one
     @Test func selectionDoesNotLeakAcrossNetworks() throws {
         let env = try XrpNodeTestEnvironment()
-        let target = env.manager.allNodes(network: mainNet)[1]
+        let mainTarget = env.manager.allNodes(network: mainNet)[1]
 
-        env.manager.setCurrent(node: target, network: mainNet)
+        env.manager.setCurrent(node: mainTarget, network: mainNet)
 
         #expect(env.manager.node(network: testNet).url == testNet.rpcUrls[0])
         #expect(env.manager.rpcUrls(network: testNet) == testNet.rpcUrls)
-        #expect(env.manager.node(network: mainNet).url == target.url)
+        #expect(env.manager.node(network: mainNet).url == mainTarget.url)
+    }
+
+    // The direction that used to lose the choice: pick on testnet, come back to mainnet
+    @Test func testnetChoiceDoesNotOverwriteMainnetChoice() throws {
+        let env = try XrpNodeTestEnvironment()
+        let mainTarget = env.manager.allNodes(network: mainNet)[2]
+        let testTarget = env.manager.allNodes(network: testNet)[1]
+
+        env.manager.setCurrent(node: mainTarget, network: mainNet)
+        env.manager.setCurrent(node: testTarget, network: testNet)
+
+        #expect(env.manager.node(network: mainNet).url == mainTarget.url)
+        #expect(env.manager.node(network: testNet).url == testTarget.url)
     }
 
     @Test func nodeUpdateIsPublished() throws {

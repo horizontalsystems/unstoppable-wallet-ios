@@ -4,10 +4,15 @@ import MarketKit
 import RxSwift
 import XrpKit
 
-/// Looks up what the destination account demands before a payment is built (Android
-/// `SendXrpDestinationService`): a minimum first deposit when it does not exist yet, a destination
-/// tag when it has the RequireDestTag flag, a trust line for an issued token. A lookup that failed
-/// blocks the send: an unknown flag is not the same as no flag. Memo size is enforced by the kit.
+/// Asks the ledger what the destination demands, to shape the form: whether the RequireDestTag flag
+/// makes the tag mandatory, and whether an issued token has a trust line to land on. Both are
+/// permissive when the node does not answer, as Android (`XrpChainPlugin.sendExtraInput` leaves the
+/// tag optional, `XrpAddressValidator` keeps a well-formed address valid): a blip while typing must
+/// not lock the form. The two gates that must not pass on an unknown answer, a minimum first deposit
+/// into an unfunded account and a required destination tag, live on the confirmation in
+/// `XrpSendHelper.destinationError`, which is re-asked on every refresh. The trust line stays here
+/// and stays permissive, as Android: an issued payment the recipient cannot accept costs the fee the
+/// ledger burns, not the amount. Memo size is enforced by the kit.
 class XrpPreSendHandler: PreSendHandler {
     override class func instance(wallet: Wallet, address: ResolvedAddress) -> IPreSendHandler? {
         guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? ISendXrpAdapter & IBalanceAdapter else { return nil }
@@ -21,8 +26,9 @@ class XrpPreSendHandler: PreSendHandler {
     private let destination: (classic: String, tag: UInt32?)?
     private let addressError: Error?
 
-    private var lookup: Lookup?
-    private var lookupError: Error?
+    /// nil while unknown: the node has not answered yet, or it failed to.
+    private var requiresTag: Bool?
+    private var canReceive: Bool?
     private var lookupTask: Task<Void, Never>?
 
     private let stateSubject = PassthroughSubject<AdapterState, Never>()
@@ -60,7 +66,8 @@ class XrpPreSendHandler: PreSendHandler {
         adapter.balanceDataUpdatedObservable
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe { [weak self] balanceData in
-                self?.balanceSubject.send(balanceData.available)
+                guard let self else { return }
+                balanceSubject.send(spendable(available: balanceData.available))
             }
             .disposed(by: disposeBag)
 
@@ -75,38 +82,45 @@ class XrpPreSendHandler: PreSendHandler {
         guard let destination else { return }
 
         lookupTask = Task { [weak self, adapter] in
-            do {
-                let exists = try await adapter.doesAccountExist(address: destination.classic)
-                let requiresTag = try await adapter.requiresDestinationTag(address: destination.classic)
-                let canReceive = try await adapter.canReceive(address: destination.classic)
-                self?.handle(lookup: Lookup(exists: exists, requiresTag: requiresTag, canReceive: canReceive), error: nil)
-            } catch is CancellationError {
-                return
-            } catch {
-                self?.handle(lookup: nil, error: error)
-            }
+            // asked separately, as the two Android call sites are: one node hiccup must not throw
+            // away the other answer
+            let requiresTag = try? await adapter.requiresDestinationTag(address: destination.classic)
+            if Task.isCancelled { return }
+            let canReceive = try? await adapter.canReceive(address: destination.classic)
+            if Task.isCancelled { return }
+
+            self?.handle(requiresTag: requiresTag, canReceive: canReceive)
         }
     }
 
-    private func handle(lookup: Lookup?, error: Error?) {
-        self.lookup = lookup
-        lookupError = error
+    private func handle(requiresTag: Bool?, canReceive: Bool?) {
+        self.requiresTag = requiresTag
+        self.canReceive = canReceive
 
-        // a tag packed in the X-address stays pinned whatever the account says
-        if case .fixed = destinationTagStateSubject.value {
-            return
+        // Always publish, even when the value does not change: this is the signal the form waits on
+        // to recompute. Returning early for a pinned tag left the send button dead whenever the
+        // amount had been typed before the node answered.
+        if case let .fixed(tag) = destinationTagStateSubject.value {
+            // a tag packed in the X-address stays pinned whatever the account says
+            destinationTagStateSubject.send(.fixed(tag))
+        } else {
+            destinationTagStateSubject.send(requiresTag == true ? .required : .optional)
         }
-        destinationTagStateSubject.send(lookup?.requiresTag == true ? .required : .optional)
+    }
+
+    /// What the form may actually offer: the fee is paid in XRP on top of the amount, so a native
+    /// send of the whole spendable balance would always fail the fee check (Android
+    /// `XrpAdapter.maxSendableBalance`). An issued token is not reduced: its fee is a separate asset.
+    private func spendable(available: Decimal) -> Decimal {
+        guard token.type.isNative else {
+            return available
+        }
+
+        return max(0, available - adapter.fee)
     }
 
     private func invalid(_ text: String, title: String? = nil) -> SendDataResult {
         .invalid(cautions: [CautionNew(title: title, text: text, type: .error)])
-    }
-
-    private struct Lookup {
-        let exists: Bool
-        let requiresTag: Bool
-        let canReceive: Bool
     }
 }
 
@@ -120,7 +134,7 @@ extension XrpPreSendHandler: IPreSendHandler {
     }
 
     var balance: Decimal {
-        adapter.balanceData.available
+        spendable(available: adapter.balanceData.available)
     }
 
     var balancePublisher: AnyPublisher<Decimal, Never> {
@@ -155,14 +169,6 @@ extension XrpPreSendHandler: IPreSendHandler {
             return invalid("send.address_error.own_address".localized(token.coin.code), title: "send.address.invalid_address".localized)
         }
 
-        // fail-closed: the tag, minimum deposit and trust line gates all rest on this lookup
-        guard let lookup else {
-            if let lookupError {
-                return invalid(lookupError.convertedError.smartDescription, title: "send.xrp.destination_tag".localized)
-            }
-            return .invalid(cautions: [])
-        }
-
         let tag: UInt32?
         if let fixed = destination.tag {
             tag = fixed
@@ -177,17 +183,12 @@ extension XrpPreSendHandler: IPreSendHandler {
             }
         }
 
-        if lookup.requiresTag, tag == nil {
+        // a definite "no" is a property of the address, so it belongs here; an unknown answer is not
+        if requiresTag == true, tag == nil {
             return invalid("send.xrp.destination_tag.required".localized, title: "send.xrp.destination_tag".localized)
         }
 
-        if token.type.isNative {
-            // an unfunded account is created by its first payment, which must cover the base reserve (tecNO_DST_INSUF_XRP)
-            if !lookup.exists, amount < adapter.baseReserve {
-                let minimum = AppValue(token: token, value: adapter.baseReserve).formattedFull() ?? ""
-                return invalid("send.amount_error.minimum_amount.description".localized(minimum), title: "send.amount_error.minimum_amount.title".localized)
-            }
-        } else if !lookup.canReceive {
+        if !token.type.isNative, canReceive == false {
             return invalid("send.stellar.no_trustline.description".localized, title: "send.stellar.no_trustline.title".localized)
         }
 

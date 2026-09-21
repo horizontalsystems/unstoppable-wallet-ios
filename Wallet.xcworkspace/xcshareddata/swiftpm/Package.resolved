@@ -1,5 +1,5 @@
 {
-  "originHash" : "bb6f3ccb764f068d44373c89baad618dfe1783f75a570941bd14a4203f65e0f0",
+  "originHash" : "87dfbc5c8d56f60063bd8f26c3f994cc2afd276ef312fb5417f7c536779e7875",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -276,8 +276,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/MarketKit.Swift",
       "state" : {
-        "revision" : "2e6d253a2f1e0489a79aa0f7355906c42ba2791e",
-        "version" : "3.6.17"
+        "revision" : "a991038377e9c100905f869abbd578aad15e96b7",
+        "version" : "3.6.18"
       }
     },
     {
@@ -301,7 +301,7 @@
     {
       "identity" : "objectmapper",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tristanhimmelman/ObjectMapper/",
+      "location" : "https://github.com/tristanhimmelman/ObjectMapper",
       "state" : {
         "revision" : "0b96a734de3ea1c87374ae677064f86adb0716ec",
         "version" : "4.2.0"
@@ -683,6 +683,15 @@
       "state" : {
         "revision" : "4293df51d3500b8e876ca4bf0d7548adf097569a",
         "version" : "1.1.2"
+      }
+    },
+    {
+      "identity" : "xrpkit.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/horizontalsystems/XrpKit.Swift",
+      "state" : {
+        "revision" : "4a06bac0577d623a4959c1ea93b87baa654f78b3",
+        "version" : "1.0.0"
       }
     },
     {

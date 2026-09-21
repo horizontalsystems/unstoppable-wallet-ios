@@ -7,7 +7,4 @@
    <FileRef
       location = "group:packages/WalletCore">
    </FileRef>
-   <FileRef
-      location = "group:../MarketKit.Swift">
-   </FileRef>
 </Workspace>

@@ -76,6 +76,8 @@ public enum DestinationHelper {
             address = ZanoAdapter.address(accountType: account.type)
         case .solana:
             address = try SolanaKitManager.address(accountType: account.type)
+        case .xrp:
+            address = try XrpKitManager.address(accountType: account.type)
         case .thorChain:
             address = try AccountAddress.thorChainAddress(account: account, network: .mainnet).raw
         case .mayaChain:

@@ -26,6 +26,7 @@ public final class USwapAssetRepository {
         "324": .zkSync,
         "4663": .robinhood,
         "stellar": .stellar,
+        "ripple": .xrp,
         "zano": .zano,
     ]
 
@@ -235,6 +236,15 @@ private extension USwapAssetRepository {
                         tokenType: .stellar(code: ticker, issuer: issuer)
                     ),
                 ]
+            }
+
+            return blockchainType.nativeTokenQueries
+
+        case .xrp:
+            // Native XRP only: the server lists no XRPL issued currency, and a trust-line asset
+            // has no canonical id, so it could not even be suspended (Android USwapProvider).
+            guard address?.isEmpty ?? true else {
+                return []
             }
 
             return blockchainType.nativeTokenQueries

@@ -11,6 +11,7 @@ public class XrpKitManager {
     private let marketKit: MarketKit.Kit
     private let walletManager: WalletManager
     private let nodeManager: XrpNodeManager
+    private let testNetManager: TestNetManager
 
     private var trustLinesCancellable: AnyCancellable?
     private var cancellables = Set<AnyCancellable>()
@@ -21,23 +22,33 @@ public class XrpKitManager {
     private let queue = DispatchQueue(label: "\(AppConfig.label).xrp-kit-manager", qos: .userInitiated)
     private let kitStoppedRelay = PublishRelay<Void>()
 
-    public init(restoreStateManager: RestoreStateManager, marketKit: MarketKit.Kit, walletManager: WalletManager, nodeManager: XrpNodeManager) {
+    public init(restoreStateManager: RestoreStateManager, marketKit: MarketKit.Kit, walletManager: WalletManager, nodeManager: XrpNodeManager, testNetManager: TestNetManager) {
         self.restoreStateManager = restoreStateManager
         self.marketKit = marketKit
         self.walletManager = walletManager
         self.nodeManager = nodeManager
+        self.testNetManager = testNetManager
 
         nodeManager.nodeUpdatedPublisher
             .receive(on: DispatchQueue.global(qos: .userInitiated))
             .sink { [weak self] _ in
-                self?.handleNodeUpdate()
+                self?.dropKit()
+            }
+            .store(in: &cancellables)
+
+        // The network decides the node list, the database file and how an X-address is read, so a
+        // kit built for the other one must not survive the switch.
+        testNetManager.$testNetEnabled
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
+            .sink { [weak self] _ in
+                self?.dropKit()
             }
             .store(in: &cancellables)
     }
 
-    /// Drop the kit so the next adapter build reaches the new node (SolanaKitManager
+    /// Drop the kit so the next adapter build reaches the new node or network (SolanaKitManager
     /// `handleRpcSourceUpdate`); AdapterManager recreates the adapters on the relay.
-    private func handleNodeUpdate() {
+    private func dropKit() {
         queue.async { [weak self] in
             guard let self else { return }
 
@@ -129,8 +140,13 @@ extension XrpKitManager {
     static let issuedTokenDecimals = 8
 
     /// Follows the app-wide testnet switch, like Tron: the kit keeps a separate database per network.
+    var network: XrpKit.Network {
+        testNetManager.testNetEnabled ? .testNet : .mainNet
+    }
+
+    /// One source of truth for callers that have no manager at hand (send handlers, swap builder).
     static var network: XrpKit.Network {
-        Core.shared.testNetManager.testNetEnabled ? .testNet : .mainNet
+        Core.shared.xrpKitManager.network
     }
 
     var xrpKit: XrpKit.Kit? {
