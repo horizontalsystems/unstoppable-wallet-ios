@@ -42,6 +42,7 @@ enum AppConfig {
         .base: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .zkSync: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .robinhood: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
+        .arc: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .arbitrumOne: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .gnosis: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .fantom: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",

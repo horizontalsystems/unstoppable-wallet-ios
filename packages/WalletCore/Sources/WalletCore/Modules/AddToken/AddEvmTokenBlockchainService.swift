@@ -43,6 +43,12 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
             throw TokenError.invalidAddress
         }
 
+        // The native coin's ERC-20 interface is not a token of its own, and Arc's transfer-log
+        // address is not a contract at all; adding either would duplicate the native wallet.
+        guard !blockchain.type.isBlockedEip20(address: reference) else {
+            throw TokenError.invalidAddress
+        }
+
         let tokenQuery = tokenQuery(reference: reference)
 
         do {

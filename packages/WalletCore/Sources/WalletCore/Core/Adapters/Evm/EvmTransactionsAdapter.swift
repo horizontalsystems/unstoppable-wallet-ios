@@ -39,15 +39,27 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
         spamManager?.initialize(adapter: self)
     }
 
-    private func tagQuery(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> TransactionTagQuery {
+    /// Usually one query. Arc's native coin gets a second one for its ERC-20 interface: such a movement
+    /// is tagged by the emitting contract rather than as native, so the coin's own history would
+    /// otherwise miss it, and the interface never becomes a wallet of its own. The storage ORs the
+    /// queries and selects distinct rows, so nothing is listed twice.
+    ///
+    /// Scoped to Arc like the relabelling in `EvmTransactionConverter`. zkSync's interface also tags
+    /// the fee and refund of every contract call, which are not relabelled there, so pulling them into
+    /// the ETH history would add unknown calls with the fee shown twice.
+    private func tagQueries(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> [TransactionTagQuery] {
         var type: TransactionTag.TagType?
         var `protocol`: TransactionTag.TagProtocol?
         var contractAddress: EvmKit.Address?
+        var nativeInterfaceAddress: EvmKit.Address?
 
         if let token {
             switch token.type {
             case .native:
                 `protocol` = .native
+                if evmKitWrapper.blockchainType == .arc, let contract = evmKitWrapper.blockchainType.nativeTokenContract {
+                    nativeInterfaceAddress = try? EvmKit.Address(hex: contract.address)
+                }
             case let .eip20(address):
                 if let address = try? EvmKit.Address(hex: address) {
                     `protocol` = .eip20
@@ -63,7 +75,13 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
         case .outgoing: type = .outgoing
         }
 
-        return TransactionTagQuery(type: type, protocol: `protocol`, contractAddress: contractAddress, address: address)
+        var queries = [TransactionTagQuery(type: type, protocol: `protocol`, contractAddress: contractAddress, address: address)]
+
+        if let nativeInterfaceAddress {
+            queries.append(TransactionTagQuery(type: type, protocol: .eip20, contractAddress: nativeInterfaceAddress, address: address))
+        }
+
+        return queries
     }
 }
 
@@ -120,7 +138,7 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
     }
 
     func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
-        evmKit.transactionsObservable(tagQueries: [tagQuery(token: token, filter: filter, address: address?.lowercased())]).map { [weak self] in
+        evmKit.transactionsObservable(tagQueries: tagQueries(token: token, filter: filter, address: address?.lowercased())).map { [weak self] in
 
             self?.handleTransactions($0, token: token) ?? []
         }
@@ -129,7 +147,7 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
     func transactionsSingle(paginationData: String?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
         let hash = paginationData?.hs.hexData
 
-        return evmKit.transactionsSingle(tagQueries: [tagQuery(token: token, filter: filter, address: address?.lowercased())], fromHash: hash, limit: limit)
+        return evmKit.transactionsSingle(tagQueries: tagQueries(token: token, filter: filter, address: address?.lowercased()), fromHash: hash, limit: limit)
             .map { [weak self] transactions -> [TransactionRecord] in
 
                 guard !transactions.isEmpty else {

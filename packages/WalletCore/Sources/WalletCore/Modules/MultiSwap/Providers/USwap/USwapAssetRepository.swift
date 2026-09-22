@@ -25,6 +25,7 @@ public final class USwapAssetRepository {
         "8453": .base,
         "324": .zkSync,
         "4663": .robinhood,
+        "5042": .arc,
         "stellar": .stellar,
         "ripple": .xrp,
         "zano": .zano,
@@ -191,7 +192,7 @@ extension USwapAssetRepository {
 private extension USwapAssetRepository {
     static func tokenQueries(blockchainType: BlockchainType, address: String?, ticker: String?) -> [TokenQuery] {
         switch blockchainType {
-        case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .tron, .base, .zkSync, .robinhood:
+        case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .tron, .base, .zkSync, .robinhood, .arc:
             let tokenType: TokenType
 
             if let address, !address.isEmpty {

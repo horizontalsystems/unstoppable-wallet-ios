@@ -24,6 +24,7 @@ extension BlockchainType {
         .base,
         .zkSync,
         .robinhood,
+        .arc,
         .binanceSmartChain,
         .tron,
         .thorChain,
@@ -80,6 +81,7 @@ extension BlockchainType {
             .ecash,
             .zkSync,
             .robinhood,
+            .arc,
             .gnosis,
             .fantom,
         ]
@@ -89,7 +91,9 @@ extension BlockchainType {
 
     var resendable: Bool {
         switch self {
-        case .optimism, .arbitrumOne, .base: return false
+        // sequencer-run chains where replacing a pending transaction by nonce does not apply,
+        // the same set Android refuses speed-up and cancel on
+        case .optimism, .arbitrumOne, .base, .zkSync, .robinhood, .arc: return false
         default: return true
         }
     }
@@ -143,7 +147,7 @@ extension BlockchainType {
         case .evmPrivateKey, .evmAddress:
             switch self {
             case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne,
-                 .gnosis, .fantom, .base, .zkSync, .robinhood:
+                 .gnosis, .fantom, .base, .zkSync, .robinhood, .arc:
                 return true
             default: return false
             }
@@ -171,9 +175,39 @@ extension BlockchainType {
         }
     }
 
+    /// A contract that exposes the native coin through an ERC-20 interface over the same balance.
+    /// zkSync reports plain ETH movements as transfers of its L2 ETH system contract; Arc predeploys
+    /// a 6-decimal view of its 18-decimal native USDC. Neither is a separate token, so neither may
+    /// ever become a wallet of its own. Reading such a transfer as the native coin in history is a
+    /// separate decision and is made for Arc only, in `EvmTransactionConverter`.
+    var nativeTokenContract: (address: String, decimals: Int)? {
+        switch self {
+        case .zkSync: return ("0x000000000000000000000000000000000000800a", 18)
+        case .arc: return ("0x3600000000000000000000000000000000000000", 6)
+        default: return nil
+        }
+    }
+
+    /// Arc mirrors every native movement as a Transfer log from this address. It is not a contract:
+    /// the amount is already carried by the transaction value or an internal transaction, so the log
+    /// is dropped from history and never treated as a token.
+    static let arcNativeTransferLogAddress = "0xfffffffffffffffffffffffffffffffffffffffe"
+
+    /// Addresses whose Transfer logs must never be offered, or accepted, as an ERC-20 wallet.
+    var blockedEip20Addresses: Set<String> {
+        switch self {
+        case .arc: return Set([nativeTokenContract.map(\.address), Self.arcNativeTransferLogAddress].compactMap { $0?.lowercased() })
+        default: return Set(nativeTokenContract.map { [$0.address.lowercased()] } ?? [])
+        }
+    }
+
+    func isBlockedEip20(address: String) -> Bool {
+        blockedEip20Addresses.contains(address.lowercased())
+    }
+
     public var isEvm: Bool {
         switch self {
-        case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum, .fantom, .gnosis, .optimism, .polygon, .zkSync, .robinhood: return true
+        case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum, .fantom, .gnosis, .optimism, .polygon, .zkSync, .robinhood, .arc: return true
         default: return false
         }
     }
@@ -196,6 +230,7 @@ extension BlockchainType {
         case .base: return "L2 chain"
         case .zkSync: return "L2 chain"
         case .robinhood: return "L2 chain"
+        case .arc: return "USDC, ERC20 tokens"
         case .arbitrumOne: return "L2 chain"
         case .zcash: return "ZEC"
         case .monero: return "XMR"
@@ -224,6 +259,7 @@ extension BlockchainType {
         case .optimism: return UIColor(hex: 0xEB3431)
         case .base: return UIColor(hex: 0x2759F6)
         case .arbitrumOne: return UIColor(hex: 0x96BEDC)
+        case .arc: return UIColor(hex: 0x4A7BB7)
         default: return nil
         }
     }
@@ -237,6 +273,7 @@ extension BlockchainType {
         case .optimism: return Color(hex: 0xEB3431)
         case .base: return Color(hex: 0x2759F6)
         case .arbitrumOne: return Color(hex: 0x96BEDC)
+        case .arc: return Color(hex: 0x4A7BB7)
         default: return nil
         }
     }
@@ -297,7 +334,7 @@ extension BlockchainType {
         case .zcash: return 75
         case .monero: return 120
         case .zano: return 60
-        case .binanceSmartChain, .arbitrumOne: return 1
+        case .binanceSmartChain, .arbitrumOne, .arc: return 1
         case .thorChain, .mayaChain: return nil
         case .xrp: return 4
         case .solana, .unsupported: return nil

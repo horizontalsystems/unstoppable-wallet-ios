@@ -39,6 +39,22 @@ public class EvmTransactionConverter {
     }
 
     public static func eip20Value(baseToken: MarketKit.Token, coinManager: CoinManager, tokenAddress: EvmKit.Address, value: BigUInt, sign: FloatingPointSign, tokenInfo: Eip20Kit.TokenInfo?) -> AppValue {
+        // The ERC-20 interface over the native coin moves the native balance, so it is shown as the
+        // native coin. Its own decimals are used for the amount: on Arc the view is 6-decimal while
+        // the coin is 18-decimal.
+        //
+        // Scoped to Arc, as Android scopes it. zkSync has the same kind of contract, but there the
+        // mirrored movement is not dropped from history the way Arc's is, so relabelling it as the
+        // native coin would turn a visibly separate entry into what looks like a second copy of the
+        // same amount. Blocking it from becoming a wallet (`blockedEip20Addresses`) still applies to
+        // both chains.
+        if baseToken.blockchainType == .arc,
+           let contract = baseToken.blockchainType.nativeTokenContract,
+           tokenAddress.hex.caseInsensitiveCompare(contract.address) == .orderedSame
+        {
+            return AppValue(token: baseToken, value: convertAmount(amount: value, decimals: contract.decimals, sign: sign))
+        }
+
         let query = TokenQuery(blockchainType: baseToken.blockchainType, tokenType: .eip20(address: tokenAddress.hex))
 
         if let token = try? coinManager.token(query: query) {
@@ -50,6 +66,10 @@ public class EvmTransactionConverter {
         }
 
         return AppValue(value: Self.convertAmount(amount: value, decimals: 0, sign: sign))
+    }
+
+    private static func isNativeTransferLog(blockchainType: BlockchainType, address: EvmKit.Address) -> Bool {
+        blockchainType == .arc && address.hex.caseInsensitiveCompare(BlockchainType.arcNativeTransferLogAddress) == .orderedSame
     }
 
     private func convertToAmount(token: SwapDecoration.Token, amount: SwapDecoration.Amount, sign: FloatingPointSign) -> SwapTransactionRecord.Amount {
@@ -324,7 +344,10 @@ public extension EvmTransactionConverter {
         case let decoration as UnknownTransactionDecoration:
             let internalTransactions = decoration.internalTransactions.filter { $0.to == userAddress }
 
-            let eip20Transfers = decoration.eventInstances.compactMap { $0 as? TransferEventInstance }
+            let eip20Transfers = decoration.eventInstances
+                .compactMap { $0 as? TransferEventInstance }
+                // a mirror of a native movement that is already counted elsewhere in this transaction
+                .filter { !Self.isNativeTransferLog(blockchainType: baseToken.blockchainType, address: $0.contractAddress) }
             let incomingEip20Transfers = eip20Transfers.filter { $0.to == userAddress && $0.from != userAddress }
             let outgoingEip20Transfers = eip20Transfers.filter { $0.from == userAddress }
 

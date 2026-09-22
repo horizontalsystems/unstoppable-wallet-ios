@@ -121,6 +121,7 @@ public enum AccountType: Identifiable {
             case (.base, .native), (.base, .eip20): return true
             case (.zkSync, .native), (.zkSync, .eip20): return true
             case (.robinhood, .native), (.robinhood, .eip20): return true
+            case (.arc, .native), (.arc, .eip20): return true
             case (.tron, .native), (.tron, .eip20): return true
             case (.thorChain, .native), (.thorChain, .thorChainAsset): return true
             case (.mayaChain, .native): return true
@@ -162,6 +163,7 @@ public enum AccountType: Identifiable {
             case (.base, .native), (.base, .eip20): return true
             case (.zkSync, .native), (.zkSync, .eip20): return true
             case (.robinhood, .native), (.robinhood, .eip20): return true
+            case (.arc, .native), (.arc, .eip20): return true
             default: return false
             }
         case .stellarSecretKey, .stellarAccount:

@@ -128,7 +128,24 @@ class EvmAccountManager {
             }
         }
 
-        handle(foundTokens: Array(foundTokens), suspiciousTokenTypes: Array(suspiciousTokenTypes.subtracting(foundTokens.map(\.tokenType))), account: account, evmKit: evmKitWrapper.evmKit)
+        // Filtered here rather than in each branch: the native coin's ERC-20 interface and Arc's
+        // synthetic transfer log arrive through the swap decorations too, and enabling either would
+        // duplicate the native wallet. One gate on the collected set covers every path (Android
+        // EvmAccountManager).
+        handle(
+            foundTokens: Array(foundTokens.filter { !isBlocked(tokenType: $0.tokenType) }),
+            suspiciousTokenTypes: Array(suspiciousTokenTypes.subtracting(foundTokens.map(\.tokenType)).filter { !isBlocked(tokenType: $0) }),
+            account: account,
+            evmKit: evmKitWrapper.evmKit
+        )
+    }
+
+    private func isBlocked(tokenType: TokenType) -> Bool {
+        guard case let .eip20(address) = tokenType else {
+            return false
+        }
+
+        return blockchainType.isBlockedEip20(address: address)
     }
 
     private func handle(foundTokens: [FoundToken], suspiciousTokenTypes: [TokenType], account: Account, evmKit: EvmKit.Kit) {

@@ -9,6 +9,7 @@ extension Token {
             switch blockchainType {
             case .optimism, .arbitrumOne, .base, .zkSync: return blockchain.name
             case .robinhood: return "Robinhood"
+            case .arc: return "Arc"
             default: return nil
             }
         case .eip20:
@@ -17,6 +18,7 @@ extension Token {
             case .binanceSmartChain: return "BEP20"
             case .tron: return "TRC20"
             case .robinhood: return "Robinhood"
+            case .arc: return "Arc"
             default: return blockchain.name
             }
         case .jetton:
@@ -46,7 +48,7 @@ extension Token {
         switch type {
         case .native:
             switch blockchainType {
-            case .optimism, .arbitrumOne, .base, .zkSync, .robinhood: return blockchainType.imageUrl
+            case .optimism, .arbitrumOne, .base, .zkSync, .robinhood, .arc: return blockchainType.imageUrl
             default: return nil
             }
         case .derived, .addressType: return nil

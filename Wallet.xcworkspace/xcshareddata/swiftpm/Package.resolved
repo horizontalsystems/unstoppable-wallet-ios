@@ -1,5 +1,5 @@
 {
-  "originHash" : "87dfbc5c8d56f60063bd8f26c3f994cc2afd276ef312fb5417f7c536779e7875",
+  "originHash" : "b6ea8672b27e10886231bdb91d54179fdf2dfd55be0459af218df1ad583899b7",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -159,8 +159,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/EvmKit.Swift",
       "state" : {
-        "revision" : "b8c1b51b14cbedb1cd71b8543d129a2c58c23126",
-        "version" : "2.6.0"
+        "revision" : "481a2161710f713098c6831749e58b3db1f242e0",
+        "version" : "2.7.0"
       }
     },
     {
@@ -276,8 +276,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/MarketKit.Swift",
       "state" : {
-        "revision" : "a991038377e9c100905f869abbd578aad15e96b7",
-        "version" : "3.6.18"
+        "revision" : "0c0ea2b0091c1c6e44817e059333e11792ee68f5",
+        "version" : "3.6.19"
       }
     },
     {

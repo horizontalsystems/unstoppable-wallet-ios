@@ -124,7 +124,7 @@ struct EvmResendHandlerTests {
         }
     }
 
-    @Test(arguments: [BlockchainType.optimism, .arbitrumOne, .base])
+    @Test(arguments: [BlockchainType.optimism, .arbitrumOne, .base, .zkSync, .robinhood, .arc])
     func unsupportedNetworkIsRejected(blockchainType: BlockchainType) throws {
         let original = try transaction()
 
