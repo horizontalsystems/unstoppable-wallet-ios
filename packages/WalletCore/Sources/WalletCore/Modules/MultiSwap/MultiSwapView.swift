@@ -98,55 +98,24 @@ struct MultiSwapView: View {
     }
 
     @ViewBuilder private func boxInView() -> some View {
-        HStack(spacing: 8) {
-            TokenSelectorButton(token: viewModel.tokenIn) {
-                Coordinator.shared.present { isPresented in
-                    MultiSwapTokenSelectView(
-                        title: "swap.you_pay".localized,
-                        currentToken: $viewModel.tokenIn,
-                        otherToken: viewModel.tokenOut,
-                        isPresented: isPresented
-                    )
-                }
+        SendInputView(
+            token: viewModel.tokenIn,
+            amountString: $viewModel.amountString,
+            fiatAmountString: $viewModel.fiatAmountString,
+            coinPrice: viewModel.coinPriceIn,
+            currency: viewModel.currency,
+            focusedField: $focusedField,
+            amountField: .amount,
+            fiatField: .fiat
+        ) {
+            Coordinator.shared.present { isPresented in
+                MultiSwapTokenSelectView(
+                    title: "swap.you_pay".localized,
+                    currentToken: $viewModel.tokenIn,
+                    otherToken: viewModel.tokenOut,
+                    isPresented: isPresented
+                )
             }
-
-            VStack(alignment: .trailing, spacing: 0) {
-                TextField("", text: $viewModel.amountString, prompt: Text("0").foregroundColor(.themeGray))
-                    .multilineTextAlignment(.trailing)
-                    .foregroundColor(.themeLeah)
-                    .font(.themeHeadline1)
-                    .tint(.themeInputFieldTintColor)
-                    .keyboardType(.decimalPad)
-                    .focused($focusedField, equals: .amount)
-                    .frame(height: 33)
-
-                if viewModel.tokenIn != nil {
-                    if let coinPriceIn = viewModel.coinPriceIn {
-                        HStack(spacing: 0) {
-                            ThemeText(viewModel.currency.symbol, style: .body, colorStyle: viewModel.fiatAmountString.isEmpty ? .andy : .secondary)
-
-                            TextField("", text: $viewModel.fiatAmountString, prompt: Text("0").foregroundColor(.themeAndy))
-                                .fixedSize(horizontal: true, vertical: false)
-                                .multilineTextAlignment(.trailing)
-                                .foregroundColor(.themeGray)
-                                .font(.themeBody)
-                                .tint(.themeInputFieldTintColor)
-                                .keyboardType(.decimalPad)
-                                .focused($focusedField, equals: .fiat)
-                                .frame(height: 22)
-                                .disabled(coinPriceIn.expired)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                    } else {
-                        ThemeText("n/a".localized, style: .body, colorStyle: .andy)
-                            .frame(height: 22)
-                    }
-                } else {
-                    ThemeText("\(viewModel.currency.symbol)0", style: .body, colorStyle: .andy)
-                        .frame(height: 22)
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .trailing)
         }
     }
 
