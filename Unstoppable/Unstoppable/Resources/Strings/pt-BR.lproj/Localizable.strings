@@ -486,6 +486,8 @@
 "send.transaction_inputs_outputs_info.deterministic.description" = "Existe um padrão comumente aceitado para ordenar saídas de transações (conhecido como BIP69). Em carteiras de código aberto, esse padrão garante que os usuários de carteiras não precisem confiar em como os desenvolvedores do aplicativo implementam a ordem das saídas. Como esse padrão é novo, poucas carteiras o implementaram ainda. Como resultado, é possível ver no blockchain se uma transação foi enviada de uma carteira que usa esse padrão ou não.";
 "send.select_all" = "Selecionar Tudo";
 "send.unselect_all" = "Desmarcar Tudo";
+"send.balance.available" = "Disponível: %@";
+"send.balance.clear" = "Limpar";
 
 "send.confirmation.title" = "Confirmar Envio";
 "send.confirmation.you_send" = "Enviar";
@@ -682,7 +684,6 @@
 "swap.price" = "Preço";
 "swap.estimate_short" = "(est)";
 
-"swap.available" = "Disponível: %@";
 "swap.rate_not_available" = "Taxa não disponível";
 "swap.route" = "Rota";
 "swap.select" = "Selecionar";

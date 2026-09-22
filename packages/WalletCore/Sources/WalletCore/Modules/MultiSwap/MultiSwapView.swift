@@ -20,8 +20,22 @@ struct MultiSwapView: View {
                 ScrollView {
                     VStack(spacing: 16) {
                         VStack(spacing: 0) {
-                            availableBalanceView(value: balanceValue())
-                                .themeListTopView()
+                            AvailableBalanceView(
+                                balance: viewModel.availableBalance,
+                                token: viewModel.tokenIn,
+                                allAvailable: viewModel.percentAllAvailable,
+                                currentValue: viewModel.amountIn,
+                                onSelect: { percent in
+                                    viewModel.setAmountIn(percent: percent)
+                                    focusedField = nil
+                                },
+                                onClear: {
+                                    viewModel.clearAmountIn()
+                                }
+                            )
+                            .padding(.top, 16)
+                            .padding(.horizontal, 16)
+                            .themeListTopView()
 
                             amountsView()
 
@@ -266,27 +280,6 @@ struct MultiSwapView: View {
         }
     }
 
-    @ViewBuilder private func availableBalanceView(value: String?) -> some View {
-        HStack(spacing: 8) {
-            ThemeText("swap.available".localized(value ?? "----"), style: .caption, colorStyle: .blue)
-            Spacer()
-
-            if let balance = viewModel.availableBalance, balance > 0 {
-                HStack(spacing: 16) {
-                    ForEach([25, 50, 75], id: \.self) { percent in
-                        ThemeText("\(percent)%", style: .caption, colorStyle: .blue)
-                            .onTapGesture {
-                                viewModel.setAmountIn(percent: percent)
-                                focusedField = nil
-                            }
-                    }
-                }
-            }
-        }
-        .padding(.top, 16)
-        .padding(.horizontal, 16)
-    }
-
     @ViewBuilder private func quoteList(quote: MultiSwapViewModel.Quote) -> some View {
         VStack(spacing: 0) {
             Cell(
@@ -452,14 +445,6 @@ struct MultiSwapView: View {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
             MultiSwapProviderTypeBottomSheet(isPresented: isPresented)
         }
-    }
-
-    private func balanceValue() -> String? {
-        guard let availableBalance = viewModel.availableBalance, let tokenIn = viewModel.tokenIn else {
-            return nil
-        }
-
-        return AppValue(token: tokenIn, value: availableBalance).formattedFull()
     }
 
     private func buttonState() -> (String, ThemeButton.Style, Bool, Bool, MultiSwapPreSwapStep?) {

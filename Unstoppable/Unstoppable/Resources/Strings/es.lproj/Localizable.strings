@@ -486,6 +486,8 @@
 "send.transaction_inputs_outputs_info.deterministic.description" = "Existe un estándar comúnmente acordado para ordenar las salidas de las transacciones (conocido como BIP69). En carteras de código abierto, ese estándar asegura que los usuarios de la cartera no necesiten confiar en cómo los desarrolladores de la aplicación implementan el orden de las salidas. Dado que este estándar es nuevo, todavía no muchos monederos lo han implementado. Como resultado, es algo posible ver en la cadena de bloques si una transacción fue enviada desde una cartera que utiliza ese estándar o no.";
 "send.select_all" = "Seleccionar Todo";
 "send.unselect_all" = "Deseleccionar Todo";
+"send.balance.available" = "Disponible: %@";
+"send.balance.clear" = "Borrar";
 
 "send.confirmation.title" = "Confirmar envío";
 "send.confirmation.you_send" = "Usted envía";
@@ -682,7 +684,6 @@
 "swap.price" = "Precio";
 "swap.estimate_short" = "(est)";
 
-"swap.available" = "Disponible: %@";
 "swap.rate_not_available" = "Tasa no disponible";
 "swap.route" = "Ruta";
 "swap.select" = "Seleccionar";

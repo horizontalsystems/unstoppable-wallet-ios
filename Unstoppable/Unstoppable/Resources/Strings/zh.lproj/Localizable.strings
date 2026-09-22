@@ -486,6 +486,8 @@
 "send.transaction_inputs_outputs_info.deterministic.description" = "存在一个公认的交易输出排序标准（称为BIP69）。在开源钱包中，该标准确保钱包用户不需要信任应用开发者如何实现输出的排序。由于这个标准是新的，目前还没有多少钱包实施它。因此，在区块链上有可能某种程度上看出交易是否来自使用该标准的钱包。";
 "send.select_all" = "选择所有";
 "send.unselect_all" = "取消选择所有";
+"send.balance.available" = "可用：%@";
+"send.balance.clear" = "清除";
 
 "send.confirmation.title" = "确认发送";
 "send.confirmation.you_send" = "您发送";
@@ -682,7 +684,6 @@
 "swap.price" = "价格";
 "swap.estimate_short" = "（美国东部时间）";
 
-"swap.available" = "可用：%@";
 "swap.rate_not_available" = "汇率不可用";
 "swap.route" = "路由";
 "swap.select" = "选择";

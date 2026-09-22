@@ -486,6 +486,8 @@
 "send.transaction_inputs_outputs_info.deterministic.description" = "There is a commonly agreed standard for ordering transaction outputs (known as BIP69). In open-source wallets, that standard ensures wallet users do not need to trust how developers of the app implement the ordering of the outputs. As this standard is new, not many wallets have implemented it yet. As a result, it's somewhat possible to see on the blockchain whether a transaction was sent from a wallet that uses that standard or not.";
 "send.select_all" = "Select All";
 "send.unselect_all" = "Unselect All";
+"send.balance.available" = "Available: %@";
+"send.balance.clear" = "Clear";
 
 "send.confirmation.title" = "Confirm Send";
 "send.confirmation.you_send" = "You Send";
@@ -682,7 +684,6 @@
 "swap.price" = "Price";
 "swap.estimate_short" = "(est)";
 
-"swap.available" = "Available: %@";
 "swap.rate_not_available" = "Rate not available";
 "swap.route" = "Route";
 "swap.select" = "Select";

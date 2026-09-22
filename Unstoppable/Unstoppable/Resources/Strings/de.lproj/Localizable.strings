@@ -486,6 +486,8 @@
 "send.transaction_inputs_outputs_info.deterministic.description" = "Es gibt einen allgemein vereinbarten Standard für die Bestellung von Transaktionsausgängen (bekannt als BIP69). In Open-Source-Brieftaschen stellt dieser Standard sicher, dass Wallet-Benutzer nicht darauf vertrauen müssen, wie Entwickler der App die Reihenfolge der Ausgaben implementieren. Da dieser Standard neu ist, haben noch nicht viele Brieftaschen ihn implementiert. Infolgedessen ist es einigermaßen möglich, auf der Blockchain zu sehen, ob eine Transaktion von einer Brieftasche gesendet wurde, die diesen Standard verwendet hat oder nicht.";
 "send.select_all" = "Alles Auswählen";
 "send.unselect_all" = "Alle abwählen";
+"send.balance.available" = "Verfügbar: %@";
+"send.balance.clear" = "Löschen";
 
 "send.confirmation.title" = "Senden bestätigen";
 "send.confirmation.you_send" = "Sie Senden";
@@ -682,7 +684,6 @@
 "swap.price" = "Preis";
 "swap.estimate_short" = "(geschätzt)";
 
-"swap.available" = "Verfügbar: %@";
 "swap.rate_not_available" = "Rate nicht verfügbar";
 "swap.route" = "Route";
 "swap.select" = "Auswählen";

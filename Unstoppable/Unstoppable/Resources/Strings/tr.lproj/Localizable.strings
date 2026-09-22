@@ -486,6 +486,8 @@
 "send.transaction_inputs_outputs_info.deterministic.description" = "İşlem çıktılarını sipariş etmek için yaygın olarak kabul edilen bir standart vardır (BIP69 olarak bilinir). Açık kaynaklı (open-source) cüzdanlarda, bu standart, cüzdan kullanıcılarının uygulamanın geliştiricilerinin çıktıların sıralanmasını nasıl uyguladıklarına güvenmelerine gerek kalmamasını sağlar. Bu standart yeni olduğundan, henüz pek çok cüzdan bunu uygulamamıştır. Sonuç olarak, bir işlemin bu standardı kullanan bir cüzdandan gönderilip gönderilmediğini blok zincirinde görmek mümkündür.";
 "send.select_all" = "Hepsini Seç";
 "send.unselect_all" = "Tüm Seçimleri Kaldır";
+"send.balance.available" = "Mevcut: %@";
+"send.balance.clear" = "Temizle";
 
 "send.confirmation.title" = "Gönderimi Onayla";
 "send.confirmation.you_send" = "Gönderdiğiniz";
@@ -682,7 +684,6 @@
 "swap.price" = "Fiyat";
 "swap.estimate_short" = "(tah)";
 
-"swap.available" = "Mevcut: %@";
 "swap.rate_not_available" = "Oran mevcut değil";
 "swap.route" = "Rota";
 "swap.select" = "Seç";
