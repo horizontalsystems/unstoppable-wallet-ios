@@ -686,7 +686,7 @@
 
 "swap.rate_not_available" = "Oran mevcut değil";
 "swap.route" = "Rota";
-"swap.select" = "Seç";
+"token_selector.select" = "Seç";
 "swap.quoting" = "Alıntı";
 "swap.select_token_in" = "Girdi olarak jeton seçin";
 "swap.select_token_out" = "Çıktı olarak jeton seçin";

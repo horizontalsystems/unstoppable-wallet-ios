@@ -686,7 +686,7 @@
 
 "swap.rate_not_available" = "가격이 제공되지 않습니다";
 "swap.route" = "경로";
-"swap.select" = "선택";
+"token_selector.select" = "선택";
 "swap.quoting" = "견적";
 "swap.select_token_in" = "토큰 인 선택";
 "swap.select_token_out" = "토큰 아웃 선택";

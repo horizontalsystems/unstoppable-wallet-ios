@@ -99,7 +99,7 @@ struct MultiSwapView: View {
 
     @ViewBuilder private func boxInView() -> some View {
         HStack(spacing: 8) {
-            selectorButton(token: viewModel.tokenIn) {
+            TokenSelectorButton(token: viewModel.tokenIn) {
                 Coordinator.shared.present { isPresented in
                     MultiSwapTokenSelectView(
                         title: "swap.you_pay".localized,
@@ -165,7 +165,7 @@ struct MultiSwapView: View {
 
     @ViewBuilder private func boxOutView() -> some View {
         HStack(spacing: 8) {
-            selectorButton(token: viewModel.tokenOut) {
+            TokenSelectorButton(token: viewModel.tokenOut) {
                 Coordinator.shared.present { isPresented in
                     MultiSwapTokenSelectView(
                         title: "swap.you_get".localized,
@@ -213,27 +213,6 @@ struct MultiSwapView: View {
                 } else {
                     ThemeText("\(viewModel.currency.symbol)0", style: .body, colorStyle: .andy)
                         .frame(height: 22)
-                }
-            }
-        }
-    }
-
-    @ViewBuilder private func selectorButton(token: Token?, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            HStack(spacing: 16) {
-                CoinIconView(token: token)
-
-                HStack(spacing: 8) {
-                    if let token {
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text(token.coin.code).textHeadline1()
-                            BadgeViewNew(token.fullBadge)
-                        }
-                    } else {
-                        Text("swap.select".localized).textHeadline2(color: .themeJacob)
-                    }
-
-                    ThemeImage("arrow_s_down", size: 20, colorStyle: .primary)
                 }
             }
         }

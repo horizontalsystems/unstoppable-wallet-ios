@@ -686,7 +686,7 @@
 
 "swap.rate_not_available" = "Tasa no disponible";
 "swap.route" = "Ruta";
-"swap.select" = "Seleccionar";
+"token_selector.select" = "Seleccionar";
 "swap.quoting" = "Cotización";
 "swap.select_token_in" = "Seleccionar Token de Entrada";
 "swap.select_token_out" = "Seleccionar Token de Salida";

@@ -686,7 +686,7 @@
 
 "swap.rate_not_available" = "汇率不可用";
 "swap.route" = "路由";
-"swap.select" = "选择";
+"token_selector.select" = "选择";
 "swap.quoting" = "引述";
 "swap.select_token_in" = "选择代币输入";
 "swap.select_token_out" = "选择代币输出";

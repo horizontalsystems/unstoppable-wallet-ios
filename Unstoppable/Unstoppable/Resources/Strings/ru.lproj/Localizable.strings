@@ -686,7 +686,7 @@
 
 "swap.rate_not_available" = "Цена недоступна";
 "swap.route" = "Маршрут";
-"swap.select" = "Выбрать";
+"token_selector.select" = "Выбрать";
 "swap.quoting" = "Котировка";
 "swap.select_token_in" = "Выберите токен для обмена";
 "swap.select_token_out" = "Выберите токен для получения";
