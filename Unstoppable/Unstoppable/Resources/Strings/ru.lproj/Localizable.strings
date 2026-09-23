@@ -453,7 +453,7 @@
 "send.send" = "Отправить";
 "send.no_assets" = "У вас нет активов для отправки.";
 "send.amount_placeholder" = "Сумма";
-"send.address_placeholder" = "Адрес";
+"send.address_placeholder" = "На адрес";
 "send.address_or_domain_placeholder" = "Адрес или домен";
 "send.fee" = "Комиссия";
 "send.network_fee" = "Комиссия";

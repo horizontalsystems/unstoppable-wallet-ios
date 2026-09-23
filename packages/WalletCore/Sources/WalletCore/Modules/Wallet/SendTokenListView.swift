@@ -36,15 +36,21 @@ struct SendTokenListView: View {
                 .searchBar(text: $searchText, prompt: "placeholder.search".localized, isActive: !viewModel.noTokens)
                 .navigationDestination(for: Route.self) { route in
                     switch route {
-                    case let .send(wallet, options):
-                        SendAddressView(
+                    case let .address(wallet, options):
+                        SendAddressView(wallet: wallet, address: options.address, buttonTitle: "send.next_button".localized) { resolvedAddress in
+                            path.append(Route.preSend(wallet, options, resolvedAddress))
+                        }
+                        .toolbarRole(.editor)
+                    case let .preSend(wallet, options, resolvedAddress):
+                        PreSendView(
                             wallet: wallet,
-                            address: options.address,
+                            predefinedAddress: resolvedAddress,
                             amount: options.amount?.humanReadable(decimals: wallet.token.decimals),
                             memo: options.memo,
                             path: $path,
                             isPresented: $isPresented
                         )
+                        .toolbarRole(.editor)
                     }
                 }
                 .toolbar {
@@ -64,19 +70,28 @@ struct SendTokenListView: View {
         stat(page: .sendTokenList, event: .openSend(token: wallet.token))
 
         guard let onPrepare else {
-            path.append(Route.send(wallet, viewModel.options))
+            path.append(route(wallet: wallet, options: viewModel.options))
             return
         }
 
         Task { @MainActor in
             guard let prepared = try? await onPrepare(wallet) else { return }
-            path.append(Route.send(wallet, prepared))
+            path.append(route(wallet: wallet, options: prepared))
+        }
+    }
+
+    private func route(wallet: Wallet, options: SendTokenListViewModel.SendOptions) -> Route {
+        if options.address != nil {
+            return .address(wallet, options)
+        } else {
+            return .preSend(wallet, options, nil)
         }
     }
 }
 
 extension SendTokenListView {
     enum Route: Hashable {
-        case send(Wallet, SendTokenListViewModel.SendOptions)
+        case address(Wallet, SendTokenListViewModel.SendOptions)
+        case preSend(Wallet, SendTokenListViewModel.SendOptions, ResolvedAddress?)
     }
 }

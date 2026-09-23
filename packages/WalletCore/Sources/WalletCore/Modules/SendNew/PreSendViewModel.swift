@@ -3,8 +3,7 @@ import Foundation
 import MarketKit
 
 public class PreSendViewModel: ObservableObject {
-    private let wallet: Wallet
-    let resolvedAddress: ResolvedAddress
+    let wallet: Wallet
     private let currencyManager = Core.shared.currencyManager
     private let marketKit = Core.shared.marketKit
     private let walletManager = Core.shared.walletManager
@@ -102,13 +101,14 @@ public class PreSendViewModel: ObservableObject {
     }
 
     var handler: IPreSendHandler?
+    @Published private(set) var resolvedAddress: ResolvedAddress?
     @Published public private(set) var sendData: ExtendedSendData?
     @Published public var cautions = [CautionNew]()
 
-    public init(wallet: Wallet, handler: IPreSendHandler?, resolvedAddress: ResolvedAddress, amount: Decimal?, memo: String?, customDecimals: Int? = nil) {
+    public init(wallet: Wallet, predefinedAddress: ResolvedAddress?, amount: Decimal?, memo: String?, customDecimals: Int? = nil) {
         self.wallet = wallet
-        self.handler = handler
-        self.resolvedAddress = resolvedAddress
+        handler = SendHandlerFactory.preSendHandler(wallet: wallet, address: predefinedAddress)
+        resolvedAddress = predefinedAddress
         self.customDecimals = customDecimals
 
         currency = currencyManager.baseCurrency
@@ -136,7 +136,6 @@ public class PreSendViewModel: ObservableObject {
         if let handler {
             adapterState = handler.state
             availableBalance = handler.balance
-            memoType = handler.memoType(address: resolvedAddress.address)
             destinationTagState = handler.destinationTagState
 
             handler.destinationTagStatePublisher
@@ -163,7 +162,19 @@ public class PreSendViewModel: ObservableObject {
                 .store(in: &cancellables)
         }
 
+        syncMemoType()
         syncFiatAmount()
+    }
+
+    func set(address: ResolvedAddress?) {
+        guard address != resolvedAddress else {
+            return
+        }
+
+        resolvedAddress = address
+        handler?.set(address: address?.address)
+        syncMemoType()
+        syncSendData()
     }
 
     private func syncAmount() {
@@ -198,7 +209,7 @@ public class PreSendViewModel: ObservableObject {
             return
         }
 
-        memoType = handler.memoType(address: resolvedAddress.address)
+        memoType = handler.memoType(address: resolvedAddress?.address)
     }
 }
 
@@ -217,10 +228,11 @@ public extension PreSendViewModel {
             return
         }
 
-        // guard case let .valid(address) = addressState else {
-        //     sendData = nil
-        //     return
-        // }
+        guard let resolvedAddress else {
+            sendData = nil
+            cautions = []
+            return
+        }
 
         guard let handler else {
             sendData = nil

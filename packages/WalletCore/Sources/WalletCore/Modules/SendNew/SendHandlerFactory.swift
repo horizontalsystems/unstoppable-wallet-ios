@@ -35,7 +35,7 @@ public enum SendHandlerFactory {
         }
     }
 
-    public static func preSendHandler(wallet: Wallet, address: ResolvedAddress) -> IPreSendHandler? {
+    public static func preSendHandler(wallet: Wallet, address: ResolvedAddress?) -> IPreSendHandler? {
         for provider in preSendProviders {
             if let handler = provider.instance(wallet: wallet, address: address) {
                 return handler

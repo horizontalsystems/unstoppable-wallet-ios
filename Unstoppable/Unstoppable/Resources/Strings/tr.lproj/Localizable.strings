@@ -453,7 +453,7 @@
 "send.send" = "Gönder";
 "send.no_assets" = "Gönderilecek öğeniz yok.";
 "send.amount_placeholder" = "Tutar";
-"send.address_placeholder" = "Adres";
+"send.address_placeholder" = "Adrese";
 "send.address_or_domain_placeholder" = "Adres veya Domain";
 "send.fee" = "Ücret";
 "send.network_fee" = "Ücret";

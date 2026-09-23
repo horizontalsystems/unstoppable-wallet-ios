@@ -8,9 +8,9 @@ import RxSwift
 import SwiftUI
 
 class BitcoinPreSendHandler: PreSendHandler {
-    override class func instance(wallet: Wallet, address: ResolvedAddress) -> IPreSendHandler? {
+    override class func instance(wallet: Wallet, address: ResolvedAddress?) -> IPreSendHandler? {
         guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? BitcoinBaseAdapter else { return nil }
-        return BitcoinPreSendHandler(token: wallet.token, address: address, adapter: adapter)
+        return BitcoinPreSendHandler(token: wallet.token, address: address?.address, adapter: adapter)
     }
 
     let token: Token
@@ -39,7 +39,7 @@ class BitcoinPreSendHandler: PreSendHandler {
     }
 
     let rbfAllowed: Bool
-    let lockTimeIntervalState: LockTimeIntervalState
+    private(set) var lockTimeIntervalState: LockTimeIntervalState
 
     var lockTimeInterval: HodlerPlugin.LockTimeInterval? {
         didSet {
@@ -74,7 +74,7 @@ class BitcoinPreSendHandler: PreSendHandler {
         return [HodlerPlugin.id: HodlerData(lockTimeInterval: lockTimeInterval)]
     }
 
-    init(token: Token, address: ResolvedAddress, adapter: BitcoinBaseAdapter) {
+    init(token: Token, address: String?, adapter: BitcoinBaseAdapter) {
         self.token = token
         self.adapter = adapter
 
@@ -88,12 +88,7 @@ class BitcoinPreSendHandler: PreSendHandler {
         defaultRbfEnabled = rbfAllowed ? blockchainManager.transactionRbfEnabled(blockchainType: blockchainType) : false
         rbfEnabled = rbfAllowed ? defaultRbfEnabled : false
 
-        let isLegacyAddress = address.address.hasPrefix("1")
-        if blockchainType != .bitcoin {
-            lockTimeIntervalState = .inactive
-        } else {
-            lockTimeIntervalState = isLegacyAddress ? .enabled : .disabled
-        }
+        lockTimeIntervalState = Self.lockTimeIntervalState(blockchainType: blockchainType, address: address)
 
         super.init()
 
@@ -112,6 +107,14 @@ class BitcoinPreSendHandler: PreSendHandler {
             .disposed(by: disposeBag)
 
         syncBalance()
+    }
+
+    private static func lockTimeIntervalState(blockchainType: BlockchainType, address: String?) -> LockTimeIntervalState {
+        guard blockchainType == .bitcoin else {
+            return .inactive
+        }
+
+        return address?.hasPrefix("1") == true ? .enabled : .disabled
     }
 
     private func syncBalance() {
@@ -181,6 +184,16 @@ extension BitcoinPreSendHandler: IPreSendHandler {
         )
 
         return .valid(sendData: .bitcoin(token: token, params: params))
+    }
+
+    func set(address: String?) {
+        lockTimeIntervalState = Self.lockTimeIntervalState(blockchainType: token.blockchainType, address: address)
+
+        if lockTimeIntervalState != .enabled {
+            lockTimeInterval = nil
+        }
+
+        settingsModifiedSubject.send(settingsModified)
     }
 }
 

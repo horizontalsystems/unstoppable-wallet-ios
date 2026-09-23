@@ -453,7 +453,7 @@
 "send.send" = "Enviar";
 "send.no_assets" = "No tiene activos para enviar.";
 "send.amount_placeholder" = "Importe";
-"send.address_placeholder" = "Dirección";
+"send.address_placeholder" = "A dirección";
 "send.address_or_domain_placeholder" = "Dominio o dirección";
 "send.fee" = "Comisión";
 "send.network_fee" = "Comisión";

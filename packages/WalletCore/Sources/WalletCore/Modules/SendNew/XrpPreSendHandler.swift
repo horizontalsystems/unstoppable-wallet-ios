@@ -14,22 +14,24 @@ import XrpKit
 /// and stays permissive, as Android: an issued payment the recipient cannot accept costs the fee the
 /// ledger burns, not the amount. Memo size is enforced by the kit.
 class XrpPreSendHandler: PreSendHandler {
-    override class func instance(wallet: Wallet, address: ResolvedAddress) -> IPreSendHandler? {
+    override class func instance(wallet: Wallet, address: ResolvedAddress?) -> IPreSendHandler? {
         guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? ISendXrpAdapter & IBalanceAdapter else { return nil }
-        return XrpPreSendHandler(token: wallet.token, adapter: adapter, address: address.address)
+        return XrpPreSendHandler(token: wallet.token, adapter: adapter, address: address?.address)
     }
 
     private let token: Token
     private let adapter: ISendXrpAdapter & IBalanceAdapter
     private let network: XrpKit.Network
 
-    private let destination: (classic: String, tag: UInt32?)?
-    private let addressError: Error?
+    private var destination: (classic: String, tag: UInt32?)?
+    private var addressError: Error?
 
     /// nil while unknown: the node has not answered yet, or it failed to.
     private var requiresTag: Bool?
     private var canReceive: Bool?
     private var lookupTask: Task<Void, Never>?
+    /// Bumped on every address change, so a lookup started for an earlier address never lands.
+    private var lookupGeneration = 0
 
     private let stateSubject = PassthroughSubject<AdapterState, Never>()
     private let balanceSubject = PassthroughSubject<Decimal, Never>()
@@ -37,20 +39,14 @@ class XrpPreSendHandler: PreSendHandler {
 
     private let disposeBag = DisposeBag()
 
-    init(token: Token, adapter: ISendXrpAdapter & IBalanceAdapter, address: String) {
+    init(token: Token, adapter: ISendXrpAdapter & IBalanceAdapter, address: String?) {
         self.token = token
         self.adapter = adapter
         network = XrpKitManager.network
 
-        do {
-            destination = try XrpKit.Kit.resolveDestination(address: address, tag: nil, network: network)
-            addressError = nil
-        } catch {
-            destination = nil
-            addressError = error
-        }
-
         super.init()
+
+        resolve(address: address)
 
         if let tag = destination?.tag {
             destinationTagStateSubject.send(.fixed(tag))
@@ -78,8 +74,29 @@ class XrpPreSendHandler: PreSendHandler {
         lookupTask?.cancel()
     }
 
+    private func resolve(address: String?) {
+        guard let address else {
+            destination = nil
+            addressError = nil
+            return
+        }
+
+        do {
+            destination = try XrpKit.Kit.resolveDestination(address: address, tag: nil, network: network)
+            addressError = nil
+        } catch {
+            destination = nil
+            addressError = error
+        }
+    }
+
     private func lookupDestination() {
+        lookupTask?.cancel()
+        lookupGeneration += 1
+
         guard let destination else { return }
+
+        let generation = lookupGeneration
 
         lookupTask = Task { [weak self, adapter] in
             // asked separately, as the two Android call sites are: one node hiccup must not throw
@@ -88,8 +105,14 @@ class XrpPreSendHandler: PreSendHandler {
             if Task.isCancelled { return }
             let canReceive = try? await adapter.canReceive(address: destination.classic)
             if Task.isCancelled { return }
+            guard let self else { return }
 
-            self?.handle(requiresTag: requiresTag, canReceive: canReceive)
+            // checked and applied on main, where set(address:) runs, so a stale answer cannot
+            // slip in between the check and the writes
+            await MainActor.run {
+                guard generation == self.lookupGeneration else { return }
+                self.handle(requiresTag: requiresTag, canReceive: canReceive)
+            }
         }
     }
 
@@ -193,5 +216,17 @@ extension XrpPreSendHandler: IPreSendHandler {
         }
 
         return .valid(sendData: .xrp(token: token, data: .payment(amount: amount, address: destination.classic), destinationTag: tag))
+    }
+
+    func set(address: String?) {
+        lookupTask?.cancel()
+        lookupGeneration += 1
+        requiresTag = nil
+        canReceive = nil
+
+        resolve(address: address)
+        destinationTagStateSubject.send(destination?.tag.map { .fixed($0) } ?? .optional)
+
+        lookupDestination()
     }
 }

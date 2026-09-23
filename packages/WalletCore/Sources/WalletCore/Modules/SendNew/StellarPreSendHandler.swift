@@ -5,7 +5,7 @@ import RxSwift
 import StellarKit
 
 class StellarPreSendHandler: PreSendHandler {
-    override class func instance(wallet: Wallet, address _: ResolvedAddress) -> IPreSendHandler? {
+    override class func instance(wallet: Wallet, address _: ResolvedAddress?) -> IPreSendHandler? {
         guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? StellarAdapter else { return nil }
         return StellarPreSendHandler(token: wallet.token, adapter: adapter)
     }

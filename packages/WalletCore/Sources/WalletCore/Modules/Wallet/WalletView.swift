@@ -191,7 +191,7 @@ struct WalletView: View {
                 if !item.wallet.account.watchAccount {
                     Button {
                         Coordinator.shared.present { isPresented in
-                            SendAddressViewWrapper(wallet: item.wallet, isPresented: isPresented)
+                            PreSendViewWrapper(wallet: item.wallet, isPresented: isPresented)
                         }
                         stat(page: .tokenPage, event: .openSend(token: item.wallet.token))
                     } label: {

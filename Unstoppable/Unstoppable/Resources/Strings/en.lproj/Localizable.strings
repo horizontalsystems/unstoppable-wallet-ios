@@ -453,7 +453,7 @@
 "send.send" = "Send";
 "send.no_assets" = "You have no assets to send.";
 "send.amount_placeholder" = "Amount";
-"send.address_placeholder" = "Address";
+"send.address_placeholder" = "To Address";
 "send.address_or_domain_placeholder" = "Address or Domain";
 "send.fee" = "Fee";
 "send.network_fee" = "Fee";

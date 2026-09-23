@@ -453,7 +453,7 @@
 "send.send" = "전송";
 "send.no_assets" = "자산을 보낼 수 없습니다.";
 "send.amount_placeholder" = "양";
-"send.address_placeholder" = "주소";
+"send.address_placeholder" = "주소로";
 "send.address_or_domain_placeholder" = "주소 또는 도메인";
 "send.fee" = "수수료";
 "send.network_fee" = "수수료";

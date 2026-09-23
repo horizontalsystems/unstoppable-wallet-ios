@@ -59,17 +59,14 @@ struct DonateTokenListView: View {
                 DonateAddressesView()
             }
             .navigationDestination(for: DestinationData.self) { data in
-                let resolvedAddress = ResolvedAddress(address: data.address, issueTypes: [])
                 PreSendView(
                     wallet: data.wallet,
-                    handler: SendHandlerFactory.preSendHandler(wallet: data.wallet, address: resolvedAddress),
-                    resolvedAddress: resolvedAddress,
+                    predefinedAddress: ResolvedAddress(address: data.address, issueTypes: []),
                     addressVisible: false,
                     path: $path,
-                    onDismiss: {
-                        isPresented = false
-                    }
+                    isPresented: $isPresented
                 )
+                .toolbarRole(.editor)
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

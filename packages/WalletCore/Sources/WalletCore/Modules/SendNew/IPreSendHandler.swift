@@ -18,6 +18,7 @@ public protocol IPreSendHandler {
     var destinationTagState: DestinationTagState { get }
     var destinationTagStatePublisher: AnyPublisher<DestinationTagState, Never> { get }
     func sendData(amount: Decimal, address: String, memo: String?, destinationTagInput: String) -> SendDataResult
+    func set(address: String?)
 }
 
 /// What the destination tag input shows: nothing, an optional field, a field the destination
@@ -65,6 +66,8 @@ public extension IPreSendHandler {
     var settingsModifiedPublisher: AnyPublisher<Bool, Never> {
         Empty().eraseToAnyPublisher()
     }
+
+    func set(address _: String?) {}
 }
 
 public enum SendDataResult {

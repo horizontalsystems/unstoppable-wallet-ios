@@ -78,7 +78,7 @@ struct WalletTokenTopView<Content: View, Status: View>: View {
             switch button {
             case .send:
                 Coordinator.shared.present { isPresented in
-                    SendAddressViewWrapper(wallet: viewModel.wallet, isPresented: isPresented)
+                    PreSendViewWrapper(wallet: viewModel.wallet, isPresented: isPresented)
                 }
                 stat(page: .tokenPage, event: .openSend(token: viewModel.wallet.token))
             case .receive: viewModel.onTapReceive()

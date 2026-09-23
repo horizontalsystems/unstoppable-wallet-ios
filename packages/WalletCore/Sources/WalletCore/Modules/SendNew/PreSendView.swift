@@ -5,19 +5,18 @@ struct PreSendView: View {
     @StateObject var viewModel: PreSendViewModel
     @StateObject private var privateSend: PrivateSendViewModel
     private let addressVisible: Bool
-    private let onDismiss: () -> Void
 
-    @Environment(\.presentationMode) private var presentationMode
     @FocusState private var focusField: FocusField?
 
     @Binding var path: NavigationPath
+    @Binding var isPresented: Bool
 
-    init(wallet: Wallet, handler: IPreSendHandler?, resolvedAddress: ResolvedAddress, amount: Decimal? = nil, memo: String? = nil, addressVisible: Bool = true, path: Binding<NavigationPath>, onDismiss: @escaping () -> Void) {
-        _viewModel = StateObject(wrappedValue: PreSendViewModel(wallet: wallet, handler: handler, resolvedAddress: resolvedAddress, amount: amount, memo: memo))
+    init(wallet: Wallet, predefinedAddress: ResolvedAddress? = nil, amount: Decimal? = nil, memo: String? = nil, addressVisible: Bool = true, path: Binding<NavigationPath>, isPresented: Binding<Bool>) {
+        _viewModel = StateObject(wrappedValue: PreSendViewModel(wallet: wallet, predefinedAddress: predefinedAddress, amount: amount, memo: memo))
         _privateSend = StateObject(wrappedValue: PrivateSendViewModel(token: wallet.token, service: Core.privateSendService))
         self.addressVisible = addressVisible
         _path = path
-        self.onDismiss = onDismiss
+        _isPresented = isPresented
     }
 
     var body: some View {
@@ -52,7 +51,7 @@ struct PreSendView: View {
                                 inputSeparatorView()
 
                                 Button(action: {
-                                    presentationMode.wrappedValue.dismiss()
+                                    presentAddressPicker()
                                 }) {
                                     addressView()
                                         .padding(.horizontal, 16)
@@ -89,7 +88,7 @@ struct PreSendView: View {
         .navigationDestination(for: ConfirmationData.self) { data in
             RegularSendView(sendData: data.sendData, address: data.address) {
                 HudHelper.instance.show(banner: .sent)
-                onDismiss()
+                isPresented = false
             }
             .toolbarRole(.editor)
         }
@@ -112,7 +111,6 @@ struct PreSendView: View {
                 }
             }
         }
-        .toolbarRole(.editor)
     }
 
     @ViewBuilder private func inputView() -> some View {
@@ -166,9 +164,15 @@ struct PreSendView: View {
             ThemeImage("wallet_filled", size: 40)
 
             HStack(spacing: 8) {
-                ThemeText(viewModel.resolvedAddress.address, style: .headline1, colorStyle: viewModel.resolvedAddress.issueTypes.isEmpty ? .primary : .red)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(2)
+                if let address = viewModel.resolvedAddress {
+                    ThemeText(address.address, style: .headline1, colorStyle: address.issueTypes.isEmpty ? .primary : .red)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(2)
+                } else {
+                    ThemeText("send.address_placeholder".localized, style: .headline1, colorStyle: .primary)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(2)
+                }
 
                 ThemeImage("arrow_s_down", size: 20, colorStyle: .primary)
             }
@@ -242,6 +246,8 @@ struct PreSendView: View {
         let (title, disabled, showProgress) = buttonState()
 
         Button(action: {
+            guard let resolvedAddress = viewModel.resolvedAddress else { return }
+
             // The private path is built inline and synchronously — no quote, no commit, no await —
             // and is deliberately NOT gated on `viewModel.sendData`: under private send the deposit
             // transfer is built later, inside the handler, once the commit has produced a deposit
@@ -251,13 +257,13 @@ struct PreSendView: View {
 
             if privateSend.isEnabled {
                 if let amount = viewModel.amount {
-                    data = .privateSend(request: privateSend.request(recipient: viewModel.resolvedAddress.address, amount: amount))
+                    data = .privateSend(request: privateSend.request(recipient: resolvedAddress.address, amount: amount))
                 } else {
                     data = nil
                 }
 
                 // The real recipient, never a deposit address.
-                address = viewModel.resolvedAddress.address
+                address = resolvedAddress.address
             } else {
                 data = viewModel.sendData?.sendData
                 address = viewModel.sendData?.address
@@ -273,7 +279,7 @@ struct PreSendView: View {
                     presentRegularSendView(sendData: data, address: address)
                 }
             }
-            if viewModel.resolvedAddress.issueTypes.isEmpty {
+            if resolvedAddress.issueTypes.isEmpty {
                 proceedToSend()
             } else {
                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
@@ -305,6 +311,16 @@ struct PreSendView: View {
         .buttonStyle(PrimaryButtonStyle(style: .yellow))
     }
 
+    private func presentAddressPicker() {
+        focusField = nil
+
+        Coordinator.shared.present { isPresented in
+            SendAddressViewWrapper(wallet: viewModel.wallet, address: viewModel.resolvedAddress?.address, isPresented: isPresented) { resolved in
+                viewModel.set(address: resolved)
+            }
+        }
+    }
+
     private func presentRegularSendView(sendData: SendData, address: String?) {
         Coordinator.shared.present { regularSendPresented in
             RegularSendViewWrapper(
@@ -313,7 +329,7 @@ struct PreSendView: View {
                 isPresented: regularSendPresented,
                 onSuccess: {
                     HudHelper.instance.show(banner: .sent)
-                    onDismiss()
+                    isPresented = false
                 }
             )
         }
@@ -349,6 +365,8 @@ struct PreSendView: View {
             title = "send.enter_amount".localized
         } else if let availableBalance = viewModel.availableBalance, let amount = viewModel.amount, amount > availableBalance {
             title = "send.insufficient_balance".localized
+        } else if viewModel.resolvedAddress == nil {
+            title = "send.address.enter_address".localized
         } else {
             title = "send.next_button".localized
             // A private send has no inner SendData at this stage — it is built inside the handler

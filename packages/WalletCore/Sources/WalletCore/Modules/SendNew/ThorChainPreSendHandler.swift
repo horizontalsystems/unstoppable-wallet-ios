@@ -12,7 +12,7 @@ final class ThorChainPreSendHandler: PreSendHandler, IPreSendHandler {
     private let balanceSubject = PassthroughSubject<Decimal, Never>()
     private let disposeBag = DisposeBag()
 
-    override class func instance(wallet: Wallet, address _: ResolvedAddress) -> IPreSendHandler? {
+    override class func instance(wallet: Wallet, address _: ResolvedAddress?) -> IPreSendHandler? {
         guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? ThorChainAdapter else { return nil }
         return ThorChainPreSendHandler(token: wallet.token, adapter: adapter)
     }

@@ -9,7 +9,7 @@ open class TronPreSendHandler: PreSendHandler {
     public let token: Token
     private let adapter: ISendTronAdapter & IBalanceAdapter
 
-    override open class func instance(wallet: Wallet, address _: ResolvedAddress) -> IPreSendHandler? {
+    override open class func instance(wallet: Wallet, address _: ResolvedAddress?) -> IPreSendHandler? {
         guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? ISendTronAdapter & IBalanceAdapter else { return nil }
         return TronPreSendHandler(token: wallet.token, adapter: adapter)
     }

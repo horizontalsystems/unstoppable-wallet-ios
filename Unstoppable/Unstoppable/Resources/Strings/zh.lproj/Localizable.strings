@@ -453,7 +453,7 @@
 "send.send" = "发送​​";
 "send.no_assets" = "您没有要发送的资产。";
 "send.amount_placeholder" = "金额";
-"send.address_placeholder" = "地址";
+"send.address_placeholder" = "至地址";
 "send.address_or_domain_placeholder" = "地址或域名";
 "send.fee" = "费用";
 "send.network_fee" = "费用";
