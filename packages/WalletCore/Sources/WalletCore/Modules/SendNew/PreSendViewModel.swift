@@ -8,6 +8,7 @@ public class PreSendViewModel: ObservableObject {
     private let marketKit = Core.shared.marketKit
     private let walletManager = Core.shared.walletManager
     private let adapterManager = Core.shared.adapterManager
+    private let contactManager = Core.shared.contactManager
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -102,6 +103,7 @@ public class PreSendViewModel: ObservableObject {
 
     var handler: IPreSendHandler?
     @Published private(set) var resolvedAddress: ResolvedAddress?
+    @Published private(set) var contactName: String?
     @Published public private(set) var sendData: ExtendedSendData?
     @Published public var cautions = [CautionNew]()
 
@@ -163,6 +165,7 @@ public class PreSendViewModel: ObservableObject {
         }
 
         syncMemoType()
+        syncContactName()
         syncFiatAmount()
     }
 
@@ -174,6 +177,7 @@ public class PreSendViewModel: ObservableObject {
         resolvedAddress = address
         handler?.set(address: address?.address)
         syncMemoType()
+        syncContactName()
         syncSendData()
     }
 
@@ -210,6 +214,10 @@ public class PreSendViewModel: ObservableObject {
         }
 
         memoType = handler.memoType(address: resolvedAddress?.address)
+    }
+
+    private func syncContactName() {
+        contactName = resolvedAddress.flatMap { contactManager.name(blockchainType: token.blockchainType, address: $0.address) }
     }
 }
 

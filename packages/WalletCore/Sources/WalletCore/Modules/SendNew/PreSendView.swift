@@ -161,13 +161,22 @@ struct PreSendView: View {
 
     @ViewBuilder private func addressView() -> some View {
         HStack(spacing: 16) {
-            ThemeImage("wallet_filled", size: 40)
+            ThemeImage(viewModel.contactName != nil ? "user_filled" : "wallet_filled", size: 40)
 
             HStack(spacing: 8) {
                 if let address = viewModel.resolvedAddress {
-                    ThemeText(address.address, style: .headline1, colorStyle: address.issueTypes.isEmpty ? .primary : .red)
-                        .multilineTextAlignment(.leading)
-                        .lineLimit(2)
+                    if let contactName = viewModel.contactName {
+                        VStack(alignment: .leading, spacing: 0) {
+                            ThemeText(contactName, style: .headline1)
+                                .lineLimit(1)
+                            ThemeText(address.address.shortened, style: .body, colorStyle: address.issueTypes.isEmpty ? .secondary : .red)
+                                .lineLimit(1)
+                        }
+                    } else {
+                        ThemeText(address.address, style: .headline1, colorStyle: address.issueTypes.isEmpty ? .primary : .red)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(2)
+                    }
                 } else {
                     ThemeText("send.address_placeholder".localized, style: .headline1, colorStyle: .primary)
                         .multilineTextAlignment(.leading)
