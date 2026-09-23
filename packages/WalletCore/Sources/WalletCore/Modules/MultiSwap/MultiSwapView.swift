@@ -84,16 +84,16 @@ struct MultiSwapView: View {
             boxInView()
                 .padding(.horizontal, 16)
                 .padding(.top, 16)
-                .padding(.bottom, 8)
+                .padding(.bottom, 24)
 
             boxSeparatorView()
 
             boxOutView()
                 .padding(.horizontal, 16)
+                .padding(.top, 16)
                 .padding(.bottom, 24)
 
             Color.themeBlade.frame(height: .heightOnePixel)
-//                .frame(maxWidth: .infinity)
         }
     }
 
@@ -120,16 +120,13 @@ struct MultiSwapView: View {
     }
 
     @ViewBuilder private func boxSeparatorView() -> some View {
-        HStack(spacing: 0) {
-            Color.themeBlade.frame(height: .heightOnePixel)
-
-            IconButton(icon: "arrow_m_down", style: .secondary, size: .small) {
-                viewModel.interchange()
+        Color.themeBlade.frame(height: .heightOnePixel)
+            .overlay {
+                IconButton(icon: "arrow_m_down", style: .secondary, size: .small) {
+                    viewModel.interchange()
+                }
+                .disabled(viewModel.externalRecipientRequired)
             }
-            .disabled(viewModel.externalRecipientRequired)
-
-            Color.themeBlade.frame(height: .heightOnePixel)
-        }
     }
 
     @ViewBuilder private func boxOutView() -> some View {

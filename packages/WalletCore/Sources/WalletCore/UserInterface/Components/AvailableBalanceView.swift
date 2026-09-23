@@ -26,12 +26,16 @@ struct AvailableBalanceView: View {
                     .onTapGesture {
                         onClear()
                     }
-            } else if let balance, balance > 0 {
+            } else {
+                let enabled = (balance ?? 0) > 0
+
                 HStack(spacing: 16) {
                     ForEach([25, 50, 75], id: \.self) { percent in
-                        ThemeText("\(percent)%", style: .caption, colorStyle: .blue)
+                        ThemeText("\(percent)%", style: .caption, colorStyle: enabled ? .blue : .andy)
                             .onTapGesture {
-                                onSelect(percent)
+                                if enabled {
+                                    onSelect(percent)
+                                }
                             }
                     }
                 }

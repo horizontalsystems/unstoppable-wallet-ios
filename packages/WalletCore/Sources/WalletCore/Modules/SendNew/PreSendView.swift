@@ -21,65 +21,71 @@ struct PreSendView: View {
     }
 
     var body: some View {
-        ThemeView {
-            BottomGradientWrapper {
+        ThemeView(style: .list) {
+            BottomGradientWrapper(gradientColor: .themeLawrence) {
                 ScrollView {
-                    VStack(spacing: .margin16) {
-                        if addressVisible {
-                            if viewModel.resolvedAddress.issueTypes.isEmpty {
-                                addressView()
-                            } else {
-                                addressView()
-                                    .overlay(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).stroke(Color.themeRed50, lineWidth: .heightOneDp))
+                    VStack(spacing: 16) {
+                        VStack(spacing: 0) {
+                            AvailableBalanceView(
+                                balance: viewModel.availableBalance,
+                                token: viewModel.token,
+                                allAvailable: true,
+                                currentValue: viewModel.amount,
+                                onSelect: { percent in
+                                    viewModel.setAmountIn(percent: percent)
+                                    focusField = nil
+                                },
+                                onClear: {
+                                    viewModel.clearAmountIn()
+                                }
+                            )
+                            .padding(.top, 16)
+                            .padding(.horizontal, 16)
+                            .themeListTopView()
+
+                            inputView()
+                                .padding(.horizontal, 16)
+                                .padding(.top, 16)
+                                .padding(.bottom, 24)
+
+                            if addressVisible {
+                                inputSeparatorView()
+
+                                Button(action: {
+                                    presentationMode.wrappedValue.dismiss()
+                                }) {
+                                    addressView()
+                                        .padding(.horizontal, 16)
+                                        .frame(height: 89)
+                                }
+                            }
+
+                            Color.themeBlade.frame(height: .heightOnePixel)
+
+                            if viewModel.memoType != .none {
+                                memoView(type: viewModel.memoType)
+                            }
+
+                            if viewModel.destinationTagState != .hidden {
+                                destinationTagView(state: viewModel.destinationTagState)
+                            }
+
+                            if !viewModel.cautions.isEmpty {
+                                cautionsView()
                             }
                         }
-
-                        VStack(spacing: .margin8) {
-                            inputView()
-                            availableBalanceView(value: balanceValue())
-//                            privateSendView()
-                        }
-
-                        // the chain's own field sits above the memo; a private send deposit cannot carry it
-                        if viewModel.destinationTagState != .hidden, !privateSend.isEnabled {
-                            destinationTagView(state: viewModel.destinationTagState)
-                        }
-
-                        if viewModel.memoType != .none {
-                            memoView(type: viewModel.memoType)
-                        }
-
-                        if !viewModel.cautions.isEmpty {
-                            cautionsView()
-                        }
                     }
-                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin16, trailing: .margin16))
-                    .animation(.linear, value: viewModel.memoType)
-                    .animation(.linear, value: viewModel.destinationTagState)
+                    .padding(.bottom, 32)
                 }
+                .themeListScrollHeader()
                 .onTapGesture {
                     focusField = nil
                 }
             } bottomContent: {
                 buttonView()
-            } keyboardContent: {
-                AmountAccessoryView(
-                    visible: focusField == .amount || focusField == .fiatAmount,
-                    enabledPercents: (viewModel.availableBalance ?? 0) > 0,
-                    onPercent: { percent in
-                        viewModel.setAmountIn(percent: percent)
-                        focusField = nil
-                    },
-                    onTrash: {
-                        viewModel.clearAmountIn()
-                    }
-                )
             }
-            .animation(.easeOut(duration: 0.25), value: focusField)
+            .animation(.easeOut(duration: 0.25), value: focusField != nil)
         }
-        // .onFirstAppear {
-        //     focusField = .amount
-        // }
         .navigationDestination(for: ConfirmationData.self) { data in
             RegularSendView(sendData: data.sendData, address: data.address) {
                 HudHelper.instance.show(banner: .sent)
@@ -100,7 +106,7 @@ struct PreSendView: View {
                             }
                         }
                     }) {
-                        Image("gear")
+                        Image("manage")
                             .modifier(ToolbarBadgeModifier(visible: handler.settingsModified))
                     }
                 }
@@ -109,15 +115,26 @@ struct PreSendView: View {
         .toolbarRole(.editor)
     }
 
-    @ViewBuilder private func availableBalanceView(value: String?) -> some View {
-        HStack(spacing: .margin8) {
-            Text("send.available_balance".localized).textCaption()
-            Spacer()
-            Text(value ?? "---")
-                .textCaption()
-                .multilineTextAlignment(.trailing)
-        }
-        .padding(.horizontal, .margin16)
+    @ViewBuilder private func inputView() -> some View {
+        SendInputView(
+            token: viewModel.token,
+            amountString: $viewModel.amountString,
+            fiatAmountString: $viewModel.fiatAmountString,
+            coinPrice: viewModel.coinPrice,
+            currency: viewModel.currency,
+            focusedField: $focusField,
+            amountField: .amount,
+            fiatField: .fiatAmount
+        )
+    }
+
+    @ViewBuilder private func inputSeparatorView() -> some View {
+        Color.themeBlade.frame(height: .heightOnePixel)
+            .overlay {
+                ThemeImage("arrow_m_down", size: 20)
+                    .padding(6)
+                    .background(Color.themeLawrence)
+            }
     }
 
     @ViewBuilder private func privateSendView() -> some View {
@@ -144,70 +161,27 @@ struct PreSendView: View {
         }
     }
 
-    @ViewBuilder private func inputView() -> some View {
-        VStack(spacing: 3) {
-            TextField("", text: $viewModel.amountString, prompt: Text("0").foregroundColor(.themeGray))
-                .foregroundColor(.themeLeah)
-                .font(.themeHeadline1)
-                .tint(.themeInputFieldTintColor)
-                .keyboardType(.decimalPad)
-                .focused($focusField, equals: .amount)
-
-            if let coinPrice = viewModel.coinPrice {
-                HStack(spacing: 0) {
-                    Text(viewModel.currency.symbol).textBody(color: .themeGray)
-
-                    TextField("", text: $viewModel.fiatAmountString, prompt: Text("0").foregroundColor(.themeGray))
-                        .foregroundColor(.themeGray)
-                        .font(.themeBody)
-                        .tint(.themeInputFieldTintColor)
-                        .keyboardType(.decimalPad)
-                        .focused($focusField, equals: .fiatAmount)
-                        .frame(height: 20)
-                        .disabled(coinPrice.expired)
-                }
-            } else {
-                Text("swap.rate_not_available".localized)
-                    .themeSubhead2(color: .themeGray50, alignment: .leading)
-                    .frame(height: 20)
-            }
-        }
-        .padding(.horizontal, .margin16)
-        .padding(.vertical, 20)
-        .modifier(ThemeListStyleModifier(themeListStyle: .borderedLawrence))
-    }
-
     @ViewBuilder private func addressView() -> some View {
-        ListSection {
-            ClickableRow {
-                presentationMode.wrappedValue.dismiss()
-            } content: {
-                Text("send.confirmation.to".localized).textSubhead2()
+        HStack(spacing: 16) {
+            ThemeImage("wallet_filled", size: 40)
 
-                Text(viewModel.resolvedAddress.address)
-                    .textSubhead2(color: .themeLeah)
+            HStack(spacing: 8) {
+                ThemeText(viewModel.resolvedAddress.address, style: .headline1, colorStyle: viewModel.resolvedAddress.issueTypes.isEmpty ? .primary : .red)
                     .multilineTextAlignment(.leading)
+                    .lineLimit(2)
 
-                Spacer()
-
-                if !viewModel.resolvedAddress.issueTypes.isEmpty {
-                    Image.warningIcon
-                }
-
-                Image("arrow_small_down_20").themeIcon()
+                ThemeImage("arrow_s_down", size: 20, colorStyle: .primary)
             }
+
+            Spacer()
         }
     }
 
     @ViewBuilder private func destinationTagView(state: DestinationTagState) -> some View {
-        // caption as on Android: the parse error in red, the info in yellow while the recipient
-        // insists on a tag, grey otherwise; a tag packed in the X-address is shown but not editable
         let input = viewModel.destinationTag.trimmingCharacters(in: .whitespacesAndNewlines)
         let invalid = !input.isEmpty && XrpDestinationTag.parse(input) == nil
-
-        let cautionState: CautionState = invalid
-            ? .caution(Caution(text: "send.xrp.destination_tag.invalid".localized, type: .error))
-            : .caution(Caution(text: "send.xrp.destination_tag.info".localized, type: state == .required ? .warning : .regular))
+        let infoText = invalid ? "send.xrp.destination_tag.invalid".localized : "send.xrp.destination_tag.info".localized
+        let infoTextColorStyle: ColorStyle = invalid ? .red : (state == .required ? .yellow : .secondary)
 
         let fixedTag: UInt32? = {
             if case let .fixed(tag) = state { return tag }
@@ -215,7 +189,7 @@ struct PreSendView: View {
         }()
         let text: Binding<String> = fixedTag.map { .constant(String($0)) } ?? $viewModel.destinationTag
 
-        InputTextRow {
+        VStack(alignment: .leading, spacing: 0) {
             InputTextView(
                 placeholder: "send.xrp.destination_tag.title".localized,
                 multiline: false,
@@ -225,19 +199,19 @@ struct PreSendView: View {
             .keyboardType(.numberPad)
             .disabled(fixedTag != nil)
             .focused($focusField, equals: .destinationTag)
+            .padding(16)
+
+            Color.themeBlade.frame(height: .heightOnePixel)
+
+            ThemeText(infoText, style: .caption, colorStyle: infoTextColorStyle)
+                .multilineTextAlignment(.leading)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
         }
-        .modifier(CautionBorder(cautionState: .constant(invalid ? cautionState : .none)))
-        .modifier(CautionPrompt(cautionState: .constant(cautionState)))
     }
 
     @ViewBuilder private func memoView(type: MemoType) -> some View {
-        let privateSendConflict = privateSend.isEnabled && !viewModel.memo.isEmpty
-
-        let cautionState: CautionState = privateSendConflict
-            ? .caution(Caution(text: "private_send.memo_unavailable".localized, type: .warning))
-            : .caution(Caution(text: memoWarningText(type: type), type: .regular))
-
-        InputTextRow {
+        VStack(alignment: .leading, spacing: 0) {
             InputTextView(
                 placeholder: "send.confirmation.memo_placeholder".localized,
                 multiline: true,
@@ -245,12 +219,18 @@ struct PreSendView: View {
                 text: $viewModel.memo
             )
             .focused($focusField, equals: .memo)
+            .padding(16)
+
+            Color.themeBlade.frame(height: .heightOnePixel)
+
+            ThemeText(memoInfoText(type: type), style: .caption)
+                .multilineTextAlignment(.leading)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
         }
-        .modifier(CautionBorder(cautionState: .constant(privateSendConflict ? cautionState : .none)))
-        .modifier(CautionPrompt(cautionState: .constant(cautionState)))
     }
 
-    private func memoWarningText(type: MemoType) -> String {
+    private func memoInfoText(type: MemoType) -> String {
         switch type {
         case .onChainPrivate: return "send.memo.private_warning".localized
         case .local: return "send.memo.local_warning".localized
@@ -342,19 +322,15 @@ struct PreSendView: View {
     @ViewBuilder private func cautionsView() -> some View {
         let cautions = viewModel.cautions
 
-        VStack(spacing: .margin12) {
-            ForEach(cautions.indices, id: \.self) { index in
-                HighlightedTextView(caution: cautions[index])
+        if !cautions.isEmpty {
+            VStack(spacing: .margin12) {
+                ForEach(cautions.indices, id: \.self) { index in
+                    HighlightedTextView(caution: cautions[index])
+                }
             }
+            .padding(.top, 12)
+            .padding(.horizontal, 16)
         }
-    }
-
-    private func balanceValue() -> String? {
-        guard let availableBalance = viewModel.availableBalance else {
-            return nil
-        }
-
-        return AppValue(token: viewModel.token, value: availableBalance).formattedFull()
     }
 
     private func buttonState() -> (String, Bool, Bool) {
