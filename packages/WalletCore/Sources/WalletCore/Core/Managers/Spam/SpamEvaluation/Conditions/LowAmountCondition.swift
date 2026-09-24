@@ -67,7 +67,7 @@ class LowAmountCondition: SpamCondition {
             return 0
         }
 
-        if value < limit.spam {
+        if value < limit.spam, !Self.coinsWithoutMicroDust.contains(code) {
             return spamScore
         } else if value < limit.risk {
             return riskScore
@@ -96,6 +96,11 @@ extension LowAmountCondition {
         "POL": .init(1),
         "SOL": .init(0.0001),
     ]
+
+    /// Cent-sized stablecoin transfers are common test sends, so their micro dust is not spam on
+    /// value alone: it scores as ordinary dust and needs address or time correlation (Android
+    /// `spamCoinsWithoutMicroDust`).
+    static let coinsWithoutMicroDust: Set<String> = ["USDT", "USDC", "USDD", "DAI", "BUSD", "EURS", "BSC-USD"]
 
     struct AmountLimit {
         let spam: Decimal

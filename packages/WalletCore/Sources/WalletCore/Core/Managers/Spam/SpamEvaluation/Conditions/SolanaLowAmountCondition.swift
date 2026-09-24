@@ -60,7 +60,7 @@ class SolanaLowAmountCondition: SpamCondition {
             return 0
         }
 
-        if value < limit.spam {
+        if value < limit.spam, !LowAmountCondition.coinsWithoutMicroDust.contains(code) {
             return spamScore
         } else if value < limit.risk {
             return riskScore

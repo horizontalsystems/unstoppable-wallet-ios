@@ -178,7 +178,8 @@ struct SpamSharedValueScoringTests {
     @Test func positiveIncomingDustStillScores() {
         let events = TransferEvents(incoming: [TransferEvent(address: "0xsender", value: AppValue(token: Self.usdt, value: 0.05))])
 
-        #expect(LowAmountCondition().evaluate(context(events: events)) == 7)
+        // stablecoin micro dust scores as ordinary dust, not instant spam
+        #expect(LowAmountCondition().evaluate(context(events: events)) == 3)
     }
 
     private func context(events: TransferEvents) -> SpamEvaluationContext {
