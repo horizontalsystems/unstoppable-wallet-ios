@@ -18,8 +18,8 @@ struct PreSendView: View {
         ThemeView(style: .list) {
             VStack(spacing: 0) {
                 if viewModel.tabs.count > 1 {
-                    ScrollableTabHeaderView(
-                        tabs: viewModel.tabs.map(\.title),
+                    FolderTabHeaderView(
+                        tabs: viewModel.tabs.map { FolderTabHeaderView.Tab(title: $0.title, icon: $0.icon) },
                         currentTabIndex: Binding(
                             get: {
                                 viewModel.tabs.firstIndex(of: viewModel.currentTab) ?? 0

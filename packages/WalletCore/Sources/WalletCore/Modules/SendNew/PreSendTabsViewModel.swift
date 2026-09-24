@@ -76,4 +76,11 @@ enum PreSendTab: CaseIterable {
         case .crossPay: return "send.tab.cross_pay".localized
         }
     }
+
+    var icon: String? {
+        switch self {
+        case .privateSend: return "fraud"
+        default: return nil
+        }
+    }
 }
