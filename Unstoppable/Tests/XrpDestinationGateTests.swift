@@ -11,13 +11,23 @@ struct XrpDestinationGateTests {
     @Test func unfundedDestinationBelowBaseReserveIsRefused() async {
         let adapter = StubSendXrpAdapter(exists: false)
 
-        let error = await XrpSendHelper.destinationError(adapter: adapter, token: Self.xrpToken, amount: 1, address: Self.destination, destinationTag: nil)
+        // one drop short of the reserve
+        let error = await XrpSendHelper.destinationError(adapter: adapter, token: Self.xrpToken, amount: adapter.baseReserve - Decimal(string: "0.000001")!, address: Self.destination, destinationTag: nil)
 
         guard case let .belowMinimumFirstDeposit(minimum) = error as? XrpSendHelper.TransactionError else {
             Issue.record("expected a minimum first deposit error, got \(String(describing: error))")
             return
         }
         #expect(minimum == adapter.baseReserve)
+    }
+
+    // the ledger creates the account from the base reserve upwards, the boundary included
+    @Test func unfundedDestinationAtBaseReservePasses() async {
+        let adapter = StubSendXrpAdapter(exists: false)
+
+        let error = await XrpSendHelper.destinationError(adapter: adapter, token: Self.xrpToken, amount: adapter.baseReserve, address: Self.destination, destinationTag: nil)
+
+        #expect(error == nil)
     }
 
     @Test func fundedDestinationTakesAnyAmount() async {
