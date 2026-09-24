@@ -452,6 +452,9 @@
 "send.title" = "发送%@";
 "send.title.shield" = "已屏蔽 %@（或：屏蔽 %@)";
 "send.send" = "发送​​";
+"send.tab.standard" = "标准";
+"send.tab.private" = "隐私";
+"send.tab.cross_pay" = "Cross Pay";
 "send.no_assets" = "您没有要发送的资产。";
 "send.amount_placeholder" = "金额";
 "send.address_placeholder" = "至地址";
@@ -614,13 +617,11 @@
 
 // Private Send
 
-"private_send.toggle.title" = "隐私发送";
+"private_send.tab.caution.title" = "隐私发送";
+"private_send.tab.caution.text" = "隐私发送通过一个保密中介，隐藏您的地址与收款人之间的直接链上关联。";
 "private_send.amount_caption" = "收款方收到的金额";
 "private_send.unavailable" = "隐私发送不可用";
 "private_send.memo_unavailable" = "开启隐私发送时，备注不可用";
-
-"private_send.info.title" = "隐私发送";
-"private_send.info.description" = "隐私发送通过一个保密中介来路由您的交易，隐藏您的地址与收款人之间的公开链接。两笔交易在链上仍然可见，但它们之间没有直接关联。";
 
 "private_send.fee" = "隐私发送费用";
 "private_send.fee.info" = "此费用用于支付私密处理您的交易的成本。它在网络费用之外收取，具体取决于您发送的金额。";
@@ -2403,7 +2404,7 @@
 "fee_settings.replace_by_fee.description" = "此选项允许您通过增加手续费金额来重新发送卡住的交易。";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock 仅适用于发送到 BIP44 地址（以 1 开头）。";
-"fee_settings.time_lock.private_send_unavailable" = "开启隐私发送时不可用。";
+"fee_settings.time_lock.not_applied" = "不适用于隐私发送和 Cross Pay。";
 
 "fee_settings.network_fee" = "网络费用";
 "fee_settings.network_fee.info" = "在网络上发送给定交易的估计费用。";

@@ -32,6 +32,9 @@ public extension PrivateSendHandlerProvider {
         // The recipient, not the deposit address, which does not exist yet. That is fine for
         // *resolving* the handler (it keys on the wallet), but it is why the memo-capability gate is
         // re-evaluated against the deposit address after the commit rather than inferred here.
+        //
+        // Always a fresh handler owned by PrivateSendHandler, never the UI's shared one: the user's
+        // send settings arrive as the immutable `request.depositSettings` snapshot instead.
         guard let preSendHandler = SendHandlerFactory.preSendHandler(
             wallet: wallet,
             address: ResolvedAddress(address: request.recipient, issueTypes: [])

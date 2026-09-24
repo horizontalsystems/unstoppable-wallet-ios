@@ -452,6 +452,9 @@
 "send.title" = "Enviar %@";
 "send.title.shield" = "Shield %@";
 "send.send" = "Enviar";
+"send.tab.standard" = "Padrão";
+"send.tab.private" = "Privado";
+"send.tab.cross_pay" = "Cross Pay";
 "send.no_assets" = "Você não tem ativos para enviar.";
 "send.amount_placeholder" = "Montante";
 "send.address_placeholder" = "Para endereço";
@@ -614,13 +617,11 @@
 
 // Private Send
 
-"private_send.toggle.title" = "Envio Privado";
+"private_send.tab.caution.title" = "Envio Privado";
+"private_send.tab.caution.text" = "O Envio Privado oculta o vínculo direto on-chain entre seu endereço e o destinatário por meio de um intermediário confidencial.";
 "private_send.amount_caption" = "Valor que o destinatário recebe";
 "private_send.unavailable" = "Envio privado indisponível";
 "private_send.memo_unavailable" = "O memo não está disponível quando o Envio Privado está ativado";
-
-"private_send.info.title" = "Envio Privado";
-"private_send.info.description" = "O Envio Privado roteia sua transação por meio de um intermediário confidencial, ocultando o vínculo público entre seu endereço e o destinatário. Ambas as transações permanecem visíveis na blockchain, mas não estão diretamente conectadas entre si.";
 
 "private_send.fee" = "Taxa de envio privado";
 "private_send.fee.info" = "Esta taxa cobre o custo de processar sua transação de forma privada. Ela é cobrada além da taxa de rede e depende do valor que você enviar.";
@@ -2403,7 +2404,7 @@
 "fee_settings.replace_by_fee.description" = "Essa opção permite que você reenvie uma transação travada aumentando o valor da taxa.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "O TimeLock funciona apenas para envios a endereços BIP44 (que começam com 1).";
-"fee_settings.time_lock.private_send_unavailable" = "Não disponível quando o Envio Privado está ativado.";
+"fee_settings.time_lock.not_applied" = "Não aplicado ao Envio Privado e ao Cross Pay.";
 
 "fee_settings.network_fee" = "Taxa de Rede";
 "fee_settings.network_fee.info" = "O custo estimado do envio de determinada transação na rede.";

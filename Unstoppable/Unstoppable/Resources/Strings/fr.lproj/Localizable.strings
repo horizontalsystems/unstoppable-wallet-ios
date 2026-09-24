@@ -452,6 +452,9 @@
 "send.title" = "Envoyer %@";
 "send.title.shield" = "Shield %@";
 "send.send" = "Envoyer";
+"send.tab.standard" = "Standard";
+"send.tab.private" = "Privé";
+"send.tab.cross_pay" = "Cross Pay";
 "send.no_assets" = "Vous n'avez pas d'actifs à envoyer.";
 "send.amount_placeholder" = "Montant";
 "send.address_placeholder" = "À l'adresse";
@@ -614,13 +617,11 @@
 
 // Private Send
 
-"private_send.toggle.title" = "Envoi Privé";
+"private_send.tab.caution.title" = "Envoi Privé";
+"private_send.tab.caution.text" = "L'Envoi Privé masque le lien direct on-chain entre votre adresse et le destinataire grâce à un intermédiaire confidentiel.";
 "private_send.amount_caption" = "Montant reçu par le destinataire";
 "private_send.unavailable" = "Envoi privé indisponible";
 "private_send.memo_unavailable" = "Le mémo n'est pas disponible lorsque l'Envoi Privé est activé";
-
-"private_send.info.title" = "Envoi Privé";
-"private_send.info.description" = "L'Envoi Privé achemine votre transaction via un intermédiaire confidentiel, masquant le lien public entre votre adresse et le destinataire. Les deux transactions restent visibles sur la blockchain, mais elles ne sont pas directement liées l'une à l'autre.";
 
 "private_send.fee" = "Frais d'envoi privé";
 "private_send.fee.info" = "Ces frais couvrent le coût du traitement privé de votre transaction. Ils sont facturés en plus des frais de réseau et dépendent du montant que vous envoyez.";
@@ -2403,7 +2404,7 @@
 "fee_settings.replace_by_fee.description" = "Ce choix vous permet de renvoyer une transaction bloquée en augmentant le montant des frais.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock fonctionne uniquement pour les envois vers des adresses BIP44 (commençant par 1).";
-"fee_settings.time_lock.private_send_unavailable" = "Non disponible lorsque l'Envoi Privé est activé.";
+"fee_settings.time_lock.not_applied" = "Non appliqué à l'Envoi Privé et à Cross Pay.";
 
 "fee_settings.network_fee" = "Frais de Réseau";
 "fee_settings.network_fee.info" = "Le coût estimé de l'envoi d'une transaction donnée sur le réseau.";

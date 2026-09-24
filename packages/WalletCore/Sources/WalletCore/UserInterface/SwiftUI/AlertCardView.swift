@@ -35,7 +35,7 @@ struct AlertCardView: View {
         .padding(.vertical, .margin16)
         .padding(.horizontal, .margin24)
         .overlay(
-            RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous).stroke(type.colorStyle.color, lineWidth: .heightOneDp)
+            RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous).stroke(type.borderColor, lineWidth: .heightOneDp)
         )
     }
 
@@ -56,8 +56,8 @@ struct AlertCardView: View {
 
             Group {
                 switch text {
-                case let .plain(text): ThemeText(text, style: .subheadR, colorStyle: .primary)
-                case let .attributed(text): ThemeText(text, style: .subheadR, colorStyle: .primary)
+                case let .plain(text): ThemeText(text, style: .subheadR, colorStyle: type.textColorStyle)
+                case let .attributed(text): ThemeText(text, style: .subheadR, colorStyle: type.textColorStyle)
                 }
             }
             .multilineTextAlignment(style.textAlignment)
@@ -68,25 +68,43 @@ struct AlertCardView: View {
 
 extension AlertCardView {
     enum CardType: Equatable {
-        case critical
+        case regular
         case caution
+        case critical
 
         init(cautionType: CautionType) {
             switch cautionType {
-            case .warning, .regular: self = .caution
+            case .regular: self = .regular
+            case .warning: self = .caution
             case .error: self = .critical
             }
         }
 
         var colorStyle: ColorStyle {
             switch self {
+            case .regular: return .secondary
             case .caution: return .yellow
             case .critical: return .red
             }
         }
 
-        var defaultTitle: String {
+        var borderColor: Color {
             switch self {
+            case .regular: return .themeBlade
+            default: return colorStyle.color
+            }
+        }
+
+        var textColorStyle: ColorStyle {
+            switch self {
+            case .regular: return .andy
+            case .caution, .critical: return .primary
+            }
+        }
+
+        var defaultTitle: String? {
+            switch self {
+            case .regular: return nil
             case .caution: return "alert_card.title.caution".localized
             case .critical: return "alert_card.title.critical".localized
             }

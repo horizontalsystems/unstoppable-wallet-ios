@@ -14,6 +14,16 @@ public protocol IPreSendHandler {
     func memoType(address: String?) -> MemoType
     func settingsView(onChangeSettings: @escaping () -> Void) -> AnyView
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult
+    /// Builds a transfer to a swap-provider deposit address (Private Send / Cross Pay). Recipient-only
+    /// extras such as the Bitcoin time lock are never applied.
+    func depositSendData(amount: Decimal, address: String, memo: String?) -> SendDataResult
+    /// An immutable copy of the send settings that apply to a deposit transfer. Taken on the main
+    /// thread, where the settings UI mutates this handler, so a deposit built later off the main
+    /// thread never reads the live handler. Nil when the chain has no deposit-relevant settings.
+    var depositSettingsSnapshot: PreSendSettingsSnapshot? { get }
+    /// Same as `depositSendData(amount:address:memo:)`, but with the settings taken from `settings`
+    /// instead of this handler's current state. Nil settings means the handler's defaults.
+    func depositSendData(amount: Decimal, address: String, memo: String?, settings: PreSendSettingsSnapshot?) -> SendDataResult
     /// Chains whose payments carry a destination tag (XRP) show a fourth input; everyone else keeps it hidden.
     var destinationTagState: DestinationTagState { get }
     var destinationTagStatePublisher: AnyPublisher<DestinationTagState, Never> { get }
@@ -63,11 +73,33 @@ public extension IPreSendHandler {
         sendData(amount: amount, address: address, memo: memo)
     }
 
+    func depositSendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
+        sendData(amount: amount, address: address, memo: memo)
+    }
+
+    var depositSettingsSnapshot: PreSendSettingsSnapshot? {
+        nil
+    }
+
+    func depositSendData(amount: Decimal, address: String, memo: String?, settings _: PreSendSettingsSnapshot?) -> SendDataResult {
+        depositSendData(amount: amount, address: address, memo: memo)
+    }
+
     var settingsModifiedPublisher: AnyPublisher<Bool, Never> {
         Empty().eraseToAnyPublisher()
     }
 
     func set(address _: String?) {}
+}
+
+/// Chain-agnostic, immutable carrier for deposit-relevant send settings. Each chain with such
+/// settings owns one optional payload; the rest leave everything nil.
+public struct PreSendSettingsSnapshot: Sendable {
+    let bitcoin: BitcoinDepositSettings?
+
+    init(bitcoin: BitcoinDepositSettings? = nil) {
+        self.bitcoin = bitcoin
+    }
 }
 
 public enum SendDataResult {

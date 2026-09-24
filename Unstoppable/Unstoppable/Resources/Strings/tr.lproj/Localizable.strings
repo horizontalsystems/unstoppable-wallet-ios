@@ -452,6 +452,9 @@
 "send.title" = "%@ gönder";
 "send.title.shield" = "Shield %@";
 "send.send" = "Gönder";
+"send.tab.standard" = "Standart";
+"send.tab.private" = "Gizli";
+"send.tab.cross_pay" = "Cross Pay";
 "send.no_assets" = "Gönderilecek öğeniz yok.";
 "send.amount_placeholder" = "Tutar";
 "send.address_placeholder" = "Adrese";
@@ -614,13 +617,11 @@
 
 // Private Send
 
-"private_send.toggle.title" = "Gizli Gönderim";
+"private_send.tab.caution.title" = "Gizli Gönderim";
+"private_send.tab.caution.text" = "Gizli Gönderim, gizli bir aracı aracılığıyla adresiniz ile alıcı arasındaki doğrudan zincir üstü bağlantıyı gizler.";
 "private_send.amount_caption" = "Alıcının aldığı tutar";
 "private_send.unavailable" = "Gizli gönderim kullanılamıyor";
 "private_send.memo_unavailable" = "Gizli Gönderim açıkken memo kullanılamaz";
-
-"private_send.info.title" = "Gizli Gönderim";
-"private_send.info.description" = "Gizli Gönderim, işleminizi gizli bir aracı üzerinden yönlendirerek adresiniz ile alıcı arasındaki herkese açık bağlantıyı gizler. Her iki işlem de blok zincirinde görünür kalır ancak birbirine doğrudan bağlı değildir.";
 
 "private_send.fee" = "Gizli gönderim ücreti";
 "private_send.fee.info" = "Bu ücret, işleminizin gizli olarak işlenmesinin maliyetini karşılar. Ağ ücretine ek olarak tahsil edilir ve gönderdiğiniz tutara bağlıdır.";
@@ -2403,7 +2404,7 @@
 "fee_settings.replace_by_fee.description" = "Bu seçenek, takılı kalmış bir işlemi ücret miktarını artırarak yeniden göndermenizi sağlar.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock yalnızca BIP44 adreslerine (1 ile başlayan) gönderim için çalışır.";
-"fee_settings.time_lock.private_send_unavailable" = "Gizli Gönderim açıkken kullanılamaz.";
+"fee_settings.time_lock.not_applied" = "Gizli Gönderim ve Cross Pay için uygulanmaz.";
 
 "fee_settings.network_fee" = "Ağ Ücreti";
 "fee_settings.network_fee.info" = "Ağda belirli bir işlemi göndermenin tahmini maliyeti.";

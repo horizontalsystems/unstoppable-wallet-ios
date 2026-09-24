@@ -99,7 +99,7 @@ extension CrossPayHandler: ISendHandler {
         }
 
         // The deposit, never the entered amount — different quantities in different tokens.
-        let result = preSendHandler.sendData(
+        let result = preSendHandler.depositSendData(
             amount: order.depositAmount,
             address: order.depositAddress,
             memo: memoText

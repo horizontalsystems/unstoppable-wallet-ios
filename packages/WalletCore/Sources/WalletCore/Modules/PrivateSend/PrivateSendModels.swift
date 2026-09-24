@@ -7,11 +7,16 @@ public struct PrivateSendRequest {
     public let token: Token // sent == received token
     public let recipient: String // the REAL recipient, never a deposit address
     public let amount: Decimal // exact output — the amount the recipient receives
+    // An immutable copy of the user's send settings, taken on the main thread when the request is
+    // built, so they apply to the deposit transfer without the handler ever reading the live,
+    // UI-owned pre-send handler. Nil falls back to default settings.
+    public let depositSettings: PreSendSettingsSnapshot?
 
-    public init(token: Token, recipient: String, amount: Decimal) {
+    public init(token: Token, recipient: String, amount: Decimal, depositSettings: PreSendSettingsSnapshot? = nil) {
         self.token = token
         self.recipient = recipient
         self.amount = amount
+        self.depositSettings = depositSettings
     }
 }
 

@@ -11,6 +11,7 @@ final class PrivateSendHandler {
     let baseToken: Token
 
     private let request: PrivateSendRequest
+    // Created by PrivateSendHandlerProvider for this handler alone; nothing else mutates it.
     private let preSendHandler: IPreSendHandler
     private let service: PrivateSendService
     private let swapHistoryManager: SwapHistoryManager
@@ -107,11 +108,13 @@ extension PrivateSendHandler: ISendHandler {
         }
 
         // order.depositAmount, never the entered amount: under exact output they are structurally
-        // different quantities.
-        let result = preSendHandler.sendData(
+        // different quantities. Settings come from the request's immutable snapshot, never from a
+        // live UI-owned handler.
+        let result = preSendHandler.depositSendData(
             amount: order.depositAmount,
             address: order.depositAddress,
-            memo: memoText
+            memo: memoText,
+            settings: order.request.depositSettings
         )
 
         guard case let .valid(innerSendData) = result else {

@@ -452,6 +452,9 @@
 "send.title" = "Send %@";
 "send.title.shield" = "Shield %@";
 "send.send" = "Send";
+"send.tab.standard" = "Standard";
+"send.tab.private" = "Private";
+"send.tab.cross_pay" = "Cross Pay";
 "send.no_assets" = "You have no assets to send.";
 "send.amount_placeholder" = "Amount";
 "send.address_placeholder" = "To Address";
@@ -614,13 +617,11 @@
 
 // Private Send
 
-"private_send.toggle.title" = "Private Send";
+"private_send.tab.caution.title" = "Private Send";
+"private_send.tab.caution.text" = "Private Send hides the direct on-chain link between your address and the recipient through a confidential intermediary.";
 "private_send.amount_caption" = "Amount the recipient receives";
 "private_send.unavailable" = "Private send unavailable";
 "private_send.memo_unavailable" = "Memo is not available when Private Send is on";
-
-"private_send.info.title" = "Private Send";
-"private_send.info.description" = "Private Send routes your transaction through a confidential intermediary, hiding the public link between your address and the recipient. Both transactions remain visible on chain, but they are not directly connected to each other.";
 
 "private_send.fee" = "Private send fee";
 "private_send.fee.info" = "This fee covers the cost of processing your transaction privately. It is charged in addition to the network fee and depends on the amount you send.";
@@ -2403,7 +2404,7 @@
 "fee_settings.replace_by_fee.description" = "This option allows you to resend a stuck transaction by increasing the amount of the fee.";
 "fee_settings.time_lock" = "Time Lock";
 "fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1).";
-"fee_settings.time_lock.private_send_unavailable" = "Not available when Private Send is on.";
+"fee_settings.time_lock.not_applied" = "Not applied to Private Send and Cross Pay.";
 
 "fee_settings.network_fee" = "Network Fee";
 "fee_settings.network_fee.info" = "Fee charged by the network for transaction execution and confirmation. The amount depends on network conditions and current congestion.";

@@ -452,6 +452,9 @@
 "send.title" = "Senden %@";
 "send.title.shield" = "Schutz %@";
 "send.send" = "Senden";
+"send.tab.standard" = "Standard";
+"send.tab.private" = "Privat";
+"send.tab.cross_pay" = "Cross Pay";
 "send.no_assets" = "Sie haben keine Assets zu senden.";
 "send.amount_placeholder" = "Betrag";
 "send.address_placeholder" = "An Adresse";
@@ -614,13 +617,11 @@
 
 // Private Send
 
-"private_send.toggle.title" = "Privates Senden";
+"private_send.tab.caution.title" = "Privates Senden";
+"private_send.tab.caution.text" = "Privates Senden verbirgt die direkte On-Chain-Verbindung zwischen Ihrer Adresse und dem Empfänger über einen vertraulichen Vermittler.";
 "private_send.amount_caption" = "Betrag, den der Empfänger erhält";
 "private_send.unavailable" = "Privater Versand nicht verfügbar";
 "private_send.memo_unavailable" = "Memo ist nicht verfügbar, wenn Privates Senden aktiviert ist";
-
-"private_send.info.title" = "Privates Senden";
-"private_send.info.description" = "Privates Senden leitet Ihre Transaktion über einen vertraulichen Vermittler und verbirgt die öffentliche Verbindung zwischen Ihrer Adresse und dem Empfänger. Beide Transaktionen bleiben auf der Blockchain sichtbar, sind aber nicht direkt miteinander verbunden.";
 
 "private_send.fee" = "Gebühr für privaten Versand";
 "private_send.fee.info" = "Diese Gebühr deckt die Kosten für die private Verarbeitung Ihrer Transaktion. Sie wird zusätzlich zur Netzwerkgebühr erhoben und hängt vom gesendeten Betrag ab.";
@@ -2403,7 +2404,7 @@
 "fee_settings.replace_by_fee.description" = "Diese Option ermöglicht es Ihnen, eine festsitzende Transaktion erneut zu senden, indem Sie die Höhe der Gebühr erhöhen.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock funktioniert nur beim Senden an BIP44-Adressen (beginnend mit 1).";
-"fee_settings.time_lock.private_send_unavailable" = "Nicht verfügbar, wenn Privates Senden aktiviert ist.";
+"fee_settings.time_lock.not_applied" = "Wird bei Privatem Senden und Cross Pay nicht angewendet.";
 
 "fee_settings.network_fee" = "Netzwerkgebühr";
 "fee_settings.network_fee.info" = "Die geschätzten Kosten für den Versand der Transaktion im Netzwerk.";

@@ -67,8 +67,8 @@ extension BitcoinSendSettingsViewModel {
         handler.token.coin.code
     }
 
-    var lockTimeIntervalState: BitcoinPreSendHandler.LockTimeIntervalState {
-        handler.lockTimeIntervalState
+    var lockTimeSupported: Bool {
+        handler.lockTimeSupported
     }
 
     var lockTimeIntervalTitle: String {
