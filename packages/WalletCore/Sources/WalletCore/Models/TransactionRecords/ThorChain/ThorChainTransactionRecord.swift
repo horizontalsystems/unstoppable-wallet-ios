@@ -26,12 +26,24 @@ class ThorChainTransactionRecord: TransactionRecord {
             blockHeight: transaction.isPending ? nil : Int(exactly: transaction.blockHeight),
             confirmationsThreshold: nil,
             date: transaction.timestamp,
-            failed: transaction.status.caseInsensitiveCompare("failed") == .orderedSame,
+            failed: Self.isFailed(transaction),
             paginationRaw: transaction.transactionId.hash
         )
     }
 
+    // Midgard reports a transaction that was included but failed to execute as a `failed`
+    // action whose status is still `success`; the `failed` status is set only by the kit for
+    // a send the node rejected.
+    private static func isFailed(_ transaction: ThorChainKit.Transaction) -> Bool {
+        transaction.status.caseInsensitiveCompare("failed") == .orderedSame
+            || transaction.type.caseInsensitiveCompare("failed") == .orderedSame
+    }
+
     override func status(lastBlockHeight _: Int?) -> TransactionStatus {
+        if Self.isFailed(transaction) {
+            return .failed
+        }
+
         switch transaction.status.lowercased() {
         case "success", "refund": return .completed
         case "failed": return .failed
