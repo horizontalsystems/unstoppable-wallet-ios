@@ -77,6 +77,7 @@
 "alert.revoking" = "Revoking";
 "alert.revoked" = "Revoked";
 "alert.cant_recognize" = "Can't Recognize";
+"alert.change_wallet" = "Change Wallet";
 "alert.not_founded" = "Not Founded.";
 
 "alert.fee_too_low" = "Fee Too Low";

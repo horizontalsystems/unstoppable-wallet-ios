@@ -77,6 +77,7 @@
 "alert.revoking" = "Revogando";
 "alert.revoked" = "Revogado";
 "alert.cant_recognize" = "Impossível Reconhecer";
+"alert.change_wallet" = "Troque de carteira";
 "alert.not_founded" = "Não encontrado.";
 
 "alert.fee_too_low" = "Taxa Baixa Muito";

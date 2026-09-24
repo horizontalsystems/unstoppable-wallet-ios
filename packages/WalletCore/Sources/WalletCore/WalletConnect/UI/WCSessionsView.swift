@@ -59,6 +59,12 @@ struct WCSessionsView: View {
     }
 
     private func scan() {
+        // the same gate as in WCPresenter.pair, one screen earlier: a watch account never gets the camera
+        if let account = Core.shared.accountManager.activeAccount, !account.type.supportsWalletConnect {
+            WCPresenter.presentNotSupported(accountType: account.type)
+            return
+        }
+
         Coordinator.shared.present { isPresented in
             ScanQrViewNew(reportAfterDismiss: true, isPresented: isPresented) { uri in
                 viewModel.pair(uri: uri)

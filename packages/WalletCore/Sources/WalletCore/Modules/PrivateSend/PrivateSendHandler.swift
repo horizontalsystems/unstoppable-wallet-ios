@@ -70,6 +70,11 @@ extension PrivateSendHandler: ISendHandler {
     var refreshPublisher: AnyPublisher<Void, Never>? { nil }
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
+        // committedOrder() creates an order with the provider, so the account is checked before it
+        guard accountManager.activeAccount?.watchAccount != true else {
+            throw PrivateSendError.notQuoted
+        }
+
         let generation = withLock { () -> Int in
             self.syncGeneration += 1
             return self.syncGeneration

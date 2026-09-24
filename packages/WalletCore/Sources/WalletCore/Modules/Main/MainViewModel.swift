@@ -42,16 +42,19 @@ class MainViewModel: ObservableObject {
 
     init() {
         showMarket = launchScreenManager.showMarket
-        showSwap = appStateManager.swapEnabled
+        showSwap = appStateManager.swapEnabled && !(accountManager.activeAccount?.watchAccount ?? false)
 
         launchScreenManager.showMarketObservable
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] in self?.showMarket = $0 })
             .disposed(by: disposeBag)
 
-        appStateManager.$swapEnabled
+        // a watch account cannot sign a swap, so the tab goes away for it as it does when swap is turned off
+        Publishers.CombineLatest(appStateManager.$swapEnabled, accountManager.activeAccountPublisher)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.showSwap = $0 }
+            .sink { [weak self] swapEnabled, account in
+                self?.showSwap = swapEnabled && !(account?.watchAccount ?? false)
+            }
             .store(in: &cancellables)
 
         selectedTab = initialTab

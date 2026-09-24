@@ -137,6 +137,15 @@ extension MultiSwapSendHandler: ISendHandler {
     }
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
+        // the confirmation quote commits an order with the provider, so the account is checked before it, not after
+        guard let account = accountManager.activeAccount else {
+            throw SendError.noActiveAccount
+        }
+
+        guard !account.watchAccount else {
+            throw SwapBroadcasterError.noBroadcaster
+        }
+
         let quote = try await provider.confirmationQuote(
             multiSwapQuote: multiSwapQuote,
             tokenIn: tokenIn,
@@ -147,10 +156,6 @@ extension MultiSwapSendHandler: ISendHandler {
             transactionSettings: transactionSettings
         )
         quote.preciseEstimateTime = provider.preciseEstimateTime
-
-        guard accountManager.activeAccount != nil else {
-            throw SendError.noActiveAccount
-        }
 
         guard let broadcaster else {
             throw SwapBroadcasterError.noBroadcaster

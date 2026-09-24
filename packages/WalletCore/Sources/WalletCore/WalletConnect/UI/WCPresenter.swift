@@ -5,8 +5,14 @@ import SwiftUI
 enum WCPresenter {
     static func pair(uri: String) {
         guard let manager = Core.shared.walletConnect else { return }
-        guard Core.shared.accountManager.activeAccount != nil else {
+        guard let account = Core.shared.accountManager.activeAccount else {
             presentNoAccount()
+            return
+        }
+
+        // a watch account signs nothing, so pairing would only end in an unsupported proposal
+        guard account.type.supportsWalletConnect else {
+            presentNotSupported(accountType: account.type)
             return
         }
 
@@ -129,6 +135,28 @@ enum WCPresenter {
                     .buttonGroup(.init(buttons: [
                         .init(style: .yellow, title: "button.ok".localized) {
                             isPresented.wrappedValue = false
+                        },
+                    ])),
+                ]
+            )
+        }
+    }
+
+    static func presentNotSupported(accountType: AccountType) {
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            BottomSheetView(
+                items: [
+                    .title(icon: ThemeImage.warning, title: "wallet_connect.title".localized),
+                    .warning(text: "wallet_connect.non_supported_account.description".localized(accountType.description)),
+                    .buttonGroup(.init(buttons: [
+                        .init(style: .yellow, title: "wallet_connect.non_supported_account.switch".localized) {
+                            isPresented.wrappedValue = false
+
+                            DispatchQueue.main.async {
+                                Coordinator.shared.present { _ in
+                                    SwitchAccountView()
+                                }
+                            }
                         },
                     ])),
                 ]

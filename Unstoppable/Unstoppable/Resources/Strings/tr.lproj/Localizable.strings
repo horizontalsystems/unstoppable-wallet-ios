@@ -77,6 +77,7 @@
 "alert.revoking" = "İptal ediliyor";
 "alert.revoked" = "İptal et";
 "alert.cant_recognize" = "Tanıyamıyorum";
+"alert.change_wallet" = "Cüzdan değiştirin";
 "alert.not_founded" = "Bulunamadı.";
 
 "alert.fee_too_low" = "Ücret Çok Düşük";

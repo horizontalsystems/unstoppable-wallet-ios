@@ -30,6 +30,11 @@ class DeepLinkViewManager {
         switch signal {
         case let .coinPage(coin): Coordinator.shared.presentCoinPage(coin: coin, page: .deepLink)
         case let .sendPage(options):
+            guard !watchAccountActive else {
+                showChangeWallet()
+                return
+            }
+
             var blockchainTypes: [BlockchainType]?
             var tokenTypes: [TokenType]?
             if case let .blockchain(filterBlockchainTypes, filterTokenTypes) = options.filter {
@@ -40,6 +45,11 @@ class DeepLinkViewManager {
             let link = SendDeepLink(blockchainTypes: blockchainTypes, tokenTypes: tokenTypes, address: options.address, amount: options.amount, memo: options.memo)
             DeepLinkPresenterFactory.presentSend(link: link)
         case let .cryptoPaySendPage(url):
+            guard !watchAccountActive else {
+                showChangeWallet()
+                return
+            }
+
             Coordinator.shared.present { isPresented in
                 CryptoPaySendTokenListView(url: url, isPresented: isPresented)
             }
@@ -61,5 +71,14 @@ class DeepLinkViewManager {
         DispatchQueue.main.async {
             HudHelper.instance.show(banner: .error(string: error.smartDescription))
         }
+    }
+
+    // a link or a scanned code can ask for a payment while the active account only watches an address
+    private var watchAccountActive: Bool {
+        Core.shared.accountManager.activeAccount?.watchAccount ?? false
+    }
+
+    private func showChangeWallet() {
+        HudHelper.instance.show(banner: .error(string: "alert.change_wallet".localized))
     }
 }

@@ -20,7 +20,14 @@ public enum SendHandlerFactory {
         preSendProviders.insert(provider, at: 0)
     }
 
+    // Backstop for every send screen: the entry points are gated in the UI, this catches the ones that are not.
+    // It must run before the providers: PrivateSendHandlerProvider/CrossPayHandlerProvider commit an order with the
+    // provider while building their handler, so a later nil would leave that order unpaid.
     static func handler(sendData: SendData) -> ISendHandler? {
+        if Core.shared.accountManager.activeAccount?.watchAccount == true {
+            return nil
+        }
+
         for provider in providers {
             if let handler = provider.instance(sendData: sendData) {
                 return handler
@@ -36,6 +43,10 @@ public enum SendHandlerFactory {
     }
 
     public static func preSendHandler(wallet: Wallet, address: ResolvedAddress?) -> IPreSendHandler? {
+        if wallet.account.watchAccount {
+            return nil
+        }
+
         for provider in preSendProviders {
             if let handler = provider.instance(wallet: wallet, address: address) {
                 return handler

@@ -77,6 +77,7 @@
 "alert.revoking" = "正在取消";
 "alert.revoked" = "已注销";
 "alert.cant_recognize" = "无法识别";
+"alert.change_wallet" = "请切换钱包";
 "alert.not_founded" = "未找到。";
 
 "alert.fee_too_low" = "费用过低";

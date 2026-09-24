@@ -77,6 +77,7 @@
 "alert.revoking" = "Révocation en cours";
 "alert.revoked" = "Révoqué";
 "alert.cant_recognize" = "Impossible de reconnaître";
+"alert.change_wallet" = "Changez de portefeuille";
 "alert.not_founded" = "Non Trouvé.";
 
 "alert.fee_too_low" = "Frais trop bas";
