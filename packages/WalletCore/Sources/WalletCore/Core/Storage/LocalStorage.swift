@@ -103,10 +103,11 @@ extension LocalStorage {
         set { userDefaultsStorage.set(value: newValue, for: keyZCashRewind) }
     }
 
-    func defaultProvider(blockchainType: BlockchainType) -> LegacySwapProvider {
+    // nil for a chain with no legacy swap providers at all, such as Arc
+    func defaultProvider(blockchainType: BlockchainType) -> LegacySwapProvider? {
         let key = [keyDefaultProvider, blockchainType.uid].joined(separator: "|")
         let raw: String? = userDefaultsStorage.value(for: key)
-        return (raw.flatMap { LegacySwapProvider(rawValue: $0) }) ?? blockchainType.legacySwapProviders[0]
+        return (raw.flatMap { LegacySwapProvider(rawValue: $0) }) ?? blockchainType.legacySwapProviders.first
     }
 
     func setDefaultProvider(blockchainType: BlockchainType, provider: LegacySwapProvider) {

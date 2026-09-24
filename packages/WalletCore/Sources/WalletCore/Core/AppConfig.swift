@@ -4,7 +4,6 @@ import UIKit
 
 enum AppConfig {
     static let label = "io.horizontalsystems.unstoppable"
-    static let backupSalt = "unstoppable"
 
     static let companyName = "Horizontal Systems"
     static let reportEmail = "support.unstoppable@protonmail.com"

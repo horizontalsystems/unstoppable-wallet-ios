@@ -92,6 +92,7 @@ typealias RestoreSettings = [RestoreSettingType: String]
 
 extension RestoreSettings {
     var birthdayHeight: Int? {
-        self[.birthdayHeight].flatMap { Int($0) }
+        // a negative value would trap in UInt64() when an adapter starts; treat it as absent
+        self[.birthdayHeight].flatMap { Int($0) }.flatMap { $0 >= 0 ? $0 : nil }
     }
 }

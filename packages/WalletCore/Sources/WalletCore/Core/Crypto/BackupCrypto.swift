@@ -92,7 +92,7 @@ extension BackupCrypto {
         }
     }
 
-    static func encrypt(data: Data, passphrase: String, kdf: KdfParams = .defaultBackup) throws -> BackupCrypto {
+    static func encrypt(data: Data, passphrase: String, kdf: KdfParams = .newBackupParams()) throws -> BackupCrypto {
         let iv = BackupCryptoHelper.generateInitialVector().hs.hex
 
         let cipherText = try BackupCryptoHelper.AES128(

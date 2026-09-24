@@ -35,7 +35,9 @@ class WalletBackup: Codable {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         crypto = try container.decode(BackupCrypto.self, forKey: .crypto)
-        enabledWallets = (try? container.decode([EnabledWallet].self, forKey: .enabledWallets)) ?? []
+        // per entry, so one unreadable wallet does not wipe every wallet of the account
+        enabledWallets = ((try? container.decode([FailableDecodable<EnabledWallet>].self, forKey: .enabledWallets)) ?? [])
+            .compactMap(\.base)
         id = try container.decode(String.self, forKey: .id)
         type = try container.decode(AccountType.Abstract.self, forKey: .type)
         let isManualBackedUp = try? container.decode(Bool.self, forKey: .isManualBackedUp)
@@ -100,8 +102,9 @@ extension WalletBackup {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             let tokenQueryId = try container.decode(String.self, forKey: .tokenQueryId)
             let coinName = try? container.decode(String.self, forKey: .coinName)
-            let coinCode = try container.decode(String.self, forKey: .coinCode)
-            let tokenDecimals = try container.decode(Int.self, forKey: .tokenDecimals)
+            // Android leaves both out when it has no coin data; the model already treats them as optional
+            let coinCode = try? container.decode(String.self, forKey: .coinCode)
+            let tokenDecimals = try? container.decode(Int.self, forKey: .tokenDecimals)
             let settings = try? container.decode([String: String].self, forKey: .settings)
 
             self.init(tokenQueryId: tokenQueryId, coinName: coinName, coinCode: coinCode, tokenDecimals: tokenDecimals, settings: settings ?? [:])

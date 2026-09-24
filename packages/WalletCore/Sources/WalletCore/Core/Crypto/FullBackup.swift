@@ -9,6 +9,8 @@ struct FullBackup {
     let sections: Set<BackupSection>?
     let version: Int
     let timestamp: TimeInterval?
+    // number of wallet entries in the file before unknown types were dropped; not part of the format
+    var rawWalletCount: Int = 0
 }
 
 extension FullBackup: Codable {
@@ -26,10 +28,15 @@ extension FullBackup: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
-        do {
-            wallets = try (container.decode([FailableDecodable<CloudRestoreBackupListModule.RestoredBackup>].self, forKey: .wallets))
-                .compactMap(\.base)
-        } catch {
+        if container.contains(.wallets) {
+            // entries of an unknown type are dropped here; the original count tells a file whose accounts
+            // were all skipped from a file that simply carries no accounts. A broken array is an error:
+            // silently restoring nothing would look like a successful restore of an empty backup
+            let decoded = try container.decode([FailableDecodable<CloudRestoreBackupListModule.RestoredBackup>].self, forKey: .wallets)
+            rawWalletCount = decoded.count
+            wallets = decoded.compactMap(\.base)
+        } else {
+            rawWalletCount = 0
             wallets = []
         }
         watchlistIds = (try? container.decode([String].self, forKey: .watchlistIds)) ?? []

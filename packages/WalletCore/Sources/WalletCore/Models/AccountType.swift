@@ -378,107 +378,21 @@ public enum AccountType: Identifiable {
     }
 }
 
-extension AccountType {
-    private static func split(_ string: String, separator: String) -> (String, String) {
-        if let index = string.firstIndex(of: Character(separator)) {
-            let left = String(string.prefix(upTo: index))
-            let right = String(string.suffix(from: string.index(after: index)))
-            return (left, right)
-        }
-
-        return (string, "")
-    }
-
-    static func decode(uniqueId: Data, type: Abstract) -> AccountType? {
-        let string = String(decoding: uniqueId, as: UTF8.self)
-
-        switch type {
-        case .mnemonic:
-            let (wordsWithCompliant, salt) = split(string, separator: "@")
-            let (wordList, bip39CompliantString) = split(wordsWithCompliant, separator: "&")
-            let words = wordList.split(separator: " ").map(String.init)
-
-            let bip39Compliant = bip39CompliantString.isEmpty
-            return AccountType.mnemonic(words: words, salt: salt, bip39Compliant: bip39Compliant)
-        case .evmPrivateKey:
-            return AccountType.evmPrivateKey(data: uniqueId)
-        case .trcPrivateKey:
-            return AccountType.trcPrivateKey(data: uniqueId)
-        case .stellarSecretKey:
-            return AccountType.stellarSecretKey(secretSeed: string)
-        case .passkeyOwned:
-            return nil // device-bound passkey + separate local storage: not restorable from a portable backup
-        case .hdExtendedKey:
-            do {
-                return try AccountType.hdExtendedKey(key: HDExtendedKey(data: uniqueId))
-            } catch {
-                return nil
-            }
-        case .btcAddress:
-            let (address, details) = split(string, separator: "&")
-            let (blockchainTypeUid, tokenTypeValue) = split(details, separator: "|")
-            guard let tokenType = TokenType(id: tokenTypeValue) else {
-                return nil
-            }
-
-            return AccountType.btcAddress(address: address, blockchainType: BlockchainType(uid: blockchainTypeUid), tokenType: tokenType)
-        case .evmAddress:
-            return (try? EvmKit.Address(hex: string)).map { AccountType.evmAddress(address: $0) }
-        case .tronAddress:
-            let hexData = string.hs.hexData ?? Data()
-
-            let address: TronKit.Address?
-            if !hexData.isEmpty { // android convention address
-                address = try? TronKit.Address(raw: hexData)
-            } else { // old ios style
-                address = try? TronKit.Address(address: string)
-            }
-
-            return address.map { AccountType.tronAddress(address: $0) }
-        case .tonAddress:
-            return AccountType.tonAddress(address: string)
-        case .solanaAddress:
-            return AccountType.solanaAddress(address: string)
-        case .stellarAccount:
-            return AccountType.stellarAccount(accountId: string)
-        case .xrpAddress:
-            return AccountType.xrpAddress(address: string)
-        case .moneroWatchAccount:
-            let components = string.components(separatedBy: "|")
-            guard components.count >= 2 else {
-                return nil
-            }
-
-            let address = components[0]
-            let viewKey = components[1]
-
-            return AccountType.moneroWatchAccount(address: address, viewKey: viewKey)
-        case .moneroMnemonic:
-            let (wordList, passphrase) = split(string, separator: "@")
-            let words = wordList.split(separator: " ").map(String.init)
-
-            guard words.count == 25 else {
-                return nil
-            }
-
-            return AccountType.moneroMnemonic(words: words, passphrase: passphrase)
-        }
-    }
-
-    public enum Abstract: String, Codable {
+public extension AccountType {
+    enum Abstract: String, Codable, CaseIterable {
         case mnemonic
         case evmPrivateKey = "private_key"
         case trcPrivateKey = "tron_private_key"
-        case stellarSecretKey = "stellar_secret_key"
+        case stellarSecretKey = "secret_key"
         case passkeyOwned = "passkey_owned"
         case evmAddress = "evm_address"
         case tronAddress = "tron_address"
         case tonAddress = "ton_address"
         case solanaAddress = "solana_address"
-        case stellarAccount = "stellar_account"
+        case stellarAccount = "stellar_address"
         case xrpAddress = "xrp_address"
         case hdExtendedKey = "hd_extended_key"
-        case btcAddress = "btc_address_key"
+        case btcAddress = "bitcoin_address"
         case moneroWatchAccount = "monero_watch_account"
         case moneroMnemonic = "monero_mnemonic"
 
@@ -595,17 +509,5 @@ extension AccountType: Hashable {
             hasher.combine(words)
             hasher.combine(passphrase)
         }
-    }
-}
-
-extension AccountType {
-    static func decrypt(crypto: BackupCrypto, type: AccountType.Abstract, passphrase: String) throws -> AccountType {
-        let data = try crypto.decrypt(passphrase: passphrase)
-
-        guard let accountType = AccountType.decode(uniqueId: data, type: type) else {
-            throw CloudRestoreBackupListModule.RestoreError.invalidBackup
-        }
-
-        return accountType
     }
 }
