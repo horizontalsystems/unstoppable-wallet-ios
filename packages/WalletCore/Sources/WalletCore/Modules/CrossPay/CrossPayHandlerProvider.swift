@@ -17,7 +17,9 @@ public final class CrossPayHandlerProvider: SendHandler {
         let wallet = Wallet(token: request.tokenIn, account: account)
 
         // Placeholder for handler resolution only — the real destination is the deposit address,
-        // which does not exist yet.
+        // which does not exist yet. Always a fresh handler owned by CrossPayHandler, never the UI's
+        // shared one: the user's send settings arrive as the immutable `request.depositSettings`
+        // snapshot instead.
         guard let preSendHandler = SendHandlerFactory.preSendHandler(
             wallet: wallet,
             address: ResolvedAddress(address: request.recipient, issueTypes: [])

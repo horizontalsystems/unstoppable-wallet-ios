@@ -31,7 +31,7 @@ public class PreSendViewModel: BasePreSendViewModel {
     }
 
     init(wallet: Wallet, handler: IPreSendHandler?, predefinedAddress: ResolvedAddress?, amount: Decimal?, memo: String?, customDecimals: Int? = nil) {
-        super.init(wallet: wallet, handler: handler, predefinedAddress: predefinedAddress, amount: amount, customDecimals: customDecimals)
+        super.init(wallet: wallet, handler: handler, predefinedAddress: predefinedAddress, amount: amount, initialInputToken: wallet.token, customDecimals: customDecimals)
 
         if let handler {
             destinationTagState = handler.destinationTagState

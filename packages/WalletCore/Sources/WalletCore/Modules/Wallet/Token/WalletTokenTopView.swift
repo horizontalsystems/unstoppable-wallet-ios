@@ -88,11 +88,6 @@ struct WalletTokenTopView<Content: View, Status: View>: View {
                 }
                 stat(page: .tokenPage, event: .open(page: .swap))
             case .chart: Coordinator.shared.presentCoinPage(coin: viewModel.wallet.coin, page: .tokenPage)
-            case .pay:
-                Coordinator.shared.present { isPresented in
-                    CrossPayView(wallet: viewModel.wallet, isPresented: isPresented)
-                }
-                stat(page: .tokenPage, event: .open(page: .crossPay))
             default: ()
             }
         }

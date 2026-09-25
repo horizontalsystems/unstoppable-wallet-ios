@@ -17,7 +17,7 @@ final class PrivatePreSendViewModel: BasePreSendViewModel {
         self.service = service
         isSupported = Self.isSupported(token: wallet.token, service: service)
 
-        super.init(wallet: wallet, handler: handler, predefinedAddress: predefinedAddress, amount: amount)
+        super.init(wallet: wallet, handler: handler, predefinedAddress: predefinedAddress, amount: amount, initialInputToken: wallet.token)
 
         service?.syncPublisher
             .receive(on: DispatchQueue.main)

@@ -99,7 +99,7 @@ struct UnstoppableApp: App {
         )
 
         // Shares the API and repository cache; the factory keeps the NEAR repository (and its
-        // first /v2/tokens fetch) uncreated until the CrossPay screen opens.
+        // first /v2/tokens fetch) uncreated until a send screen for a token opens.
         Core.crossPayService = CrossPayService(
             api: uSwapApi,
             assetRepository: repositoryCache.repository(providerId:),

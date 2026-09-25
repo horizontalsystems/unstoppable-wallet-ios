@@ -1,17 +1,39 @@
 import SwiftUI
 
-// The form shared by the Standard and Private tabs of PreSendView: balance, amount/fiat input, address,
-// tab-specific fields, cautions and the Next button.
-struct PreSendFormView<Fields: View>: View {
+// The form shared by the Standard, Private and Cross Pay tabs of PreSendView: balance, amount/fiat input,
+// address, tab-specific fields, cautions, a footer (info cards) and the Next button.
+struct PreSendFormView<Fields: View, Footer: View>: View {
     @ObservedObject var viewModel: BasePreSendViewModel
     let addressVisible: Bool
 
     @Binding var path: NavigationPath
     @Binding var isPresented: Bool
 
-    @ViewBuilder let fields: (FocusState<PreSendFocusField?>.Binding) -> Fields
+    // When set, the input's token selector is tappable (the amount is in a user-selected token).
+    let onSelectToken: (() -> Void)?
+
+    let fields: (FocusState<PreSendFocusField?>.Binding) -> Fields
+    let footer: () -> Footer
 
     @FocusState private var focusField: PreSendFocusField?
+
+    init(
+        viewModel: BasePreSendViewModel,
+        addressVisible: Bool,
+        path: Binding<NavigationPath>,
+        isPresented: Binding<Bool>,
+        onSelectToken: (() -> Void)? = nil,
+        @ViewBuilder fields: @escaping (FocusState<PreSendFocusField?>.Binding) -> Fields,
+        @ViewBuilder footer: @escaping () -> Footer
+    ) {
+        self.viewModel = viewModel
+        self.addressVisible = addressVisible
+        _path = path
+        _isPresented = isPresented
+        self.onSelectToken = onSelectToken
+        self.fields = fields
+        self.footer = footer
+    }
 
     var body: some View {
         BottomGradientWrapper(gradientColor: .themeLawrence) {
@@ -21,7 +43,7 @@ struct PreSendFormView<Fields: View>: View {
                         AvailableBalanceView(
                             balance: viewModel.availableBalance,
                             token: viewModel.token,
-                            allAvailable: true,
+                            allAvailable: viewModel.maxAmountEnabled,
                             currentValue: viewModel.amount,
                             onSelect: { percent in
                                 viewModel.setAmountIn(percent: percent)
@@ -29,7 +51,8 @@ struct PreSendFormView<Fields: View>: View {
                             },
                             onClear: {
                                 viewModel.clearAmountIn()
-                            }
+                            },
+                            percents: viewModel.balancePercents
                         )
                         .padding(.top, 16)
                         .padding(.horizontal, 16)
@@ -58,6 +81,8 @@ struct PreSendFormView<Fields: View>: View {
                         if !viewModel.cautions.isEmpty {
                             cautionsView()
                         }
+
+                        footer()
                     }
                 }
                 .padding(.bottom, 32)
@@ -73,14 +98,15 @@ struct PreSendFormView<Fields: View>: View {
 
     @ViewBuilder private func inputView() -> some View {
         SendInputView(
-            token: viewModel.token,
+            token: viewModel.inputToken,
             amountString: $viewModel.amountString,
             fiatAmountString: $viewModel.fiatAmountString,
             coinPrice: viewModel.coinPrice,
             currency: viewModel.currency,
             focusedField: $focusField,
             amountField: .amount,
-            fiatField: .fiatAmount
+            fiatField: .fiatAmount,
+            onSelectToken: onSelectToken
         )
     }
 
@@ -125,7 +151,7 @@ struct PreSendFormView<Fields: View>: View {
     }
 
     @ViewBuilder private func buttonView() -> some View {
-        let (title, disabled, showProgress) = buttonState()
+        let state = viewModel.buttonState
 
         Button(action: {
             guard let resolvedAddress = viewModel.resolvedAddress else { return }
@@ -162,22 +188,33 @@ struct PreSendFormView<Fields: View>: View {
             }
         }) {
             HStack(spacing: .margin8) {
-                if showProgress {
+                if state.showProgress {
                     ProgressView()
                 }
 
-                Text(title)
+                Text(state.title)
             }
         }
-        .disabled(disabled)
+        .disabled(state.disabled)
         .buttonStyle(PrimaryButtonStyle(style: .yellow))
     }
 
     private func presentAddressPicker() {
         focusField = nil
 
+        // No recipient chain until a token is chosen: pick the token first.
+        guard let addressToken = viewModel.addressToken else {
+            onSelectToken?()
+            return
+        }
+
         Coordinator.shared.present { isPresented in
-            SendAddressViewWrapper(wallet: viewModel.wallet, address: viewModel.resolvedAddress?.address, isPresented: isPresented) { resolved in
+            SendAddressViewWrapper(
+                token: addressToken,
+                fromAddress: viewModel.addressFromAddress,
+                address: viewModel.resolvedAddress?.address,
+                isPresented: isPresented
+            ) { resolved in
                 viewModel.set(address: resolved)
             }
         }
@@ -210,31 +247,20 @@ struct PreSendFormView<Fields: View>: View {
             .padding(.horizontal, 16)
         }
     }
+}
 
-    private func buttonState() -> (String, Bool, Bool) {
-        let title: String
-        var disabled = true
-        var showProgress = false
-
-        if viewModel.adapterState == nil {
-            title = "send.token_not_enabled".localized
-        } else if let adapterState = viewModel.adapterState, adapterState.syncing {
-            title = "send.token_syncing".localized
-            showProgress = true
-        } else if let adapterState = viewModel.adapterState, !adapterState.isSynced {
-            title = "send.token_not_synced".localized
-        } else if viewModel.amount == nil {
-            title = "send.enter_amount".localized
-        } else if let availableBalance = viewModel.availableBalance, let amount = viewModel.amount, amount > availableBalance {
-            title = "send.insufficient_balance".localized
-        } else if viewModel.resolvedAddress == nil {
-            title = "send.address.enter_address".localized
-        } else {
-            title = "send.next_button".localized
-            disabled = viewModel.sendData == nil
+extension PreSendFormView where Footer == EmptyView {
+    init(
+        viewModel: BasePreSendViewModel,
+        addressVisible: Bool,
+        path: Binding<NavigationPath>,
+        isPresented: Binding<Bool>,
+        onSelectToken: (() -> Void)? = nil,
+        @ViewBuilder fields: @escaping (FocusState<PreSendFocusField?>.Binding) -> Fields
+    ) {
+        self.init(viewModel: viewModel, addressVisible: addressVisible, path: path, isPresented: isPresented, onSelectToken: onSelectToken, fields: fields) {
+            EmptyView()
         }
-
-        return (title, disabled, showProgress)
     }
 }
 

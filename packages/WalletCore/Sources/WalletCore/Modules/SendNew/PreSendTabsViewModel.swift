@@ -12,6 +12,7 @@ final class PreSendTabsViewModel: ObservableObject {
     let handler: IPreSendHandler?
     let standard: PreSendViewModel
     let privateSend: PrivatePreSendViewModel
+    let crossPay: CrossPayPreSendViewModel
 
     @Published var currentTab: PreSendTab = .standard
     @Published private(set) var tabs: [PreSendTab] = []
@@ -26,6 +27,7 @@ final class PreSendTabsViewModel: ObservableObject {
 
         standard = PreSendViewModel(wallet: wallet, handler: handler, predefinedAddress: predefinedAddress, amount: amount, memo: memo)
         privateSend = PrivatePreSendViewModel(wallet: wallet, handler: handler, service: Core.privateSendService, predefinedAddress: predefinedAddress, amount: amount)
+        crossPay = CrossPayPreSendViewModel(wallet: wallet, handler: handler, service: Core.crossPayService)
 
         settingsModified = handler?.settingsModified ?? false
 
@@ -39,11 +41,16 @@ final class PreSendTabsViewModel: ObservableObject {
             .sink { [weak self] _ in self?.syncTabs() }
             .store(in: &cancellables)
 
+        crossPay.$isSupported
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.syncTabs() }
+            .store(in: &cancellables)
+
         syncTabs()
     }
 
     private func syncTabs() {
-        tabs = [.standard] + (privateSend.isSupported ? [.privateSend] : []) + (crossPayVisible ? [.crossPay] : [])
+        tabs = [.standard] + (privateSend.isSupported ? [.privateSend] : []) + (crossPayVisible && crossPay.isSupported ? [.crossPay] : [])
 
         if !tabs.contains(currentTab) {
             currentTab = .standard
@@ -61,6 +68,7 @@ extension PreSendTabsViewModel {
         settingsModified = handler?.settingsModified ?? false
         standard.syncSendData()
         privateSend.syncSendData()
+        crossPay.syncSendData()
     }
 }
 

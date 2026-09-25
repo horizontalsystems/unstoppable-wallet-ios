@@ -1,18 +1,23 @@
 import Foundation
 import MarketKit
 
-// What the `.crossPay` SendData case carries: deposit address and ZEC amount don't exist until commit.
+// What the `.crossPay` SendData case carries: deposit address and funding amount don't exist until commit.
 public struct CrossPayRequest {
-    public let tokenIn: Token // the funding token (ZEC)
+    public let tokenIn: Token // the funding token (the wallet being sent from)
     public let tokenOut: Token // what the recipient receives
     public let recipient: String // the REAL recipient on tokenOut's chain, never a deposit address
     public let amount: Decimal // exact output — the amount of tokenOut the recipient receives
+    // An immutable copy of the user's send settings, taken on the main thread when the request is
+    // built, so they apply to the deposit transfer without the handler ever reading the live,
+    // UI-owned pre-send handler. Nil falls back to default settings.
+    public let depositSettings: PreSendSettingsSnapshot?
 
-    public init(tokenIn: Token, tokenOut: Token, recipient: String, amount: Decimal) {
+    public init(tokenIn: Token, tokenOut: Token, recipient: String, amount: Decimal, depositSettings: PreSendSettingsSnapshot? = nil) {
         self.tokenIn = tokenIn
         self.tokenOut = tokenOut
         self.recipient = recipient
         self.amount = amount
+        self.depositSettings = depositSettings
     }
 }
 

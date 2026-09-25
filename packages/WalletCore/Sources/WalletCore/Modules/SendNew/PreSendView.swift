@@ -40,7 +40,7 @@ struct PreSendView: View {
                     case .privateSend:
                         PrivatePreSendTabView(viewModel: viewModel.privateSend, addressVisible: addressVisible, path: $path, isPresented: $isPresented)
                     case .crossPay:
-                        CrossPayPreSendTabView()
+                        CrossPayPreSendTabView(viewModel: viewModel.crossPay, addressVisible: addressVisible, path: $path, isPresented: $isPresented)
                     }
                 }
             }

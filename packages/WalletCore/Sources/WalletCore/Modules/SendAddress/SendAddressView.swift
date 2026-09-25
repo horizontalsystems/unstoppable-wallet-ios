@@ -1,24 +1,34 @@
+import MarketKit
 import SwiftUI
 
 struct SendAddressView: View {
-    private let wallet: Wallet
+    private let token: Token
     private let address: String?
     private let buttonTitle: String
     private let fromAddress: String?
     private let onSelect: (ResolvedAddress) -> Void
 
-    init(wallet: Wallet, address: String? = nil, buttonTitle: String = "button.apply".localized, onSelect: @escaping (ResolvedAddress) -> Void) {
-        self.wallet = wallet
+    init(token: Token, fromAddress: String?, address: String? = nil, buttonTitle: String = "button.apply".localized, onSelect: @escaping (ResolvedAddress) -> Void) {
+        self.token = token
+        self.fromAddress = fromAddress
         self.address = address
         self.buttonTitle = buttonTitle
         self.onSelect = onSelect
+    }
 
-        fromAddress = Core.shared.adapterManager.depositAdapter(for: wallet)?.receiveAddress.address
+    init(wallet: Wallet, address: String? = nil, buttonTitle: String = "button.apply".localized, onSelect: @escaping (ResolvedAddress) -> Void) {
+        self.init(
+            token: wallet.token,
+            fromAddress: Core.shared.adapterManager.depositAdapter(for: wallet)?.receiveAddress.address,
+            address: address,
+            buttonTitle: buttonTitle,
+            onSelect: onSelect
+        )
     }
 
     var body: some View {
         ThemeView {
-            AddressView(token: wallet.token, buttonTitle: buttonTitle, destination: .send(fromAddress: fromAddress), address: address, allowRemoval: false) { resolvedAddress in
+            AddressView(token: token, buttonTitle: buttonTitle, destination: .send(fromAddress: fromAddress), address: address, allowRemoval: false) { resolvedAddress in
                 if let resolvedAddress {
                     onSelect(resolvedAddress)
                 }
@@ -29,14 +39,33 @@ struct SendAddressView: View {
 }
 
 struct SendAddressViewWrapper: View {
-    let wallet: Wallet
+    let token: Token
+    let fromAddress: String?
     let address: String?
     @Binding var isPresented: Bool
     let onSelect: (ResolvedAddress) -> Void
 
+    init(token: Token, fromAddress: String?, address: String?, isPresented: Binding<Bool>, onSelect: @escaping (ResolvedAddress) -> Void) {
+        self.token = token
+        self.fromAddress = fromAddress
+        self.address = address
+        _isPresented = isPresented
+        self.onSelect = onSelect
+    }
+
+    init(wallet: Wallet, address: String?, isPresented: Binding<Bool>, onSelect: @escaping (ResolvedAddress) -> Void) {
+        self.init(
+            token: wallet.token,
+            fromAddress: Core.shared.adapterManager.depositAdapter(for: wallet)?.receiveAddress.address,
+            address: address,
+            isPresented: isPresented,
+            onSelect: onSelect
+        )
+    }
+
     var body: some View {
         ThemeNavigationStack {
-            SendAddressView(wallet: wallet, address: address) { resolvedAddress in
+            SendAddressView(token: token, fromAddress: fromAddress, address: address) { resolvedAddress in
                 onSelect(resolvedAddress)
                 isPresented = false
             }

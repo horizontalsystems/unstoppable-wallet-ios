@@ -9,6 +9,7 @@ struct AvailableBalanceView: View {
     let currentValue: Decimal?
     let onSelect: (Int) -> Void
     let onClear: () -> Void
+    var percents: [Int] = [25, 50, 75]
 
     var body: some View {
         HStack(spacing: 8) {
@@ -26,11 +27,11 @@ struct AvailableBalanceView: View {
                     .onTapGesture {
                         onClear()
                     }
-            } else {
+            } else if !percents.isEmpty {
                 let enabled = (balance ?? 0) > 0
 
                 HStack(spacing: 16) {
-                    ForEach([25, 50, 75], id: \.self) { percent in
+                    ForEach(percents, id: \.self) { percent in
                         ThemeText("\(percent)%", style: .caption, colorStyle: enabled ? .blue : .andy)
                             .onTapGesture {
                                 if enabled {

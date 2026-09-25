@@ -98,11 +98,13 @@ extension CrossPayHandler: ISendHandler {
             throw CrossPayError.commitFailed
         }
 
-        // The deposit, never the entered amount — different quantities in different tokens.
+        // The deposit, never the entered amount — different quantities in different tokens. Settings
+        // come from the request's immutable snapshot, never from a live UI-owned handler.
         let result = preSendHandler.depositSendData(
             amount: order.depositAmount,
             address: order.depositAddress,
-            memo: memoText
+            memo: memoText,
+            settings: order.request.depositSettings
         )
 
         guard case let .valid(innerSendData) = result else {

@@ -2749,11 +2749,8 @@
 "open_crypto_pay.tx_info.proof_status.pending" = "Pendiente";
 "open_crypto_pay.tx_info.proof_status.reconciliation" = "Reconciliación necesaria";
 
-"balance.pay" = "Pagar";
-"cross_pay.title" = "Pagar";
 "cross_pay.send_to" = "Enviar a";
 "cross_pay.select_token" = "Seleccionar token";
-"cross_pay.review" = "Revisar";
 "cross_pay.you_pay" = "Tú pagas";
 "cross_pay.you_pay.info" = "El monto depositado para financiar este pago, incluido el costo de cambio del proveedor y una reserva de deslizamiento reembolsable. Cualquier parte no utilizada de la reserva se devuelve a tu wallet.";
 "cross_pay.caution.insufficient_balance %@" = "Este pago necesita %@ en tu wallet, incluidas las comisiones.";
@@ -2765,6 +2762,10 @@
 "cross_pay.error.network" = "Ocurrió un error de red. Verifica tu conexión e inténtalo de nuevo.";
 "cross_pay.error.commit_failed" = "No se pudo configurar este pago. Actualiza para intentarlo de nuevo.";
 "cross_pay.unavailable" = "Pago no disponible";
+"cross_pay.you_will_pay" = "Pagarás";
+"cross_pay.quoting" = "Cotizando...";
+"cross_pay.info.title" = "CrossPay";
+"cross_pay.info.text %@" = "CrossPay te permite enviar un activo mientras pagas con otro. Tu %@ se convierte automáticamente en el activo que recibe el destinatario.";
 
 "swap.amount_min" = "(mín.)";
 "swap.amount_max" = "(máx.)";

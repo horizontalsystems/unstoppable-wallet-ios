@@ -149,11 +149,6 @@ extension WalletTokenViewModel {
 
         var buttons: [WalletButton] = [.chart, .receive, .send]
 
-        // ZEC only, behind the same gate as swapping — the flow funds the payment through the swap rail.
-        if wallet.token.blockchainType == .zcash, swapEnabled, Core.crossPayService != nil {
-            buttons.append(.pay)
-        }
-
         if swapEnabled {
             buttons.append(.swap)
         }
