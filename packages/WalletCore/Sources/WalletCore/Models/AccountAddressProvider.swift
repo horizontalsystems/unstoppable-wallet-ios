@@ -51,6 +51,9 @@ class AccountAddressProvider: IAccountAddressProvider {
             }
             return try ThorChainKit.Signer.address(seed: seed)
 
+        case let .thorChainAddress(address):
+            return try ThorChainKit.Address(address, network: .mainnet)
+
         default:
             return nil
         }

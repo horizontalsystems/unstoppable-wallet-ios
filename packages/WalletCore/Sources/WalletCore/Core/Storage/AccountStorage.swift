@@ -99,6 +99,18 @@ public class AccountStorage {
             }
 
             type = .xrpAddress(address: address)
+        case .thorChainAddress:
+            guard let address = record.dataKey else {
+                return nil
+            }
+
+            type = .thorChainAddress(address: address)
+        case .mayaChainAddress:
+            guard let address = record.dataKey else {
+                return nil
+            }
+
+            type = .mayaChainAddress(address: address)
         case .hdExtendedKey:
             guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
                 return nil
@@ -195,6 +207,12 @@ public class AccountStorage {
             dataKey = accountId
         case let .xrpAddress(address):
             typeName = .xrpAddress
+            dataKey = address
+        case let .thorChainAddress(address):
+            typeName = .thorChainAddress
+            dataKey = address
+        case let .mayaChainAddress(address):
+            typeName = .mayaChainAddress
             dataKey = address
         case let .hdExtendedKey(key):
             typeName = .hdExtendedKey
@@ -347,6 +365,8 @@ extension AccountStorage {
         case solanaAddress
         case stellarAccount
         case xrpAddress
+        case thorChainAddress
+        case mayaChainAddress
         case hdExtendedKey
         case btcAddress
         case moneroWatchAccount

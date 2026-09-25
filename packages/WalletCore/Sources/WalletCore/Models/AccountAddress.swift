@@ -41,10 +41,14 @@ public enum AccountAddress {
     }
 
     // Provider chain is single-network (THOR mainnet); other thornode-family networks
-    // derive directly from the seed with the same coin type and their own hrp.
+    // derive directly from the seed with the same coin type and their own hrp, or take the watched address.
     static func thorChainAddress(account: Account, network: ThorChainKit.Network) throws -> ThorChainKit.Address {
         guard network != .mainnet else {
             return try thorChainAddress(account: account)
+        }
+
+        if case let .mayaChainAddress(address) = account.type {
+            return try ThorChainKit.Address(address, network: network)
         }
 
         guard let seed = account.type.mnemonicSeed else {

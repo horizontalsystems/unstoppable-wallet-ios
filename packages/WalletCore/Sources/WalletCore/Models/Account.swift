@@ -21,7 +21,7 @@ public class Account: Identifiable {
 
     var watchAccount: Bool {
         switch type {
-        case .evmAddress, .tronAddress, .tonAddress, .solanaAddress, .stellarAccount, .xrpAddress, .btcAddress, .moneroWatchAccount:
+        case .evmAddress, .tronAddress, .tonAddress, .solanaAddress, .stellarAccount, .xrpAddress, .thorChainAddress, .mayaChainAddress, .btcAddress, .moneroWatchAccount:
             return true
         case .passkeyOwned:
             return false

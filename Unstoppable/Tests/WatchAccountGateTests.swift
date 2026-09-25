@@ -1,4 +1,7 @@
+import EvmKit
+import Foundation
 import HdWalletKit
+import MarketKit
 import Testing
 @testable import WalletCore
 
@@ -10,6 +13,8 @@ struct WatchAccountGateTests {
         #expect(account(type: .solanaAddress(address: "So11111111111111111111111111111111111111112")).watchAccount)
         #expect(account(type: .stellarAccount(accountId: "GA...")).watchAccount)
         #expect(account(type: .xrpAddress(address: "rG...")).watchAccount)
+        #expect(account(type: .thorChainAddress(address: "thor1...")).watchAccount)
+        #expect(account(type: .mayaChainAddress(address: "maya1...")).watchAccount)
         #expect(account(type: .moneroWatchAccount(address: "4...", viewKey: "key")).watchAccount)
         #expect(account(type: .btcAddress(address: "bc1...", blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84))).watchAccount)
     }

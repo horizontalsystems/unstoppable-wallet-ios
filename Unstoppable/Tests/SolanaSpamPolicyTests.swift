@@ -60,6 +60,18 @@ struct SolanaSpamPolicyTests {
         #expect(spam == false)
     }
 
+    @Test func stablecoinTestSendIsNotSpam() throws {
+        let events = TransferEvents(incoming: [event(usdc: "0.01")])
+        let spam = try isSpam(events: events)
+        #expect(spam == false)
+    }
+
+    @Test func stablecoinDustBelowTenthOfCentIsSpam() throws {
+        let events = TransferEvents(incoming: [event(usdc: "0.0001")])
+        let spam = try isSpam(events: events)
+        #expect(spam == true)
+    }
+
     @Test func emptyEventsAreNotSpam() throws {
         let spam = try isSpam(events: TransferEvents())
         #expect(spam == false)
@@ -73,10 +85,11 @@ struct SolanaSpamPolicyTests {
         #expect(spam == false)
     }
 
-    @Test func outgoingKnownSplDustLegIsSpam() throws {
+    // a cent-sized stablecoin leg is ordinary dust, not spam on its own; below a tenth of a cent it would be
+    @Test func outgoingStablecoinDustLegIsNotSpamAlone() throws {
         let events = TransferEvents(incoming: [event(usdc: "5")], outgoing: [event(usdc: "-0.05")])
         let spam = try isSpam(events: events)
-        #expect(spam == true)
+        #expect(spam == false)
     }
 
     @Test func outgoingKnownSplNormalLegIsNotSpam() throws {

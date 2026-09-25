@@ -3,6 +3,7 @@ import EvmKit
 import Foundation
 import HdWalletKit
 import MarketKit
+import ThorChainKit
 import TronKit
 import XrpKit
 
@@ -108,6 +109,11 @@ extension AccountTypeBackupCodec {
             // Android stores an X-address verbatim; the account is the classic address behind it,
             // as WatchViewModel does when the same address is added by hand
             return Decoded(.xrpAddress(address: XrpKit.Kit.decode(xAddress: string)?.classicAddress ?? string))
+        case .thorChainAddress:
+            // Android stores the address as typed; the kit's canonical lowercase form keeps it one account
+            return (try? ThorChainKit.Address(string, network: .mainnet)).map { Decoded(.thorChainAddress(address: $0.raw)) }
+        case .mayaChainAddress:
+            return (try? ThorChainKit.Address(string, network: .mayaMainnet)).map { Decoded(.mayaChainAddress(address: $0.raw)) }
         case .moneroWatchAccount:
             return moneroWatchAccount(string: string)
         case .moneroMnemonic:

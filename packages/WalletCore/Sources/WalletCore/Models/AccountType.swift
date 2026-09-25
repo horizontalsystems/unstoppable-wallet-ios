@@ -18,6 +18,8 @@ public enum AccountType: Identifiable {
     case solanaAddress(address: String)
     case stellarAccount(accountId: String)
     case xrpAddress(address: String)
+    case thorChainAddress(address: String)
+    case mayaChainAddress(address: String)
     case hdExtendedKey(key: HDExtendedKey)
     case btcAddress(address: String, blockchainType: BlockchainType, tokenType: TokenType)
     case moneroWatchAccount(address: String, viewKey: String)
@@ -72,6 +74,10 @@ public enum AccountType: Identifiable {
         case let .stellarAccount(accountId):
             privateData = accountId.hs.data
         case let .xrpAddress(address):
+            privateData = address.hs.data
+        case let .thorChainAddress(address):
+            privateData = address.hs.data
+        case let .mayaChainAddress(address):
             privateData = address.hs.data
         case let .hdExtendedKey(key):
             privateData = key.serialized
@@ -191,6 +197,16 @@ public enum AccountType: Identifiable {
             case (.xrp, .native), (.xrp, .xrpAsset): return true
             default: return false
             }
+        case .thorChainAddress:
+            switch (token.blockchainType, token.type) {
+            case (.thorChain, .native), (.thorChain, .thorChainAsset): return true
+            default: return false
+            }
+        case .mayaChainAddress:
+            switch (token.blockchainType, token.type) {
+            case (.mayaChain, .native): return true
+            default: return false
+            }
         case let .btcAddress(_, blockchainType, tokenType):
             return token.blockchainType == blockchainType && token.type == tokenType
         case .moneroWatchAccount:
@@ -246,6 +262,10 @@ public enum AccountType: Identifiable {
             return "Stellar Account"
         case .xrpAddress:
             return "XRP Address"
+        case .thorChainAddress:
+            return "THORChain Address"
+        case .mayaChainAddress:
+            return "Maya Address"
         case let .hdExtendedKey(key):
             switch key {
             case .private:
@@ -295,6 +315,10 @@ public enum AccountType: Identifiable {
             return "stellar_account"
         case .xrpAddress:
             return "xrp_address"
+        case .thorChainAddress:
+            return "thorchain_address"
+        case .mayaChainAddress:
+            return "mayachain_address"
         case let .hdExtendedKey(key):
             switch key {
             case .private:
@@ -334,6 +358,10 @@ public enum AccountType: Identifiable {
             return accountId
         case let .xrpAddress(address):
             return address
+        case let .thorChainAddress(address):
+            return address
+        case let .mayaChainAddress(address):
+            return address
         case let .hdExtendedKey(key):
             switch key {
             case .private: return nil
@@ -366,6 +394,8 @@ public enum AccountType: Identifiable {
         case .solanaAddress: return "Solana"
         case .stellarAccount: return "Stellar"
         case .xrpAddress: return "XRP"
+        case .thorChainAddress: return "THORChain"
+        case .mayaChainAddress: return "Maya"
         case let .hdExtendedKey(key):
             switch key {
             case .public: return "HD"
@@ -391,6 +421,8 @@ public extension AccountType {
         case solanaAddress = "solana_address"
         case stellarAccount = "stellar_address"
         case xrpAddress = "xrp_address"
+        case thorChainAddress = "thorchain_address"
+        case mayaChainAddress = "mayachain_address"
         case hdExtendedKey = "hd_extended_key"
         case btcAddress = "bitcoin_address"
         case moneroWatchAccount = "monero_watch_account"
@@ -409,6 +441,8 @@ public extension AccountType {
             case .solanaAddress: self = .solanaAddress
             case .stellarAccount: self = .stellarAccount
             case .xrpAddress: self = .xrpAddress
+            case .thorChainAddress: self = .thorChainAddress
+            case .mayaChainAddress: self = .mayaChainAddress
             case .hdExtendedKey: self = .hdExtendedKey
             case .btcAddress: self = .btcAddress
             case .moneroWatchAccount: self = .moneroWatchAccount
@@ -442,6 +476,10 @@ extension AccountType: Hashable {
         case let (.stellarAccount(lhsAccountId), .stellarAccount(rhsAccountId)):
             return lhsAccountId == rhsAccountId
         case let (.xrpAddress(lhsAddress), .xrpAddress(rhsAddress)):
+            return lhsAddress == rhsAddress
+        case let (.thorChainAddress(lhsAddress), .thorChainAddress(rhsAddress)):
+            return lhsAddress == rhsAddress
+        case let (.mayaChainAddress(lhsAddress), .mayaChainAddress(rhsAddress)):
             return lhsAddress == rhsAddress
         case let (.hdExtendedKey(lhsKey), .hdExtendedKey(rhsKey)):
             return lhsKey == rhsKey
@@ -491,6 +529,12 @@ extension AccountType: Hashable {
             hasher.combine(accountId)
         case let .xrpAddress(address):
             hasher.combine("xrpAddress")
+            hasher.combine(address)
+        case let .thorChainAddress(address):
+            hasher.combine("thorChainAddress")
+            hasher.combine(address)
+        case let .mayaChainAddress(address):
+            hasher.combine("mayaChainAddress")
             hasher.combine(address)
         case let .hdExtendedKey(key):
             hasher.combine("hdExtendedKey")
