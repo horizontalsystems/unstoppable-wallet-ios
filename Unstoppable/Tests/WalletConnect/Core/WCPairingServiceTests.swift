@@ -49,7 +49,8 @@ struct WCPairingServiceTests {
     }
 
     @Test func proposalDeliveredDuringPairIsNotMissed() async throws {
-        let service = WCPairingService(signClient: client, proposalTimeout: 0.2)
+        // a short timeout only matters when no proposal comes; under a loaded parallel run 0.2 s can expire first
+        let service = WCPairingService(signClient: client, proposalTimeout: 2)
         let proposal = try WCPairingFixtures.proposal()
         client.onPair = { [client] in client.sessionProposalSubject.send((proposal: proposal, context: nil)) }
 

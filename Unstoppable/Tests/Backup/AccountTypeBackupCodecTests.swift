@@ -1,5 +1,7 @@
 import Foundation
+import HsExtensions
 import MarketKit
+import TronKit
 import Testing
 @testable import WalletCore
 
@@ -27,6 +29,8 @@ struct AccountTypeBackupCodecTests {
             .solanaAddress: "solana_address",
             .stellarAccount: "stellar_address",
             .xrpAddress: "xrp_address",
+            .thorChainAddress: "thorchain_address",
+            .mayaChainAddress: "mayachain_address",
             .hdExtendedKey: "hd_extended_key",
             .btcAddress: "bitcoin_address",
             .moneroWatchAccount: "monero_watch_account",
@@ -45,7 +49,9 @@ struct AccountTypeBackupCodecTests {
         #expect(try decodeAbstract("stellar_account") == .stellarAccount)
         #expect(try decodeAbstract("bitcoin_address") == .btcAddress)
         #expect(try decodeAbstract("btc_address_key") == .btcAddress)
-        #expect(throws: (any Error).self) { try decodeAbstract("thorchain_address") }
+        #expect(try decodeAbstract("thorchain_address") == .thorChainAddress)
+        #expect(try decodeAbstract("mayachain_address") == .mayaChainAddress)
+        #expect(throws: (any Error).self) { try decodeAbstract("unknown_address") }
     }
 
     // MARK: private keys
@@ -185,6 +191,21 @@ struct AccountTypeBackupCodecTests {
         }
 
         #expect(fromHex.base58 == base58)
+    }
+
+    // Android stores the address as typed; it comes back in the kit's lowercase form, and anything
+    // that is not an address of that chain skips the account
+    @Test func readsThorAndMayaAddressesInCanonicalForm() throws {
+        let thor = "thor1le9eykyndunax8k24w8fykd8ndx35w2h27c008"
+        let maya = "maya1le9eykyndunax8k24w8fykd8ndx35w2h2fxreh"
+
+        #expect(try decoded(thor.uppercased().hs.data, .thorChainAddress).accountType == .thorChainAddress(address: thor))
+        #expect(try decoded(maya.hs.data, .mayaChainAddress).accountType == .mayaChainAddress(address: maya))
+        #expect(String(decoding: AccountTypeBackupCodec.data(accountType: .thorChainAddress(address: thor), moneroHeight: 0), as: UTF8.self) == thor)
+
+        #expect(AccountTypeBackupCodec.decode(data: maya.hs.data, type: .thorChainAddress) == nil)
+        #expect(AccountTypeBackupCodec.decode(data: thor.hs.data, type: .mayaChainAddress) == nil)
+        #expect(AccountTypeBackupCodec.decode(data: "garbage".hs.data, type: .thorChainAddress) == nil)
     }
 
     // MARK: other types

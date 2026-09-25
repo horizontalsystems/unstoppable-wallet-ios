@@ -67,7 +67,7 @@ class LowAmountCondition: SpamCondition {
             return 0
         }
 
-        if value < limit.spam, !Self.coinsWithoutMicroDust.contains(code) {
+        if value < limit.spam {
             return spamScore
         } else if value < limit.risk {
             return riskScore
@@ -83,13 +83,13 @@ extension LowAmountCondition {
     static let defaultLimits: [String: AmountLimit] = [
         "XLM": .init(0.1),
         "XRP": .init(0.001),
-        "USDT": .init(1),
-        "USDC": .init(1),
-        "USDD": .init(1),
-        "DAI": .init(1),
-        "BUSD": .init(1),
-        "EURS": .init(1),
-        "BSC-USD": .init(1),
+        "USDT": .init(1, spam: stablecoinMicroDust),
+        "USDC": .init(1, spam: stablecoinMicroDust),
+        "USDD": .init(1, spam: stablecoinMicroDust),
+        "DAI": .init(1, spam: stablecoinMicroDust),
+        "BUSD": .init(1, spam: stablecoinMicroDust),
+        "EURS": .init(1, spam: stablecoinMicroDust),
+        "BSC-USD": .init(1, spam: stablecoinMicroDust),
         "TRX": .init(1),
         "ETH": .init(0.0005),
         "BNB": .init(0.0002),
@@ -97,18 +97,19 @@ extension LowAmountCondition {
         "SOL": .init(0.0001),
     ]
 
-    /// Cent-sized stablecoin transfers are common test sends, so their micro dust is not spam on
-    /// value alone: it scores as ordinary dust and needs address or time correlation (Android
-    /// `spamCoinsWithoutMicroDust`).
-    static let coinsWithoutMicroDust: Set<String> = ["USDT", "USDC", "USDD", "DAI", "BUSD", "EURS", "BSC-USD"]
+    /// Cent-sized stablecoin transfers are common test sends, so a stablecoin is spam on value alone
+    /// only below a tenth of a cent, not below a tenth of its limit: 0.01 USDC scores as ordinary dust,
+    /// poisoning dust such as 0.0001 USDT stays spam. Android lifts the rule for these coins entirely
+    /// (`spamCoinsWithoutMicroDust`).
+    static let stablecoinMicroDust = Decimal(string: "0.001")!
 
     struct AmountLimit {
         let spam: Decimal
         let risk: Decimal
         let danger: Decimal
 
-        init(_ default: Decimal) {
-            spam = `default` / 10
+        init(_ default: Decimal, spam: Decimal? = nil) {
+            self.spam = spam ?? `default` / 10
             risk = `default`
             danger = `default` * 5
         }

@@ -174,14 +174,18 @@ final class ThorChainKitManager {
     }
 
     private func _kitWrapper(account: Account) throws -> ThorChainKitWrapper {
-        guard case let .mnemonic(words, _, _) = account.type else {
+        switch account.type {
+        case let .mnemonic(words, _, _):
+            // `mnemonicSeed` is PBKDF2 over the joined words, so an empty list still
+            // yields 64 bytes rather than nil. Reject it here: deriving from it would
+            // produce a publicly computable address and signing key.
+            guard !words.isEmpty, account.type.mnemonicSeed != nil else {
+                throw ThorChainKitManagerError.mnemonicNoSeed
+            }
+        case .thorChainAddress, .mayaChainAddress:
+            ()
+        default:
             throw ThorChainKitManagerError.unsupportedAccount
-        }
-        // `mnemonicSeed` is PBKDF2 over the joined words, so an empty list still
-        // yields 64 bytes rather than nil. Reject it here: deriving from it would
-        // produce a publicly computable address and signing key.
-        guard !words.isEmpty, account.type.mnemonicSeed != nil else {
-            throw ThorChainKitManagerError.mnemonicNoSeed
         }
 
         let address = try AccountAddress.thorChainAddress(account: account, network: network)
@@ -332,7 +336,12 @@ final class ThorChainKitManager {
         }
     }
 
-    private func signer(account: Account) throws -> ThorChainKit.Signer {
+    private func signer(account: Account) throws -> ThorChainKit.Signer? {
+        switch account.type {
+        case .thorChainAddress, .mayaChainAddress: return nil
+        default: ()
+        }
+
         guard let seed = account.type.mnemonicSeed else {
             throw ThorChainKitManagerError.mnemonicNoSeed
         }

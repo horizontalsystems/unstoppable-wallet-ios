@@ -152,6 +152,71 @@ struct ThorChainKitManagerTests {
         #expect(first !== second)
     }
 
+    @Test func thorWatchAccountStartsWithoutSigner() throws {
+        let manager = ThorChainKitManager(endpointProvider: StaticThorChainEndpointProvider())
+        let account = Self.watchAccount(id: "thor-watch", type: .thorChainAddress(address: Self.thorVector))
+
+        let wrapper = try manager.thorChainKitWrapper(account: account)
+
+        #expect(wrapper.thorChainKit.address.raw == Self.thorVector)
+        #expect(!Self.hasSigner(wrapper))
+    }
+
+    @Test func mayaWatchAccountStartsOnMaya() throws {
+        let manager = ThorChainKitManager(endpointProvider: StaticThorChainEndpointProvider(), network: .mayaMainnet)
+        let account = Self.watchAccount(id: "maya-watch", type: .mayaChainAddress(address: Self.mayaVector))
+
+        let wrapper = try manager.thorChainKitWrapper(account: account)
+
+        #expect(wrapper.thorChainKit.address.raw == Self.mayaVector)
+        #expect(!Self.hasSigner(wrapper))
+    }
+
+    // a watched address belongs to one network; the other manager cannot derive it and stops before touching endpoints
+    @Test func watchAccountOfOtherNetworkFailsBeforeFactoryAccess() {
+        let accounts = [
+            (ThorChainKitManager(endpointProvider: FailingThorChainEndpointProvider(), network: .mayaMainnet), Self.watchAccount(id: "thor-in-maya", type: .thorChainAddress(address: Self.thorVector))),
+            (ThorChainKitManager(endpointProvider: FailingThorChainEndpointProvider()), Self.watchAccount(id: "maya-in-thor", type: .mayaChainAddress(address: Self.mayaVector))),
+        ]
+
+        for (manager, account) in accounts {
+            do {
+                _ = try manager.thorChainKitWrapper(account: account)
+                Issue.record("\(account.id) was accepted")
+            } catch {
+                #expect((error as? AdapterError) == .unsupportedAccount)
+            }
+        }
+    }
+
+    @Test func mnemonicAndWatchOfSameAddressAreSeparateWrappers() throws {
+        let manager = ThorChainKitManager(endpointProvider: StaticThorChainEndpointProvider())
+        let entropy = Crypto.sha256(Data("THR-104-S1-06-test-seed-v1".utf8))
+        let mnemonic = try Self.account(id: "vector-mnemonic", entropy: entropy)
+        let watch = Self.watchAccount(id: "vector-watch", type: .thorChainAddress(address: Self.thorVector))
+
+        let mnemonicWrapper = try manager.thorChainKitWrapper(account: mnemonic)
+        let watchWrapper = try manager.thorChainKitWrapper(account: watch)
+
+        #expect(mnemonicWrapper !== watchWrapper)
+        #expect(mnemonicWrapper.thorChainKit.address == watchWrapper.thorChainKit.address)
+        #expect(Self.hasSigner(mnemonicWrapper))
+        #expect(!Self.hasSigner(watchWrapper))
+    }
+
+    private static let thorVector = "thor1le9eykyndunax8k24w8fykd8ndx35w2h27c008"
+    // the same key under the Maya hrp
+    private static let mayaVector = "maya1le9eykyndunax8k24w8fykd8ndx35w2h2fxreh"
+
+    // SendQuote has no public initializer, so a send cannot be driven offline; the stored signer is read instead
+    private static func hasSigner(_ wrapper: ThorChainKitWrapper) -> Bool {
+        Mirror(reflecting: wrapper).children.first { $0.label == "signer" }?.value is ThorChainKit.Signer
+    }
+
+    private static func watchAccount(id: String, type: AccountType) -> Account {
+        Account(id: id, level: 0, name: id, type: type, origin: .restored, backedUp: true, fileBackedUp: false)
+    }
+
     private static func account(id: String, entropy: Data? = nil) throws -> Account {
         let words = if let entropy {
             Mnemonic.generate(entropy: entropy, language: .english)

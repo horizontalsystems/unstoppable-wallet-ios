@@ -4,6 +4,7 @@ import Foundation
 import HdWalletKit
 import MarketKit
 import RxSwift
+import ThorChainKit
 import TronKit
 import UIKit
 import XrpKit
@@ -105,6 +106,10 @@ class WatchViewModel: ObservableObject {
         addressParserChain.append(handlers: BtcBlockchainManager.blockchainTypes.flatMap { AddressParserFactory.parserChainHandlers(blockchainType: $0, withEns: false) })
         addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .tron))
         addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .ton))
+        // bech32 with a checksum goes before Solana: its base58-to-32-bytes check alone accepts about
+        // one in twelve thor1/maya1 addresses (Android WatchAddressModule keeps Solana last too)
+        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .thorChain))
+        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .mayaChain))
         addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .solana))
         addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .stellar))
         addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .xrp))
@@ -200,6 +205,11 @@ class WatchViewModel: ObservableObject {
                 case .xrp:
                     // an X-address watches the account behind it; the tag is a payment detail, not an identity
                     accountType = .xrpAddress(address: XrpKit.Kit.decode(xAddress: address.raw)?.classicAddress ?? address.raw)
+                case .thorChain:
+                    // the parser passes the input through; an all-uppercase QR form must not become a second account
+                    accountType = try .thorChainAddress(address: ThorChainKit.Address(address.raw, network: .mainnet).raw)
+                case .mayaChain:
+                    accountType = try .mayaChainAddress(address: ThorChainKit.Address(address.raw, network: .mayaMainnet).raw)
                 case .monero:
                     (state, viewKeyCaution) = moneroParser.parseAndValidate(
                         address: address, viewKey: viewKey, forceRequiredFields: forceRequiredFields
@@ -262,6 +272,12 @@ class WatchViewModel: ObservableObject {
 
         case .xrpAddress:
             tokenQueries = BlockchainType.xrp.nativeTokenQueries
+
+        case .thorChainAddress:
+            tokenQueries = BlockchainType.thorChain.nativeTokenQueries
+
+        case .mayaChainAddress:
+            tokenQueries = BlockchainType.mayaChain.nativeTokenQueries
 
         case let .hdExtendedKey(key):
             guard case .public = key else {
