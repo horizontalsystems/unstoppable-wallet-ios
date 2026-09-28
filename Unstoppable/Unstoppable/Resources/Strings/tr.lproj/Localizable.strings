@@ -687,6 +687,8 @@
 // Swap
 
 "swap.title" = "Takas";
+"swap.tab.standard" = "Standart";
+"swap.tab.private" = "Gizli";
 "swap.token_select.popular_tokens" = "Popüler Tokenlar";
 "swap.token_select.your_tokens" = "Tokenlarınız";
 "swap.token_select.top_tokens" = "En İyi Tokenlar";

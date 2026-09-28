@@ -12,6 +12,22 @@ struct FolderTabHeaderView: View {
         _currentTabIndex = currentTabIndex
     }
 
+    init<Item: Equatable>(items: [Item], currentItem: Binding<Item>, tab: (Item) -> Tab) {
+        self.init(
+            tabs: items.map(tab),
+            currentTabIndex: Binding(
+                get: {
+                    items.firstIndex(of: currentItem.wrappedValue) ?? 0
+                },
+                set: { index in
+                    if items.indices.contains(index) {
+                        currentItem.wrappedValue = items[index]
+                    }
+                }
+            )
+        )
+    }
+
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {

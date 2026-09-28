@@ -687,6 +687,8 @@
 // Swap
 
 "swap.title" = "掉期交易";
+"swap.tab.standard" = "标准";
+"swap.tab.private" = "隐私";
 "swap.token_select.popular_tokens" = "热门代币";
 "swap.token_select.your_tokens" = "您的代币";
 "swap.token_select.top_tokens" = "顶级代币";

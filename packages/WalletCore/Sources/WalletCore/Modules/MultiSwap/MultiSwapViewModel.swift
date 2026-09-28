@@ -16,6 +16,8 @@ public class MultiSwapViewModel: ObservableObject {
     private var rateInCancellable: AnyCancellable?
     private var rateOutCancellable: AnyCancellable?
     private var timer: Timer?
+    private var autoQuotingEnabled = true
+    private var quotesInterrupted = false
 
     private var balanceDisposeBag = DisposeBag()
 
@@ -324,8 +326,10 @@ public class MultiSwapViewModel: ObservableObject {
             if !quotes.isEmpty {
                 nextQuoteTime = Date().timeIntervalSince1970 + autoRefreshDuration
 
-                timer = Timer.scheduledTimer(withTimeInterval: autoRefreshDuration, repeats: false) { [weak self] _ in
-                    self?.syncQuotes(silent: true)
+                if autoQuotingEnabled {
+                    timer = Timer.scheduledTimer(withTimeInterval: autoRefreshDuration, repeats: false) { [weak self] _ in
+                        self?.syncQuotes(silent: true)
+                    }
                 }
             }
         }
@@ -749,6 +753,7 @@ public class MultiSwapViewModel: ObservableObject {
 
     func syncQuotes(silent: Bool = false) {
         quotesTask = nil
+        quotesInterrupted = false
 
         if !silent {
             quotes = []
@@ -825,10 +830,11 @@ public class MultiSwapViewModel: ObservableObject {
 
             if !Task.isCancelled {
                 await MainActor.run { [weak self, decorated] in
-                    guard let self else {
+                    guard let self, !Task.isCancelled else {
                         return
                     }
 
+                    quotesTask = nil
                     quoting = false
                     self.quotes = decorated
 
@@ -932,10 +938,24 @@ public extension MultiSwapViewModel {
     }
 
     func stopAutoQuoting() {
+        autoQuotingEnabled = false
         timer?.invalidate()
+
+        if quotesTask != nil {
+            quotesTask = nil
+            quotesInterrupted = true
+            quoting = false
+        }
     }
 
     func autoQuoteIfRequired() {
+        autoQuotingEnabled = true
+
+        if quotesInterrupted {
+            syncQuotes(silent: !quotes.isEmpty)
+            return
+        }
+
         guard !quoting, let nextQuoteTime else {
             return
         }

@@ -687,6 +687,8 @@
 // Swap
 
 "swap.title" = "스왑";
+"swap.tab.standard" = "일반";
+"swap.tab.private" = "프라이빗";
 "swap.token_select.popular_tokens" = "인기 토큰";
 "swap.token_select.your_tokens" = "내 토큰";
 "swap.token_select.top_tokens" = "상위 토큰";

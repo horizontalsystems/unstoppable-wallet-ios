@@ -687,6 +687,8 @@
 // Swap
 
 "swap.title" = "Обмен";
+"swap.tab.standard" = "Обычный";
+"swap.tab.private" = "Приватный";
 "swap.token_select.popular_tokens" = "Популярные токены";
 "swap.token_select.your_tokens" = "Ваши токены";
 "swap.token_select.top_tokens" = "Топ токены";

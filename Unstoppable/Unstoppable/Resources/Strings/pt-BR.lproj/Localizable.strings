@@ -687,6 +687,8 @@
 // Swap
 
 "swap.title" = "Trocar";
+"swap.tab.standard" = "Padrão";
+"swap.tab.private" = "Privado";
 "swap.token_select.popular_tokens" = "Tokens Populares";
 "swap.token_select.your_tokens" = "Seus Tokens";
 "swap.token_select.top_tokens" = "Principais Tokens";

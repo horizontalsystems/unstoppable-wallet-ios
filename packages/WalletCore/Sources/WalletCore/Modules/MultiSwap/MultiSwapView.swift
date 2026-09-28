@@ -9,6 +9,7 @@ struct MultiSwapView: View {
     var autoFocus = false
 
     @FocusState var focusedField: FocusField?
+    @State var currentTab: MultiSwapTab = .standard
 
     private var isInputActive: Bool {
         focusedField != nil
@@ -16,59 +17,26 @@ struct MultiSwapView: View {
 
     var body: some View {
         ThemeView(style: .list) {
-            BottomGradientWrapper(gradientColor: .themeLawrence) {
-                ScrollView {
-                    VStack(spacing: 16) {
-                        VStack(spacing: 0) {
-                            AvailableBalanceView(
-                                // a balance read mid-sync is not the real one yet
-                                balance: viewModel.tokenInWalletState == .ready ? viewModel.availableBalance : nil,
-                                token: viewModel.tokenIn,
-                                allAvailable: viewModel.tokenInWalletState == .ready && viewModel.percentAllAvailable,
-                                currentValue: viewModel.amountIn,
-                                onSelect: { percent in
-                                    viewModel.setAmountIn(percent: percent)
-                                    focusedField = nil
-                                },
-                                onClear: {
-                                    viewModel.clearAmountIn()
-                                }
-                            )
-                            .padding(.top, 16)
-                            .padding(.horizontal, 16)
-                            .themeListTopView()
+            VStack(spacing: 0) {
+                FolderTabHeaderView(items: MultiSwapTab.allCases, currentItem: $currentTab) {
+                    FolderTabHeaderView.Tab(title: $0.title, icon: $0.icon)
+                }
 
-                            amountsView()
-
-                            if let currentQuote = viewModel.currentQuote {
-                                quoteList(quote: currentQuote)
-                            }
-                        }
-
-                        if let path = viewModel.suggestedPath {
-                            MultiSwapSuggestedPathView(path: path) { token in
-                                viewModel.tokenOut = token
-                            }
-                            .padding(.horizontal, 16)
-                        }
-
-                        if let currentQuote = viewModel.currentQuote {
-                            quoteCautionsView(quote: currentQuote)
-                        }
+                Group {
+                    switch currentTab {
+                    case .standard: standardTabView()
+                    case .privateSwap: privateTabView()
                     }
-                    .padding(.bottom, 32)
                 }
-                .themeListScrollHeader()
-                .onTapGesture {
-                    focusedField = nil
-                }
-            } bottomContent: {
-                buttonView()
             }
-            .animation(.easeOut(duration: 0.25), value: isInputActive)
+        }
+        .onChange(of: currentTab) { _, tab in
+            onChange(tab: tab)
         }
         .onAppear {
-            viewModel.autoQuoteIfRequired()
+            if currentTab == .standard {
+                viewModel.autoQuoteIfRequired()
+            }
         }
         .onFirstAppear {
             if autoFocus {
@@ -76,6 +44,73 @@ struct MultiSwapView: View {
             }
         }
         .onDisappear {
+            viewModel.stopAutoQuoting()
+        }
+    }
+
+    @ViewBuilder private func standardTabView() -> some View {
+        BottomGradientWrapper(gradientColor: .themeLawrence) {
+            ScrollView {
+                VStack(spacing: 16) {
+                    VStack(spacing: 0) {
+                        AvailableBalanceView(
+                            // a balance read mid-sync is not the real one yet
+                            balance: viewModel.tokenInWalletState == .ready ? viewModel.availableBalance : nil,
+                            token: viewModel.tokenIn,
+                            allAvailable: viewModel.tokenInWalletState == .ready && viewModel.percentAllAvailable,
+                            currentValue: viewModel.amountIn,
+                            onSelect: { percent in
+                                viewModel.setAmountIn(percent: percent)
+                                focusedField = nil
+                            },
+                            onClear: {
+                                viewModel.clearAmountIn()
+                            }
+                        )
+                        .padding(.top, 16)
+                        .padding(.horizontal, 16)
+
+                        amountsView()
+
+                        if let currentQuote = viewModel.currentQuote {
+                            quoteList(quote: currentQuote)
+                        }
+                    }
+
+                    if let path = viewModel.suggestedPath {
+                        MultiSwapSuggestedPathView(path: path) { token in
+                            viewModel.tokenOut = token
+                        }
+                        .padding(.horizontal, 16)
+                    }
+
+                    if let currentQuote = viewModel.currentQuote {
+                        quoteCautionsView(quote: currentQuote)
+                    }
+                }
+                .padding(.bottom, 32)
+            }
+            .onTapGesture {
+                focusedField = nil
+            }
+        } bottomContent: {
+            buttonView()
+        }
+        .animation(.easeOut(duration: 0.25), value: isInputActive)
+    }
+
+    @ViewBuilder private func privateTabView() -> some View {
+        // TODO: private swap
+        Color.clear
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private func onChange(tab: MultiSwapTab) {
+        switch tab {
+        case .standard:
+            viewModel.autoQuoteIfRequired()
+        case .privateSwap:
+            focusedField = nil
             viewModel.stopAutoQuoting()
         }
     }
@@ -457,6 +492,25 @@ extension MultiSwapView {
     enum FocusField {
         case amount
         case fiat
+    }
+}
+
+enum MultiSwapTab: CaseIterable {
+    case standard
+    case privateSwap
+
+    var title: String {
+        switch self {
+        case .standard: return "swap.tab.standard".localized
+        case .privateSwap: return "swap.tab.private".localized
+        }
+    }
+
+    var icon: String? {
+        switch self {
+        case .privateSwap: return "fraud"
+        default: return nil
+        }
     }
 }
 
