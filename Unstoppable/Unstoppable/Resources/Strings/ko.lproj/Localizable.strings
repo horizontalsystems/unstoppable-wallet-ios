@@ -510,6 +510,8 @@
 "send.xrp.destination_tag.info" = "거래소 및 일부 서비스에서는 입금을 송금하기 위해 대상 태그가 필요합니다. 태그는 원장에 공개됩니다.";
 "send.xrp.destination_tag.required" = "이 주소에는 대상 태그가 필요합니다. 태그 없는 결제는 거부됩니다.";
 "send.xrp.destination_tag.invalid" = "대상 태그는 0부터 4294967295까지의 정수여야 합니다.";
+"send.xrp.destination_tag.conflict" = "대상 태그가 주소에 포함된 태그와 일치하지 않습니다.";
+"send.xrp.address_error.network_mismatch" = "잘못된 네트워크: 이 주소는 다른 XRP 네트워크에 속합니다.";
 "send.xrp.activation.reserve_note" = "활성화하면 %@이(가) 지갑의 예비금으로 잠깁니다. 신뢰선을 나중에 제거하면 해제됩니다.";
 "send.xrp.activation.insufficient_balance" = "신뢰선 예비금과 네트워크 수수료를 충당할 수 있는 충분한 사용 가능한 XRP가 없습니다.";
 "send.confirmation.fee" = "수수료";

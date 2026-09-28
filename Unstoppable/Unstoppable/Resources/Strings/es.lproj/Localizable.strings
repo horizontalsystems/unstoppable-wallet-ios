@@ -510,6 +510,8 @@
 "send.xrp.destination_tag.info" = "Los intercambios y algunos servicios requieren una etiqueta de destino para acreditar su depósito. La etiqueta es pública en el libro mayor.";
 "send.xrp.destination_tag.required" = "Esta dirección requiere una etiqueta de destino. Los pagos sin una son rechazados.";
 "send.xrp.destination_tag.invalid" = "La etiqueta de destino debe ser un número entero de 0 a 4294967295.";
+"send.xrp.destination_tag.conflict" = "La etiqueta de destino no coincide con la etiqueta de la dirección.";
+"send.xrp.address_error.network_mismatch" = "Red no válida: esta dirección pertenece a otra red de XRP.";
 "send.xrp.activation.reserve_note" = "La activación bloquea %@ como reserva en su billetera. Se libera si la línea de confianza se elimina más tarde.";
 "send.xrp.activation.insufficient_balance" = "No tiene suficiente XRP disponible para cubrir la reserva de línea de confianza y la tarifa de red.";
 "send.confirmation.fee" = "Comisión";

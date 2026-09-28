@@ -49,10 +49,16 @@ extension XrpSendHandler: ISendHandler {
             }
 
             if transactionError == nil {
-                transactionError = await XrpSendHelper.destinationError(
-                    adapter: adapter, token: token, amount: amount,
-                    address: address, destinationTag: destinationTag
-                )
+                // the address may be an X-address as entered; the ledger lookups take the classic one
+                do {
+                    let destination = try XrpKit.Kit.resolveDestination(address: address, tag: destinationTag, network: XrpKitManager.network)
+                    transactionError = await XrpSendHelper.destinationError(
+                        adapter: adapter, token: token, amount: amount,
+                        address: destination.classic, destinationTag: destination.tag
+                    )
+                } catch {
+                    transactionError = error
+                }
             }
         case .trustSet:
             // the new object also locks one owner reserve increment (Android `validateActivation`)

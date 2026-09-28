@@ -510,6 +510,8 @@
 "send.xrp.destination_tag.info" = "交易所和某些服务需要目标标签来记入您的存款。该标签在账本上是公开的。";
 "send.xrp.destination_tag.required" = "此地址需要目标标签。没有标签的付款会被拒绝。";
 "send.xrp.destination_tag.invalid" = "目标标签必须是0到4294967295之间的整数。";
+"send.xrp.destination_tag.conflict" = "目标标签与地址中的标签不一致。";
+"send.xrp.address_error.network_mismatch" = "网络无效：此地址属于其他 XRP 网络。";
 "send.xrp.activation.reserve_note" = "激活会将 %@ 锁定为您钱包中的准备金。如果稍后删除信任线，将释放准备金。";
 "send.xrp.activation.insufficient_balance" = "您没有足够的可用 XRP 来支付信任线准备金和网络费用。";
 "send.confirmation.fee" = "费用";

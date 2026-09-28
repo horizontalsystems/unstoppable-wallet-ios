@@ -510,6 +510,8 @@
 "send.xrp.destination_tag.info" = "Borsalar ve bazı hizmetler, paranızı yatırmak için bir hedef etiketi gerektirir. Etiket defter üzerinde halka açıktır.";
 "send.xrp.destination_tag.required" = "Bu adres bir hedef etiketi gerektirir. Etiketsiz ödemeler reddedilir.";
 "send.xrp.destination_tag.invalid" = "Hedef etiketi 0 ile 4294967295 arasında bir tam sayı olmalıdır.";
+"send.xrp.destination_tag.conflict" = "Hedef etiketi, adresteki etiketle eşleşmiyor.";
+"send.xrp.address_error.network_mismatch" = "Geçersiz ağ: bu adres farklı bir XRP ağına ait.";
 "send.xrp.activation.reserve_note" = "Etkinleştirme, %@'i cüzdanınızda rezerv olarak kilitler. Güven çizgisi daha sonra kaldırılırsa serbest bırakılır.";
 "send.xrp.activation.insufficient_balance" = "Güven çizgisi rezervini ve ağ ücretini karşılamak için yeterli harcayabileceğiniz XRP'niz yok.";
 "send.confirmation.fee" = "Ücret";

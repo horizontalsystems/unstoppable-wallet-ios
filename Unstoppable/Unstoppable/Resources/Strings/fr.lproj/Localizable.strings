@@ -510,6 +510,8 @@
 "send.xrp.destination_tag.info" = "Les bourses et certains services nécessitent une balise de destination pour créditer votre dépôt. La balise est publique sur le ledger.";
 "send.xrp.destination_tag.required" = "Cette adresse nécessite une balise de destination. Les paiements sans un sont rejetés.";
 "send.xrp.destination_tag.invalid" = "La balise de destination doit être un nombre entier de 0 à 4294967295.";
+"send.xrp.destination_tag.conflict" = "La balise de destination ne correspond pas à celle de l'adresse.";
+"send.xrp.address_error.network_mismatch" = "Réseau invalide : cette adresse appartient à un autre réseau XRP.";
 "send.xrp.activation.reserve_note" = "L'activation verrouille %@ comme réserve dans votre portefeuille. Il est libéré si la ligne de confiance est supprimée ultérieurement.";
 "send.xrp.activation.insufficient_balance" = "Vous n'avez pas assez de XRP dépensable pour couvrir la réserve de ligne de confiance et les frais de réseau.";
 "send.confirmation.fee" = "Frais";

@@ -510,6 +510,8 @@
 "send.xrp.destination_tag.info" = "Exchanges e alguns serviços exigem uma etiqueta de destino para creditar seu depósito. A etiqueta é pública no livro razão.";
 "send.xrp.destination_tag.required" = "Este endereço requer uma etiqueta de destino. Pagamentos sem uma são rejeitados.";
 "send.xrp.destination_tag.invalid" = "A tag de destino deve ser um número inteiro de 0 a 4294967295.";
+"send.xrp.destination_tag.conflict" = "A tag de destino não corresponde à tag do endereço.";
+"send.xrp.address_error.network_mismatch" = "Rede inválida: este endereço pertence a outra rede XRP.";
 "send.xrp.activation.reserve_note" = "A ativação bloqueia %@ como uma reserva em sua carteira. É liberado se a linha de confiança for removida depois.";
 "send.xrp.activation.insufficient_balance" = "Você não tem XRP disponível suficiente para cobrir a reserva de linha de confiança e a taxa de rede.";
 "send.confirmation.fee" = "Taxa";

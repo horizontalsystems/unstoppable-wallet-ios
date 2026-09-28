@@ -23,6 +23,9 @@ class XrpPreSendHandler: PreSendHandler {
     private let adapter: ISendXrpAdapter & IBalanceAdapter
     private let network: XrpKit.Network
 
+    /// The address as entered, which the confirmation shows (Android `SendXrpViewModel`); the kit
+    /// resolves it again on send.
+    private var enteredAddress: String?
     private var destination: (classic: String, tag: UInt32?)?
     private var addressError: Error?
 
@@ -75,6 +78,8 @@ class XrpPreSendHandler: PreSendHandler {
     }
 
     private func resolve(address: String?) {
+        enteredAddress = address
+
         guard let address else {
             destination = nil
             addressError = nil
@@ -215,7 +220,9 @@ extension XrpPreSendHandler: IPreSendHandler {
             return invalid("send.stellar.no_trustline.description".localized, title: "send.stellar.no_trustline.title".localized)
         }
 
-        return .valid(sendData: .xrp(token: token, data: .payment(amount: amount, address: destination.classic), destinationTag: tag))
+        // the entered address, not the classic one: an X-address stays as typed, with its tag beside it
+        let address = enteredAddress ?? destination.classic
+        return .valid(sendData: .xrp(token: token, data: .payment(amount: amount, address: address), destinationTag: tag))
     }
 
     func set(address: String?) {
