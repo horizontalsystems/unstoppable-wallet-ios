@@ -14,7 +14,7 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
 
     @Published private(set) var isSupported: Bool
 
-    // Starts nil: no receive token is preselected.
+    // Preselected with the first popular token for the wallet's token; nil only when there is none.
     @Published private(set) var tokenOut: Token?
 
     // Sheet binding for the token selector; the reset logic runs once in onSelect.
@@ -60,6 +60,14 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.syncSupported() }
             .store(in: &cancellables)
+
+        // As on Android: the first popular token for the source (a native coin gets its chain's USDT, a token
+        // its chain's native coin). One the provider cannot route shows "not supported" on the quote.
+        if let defaultTokenOut = MultiSwapPopularTokenResolver.tokens(for: wallet.token).first {
+            // didSet does not fire from the class's own init, so the selection is applied directly
+            selectedTokenOut = defaultTokenOut
+            onSelect(tokenOut: defaultTokenOut)
+        }
     }
 
     deinit {
