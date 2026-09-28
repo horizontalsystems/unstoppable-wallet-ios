@@ -145,7 +145,9 @@ public final class CrossPayService {
             throw CrossPayError.commitFailed
         }
 
-        guard let depositAmount = amount else {
+        // The floor check below only sees this when the provider states one, so a transfer of nothing
+        // is refused on its own terms (Android CrossPayManager)
+        guard let depositAmount = amount, depositAmount > 0 else {
             throw CrossPayError.commitFailed
         }
 

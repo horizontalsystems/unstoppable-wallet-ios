@@ -137,6 +137,12 @@ public final class PrivateSendService {
             throw PrivateSendError.missingDepositAmount
         }
 
+        // The floor check below only sees this when the provider states one, so a transfer of nothing
+        // is refused on its own terms (Android PrivateSendManager)
+        guard depositAmount > 0 else {
+            throw PrivateSendError.depositBelowMinimum
+        }
+
         // Nil when /v2/swap omits it and there is no rate quote to fall back on. That is a known,
         // handled state, not a substitutable one: `PrivateSendOrder.privateFee` then over-states the
         // fee from `depositAmount` — shown as an upper bound rather than substituted with a guess.
