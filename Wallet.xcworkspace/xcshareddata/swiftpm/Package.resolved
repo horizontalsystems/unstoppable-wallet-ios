@@ -1,5 +1,5 @@
 {
-  "originHash" : "b6ea8672b27e10886231bdb91d54179fdf2dfd55be0459af218df1ad583899b7",
+  "originHash" : "89b7fbd7bcafd66ae9582ccf0b41e9a0f7300f45312676bf714552f1b33c7c53",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -285,8 +285,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/MoneroKit.Swift",
       "state" : {
-        "revision" : "dbee6911418bac96f277b563f7317adf9078cfcb",
-        "version" : "0.2.11"
+        "revision" : "942f411f766b531550a4a6ff5a72520a1d228a30",
+        "version" : "0.2.12"
       }
     },
     {
@@ -301,7 +301,7 @@
     {
       "identity" : "objectmapper",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tristanhimmelman/ObjectMapper",
+      "location" : "https://github.com/tristanhimmelman/ObjectMapper/",
       "state" : {
         "revision" : "0b96a734de3ea1c87374ae677064f86adb0716ec",
         "version" : "4.2.0"
