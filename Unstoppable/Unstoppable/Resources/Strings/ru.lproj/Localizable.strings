@@ -718,6 +718,9 @@
 
 "swap.quotes.providers.risk_levels.title" = "Оценка маршрута";
 "swap.quotes.providers.risk_levels.description" = "Эти оценки показывают, как каждый маршрут обрабатывает свопы и проверки транзакций.";
+"swap.quotes.providers.risk_levels.excellent" = "Отличный";
+"swap.quotes.providers.risk_levels.good" = "Хороший";
+"swap.quotes.providers.risk_levels.fair" = "Приемлемый";
 "swap.quotes.providers.risk_levels.excellent.description" = "Прямое исполнение в блокчейне. Без проверок и заморозок. Автоматический возврат средств при неудачном свопе.";
 "swap.quotes.providers.risk_levels.good.description" = "Транзакции автоматически проверяются перед завершением. При обнаружении проблемы своп отклоняется, а средства возвращаются.";
 "swap.quotes.providers.risk_levels.fair.description" = "Некоторые транзакции могут потребовать дополнительной верификации. При обнаружении проблемы средства, как правило, возвращаются автоматически.";

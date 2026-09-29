@@ -718,6 +718,9 @@
 
 "swap.quotes.providers.risk_levels.title" = "Pontuação da rota";
 "swap.quotes.providers.risk_levels.description" = "Essas pontuações mostram como cada rota lida com swaps e verificações de transações.";
+"swap.quotes.providers.risk_levels.excellent" = "Excelente";
+"swap.quotes.providers.risk_levels.good" = "Bom";
+"swap.quotes.providers.risk_levels.fair" = "Razoável";
 "swap.quotes.providers.risk_levels.excellent.description" = "Execução direta on-chain. Sem verificações ou bloqueios. Reembolso automático se o swap falhar.";
 "swap.quotes.providers.risk_levels.good.description" = "As transações são verificadas automaticamente antes da conclusão. Se um problema for encontrado, o swap é rejeitado e os fundos são reembolsados.";
 "swap.quotes.providers.risk_levels.fair.description" = "Algumas transações podem precisar de verificação adicional. Se um problema for encontrado, os fundos geralmente são reembolsados automaticamente.";

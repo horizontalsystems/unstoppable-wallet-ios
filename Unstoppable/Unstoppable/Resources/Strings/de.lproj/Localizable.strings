@@ -718,6 +718,9 @@
 
 "swap.quotes.providers.risk_levels.title" = "Routenbewertung";
 "swap.quotes.providers.risk_levels.description" = "Diese Bewertungen zeigen, wie jede Route Swaps und Transaktionsprüfungen handhabt.";
+"swap.quotes.providers.risk_levels.excellent" = "Ausgezeichnet";
+"swap.quotes.providers.risk_levels.good" = "Gut";
+"swap.quotes.providers.risk_levels.fair" = "Befriedigend";
 "swap.quotes.providers.risk_levels.excellent.description" = "Direkte On-Chain-Ausführung. Keine Prüfungen oder Sperrungen. Automatische Rückerstattung bei fehlgeschlagenem Swap.";
 "swap.quotes.providers.risk_levels.good.description" = "Transaktionen werden vor Abschluss automatisch geprüft. Wird ein Problem festgestellt, wird der Swap abgelehnt und die Mittel zurückerstattet.";
 "swap.quotes.providers.risk_levels.fair.description" = "Einige Transaktionen erfordern möglicherweise eine zusätzliche Verifizierung. Wird ein Problem festgestellt, werden die Mittel in der Regel automatisch zurückerstattet.";

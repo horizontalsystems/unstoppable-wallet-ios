@@ -718,6 +718,9 @@
 
 "swap.quotes.providers.risk_levels.title" = "Route Score";
 "swap.quotes.providers.risk_levels.description" = "These scores show how each route handles swaps and transaction checks.";
+"swap.quotes.providers.risk_levels.excellent" = "Excellent";
+"swap.quotes.providers.risk_levels.good" = "Good";
+"swap.quotes.providers.risk_levels.fair" = "Fair";
 "swap.quotes.providers.risk_levels.excellent.description" = "Direct on-chain execution. No checks or freezes. Automatic refund if the swap fails.";
 "swap.quotes.providers.risk_levels.good.description" = "Transactions are checked automatically before completion. If an issue is found, the swap is rejected and funds are refunded.";
 "swap.quotes.providers.risk_levels.fair.description" = "Some transactions may need extra verification. If an issue is found, funds are usually refunded automatically.";

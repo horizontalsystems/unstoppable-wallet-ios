@@ -718,6 +718,9 @@
 
 "swap.quotes.providers.risk_levels.title" = "路由评分";
 "swap.quotes.providers.risk_levels.description" = "这些评分显示了每条路由处理兑换和交易检查的方式。";
+"swap.quotes.providers.risk_levels.excellent" = "优秀";
+"swap.quotes.providers.risk_levels.good" = "良好";
+"swap.quotes.providers.risk_levels.fair" = "一般";
 "swap.quotes.providers.risk_levels.excellent.description" = "直接链上执行。无检查或冻结。兑换失败时自动退款。";
 "swap.quotes.providers.risk_levels.good.description" = "交易在完成前会自动检查。如发现问题，兑换将被拒绝并退还资金。";
 "swap.quotes.providers.risk_levels.fair.description" = "部分交易可能需要额外验证。如发现问题，资金通常会自动退还。";
