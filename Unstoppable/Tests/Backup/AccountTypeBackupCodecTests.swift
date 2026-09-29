@@ -1,8 +1,8 @@
 import Foundation
 import HsExtensions
 import MarketKit
-import TronKit
 import Testing
+import TronKit
 @testable import WalletCore
 
 // Golden vectors shared with Android: the bytes on the left are what BackupLocalModule writes and reads.
