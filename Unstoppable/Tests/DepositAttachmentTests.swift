@@ -5,8 +5,8 @@ import Testing
 @testable import WalletCore
 
 // The deposit attachment of Private Send and Cross Pay on every chain but XRP: the default
-// `depositSendData(attachment:)` turns it into a memo exactly as the handlers' own switch did, and
-// hands it to the chain's memo-based deposit method (Bitcoin overrides that one).
+// `depositSendData(attachment:)` turns it into a memo as the Private Send and Cross Pay handlers did
+// before this method, and hands it to the chain's memo-based deposit method (Bitcoin overrides that one).
 struct DepositAttachmentTests {
     @Test func noAttachmentBuildsWithoutMemo() throws {
         let handler = StubPreSendHandler(memoType: .onChainPublic)

@@ -5,6 +5,8 @@ import MarketKit
 public final class CrossPayHandlerProvider: SendHandler {
     override public class func instance(sendData: SendData) -> ISendHandler? {
         guard case let .crossPay(request) = sendData else { return nil }
+        // the tab refuses these recipients too; this keeps any other entry point from committing one
+        guard !PrivateSendHandlerProvider.unsupportedBlockchainTypes.contains(request.tokenOut.blockchainType) else { return nil }
         guard let service = Core.crossPayService else { return nil }
         guard let account = Core.shared.accountManager.activeAccount else { return nil }
         guard let baseToken = PrivateSendHandlerProvider.baseToken(token: request.tokenIn) else { return nil }

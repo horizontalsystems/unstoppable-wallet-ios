@@ -3,7 +3,7 @@ import MarketKit
 import XrpKit
 
 /// One place for the XRP transaction errors and the fields that render them, shared by the send
-/// handler and the swap deposit leg (StellarSendHelper form).
+/// handler, the swap deposit leg and the Cross Pay deposit (StellarSendHelper form).
 enum XrpSendHelper {
     static func caution(transactionError: Error, feeToken: Token) -> CautionNew {
         let title: String
@@ -69,7 +69,7 @@ enum XrpSendHelper {
         }
     }
 
-    /// The deposit transfer of Private Send and Cross Pay: to the provider's deposit address, with
+    /// The Cross Pay deposit transfer: to the provider's deposit address, with
     /// the provider's tag in the Payment's DestinationTag. The same steps as
     /// `USwapXrpFinalQuoteBuilder`: a text or unknown attachment, a tag the field cannot hold, a
     /// deposit X-address of the other network or with a different tag - all throw, because an

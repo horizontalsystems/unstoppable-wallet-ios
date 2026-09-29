@@ -62,8 +62,8 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
             .store(in: &cancellables)
 
         // As on Android: the first popular token for the source (a native coin gets its chain's USDT, a token
-        // its chain's native coin). One the provider cannot route shows "not supported" on the quote.
-        // A chain that is never a supported recipient is skipped, so the tab does not open on an error.
+        // its chain's native coin). One the provider cannot route shows "not supported" once selected;
+        // a chain that is never a supported recipient is skipped, so the tab does not open on that error.
         if let defaultTokenOut = MultiSwapPopularTokenResolver.tokens(for: wallet.token)
             .first(where: { !PrivateSendHandlerProvider.unsupportedBlockchainTypes.contains($0.blockchainType) })
         {
@@ -157,6 +157,11 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
 
         if tokenOut == nil {
             return PreSendButtonState(title: "cross_pay.select_token".localized, disabled: true, showProgress: false)
+        }
+
+        // An unsupported pair is known before an amount, and no amount would make it payable
+        if case .error = quoteState {
+            return PreSendButtonState(title: "cross_pay.unavailable".localized, disabled: true, showProgress: false)
         }
 
         if amount == nil {
