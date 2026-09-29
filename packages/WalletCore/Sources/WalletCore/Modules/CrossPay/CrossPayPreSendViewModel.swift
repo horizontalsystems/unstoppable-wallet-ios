@@ -181,13 +181,8 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
     }
 
     // A nil service yields false permanently, so an app that never wires Cross Pay is unaffected.
-    // XRP is rejected by CrossPayHandlerProvider, so the tab must not offer it either.
     static func isSupported(token: Token, service: CrossPayService?) -> Bool {
         guard let service else {
-            return false
-        }
-
-        guard token.blockchainType != .xrp else {
             return false
         }
 

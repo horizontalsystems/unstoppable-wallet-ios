@@ -56,10 +56,23 @@ public extension BlockchainType {
         // readable on-chain.
         case .ton, .stellar, .thorChain, .mayaChain: .onChainPublic
         // The XRP send form offers no memo (Android XrpChainPlugin): the recipient-facing field on
-        // XRP is the Payment's DestinationTag, which has its own input, and the deposit gates
-        // (USwap, Private Send, CrossPay) take an explicit `.xrp` branch through XrpDestinationTag.
+        // XRP is the Payment's DestinationTag, which has its own input. Deposits carry the
+        // provider's tag there: USwapXrpFinalQuoteBuilder, XrpPreSendHandler's attachment
+        // overload, and Attachment.validate below.
         case .xrp: .none
         case .unsupported: .none
+        }
+    }
+}
+
+public extension USwapMultiSwapApi.Attachment {
+    // Whether a deposit on this chain can carry the attachment at all, before anything is built:
+    // XRP by its DestinationTag, every other chain by a memo the chain delivers.
+    static func validate(_ attachment: USwapMultiSwapApi.Attachment?, blockchainType: BlockchainType) throws {
+        if blockchainType == .xrp {
+            _ = try destinationTag(attachment)
+        } else {
+            _ = try memo(attachment, memoType: blockchainType.memoType)
         }
     }
 }

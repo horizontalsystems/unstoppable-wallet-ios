@@ -186,6 +186,18 @@ extension XrpPreSendHandler: IPreSendHandler {
         sendData(amount: amount, address: address, memo: memo, destinationTagInput: "")
     }
 
+    // Not a deposit path on XRP: this handler pays the address it was built for, so the default
+    // (sendData with `address` ignored) would silently pay the form's recipient instead of the
+    // deposit address. The deposit goes through the attachment overload below.
+    func depositSendData(amount _: Decimal, address _: String, memo _: String?) -> SendDataResult {
+        .invalid(cautions: [])
+    }
+
+    // To the deposit address itself, with the provider's tag in the Payment's DestinationTag.
+    func depositSendData(amount: Decimal, address: String, attachment: USwapMultiSwapApi.Attachment?, settings _: PreSendSettingsSnapshot?) throws -> SendDataResult {
+        try .valid(sendData: XrpSendHelper.depositSendData(token: token, amount: amount, depositAddress: address, attachment: attachment))
+    }
+
     func sendData(amount: Decimal, address _: String, memo _: String?, destinationTagInput: String) -> SendDataResult {
         guard let destination else {
             return invalid((addressError ?? XrpKit.AddressError.invalidFormat).smartDescription)

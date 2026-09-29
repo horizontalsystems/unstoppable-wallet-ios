@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import XrpKit
 
 /// One place for the XRP transaction errors and the fields that render them, shared by the send
 /// handler and the swap deposit leg (StellarSendHelper form).
@@ -66,6 +67,18 @@ enum XrpSendHelper {
         } catch {
             return error
         }
+    }
+
+    /// The deposit transfer of Private Send and Cross Pay: to the provider's deposit address, with
+    /// the provider's tag in the Payment's DestinationTag. The same steps as
+    /// `USwapXrpFinalQuoteBuilder`: a text or unknown attachment, a tag the field cannot hold, a
+    /// deposit X-address of the other network or with a different tag - all throw, because an
+    /// unmatched deposit is typically unrecoverable.
+    static func depositSendData(token: Token, amount: Decimal, depositAddress: String, attachment: USwapMultiSwapApi.Attachment?) throws -> SendData {
+        let attachmentTag = try USwapMultiSwapApi.Attachment.destinationTag(attachment)
+        let destination = try XrpKit.Kit.resolveDestination(address: depositAddress, tag: attachmentTag, network: XrpKitManager.network)
+
+        return .xrp(token: token, data: .payment(amount: amount, address: destination.classic), destinationTag: destination.tag)
     }
 
     static func feeFields(fee: Decimal?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendField] {

@@ -85,37 +85,23 @@ extension PrivateSendHandler: ISendHandler {
 
         try Task.checkCancellation()
 
-        // Re-evaluated here rather than at handler-resolution time, because the deposit address only
-        // exists after the commit.
-        let memoText: String?
-
-        switch order.attachment {
-        case .none:
-            memoText = nil
-        case let .some(.text(value)):
-            // The same gate the USwap deposit builders apply, through the same predicate — see
-            // MemoType.deliversAttachment for why only .onChainPublic is safe here. The handler is
-            // asked rather than the chain because it can narrow the answer by address (shielded vs
-            // transparent Zcash).
-            guard preSendHandler.memoType(address: order.depositAddress).deliversAttachment else {
-                throw PrivateSendError.attachmentUnsupported
-            }
-            memoText = value
-        case .some:
-            // No SendData case carries a destination tag, and an unknown attachment kind cannot be
-            // carried at all.
-            throw PrivateSendError.attachmentUnsupported
-        }
-
         // order.depositAmount, never the entered amount: under exact output they are structurally
         // different quantities. Settings come from the request's immutable snapshot, never from a
-        // live UI-owned handler.
-        let result = preSendHandler.depositSendData(
-            amount: order.depositAmount,
-            address: order.depositAddress,
-            memo: memoText,
-            settings: order.request.depositSettings
-        )
+        // live UI-owned handler. The attachment is re-evaluated here rather than at handler-resolution
+        // time, because the deposit address only exists after the commit; the chain's handler decides
+        // how to carry it, and one it cannot carry fails the build.
+        let result: SendDataResult
+
+        do {
+            result = try preSendHandler.depositSendData(
+                amount: order.depositAmount,
+                address: order.depositAddress,
+                attachment: order.attachment,
+                settings: order.request.depositSettings
+            )
+        } catch {
+            throw PrivateSendError.attachmentUnsupported
+        }
 
         guard case let .valid(innerSendData) = result else {
             throw PrivateSendError.innerSendDataUnavailable

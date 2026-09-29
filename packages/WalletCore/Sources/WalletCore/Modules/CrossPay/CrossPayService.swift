@@ -124,9 +124,18 @@ public final class CrossPayService {
 
         let response: USwapMultiSwapApi.SwapResponse
 
+        print("[XRP-DEBUG] commit: sell=\(sellAsset) buy=\(buyAsset) amountOut=\(request.amount) destination=\(request.recipient) refund=\(refundAddress)")
+
         do {
             response = try await api.swap(swapRequest)
+            print("[XRP-DEBUG] commit OK: uuid=\(response.uuid ?? "nil") execution=\(String(describing: response.execution)) expectedBuy=\(response.expectedBuyAmount)")
         } catch {
+            if let responseError = error as? NetworkManager.ResponseError {
+                print("[XRP-DEBUG] commit FAILED: status=\(String(describing: responseError.statusCode)) json=\(String(describing: responseError.json))")
+            } else {
+                print("[XRP-DEBUG] commit FAILED: \(error)")
+            }
+            print("[XRP-DEBUG] mapped to: \(Self.error(networkError: error, tokenOut: request.tokenOut))")
             throw Self.error(networkError: error, tokenOut: request.tokenOut)
         }
 
@@ -172,7 +181,7 @@ public final class CrossPayService {
 
         // An undeliverable attachment fails once here at commit, not on every build re-entry.
         do {
-            _ = try USwapMultiSwapApi.Attachment.memo(attachment, memoType: request.tokenIn.blockchainType.memoType)
+            try USwapMultiSwapApi.Attachment.validate(attachment, blockchainType: request.tokenIn.blockchainType)
         } catch {
             throw CrossPayError.commitFailed
         }

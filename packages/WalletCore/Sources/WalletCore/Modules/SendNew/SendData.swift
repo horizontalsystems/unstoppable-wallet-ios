@@ -74,6 +74,7 @@ public struct PaymentInfo {
 }
 
 public enum XrpSendData {
+    /// `address` is classic or an X-address as entered; a tag packed in an X-address must match `destinationTag`.
     case payment(amount: Decimal, address: String)
     case trustSet(currency: String, issuer: String, limit: Decimal)
 }
