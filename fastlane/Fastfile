@@ -6,7 +6,6 @@ TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
 APPLE_ISSUER_ID = ENV["APPLE_ISSUER_ID"]
 APPLE_KEY_ID = ENV["APPLE_KEY_ID"]
 APPLE_KEY_CONTENT = ENV["APPLE_KEY_CONTENT"]
-GIT_AUTHORIZATION = ENV["GIT_AUTHORIZATION"]
 
 TEAM_ID = "HC4MCAXJ66"
 
@@ -115,7 +114,6 @@ def build_and_sign(match_type:, export_method:, app_ids:, scheme:, keychain_name
   match(
     type: match_type,
     app_identifier: app_ids,
-    git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
     readonly: true,
     keychain_name: keychain_name,
     keychain_password: TEMP_KEYCHAIN_PASSWORD,
