@@ -689,6 +689,12 @@
 "swap.title" = "掉期交易";
 "swap.tab.standard" = "标准";
 "swap.tab.private" = "隐私";
+"swap.private.caution.title" = "隐私兑换";
+"swap.private.caution.text" = "隐私兑换会将收到的金额分配到多个地址，使交易流向更难被追踪。";
+"swap.private.recipients.title" = "收款人";
+"swap.private.recipients.description" = "添加收款人地址，并选择收到的金额在他们之间如何分配。";
+"swap.private.address" = "地址 %d";
+"swap.private.enter_addresses" = "输入地址";
 "swap.token_select.popular_tokens" = "热门代币";
 "swap.token_select.your_tokens" = "您的代币";
 "swap.token_select.top_tokens" = "顶级代币";

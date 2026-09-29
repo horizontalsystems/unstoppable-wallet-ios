@@ -439,21 +439,21 @@ extension MultiSwapSendHandler {
 
 extension MultiSwapSendHandler {
     static func instance(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, multiSwapQuote: MultiSwapQuote, recipientHolder: SwapExternalRecipientHolder) -> MultiSwapSendHandler? {
-        let baseToken: Token?
-
-        switch tokenIn.type {
-        case .native, .derived, .addressType:
-            baseToken = tokenIn
-        case .eip20, .spl, .jetton, .stellar, .zanoAsset, .thorChainAsset, .xrpAsset, .nep141:
-            baseToken = try? Core.shared.marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native))
-        case .unsupported:
-            baseToken = nil
-        }
-
-        guard let baseToken else {
+        guard let baseToken = baseToken(tokenIn: tokenIn) else {
             return nil
         }
 
         return MultiSwapSendHandler(baseToken: baseToken, tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider, multiSwapQuote: multiSwapQuote, recipientHolder: recipientHolder)
+    }
+
+    static func baseToken(tokenIn: Token) -> Token? {
+        switch tokenIn.type {
+        case .native, .derived, .addressType:
+            return tokenIn
+        case .eip20, .spl, .jetton, .stellar, .zanoAsset, .thorChainAsset, .xrpAsset, .nep141:
+            return try? Core.shared.marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native))
+        case .unsupported:
+            return nil
+        }
     }
 }

@@ -269,6 +269,81 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
     }
 }
 
+extension USwapMultiSwapProvider: ISplitSwapProvider {
+    public func splitQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, percents: [Int]) async throws -> SplitMultiSwapQuote {
+        guard percents.reduce(0, +) == 100 else {
+            throw SplitSwapError.invalidPercents
+        }
+
+        let response = try await subProvider.splitRate(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, percents: percents)
+
+        return SplitMultiSwapQuote(
+            percents: percents,
+            outputAmounts: response.outputs.map(\.amountResult),
+            guaranteedAmountOut: response.guaranteedAmount,
+            estimatedTime: response.estimatedTime
+        )
+    }
+
+    public func splitConfirmationQuote(
+        quote: SplitMultiSwapQuote,
+        tokenIn: Token,
+        tokenOut: Token,
+        amountIn: Decimal,
+        recipients: [SplitRecipient],
+        transactionSettings: TransactionSettings?
+    ) async throws -> SwapFinalQuote {
+        guard recipients.map(\.percent).reduce(0, +) == 100 else {
+            throw SplitSwapError.invalidPercents
+        }
+
+        let result = try await subProvider.splitCommit(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, recipients: recipients)
+        let order = result.order
+
+        // Always the case with the stubbed split order (no backend yet)
+        guard !order.depositAddress.isEmpty else {
+            throw SplitSwapError.noDepositAddress
+        }
+
+        // TODO: on backend integration verify this mapping against the real split order: the final
+        // quote builders of signable chains (EVM, Tron, Solana...) expect an unsigned transaction in
+        // the execution, which the order has to supply (or be built here from the deposit address).
+        let response = USwapMultiSwapApi.SwapResponse(
+            expectedBuyAmount: quote.expectedBuyAmount,
+            minBuyAmount: quote.guaranteedAmountOut,
+            buyAsset: nil,
+            estimatedTime: quote.estimatedTime,
+            execution: .transfer(
+                chain: result.chain ?? "",
+                depositAddress: order.depositAddress,
+                amount: order.depositAmount,
+                attachment: order.depositMemo.map { .text($0) },
+                unsignedTx: nil
+            ),
+            uuid: order.publicUid,
+            approvalSpender: nil
+        )
+
+        let finalQuote = try await finalQuoteFactory.build(
+            input: .init(
+                tokenIn: tokenIn,
+                amountIn: amountIn,
+                response: response,
+                providerSwapId: order.publicUid,
+                destinationAddress: recipients.first?.address ?? "",
+                slippage: quote.guaranteedAmountOut != nil ? MultiSwapSlippage.default : nil,
+                recipient: nil,
+                transactionSettings: transactionSettings
+            )
+        )
+
+        finalQuote.refundAddress = result.refundAddress
+        finalQuote.minAmountOut = quote.guaranteedAmountOut
+        finalQuote.setDeposit(address: order.depositAddress, memo: order.depositMemo)
+        return finalQuote
+    }
+}
+
 extension USwapMultiSwapProvider {
     // What `commit(finalQuote:)` needs from the preview: the token to commit and everything the
     // final-quote factory needs to rebuild a transfer route against the real deposit.

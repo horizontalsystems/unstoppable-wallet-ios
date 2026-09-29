@@ -5,7 +5,9 @@ import SwiftUI
 
 struct MultiSwapView: View {
     @ObservedObject var viewModel: MultiSwapViewModel
+    @ObservedObject var splitViewModel: SplitSwapViewModel
     @Binding var sendPresented: Bool
+    @Binding var splitRecipientsPresented: Bool
     var autoFocus = false
 
     @FocusState var focusedField: FocusField?
@@ -13,6 +15,10 @@ struct MultiSwapView: View {
 
     private var isInputActive: Bool {
         focusedField != nil
+    }
+
+    private var activeViewModel: MultiSwapViewModel {
+        currentTab == .standard ? viewModel : splitViewModel
     }
 
     var body: some View {
@@ -24,8 +30,8 @@ struct MultiSwapView: View {
 
                 Group {
                     switch currentTab {
-                    case .standard: standardTabView()
-                    case .privateSwap: privateTabView()
+                    case .standard: tabView(vm: viewModel, privateSwap: false)
+                    case .privateSwap: tabView(vm: splitViewModel, privateSwap: true)
                     }
                 }
             }
@@ -34,8 +40,15 @@ struct MultiSwapView: View {
             onChange(tab: tab)
         }
         .onAppear {
-            if currentTab == .standard {
+            // the hidden tab's view model starts with auto quoting enabled: stop it, so provider
+            // changes are deferred until the tab is shown
+            switch currentTab {
+            case .standard:
+                splitViewModel.stopAutoQuoting()
                 viewModel.autoQuoteIfRequired()
+            case .privateSwap:
+                viewModel.stopAutoQuoting()
+                resumeSplitQuoting()
             }
         }
         .onFirstAppear {
@@ -45,47 +58,37 @@ struct MultiSwapView: View {
         }
         .onDisappear {
             viewModel.stopAutoQuoting()
+            splitViewModel.stopAutoQuoting()
         }
     }
 
-    @ViewBuilder private func standardTabView() -> some View {
+    // Both tabs share the layout; the Private tab only adds the "Private Swap" alert card
+    @ViewBuilder private func tabView(vm: MultiSwapViewModel, privateSwap: Bool) -> some View {
         BottomGradientWrapper(gradientColor: .themeLawrence) {
             ScrollView {
                 VStack(spacing: 16) {
                     VStack(spacing: 0) {
-                        AvailableBalanceView(
-                            // a balance read mid-sync is not the real one yet
-                            balance: viewModel.tokenInWalletState == .ready ? viewModel.availableBalance : nil,
-                            token: viewModel.tokenIn,
-                            allAvailable: viewModel.tokenInWalletState == .ready && viewModel.percentAllAvailable,
-                            currentValue: viewModel.amountIn,
-                            onSelect: { percent in
-                                viewModel.setAmountIn(percent: percent)
-                                focusedField = nil
-                            },
-                            onClear: {
-                                viewModel.clearAmountIn()
-                            }
-                        )
-                        .padding(.top, 16)
-                        .padding(.horizontal, 16)
+                        MultiSwapInputSection(viewModel: vm, focusedField: $focusedField, allowExternalReceive: true)
 
-                        amountsView()
-
-                        if let currentQuote = viewModel.currentQuote {
-                            quoteList(quote: currentQuote)
+                        if let currentQuote = vm.currentQuote {
+                            quoteList(quote: currentQuote, vm: vm)
                         }
                     }
 
-                    if let path = viewModel.suggestedPath {
+                    if let path = vm.suggestedPath {
                         MultiSwapSuggestedPathView(path: path) { token in
-                            viewModel.tokenOut = token
+                            vm.tokenOut = token
                         }
                         .padding(.horizontal, 16)
                     }
 
-                    if let currentQuote = viewModel.currentQuote {
+                    if let currentQuote = vm.currentQuote {
                         quoteCautionsView(quote: currentQuote)
+                    }
+
+                    if privateSwap {
+                        AlertCardView(.init(icon: "info_filled", title: "swap.private.caution.title".localized, text: "swap.private.caution.text".localized, type: .regular))
+                            .padding(.horizontal, 16)
                     }
                 }
                 .padding(.bottom, 32)
@@ -94,157 +97,56 @@ struct MultiSwapView: View {
                 focusedField = nil
             }
         } bottomContent: {
-            buttonView()
+            buttonView(vm: vm)
         }
         .animation(.easeOut(duration: 0.25), value: isInputActive)
     }
 
-    @ViewBuilder private func privateTabView() -> some View {
-        // TODO: private swap
-        Color.clear
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
     private func onChange(tab: MultiSwapTab) {
+        focusedField = nil
+
         switch tab {
         case .standard:
+            splitViewModel.stopAutoQuoting()
             viewModel.autoQuoteIfRequired()
         case .privateSwap:
-            focusedField = nil
             viewModel.stopAutoQuoting()
+            resumeSplitQuoting()
         }
     }
 
-    @ViewBuilder private func amountsView() -> some View {
-        VStack(spacing: 0) {
-            boxInView()
-                .padding(.horizontal, 16)
-                .padding(.top, 16)
-                .padding(.bottom, 24)
+    // `autoQuoteIfRequired` only re-runs an interrupted or expired round: the first entry into the
+    // Private tab, with no quote yet, has to start one
+    private func resumeSplitQuoting() {
+        splitViewModel.autoQuoteIfRequired()
 
-            boxSeparatorView()
-
-            boxOutView()
-                .padding(.horizontal, 16)
-                .padding(.top, 16)
-                .padding(.bottom, 24)
-
-            Color.themeBlade.frame(height: .heightOnePixel)
+        if splitViewModel.quotes.isEmpty, !splitViewModel.quoting {
+            splitViewModel.syncQuotes()
         }
     }
 
-    @ViewBuilder private func boxInView() -> some View {
-        SendInputView(
-            token: viewModel.tokenIn,
-            amountDecimals: viewModel.amountInDecimals,
-            amountString: $viewModel.amountString,
-            fiatAmountString: $viewModel.fiatAmountString,
-            coinPrice: viewModel.coinPriceIn,
-            currency: viewModel.currency,
-            focusedField: $focusedField,
-            amountField: .amount,
-            fiatField: .fiat
-        ) {
-            Coordinator.shared.present { isPresented in
-                MultiSwapTokenSelectView(
-                    title: "swap.you_pay".localized,
-                    currentToken: $viewModel.tokenIn,
-                    otherToken: viewModel.tokenOut,
-                    isPresented: isPresented
-                )
-            }
-        }
-    }
-
-    @ViewBuilder private func boxSeparatorView() -> some View {
-        Color.themeBlade.frame(height: .heightOnePixel)
-            .overlay {
-                IconButton(icon: "arrow_m_down", style: .secondary, size: .small) {
-                    viewModel.interchange()
-                }
-                .disabled(viewModel.externalRecipientRequired)
-            }
-    }
-
-    @ViewBuilder private func boxOutView() -> some View {
-        HStack(spacing: 8) {
-            TokenSelectorButton(token: viewModel.tokenOut) {
-                Coordinator.shared.present { isPresented in
-                    MultiSwapTokenSelectView(
-                        title: "swap.you_get".localized,
-                        currentToken: $viewModel.tokenOut,
-                        otherToken: viewModel.tokenIn,
-                        allowExternalReceive: true,
-                        isPresented: isPresented
-                    )
-                }
-            }
-
-            Spacer()
-
-            VStack(alignment: .trailing, spacing: 0) {
-                if let amountOut = viewModel.amountOut, let tokenOut = viewModel.tokenOut,
-                   let formatted = ValueFormatter.instance.formatFull(value: amountOut, decimalCount: tokenOut.decimals)
-                {
-                    ThemeText(formatted, style: .headline1)
-                        .lineLimit(1)
-                } else {
-                    ThemeText("0", style: .headline1, colorStyle: .secondary)
-                }
-
-                if viewModel.tokenOut != nil {
-                    if viewModel.rateOut != nil {
-                        HStack(spacing: 8) {
-                            Spacer()
-
-                            ThemeText("\(viewModel.currency.symbol)\((viewModel.fiatAmountOut ?? 0).description)", style: .body, colorStyle: viewModel.fiatAmountOut == nil ? .andy : .secondary)
-                                .frame(height: 22)
-
-                            if let priceImpact = viewModel.priceImpact {
-                                let level = MultiSwapViewModel.PriceImpactLevel(priceImpact: abs(priceImpact))
-
-                                switch level {
-                                case .negligible, .low:
-                                    EmptyView()
-                                default:
-                                    ThemeText("(\(PriceImpact.display(value: priceImpact)))", style: .body, colorStyle: level.valueLevel.colorStyle)
-                                }
-                            }
-                        }
-                    } else {
-                        ThemeText("n/a".localized, style: .body, colorStyle: .andy)
-                            .frame(height: 22)
-                    }
-                } else {
-                    ThemeText("\(viewModel.currency.symbol)0", style: .body, colorStyle: .andy)
-                        .frame(height: 22)
-                }
-            }
-        }
-    }
-
-    @ViewBuilder private func buttonView() -> some View {
-        let (title, style, disabled, showProgress, preSwapStep) = buttonState()
+    @ViewBuilder private func buttonView(vm: MultiSwapViewModel) -> some View {
+        let (title, style, disabled, showProgress, preSwapStep) = buttonState(vm: vm)
 
         ThemeButton(text: title, spinner: showProgress, style: style) {
-            if viewModel.tokenInWalletState == .notEnabled {
+            if vm.tokenInWalletState == .notEnabled {
                 focusedField = nil
-                viewModel.enableTokenIn()
+                vm.enableTokenIn()
             } else {
-                validatePreSwapSteps(preSwapStep)
+                validatePreSwapSteps(preSwapStep, vm: vm)
             }
         }
         .disabled(disabled)
     }
 
-    private func validatePreSwapSteps(_ preSwapStep: MultiSwapPreSwapStep?) {
-        viewModel.stopAutoQuoting()
+    private func validatePreSwapSteps(_ preSwapStep: MultiSwapPreSwapStep?, vm: MultiSwapViewModel) {
+        vm.stopAutoQuoting()
 
         if let preSwapStep {
-            if let currentQuote = viewModel.currentQuote,
-               let tokenIn = viewModel.tokenIn,
-               let tokenOut = viewModel.tokenOut,
-               let amount = viewModel.amountIn
+            if let currentQuote = vm.currentQuote,
+               let tokenIn = vm.tokenIn,
+               let tokenOut = vm.tokenOut,
+               let amount = vm.amountIn
             {
                 Coordinator.shared.present { isPresented in
                     currentQuote.provider.preSwapView(
@@ -254,34 +156,34 @@ struct MultiSwapView: View {
                         amount: amount,
                         isPresented: isPresented
                     ) {
-                        viewModel.syncQuotes()
+                        vm.syncQuotes()
                     }
 
                 } onDismiss: {
-                    viewModel.autoQuoteIfRequired()
+                    activeViewModel.autoQuoteIfRequired()
                 }
             }
         } else {
-            viewModel.validateAndProceed(
-                onSuccess: { showSwap() },
-                onRiskDetected: { result in showRiskBottomSheet(result) }
+            vm.validateAndProceed(
+                onSuccess: { showSwap(vm: vm) },
+                onRiskDetected: { result in showRiskBottomSheet(result, vm: vm) }
             )
         }
     }
 
-    @ViewBuilder private func quoteList(quote: MultiSwapViewModel.Quote) -> some View {
+    @ViewBuilder private func quoteList(quote: MultiSwapViewModel.Quote, vm: MultiSwapViewModel) -> some View {
         VStack(spacing: 0) {
             Cell(
                 style: .secondary,
                 middle: {
                     RightButtonText(text: ComponentText(text: "swap.route".localized, colorStyle: .primary), textStyle: .subhead, icon: "arrow_s_down") {
-                        viewModel.stopAutoQuoting()
+                        vm.stopAutoQuoting()
 
                         showSelectProvider()
                     }
                 },
                 right: {
-                    if let price = viewModel.price {
+                    if let price = vm.price {
                         VStack(alignment: .trailing, spacing: 3) {
                             ThemeText(price, style: .subheadSB, colorStyle: .primary)
                                 .multilineTextAlignment(.trailing)
@@ -290,7 +192,7 @@ struct MultiSwapView: View {
                                 .id(price)
                                 .transition(.opacity)
                                 .onTapGesture {
-                                    viewModel.flipPrice()
+                                    vm.flipPrice()
                                 }
                         }
                         .animation(.easeInOut(duration: 0.15), value: price)
@@ -344,28 +246,34 @@ struct MultiSwapView: View {
         }
     }
 
-    private func showSwap() {
-        if viewModel.shouldShowTerms {
+    private func showSwap(vm: MultiSwapViewModel) {
+        if vm.shouldShowTerms {
             Coordinator.shared.present { isPresented in
                 SwapTermsView(isPresented: isPresented) {
-                    viewModel.onAcceptTerms()
+                    vm.onAcceptTerms()
 
                     DispatchQueue.main.async {
-                        proceedToConfirmation()
+                        proceedToConfirmation(vm: vm)
                     }
                 }
             } onDismiss: {
-                viewModel.autoQuoteIfRequired()
+                activeViewModel.autoQuoteIfRequired()
             }
         } else {
-            proceedToConfirmation()
+            proceedToConfirmation(vm: vm)
         }
     }
 
     // tokenOut the account can't hold: ask for the external delivery address first,
     // then open the confirmation with it
-    private func proceedToConfirmation() {
+    private func proceedToConfirmation(vm: MultiSwapViewModel) {
         focusedField = nil
+
+        // the split swap's recipients are always entered on the Recipients screen
+        if vm is SplitSwapViewModel {
+            splitRecipientsPresented = true
+            return
+        }
 
         guard viewModel.externalRecipientRequired, let tokenOut = viewModel.tokenOut else {
             sendPresented = true
@@ -389,7 +297,7 @@ struct MultiSwapView: View {
         }
     }
 
-    private func showRiskBottomSheet(_ result: MultiSwapViewModel.AmlRiskResult) {
+    private func showRiskBottomSheet(_ result: MultiSwapViewModel.AmlRiskResult, vm: MultiSwapViewModel) {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
             BottomSheetView(
                 items: [
@@ -399,24 +307,24 @@ struct MultiSwapView: View {
                         .init(style: .gray, title: result.buttonTitle) {
                             isPresented.wrappedValue = false
 
-                            onTapResult(result)
+                            onTapResult(result, vm: vm)
                         },
                     ])),
                 ]
             )
         } onDismiss: {
-            viewModel.autoQuoteIfRequired()
+            activeViewModel.autoQuoteIfRequired()
         }
     }
 
-    private func onTapResult(_ result: MultiSwapViewModel.AmlRiskResult) {
+    private func onTapResult(_ result: MultiSwapViewModel.AmlRiskResult, vm: MultiSwapViewModel) {
         switch result {
         case .dirty: showSelectProvider()
-        case .unprocessed: showSwap()
+        case .unprocessed: showSwap(vm: vm)
         case .networkError:
-            viewModel.validateAndProceed(
-                onSuccess: { showSwap() },
-                onRiskDetected: { result in showRiskBottomSheet(result) }
+            vm.validateAndProceed(
+                onSuccess: { showSwap(vm: vm) },
+                onRiskDetected: { result in showRiskBottomSheet(result, vm: vm) }
             )
         }
     }
@@ -424,9 +332,9 @@ struct MultiSwapView: View {
     private func showSelectProvider() {
         DispatchQueue.main.async {
             Coordinator.shared.present { isPresented in
-                MultiSwapQuotesView(viewModel: viewModel, isPresented: isPresented)
+                MultiSwapQuotesView(viewModel: activeViewModel, isPresented: isPresented)
             } onDismiss: {
-                viewModel.autoQuoteIfRequired()
+                activeViewModel.autoQuoteIfRequired()
             }
         }
     }
@@ -437,50 +345,50 @@ struct MultiSwapView: View {
         }
     }
 
-    private func buttonState() -> (String, ThemeButton.Style, Bool, Bool, MultiSwapPreSwapStep?) {
+    private func buttonState(vm: MultiSwapViewModel) -> (String, ThemeButton.Style, Bool, Bool, MultiSwapPreSwapStep?) {
         let title: String
         var style: ThemeButton.Style = .primary
         var disabled = true
         var showProgress = false
         var preSwapStep: MultiSwapPreSwapStep?
 
-        if viewModel.validatingProvider {
+        if vm.validatingProvider {
             title = "swap.proceed_button".localized
             showProgress = true
-        } else if viewModel.tokenInWalletState == .notEnabled, let tokenIn = viewModel.tokenIn {
+        } else if vm.tokenInWalletState == .notEnabled, let tokenIn = vm.tokenIn {
             title = "swap.enable_coin".localized(tokenIn.coin.code)
             style = .secondary
             disabled = false
-        } else if viewModel.tokenInWalletState == .syncing {
+        } else if vm.tokenInWalletState == .syncing {
             title = "balance.syncing".localized
             showProgress = true
-        } else if viewModel.quoting {
+        } else if vm.quoting {
             title = "swap.quoting".localized
             showProgress = true
-        } else if viewModel.tokenIn == nil {
+        } else if vm.tokenIn == nil {
             title = "swap.select_token_in".localized
-        } else if viewModel.tokenOut == nil {
+        } else if vm.tokenOut == nil {
             title = "swap.select_token_out".localized
-        } else if viewModel.validProviders.isEmpty {
+        } else if vm.validProviders.isEmpty {
             title = "swap.no_providers".localized
-        } else if viewModel.amountIn == nil {
+        } else if vm.amountIn == nil {
             title = "swap.enter_amount".localized
-        } else if viewModel.currentQuote == nil {
+        } else if vm.currentQuote == nil {
             title = "swap.no_quotes".localized
-        } else if viewModel.adapterState == nil {
+        } else if vm.adapterState == nil {
             title = "swap.token_not_enabled".localized
-        } else if let adapterState = viewModel.adapterState, !viewModel.spendMode.spendAllowed(state: adapterState) {
+        } else if let adapterState = vm.adapterState, !vm.spendMode.spendAllowed(state: adapterState) {
             title = "swap.token_not_synced".localized
-        } else if let availableBalance = viewModel.availableBalance, let amountIn = viewModel.amountIn, amountIn > availableBalance {
+        } else if let availableBalance = vm.availableBalance, let amountIn = vm.amountIn, amountIn > availableBalance {
             title = "swap.insufficient_balance".localized
-        } else if let currentQuote = viewModel.currentQuote, let state = currentQuote.quote.customButtonState {
+        } else if let currentQuote = vm.currentQuote, let state = currentQuote.quote.customButtonState {
             title = state.title
             style = state.style
             disabled = state.disabled
             showProgress = state.showProgress
             preSwapStep = state.preSwapStep
         } else {
-            title = "swap.proceed_button".localized
+            title = vm is SplitSwapViewModel ? "send.next_button".localized : "swap.proceed_button".localized
             disabled = false
         }
 

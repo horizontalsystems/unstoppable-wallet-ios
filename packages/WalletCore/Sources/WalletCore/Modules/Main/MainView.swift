@@ -6,9 +6,12 @@ struct MainView: View {
     @StateObject var walletViewModel = WalletViewModel()
     @StateObject var transactionsViewModel = TransactionsViewModel()
     @StateObject var multiSwapViewModel = MultiSwapViewModel()
+    @StateObject var splitSwapViewModel = SplitSwapViewModel()
 
     @State private var selectedWallet: Wallet?
     @State private var swapSendPresented = false
+    @State private var splitRecipientsPresented = false
+    @State private var splitSendPresented = false
     @State private var walletConnectPresented = false
 
     @State private var backupAccount: Account?
@@ -30,10 +33,15 @@ struct MainView: View {
                         .tint(.themeLeah)
 
                     if viewModel.showSwap {
-                        MultiSwapView(viewModel: multiSwapViewModel, sendPresented: $swapSendPresented)
-                            .tabItem { Label("", image: "swap_filled") }
-                            .tag(MainViewModel.Tab.swap)
-                            .tint(.themeLeah)
+                        MultiSwapView(
+                            viewModel: multiSwapViewModel,
+                            splitViewModel: splitSwapViewModel,
+                            sendPresented: $swapSendPresented,
+                            splitRecipientsPresented: $splitRecipientsPresented
+                        )
+                        .tabItem { Label("", image: "swap_filled") }
+                        .tag(MainViewModel.Tab.swap)
+                        .tint(.themeLeah)
                     }
 
                     MainSettingsView(walletConnectPresented: $walletConnectPresented)
@@ -51,6 +59,18 @@ struct MainView: View {
                 MultiSwapSendDestinationView(viewModel: multiSwapViewModel) {
                     multiSwapViewModel.reset()
                     swapSendPresented = false
+                }
+            }
+            .navigationDestination(isPresented: $splitRecipientsPresented) {
+                SplitSwapRecipientsView(viewModel: splitSwapViewModel) {
+                    splitSendPresented = true
+                }
+                .navigationDestination(isPresented: $splitSendPresented) {
+                    SplitSwapSendDestinationView(viewModel: splitSwapViewModel) {
+                        splitSwapViewModel.reset()
+                        splitSendPresented = false
+                        splitRecipientsPresented = false
+                    }
                 }
             }
             .navigationDestination(isPresented: $walletConnectPresented) {

@@ -689,6 +689,12 @@
 "swap.title" = "Обмен";
 "swap.tab.standard" = "Обычный";
 "swap.tab.private" = "Приватный";
+"swap.private.caution.title" = "Приватный обмен";
+"swap.private.caution.text" = "Приватный обмен распределяет полученную сумму между несколькими адресами, что затрудняет отслеживание движения средств.";
+"swap.private.recipients.title" = "Получатели";
+"swap.private.recipients.description" = "Добавьте адреса получателей и выберите, как полученная сумма будет распределена между ними.";
+"swap.private.address" = "Адрес %d";
+"swap.private.enter_addresses" = "Введите адреса";
 "swap.token_select.popular_tokens" = "Популярные токены";
 "swap.token_select.your_tokens" = "Ваши токены";
 "swap.token_select.top_tokens" = "Топ токены";

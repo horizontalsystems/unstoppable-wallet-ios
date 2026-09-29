@@ -41,21 +41,36 @@ public struct SendDataSection {
     public let isMain: Bool
     public let isFlow: Bool
     public let isList: Bool
+    // Divider after each field of a flow section except the last; nil puts an arrow between every two fields
+    public let flowDividers: [FlowDivider]?
 
-    public init(_ fields: [SendField], isMain: Bool = true, isFlow: Bool = false, isList: Bool = true) {
+    public init(_ fields: [SendField], isMain: Bool = true, isFlow: Bool = false, isList: Bool = true, flowDividers: [FlowDivider]? = nil) {
         self.fields = fields
         self.isMain = isMain
         self.isFlow = isFlow
         self.isList = isList
+        self.flowDividers = flowDividers
     }
 
     @MainActor @ViewBuilder var fieldList: some View {
         ForEach(fields.indices, id: \.self) { index in
             fields[index].listRow()
             if isFlow, index < (fields.count - 1) {
-                flowDivider
+                switch flowDivider(after: index) {
+                case .arrow: flowDivider
+                case .line: HorizontalDivider()
+                case .hidden: EmptyView()
+                }
             }
         }
+    }
+
+    private func flowDivider(after index: Int) -> FlowDivider {
+        guard let flowDividers else {
+            return .arrow
+        }
+
+        return flowDividers.indices.contains(index) ? flowDividers[index] : .hidden
     }
 
     @MainActor @ViewBuilder private var flowDivider: some View {
@@ -68,6 +83,14 @@ public struct SendDataSection {
                         ThemeImage("arrow_m_down", size: .iconSize20)
                     )
             )
+    }
+}
+
+public extension SendDataSection {
+    enum FlowDivider {
+        case arrow
+        case line
+        case hidden
     }
 }
 

@@ -117,6 +117,68 @@ public class DefaultUSwapSubProvider: USwapSubProvider {
         _ = try await api.signed(.init(uuid: uuid, inboundTxHash: inboundTxHash))
     }
 
+    public func splitRate(tokenIn: Token, tokenOut: Token, amountIn: Decimal, percents: [Int]) async throws -> USwapMultiSwapApi.SplitRateResponse {
+        guard let assetIn = asset(token: tokenIn) else {
+            throw SwapError.unsupportedTokenIn
+        }
+
+        guard let assetOut = asset(token: tokenOut) else {
+            throw SwapError.unsupportedTokenOut
+        }
+
+        let request = USwapMultiSwapApi.SplitRateRequest(
+            sellAsset: assetIn,
+            depositAmount: amountIn,
+            amountType: .percent,
+            chainId: commitRequestBuilder.chainId(token: tokenIn),
+            providerIds: [info.id],
+            outputs: percents.map { .init(buyAsset: assetOut, amount: Decimal($0)) }
+        )
+
+        return try await api.splitRate(request, stubRate: stubSplitRate(tokenIn: tokenIn, tokenOut: tokenOut))
+    }
+
+    public func splitCommit(tokenIn: Token, tokenOut: Token, amountIn: Decimal, recipients: [SplitRecipient]) async throws -> USwapSplitCommitResult {
+        guard let assetIn = asset(token: tokenIn) else {
+            throw SwapError.unsupportedTokenIn
+        }
+
+        guard let assetOut = asset(token: tokenOut) else {
+            throw SwapError.unsupportedTokenOut
+        }
+
+        let refundAddress = try await commitRequestBuilder.refundAddress(token: tokenIn)
+
+        let request = USwapMultiSwapApi.CreateSplitOrderRequest(
+            sellAsset: assetIn,
+            depositAmount: amountIn,
+            amountType: .percent,
+            providerIds: [info.id],
+            refundAddress: refundAddress,
+            refundMemo: nil,
+            outputs: recipients.map { .init(buyAsset: assetOut, address: $0.address, memo: nil, amount: Decimal($0.percent)) }
+        )
+
+        let order = try await api.createSplitOrder(request)
+
+        return USwapSplitCommitResult(order: order, refundAddress: refundAddress, chain: commitRequestBuilder.chainId(token: tokenIn))
+    }
+
+    // TODO: stub only — remove with the `stubRate` argument once the backend split rate is integrated
+    private func stubSplitRate(tokenIn: Token, tokenOut: Token) -> Decimal {
+        let marketKit = Core.shared.marketKit
+        let currencyCode = Core.shared.currencyManager.baseCurrency.code
+
+        let priceIn = marketKit.coinPrice(coinUid: tokenIn.coin.uid, currencyCode: currencyCode)?.value ?? 1
+        let priceOut = marketKit.coinPrice(coinUid: tokenOut.coin.uid, currencyCode: currencyCode)?.value ?? 1
+
+        guard priceOut != 0 else {
+            return 1
+        }
+
+        return priceIn / priceOut
+    }
+
     public func validateTrustedProvider(tokenIn _: Token, amountIn _: Decimal) async throws -> Bool? {
         true
     }

@@ -689,6 +689,12 @@
 "swap.title" = "Takas";
 "swap.tab.standard" = "Standart";
 "swap.tab.private" = "Gizli";
+"swap.private.caution.title" = "Gizli Takas";
+"swap.private.caution.text" = "Gizli Takas, alınan tutarı birden fazla adrese bölerek işlem akışının izlenmesini zorlaştırır.";
+"swap.private.recipients.title" = "Alıcılar";
+"swap.private.recipients.description" = "Alıcı adreslerini ekleyin ve alınan tutarın aralarında nasıl bölüneceğini seçin.";
+"swap.private.address" = "Adres %d";
+"swap.private.enter_addresses" = "Adresleri Girin";
 "swap.token_select.popular_tokens" = "Popüler Tokenlar";
 "swap.token_select.your_tokens" = "Tokenlarınız";
 "swap.token_select.top_tokens" = "En İyi Tokenlar";

@@ -15,8 +15,21 @@ public protocol USwapSubProvider {
     func commit(previewToken: String) async throws -> USwapMultiSwapApi.CommitResponse
     // Reports the broadcast hash of a committed order (best-effort, after a successful broadcast)
     func reportSigned(uuid: String, inboundTxHash: String) async throws
+    func splitRate(tokenIn: Token, tokenOut: Token, amountIn: Decimal, percents: [Int]) async throws -> USwapMultiSwapApi.SplitRateResponse
+    func splitCommit(tokenIn: Token, tokenOut: Token, amountIn: Decimal, recipients: [SplitRecipient]) async throws -> USwapSplitCommitResult
     func validateTrustedProvider(tokenIn: Token, amountIn: Decimal) async throws -> Bool?
     func track(swap: Swap) async throws -> Swap
+}
+
+// Split (Private) swap support is opt-in: sub-providers that can't quote a split inherit these.
+public extension USwapSubProvider {
+    func splitRate(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, percents _: [Int]) async throws -> USwapMultiSwapApi.SplitRateResponse {
+        throw SplitSwapError.notSupported
+    }
+
+    func splitCommit(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, recipients _: [SplitRecipient]) async throws -> USwapSplitCommitResult {
+        throw SplitSwapError.notSupported
+    }
 }
 
 public struct USwapRateInput {
@@ -86,5 +99,18 @@ public struct USwapPreviewResult {
         self.response = response
         self.refundAddress = refundAddress
         self.destinationAddress = destinationAddress
+    }
+}
+
+public struct USwapSplitCommitResult {
+    public let order: USwapMultiSwapApi.SplitOrderResponse
+    public let refundAddress: String?
+    // USwap chain id of the deposit (tokenIn) chain
+    public let chain: String?
+
+    public init(order: USwapMultiSwapApi.SplitOrderResponse, refundAddress: String?, chain: String?) {
+        self.order = order
+        self.refundAddress = refundAddress
+        self.chain = chain
     }
 }

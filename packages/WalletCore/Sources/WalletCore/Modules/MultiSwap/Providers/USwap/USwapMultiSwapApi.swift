@@ -6,7 +6,7 @@ import ObjectMapper
 public final class USwapMultiSwapApi {
     // Amounts arrive as decimal strings on the amount fields but as bare JSON numbers on
     // providerErrors.minimumAmount/maximumAmount, so both representations are accepted.
-    private static let decimalTransform = TransformOf<Decimal, Any>(
+    static let decimalTransform = TransformOf<Decimal, Any>(
         fromJSON: { value in
             switch value {
             case let value as String: return Decimal(string: value)

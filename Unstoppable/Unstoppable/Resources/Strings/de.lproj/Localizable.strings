@@ -689,6 +689,12 @@
 "swap.title" = "Swap";
 "swap.tab.standard" = "Standard";
 "swap.tab.private" = "Privat";
+"swap.private.caution.title" = "Privater Swap";
+"swap.private.caution.text" = "Der private Swap teilt den erhaltenen Betrag auf mehrere Adressen auf und erschwert so die Nachverfolgung des Transaktionsflusses.";
+"swap.private.recipients.title" = "Empfänger";
+"swap.private.recipients.description" = "Fügen Sie Empfängeradressen hinzu und legen Sie fest, wie der erhaltene Betrag zwischen ihnen aufgeteilt wird.";
+"swap.private.address" = "Adresse %d";
+"swap.private.enter_addresses" = "Adressen eingeben";
 "swap.token_select.popular_tokens" = "Beliebte Token";
 "swap.token_select.your_tokens" = "Deine Token";
 "swap.token_select.top_tokens" = "Top Token";

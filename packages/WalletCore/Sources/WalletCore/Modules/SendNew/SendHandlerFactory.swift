@@ -78,6 +78,7 @@ public extension SendHandlerFactory {
         MoneroSendHandler.self,
         ZanoSendHandler.self,
         MultiSwapSendHandler.self,
+        SplitSwapSendHandler.self,
         TonConnectSendHandler.self,
     ]
 

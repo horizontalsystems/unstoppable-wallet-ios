@@ -21,8 +21,8 @@ public class MultiSwapViewModel: ObservableObject {
 
     private var balanceDisposeBag = DisposeBag()
 
-    private var providers: [IMultiSwapProvider]
-    private let swapProviderManager = Core.shared.swapProviderManager
+    private var providers: [IMultiSwapProvider] = []
+    let swapProviderManager = Core.shared.swapProviderManager
     private let currencyManager = Core.shared.currencyManager
     private let marketKit = Core.shared.marketKit
     private let accountManager = Core.shared.accountManager
@@ -332,6 +332,8 @@ public class MultiSwapViewModel: ObservableObject {
                     }
                 }
             }
+
+            didUpdateQuotes()
         }
     }
 
@@ -354,7 +356,6 @@ public class MultiSwapViewModel: ObservableObject {
     @Published var quoteSortType: QuoteSortType = .bestRate
 
     public init(token: Token? = nil, tokenOut: Token? = nil, autoResolveTokenOut: Bool = true, customDecimals: Int? = nil) {
-        providers = SwapProviderFactory.swappableProviders(ids: swapProviderManager.providers)
         currency = currencyManager.baseCurrency
         spendMode = .fromBalanceState
         hasExplicitToken = token != nil || tokenOut != nil
@@ -362,6 +363,7 @@ public class MultiSwapViewModel: ObservableObject {
         self.customDecimals = customDecimals
         currentAccountId = accountManager.activeAccount?.id
         (restoreSettingsService, restoreSettingsView) = RestoreSettingsModule.module(statPage: .swap)
+        providers = resolveProviders()
 
         defer {
             if token != nil || tokenOut != nil {
@@ -387,11 +389,15 @@ public class MultiSwapViewModel: ObservableObject {
         // round of provider requests.
         swapProviderManager.$providers
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.providers = SwapProviderFactory.swappableProviders(ids: $0)
-                self?.syncValidProviders()
-                self?.syncQuotes(silent: true)
-                self?.subscribeToProviders()
+            .sink { [weak self] _ in
+                guard let self else {
+                    return
+                }
+
+                providers = resolveProviders()
+                syncValidProviders()
+                syncQuotesOnProvidersChange()
+                subscribeToProviders()
             }
             .store(in: &cancellables)
 
@@ -639,11 +645,28 @@ public class MultiSwapViewModel: ObservableObject {
                     .receive(on: DispatchQueue.main)
                     .sink { [weak self] in
                         self?.syncValidProviders()
-                        self?.syncQuotes(silent: true)
+                        self?.syncQuotesOnProvidersChange()
                     }
                     .store(in: &providerCancellables)
             }
         }
+    }
+
+    // While auto quoting is stopped (hidden tab, presented sheet) a provider change must not start a
+    // round: it is deferred to `autoQuoteIfRequired`, which requotes an interrupted round on resume
+    private func syncQuotesOnProvidersChange() {
+        guard autoQuotingEnabled else {
+            quotesTask = nil
+            quotesInterrupted = true
+
+            if quoting {
+                quoting = false
+            }
+
+            return
+        }
+
+        syncQuotes(silent: true)
     }
 
     private func syncValidProviders() {
@@ -685,7 +708,7 @@ public class MultiSwapViewModel: ObservableObject {
     private func syncSuggestedPath() {
         var path: SwapPath?
 
-        if let internalTokenIn, let internalTokenOut, validProviders.isEmpty || quotesUnavailable {
+        if suggestedPathEnabled, let internalTokenIn, let internalTokenOut, validProviders.isEmpty || quotesUnavailable {
             path = pathFinder.find(
                 tokenIn: internalTokenIn,
                 tokenOut: internalTokenOut,
@@ -780,6 +803,7 @@ public class MultiSwapViewModel: ObservableObject {
         }
 
         let roundKey = currentRoundKey
+        let fetchQuote = quoteFetcher()
 
         quotesTask = Task { [weak self, validProviders] in
             let optionalQuotes: [Quote?] = await withTaskGroup(of: Quote?.self) { group in
@@ -787,7 +811,7 @@ public class MultiSwapViewModel: ObservableObject {
                     group.addTask {
                         do {
                             let quoteTask = Task {
-                                try await provider.quote(tokenIn: internalTokenIn, tokenOut: internalTokenOut, amountIn: amountIn)
+                                try await fetchQuote(provider, internalTokenIn, internalTokenOut, amountIn)
                             }
 
                             // Per-provider quote timeout. Must exceed uswap-server's own budget
@@ -848,6 +872,36 @@ public class MultiSwapViewModel: ObservableObject {
             }
         }
         .erased()
+    }
+
+    // MARK: Subclass hooks (SplitSwapViewModel)
+
+    typealias QuoteFetcher = (IMultiSwapProvider, Token, Token, Decimal) async throws -> MultiSwapQuote
+
+    // Called at the end of every `quotes` assignment, after the dependent state is synced
+    func didUpdateQuotes() {}
+
+    // Providers this view model quotes. Called from init and on every provider list sync, so an
+    // override must not rely on state set after `super.init`.
+    func resolveProviders() -> [IMultiSwapProvider] {
+        SwapProviderFactory.swappableProviders(ids: swapProviderManager.providers)
+    }
+
+    // The per-provider quote call of a quote round. Built once per round on the main thread, so an
+    // override can snapshot its own inputs; the closure runs off the main thread and must not
+    // capture the view model.
+    func quoteFetcher() -> QuoteFetcher {
+        { provider, tokenIn, tokenOut, amountIn in
+            try await provider.quote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
+        }
+    }
+
+    var suggestedPathEnabled: Bool {
+        true
+    }
+
+    public func reset() {
+        amountIn = nil
     }
 
     private func syncPrice() {
@@ -970,10 +1024,6 @@ public extension MultiSwapViewModel {
                 self?.syncQuotes(silent: true)
             }
         }
-    }
-
-    func reset() {
-        amountIn = nil
     }
 
     internal func validateAndProceed(onSuccess: @escaping () -> Void, onRiskDetected: @escaping (AmlRiskResult) -> Void) {

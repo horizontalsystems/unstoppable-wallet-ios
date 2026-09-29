@@ -25,6 +25,9 @@ class MultiSwapProviderManager {
     /// access goes through `executionTypesLock`.
     private var _executionTypes = [String: String]()
     private let executionTypesLock = NSLock()
+    /// Ids of the providers flagged `split` by the backend: the only ones quoted on the Private
+    /// (split) swap tab. Assigned before `providers`, which is the signal subscribers react to.
+    @PostPublished private(set) var splitProviders: [String] = []
 
     init(localStorage: LocalStorage, networkManager: NetworkManager, apiKey: String?) {
         self.localStorage = localStorage
@@ -35,17 +38,20 @@ class MultiSwapProviderManager {
             headers = HTTPHeaders([HTTPHeader(name: "x-api-key", value: apiKey)])
         }
 
+        let cachedSplitProviders = localStorage.uSwapSplitProviders
+        splitProviders = cachedSplitProviders?.components(separatedBy: ",").filter { !$0.isEmpty } ?? []
+
         syncProviders(uSwapProviders: localStorage.uSwapProviders?.components(separatedBy: ",").filter { !$0.isEmpty } ?? [])
 
         let hadSuspensions = restoreSuspensions()
         let hadExecutionTypes = restoreExecutionTypes()
 
-        // Force a fetch when suspensions or execution types have never been stored, even if the
-        // provider list is still within its TTL. Upgrading from a build that predates them leaves a
-        // FRESH `swap-providers-last-sync-timestamp` beside an empty cache, so the ordinary TTL check
-        // would skip the sync and leave the first hour after the update unenforced (suspensions) or
-        // without shielded ZEC delivery (execution types).
-        sync(force: !hadSuspensions || !hadExecutionTypes)
+        // Force a fetch when suspensions, execution types or the split list have never been stored,
+        // even if the provider list is still within its TTL. Upgrading from a build that predates them
+        // leaves a FRESH `swap-providers-last-sync-timestamp` beside an empty cache, so the ordinary TTL
+        // check would skip the sync and leave the first hour after the update unenforced (suspensions),
+        // without shielded ZEC delivery (execution types) or without Private swap providers (split).
+        sync(force: !hadSuspensions || !hadExecutionTypes || cachedSplitProviders == nil)
     }
 
     private func syncProviders(uSwapProviders: [String]) {
@@ -176,11 +182,15 @@ class MultiSwapProviderManager {
 
         // Suspensions FIRST. `providers` is the signal the view model subscribes to, so everything
         // it will read must already be in place by the time that assignment publishes.
+        let splitIds = responses.filter(\.split).map(\.provider)
+
         syncSuspensions(responses: responses)
         syncExecutionTypes(responses: responses)
+        splitProviders = splitIds
         syncProviders(uSwapProviders: ids)
 
         localStorage.uSwapProviders = ids.joined(separator: ",")
+        localStorage.uSwapSplitProviders = splitIds.joined(separator: ",")
         localStorage.swapProvidersLastSyncTimestamp = Date().timeIntervalSince1970
     }
 }
@@ -193,12 +203,19 @@ extension MultiSwapProviderManager {
         let suspensions: [SwapSuspension]
         /// How the provider settles (`thorchain_deposit`, `signed_transaction`, ...).
         let executionType: String?
+        /// Whether the provider can quote a split swap (one output token delivered to several
+        /// addresses) for the Private swap tab.
+        let split: Bool
 
         init(map: Map) throws {
             provider = try map.value("provider")
             suspended = (try? map.value("suspended")) ?? false
             suspensions = (try? map.value("suspensions")) ?? []
             executionType = try? map.value("executionType")
+            // TODO: remove stub default once backend returns "split"
+            split = (try? map.value("split")) ?? Self.stubSplitProviderIds.contains(provider)
         }
+
+        private static let stubSplitProviderIds: Set<String> = [USwapProviderInfo.swapuz.id]
     }
 }

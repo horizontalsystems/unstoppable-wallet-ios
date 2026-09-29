@@ -81,6 +81,45 @@ public struct AmountField: SendFieldContent {
     }
 }
 
+// One output of a split swap: like AmountField, with the output's share next to the coin code
+public struct SplitOutputField: SendFieldContent {
+    public let token: Token
+    public let percent: Int
+    public let appValueType: SendField.AppValueType
+    public let currencyValue: CurrencyValue?
+
+    public init(token: Token, percent: Int, appValueType: SendField.AppValueType, currencyValue: CurrencyValue?) {
+        self.token = token
+        self.percent = percent
+        self.appValueType = appValueType
+        self.currencyValue = currencyValue
+    }
+
+    @ViewBuilder @MainActor public func listRow() -> some View {
+        Cell(
+            left: {
+                CoinIconView(token: token)
+            },
+            middle: {
+                VStack(alignment: .leading, spacing: 0) {
+                    HStack(spacing: 4) {
+                        ThemeText(token.coin.code, style: .subhead, colorStyle: .primary)
+                        ThemeText("\(percent)%", style: .subhead, colorStyle: .yellow)
+                    }
+
+                    MultiText(subtitle: token.fullBadge)
+                }
+            },
+            right: {
+                RightMultiText(
+                    eyebrow: appValueType.formattedFull(showCode: false).map { ComponentText(text: $0, colorStyle: .primary) },
+                    subtitle: currencyValue?.formattedFull
+                )
+            }
+        )
+    }
+}
+
 public struct ValueField: SendFieldContent {
     public let title: CustomStringConvertible
     public let appValue: AppValue?
@@ -434,6 +473,10 @@ extension SendField {
 public extension SendField {
     static func amount(token: Token, appValueType: AppValueType, currencyValue: CurrencyValue?) -> SendField {
         SendField(AmountField(token: token, appValueType: appValueType, currencyValue: currencyValue))
+    }
+
+    static func splitOutput(token: Token, percent: Int, appValueType: AppValueType, currencyValue: CurrencyValue?) -> SendField {
+        SendField(SplitOutputField(token: token, percent: percent, appValueType: appValueType, currencyValue: currencyValue))
     }
 
     static func value(title: CustomStringConvertible, appValue: AppValue?, currencyValue: CurrencyValue?, formatFull: Bool) -> SendField {

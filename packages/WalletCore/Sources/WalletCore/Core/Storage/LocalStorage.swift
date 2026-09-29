@@ -34,6 +34,7 @@ public class LocalStorage {
     private let keyUSwapProviders = "uswap-providers"
     private let keyUSwapSuspensions = "uswap-suspensions"
     private let keyUSwapExecutionTypes = "uswap-execution-types"
+    private let keyUSwapSplitProviders = "uswap-split-providers"
     private let keySwapEnabled = "swap_enabled"
     private let keyAppStateLastSyncTimestamp = "app-state-last-sync-timestamp"
     private let keyForceEnableSwap = "force-enable-swap"
@@ -228,6 +229,12 @@ extension LocalStorage {
     var uSwapExecutionTypes: String? {
         get { userDefaultsStorage.value(for: keyUSwapExecutionTypes) }
         set { userDefaultsStorage.set(value: newValue, for: keyUSwapExecutionTypes) }
+    }
+
+    // Ids of the providers able to quote a split (Private) swap, comma-joined like uSwapProviders
+    var uSwapSplitProviders: String? {
+        get { userDefaultsStorage.value(for: keyUSwapSplitProviders) }
+        set { userDefaultsStorage.set(value: newValue, for: keyUSwapSplitProviders) }
     }
 
     var swapEnabled: Bool {
