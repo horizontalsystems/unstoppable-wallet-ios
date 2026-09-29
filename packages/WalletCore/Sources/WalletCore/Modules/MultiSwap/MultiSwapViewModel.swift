@@ -272,7 +272,10 @@ public class MultiSwapViewModel: ObservableObject {
 
     @Published public var currentQuote: Quote? {
         didSet {
-            amountOut = currentQuote?.quote.expectedBuyAmount
+            // Quotes can be more precise than tokenOut allows; never show more than will be received
+            amountOut = currentQuote.map { quote in
+                internalTokenOut.map { quote.quote.expectedBuyAmount.roundedDown(decimal: $0.decimals) } ?? quote.quote.expectedBuyAmount
+            }
             syncFiatAmountOut()
             syncPrice()
         }
@@ -707,12 +710,12 @@ public class MultiSwapViewModel: ObservableObject {
     }
 
     private func syncFiatAmountOut() {
-        guard let rateOut, let currentQuote else {
+        guard let rateOut, let amountOut else {
             fiatAmountOut = nil
             return
         }
 
-        fiatAmountOut = (currentQuote.quote.expectedBuyAmount * rateOut).rounded(decimal: 2)
+        fiatAmountOut = (amountOut * rateOut).rounded(decimal: 2)
     }
 
     func syncPriceImpact() {
@@ -834,7 +837,7 @@ public class MultiSwapViewModel: ObservableObject {
             let amountA = showAsIn ? amountIn : amountOut
             let amountB = showAsIn ? amountOut : amountIn
 
-            let formattedValue = ValueFormatter.instance.formatFull(value: amountB / amountA, decimalCount: tokenB.decimals)
+            let formattedValue = ValueFormatter.instance.formatShort(value: amountB / amountA, decimalCount: tokenB.decimals)
             price = formattedValue.map { "1 \(tokenA.coin.code) = \($0) \(tokenB.coin.code)" }
         } else {
             price = nil

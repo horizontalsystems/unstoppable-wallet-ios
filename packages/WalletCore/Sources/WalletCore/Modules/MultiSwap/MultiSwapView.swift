@@ -147,8 +147,10 @@ struct MultiSwapView: View {
             Spacer()
 
             VStack(alignment: .trailing, spacing: 0) {
-                if let amountOut = viewModel.amountOut {
-                    ThemeText(amountOut.description, style: .headline1)
+                if let amountOut = viewModel.amountOut, let tokenOut = viewModel.tokenOut,
+                   let formatted = ValueFormatter.instance.formatFull(value: amountOut, decimalCount: tokenOut.decimals)
+                {
+                    ThemeText(formatted, style: .headline1)
                         .lineLimit(1)
                 } else {
                     ThemeText("0", style: .headline1, colorStyle: .secondary)
