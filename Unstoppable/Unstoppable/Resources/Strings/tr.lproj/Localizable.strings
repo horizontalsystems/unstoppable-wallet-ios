@@ -718,6 +718,9 @@
 
 "swap.quotes.providers.risk_levels.title" = "Rota Puanı";
 "swap.quotes.providers.risk_levels.description" = "Bu puanlar, her rotanın takasları ve işlem kontrollerini nasıl yönettiğini gösterir.";
+"swap.quotes.providers.risk_levels.excellent" = "Mükemmel";
+"swap.quotes.providers.risk_levels.good" = "İyi";
+"swap.quotes.providers.risk_levels.fair" = "Orta";
 "swap.quotes.providers.risk_levels.excellent.description" = "Doğrudan zincir üstü yürütme. Kontrol veya dondurma yok. Takas başarısız olursa otomatik iade.";
 "swap.quotes.providers.risk_levels.good.description" = "İşlemler tamamlanmadan önce otomatik olarak kontrol edilir. Bir sorun tespit edilirse takas reddedilir ve fonlar iade edilir.";
 "swap.quotes.providers.risk_levels.fair.description" = "Bazı işlemler ek doğrulama gerektirebilir. Bir sorun tespit edilirse fonlar genellikle otomatik olarak iade edilir.";

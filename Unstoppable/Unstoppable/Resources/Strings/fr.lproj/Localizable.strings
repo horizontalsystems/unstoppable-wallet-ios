@@ -718,6 +718,9 @@
 
 "swap.quotes.providers.risk_levels.title" = "Score de route";
 "swap.quotes.providers.risk_levels.description" = "Ces scores indiquent comment chaque route gère les swaps et les vérifications de transactions.";
+"swap.quotes.providers.risk_levels.excellent" = "Excellent";
+"swap.quotes.providers.risk_levels.good" = "Bon";
+"swap.quotes.providers.risk_levels.fair" = "Acceptable";
 "swap.quotes.providers.risk_levels.excellent.description" = "Exécution directe on-chain. Aucune vérification ni gel. Remboursement automatique en cas d'échec du swap.";
 "swap.quotes.providers.risk_levels.good.description" = "Les transactions sont vérifiées automatiquement avant leur finalisation. Si un problème est détecté, le swap est rejeté et les fonds sont remboursés.";
 "swap.quotes.providers.risk_levels.fair.description" = "Certaines transactions peuvent nécessiter une vérification supplémentaire. Si un problème est détecté, les fonds sont généralement remboursés automatiquement.";

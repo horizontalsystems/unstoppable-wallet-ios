@@ -718,6 +718,9 @@
 
 "swap.quotes.providers.risk_levels.title" = "경로 점수";
 "swap.quotes.providers.risk_levels.description" = "이 점수는 각 경로가 스왑 및 거래 검사를 처리하는 방식을 보여줍니다.";
+"swap.quotes.providers.risk_levels.excellent" = "우수";
+"swap.quotes.providers.risk_levels.good" = "좋음";
+"swap.quotes.providers.risk_levels.fair" = "보통";
 "swap.quotes.providers.risk_levels.excellent.description" = "온체인 직접 실행. 검사나 동결 없음. 스왑 실패 시 자동 환불.";
 "swap.quotes.providers.risk_levels.good.description" = "거래 완료 전에 자동으로 검사됩니다. 문제가 발견되면 스왑이 거부되고 자금이 환불됩니다.";
 "swap.quotes.providers.risk_levels.fair.description" = "일부 거래는 추가 인증이 필요할 수 있습니다. 문제가 발견되면 일반적으로 자금이 자동으로 환불됩니다.";
