@@ -63,7 +63,10 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
 
         // As on Android: the first popular token for the source (a native coin gets its chain's USDT, a token
         // its chain's native coin). One the provider cannot route shows "not supported" on the quote.
-        if let defaultTokenOut = MultiSwapPopularTokenResolver.tokens(for: wallet.token).first {
+        // A chain that is never a supported recipient is skipped, so the tab does not open on an error.
+        if let defaultTokenOut = MultiSwapPopularTokenResolver.tokens(for: wallet.token)
+            .first(where: { !PrivateSendHandlerProvider.unsupportedBlockchainTypes.contains($0.blockchainType) })
+        {
             // didSet does not fire from the class's own init, so the selection is applied directly
             selectedTokenOut = defaultTokenOut
             onSelect(tokenOut: defaultTokenOut)
@@ -221,7 +224,8 @@ private extension CrossPayPreSendViewModel {
     func onAssetsSync() {
         syncSupported()
 
-        if quoteState == .loading {
+        // nil too: a token selected before the asset map landed is checked now
+        if quoteState == .loading || quoteState == nil {
             scheduleQuote()
         }
     }
@@ -263,13 +267,27 @@ private extension CrossPayPreSendViewModel {
         }
 
         subscribeCoinPrice(token: token)
+        // the cleared amount does not re-quote when it was already empty
+        scheduleQuote()
         syncSendData()
     }
 
     func scheduleQuote() {
         quoteTask?.cancel()
 
-        guard isSupported, let tokenOut, let amount, amount > 0 else {
+        guard isSupported, let tokenOut else {
+            quoteState = nil
+            return
+        }
+
+        // A pair the provider cannot route is known without an amount, so it shows on selecting the
+        // token. Only once the asset map has landed: before that every token would read unsupported.
+        if let service, service.supports(token: tokenIn), !service.supports(tokenIn: tokenIn, tokenOut: tokenOut) {
+            quoteState = .error(.tokenUnsupported)
+            return
+        }
+
+        guard let amount, amount > 0 else {
             quoteState = nil
             return
         }

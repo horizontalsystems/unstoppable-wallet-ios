@@ -58,9 +58,9 @@ final class PrivatePreSendViewModel: BasePreSendViewModel {
     }
 
     // A nil service yields false permanently, so an app that never wires private send is unaffected.
-    // XRP is rejected by PrivateSendHandlerProvider, so the tab must not offer it either.
+    // Chains PrivateSendHandlerProvider rejects are not offered by the tab either.
     private static func isSupported(token: Token, service: PrivateSendService?) -> Bool {
-        guard token.blockchainType != .xrp else {
+        guard !PrivateSendHandlerProvider.unsupportedBlockchainTypes.contains(token.blockchainType) else {
             return false
         }
 

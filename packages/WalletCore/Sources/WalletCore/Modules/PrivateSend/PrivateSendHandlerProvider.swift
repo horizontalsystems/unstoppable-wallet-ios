@@ -11,6 +11,10 @@ public final class PrivateSendHandlerProvider: SendHandler {
 }
 
 public extension PrivateSendHandlerProvider {
+    // The provider delivers no destination tag or memo with the payout, and recipients on these chains
+    // are mostly exchanges that need one.
+    static let unsupportedBlockchainTypes: Set<BlockchainType> = [.xrp, .stellar]
+
     // Shared resolution, exposed so an app that only needs different field rendering can supply its
     // own data builder without copying any of this.
     static func handler(
@@ -18,11 +22,7 @@ public extension PrivateSendHandlerProvider {
         dataBuilder: @escaping (PrivateSendOrder, ISendData, ISendHandler) -> PrivateSendData
     ) -> ISendHandler? {
         guard case let .privateSend(request) = sendData else { return nil }
-        // XRP is deliberately absent from these two flows until Private Send and CrossPay are
-        // refactored: their deposit address arrives as the `address` argument of a pre-send
-        // handler built for a placeholder recipient, and honouring it for XRP means moving the
-        // account/tag/trust-line lookups to build time. See TECH_DEBT 2026-09-19.
-        guard request.token.blockchainType != .xrp else { return nil }
+        guard !unsupportedBlockchainTypes.contains(request.token.blockchainType) else { return nil }
         guard let service = Core.privateSendService else { return nil }
         guard let account = Core.shared.accountManager.activeAccount else { return nil }
         guard let baseToken = baseToken(token: request.token) else { return nil }

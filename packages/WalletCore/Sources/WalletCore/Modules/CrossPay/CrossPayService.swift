@@ -25,8 +25,13 @@ public final class CrossPayService {
     }
 
     // Reads only the already-synced asset map, never triggers a fetch: unsynced = "not supported yet".
+    // A recipient on an unsupported chain shows "not supported".
     public func supports(tokenIn: Token, tokenOut: Token) -> Bool {
-        supports(token: tokenIn) && supports(token: tokenOut)
+        guard !PrivateSendHandlerProvider.unsupportedBlockchainTypes.contains(tokenOut.blockchainType) else {
+            return false
+        }
+
+        return supports(token: tokenIn) && supports(token: tokenOut)
     }
 
     // Also the entry screen's "has the asset map landed" probe: ZEC is always in the provider's map.
@@ -124,18 +129,9 @@ public final class CrossPayService {
 
         let response: USwapMultiSwapApi.SwapResponse
 
-        print("[XRP-DEBUG] commit: sell=\(sellAsset) buy=\(buyAsset) amountOut=\(request.amount) destination=\(request.recipient) refund=\(refundAddress)")
-
         do {
             response = try await api.swap(swapRequest)
-            print("[XRP-DEBUG] commit OK: uuid=\(response.uuid ?? "nil") execution=\(String(describing: response.execution)) expectedBuy=\(response.expectedBuyAmount)")
         } catch {
-            if let responseError = error as? NetworkManager.ResponseError {
-                print("[XRP-DEBUG] commit FAILED: status=\(String(describing: responseError.statusCode)) json=\(String(describing: responseError.json))")
-            } else {
-                print("[XRP-DEBUG] commit FAILED: \(error)")
-            }
-            print("[XRP-DEBUG] mapped to: \(Self.error(networkError: error, tokenOut: request.tokenOut))")
             throw Self.error(networkError: error, tokenOut: request.tokenOut)
         }
 
