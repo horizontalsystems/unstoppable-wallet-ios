@@ -1027,6 +1027,7 @@
 			baseConfigurationReferenceRelativePath = "Configuration/App/App-Dev.xcconfig";
 			buildSettings = {
 				INFOPLIST_FILE = Unstoppable/Supporting/Info.plist;
+				MARKETING_VERSION = 0.51.1;
 				PRODUCT_NAME = Unstoppable;
 			};
 			name = "Debug-Dev";
@@ -1037,6 +1038,7 @@
 			baseConfigurationReferenceRelativePath = "Configuration/App/App-Prod.xcconfig";
 			buildSettings = {
 				INFOPLIST_FILE = Unstoppable/Supporting/Info.plist;
+				MARKETING_VERSION = 0.51.1;
 				PRODUCT_NAME = Unstoppable;
 			};
 			name = "Debug-Prod";
@@ -1047,6 +1049,7 @@
 			baseConfigurationReferenceRelativePath = "Configuration/App/App-Dev.xcconfig";
 			buildSettings = {
 				INFOPLIST_FILE = Unstoppable/Supporting/Info.plist;
+				MARKETING_VERSION = 0.51.1;
 				PRODUCT_NAME = Unstoppable;
 			};
 			name = "Release-Dev";
@@ -1057,6 +1060,7 @@
 			baseConfigurationReferenceRelativePath = "Configuration/App/App-Prod.xcconfig";
 			buildSettings = {
 				INFOPLIST_FILE = Unstoppable/Supporting/Info.plist;
+				MARKETING_VERSION = 0.51.1;
 				PRODUCT_NAME = Unstoppable;
 			};
 			name = "Release-Prod";
