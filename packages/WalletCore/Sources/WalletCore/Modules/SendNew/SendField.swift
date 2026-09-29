@@ -239,7 +239,9 @@ public struct AddressField: SendFieldContent {
     }
 
     @ViewBuilder @MainActor public func listRow() -> some View {
+        // the row's view model is built from the address once per identity, so a new address needs a new identity
         AddressRowsView(value: value, blockchainType: blockchainType)
+            .id([blockchainType.uid, value])
     }
 }
 
@@ -257,7 +259,9 @@ public struct RecipientField: SendFieldContent {
     }
 
     @ViewBuilder @MainActor public func listRow() -> some View {
+        // the row's view model is built from the address once per identity, so a new address needs a new identity
         RecipientRowsView(title: title, value: value, copyable: copyable, blockchainType: blockchainType)
+            .id([blockchainType.uid, value])
     }
 }
 
