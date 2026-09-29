@@ -8,7 +8,6 @@ import MarketKit
 public class BasePreSendViewModel: ObservableObject {
     let wallet: Wallet
     let handler: IPreSendHandler?
-    private let customDecimals: Int?
 
     private let currencyManager = Core.shared.currencyManager
     private let marketKit = Core.shared.marketKit
@@ -100,17 +99,17 @@ public class BasePreSendViewModel: ObservableObject {
 
     // `initialInputToken` is the token `inputToken` resolves to at construction time; the coin price is
     // subscribed for it up front. Nil means no token is chosen yet, so no price is subscribed.
-    init(wallet: Wallet, handler: IPreSendHandler?, predefinedAddress: ResolvedAddress?, amount: Decimal?, initialInputToken: Token?, customDecimals: Int? = nil) {
+    init(wallet: Wallet, handler: IPreSendHandler?, predefinedAddress: ResolvedAddress?, amount: Decimal?, initialInputToken: Token?) {
         self.wallet = wallet
         self.handler = handler
         resolvedAddress = predefinedAddress
-        self.customDecimals = customDecimals
 
         currency = currencyManager.baseCurrency
 
         defer {
             if let amount {
-                self.amount = amount
+                // A predefined amount may be more precise than the input token allows
+                self.amount = initialInputToken.map { amount.roundedDown(decimal: $0.decimals) } ?? amount
             }
         }
 
@@ -167,6 +166,11 @@ public class BasePreSendViewModel: ObservableObject {
     // The token the amount/fiat input is denominated in. Nil means no token is chosen yet.
     var inputToken: Token? {
         token
+    }
+
+    // The fraction-digit limit of the amount input.
+    var inputDecimals: Int {
+        inputToken?.decimals ?? AmountInputValidator.defaultMaxDecimals
     }
 
     // The token whose chain the recipient address belongs to. Nil means no token is chosen yet.
@@ -254,7 +258,7 @@ public class BasePreSendViewModel: ObservableObject {
 
         let amount = availableBalance * Decimal(percent) / 100
 
-        if let decimals = customDecimals ?? inputToken?.decimals {
+        if let decimals = inputToken?.decimals {
             self.amount = amount.roundedDown(decimal: decimals)
         } else {
             self.amount = amount
@@ -278,7 +282,7 @@ public class BasePreSendViewModel: ObservableObject {
 
         let amount = fiatAmount / coinPrice.value
 
-        if let decimals = customDecimals ?? inputToken?.decimals {
+        if let decimals = inputToken?.decimals {
             self.amount = amount.roundedDown(decimal: decimals)
         } else {
             self.amount = amount

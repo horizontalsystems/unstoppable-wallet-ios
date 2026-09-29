@@ -30,7 +30,6 @@ public class MultiSwapViewModel: ObservableObject {
     private let pathFinder = SwapPathFinder.make()
 
     @Published var currency: Currency
-    private let customDecimals: Int?
 
     private let hasExplicitToken: Bool
     private let autoResolveTokenOut: Bool
@@ -211,6 +210,11 @@ public class MultiSwapViewModel: ObservableObject {
         }
     }
 
+    // The fraction-digit limit of the "You pay" amount input.
+    var amountInDecimals: Int {
+        tokenIn?.decimals ?? AmountInputValidator.defaultMaxDecimals
+    }
+
     public var amountIn: Decimal? {
         didSet {
             internalUserSelectedProviderId = nil
@@ -336,11 +340,10 @@ public class MultiSwapViewModel: ObservableObject {
 
     @Published var quoteSortType: QuoteSortType = .bestRate
 
-    public init(token: Token? = nil, tokenOut: Token? = nil, autoResolveTokenOut: Bool = true, customDecimals: Int? = nil) {
+    public init(token: Token? = nil, tokenOut: Token? = nil, autoResolveTokenOut: Bool = true) {
         providers = SwapProviderFactory.swappableProviders(ids: swapProviderManager.providers)
         currency = currencyManager.baseCurrency
         spendMode = .fromBalanceState
-        self.customDecimals = customDecimals
         hasExplicitToken = token != nil || tokenOut != nil
         self.autoResolveTokenOut = autoResolveTokenOut
         currentAccountId = accountManager.activeAccount?.id
@@ -515,7 +518,15 @@ public class MultiSwapViewModel: ObservableObject {
             }
 
             if internalTokenIn == nil, let tokenIn {
-                internalTokenIn = activeWalletToken(for: tokenIn)
+                let token = activeWalletToken(for: tokenIn)
+
+                // An amount typed while there was no sell token may be more precise than the token allows.
+                // Rounded before the token is set, so the quote triggered by the token uses the rounded amount.
+                if let amountIn, amountIn.roundedDown(decimal: token.decimals) != amountIn {
+                    self.amountIn = amountIn.roundedDown(decimal: token.decimals)
+                }
+
+                internalTokenIn = token
             }
 
             return
@@ -679,7 +690,7 @@ public class MultiSwapViewModel: ObservableObject {
             return
         }
 
-        amountIn = (fiatAmountIn / coinPriceIn.value).roundedDown(decimal: customDecimals ?? tokenIn.decimals)
+        amountIn = (fiatAmountIn / coinPriceIn.value).roundedDown(decimal: tokenIn.decimals)
     }
 
     private func syncFiatAmountIn() {
@@ -862,6 +873,9 @@ public extension MultiSwapViewModel {
 
         if enteringFiat {
             fiatAmountIn = currentFiatAmountOut
+        } else if let currentAmountOut, let tokenIn = self.internalTokenIn {
+            // The buy amount can be more precise than the new sell token allows
+            amountIn = currentAmountOut.roundedDown(decimal: tokenIn.decimals)
         } else {
             amountIn = currentAmountOut
         }
@@ -886,7 +900,7 @@ public extension MultiSwapViewModel {
 
         enteringFiat = false
 
-        amountIn = (availableBalance * Decimal(percent) / 100).roundedDown(decimal: customDecimals ?? tokenIn.decimals)
+        amountIn = (availableBalance * Decimal(percent) / 100).roundedDown(decimal: tokenIn.decimals)
     }
 
     func clearAmountIn() {

@@ -100,6 +100,7 @@ struct MultiSwapView: View {
     @ViewBuilder private func boxInView() -> some View {
         SendInputView(
             token: viewModel.tokenIn,
+            amountDecimals: viewModel.amountInDecimals,
             amountString: $viewModel.amountString,
             fiatAmountString: $viewModel.fiatAmountString,
             coinPrice: viewModel.coinPriceIn,

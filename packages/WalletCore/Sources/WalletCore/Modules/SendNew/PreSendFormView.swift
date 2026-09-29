@@ -99,6 +99,7 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
     @ViewBuilder private func inputView() -> some View {
         SendInputView(
             token: viewModel.inputToken,
+            amountDecimals: viewModel.inputDecimals,
             amountString: $viewModel.amountString,
             fiatAmountString: $viewModel.fiatAmountString,
             coinPrice: viewModel.coinPrice,
