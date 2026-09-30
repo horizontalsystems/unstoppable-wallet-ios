@@ -289,7 +289,7 @@ public class AccountStorage {
     }
 }
 
-extension AccountStorage {
+extension AccountStorage: IAccountStorage {
     var allAccounts: ([Account], [AccountRecord]) {
         var accounts = [Account]()
         var lostAccountRecords = [AccountRecord]()
@@ -316,8 +316,9 @@ extension AccountStorage {
         try? clearSecureStorage(account: account)
     }
 
-    func delete(accountId: String) {
-        storage.delete(by: accountId)
+    func delete(accountIds: Set<String>) throws {
+        // Preserve any temporarily inaccessible Keychain items. This removes metadata only.
+        try storage.delete(by: accountIds)
     }
 
     func clear() {

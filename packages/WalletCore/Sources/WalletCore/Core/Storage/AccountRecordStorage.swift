@@ -27,6 +27,16 @@ extension AccountRecordStorage {
         }
     }
 
+    func delete(by ids: Set<String>) throws {
+        guard !ids.isEmpty else {
+            return
+        }
+
+        _ = try dbPool.write { db in
+            try AccountRecord.filter(ids.contains(AccountRecord.Columns.id)).deleteAll(db)
+        }
+    }
+
     func clear() {
         _ = try! dbPool.write { db in
             try AccountRecord.deleteAll(db)

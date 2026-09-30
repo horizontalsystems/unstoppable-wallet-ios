@@ -335,6 +335,11 @@
 "balance_error.sync_error.description.without_source" = "현재 소스에서 데이터를 가져오지 못했습니다. 나중에 다시 시도하세요.";
 "lost_accounts.warning_title" = "iOS 키체인 오류";
 "lost_accounts.warning_message" = "iOS 키체인 오류로 인해 다음 지갑에 접근할 수 없습니다:\n\n%@\n\n앱을 다시 시작하면 대부분의 경우 문제가 해결됩니다. 문제가 지속되면 해당 지갑을 연결 해제한 후 복원할 수 있습니다.";
+"lost_accounts.recovery_message" = "We couldn't access the following wallets:\n\n%@\n\nThis can happen after transferring to another iPhone. If restarting does not help, you can remove these unavailable wallets from this app and restore them using your backup.";
+"lost_accounts.remove_title" = "Remove unavailable wallets?";
+"lost_accounts.remove_button" = "Remove unavailable wallets";
+"lost_accounts.remove_confirmation" = "Remove the local wallet records listed below?\n\n%@\n\nThis does not restore access to these wallets. You will need their recovery phrase or another wallet backup to restore them. Other wallets in this app will remain available.";
+"lost_accounts.remove_failed" = "Could not remove these wallets. No records were removed. Please try again.";
 
 // Token Balance Page
 "balance.token.locked" = "잠김";

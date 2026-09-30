@@ -335,6 +335,11 @@
 "balance_error.sync_error.description.without_source" = "Fehler beim Abrufen der Daten von der aktuellen Quelle. Bitte versuchen Sie es später erneut.";
 "lost_accounts.warning_title" = "iOS-Keychain-Fehler";
 "lost_accounts.warning_message" = "Aufgrund eines Fehlers im iOS-Schlüsselbund konnten wir auf die folgenden Wallets nicht zugreifen:\n\n%@\n\nEin Neustart der App behebt das Problem in der Regel. Falls das Problem weiterhin besteht, können Sie diese Wallets trennen und wiederherstellen.";
+"lost_accounts.recovery_message" = "We couldn't access the following wallets:\n\n%@\n\nThis can happen after transferring to another iPhone. If restarting does not help, you can remove these unavailable wallets from this app and restore them using your backup.";
+"lost_accounts.remove_title" = "Remove unavailable wallets?";
+"lost_accounts.remove_button" = "Remove unavailable wallets";
+"lost_accounts.remove_confirmation" = "Remove the local wallet records listed below?\n\n%@\n\nThis does not restore access to these wallets. You will need their recovery phrase or another wallet backup to restore them. Other wallets in this app will remain available.";
+"lost_accounts.remove_failed" = "Could not remove these wallets. No records were removed. Please try again.";
 
 // Token Balance Page
 "balance.token.locked" = "Gesperrt";
