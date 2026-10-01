@@ -15,11 +15,13 @@ public class BasePreSendViewModel: ObservableObject {
     private let currencyManager = Core.shared.currencyManager
     private let marketKit = Core.shared.marketKit
     private let contactManager = Core.shared.contactManager
+    private let reachabilityManager = Core.shared.reachabilityManager
 
     var cancellables = Set<AnyCancellable>()
     private var coinPriceCancellable: AnyCancellable?
 
     @Published var currency: Currency
+    @Published private(set) var isReachable: Bool
 
     public var amount: Decimal? {
         didSet {
@@ -109,6 +111,7 @@ public class BasePreSendViewModel: ObservableObject {
         resolvedAddress = predefinedAddress
 
         currency = currencyManager.baseCurrency
+        isReachable = reachabilityManager.isReachable
 
         defer {
             if let amount {
@@ -120,6 +123,11 @@ public class BasePreSendViewModel: ObservableObject {
         currencyManager.$baseCurrency
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.currency = $0 }
+            .store(in: &cancellables)
+
+        reachabilityManager.$isReachable
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.isReachable = $0 }
             .store(in: &cancellables)
 
         // Not `inputToken`: an overridable member must not be read before the subclass is initialized.
@@ -210,7 +218,9 @@ public class BasePreSendViewModel: ObservableObject {
         var disabled = true
         var showProgress = false
 
-        if adapterState == nil {
+        if !isReachable {
+            title = "alert.no_internet".localized
+        } else if adapterState == nil {
             title = "send.token_not_enabled".localized
         } else if let adapterState, adapterState.syncing {
             title = "send.token_syncing".localized

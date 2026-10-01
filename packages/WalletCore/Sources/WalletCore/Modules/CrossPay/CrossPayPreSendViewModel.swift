@@ -151,7 +151,7 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
     }
 
     override var buttonState: PreSendButtonState {
-        guard let adapterState, adapterState.isSynced else {
+        guard isReachable, let adapterState, adapterState.isSynced else {
             return super.buttonState
         }
 
