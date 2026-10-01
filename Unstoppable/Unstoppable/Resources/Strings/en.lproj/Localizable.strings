@@ -576,6 +576,7 @@
 "send.fee_settings.fee_rate_unavailable" = "Fee Rate unavailable. Please, check fee rates manually";
 
 "send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.auto" = "Auto";
 "send.unspent_outputs.description" = "Manually choose which coins to spend in the transaction.";
 "send.unspent_outputs.send_to" = "Send To";
 "send.unspent_outputs.change" = "Change";

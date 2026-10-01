@@ -576,6 +576,7 @@
 "send.fee_settings.fee_rate_unavailable" = "Tarifa indisponível. Por favor, verifique as taxas de taxas manualmente";
 
 "send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.auto" = "Automático";
 "send.unspent_outputs.description" = "Escolha manualmente quais moedas gastar na transação.";
 "send.unspent_outputs.send_to" = "Enviar para";
 "send.unspent_outputs.change" = "Alterar";

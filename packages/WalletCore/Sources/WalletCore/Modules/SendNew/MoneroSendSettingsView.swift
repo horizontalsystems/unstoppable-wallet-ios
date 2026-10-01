@@ -109,10 +109,12 @@ class MoneroSendSettingsViewModel: ObservableObject {
     }
 
     private func syncUtxos() {
-        let totalUtxos = handler.allOutputs.count
-        let usedUtxos = handler.customOutputs?.count ?? totalUtxos
+        guard let customOutputs = handler.customOutputs else {
+            utxos = "send.unspent_outputs.auto".localized
+            return
+        }
 
-        utxos = [usedUtxos.description, totalUtxos.description].joined(separator: " / ")
+        utxos = [customOutputs.count.description, handler.allOutputs.count.description].joined(separator: " / ")
     }
 
     func reset() {

@@ -137,7 +137,7 @@ class MoneroOutputSelectorViewModel: ObservableObject {
             return false
         }
 
-        let selectedIds = (handler.customOutputs ?? all).map(\.keyImage)
+        let selectedIds = (handler.customOutputs ?? []).map(\.keyImage)
         selectedSet = Set(selectedIds)
 
         outputsViewItems = all.map { viewItem(unspentOutput: $0) }
@@ -185,7 +185,7 @@ class MoneroOutputSelectorViewModel: ObservableObject {
 
 extension MoneroOutputSelectorViewModel {
     func toggle(viewItem: OutputViewItem) {
-        handler.customOutputs = handler.allOutputs.filter { output in
+        let selected = handler.allOutputs.filter { output in
             if viewItem.id == output.keyImage {
                 return !selectedSet.contains(output.keyImage)
             } else {
@@ -193,11 +193,14 @@ extension MoneroOutputSelectorViewModel {
             }
         }
 
+        // nothing selected means the wallet picks the outputs itself
+        handler.customOutputs = selected.isEmpty ? nil : selected
+
         sync()
     }
 
     func unselectAll() {
-        handler.customOutputs = []
+        handler.customOutputs = nil
         sync()
     }
 

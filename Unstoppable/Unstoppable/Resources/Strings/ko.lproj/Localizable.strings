@@ -576,6 +576,7 @@
 "send.fee_settings.fee_rate_unavailable" = "수수료 비율을 사용할 수 없습니다. 수수료 요율을 수동으로 확인하십시오.";
 
 "send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.auto" = "자동";
 "send.unspent_outputs.description" = "거래에서 사용할 코인을 수동으로 선택하세요.";
 "send.unspent_outputs.send_to" = "보내기";
 "send.unspent_outputs.change" = "변경";

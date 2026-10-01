@@ -576,6 +576,7 @@
 "send.fee_settings.fee_rate_unavailable" = "Ставка комиссии недоступна. Пожалуйста, проверьте ставки комиссии вручную";
 
 "send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.auto" = "Авто";
 "send.unspent_outputs.description" = "Вручную выберите, какие монеты потратить в транзакции.";
 "send.unspent_outputs.send_to" = "Отправить";
 "send.unspent_outputs.change" = "Изменить";

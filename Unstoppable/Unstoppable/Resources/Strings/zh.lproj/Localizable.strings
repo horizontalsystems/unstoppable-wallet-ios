@@ -576,6 +576,7 @@
 "send.fee_settings.fee_rate_unavailable" = "费用率不可用。请手动检查费率。";
 
 "send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.auto" = "自动";
 "send.unspent_outputs.description" = "手动选择在交易中花费哪些币。";
 "send.unspent_outputs.send_to" = "发送至";
 "send.unspent_outputs.change" = "更改";

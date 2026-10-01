@@ -576,6 +576,7 @@
 "send.fee_settings.fee_rate_unavailable" = "Gebührensatz nicht verfügbar. Bitte überprüfen Sie die Gebührensätze manuell";
 
 "send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.auto" = "Auto";
 "send.unspent_outputs.description" = "Wählen Sie manuell aus, welche Coins in der Transaktion ausgegeben werden sollen.";
 "send.unspent_outputs.send_to" = "Senden an";
 "send.unspent_outputs.change" = "Ändern";
