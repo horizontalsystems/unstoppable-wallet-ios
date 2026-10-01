@@ -280,8 +280,8 @@ public enum AccountType: Identifiable {
                 default: return ""
                 }
             }
-        case .btcAddress:
-            return "BTC Address"
+        case let .btcAddress(_, blockchainType, _):
+            return "\(Self.btcAddressCoinCode(blockchainType)) Address"
         case .moneroWatchAccount:
             return "Monero Watch Account"
         case let .moneroMnemonic(words, passphrase):
@@ -401,9 +401,20 @@ public enum AccountType: Identifiable {
             case .public: return "HD"
             default: return nil
             }
-        case .btcAddress: return "BTC"
+        case let .btcAddress(_, blockchainType, _): return Self.btcAddressCoinCode(blockchainType)
         case .moneroWatchAccount: return "Monero"
         default: return nil
+        }
+    }
+
+    private static func btcAddressCoinCode(_ blockchainType: BlockchainType) -> String {
+        switch blockchainType {
+        case .bitcoin: "BTC"
+        case .bitcoinCash: "BCH"
+        case .ecash: "XEC"
+        case .litecoin: "LTC"
+        case .dash: "DASH"
+        default: blockchainType.uid
         }
     }
 }
