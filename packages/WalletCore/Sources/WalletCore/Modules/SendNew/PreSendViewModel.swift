@@ -61,6 +61,7 @@ public class PreSendViewModel: BasePreSendViewModel {
     override func didChangeAddress() {
         handler?.set(address: resolvedAddress?.address)
         syncMemoType()
+        destinationTag = ""
     }
 
     override func syncSendData() {
