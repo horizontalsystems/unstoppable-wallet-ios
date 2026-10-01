@@ -135,7 +135,7 @@
 
 // Access Camera
 
-"access_camera.message" = "%@ necesita acceso a tu cámara para escanear el código QR.\n\nIr a Ajustes - > %@ y permitir el acceso a la cámara.";
+"access_camera.message" = "Se denegó el acceso de esta aplicación a tu cámara. Puedes permitirlo en Ajustes.";
 "access_camera.not_supported" = "Su dispositivo no es compatible con el escaneo de un código de un artículo. Por favor, use un dispositivo con cámara.";
 "access_camera.settings" = "Ajustes";
 
@@ -196,7 +196,7 @@
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.hybrid" = "Híbrido";
-"sync_mode.from_blockchain" = "Desde Blockchain";
+"sync_mode.from_blockchain" = "Blockchain de %@";
 "blockchain_settings.description" = "Selecciona el formato de dirección para la moneda.";
 "blockchain_settings.footer" = "Sigue la opción recomendada si no estás seguro. Debe elegirse el formato correcto al restaurar una wallet existente.";
 
@@ -481,7 +481,7 @@
 "send.hodler_locktime_off" = "Apagado";
 "send.hodler_error.unsupported_address" = "El bloqueo del tiempo solo funciona con direcciones P2PKH (a partir de 1)";
 "send.fee_info.title" = "Tasa de comisión";
-"send.fee_info.description" = "Las cadenas de bloques requieren que los usuarios paguen tarifas de red al enviar transacciones. Las tarifas son más altas cuando hay muchas transacciones ocurriendo en la red.\n\nLa cartera %@ estima la tarifa basándose en la actividad actual de la cadena de bloques y recomienda el valor óptimo para que la transacción sea procesada en un tiempo razonable.\n\nLa tarifa recomendada se muestra como la cantidad de satoshis que el usuario necesita pagar por un solo byte de la transacción. Por lo tanto, la tarifa total depende del tamaño total de la transacción, que se mide en bytes.\n\nLos usuarios pueden usar los controles proporcionados para aumentar o disminuir el valor de la tarifa. El cambio en la tarifa modifica la tarifa total que el usuario pagará por la transacción.\n\nEstablecer una tarifa por debajo del valor recomendado puede resultar en que la transacción se mantenga en espera durante horas o sea rechazada. Cuanto más bajo sea el valor, más tiempo tardará en confirmarse la transacción. Para transacciones donde la prioridad es importante, recomendamos establecer una tarifa más alta.";
+"send.fee_info.description" = "Al enviar una transacción, debes pagar una tarifa de red. Cuanto más congestionada esté la red, más alta será la tarifa.\n\n%@ sugiere una tarifa óptima para que tu transacción se confirme en un tiempo razonable. Puedes aumentar o disminuir este valor.\n\nUna tarifa demasiado baja puede hacer que tu transacción quede pendiente durante mucho tiempo o incluso sea rechazada. Para una confirmación más rápida, usa una tarifa más alta.";
 "send.transaction_inputs_outputs_info.title" = "Entradas / salidas de transacciones";
 "send.transaction_inputs_outputs_info.description" = "La mayoría de las transacciones de Bitcoin, así como las transacciones en criptomonedas similares, incluyendo Bitcoin Cash, Dash y Litecoin, generan dos salidas. Una salida es la cantidad que va al receptor y la otra es la salida de cambio que se devuelve al emisor. La forma en que la mayoría de las carteras construyen transacciones facilita a un tercero entender cuál de las salidas fue para el receptor y cuál fue el cambio devuelto al emisor. Dado que la salida devuelta al emisor se utiliza posteriormente en transacciones futuras, se hace evidente una conexión entre estas dos transacciones.\n\nLa cartera %@ implementa medidas para dificultar que alguien averigüe a dónde va cada salida.\n\nHay dos opciones disponibles para los usuarios de %@:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
@@ -831,7 +831,7 @@
 "swap.confirmation.swapping" = "Intercambio";
 "swap.confirmation.refresh" = "Actualizar";
 "swap.confirmation.impact_high" = "Perderás una gran parte (%@) de tus fondos en este swap.";
-"swap.confirmation.impact_too_high" = "%@ ha desactivado la acción de intercambio para esta operación porque está recibiendo un precio extremadamente desfavorable. Esto se debe a una liquidez extremadamente baja. \nSi aún desea intercambiar, utilice el sitio web %@ en su lugar.";
+"swap.confirmation.impact_too_high" = "Este intercambio supondría una gran pérdida (%@) debido a una liquidez muy baja.";
 "swap.confirmation.impact_warning" = "¡Importante! Has obtenido un precio extremadamente desfavorable debido a la baja liquidez del mercado.";
 
 "swap.confirmation.minimum_received" = "Garantizado";
@@ -971,7 +971,7 @@
 "market.top.floor_price" = "Piso:";
 "market.top.top_market_pairs" = "Mejores pares de mercado";
 "market.top.top_platforms" = "Plataformas superiores";
-"market.top.protocols" = "Protocolos";
+"market.top.protocols" = "Protocolos: %@";
 
 "market.pairs.volume" = "Volumen";
 "top_pairs.title" = "Mejores pares de mercado";
@@ -1101,8 +1101,8 @@
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.defi_cap.description" = "Valor total del mercado de proyectos DeFi";
 
-"market.etf.title" = "Ingreso Neto Total";
-"market.etf.description" = "El ingreso neto de un ETF es igual a sus entradas de efectivo menos las salidas.";
+"market.etf.title" = "ETF de %@";
+"market.etf.description" = "Entrada neta de todos los ETF de %@, incluidos los fondos al contado y los basados en futuros.";
 "market.etf.total_net_assets" = "Activos Netos Totales";
 "market.etf.sort_by.highest_assets" = "Mayores Activos";
 "market.etf.sort_by.lowest_assets" = "Activos Más Bajos";
@@ -1467,7 +1467,7 @@
 "transactions.approve" = "Aprobar";
 "transactions.swap" = "Cambiado";
 "transactions.shield" = "Blindado";
-"transactions.unshield" = "Financiador: %@";
+"transactions.unshield" = "Desblindado";
 "transactions.transfer" = "Transferencia";
 "transactions.contract_call" = "Llamada de Contrato";
 "transactions.contract_creation" = "Creación de Contrato";
@@ -2408,7 +2408,7 @@
 "fee_settings.inputs_outputs" = "Entradas/Salidas";
 "fee_settings.inputs_outputs.description" = "Cambia cómo se estructuran las entradas y salidas de la transacción.";
 "fee_settings.transaction_settings" = "Ajustes de la transacción";
-"fee_settings.transaction_settings.description" = "Haga que sus transacciones Bitcoin sean más difíciles de rastrear cambiando la forma en que las transacciones están estructuradas.";
+"fee_settings.transaction_settings.description" = "Haz que tu transacción de %@ sea más difícil de rastrear cambiando la forma en que se estructuran las transacciones.";
 "fee_settings.replace_by_fee" = "Reemplazar por tarifa";
 "fee_settings.replace_by_fee.description" = "Esta opción le permite volver a enviar una transacción bloqueada aumentando la cantidad de la tarifa.";
 "fee_settings.time_lock" = "TimeLock";

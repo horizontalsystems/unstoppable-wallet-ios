@@ -135,7 +135,7 @@
 
 // Access Camera
 
-"access_camera.message" = "%@, QR kodunu okuyabilmek için kameranıza erişime ihtiyaç duyuyor.\n\nAyarlar - > %@ ekranına giderek kamera erişimine izin verin.";
+"access_camera.message" = "Bu uygulamanın kameranıza erişimi reddedildi. Erişime Ayarlar'dan izin verebilirsiniz.";
 "access_camera.not_supported" = "Cihazınız bir öğeden kod tarımını desteklemiyor. Bir kameraya sahip bir cihaz kullanın lütfen.";
 "access_camera.settings" = "Ayarlar";
 
@@ -196,7 +196,7 @@
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.hybrid" = "Hybrid";
-"sync_mode.from_blockchain" = "Blockchain çıkışlı";
+"sync_mode.from_blockchain" = "%@ Blockchain";
 "blockchain_settings.description" = "Coin için adres formatını seçin.";
 "blockchain_settings.footer" = "Emin değilseniz önerilen seçeneği kullanın. Mevcut bir cüzdanı geri yüklerken doğru format seçilmelidir.";
 
@@ -323,7 +323,7 @@
 "balance.add_wallet" = "Cüzdan Ekle";
 "balance.no_tokens" = "Burada token yok. Başlamak için bir tane ekleyin.";
 
-"balance.searching.count" = "bakiye.araması.miktar";
+"balance.searching.count" = "%@ işlem";
 "balance.remaining" = "Kalan Bloklar - %@";
 "balance.synced_through" = "%@ kadar";
 "balance.sort.header" = "Sıralama şekli";
@@ -481,7 +481,7 @@
 "send.hodler_locktime_off" = "Kapat";
 "send.hodler_error.unsupported_address" = "Zaman kilitleme sadece P2PKH adresleriyle çalışır (1 ile başlayan)";
 "send.fee_info.title" = "Ücret oranı";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe %@ wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within reasonable amount of time.\n\nThe recommended fee rate shown as the amount of satoshi user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours, or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting higher fee rate.";
+"send.fee_info.description" = "İşlem gönderirken bir ağ ücreti ödemeniz gerekir. Ağ ne kadar yoğunsa ücret o kadar yüksek olur.\n\n%@, işleminizin makul bir sürede onaylanması için en uygun ücreti önerir. Bu değeri artırabilir veya azaltabilirsiniz.\n\nÜcreti çok düşük belirlemek, işleminizin uzun süre beklemede kalmasına, hatta reddedilmesine neden olabilir. Daha hızlı onay için daha yüksek bir ücret kullanın.";
 "send.transaction_inputs_outputs_info.title" = "İşlem Girdileri / Çıktıları";
 "send.transaction_inputs_outputs_info.description" = "Bitcoin'in çoğu işlemi, Bitcoin Cash, Dash ve Litecoin gibi benzer kripto paralar da dahil olmak üzere iki çıkış üretir. Bir çıkış, alıcıya giden miktarı temsil eder ve diğeri geri gönderilen değişim çıkışıdır. Çoğu cüzdanın işlemleri nasıl oluşturduğu, üçüncü bir tarafın hangi çıkışın alıcıya gittiğini ve hangisinin geri gönderilen değişim miktarı olduğunu anlamasını kolaylaştırır. Gönderene geri gönderilen çıkışın daha sonraki işlemlerde kullanılması, bu iki işlem arasındaki bağlantıyı açığa çıkarır.\n\n%@ cüzdanı, hangi çıkışın nereye gittiğini anlamayı zorlaştırmak için önlemler uygular.\n\n%@ kullanıcıları için iki seçenek mevcuttur:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
@@ -831,7 +831,7 @@
 "swap.confirmation.swapping" = "Takas";
 "swap.confirmation.refresh" = "Yenile";
 "swap.confirmation.impact_high" = "Bu swap işleminde fonlarınızın büyük bir kısmını (%@) kaybedeceksiniz.";
-"swap.confirmation.impact_too_high" = "%@, son derece elverişsiz bir fiyat aldığınız için bu ticaret için takas işlemini devre dışı bıraktı. Bunun nedeni son derece düşük likiditedir.\nHala takas yapmak istiyorsanız lütfen bunun yerine %@ web sitesini kullanın.";
+"swap.confirmation.impact_too_high" = "Bu takas, çok düşük likidite nedeniyle büyük bir kayba (%@) yol açar.";
 "swap.confirmation.impact_warning" = "Önemli! Son derece olumsuz bir fiyat alıyorsunuz. Bunun nedeni son derece düşük likiditedir.";
 
 "swap.confirmation.minimum_received" = "Garantili";
@@ -971,7 +971,7 @@
 "market.top.floor_price" = "Taban:";
 "market.top.top_market_pairs" = "En İyi Piyasa Çiftleri";
 "market.top.top_platforms" = "En İyi Platformlar";
-"market.top.protocols" = "Protokoller";
+"market.top.protocols" = "Protokoller: %@";
 
 "market.pairs.volume" = "Hacim";
 "top_pairs.title" = "En İyi Piyasa Çiftleri";
@@ -1101,8 +1101,8 @@
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.defi_cap.description" = "DeFi projelerinin toplam piyasa değeri";
 
-"market.etf.title" = "Toplam Net Giriş";
-"market.etf.description" = "Bir ETF'nin net girişi, nakit girişlerinin çıkışlardan çıkarılmasıyla eşittir.";
+"market.etf.title" = "%@ ETF";
+"market.etf.description" = "Spot ve vadeli işlem tabanlı fonlar dahil tüm %@ ETF'lerine net giriş.";
 "market.etf.total_net_assets" = "Toplam Net Varlıklar";
 "market.etf.sort_by.highest_assets" = "En Yüksek Varlıklar";
 "market.etf.sort_by.lowest_assets" = "En Düşük Varlıklar";
@@ -2408,7 +2408,7 @@
 "fee_settings.inputs_outputs" = "Giriş/Çıkış";
 "fee_settings.inputs_outputs.description" = "İşlem girdilerinin ve çıktılarının nasıl yapılandırıldığını değiştirir.";
 "fee_settings.transaction_settings" = "İşlem Ayarları";
-"fee_settings.transaction_settings.description" = "İşlemlerin yapılandırılma şeklini değiştirerek Bitcoin işlemlerinizin izlenilmesini zorlaştırın.";
+"fee_settings.transaction_settings.description" = "İşlemlerin yapısını değiştirerek %@ işleminizin izlenmesini zorlaştırın.";
 "fee_settings.replace_by_fee" = "Ücretle Değiştir";
 "fee_settings.replace_by_fee.description" = "Bu seçenek, takılı kalmış bir işlemi ücret miktarını artırarak yeniden göndermenizi sağlar.";
 "fee_settings.time_lock" = "TimeLock";

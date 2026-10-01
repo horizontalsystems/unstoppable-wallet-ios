@@ -135,7 +135,7 @@
 
 // Access Camera
 
-"access_camera.message" = "%@ a besoin d'accéder à votre caméra pour scanner le code QR.\n\nAllez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
+"access_camera.message" = "L'accès de cette application à votre caméra a été refusé. Vous pouvez l'autoriser dans les Réglages.";
 "access_camera.not_supported" = "Votre appareil ne prend pas en charge la numérisation d'un code depuis un article. Veuillez utiliser un appareil doté d'une caméra.";
 "access_camera.settings" = "Paramètres";
 
@@ -196,7 +196,7 @@
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.hybrid" = "Hybride";
-"sync_mode.from_blockchain" = "De la Blockchain";
+"sync_mode.from_blockchain" = "Blockchain %@";
 "blockchain_settings.description" = "Sélectionnez le format d’adresse pour cette cryptomonnaie.";
 "blockchain_settings.footer" = "Suivez l’option recommandée si vous n’êtes pas sûr(e). Le format correct doit être choisi lors de la restauration d’un portefeuille existant.";
 
@@ -481,7 +481,7 @@
 "send.hodler_locktime_off" = "Désactivé";
 "send.hodler_error.unsupported_address" = "Time lock ne fonctionne qu'avec les adresses P2PKH (commençant par 1)";
 "send.fee_info.title" = "Taux de frais";
-"send.fee_info.description" = "Les blockchains exigent que les utilisateurs paient des frais de réseau lorsqu'ils envoient des transactions. Les frais sont plus élevés lorsque de nombreuses transactions ont lieu sur le réseau.\n\nLe portefeuille %@ estime les frais en fonction de l'activité actuelle de la blockchain et recommande la valeur optimale pour que la transaction soit traitée dans un délai raisonnable.\n\nLe taux de frais recommandé est affiché en tant que montant de satoshis que l'utilisateur doit payer pour un octet unique de la transaction. Ainsi, les frais totaux dépendent de la taille totale de la transaction, mesurée en octets.\n\nLes utilisateurs peuvent utiliser les commandes fournies pour augmenter ou diminuer la valeur du taux de frais. Le changement du taux de frais modifie les frais totaux que l'utilisateur paiera pour la transaction.\n\nLe fait de définir un taux de frais inférieur à la valeur recommandée peut entraîner le blocage d'une transaction pendant des heures ou son rejet. Plus la valeur est basse, plus la confirmation de la transaction prendra de temps. Pour les transactions où la priorité est importante, nous recommandons de définir un taux de frais plus élevé.";
+"send.fee_info.description" = "Lors de l'envoi d'une transaction, vous devez payer des frais de réseau. Plus le réseau est chargé, plus les frais sont élevés.\n\n%@ suggère des frais optimaux pour que votre transaction soit confirmée dans un délai raisonnable. Vous pouvez augmenter ou diminuer cette valeur.\n\nDes frais trop bas peuvent laisser votre transaction en attente longtemps, voire la faire rejeter. Pour une confirmation plus rapide, choisissez des frais plus élevés.";
 "send.transaction_inputs_outputs_info.title" = "Entrées / Sorties de transaction";
 "send.transaction_inputs_outputs_info.description" = "La plupart des transactions Bitcoin, ainsi que des transactions dans des cryptomonnaies similaires telles que Bitcoin Cash, Dash et Litecoin, génèrent deux sorties. Une sortie est le montant qui va au destinataire et l'autre est la sortie de change qui est renvoyée à l'expéditeur. La manière dont la plupart des portefeuilles construisent les transactions facilite la compréhension par un tiers de la sortie allant au destinataire et de celle qui est renvoyée à l'expéditeur. Comme la sortie renvoyée à l'expéditeur est utilisée ultérieurement dans des transactions futures, une connexion entre ces deux transactions devient apparente.\n\nLe portefeuille %@ met en œuvre des mesures pour rendre plus difficile à quelqu'un de déterminer quelle sortie va où.\n\nIl existe deux options disponibles pour les utilisateurs de %@ :";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
@@ -831,7 +831,7 @@
 "swap.confirmation.swapping" = "Échange";
 "swap.confirmation.refresh" = "Actualiser";
 "swap.confirmation.impact_high" = "Vous perdrez une grande partie (%@) de vos fonds sur ce swap.";
-"swap.confirmation.impact_too_high" = "%@ a désactivé l'action d'échange pour cet échange parce que vous obtenez un prix extrêmement défavorable. Ceci est dû à une liquidité extrêmement faible.\nSi vous voulez toujours échanger, veuillez utiliser le site Web %@ à la place.";
+"swap.confirmation.impact_too_high" = "Cet échange entraînerait une perte importante (%@) en raison d'une liquidité très faible.";
 "swap.confirmation.impact_warning" = "Important ! Vous avez reçu un prix extrêmement défavorable en raison d'une liquidité extrêmement faible.";
 
 "swap.confirmation.minimum_received" = "Garanti";
@@ -971,7 +971,7 @@
 "market.top.floor_price" = "Floor :";
 "market.top.top_market_pairs" = "Principaux paires de marché";
 "market.top.top_platforms" = "Meilleures plateformes";
-"market.top.protocols" = "Protocoles";
+"market.top.protocols" = "Protocoles : %@";
 
 "market.pairs.volume" = "Volume";
 "top_pairs.title" = "Principaux paires de marché";
@@ -1101,8 +1101,8 @@
 "market.global.defi_cap.title" = "Cap DeFi";
 "market.global.defi_cap.description" = "Valeur de marché totale des projets DeFi";
 
-"market.etf.title" = "Flux net total";
-"market.etf.description" = "Le flux net entrant d'un ETF est égal à ses entrées de trésorerie moins ses sorties.";
+"market.etf.title" = "ETF %@";
+"market.etf.description" = "Flux net entrant de tous les ETF %@, y compris les fonds au comptant et ceux adossés à des contrats à terme.";
 "market.etf.total_net_assets" = "Total des actifs nets";
 "market.etf.sort_by.highest_assets" = "Actifs les plus élevés";
 "market.etf.sort_by.lowest_assets" = "Les actifs les moins élevés";
@@ -2068,7 +2068,7 @@
 "wallet_connect.button_disconnect" = "Déconnecter";
 "ethereum_transaction.error.title" = "Erreur";
 "ethereum_transaction.error.insufficient_balance" = "La transaction nécessite %@ pour l'envoi.";
-"ethereum_transaction.error.insufficient_balance_with_fee" = "Le solde actuel des ETH est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
+"ethereum_transaction.error.insufficient_balance_with_fee" = "Le solde actuel de %@ est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "La valeur de frais sélectionnée est trop faible et sera rejetée !";
 "ethereum_transaction.error.nonce_already_in_block" = "Transaction déjà dans le block!";
 "ethereum_transaction.error.replacement_transaction_underpriced" = "Frais insuffisants pour remplacer la transaction";
@@ -2408,7 +2408,7 @@
 "fee_settings.inputs_outputs" = "Entrées/Sorties";
 "fee_settings.inputs_outputs.description" = "Modifie la structure des entrées et sorties de la transaction.";
 "fee_settings.transaction_settings" = "Paramètres de transaction";
-"fee_settings.transaction_settings.description" = "Rendez vos Bitcoin transactions plus difficiles à suivre en modifiant la façon dont les transactions sont structurées.";
+"fee_settings.transaction_settings.description" = "Rendez votre transaction %@ plus difficile à tracer en modifiant la structure des transactions.";
 "fee_settings.replace_by_fee" = "Remplacer par frais";
 "fee_settings.replace_by_fee.description" = "Ce choix vous permet de renvoyer une transaction bloquée en augmentant le montant des frais.";
 "fee_settings.time_lock" = "TimeLock";
@@ -2436,7 +2436,7 @@
 
 "fee_settings.errors.insufficient_balance" = "Solde insuffisant";
 "fee_settings.errors.unexpected_error" = "Erreur inattendue";
-"fee_settings.errors.insufficient_balance.info" = "Le solde actuel des ETH est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
+"fee_settings.errors.insufficient_balance.info" = "Le solde actuel de %@ est inférieur au montant requis pour traiter cette transaction, frais de transaction compris.";
 "fee_settings.errors.low_max_fee" = "Frais faibles";
 "fee_settings.errors.low_max_fee.info" = "Le montant des frais de transaction défini est insuffisant pour traiter cette transaction immédiatement.";
 "fee_settings.errors.invalid_value" = "Valeur invalide";

@@ -44,7 +44,7 @@ struct UtxoFeeSettingsView: View {
                                     title: "fee_settings.fee_rate".localized + " (Sat/Byte)".localized,
                                     infoDescription: .init(
                                         title: "send.fee_info.title".localized,
-                                        description: "send.fee_info.description".localized
+                                        description: "send.fee_info.description".localized(AppConfig.appName)
                                     )
                                 )
 

@@ -135,7 +135,7 @@
 
 // Access Camera
 
-"access_camera.message" = "%@ absolutely needs access to your tremendous camera for scanning that fantastic QR code. Believe me!.\n\nGo to Settings - > %@ and allow access to the camera.";
+"access_camera.message" = "O acesso deste app à sua câmera foi negado. Você pode permitir o acesso nos Ajustes.";
 "access_camera.not_supported" = "Seu dispositivo não suporta a leitura de um código de um item. Por favor, use um dispositivo com câmera.";
 "access_camera.settings" = "Configurações";
 
@@ -196,7 +196,7 @@
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.hybrid" = "Híbrido";
-"sync_mode.from_blockchain" = "Da Blockchain";
+"sync_mode.from_blockchain" = "Blockchain %@";
 "blockchain_settings.description" = "Selecione o formato de endereço para a moeda.";
 "blockchain_settings.footer" = "Prossiga com a opção recomendada se não tiver certeza. É importante escolher o formato correto ao restaurar uma carteira existente.";
 
@@ -481,7 +481,7 @@
 "send.hodler_locktime_off" = "Desligado";
 "send.hodler_error.unsupported_address" = "O bloqueio de tempo só funciona com endereços P2PKH (iniciando com 1)";
 "send.fee_info.title" = "Taxa de tarifa";
-"send.fee_info.description" = "Blockchains exigem que os usuários paguem taxas de rede ao enviar transações. As taxas são mais altas quando muitas transações ocorrem na rede.\n\nA carteira %@ estima a taxa com base na atividade atual do blockchain e recomenda o valor ideal para que a transação seja processada dentro de um período de tempo razoável. \n\nA taxa recomendada mostrada como a quantidade de satoshi que o usuário precisa pagar por um único byte da transação. Assim, a taxa total depende do tamanho total da transação que é medido em bytes.\n\nOs usuários podem usar os controles fornecidos para aumentar ou diminuir o valor da taxa. A alteração na taxa altera a taxa total da transação que o usuário pagará.\n\nDefinir uma taxa abaixo do valor recomendado pode fazer com que uma transação seja mantida como pendente por horas ou rejeitada. Quanto menor o valor, mais tempo levará para a transação ser confirmada. Para transações onde a prioridade é importante, recomendamos definir uma taxa de comissão mais elevada.";
+"send.fee_info.description" = "Ao enviar uma transação, você precisa pagar uma taxa de rede. Quanto mais movimentada a rede, maior a taxa.\n\nO %@ sugere uma taxa ideal para que sua transação seja confirmada em um tempo razoável. Você pode aumentar ou diminuir esse valor.\n\nUma taxa muito baixa pode deixar sua transação pendente por muito tempo ou até fazer com que seja rejeitada. Para uma confirmação mais rápida, use uma taxa mais alta.";
 "send.transaction_inputs_outputs_info.title" = "Entradas / Saídas de Transação";
 "send.transaction_inputs_outputs_info.description" = "A maioria das transações em Bitcoin, bem como as transações em criptomoedas, incluindo Bitcoin Cash, Dash, e Litecoin, geram duas saídas. Uma saída é a quantidade que vai para o destinatário e a outra é a mudança de saída que é retornada ao remetente. A maneira como a maioria das carteiras constrói as transações torna mais fácil para um terceiro entender qual das saídas foi para a parte receptora e qual foi a quantia alterada retornada ao remetente. Como a saída retornada ao remetente será usada mais tarde em transações futuras, uma conexão entre essas duas transações se torna evidente.\n\nA carteira %@ implementa medidas para tornar mais difícil para alguém descobrir qual saída vai para onde.\n\nExistem duas opções disponíveis para usuários %@:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Embaralhar";
@@ -831,7 +831,7 @@
 "swap.confirmation.swapping" = "Trocando";
 "swap.confirmation.refresh" = "Atualizar";
 "swap.confirmation.impact_high" = "Você perderá uma grande parte (%@) dos seus fundos neste swap.";
-"swap.confirmation.impact_too_high" = "%@ desativou a ação de troca para essa troca porque você está obtendo um preço extremamente desfavorável. Isso se deve a liquidez extremamente baixa.\nSe você ainda quiser trocar, use o site %@.";
+"swap.confirmation.impact_too_high" = "Esta troca resultaria em uma grande perda (%@) devido à liquidez muito baixa.";
 "swap.confirmation.impact_warning" = "Importante! Você está recebendo um preço extremamente desfavorável. Isso se deve a uma liquidez extremamente baixa.";
 
 "swap.confirmation.minimum_received" = "Garantido";
@@ -971,7 +971,7 @@
 "market.top.floor_price" = "Andar:";
 "market.top.top_market_pairs" = "Principais Pares de Mercado";
 "market.top.top_platforms" = "Melhores Plataformas";
-"market.top.protocols" = "Protocolos";
+"market.top.protocols" = "Protocolos: %@";
 
 "market.pairs.volume" = "Volume";
 "top_pairs.title" = "Principais Pares de Mercado";
@@ -1101,8 +1101,8 @@
 "market.global.defi_cap.title" = "Mercado de DeFi";
 "market.global.defi_cap.description" = "Valor total de mercado de projetos DeFi";
 
-"market.etf.title" = "Total de Despesa líquida";
-"market.etf.description" = "A entrada líquida de um ETF é igual a seus fluxos de caixa menos outflows.";
+"market.etf.title" = "ETF de %@";
+"market.etf.description" = "Entrada líquida de todos os ETFs de %@, incluindo fundos à vista e baseados em futuros.";
 "market.etf.total_net_assets" = "Total de Ativos Líquidos";
 "market.etf.sort_by.highest_assets" = "Ativos mais altos";
 "market.etf.sort_by.lowest_assets" = "Menos Ativos";

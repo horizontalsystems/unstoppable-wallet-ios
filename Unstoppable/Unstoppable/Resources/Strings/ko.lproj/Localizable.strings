@@ -135,7 +135,7 @@
 
 // Access Camera
 
-"access_camera.message" = "%@이 QR코드를 스캔하기 위해선 카메라에 대한 접근이 필요합니다. \n\n설정 -> %@으로 가서 카메라 접근을 허용해 주세요.";
+"access_camera.message" = "이 앱의 카메라 접근이 거부되었습니다. 설정에서 접근을 허용할 수 있습니다.";
 "access_camera.not_supported" = "귀하의 기기는 항목에서 코드를 스캔하는 것을 지원하지 않습니다. 카메라가 있는 기기를 사용하십시오.";
 "access_camera.settings" = "설정";
 
@@ -196,7 +196,7 @@
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.hybrid" = "하이브리드";
-"sync_mode.from_blockchain" = "블록체인으로 부터";
+"sync_mode.from_blockchain" = "%@ 블록체인";
 "blockchain_settings.description" = "코인의 주소 형식을 선택하세요.";
 "blockchain_settings.footer" = "확실하지 않은 경우 권장 옵션을 선택하세요. 기존 지갑을 복원할 때는 올바른 주소 형식을 선택해야 합니다.";
 
@@ -481,7 +481,7 @@
 "send.hodler_locktime_off" = "끄기";
 "send.hodler_error.unsupported_address" = "P2PKH (1으로 시작하는) 주소만 시간 잠금이 가능합니다.";
 "send.fee_info.title" = "수수료율";
-"send.fee_info.description" = "블록체인은 사용자가 거래를 보낼 때 네트워크 수수료를 지불하도록 요구합니다. 네트워크에서 많은 거래가 이루어질 때 수수료가 더 높아집니다.\n\n%@ 지갑은 현재 블록체인 활동을 기반으로 수수료를 추정하고 거래가 합리적인 시간 내에 처리되도록 최적의 값을 권장합니다.\n\n권장 수수료율은 사용자가 거래의 단일 바이트에 대해 지불해야 하는 사토시(satoshi) 금액으로 표시됩니다. 따라서 총 수수료는 바이트 단위로 측정되는 거래의 총 크기에 따라 달라집니다.\n\n사용자는 제공된 컨트롤을 사용하여 수수료율을 높이거나 낮출 수 있습니다. 수수료율의 변경은 사용자가 지불할 거래의 총 수수료에 영향을 줍니다.\n\n권장 값보다 낮은 수수료율을 설정하면 거래가 몇 시간 동안 보류 상태로 유지되거나 거부될 수 있습니다. 값이 낮을수록 거래 확인까지 걸리는 시간이 더 길어집니다. 우선 순위가 중요한 거래의 경우 더 높은 수수료율을 설정하는 것이 좋습니다.";
+"send.fee_info.description" = "거래를 보낼 때는 네트워크 수수료를 지불해야 합니다. 네트워크가 혼잡할수록 수수료가 높아집니다.\n\n%@은(는) 거래가 적절한 시간 안에 확인되도록 최적의 수수료를 제안합니다. 이 값은 높이거나 낮출 수 있습니다.\n\n수수료를 너무 낮게 설정하면 거래가 오랫동안 대기 상태로 남거나 거부될 수 있습니다. 더 빠른 확인을 원하면 더 높은 수수료를 사용하세요.";
 "send.transaction_inputs_outputs_info.title" = "트랜잭션 입력/출력";
 "send.transaction_inputs_outputs_info.description" = "대부분의 비트코인 거래와 비트코인 캐시, 대시, 라이트코인과 같은 암호화폐 거래는 두 개의 출력을 생성합니다. 하나의 출력은 수신자에게 전달되는 금액이고 다른 하나는 변경된 출력으로 발송자에게 반환됩니다. 대부분의 지갑이 거래를 구성하는 방식은 제3자가 어느 출력이 수신자에게 갔고 어느 것이 발송자에게 반환된 변경 금액인지 이해하기 쉽게 만듭니다. 발송자에게 반환된 출력이 후속 거래에 나중에 사용됨에 따라 이 두 거래 사이의 연결이 명백해집니다.\n\n%@ 지갑은 누군가가 어떤 출력이 어디로 가는지 파악하기 어렵게 하는 조치를 시행합니다.\n\n%@ 사용자에게는 두 가지 옵션이 제공됩니다:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
@@ -831,7 +831,7 @@
 "swap.confirmation.swapping" = "스와핑";
 "swap.confirmation.refresh" = "새로고침";
 "swap.confirmation.impact_high" = "이 스왑으로 인해 자금의 상당 부분(%@)을 잃게 됩니다.";
-"swap.confirmation.impact_too_high" = "%@은 현재 유동성이 매우 낮아 매우 불리한 가격으로 거래되고 있으므로, 이 거래에 대한 스왑 조치를 비활성화했습니다.\n교환을 원하시면 %@ 웹사이트를 사용하십시오.";
+"swap.confirmation.impact_too_high" = "유동성이 매우 낮아 이 스왑은 큰 손실(%@)을 초래합니다.";
 "swap.confirmation.impact_warning" = "중요한 사항입니다! 매우 불리한 가격을 받고 있습니다. 이는 유동성이 극도로 낮기 때문입니다.";
 
 "swap.confirmation.minimum_received" = "보장 수량";
@@ -971,7 +971,7 @@
 "market.top.floor_price" = "바닥:";
 "market.top.top_market_pairs" = "상위 시장 페어";
 "market.top.top_platforms" = "주요 플랫폼";
-"market.top.protocols" = "프로토콜";
+"market.top.protocols" = "프로토콜: %@";
 
 "market.pairs.volume" = "거래량";
 "top_pairs.title" = "상위 시장 페어";
@@ -1101,8 +1101,8 @@
 "market.global.defi_cap.title" = "디파이(DeFi) 시가총액";
 "market.global.defi_cap.description" = "디파이 프로젝트의 총 시장 가치";
 
-"market.etf.title" = "총 순유입액";
-"market.etf.description" = "ETF의 순유입액은 현금 유입에서 유출을 뺀 것과 같습니다.";
+"market.etf.title" = "%@ ETF";
+"market.etf.description" = "현물 및 선물 기반 펀드를 포함한 모든 %@ ETF의 순유입액입니다.";
 "market.etf.total_net_assets" = "총 순자산";
 "market.etf.sort_by.highest_assets" = "최고 자산";
 "market.etf.sort_by.lowest_assets" = "최저 자산";
@@ -2408,7 +2408,7 @@
 "fee_settings.inputs_outputs" = "입력/출력";
 "fee_settings.inputs_outputs.description" = "트랜잭션 입력 및 출력의 구조 방식을 변경합니다.";
 "fee_settings.transaction_settings" = "거래 설정";
-"fee_settings.transaction_settings.description" = "트랜잭션이 구조화되는 방식을 변경하여 Bitcoin 트랜잭션을 추적하기 어렵게 만드십시오.";
+"fee_settings.transaction_settings.description" = "트랜잭션 구조를 변경하여 %@ 트랜잭션을 추적하기 어렵게 만드세요.";
 "fee_settings.replace_by_fee" = "수수료로 대체";
 "fee_settings.replace_by_fee.description" = "이 옵션을 통해 거래가 멈춘 상태에서 수수료를 증가시켜 거래를 다시 보낼 수 있습니다.";
 "fee_settings.time_lock" = "TimeLock";

@@ -135,7 +135,7 @@
 
 // Access Camera
 
-"access_camera.message" = "%@ 需要访问您的相机以扫描二维码。\n\n前往设置 - > %@ 并允许访问相机。";
+"access_camera.message" = "此应用访问相机的权限已被拒绝，您可以前往设置允许访问。";
 "access_camera.not_supported" = "您的设备不支持扫描物品上的代码。请使用带有摄像头的设备。";
 "access_camera.settings" = "设置";
 
@@ -196,7 +196,7 @@
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.hybrid" = "混合型";
-"sync_mode.from_blockchain" = "来自区块链";
+"sync_mode.from_blockchain" = "%@ 区块链";
 "blockchain_settings.description" = "请选择该币种的地址格式。";
 "blockchain_settings.footer" = "如果不确定，请使用推荐选项。恢复现有钱包时需选择正确的地址格式。";
 
@@ -450,7 +450,7 @@
 // Send
 
 "send.title" = "发送%@";
-"send.title.shield" = "已屏蔽 %@（或：屏蔽 %@)";
+"send.title.shield" = "屏蔽 %@";
 "send.send" = "发送​​";
 "send.tab.standard" = "标准";
 "send.tab.private" = "隐私";
@@ -481,7 +481,7 @@
 "send.hodler_locktime_off" = "关";
 "send.hodler_error.unsupported_address" = "时间锁定只能和P2PKH地址（以1开头）一起使用";
 "send.fee_info.title" = "费率";
-"send.fee_info.description" = "区块链要求用户在发送交易时支付网络费用。当网络上发生大量交易时，费用更高。\n\n %@ 钱包基于当前区块链活动估计费用，并建议最佳值，以便在合理的时间内处理交易。\n\n建议的费用率显示为satoshi用户需要支付交易的单个字节。 因此，总费用取决于以字节衡量的交易的总规模。\n\n用户可以使用提供的控制来增加或降低收费率。 费率的变化改变了用户要支付的交易的总费用。\n\n设置收费率低于推荐值可能导致交易被搁置或被拒绝。 金额越低，交易确认所需的时间越长。 对于优先级重要的交易，我们建议设置更高的收费率。";
+"send.fee_info.description" = "发送交易时需要支付网络费用。网络越繁忙，费用越高。\n\n%@ 会建议一个最佳费用，让您的交易在合理时间内得到确认。您可以调高或调低该值。\n\n费用设置过低可能导致交易长时间处于待处理状态，甚至被拒绝。如需更快确认，请使用更高的费用。";
 "send.transaction_inputs_outputs_info.title" = "交易输入 / 输出";
 "send.transaction_inputs_outputs_info.description" = "大多数比特币交易以及包括比特币现金、达什和利特币在内的加密货币交易都产生了两个输出。 一个产出是给接收者的金额，另一个是退还给发送者的更改输出。 大多数钱包构建交易的方式使第三方很容易理解哪个产出转给了接收方，哪一个是将变更金额退还给发送者。 由于后来在未来交易中使用退还给发送人的产出，因此这两项交易之间的联系变得很明显。\n\n %@ 钱包实现了一些措施，使得某人更难于了解哪个输出到哪里。\n\n %@ 用户有两个选项：";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
@@ -831,7 +831,7 @@
 "swap.confirmation.swapping" = "交易";
 "swap.confirmation.refresh" = "刷新";
 "swap.confirmation.impact_high" = "在此次兑换交易中，您将损失您资金中的很大一部分（%@）。";
-"swap.confirmation.impact_too_high" = "%@ 已禁用此交易的掉期操作，因为您得到的价格极其不利。 这是由于流动性极低造成的。\n如果您仍想兑换，请使用 %@ 网站。";
+"swap.confirmation.impact_too_high" = "由于流动性极低，此兑换将造成重大损失（%@）。";
 "swap.confirmation.impact_warning" = "重要提示！您正在以极其不利的价格进行交易。这是因为流动性非常低。";
 
 "swap.confirmation.minimum_received" = "保证到账";
@@ -971,7 +971,7 @@
 "market.top.floor_price" = "底部：";
 "market.top.top_market_pairs" = "热门市场交易对";
 "market.top.top_platforms" = "前列平台";
-"market.top.protocols" = "协议";
+"market.top.protocols" = "协议：%@";
 
 "market.pairs.volume" = "量";
 "top_pairs.title" = "热门市场交易对";
@@ -1101,8 +1101,8 @@
 "market.global.defi_cap.title" = "DeFi市场价值";
 "market.global.defi_cap.description" = "去中心化金融（DeFi）项目的总市场价值";
 
-"market.etf.title" = "网络总流量";
-"market.etf.description" = "ETF的净流入等于其现金流入减去流出";
+"market.etf.title" = "%@ ETF";
+"market.etf.description" = "所有 %@ ETF 的净流入，包括现货和期货基金。";
 "market.etf.total_net_assets" = "净资产总额";
 "market.etf.sort_by.highest_assets" = "最高资产";
 "market.etf.sort_by.lowest_assets" = "最低资产";
@@ -2408,7 +2408,7 @@
 "fee_settings.inputs_outputs" = "输入/输出";
 "fee_settings.inputs_outputs.description" = "更改交易输入和输出的结构方式。";
 "fee_settings.transaction_settings" = "交易设置";
-"fee_settings.transaction_settings.description" = "通过更改建构交易的方式使您的比特币交易更难被追踪。";
+"fee_settings.transaction_settings.description" = "通过改变交易的构建方式，让您的 %@ 交易更难被追踪。";
 "fee_settings.replace_by_fee" = "替换交易";
 "fee_settings.replace_by_fee.description" = "此选项允许您通过增加手续费金额来重新发送卡住的交易。";
 "fee_settings.time_lock" = "TimeLock";
