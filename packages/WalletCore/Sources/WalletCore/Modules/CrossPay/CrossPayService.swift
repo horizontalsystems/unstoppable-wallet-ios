@@ -72,7 +72,7 @@ public final class CrossPayService {
         do {
             result = try await api.rate(request)
         } catch {
-            throw Self.error(networkError: error, tokenOut: tokenOut)
+            throw Self.error(rateNetworkError: error, tokenOut: tokenOut)
         }
 
         // Every route delivers the identical requested output, so the cheapest deposit wins.
@@ -214,6 +214,24 @@ private extension CrossPayService {
         let recognised = providerErrors.contains { providerError in providerError.errorCode.map(routeLevelCodes.contains) ?? false }
 
         return recognised ? .noRoute : nil
+    }
+
+    static func error(rateNetworkError: Error, tokenOut: Token) -> CrossPayError {
+        guard let responseError = rateNetworkError as? NetworkManager.ResponseError else {
+            return .networkError(rateNetworkError)
+        }
+
+        if responseError.statusCode == 503 {
+            return .providerSuspended
+        }
+
+        let providerErrors = USwapMultiSwapApi.rateProviderErrors(json: responseError.json)
+
+        guard !providerErrors.isEmpty else {
+            return .networkError(rateNetworkError)
+        }
+
+        return error(providerErrors: providerErrors, tokenOut: tokenOut) ?? .noRoute
     }
 
     static func error(networkError: Error, tokenOut: Token) -> CrossPayError {

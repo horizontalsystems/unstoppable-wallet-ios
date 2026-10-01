@@ -322,6 +322,15 @@ public extension USwapMultiSwapApi {
         return response.providerError
     }
 
+    // A refused /v2/rate may also answer a non-2xx carrying the same { routes, providerErrors } envelope
+    internal static func rateProviderErrors(json: Any?) -> [ProviderError] {
+        guard let json = json as? [String: Any], let response = Mapper<RateResponse>().map(JSON: json) else {
+            return []
+        }
+
+        return response.providerErrors.map(\.providerError)
+    }
+
     struct ProviderDescriptor {
         public let id: String
         public let executionType: String
@@ -847,7 +856,8 @@ extension USwapMultiSwapApi {
         let providerErrors: [ProviderErrorResponse]
 
         init(map: Map) throws {
-            routes = try map.value("routes")
+            // A full refusal may omit routes and carry only providerErrors
+            routes = (try? map.value("routes")) ?? []
             providerErrors = (try? map.value("providerErrors")) ?? []
         }
     }
