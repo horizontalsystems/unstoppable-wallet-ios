@@ -11,6 +11,7 @@ class TransactionsViewModel: ObservableObject {
     private let balanceHiddenManager = Core.shared.balanceHiddenManager
     private let amountRoundingManager = Core.shared.amountRoundingManager
     private let securityManger = Core.shared.securityManager
+    private let contactBookManager = Core.shared.contactManager
     private let contactLabelService = TransactionsContactLabelService(contactManager: Core.shared.contactManager)
     private let rateService = HistoricalRateService(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager)
     private let nftMetadataService = NftMetadataService(nftMetadataManager: Core.shared.nftMetadataManager)
@@ -104,6 +105,7 @@ class TransactionsViewModel: ObservableObject {
         subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
         subscribe(disposeBag, nftMetadataService.assetsBriefMetadataObservable) { [weak self] in self?.handle(assetsBriefMetadata: $0) }
         subscribe(disposeBag, contactLabelService.stateObservable) { [weak self] _ in self?.reportItemData() }
+        subscribe(disposeBag, contactBookManager.addressesAddedObservable) { [weak self] _ in self?.syncPoolGroup() }
         subscribe(disposeBag, balanceHiddenManager.balanceHiddenObservable) { [weak self] _ in self?.reportItemData() }
 
         amountRoundingManager

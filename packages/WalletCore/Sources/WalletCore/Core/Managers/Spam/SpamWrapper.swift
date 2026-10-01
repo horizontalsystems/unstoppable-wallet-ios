@@ -1,4 +1,5 @@
 import HsToolKit
+import RxSwift
 
 public class SpamWrapper {
     /// Total score >= 7: definite spam (.spam decision)
@@ -24,12 +25,19 @@ public class SpamWrapper {
     private let contactBookManager: ContactBookManager
     private let accountManager: AccountManager
     private let logger: Logger?
+    private let disposeBag = DisposeBag()
 
     public init(storage: ScannedTransactionStorage, contactBookManager: ContactBookManager, accountManager: AccountManager, logger _: Logger? = nil) {
         self.storage = storage
         self.contactBookManager = contactBookManager
         self.accountManager = accountManager
         logger = Logger(minLogLevel: .debug)
+
+        // Update saved verdicts before contact changes trigger a history reload.
+        subscribeSerial(disposeBag, contactBookManager.addressesAddedObservable) { [weak self] addresses in
+            try? self?.storage.markNotSpam(addresses: addresses)
+        }
+        try? storage.markNotSpam(addresses: contactBookManager.all?.flatMap(\.addresses).map(\.address) ?? [])
     }
 
     func spamManager(source: TransactionSource) -> SpamManager? {
