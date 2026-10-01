@@ -9,6 +9,9 @@ public class BasePreSendViewModel: ObservableObject {
     let wallet: Wallet
     let handler: IPreSendHandler?
 
+    // Overrides the input token's decimals when rounding percent/max and fiat-derived amounts.
+    private let customDecimals: Int?
+
     private let currencyManager = Core.shared.currencyManager
     private let marketKit = Core.shared.marketKit
     private let contactManager = Core.shared.contactManager
@@ -99,9 +102,10 @@ public class BasePreSendViewModel: ObservableObject {
 
     // `initialInputToken` is the token `inputToken` resolves to at construction time; the coin price is
     // subscribed for it up front. Nil means no token is chosen yet, so no price is subscribed.
-    init(wallet: Wallet, handler: IPreSendHandler?, predefinedAddress: ResolvedAddress?, amount: Decimal?, initialInputToken: Token?) {
+    init(wallet: Wallet, handler: IPreSendHandler?, predefinedAddress: ResolvedAddress?, amount: Decimal?, initialInputToken: Token?, customDecimals: Int? = nil) {
         self.wallet = wallet
         self.handler = handler
+        self.customDecimals = customDecimals
         resolvedAddress = predefinedAddress
 
         currency = currencyManager.baseCurrency
@@ -241,7 +245,7 @@ public class BasePreSendViewModel: ObservableObject {
             .sink { [weak self] price in self?.coinPrice = price }
     }
 
-    func setAmountIn(percent: Int) {
+    public func setAmountIn(percent: Int) {
         if !maxAmountEnabled, percent == 100 {
             return
         }
@@ -258,14 +262,14 @@ public class BasePreSendViewModel: ObservableObject {
 
         let amount = availableBalance * Decimal(percent) / 100
 
-        if let decimals = inputToken?.decimals {
+        if let decimals = customDecimals ?? inputToken?.decimals {
             self.amount = amount.roundedDown(decimal: decimals)
         } else {
             self.amount = amount
         }
     }
 
-    func clearAmountIn() {
+    public func clearAmountIn() {
         enteringFiat = false
         amountString = ""
     }
@@ -282,7 +286,7 @@ public class BasePreSendViewModel: ObservableObject {
 
         let amount = fiatAmount / coinPrice.value
 
-        if let decimals = inputToken?.decimals {
+        if let decimals = customDecimals ?? inputToken?.decimals {
             self.amount = amount.roundedDown(decimal: decimals)
         } else {
             self.amount = amount

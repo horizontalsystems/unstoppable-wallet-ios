@@ -19,18 +19,19 @@ public class PreSendViewModel: BasePreSendViewModel {
         }
     }
 
-    public convenience init(wallet: Wallet, predefinedAddress: ResolvedAddress?, amount: Decimal?, memo: String?) {
+    public convenience init(wallet: Wallet, predefinedAddress: ResolvedAddress?, amount: Decimal?, memo: String?, customDecimals: Int? = nil) {
         self.init(
             wallet: wallet,
             handler: SendHandlerFactory.preSendHandler(wallet: wallet, address: predefinedAddress),
             predefinedAddress: predefinedAddress,
             amount: amount,
-            memo: memo
+            memo: memo,
+            customDecimals: customDecimals
         )
     }
 
-    init(wallet: Wallet, handler: IPreSendHandler?, predefinedAddress: ResolvedAddress?, amount: Decimal?, memo: String?) {
-        super.init(wallet: wallet, handler: handler, predefinedAddress: predefinedAddress, amount: amount, initialInputToken: wallet.token)
+    public init(wallet: Wallet, handler: IPreSendHandler?, predefinedAddress: ResolvedAddress?, amount: Decimal?, memo: String?, customDecimals: Int? = nil) {
+        super.init(wallet: wallet, handler: handler, predefinedAddress: predefinedAddress, amount: amount, initialInputToken: wallet.token, customDecimals: customDecimals)
 
         if let handler {
             destinationTagState = handler.destinationTagState

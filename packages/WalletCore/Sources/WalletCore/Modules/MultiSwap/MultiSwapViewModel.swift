@@ -33,6 +33,7 @@ public class MultiSwapViewModel: ObservableObject {
 
     private let hasExplicitToken: Bool
     private let autoResolveTokenOut: Bool
+    private let customDecimals: Int?
     private var tokensManuallySet = false
     private var currentAccountId: String?
     private var defaultTokensCancellable: AnyCancellable?
@@ -343,12 +344,13 @@ public class MultiSwapViewModel: ObservableObject {
 
     @Published var quoteSortType: QuoteSortType = .bestRate
 
-    public init(token: Token? = nil, tokenOut: Token? = nil, autoResolveTokenOut: Bool = true) {
+    public init(token: Token? = nil, tokenOut: Token? = nil, autoResolveTokenOut: Bool = true, customDecimals: Int? = nil) {
         providers = SwapProviderFactory.swappableProviders(ids: swapProviderManager.providers)
         currency = currencyManager.baseCurrency
         spendMode = .fromBalanceState
         hasExplicitToken = token != nil || tokenOut != nil
         self.autoResolveTokenOut = autoResolveTokenOut
+        self.customDecimals = customDecimals
         currentAccountId = accountManager.activeAccount?.id
 
         defer {
@@ -693,7 +695,7 @@ public class MultiSwapViewModel: ObservableObject {
             return
         }
 
-        amountIn = (fiatAmountIn / coinPriceIn.value).roundedDown(decimal: tokenIn.decimals)
+        amountIn = (fiatAmountIn / coinPriceIn.value).roundedDown(decimal: customDecimals ?? tokenIn.decimals)
     }
 
     private func syncFiatAmountIn() {
@@ -903,7 +905,7 @@ public extension MultiSwapViewModel {
 
         enteringFiat = false
 
-        amountIn = (availableBalance * Decimal(percent) / 100).roundedDown(decimal: tokenIn.decimals)
+        amountIn = (availableBalance * Decimal(percent) / 100).roundedDown(decimal: customDecimals ?? tokenIn.decimals)
     }
 
     func clearAmountIn() {
