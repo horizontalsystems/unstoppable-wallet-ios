@@ -297,7 +297,11 @@ class WatchViewModel: ObservableObject {
             return nil
         }
 
-        return .coins(tokens: tokens.filter { accountType.supports(token: $0) })
+        let supportedTokens = tokens
+            .filter { accountType.supports(token: $0) }
+            .sorted { ($0.blockchainType.order, $0.type.order) < ($1.blockchainType.order, $1.type.order) }
+
+        return .coins(tokens: supportedTokens)
     }
 
     private func enableWallets(account: Account, items: Items, enabledUids: [String]) {
