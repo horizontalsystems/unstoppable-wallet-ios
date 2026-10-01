@@ -4,9 +4,9 @@ import MarketKit
 
 class SwapStorage {
     private let dbPool: DatabasePool
-    private let marketKit: MarketKit.Kit
+    private let marketKit: IMarketKit
 
-    init(dbPool: DatabasePool, marketKit: MarketKit.Kit) {
+    init(dbPool: DatabasePool, marketKit: IMarketKit) {
         self.dbPool = dbPool
         self.marketKit = marketKit
     }
@@ -35,6 +35,7 @@ class SwapStorage {
                 accountId: record.accountId,
                 providerId: record.providerId,
                 status: Swap.Status(rawValue: record.status) ?? .unknown,
+                operation: Swap.Operation(rawValue: record.operation) ?? .swap,
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 amountIn: amountIn,
@@ -72,6 +73,7 @@ class SwapStorage {
             accountId: swap.accountId,
             providerId: swap.providerId,
             status: swap.status.rawValue,
+            operation: swap.operation.rawValue,
             tokenQueryIdIn: swap.tokenIn.tokenQuery.id,
             tokenQueryIdOut: swap.tokenOut.tokenQuery.id,
             amountIn: swap.amountIn.description,

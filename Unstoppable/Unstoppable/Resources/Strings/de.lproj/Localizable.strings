@@ -848,6 +848,8 @@
 "swap_history.title" = "Swap-Verlauf";
 "swap_history.all" = "Alle";
 "swap_history.empty" = "Sie haben noch keine ausstehenden oder vergangenen Swaps.";
+"swap_history.status.depositing" = "Einzahlung läuft…";
+"swap_history.status.swapping" = "Tausch läuft…";
 
 // Swap Info
 

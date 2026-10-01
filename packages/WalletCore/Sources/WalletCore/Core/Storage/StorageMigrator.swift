@@ -978,6 +978,12 @@ public enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Add operation to SwapRecord") { db in
+            try db.alter(table: SwapRecord.databaseTableName) { t in
+                t.add(column: SwapRecord.Columns.operation.name, .text).notNull().defaults(to: Swap.Operation.swap.rawValue)
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

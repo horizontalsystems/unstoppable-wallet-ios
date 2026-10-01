@@ -172,6 +172,7 @@ extension PrivateSendHandler: ISendHandler {
             accountId: account.id,
             providerId: order.providerId,
             status: .notStarted,
+            operation: .privateSend,
             tokenIn: order.request.token,
             tokenOut: order.request.token,
             amountIn: order.depositAmount,
@@ -182,6 +183,7 @@ extension PrivateSendHandler: ISendHandler {
             providerSwapId: order.providerSwapId,
             sourceAddress: nil,
             refundAddress: order.refundAddress,
+            estimatedTime: order.estimatedTime,
             date: Date()
         ))
 

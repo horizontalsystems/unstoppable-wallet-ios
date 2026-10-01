@@ -848,6 +848,8 @@
 "swap_history.title" = "Historique des Swaps";
 "swap_history.all" = "Tous";
 "swap_history.empty" = "Vous n'avez encore aucun swap en cours ou passé.";
+"swap_history.status.depositing" = "Dépôt en cours…";
+"swap_history.status.swapping" = "Échange en cours…";
 
 // Swap Info
 

@@ -848,6 +848,8 @@
 "swap_history.title" = "스왑 내역";
 "swap_history.all" = "전체";
 "swap_history.empty" = "대기 중이거나 완료된 스왑이 없습니다.";
+"swap_history.status.depositing" = "입금 중…";
+"swap_history.status.swapping" = "스왑 중…";
 
 // Swap Info
 

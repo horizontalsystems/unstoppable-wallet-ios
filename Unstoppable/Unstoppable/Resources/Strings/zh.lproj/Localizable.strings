@@ -848,6 +848,8 @@
 "swap_history.title" = "兑换记录";
 "swap_history.all" = "全部";
 "swap_history.empty" = "您还没有任何待处理或已完成的兑换记录。";
+"swap_history.status.depositing" = "充值中…";
+"swap_history.status.swapping" = "兑换中…";
 
 // Swap Info
 

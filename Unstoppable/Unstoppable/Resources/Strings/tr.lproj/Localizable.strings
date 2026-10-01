@@ -848,6 +848,8 @@
 "swap_history.title" = "Swap Geçmişi";
 "swap_history.all" = "Tümü";
 "swap_history.empty" = "Henüz bekleyen veya geçmiş bir swap işleminiz yok.";
+"swap_history.status.depositing" = "Para yatırılıyor…";
+"swap_history.status.swapping" = "Takas yapılıyor…";
 
 // Swap Info
 

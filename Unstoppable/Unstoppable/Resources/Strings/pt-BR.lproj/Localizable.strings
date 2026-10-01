@@ -848,6 +848,8 @@
 "swap_history.title" = "Histórico de Swaps";
 "swap_history.all" = "Todos";
 "swap_history.empty" = "Você ainda não tem swaps pendentes ou anteriores.";
+"swap_history.status.depositing" = "Depositando…";
+"swap_history.status.swapping" = "Trocando…";
 
 // Swap Info
 

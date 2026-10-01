@@ -14,6 +14,7 @@ enum CoreDebugStubs {
             accountId: swap.accountId,
             providerId: Constants.providerId,
             status: .actionRequired,
+            operation: swap.operation,
             tokenIn: swap.tokenIn,
             tokenOut: swap.tokenOut,
             amountIn: swap.amountIn,

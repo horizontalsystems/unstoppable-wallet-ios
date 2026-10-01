@@ -165,6 +165,7 @@ extension CrossPayHandler: ISendHandler {
                 accountId: account.id,
                 providerId: order.providerId,
                 status: .notStarted,
+                operation: .crossPay,
                 tokenIn: order.request.tokenIn,
                 tokenOut: order.request.tokenOut,
                 amountIn: order.depositAmount,
@@ -175,6 +176,7 @@ extension CrossPayHandler: ISendHandler {
                 providerSwapId: order.providerSwapId,
                 sourceAddress: nil,
                 refundAddress: order.refundAddress,
+                estimatedTime: order.estimatedTime,
                 date: Date()
             ))
         }

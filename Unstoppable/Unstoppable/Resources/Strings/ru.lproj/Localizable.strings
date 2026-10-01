@@ -848,6 +848,8 @@
 "swap_history.title" = "История свопов";
 "swap_history.all" = "Все";
 "swap_history.empty" = "У вас пока нет ожидающих или завершённых свопов.";
+"swap_history.status.depositing" = "Пополнение…";
+"swap_history.status.swapping" = "Обмен…";
 
 // Swap Info
 
