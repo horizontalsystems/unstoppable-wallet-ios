@@ -96,6 +96,23 @@ public class PreSendViewModel: BasePreSendViewModel {
         }
     }
 
+    override var formError: String? {
+        isMemoTooLong ? "send.memo.too_long".localized : nil
+    }
+
+    // Shown as it came and blocking the send, never cut to fit
+    private var isMemoTooLong: Bool {
+        guard let memoMaxBytes else {
+            return false
+        }
+
+        return memo.utf8.count > memoMaxBytes
+    }
+
+    var memoMaxBytes: Int? {
+        memoType == .none ? nil : wallet.token.blockchainType.memoMaxBytes
+    }
+
     private func syncMemoType() {
         guard let handler else {
             memoType = .none

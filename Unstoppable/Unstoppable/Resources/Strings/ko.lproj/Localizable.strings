@@ -505,6 +505,7 @@
 "send.memo.public_warning" = "이 메모는 블록체인에 공개됩니다.";
 "send.memo.private_warning" = "이 메모는 암호화된 형태로 블록체인에 게시됩니다.";
 "send.memo.local_warning" = "이 메모는 휴대폰에만 저장됩니다.";
+"send.memo.too_long" = "메모가 너무 깁니다";
 "send.xrp.destination_tag" = "수신인 태그";
 "send.xrp.destination_tag.title" = "대상 태그";
 "send.xrp.destination_tag.info" = "거래소 및 일부 서비스에서는 입금을 송금하기 위해 대상 태그가 필요합니다. 태그는 원장에 공개됩니다.";

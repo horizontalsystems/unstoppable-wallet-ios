@@ -63,6 +63,22 @@ public extension BlockchainType {
         case .unsupported: .none
         }
     }
+
+    // The send form's memo limit in UTF-8 bytes, as on Android (ChainPlugin SendMemoSupport.maxBytes):
+    // OP_RETURN relays 80 bytes of data on Bitcoin, Litecoin and Dash and 220 on Bitcoin Cash and eCash,
+    // a Zcash memo field holds 512. TON stays within one comment cell; Monero's 120 is a local note.
+    var memoMaxBytes: Int? {
+        switch self {
+        case .bitcoin, .litecoin, .dash: 80
+        case .bitcoinCash, .ecash: 220
+        case .stellar: 28
+        case .zcash: 512
+        case .ton, .monero, .zano: 120
+        case .thorChain, .mayaChain: 250
+        case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne,
+             .gnosis, .fantom, .base, .zkSync, .robinhood, .arc, .tron, .solana, .xrp, .unsupported: nil
+        }
+    }
 }
 
 public extension USwapMultiSwapApi.Attachment {

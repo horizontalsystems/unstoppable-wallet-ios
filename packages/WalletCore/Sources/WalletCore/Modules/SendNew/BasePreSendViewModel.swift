@@ -213,6 +213,11 @@ public class BasePreSendViewModel: ObservableObject {
         true
     }
 
+    // A tab's own input error that blocks the send, checked once amount and address are in place
+    var formError: String? {
+        nil
+    }
+
     var buttonState: PreSendButtonState {
         let title: String
         var disabled = true
@@ -233,6 +238,8 @@ public class BasePreSendViewModel: ObservableObject {
             title = "send.insufficient_balance".localized
         } else if resolvedAddress == nil {
             title = "send.address.enter_address".localized
+        } else if let formError {
+            title = formError
         } else {
             title = "send.next_button".localized
             disabled = sendData == nil

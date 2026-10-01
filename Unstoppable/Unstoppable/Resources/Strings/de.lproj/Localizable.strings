@@ -505,6 +505,7 @@
 "send.memo.public_warning" = "Dieses Memo wird öffentlich auf der Blockchain sichtbar sein.";
 "send.memo.private_warning" = "Diese Notiz wird in verschlüsselter Form auf der Blockchain veröffentlicht.";
 "send.memo.local_warning" = "Dieses Memo wird nur auf Ihrem Telefon gespeichert.";
+"send.memo.too_long" = "Memo ist zu lang";
 "send.xrp.destination_tag" = "Ziel-Tag";
 "send.xrp.destination_tag.title" = "Ziel-Tag";
 "send.xrp.destination_tag.info" = "Börsen und einige Dienste erfordern ein Ziel-Tag, um Ihre Einzahlung gutzuschreiben. Das Tag ist öffentlich im Ledger.";

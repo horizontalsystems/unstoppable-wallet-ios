@@ -505,6 +505,7 @@
 "send.memo.public_warning" = "Bu not blok zincirinde herkese açık olacaktır.";
 "send.memo.private_warning" = "Bu not blok zincirinde şifrelenmiş biçimde yayınlanacaktır.";
 "send.memo.local_warning" = "Bu not yalnızca telefonunuzda kaydedilecektir.";
+"send.memo.too_long" = "Not çok uzun";
 "send.xrp.destination_tag" = "Hedef Etiketi";
 "send.xrp.destination_tag.title" = "Hedef etiketi";
 "send.xrp.destination_tag.info" = "Borsalar ve bazı hizmetler, paranızı yatırmak için bir hedef etiketi gerektirir. Etiket defter üzerinde halka açıktır.";

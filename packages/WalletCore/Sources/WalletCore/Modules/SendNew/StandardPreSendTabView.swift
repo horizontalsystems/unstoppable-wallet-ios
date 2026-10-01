@@ -58,7 +58,8 @@ struct StandardPreSendTabView: View {
                 placeholder: "send.confirmation.memo_placeholder".localized,
                 multiline: true,
                 font: .themeBody.italic(),
-                text: $viewModel.memo
+                text: $viewModel.memo,
+                isValidText: { text in viewModel.memoMaxBytes.map { text.utf8.count <= $0 } ?? true }
             )
             .focused(focus, equals: .memo)
             .padding(16)

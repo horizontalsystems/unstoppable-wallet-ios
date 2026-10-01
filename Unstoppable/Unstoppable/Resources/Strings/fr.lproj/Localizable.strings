@@ -505,6 +505,7 @@
 "send.memo.public_warning" = "Ce mémo sera public sur la blockchain.";
 "send.memo.private_warning" = "Cette note sera publiée sur la blockchain sous forme chiffrée.";
 "send.memo.local_warning" = "Ce mémo sera enregistré uniquement sur votre téléphone.";
+"send.memo.too_long" = "Le mémo est trop long";
 "send.xrp.destination_tag" = "Balise de Destination";
 "send.xrp.destination_tag.title" = "Tag de destination";
 "send.xrp.destination_tag.info" = "Les bourses et certains services nécessitent une balise de destination pour créditer votre dépôt. La balise est publique sur le ledger.";

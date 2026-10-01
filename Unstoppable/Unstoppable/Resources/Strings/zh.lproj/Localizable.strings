@@ -505,6 +505,7 @@
 "send.memo.public_warning" = "此备注将在区块链上公开显示。";
 "send.memo.private_warning" = "此备注将以加密形式发布到区块链上。";
 "send.memo.local_warning" = "此备注将仅保存在您的手机上。";
+"send.memo.too_long" = "备忘录过长";
 "send.xrp.destination_tag" = "目标标签";
 "send.xrp.destination_tag.title" = "目标标签";
 "send.xrp.destination_tag.info" = "交易所和某些服务需要目标标签来记入您的存款。该标签在账本上是公开的。";
