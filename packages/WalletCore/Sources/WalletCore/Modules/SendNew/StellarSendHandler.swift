@@ -32,7 +32,8 @@ extension StellarSendHandler: ISendHandler {
     }
 
     func sendData(transactionSettings _: TransactionSettings?) async throws -> ISendData {
-        var fee: Decimal?
+        // Known before any check, so the fee row stays even when the send is refused (as XRP and Android)
+        let fee: Decimal? = try? await stellarKit.baseFee()
         var transactionError: Error?
         var operations: [stellarsdk.Operation]?
 
@@ -49,7 +50,6 @@ extension StellarSendHandler: ISendHandler {
                     stellarKit: stellarKit
                 )
                 operations = result.operations
-                fee = result.fee
 
                 if result.adjustedAmount != amount {
                     data = .payment(asset: asset, amount: result.adjustedAmount, accountId: accountId)
@@ -64,7 +64,6 @@ extension StellarSendHandler: ISendHandler {
 
                 let operation = try stellarKit.changeTrustOperation(asset: asset, limit: limit)
                 operations = [operation]
-                fee = baseFee
             }
         } catch {
             transactionError = error
@@ -128,8 +127,13 @@ extension StellarSendHandler {
             transactionError == nil
         }
 
+        // An amount below the create-account minimum needs new input, not a refresh: a disabled
+        // Send, as on Android. Every other error keeps Refresh
         var customSendButtonTitle: String? {
-            nil
+            if case .belowMinimumFirstDeposit = transactionError as? StellarSendHelper.TransactionError {
+                return "button.send".localized
+            }
+            return nil
         }
 
         var rateCoins: [Coin] {

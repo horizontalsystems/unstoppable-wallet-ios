@@ -117,8 +117,13 @@ extension XrpSendHandler {
             transactionError == nil
         }
 
+        // An amount below the reserve or a missing destination tag needs new input, not a refresh:
+        // a disabled Send, as on Android. Every other error keeps Refresh
         var customSendButtonTitle: String? {
-            nil
+            switch transactionError as? XrpSendHelper.TransactionError {
+            case .belowMinimumFirstDeposit, .destinationRequiresTag: return "button.send".localized
+            default: return nil
+            }
         }
 
         var rateCoins: [Coin] {

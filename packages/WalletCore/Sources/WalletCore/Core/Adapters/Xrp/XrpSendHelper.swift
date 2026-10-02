@@ -44,7 +44,8 @@ enum XrpSendHelper {
     /// not on the ledger yet is created by this payment, which the network accepts only from the
     /// base reserve upwards (tecNO_DST_INSUF_XRP), and an untagged payment to an account flagged
     /// RequireDestTag is refused. A lookup that failed blocks the send too: an unknown flag is not
-    /// the same as no flag. The send form stays permissive, so this screen is where the retry lives.
+    /// the same as no flag. The send form stays permissive, so a failed lookup is retried on this
+    /// screen; the two refusals need new input and disable Send instead (`XrpSendHandler.SendData`).
     static func destinationError(adapter: ISendXrpAdapter, token: Token, amount: Decimal, address: String, destinationTag: UInt32?) async -> Error? {
         do {
             if token.type.isNative {
