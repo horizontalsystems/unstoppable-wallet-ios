@@ -30,7 +30,7 @@ public class PreSendViewModel: BasePreSendViewModel {
         )
     }
 
-    public init(wallet: Wallet, handler: IPreSendHandler?, predefinedAddress: ResolvedAddress?, amount: Decimal?, memo: String?, customDecimals: Int? = nil) {
+    public init(wallet: Wallet, handler: IPreSendHandler?, predefinedAddress: ResolvedAddress?, amount: Decimal?, memo: String?, destinationTag: String? = nil, customDecimals: Int? = nil) {
         super.init(wallet: wallet, handler: handler, predefinedAddress: predefinedAddress, amount: amount, initialInputToken: wallet.token, customDecimals: customDecimals)
 
         if let handler {
@@ -49,6 +49,10 @@ public class PreSendViewModel: BasePreSendViewModel {
 
         if let memo {
             self.memo = memo
+        }
+
+        if let destinationTag {
+            self.destinationTag = destinationTag
         }
 
         // Explicit: `memo`'s didSet does not fire from this class's own init, and the base init applied

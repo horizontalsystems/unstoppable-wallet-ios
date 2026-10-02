@@ -168,6 +168,15 @@ struct AddressUriParserBaselineTests {
         #expect(result.amount == .decimals(Decimal(12)))
     }
 
+    // XLS-2 / XLS-32 and Xaman carry the destination tag as `dt`; dropping it loses an exchange deposit
+    @Test
+    func parseXrpDestinationTag() throws {
+        let result = try anyParser.parse(url: "xrp:\(AddressUriFixtures.xrp)?amount=12&dt=123456")
+
+        #expect(result.destinationTag == "123456")
+        #expect(result.unhandledParameters.isEmpty)
+    }
+
     @Test
     func parseZcash() throws {
         let result = try anyParser.parse(url: "zcash:\(AddressUriFixtures.zecShielded)?amount=0.01")

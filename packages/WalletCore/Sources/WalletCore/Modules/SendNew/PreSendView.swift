@@ -7,8 +7,8 @@ struct PreSendView: View {
     @Binding var path: NavigationPath
     @Binding var isPresented: Bool
 
-    init(wallet: Wallet, predefinedAddress: ResolvedAddress? = nil, amount: Decimal? = nil, memo: String? = nil, addressVisible: Bool = true, path: Binding<NavigationPath>, isPresented: Binding<Bool>) {
-        _viewModel = StateObject(wrappedValue: PreSendTabsViewModel(wallet: wallet, predefinedAddress: predefinedAddress, amount: amount, memo: memo, crossPayVisible: addressVisible))
+    init(wallet: Wallet, predefinedAddress: ResolvedAddress? = nil, amount: Decimal? = nil, memo: String? = nil, destinationTag: String? = nil, addressVisible: Bool = true, path: Binding<NavigationPath>, isPresented: Binding<Bool>) {
+        _viewModel = StateObject(wrappedValue: PreSendTabsViewModel(wallet: wallet, predefinedAddress: predefinedAddress, amount: amount, memo: memo, destinationTag: destinationTag, crossPayVisible: addressVisible))
         self.addressVisible = addressVisible
         _path = path
         _isPresented = isPresented

@@ -33,6 +33,11 @@ public struct AddressUri: Equatable {
         value(field: .memo) ?? value(field: .txDescription)
     }
 
+    // XRP destination tag as XLS-2 / XLS-32 and Xaman links carry it
+    var destinationTag: String? {
+        value(field: .destinationTag)
+    }
+
     public static func == (lhs: AddressUri, rhs: AddressUri) -> Bool {
         lhs.address == rhs.address &&
             lhs.parameters == rhs.parameters &&
@@ -55,6 +60,7 @@ extension AddressUri {
         case txAmount = "tx_amount"
         case txDescription = "tx_description"
         case memo
+        case destinationTag = "dt"
         case label
         case message
         case blockchainUid = "blockchain_uid"

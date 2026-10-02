@@ -47,6 +47,8 @@ struct SendTokenListView: View {
                             predefinedAddress: resolvedAddress,
                             amount: options.amount?.humanReadable(decimals: wallet.token.decimals),
                             memo: options.memo,
+                            // The link's tag belongs to the link's address, not to one entered instead
+                            destinationTag: resolvedAddress?.address == options.address ? options.destinationTag : nil,
                             path: $path,
                             isPresented: $isPresented
                         )

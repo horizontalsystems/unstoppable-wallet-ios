@@ -42,7 +42,7 @@ class DeepLinkViewManager {
                 tokenTypes = filterTokenTypes
             }
 
-            let link = SendDeepLink(blockchainTypes: blockchainTypes, tokenTypes: tokenTypes, address: options.address, amount: options.amount, memo: options.memo)
+            let link = SendDeepLink(blockchainTypes: blockchainTypes, tokenTypes: tokenTypes, address: options.address, amount: options.amount, memo: options.memo, destinationTag: options.destinationTag)
             DeepLinkPresenterFactory.presentSend(link: link)
         case let .cryptoPaySendPage(url):
             guard !watchAccountActive else {

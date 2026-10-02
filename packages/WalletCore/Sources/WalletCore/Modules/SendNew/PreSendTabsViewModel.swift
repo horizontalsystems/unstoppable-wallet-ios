@@ -18,14 +18,14 @@ final class PreSendTabsViewModel: ObservableObject {
     @Published private(set) var tabs: [PreSendTab] = []
     @Published private(set) var settingsModified: Bool
 
-    init(wallet: Wallet, predefinedAddress: ResolvedAddress?, amount: Decimal?, memo: String?, crossPayVisible: Bool) {
+    init(wallet: Wallet, predefinedAddress: ResolvedAddress?, amount: Decimal?, memo: String?, destinationTag: String?, crossPayVisible: Bool) {
         self.wallet = wallet
         self.crossPayVisible = crossPayVisible
 
         let handler = SendHandlerFactory.preSendHandler(wallet: wallet, address: predefinedAddress)
         self.handler = handler
 
-        standard = PreSendViewModel(wallet: wallet, handler: handler, predefinedAddress: predefinedAddress, amount: amount, memo: memo)
+        standard = PreSendViewModel(wallet: wallet, handler: handler, predefinedAddress: predefinedAddress, amount: amount, memo: memo, destinationTag: destinationTag)
         privateSend = PrivatePreSendViewModel(wallet: wallet, handler: handler, service: Core.privateSendService, predefinedAddress: predefinedAddress, amount: amount)
         crossPay = CrossPayPreSendViewModel(wallet: wallet, handler: handler, service: Core.crossPayService)
 
