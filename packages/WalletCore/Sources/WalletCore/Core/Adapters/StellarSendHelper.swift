@@ -4,6 +4,9 @@ import StellarKit
 import stellarsdk
 
 class StellarSendHelper {
+    // Two base reserves; fixed, as Android's StellarAdapter.getMinimumSendAmount
+    static let minimumFirstDeposit: Decimal = 1
+
     static func preparePayment(
         asset: StellarKit.Asset,
         amount: Decimal,
@@ -48,6 +51,12 @@ class StellarSendHelper {
             )
         } else {
             if asset.isNative {
+                // The network creates an account only from the base reserve upwards; the amount
+                // that is actually sent (net of the fee on a send-all) is what counts, as on Android
+                guard adjustedAmount >= minimumFirstDeposit else {
+                    throw TransactionError.belowMinimumFirstDeposit(minimum: minimumFirstDeposit)
+                }
+
                 operation = try stellarKit.createAccountOperation(
                     destinationAccountId: accountId,
                     amount: adjustedAmount
@@ -133,6 +142,11 @@ extension StellarSendHelper {
             case .noTrustline:
                 title = "send.stellar.no_trustline.title".localized
                 text = "send.stellar.no_trustline.description".localized
+            case let .belowMinimumFirstDeposit(minimum):
+                let minimumString = AppValue(token: feeToken, value: minimum).formattedFull()
+
+                title = "send.amount_error.minimum_amount.title".localized
+                text = "send.amount_error.minimum_amount.description".localized(minimumString ?? "")
             }
         } else {
             title = "ethereum_transaction.error.title".localized
@@ -185,5 +199,6 @@ extension StellarSendHelper {
     enum TransactionError: Error {
         case insufficientStellarBalance(balance: Decimal)
         case noTrustline
+        case belowMinimumFirstDeposit(minimum: Decimal)
     }
 }
