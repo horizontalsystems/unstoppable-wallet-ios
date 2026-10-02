@@ -27,7 +27,7 @@ public class SpamWrapper {
     private let logger: Logger?
     private let disposeBag = DisposeBag()
 
-    public init(storage: ScannedTransactionStorage, contactBookManager: ContactBookManager, accountManager: AccountManager, logger _: Logger? = nil) {
+    public init(storage: ScannedTransactionStorage, contactBookManager: ContactBookManager, accountManager: AccountManager, localStorage: LocalStorage, logger _: Logger? = nil) {
         self.storage = storage
         self.contactBookManager = contactBookManager
         self.accountManager = accountManager
@@ -37,7 +37,12 @@ public class SpamWrapper {
         subscribeSerial(disposeBag, contactBookManager.addressesAddedObservable) { [weak self] addresses in
             try? self?.storage.markNotSpam(addresses: addresses)
         }
-        try? storage.markNotSpam(addresses: contactBookManager.all?.flatMap(\.addresses).map(\.address) ?? [])
+
+        // Contacts saved before this cleanup existed are cleared once; later additions arrive as events
+        if !localStorage.contactsSpamCleared, let contacts = contactBookManager.all {
+            try? storage.markNotSpam(addresses: contacts.flatMap(\.addresses).map(\.address))
+            localStorage.contactsSpamCleared = true
+        }
     }
 
     func spamManager(source: TransactionSource) -> SpamManager? {

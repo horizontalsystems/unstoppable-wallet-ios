@@ -109,7 +109,7 @@ public class PreSendViewModel: BasePreSendViewModel {
         return memo.utf8.count > memoMaxBytes
     }
 
-    var memoMaxBytes: Int? {
+    private var memoMaxBytes: Int? {
         memoType == .none ? nil : wallet.token.blockchainType.memoMaxBytes
     }
 

@@ -27,6 +27,7 @@ public class LocalStorage {
     private let keyUseMevProtection = "use-mev-protection"
     private let keyScamProtection = "scam-protection"
     private let keySpamFilterEnabled = "spam-filter"
+    private let keyContactsSpamCleared = "contacts-spam-cleared"
     private let keySwapTermsAccepted = "swap-terms-accepted"
     private let keySwapProvidersLastSyncTimestamp = "swap-providers-last-sync-timestamp"
     private let keySwapRecentTokenQueryIds = "swap-recent-token-query-ids"
@@ -123,6 +124,11 @@ extension LocalStorage {
     var indicatorsShown: Bool {
         get { userDefaultsStorage.value(for: keyIndicatorsShown) ?? true }
         set { userDefaultsStorage.set(value: newValue, for: keyIndicatorsShown) }
+    }
+
+    var contactsSpamCleared: Bool {
+        get { userDefaultsStorage.value(for: keyContactsSpamCleared) ?? false }
+        set { userDefaultsStorage.set(value: newValue, for: keyContactsSpamCleared) }
     }
 
     var telegramSupportRequested: Bool {

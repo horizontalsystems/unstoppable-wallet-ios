@@ -345,6 +345,7 @@ public class Core {
             storage: scannedTransactionStorage,
             contactBookManager: contactManager,
             accountManager: accountManager,
+            localStorage: localStorage,
             logger: logger
         )
 

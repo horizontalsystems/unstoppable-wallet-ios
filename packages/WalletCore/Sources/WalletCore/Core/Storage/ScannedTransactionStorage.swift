@@ -107,13 +107,11 @@ extension ScannedTransactionStorage {
     func markNotSpam(addresses: [String]) throws {
         guard !addresses.isEmpty else { return }
 
-        try dbPool.write { db in
-            for address in addresses {
-                try ScannedTransaction
-                    .filter(ScannedTransaction.Columns.spamAddress.collating(.nocase) == address)
-                    .filter(ScannedTransaction.Columns.isSpam == true)
-                    .updateAll(db, ScannedTransaction.Columns.isSpam.set(to: false), ScannedTransaction.Columns.spamAddress.set(to: nil))
-            }
+        _ = try dbPool.write { db in
+            try ScannedTransaction
+                .filter(addresses.contains(ScannedTransaction.Columns.spamAddress.collating(.nocase)))
+                .filter(ScannedTransaction.Columns.isSpam == true)
+                .updateAll(db, ScannedTransaction.Columns.isSpam.set(to: false), ScannedTransaction.Columns.spamAddress.set(to: nil))
         }
     }
 
