@@ -856,8 +856,8 @@ extension USwapMultiSwapApi {
         let providerErrors: [ProviderErrorResponse]
 
         init(map: Map) throws {
-            // A full refusal may omit routes and carry only providerErrors
-            routes = (try? map.value("routes")) ?? []
+            // A full refusal may omit routes (or send null) and carry only providerErrors; malformed routes still fail
+            routes = map.JSON["routes"] == nil || map.JSON["routes"] is NSNull ? [] : try map.value("routes")
             providerErrors = (try? map.value("providerErrors")) ?? []
         }
     }

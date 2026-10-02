@@ -407,14 +407,14 @@ public enum AccountType: Identifiable {
         }
     }
 
-    private static func btcAddressCoinCode(_ blockchainType: BlockchainType) -> String {
+    static func btcAddressCoinCode(_ blockchainType: BlockchainType) -> String {
         switch blockchainType {
-        case .bitcoin: "BTC"
-        case .bitcoinCash: "BCH"
-        case .ecash: "XEC"
-        case .litecoin: "LTC"
-        case .dash: "DASH"
-        default: blockchainType.uid
+        case .bitcoin: return "BTC"
+        case .bitcoinCash: return "BCH"
+        case .ecash: return "XEC"
+        case .litecoin: return "LTC"
+        case .dash: return "DASH"
+        default: return blockchainType.uid
         }
     }
 }

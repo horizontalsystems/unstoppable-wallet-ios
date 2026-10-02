@@ -137,7 +137,7 @@
 
 "access_camera.message" = "O acesso deste app à sua câmera foi negado. Você pode permitir o acesso nos Ajustes.";
 "access_camera.not_supported" = "Seu dispositivo não suporta a leitura de um código de um item. Por favor, use um dispositivo com câmera.";
-"access_camera.settings" = "Configurações";
+"access_camera.settings" = "Abrir Ajustes";
 
 // Restore
 

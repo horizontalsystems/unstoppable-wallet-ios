@@ -137,7 +137,7 @@
 
 "access_camera.message" = "L'accès de cette application à votre caméra a été refusé. Vous pouvez l'autoriser dans les Réglages.";
 "access_camera.not_supported" = "Votre appareil ne prend pas en charge la numérisation d'un code depuis un article. Veuillez utiliser un appareil doté d'une caméra.";
-"access_camera.settings" = "Paramètres";
+"access_camera.settings" = "Ouvrir les Réglages";
 
 // Restore
 

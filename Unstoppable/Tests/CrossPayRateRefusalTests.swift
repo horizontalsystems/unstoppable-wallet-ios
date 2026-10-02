@@ -2,8 +2,8 @@ import Foundation
 import Testing
 @testable import WalletCore
 
-// A refused /v2/rate reaches the app in three shapes: 200 with empty routes, 200 without routes, and a
-// non-2xx carrying the same envelope. All three must yield the same provider errors.
+// A refused /v2/rate reaches the app as 200 with empty routes, 200 without routes, or a non-2xx carrying the
+// same envelope as its body. The two JSON shapes below cover all three, and must yield the same provider errors.
 struct CrossPayRateRefusalTests {
     @Test func everyRefusalShapeYieldsTheSameMinimum() {
         let providerErrors: [[String: Any]] = [["provider": "NEAR", "errorCode": "amountOutOfRange", "minimumAmount": "10"]]

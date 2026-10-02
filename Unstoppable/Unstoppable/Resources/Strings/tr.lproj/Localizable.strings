@@ -196,7 +196,7 @@
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.hybrid" = "Hybrid";
-"sync_mode.from_blockchain" = "%@ Blockchain";
+"sync_mode.from_blockchain" = "%@ Blok Zinciri";
 "blockchain_settings.description" = "Coin için adres formatını seçin.";
 "blockchain_settings.footer" = "Emin değilseniz önerilen seçeneği kullanın. Mevcut bir cüzdanı geri yüklerken doğru format seçilmelidir.";
 

@@ -481,7 +481,7 @@
 "send.hodler_locktime_off" = "Apagado";
 "send.hodler_error.unsupported_address" = "El bloqueo del tiempo solo funciona con direcciones P2PKH (a partir de 1)";
 "send.fee_info.title" = "Tasa de comisión";
-"send.fee_info.description" = "Al enviar una transacción, debes pagar una tarifa de red. Cuanto más congestionada esté la red, más alta será la tarifa.\n\n%@ sugiere una tarifa óptima para que tu transacción se confirme en un tiempo razonable. Puedes aumentar o disminuir este valor.\n\nUna tarifa demasiado baja puede hacer que tu transacción quede pendiente durante mucho tiempo o incluso sea rechazada. Para una confirmación más rápida, usa una tarifa más alta.";
+"send.fee_info.description" = "Al enviar una transacción, debes pagar una comisión de red. Cuanto más congestionada esté la red, más alta será la comisión.\n\n%@ sugiere una comisión óptima para que tu transacción se confirme en un tiempo razonable. Puedes aumentar o disminuir este valor.\n\nUna comisión demasiado baja puede hacer que tu transacción quede pendiente durante mucho tiempo o incluso sea rechazada. Para una confirmación más rápida, usa una comisión más alta.";
 "send.transaction_inputs_outputs_info.title" = "Entradas / salidas de transacciones";
 "send.transaction_inputs_outputs_info.description" = "La mayoría de las transacciones de Bitcoin, así como las transacciones en criptomonedas similares, incluyendo Bitcoin Cash, Dash y Litecoin, generan dos salidas. Una salida es la cantidad que va al receptor y la otra es la salida de cambio que se devuelve al emisor. La forma en que la mayoría de las carteras construyen transacciones facilita a un tercero entender cuál de las salidas fue para el receptor y cuál fue el cambio devuelto al emisor. Dado que la salida devuelta al emisor se utiliza posteriormente en transacciones futuras, se hace evidente una conexión entre estas dos transacciones.\n\nLa cartera %@ implementa medidas para dificultar que alguien averigüe a dónde va cada salida.\n\nHay dos opciones disponibles para los usuarios de %@:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
@@ -2767,9 +2767,9 @@
 "cross_pay.error.below_minimum %@" = "El monto mínimo es %@";
 "cross_pay.error.above_maximum %@" = "El monto máximo es %@";
 "cross_pay.error.no_route" = "No hay ruta disponible";
-"cross_pay.error.provider_suspended" = "El proveedor de pagos no está disponible temporalmente. Por favor, inténtelo más tarde.";
-"cross_pay.error.network" = "Error en la cotización. Verifique la conexión.";
-"cross_pay.error.commit_failed" = "No se pudo configurar el pago. Por favor, inténtelo más tarde.";
+"cross_pay.error.provider_suspended" = "El proveedor de pagos no está disponible temporalmente. Inténtalo más tarde.";
+"cross_pay.error.network" = "Error en la cotización. Verifica tu conexión.";
+"cross_pay.error.commit_failed" = "No se pudo configurar el pago. Inténtalo más tarde.";
 "cross_pay.unavailable" = "Pago no disponible";
 "cross_pay.you_will_pay" = "Pagarás";
 "cross_pay.quoting" = "Cotizando...";

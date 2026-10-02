@@ -100,13 +100,13 @@ public class PreSendViewModel: BasePreSendViewModel {
         isMemoTooLong ? "send.memo.too_long".localized : nil
     }
 
-    // Shown as it came and blocking the send, never cut to fit
+    // Shown as it came and blocking the send, never cut to fit; measured as sent, without edge whitespace
     private var isMemoTooLong: Bool {
         guard let memoMaxBytes else {
             return false
         }
 
-        return memo.utf8.count > memoMaxBytes
+        return memo.trimmingCharacters(in: .whitespaces).utf8.count > memoMaxBytes
     }
 
     private var memoMaxBytes: Int? {
