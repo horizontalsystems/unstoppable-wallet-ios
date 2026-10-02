@@ -51,6 +51,12 @@ class StellarTransactionRecord: TransactionRecord, TransferEventsProvider {
         }
     }
 
+    // A Soroban tx carries exactly one operation, so the primary one decides
+    var isContractCall: Bool {
+        if case .invokeHostFunction = operation.type { return true }
+        return false
+    }
+
     var transferEvents: TransferEvents {
         let incomingEvents = ([type] + additionalActions).flatMap { StellarTransactionRecord.doubtfulEvents(type: $0) }
         return .init(incoming: incomingEvents)

@@ -6,9 +6,9 @@ class StellarOperationConverter {
     private let accountId: String
     private let source: TransactionSource
     private let baseToken: Token
-    private let coinManager: CoinManager
+    private let coinManager: ICoinManager
 
-    init(accountId: String, source: TransactionSource, baseToken: Token, coinManager: CoinManager) {
+    init(accountId: String, source: TransactionSource, baseToken: Token, coinManager: ICoinManager) {
         self.accountId = accountId
         self.source = source
         self.baseToken = baseToken
@@ -66,9 +66,11 @@ class StellarOperationConverter {
         case let .changeTrust(data):
             return .changeTrust(value: assetValue(asset: data.asset, value: data.limit), trustor: data.trustor, trustee: data.trustee, liquidityPoolId: data.liquidityPoolId)
         case let .invokeHostFunction(data):
-            // Net this account's per-asset movements from the balance changes. One net spend +
-            // one net gain = a swap (fee side-transfers in the spent asset fold into its net).
-            // Anything else falls through as a labeled contract invocation.
+            // Net this account's per-asset movements from the balance changes, as Android's
+            // StellarContractMovement does. One net spend + one net gain = a swap (fee
+            // side-transfers in the spent asset fold into its net); a single one-directional
+            // movement = a plain send or receive; no movement or several assets in one direction
+            // falls through as a labeled contract invocation.
             var deltas = [Asset: Decimal]()
             for change in data.balanceChanges {
                 if change.from == accountId { deltas[change.asset, default: 0] -= change.amount }
@@ -83,18 +85,28 @@ class StellarOperationConverter {
                     valueOut: assetValue(asset: inn.key, value: inn.value)
                 )
             }
-            // A pure inbound movement is a receive — but only when the counterparty is known.
-            // A contract-minted balance change carries no `from`, and an empty sender renders as
-            // a blank "From" row; degrade to the labeled invocation instead.
-            if spent.isEmpty, gained.count == 1, let inn = gained.first,
-               let from = data.balanceChanges.first(where: { $0.to == accountId })?.from, !from.isEmpty
-            {
-                return .receivePayment(value: assetValue(asset: inn.key, value: inn.value), from: from)
+            // A mint carries no `from` and a burn no `to`: the counterparty stays empty, as on Android
+            if gained.isEmpty, spent.count == 1, let out = spent.first {
+                let to = counterparty(asset: out.key, outgoing: true, changes: data.balanceChanges)
+                return .sendPayment(value: assetValue(asset: out.key, value: out.value), to: to ?? "", sentToSelf: false)
+            }
+            if spent.isEmpty, gained.count == 1, let inn = gained.first {
+                let from = counterparty(asset: inn.key, outgoing: false, changes: data.balanceChanges)
+                return .receivePayment(value: assetValue(asset: inn.key, value: inn.value), from: from ?? "")
             }
             return .unsupported(type: data.function)
         case let .unknown(rawType):
             return .unsupported(type: rawType)
         }
+    }
+
+    // Where the moved asset went (outgoing) or came from (incoming): the first change of that
+    // asset touching this account in that direction
+    private func counterparty(asset: Asset, outgoing: Bool, changes: [TxOperation.BalanceChange]) -> String? {
+        if outgoing {
+            return changes.first { $0.asset == asset && $0.from == accountId }?.to
+        }
+        return changes.first { $0.asset == asset && $0.to == accountId }?.from
     }
 }
 
