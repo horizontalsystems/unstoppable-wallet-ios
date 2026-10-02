@@ -39,8 +39,9 @@ public class SpamWrapper {
         }
 
         // Contacts saved before this cleanup existed are cleared once; later additions arrive as events
-        if !localStorage.contactsSpamCleared, let contacts = contactBookManager.all {
-            try? storage.markNotSpam(addresses: contacts.flatMap(\.addresses).map(\.address))
+        if !localStorage.contactsSpamCleared, let contacts = contactBookManager.all,
+           (try? storage.markNotSpam(addresses: contacts.flatMap(\.addresses).map(\.address))) != nil
+        {
             localStorage.contactsSpamCleared = true
         }
     }

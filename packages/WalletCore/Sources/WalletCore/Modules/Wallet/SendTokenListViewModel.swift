@@ -140,6 +140,7 @@ extension SendTokenListViewModel {
             identifiers.append(address ?? "")
             identifiers.append(amount?.description ?? "")
             identifiers.append(memo ?? "")
+            identifiers.append(destinationTag ?? "")
             return identifiers.joined(separator: "_")
         }
 
