@@ -29,8 +29,7 @@ class XrpTransactionConverter {
     private func paymentType(transaction: XrpKit.Transaction) -> XrpTransactionRecord.`Type` {
         let outgoing = transaction.account == selfAddress
         let incoming = transaction.destination == selfAddress
-        // what the destination actually received; falls back to the requested amount while pending
-        guard let amount = transaction.deliveredAmount ?? transaction.amount else {
+        guard let amount = Self.shownPaymentAmount(transaction: transaction) else {
             return .unsupported(type: transaction.type)
         }
 
@@ -41,6 +40,18 @@ class XrpTransactionConverter {
             return .receive(value: appValue(amount: amount, negate: false), from: transaction.account)
         }
         return .unsupported(type: transaction.type)
+    }
+
+    // What the destination actually received. A successful payment without it is a partial payment
+    // whose delivered amount the ledger no longer reports; its Amount is only an upper bound, so it must
+    // not be shown as received. Pending and failed payments delivered nothing and show the amount sent
+    // (as on Android)
+    static func shownPaymentAmount(transaction: XrpKit.Transaction) -> Amount? {
+        if let deliveredAmount = transaction.deliveredAmount {
+            return deliveredAmount
+        }
+
+        return transaction.isSuccess ? nil : transaction.amount
     }
 
     private func trustSetType(transaction: XrpKit.Transaction) -> XrpTransactionRecord.`Type` {

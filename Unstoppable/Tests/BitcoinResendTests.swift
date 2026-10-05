@@ -201,7 +201,7 @@ struct BitcoinResendTests {
             let count = try #require(sections[1].fields.last?.content as? SimpleValueField)
             #expect(count.value.description == "1")
             let fee = try #require(sections[2].fields[0].content as? FeeField)
-            #expect(fee.initialFlipped)
+            #expect(!fee.initialFlipped)
         }
     }
 

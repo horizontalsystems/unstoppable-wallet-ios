@@ -22,13 +22,6 @@ class EvmResendData: EvmSendData {
         nil
     }
 
-    override func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
-        super.feeFields(baseToken: baseToken, currency: currency, rates: rates).map { field in
-            guard let fee = field.content as? FeeField else { return field }
-            return SendField(FeeField(title: fee.title, amountData: fee.amountData, initialFlipped: true))
-        }
-    }
-
     override func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
         guard let swap else {
             return super.sections(baseToken: baseToken, currency: currency, rates: rates)

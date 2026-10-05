@@ -22,6 +22,9 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
     // "You Get" side: tokens the account can't hold stay selectable — the swap is
     // delivered to an external address the user enters before confirmation
     private let allowExternalReceive: Bool
+    // Cross Pay: paying out in the very asset that funds the payment is a plain send, so `token`
+    // is hidden on its own chain, in every derivation/address-format variant (as on Android)
+    private let excludeToken: Bool
 
     @Published var searchText: String = "" {
         didSet {
@@ -37,9 +40,10 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
     @Published var recent = [Item]()
     @Published var searchResults = [Item]()
 
-    init(token: Token?, allowExternalReceive: Bool = false) {
+    init(token: Token?, allowExternalReceive: Bool = false, excludeToken: Bool = false) {
         self.token = token
         self.allowExternalReceive = allowExternalReceive
+        self.excludeToken = excludeToken
 
         syncSections()
     }
@@ -66,6 +70,14 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
         return account?.type.supports(token: token) ?? true
     }
 
+    private static func isExcluded(_ candidate: Token, token: Token?, exclude: Bool) -> Bool {
+        guard exclude, let token else {
+            return false
+        }
+
+        return candidate.coin.uid == token.coin.uid && candidate.blockchainType == token.blockchainType
+    }
+
     var searching: Bool {
         !searchText.trimmingCharacters(in: .whitespaces).isEmpty
     }
@@ -83,7 +95,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
     private func syncSections() {
         let account = accountManager.activeAccount
 
-        sectionsTask = Task { [weak self, marketKit, walletManager, adapterManager, currencyManager, localStorage, token, allowExternalReceive] in
+        sectionsTask = Task { [weak self, marketKit, walletManager, adapterManager, currencyManager, localStorage, token, allowExternalReceive, excludeToken] in
             let wallets = walletManager.activeWallets
             let currency = currencyManager.baseCurrency
             let coinPriceMap = marketKit.coinPriceMap(coinUids: wallets.map(\.coin.uid).removeDuplicates(), currencyCode: currency.code)
@@ -117,10 +129,11 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
             }
 
             let popularTokens = MultiSwapPopularTokenResolver.tokens(marketKit: marketKit, for: token)
-                .filter { Self.includeToken($0, account: account, allowExternalReceive: allowExternalReceive) }
+                .filter { Self.includeToken($0, account: account, allowExternalReceive: allowExternalReceive) && !Self.isExcluded($0, token: token, exclude: excludeToken) }
             let popular = popularTokens.map { Item(token: $0, balance: nil, fiatBalance: nil) }
 
             let yourTokens = wallets.map(\.token)
+                .filter { !Self.isExcluded($0, token: token, exclude: excludeToken) }
                 .sorted(by: SortCriterion.walletBalance, context: context)
                 .map(item)
 
@@ -137,6 +150,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
 
                 let eligible = fullCoin.tokens.filter { candidate in
                     Self.includeToken(candidate, account: account, allowExternalReceive: allowExternalReceive) && BlockchainType.supported.contains(candidate.blockchainType)
+                        && !Self.isExcluded(candidate, token: token, exclude: excludeToken)
                 }
 
                 let representative = eligible
@@ -154,7 +168,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
             let recent = localStorage.swapRecentTokenQueryIds
                 .compactMap { TokenQuery(id: $0) }
                 .compactMap { (try? marketKit.token(query: $0)) ?? nil }
-                .filter { Self.includeToken($0, account: account, allowExternalReceive: allowExternalReceive) }
+                .filter { Self.includeToken($0, account: account, allowExternalReceive: allowExternalReceive) && !Self.isExcluded($0, token: token, exclude: excludeToken) }
                 .map(item)
 
             let resolvedTopTokens = topTokens
@@ -191,7 +205,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
 
         let account = accountManager.activeAccount
 
-        searchTask = Task { [weak self, marketKit, walletManager, adapterManager, currencyManager, allowExternalReceive] in
+        searchTask = Task { [weak self, marketKit, walletManager, adapterManager, currencyManager, token, allowExternalReceive, excludeToken] in
             let wallets = walletManager.activeWallets
             let currency = currencyManager.baseCurrency
             let coinPriceMap = marketKit.coinPriceMap(coinUids: wallets.map(\.coin.uid).removeDuplicates(), currencyCode: currency.code)
@@ -218,14 +232,14 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                 let tokens = (try? marketKit.tokens(reference: ethAddress.hex)) ?? []
 
                 resultTokens = tokens
-                    .filter { Self.includeToken($0, account: account, allowExternalReceive: allowExternalReceive) }
+                    .filter { Self.includeToken($0, account: account, allowExternalReceive: allowExternalReceive) && !Self.isExcluded($0, token: token, exclude: excludeToken) }
                     .sorted(by: SortCriterion.tokenByBlockchain, context: context)
             } else {
                 let allFullCoins = (try? marketKit.fullCoins(filter: filter, limit: 100)) ?? []
                 let tokens = allFullCoins.map(\.tokens).flatMap { $0 }
 
                 resultTokens = tokens
-                    .filter { Self.includeToken($0, account: account, allowExternalReceive: allowExternalReceive) }
+                    .filter { Self.includeToken($0, account: account, allowExternalReceive: allowExternalReceive) && !Self.isExcluded($0, token: token, exclude: excludeToken) }
                     .sorted(by: SortCriterion.tokenFilteredByBlockchain, context: context)
             }
 

@@ -55,6 +55,7 @@ struct CrossPayPreSendTabView: View {
                 currentToken: $viewModel.selectedTokenOut,
                 otherToken: viewModel.tokenIn,
                 allowExternalReceive: true,
+                excludeOtherToken: true,
                 isPresented: isPresented
             )
         }

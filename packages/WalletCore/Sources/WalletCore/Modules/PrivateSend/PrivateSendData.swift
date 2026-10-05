@@ -80,7 +80,8 @@ open class PrivateSendData: ISendData {
                 value: buffer,
                 token: token,
                 currency: currency,
-                rate: rate
+                rate: rate,
+                isAmount: true
             ))
         }
 
@@ -99,13 +100,15 @@ open class PrivateSendData: ISendData {
         return [.init([amount, to], isFlow: true), .init(fields, isMain: false)]
     }
 
-    private func feeField(title: String, info: InfoDescription, value: Decimal, token: Token, currency: Currency, rate: Decimal?) -> SendField {
-        .fee(
+    // Amounts open in the coin, fees in fiat; a tap flips either
+    private func feeField(title: String, info: InfoDescription, value: Decimal, token: Token, currency: Currency, rate: Decimal?, isAmount: Bool = false) -> SendField {
+        SendField(FeeField(
             title: ComponentInformedTitle(title, info: info),
             amountData: .init(
                 appValue: AppValue(token: token, value: value),
                 currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * value) }
-            )
-        )
+            ),
+            initialFlipped: isAmount
+        ))
     }
 }

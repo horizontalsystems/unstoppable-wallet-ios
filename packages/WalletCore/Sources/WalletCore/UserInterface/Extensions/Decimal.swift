@@ -1,7 +1,7 @@
 import BigInt
 import Foundation
 
-private let max256ByteNumber = BigUInt("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff".hs.hexData!)
+let max256ByteNumber = BigUInt("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff".hs.hexData!)
 
 public extension Decimal {
     init?(bigUInt: BigUInt, decimals: Int) {

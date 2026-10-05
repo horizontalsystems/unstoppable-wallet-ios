@@ -57,9 +57,10 @@ struct EvmResendDataTests {
         #expect(nonce.title.description == "send.confirmation.nonce".localized)
         #expect(nonce.value.description == "7")
         let fee = try #require(section.fields.last?.content as? FeeField)
-        #expect(fee.initialFlipped)
+        // Fees open in fiat on every confirmation, resend included
+        #expect(!fee.initialFlipped)
         let flipData = FlipRow.TokenFeeData(amountData: fee.amountData)
-        #expect(flipData.text(flipped: fee.initialFlipped) == fee.amountData?.appValue.formattedFull())
+        #expect(flipData.text(flipped: fee.initialFlipped) == fee.amountData?.currencyValue?.formattedFull)
     }
 
     private func expectSwapCard(_ section: SendDataSection, incoming: Bool, token: MarketKit.Token, value: Decimal, limited: Bool) throws {

@@ -52,7 +52,10 @@ public class EvmTransactionConverter {
            let contract = baseToken.blockchainType.nativeTokenContract,
            tokenAddress.hex.caseInsensitiveCompare(contract.address) == .orderedSame
         {
-            return AppValue(token: baseToken, value: convertAmount(amount: value, decimals: contract.decimals, sign: sign))
+            // isMaxValue checks against the native coin's decimals, so an unlimited approve must not be
+            // rescaled from the interface's 6 decimals (as on Android)
+            let decimals = value == max256ByteNumber ? baseToken.decimals : contract.decimals
+            return AppValue(token: baseToken, value: convertAmount(amount: value, decimals: decimals, sign: sign))
         }
 
         let query = TokenQuery(blockchainType: baseToken.blockchainType, tokenType: .eip20(address: tokenAddress.hex))

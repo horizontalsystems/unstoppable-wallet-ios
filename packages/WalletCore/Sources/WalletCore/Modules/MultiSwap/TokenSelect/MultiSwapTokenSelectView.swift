@@ -10,9 +10,9 @@ struct MultiSwapTokenSelectView: View {
     @Binding var currentToken: Token?
     @Binding var isPresented: Bool
 
-    init(title: String, currentToken: Binding<Token?>, otherToken: Token?, allowExternalReceive: Bool = false, isPresented: Binding<Bool>) {
+    init(title: String, currentToken: Binding<Token?>, otherToken: Token?, allowExternalReceive: Bool = false, excludeOtherToken: Bool = false, isPresented: Binding<Bool>) {
         self.title = title
-        _viewModel = .init(wrappedValue: MultiSwapTokenSelectViewModel(token: otherToken, allowExternalReceive: allowExternalReceive))
+        _viewModel = .init(wrappedValue: MultiSwapTokenSelectViewModel(token: otherToken, allowExternalReceive: allowExternalReceive, excludeToken: excludeOtherToken))
         _currentToken = currentToken
         _isPresented = isPresented
     }

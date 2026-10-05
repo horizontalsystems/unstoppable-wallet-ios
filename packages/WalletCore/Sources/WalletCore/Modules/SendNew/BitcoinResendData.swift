@@ -61,8 +61,7 @@ struct BitcoinResendData: ISendData {
         let fee = canSend ? record.fee?.value : nil
         let feeField = SendField(FeeField(
             title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
-            amountData: UtxoSendHelper.amountData(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid]),
-            initialFlipped: true
+            amountData: UtxoSendHelper.amountData(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid])
         ))
         return [
             .init(amountFields, isFlow: true),
