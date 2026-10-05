@@ -863,7 +863,7 @@
 "swap_info.view" = "Просмотр";
 "swap_info.deposit" = "Депозит %@";
 "swap_info.swap" = "Своп";
-"swap_info.send" = "Отправить %@";
+"swap_info.receive" = "Получение %@";
 "swap_info.refund" = "Возврат %@";
 "swap_info.unknown" = "Неизвестно";
 "swap_info.request_refund" = "Запросить возврат";

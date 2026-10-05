@@ -158,7 +158,7 @@ class SwapInfoViewModel: ObservableObject {
                 if leg.fromAsset == fromAsset {
                     title = "swap_info.deposit".localized(swap.tokenIn.coin.code)
                 } else if leg.toAsset == toAsset {
-                    title = "swap_info.send".localized(swap.tokenOut.coin.code)
+                    title = "swap_info.receive".localized(swap.tokenOut.coin.code)
                 }
             } else if leg.type == USwapMultiSwapProvider.legTypeSwap {
                 title = "swap_info.swap".localized

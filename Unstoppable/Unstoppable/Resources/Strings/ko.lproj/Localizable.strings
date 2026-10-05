@@ -863,7 +863,7 @@
 "swap_info.view" = "보기";
 "swap_info.deposit" = "입금 %@";
 "swap_info.swap" = "스왑";
-"swap_info.send" = "전송 %@";
+"swap_info.receive" = "수신 %@";
 "swap_info.refund" = "환불 %@";
 "swap_info.unknown" = "알 수 없음";
 "swap_info.request_refund" = "환불 요청";

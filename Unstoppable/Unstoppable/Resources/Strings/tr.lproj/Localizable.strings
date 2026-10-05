@@ -863,7 +863,7 @@
 "swap_info.view" = "Görüntüle";
 "swap_info.deposit" = "Yatırma %@";
 "swap_info.swap" = "Swap";
-"swap_info.send" = "Gönder %@";
+"swap_info.receive" = "Al %@";
 "swap_info.refund" = "İade %@";
 "swap_info.unknown" = "Bilinmiyor";
 "swap_info.request_refund" = "İade Talep Et";

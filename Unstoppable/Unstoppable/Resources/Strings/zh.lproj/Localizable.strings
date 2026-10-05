@@ -863,7 +863,7 @@
 "swap_info.view" = "查看";
 "swap_info.deposit" = "存入 %@";
 "swap_info.swap" = "兑换";
-"swap_info.send" = "发送 %@";
+"swap_info.receive" = "接收 %@";
 "swap_info.refund" = "退款 %@";
 "swap_info.unknown" = "未知";
 "swap_info.request_refund" = "申请退款";

@@ -863,7 +863,7 @@
 "swap_info.view" = "Anzeigen";
 "swap_info.deposit" = "Einzahlung %@";
 "swap_info.swap" = "Swap";
-"swap_info.send" = "Senden %@";
+"swap_info.receive" = "Empfangen %@";
 "swap_info.refund" = "Rückerstattung %@";
 "swap_info.unknown" = "Unbekannt";
 "swap_info.request_refund" = "Rückerstattung anfordern";

@@ -272,7 +272,8 @@ struct MultiSwapView: View {
                 }
             )
 
-            if let timeState = quote.timeState {
+            // On the swap screen the time is shown only when it needs attention
+            if let timeState = quote.timeState, case .attention = timeState {
                 Cell(
                     style: .secondary,
                     middle: {
