@@ -122,7 +122,9 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
 
     @ViewBuilder private func addressView() -> some View {
         HStack(spacing: 16) {
-            ThemeImage(viewModel.contactName != nil ? "user_filled" : "wallet_filled", size: 40)
+            // a 32 glyph centred in the 40 column of the token icon above, as on Android
+            ThemeImage(viewModel.contactName != nil ? "user_filled" : "wallet_filled", size: 32)
+                .frame(width: 40, height: 40)
 
             HStack(spacing: 8) {
                 if let address = viewModel.resolvedAddress {
