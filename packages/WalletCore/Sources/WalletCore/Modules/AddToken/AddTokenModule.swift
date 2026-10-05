@@ -47,6 +47,12 @@ enum AddTokenModule {
             items.append(item)
         }
 
+        if let blockchain = try? Core.shared.marketKit.blockchain(uid: BlockchainType.xrp.uid), blockchain.type.supports(accountType: account.type) {
+            let service: IAddTokenBlockchainService = AddXrpTokenBlockchainService(blockchain: blockchain)
+            let item = Item(blockchain: blockchain, service: service)
+            items.append(item)
+        }
+
         if let blockchain = try? Core.shared.marketKit.blockchain(uid: BlockchainType.zano.uid), blockchain.type.supports(accountType: account.type) {
             let service: IAddTokenBlockchainService = AddZanoTokenBlockchainService(
                 blockchain: blockchain,

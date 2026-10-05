@@ -104,6 +104,17 @@ extension ScannedTransactionStorage {
         }
     }
 
+    func markNotSpam(addresses: [String]) throws {
+        guard !addresses.isEmpty else { return }
+
+        _ = try dbPool.write { db in
+            try ScannedTransaction
+                .filter(addresses.contains(ScannedTransaction.Columns.spamAddress.collating(.nocase)))
+                .filter(ScannedTransaction.Columns.isSpam == true)
+                .updateAll(db, ScannedTransaction.Columns.isSpam.set(to: false), ScannedTransaction.Columns.spamAddress.set(to: nil))
+        }
+    }
+
     func isSpam(transactionHash: Data) throws -> Bool {
         try dbPool.read { db in
             try ScannedTransaction

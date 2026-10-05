@@ -8,6 +8,8 @@ enum WalletTokenModule {
             BitcoinWalletTokenView(wallet: wallet, adapter: adapter)
         } else if let adapter = Core.shared.adapterManager.adapter(for: wallet) as? ZcashAdapter {
             ZcashWalletTokenView(wallet: wallet, adapter: adapter)
+        } else if let adapter = Core.shared.adapterManager.adapter(for: wallet) as? XrpAdapter {
+            XrpWalletTokenView(wallet: wallet, adapter: adapter)
         } else if let adapter = Core.shared.adapterManager.adapter(for: wallet) as? BaseTronAdapter {
             TronWalletTokenView(wallet: wallet, adapter: adapter)
         } else if Core.shared.adapterManager.adapter(for: wallet) is MoneroAdapter ||

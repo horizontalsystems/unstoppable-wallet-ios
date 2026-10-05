@@ -7,7 +7,7 @@ class MainBadgeViewModel: ObservableObject {
     private let accountRestoreWarningManager = Core.shared.accountRestoreWarningManager
     private let passcodeManager = Core.shared.passcodeManager
     private let termsManager = Core.shared.termsManager
-    private let walletConnectSessionManager = Core.shared.walletConnectSessionManager
+    private let walletConnect = Core.shared.walletConnect
     private let contactManager = Core.shared.contactManager
 
     private var cancellables = Set<AnyCancellable>()
@@ -36,13 +36,9 @@ class MainBadgeViewModel: ObservableObject {
             .sink { [weak self] _ in self?.syncSettingsBadge() }
             .store(in: &cancellables)
 
-        walletConnectSessionManager?.activePendingRequestsObservable
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .subscribe(onNext: { [weak self] _ in
-                self?.syncSettingsBadge()
-            })
-            .disposed(by: disposeBag)
+        walletConnect?.pendingRequestCountPublisher
+            .sink { [weak self] _ in self?.syncSettingsBadge() }
+            .store(in: &cancellables)
 
         contactManager.iCloudErrorObservable
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -56,7 +52,7 @@ class MainBadgeViewModel: ObservableObject {
     }
 
     private var resolvedBadge: String? {
-        let count = walletConnectSessionManager?.activePendingRequests.count ?? 0
+        let count = walletConnect?.pendingRequestCount ?? 0
 
         if count > 0 {
             return count.description
@@ -69,10 +65,10 @@ class MainBadgeViewModel: ObservableObject {
     }
 
     private func syncSettingsBadge() {
-        let badge = resolvedBadge
-
-        DispatchQueue.main.async {
-            self.badge = badge
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            // Resolve on delivery: a queued snapshot can outlive the request's deadline.
+            badge = resolvedBadge
         }
     }
 }

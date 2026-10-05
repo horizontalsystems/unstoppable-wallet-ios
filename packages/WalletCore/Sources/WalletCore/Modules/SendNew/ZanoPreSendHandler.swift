@@ -6,7 +6,7 @@ import SwiftUI
 import ZanoKit
 
 class ZanoPreSendHandler: PreSendHandler {
-    override class func instance(wallet: Wallet, address _: ResolvedAddress) -> IPreSendHandler? {
+    override class func instance(wallet: Wallet, address _: ResolvedAddress?) -> IPreSendHandler? {
         guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? ZanoAdapter else { return nil }
         return ZanoPreSendHandler(token: wallet.token, baseToken: adapter.baseToken, adapter: adapter)
     }

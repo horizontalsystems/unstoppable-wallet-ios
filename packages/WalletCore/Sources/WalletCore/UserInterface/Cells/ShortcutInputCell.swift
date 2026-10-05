@@ -6,7 +6,6 @@ class ShortcutInputCell: UITableViewCell {
     private let formValidatedView: FormValidatedView
     private let inputStackView = InputStackView(singleLine: true)
 
-    private var shortcutViews = [InputSecondaryButtonWrapperView]()
     private let deleteView = InputSecondaryCircleButtonWrapperView()
 
     var onChangeText: ((String?) -> Void)?
@@ -54,10 +53,8 @@ class ShortcutInputCell: UITableViewCell {
     private func syncButtonStates() {
         if let text = inputStackView.text, !text.isEmpty {
             deleteView.isHidden = false
-            shortcutViews.forEach { view in view.isHidden = true }
         } else {
             deleteView.isHidden = true
-            shortcutViews.forEach { view in view.isHidden = false }
         }
     }
 }
@@ -100,24 +97,6 @@ extension ShortcutInputCell {
         formValidatedView.set(cautionType: cautionType)
     }
 
-    func set(shortcuts: [InputShortcut]) {
-        shortcutViews = shortcuts.map { shortcut in
-            let view = InputSecondaryButtonWrapperView(style: .default)
-
-            view.button.setTitle(shortcut.title, for: .normal)
-            view.onTapButton = { [weak self] in
-                self?.inputStackView.text = shortcut.value
-                self?.handleChange(text: shortcut.value)
-            }
-
-            inputStackView.appendSubview(view)
-
-            return view
-        }
-
-        syncButtonStates()
-    }
-
     var onChangeHeight: (() -> Void)? {
         get { formValidatedView.onChangeHeight }
         set { formValidatedView.onChangeHeight = newValue }
@@ -131,9 +110,4 @@ extension ShortcutInputCell {
     func height(containerWidth: CGFloat) -> CGFloat {
         formValidatedView.height(containerWidth: containerWidth)
     }
-}
-
-struct InputShortcut {
-    let title: String
-    let value: String
 }

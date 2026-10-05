@@ -4,7 +4,6 @@ import Foundation
 
 class ChartIndicatorSettingsViewModel {
     private let dataSource: IIndicatorDataSource
-    private let subscriptionManager: SubscriptionManager
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -14,11 +13,9 @@ class ChartIndicatorSettingsViewModel {
     private let buttonEnabledSubject = CurrentValueSubject<Bool, Never>(false)
     private let cautionSubject = PassthroughSubject<[IndicatorDataSource.Caution], Never>()
     private let updateIndicatorSubject = PassthroughSubject<ChartIndicator, Never>()
-    private let showSubscribeInfoSubject = PassthroughSubject<Void, Never>()
 
-    init(dataSource: IIndicatorDataSource, subscriptionManager: SubscriptionManager) {
+    init(dataSource: IIndicatorDataSource) {
         self.dataSource = dataSource
-        self.subscriptionManager = subscriptionManager
 
         dataSource.stateUpdatedPublisher
             .sink { [weak self] in self?.sync() }
@@ -64,10 +61,6 @@ extension ChartIndicatorSettingsViewModel {
         dataSource.fields
     }
 
-    var isAuthenticated: Bool {
-        subscriptionManager.isAuthenticated
-    }
-
     var itemsUpdatedPublisher: AnyPublisher<[ChartIndicatorSettingsModule.ValueItem], Never> {
         itemsUpdatedSubject.eraseToAnyPublisher()
     }
@@ -92,10 +85,6 @@ extension ChartIndicatorSettingsViewModel {
         updateIndicatorSubject.eraseToAnyPublisher()
     }
 
-    var showSubscribeInfoPublisher: AnyPublisher<Void, Never> {
-        showSubscribeInfoSubject.eraseToAnyPublisher()
-    }
-
     func onChangeText(id: String, value: String?) {
         dataSource.set(id: id, value: value)
     }
@@ -110,11 +99,6 @@ extension ChartIndicatorSettingsViewModel {
     }
 
     func didTapApply() {
-        guard subscriptionManager.isAuthenticated else {
-            showSubscribeInfoSubject.send()
-            return
-        }
-
         guard case let .success(indicator) = dataSource.state else {
             return
         }

@@ -332,6 +332,7 @@ public enum SwapProviderResolver: ISwapProviderResolver {
                 USwapMoneroFinalQuoteBuilder(adapterManager: adapterManager),
                 USwapZanoFinalQuoteBuilder(adapterManager: adapterManager),
                 USwapSolanaFinalQuoteBuilder(adapterManager: adapterManager),
+                USwapXrpFinalQuoteBuilder(adapterManager: adapterManager),
             ]
         )
     }

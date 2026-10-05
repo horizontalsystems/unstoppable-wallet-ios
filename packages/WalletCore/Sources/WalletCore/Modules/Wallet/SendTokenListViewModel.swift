@@ -96,8 +96,9 @@ extension SendTokenListViewModel {
         let address: String?
         let amount: AddressUri.Amount?
         let memo: String?
+        let destinationTag: String?
 
-        init(blockchainTypes: [BlockchainType]? = nil, tokenTypes: [TokenType]? = nil, address: String? = nil, amount: AddressUri.Amount? = nil, memo: String? = nil) {
+        init(blockchainTypes: [BlockchainType]? = nil, tokenTypes: [TokenType]? = nil, address: String? = nil, amount: AddressUri.Amount? = nil, memo: String? = nil, destinationTag: String? = nil) {
             if blockchainTypes != nil || tokenTypes != nil {
                 filter = .blockchain(blockchainTypes: blockchainTypes, tokenTypes: tokenTypes)
             } else {
@@ -106,6 +107,7 @@ extension SendTokenListViewModel {
             self.address = address
             self.amount = amount
             self.memo = memo
+            self.destinationTag = destinationTag
         }
 
         init(tokens: [TokenAmount], address: String? = nil, amount: AddressUri.Amount? = nil, memo: String? = nil) {
@@ -113,6 +115,7 @@ extension SendTokenListViewModel {
             self.address = address
             self.amount = amount
             self.memo = memo
+            destinationTag = nil
         }
 
         struct TokenAmount: Hashable {
@@ -137,6 +140,7 @@ extension SendTokenListViewModel {
             identifiers.append(address ?? "")
             identifiers.append(amount?.description ?? "")
             identifiers.append(memo ?? "")
+            identifiers.append(destinationTag ?? "")
             return identifiers.joined(separator: "_")
         }
 

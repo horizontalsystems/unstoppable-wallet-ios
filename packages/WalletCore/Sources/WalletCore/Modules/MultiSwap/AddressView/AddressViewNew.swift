@@ -12,6 +12,8 @@ struct AddressViewNew: View {
     @Binding var borderColor: Color
     @Binding var foregroundColor: Color
 
+    @State private var fieldText = ""
+
     init(initial: AddressInput.Initial, text: Binding<String>, result: Binding<AddressInput.Result>, parserFilter: AddressParserFactory.ParserFilter?, borderColor: Binding<Color>, foregroundColor: Binding<Color> = .constant(.themeLeah)) {
         _viewModel = StateObject(wrappedValue: AddressViewModelNew(initial: initial, parserFilter: parserFilter))
 
@@ -26,10 +28,16 @@ struct AddressViewNew: View {
             PrimarySizedHStack {
                 textField(
                     placeholder: placeholder,
-                    text: $viewModel.text
+                    text: $fieldText
                 )
                 .onAppear {
                     viewModel.text = text
+                    fieldText = text
+                }
+                .onChange(of: fieldText) { _, fieldText in
+                    if viewModel.text != fieldText {
+                        viewModel.text = fieldText
+                    }
                 }
                 .onChange(of: text) { newText in
                     if newText != viewModel.text {
@@ -39,6 +47,14 @@ struct AddressViewNew: View {
                 .onChange(of: viewModel.text) { newText in
                     if newText != text {
                         text = newText
+                    }
+
+                    // A vertical TextField keeps a stale height if its text and width change in the same
+                    // layout pass (iOS 27), so external text is applied after the buttons have been laid out
+                    DispatchQueue.main.async {
+                        if fieldText != viewModel.text {
+                            fieldText = viewModel.text
+                        }
                     }
                 }
                 .onChange(of: viewModel.result) { newResult in

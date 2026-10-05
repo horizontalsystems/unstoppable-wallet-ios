@@ -45,6 +45,7 @@ public class ContactBookManager {
         }
     }
 
+    private let addressesAddedRelay = PublishRelay<[String]>()
     private let stateRelay = PublishRelay<DataStatus<ContactBook>>()
     private(set) var state: DataStatus<ContactBook> = .loading {
         didSet {
@@ -207,11 +208,13 @@ public class ContactBookManager {
                 return
             case .right:
                 logger?.debug("=C-MANAGER> Remote book is up to date. Save to local")
-                try save(url: localUrl, remoteContactBook)
+                let addresses = addedAddresses(in: remoteContactBook.contacts, comparedTo: localBook.contacts)
+                try save(url: localUrl, remoteContactBook, addedAddresses: addresses)
                 state = .completed(remoteContactBook)
             case let .merged(book):
                 logger?.debug("=C-MANAGER> Merged. Save to both")
-                try save(url: localUrl, book)
+                let addresses = addedAddresses(in: book.contacts, comparedTo: localBook.contacts)
+                try save(url: localUrl, book, addedAddresses: addresses)
                 state = .completed(book)
 
                 try saveToICloud(book: book)
@@ -313,7 +316,13 @@ public class ContactBookManager {
         return newContacts
     }
 
-    private func save(url: URL, _ book: ContactBook) throws {
+    private func addedAddresses(in contacts: [Contact], comparedTo previousContacts: [Contact]) -> [String] {
+        let previousAddresses = Set(previousContacts.flatMap(\.addresses).map { $0.address.lowercased() })
+        let addresses = Set(contacts.flatMap(\.addresses).map { $0.address.lowercased() })
+        return Array(addresses.subtracting(previousAddresses))
+    }
+
+    private func save(url: URL, _ book: ContactBook, addedAddresses: [String] = []) throws {
         let json = book.toJSON()
         guard let jsonData = try? JSONSerialization.data(withJSONObject: json) else {
             throw StorageError.cantParseData
@@ -323,6 +332,9 @@ public class ContactBookManager {
         do {
             try fileStorage.write(directoryUrl: url, filename: Self.filename, data: jsonData)
             state = .completed(book)
+            if url == localUrl, !addedAddresses.isEmpty {
+                addressesAddedRelay.accept(addedAddresses)
+            }
         } catch {
             state = .failed(error)
         }
@@ -330,6 +342,10 @@ public class ContactBookManager {
 }
 
 extension ContactBookManager {
+    var addressesAddedObservable: Observable<[String]> {
+        addressesAddedRelay.asObservable()
+    }
+
     var stateObservable: Observable<DataStatus<ContactBook>> {
         stateRelay.asObservable()
     }
@@ -368,8 +384,10 @@ extension ContactBookManager {
         }
 
         let newContactBook = helper.update(contact: contact, book: contactBook)
+        let previousContact = contactBook.contacts.first { $0.uid == contact.uid }
+        let addresses = addedAddresses(in: [contact], comparedTo: previousContact.map { [$0] } ?? [])
 
-        try save(url: localUrl, newContactBook)
+        try save(url: localUrl, newContactBook, addedAddresses: addresses)
         if remoteSync {
             try saveToICloud(book: newContactBook)
         }
@@ -422,7 +440,8 @@ extension ContactBookManager {
             resolved = helper.insert(contacts: contacts, book: state.data)
         }
 
-        try save(url: localUrl, resolved)
+        let addresses = addedAddresses(in: resolved.contacts, comparedTo: state.data?.contacts ?? [])
+        try save(url: localUrl, resolved, addedAddresses: addresses)
         if remoteSync {
             try? saveToICloud(book: resolved)
         }

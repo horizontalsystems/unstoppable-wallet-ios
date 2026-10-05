@@ -47,6 +47,23 @@ extension RestoreSettingsManager {
 
         storage.save(restoreSettingRecords: records)
     }
+
+    // Enabling a chain that needs restore settings without recording them leaves the adapter
+    // on its worst-case fallback (a restored account scans Zcash from Sapling activation).
+    // Flows that ask the user save their values before the wallet, so this only fills gaps
+    // with the "wallet is new" defaults.
+    func saveDefaultSettingsIfNeeded(account: Account, blockchainType: BlockchainType) {
+        let existingSettings = settings(accountId: account.id, blockchainType: blockchainType)
+        var defaultSettings = RestoreSettings()
+
+        for type in blockchainType.restoreSettingTypes where existingSettings[type] == nil {
+            defaultSettings[type] = type.createdAccountValue(blockchainType: blockchainType)
+        }
+
+        if !defaultSettings.isEmpty {
+            save(settings: defaultSettings, account: account, blockchainType: blockchainType)
+        }
+    }
 }
 
 enum RestoreSettingType: String {
@@ -75,6 +92,7 @@ typealias RestoreSettings = [RestoreSettingType: String]
 
 extension RestoreSettings {
     var birthdayHeight: Int? {
-        self[.birthdayHeight].flatMap { Int($0) }
+        // a negative value would trap in UInt64() when an adapter starts; treat it as absent
+        self[.birthdayHeight].flatMap { Int($0) }.flatMap { $0 >= 0 ? $0 : nil }
     }
 }

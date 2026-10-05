@@ -6,7 +6,7 @@ import ObjectMapper
 
 public class SwapProviderInfoManager {
     private let networkManager: NetworkManager
-    private let baseUrl = "\(AppConfig.swapApiUrl)/v1"
+    private let baseUrl = "\(AppConfig.swapApiUrl)/v2"
     private var headers: HTTPHeaders?
     private var cache: [String: ProviderInfo]?
     private var syncTask: Task<Void, Never>?

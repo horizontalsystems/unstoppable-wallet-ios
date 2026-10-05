@@ -11,6 +11,10 @@ public final class PrivateSendHandlerProvider: SendHandler {
 }
 
 public extension PrivateSendHandlerProvider {
+    // The provider delivers no destination tag or memo with the payout, and recipients on these chains
+    // are mostly exchanges that need one.
+    static let unsupportedBlockchainTypes: Set<BlockchainType> = [.xrp, .stellar]
+
     // Shared resolution, exposed so an app that only needs different field rendering can supply its
     // own data builder without copying any of this.
     static func handler(
@@ -18,6 +22,7 @@ public extension PrivateSendHandlerProvider {
         dataBuilder: @escaping (PrivateSendOrder, ISendData, ISendHandler) -> PrivateSendData
     ) -> ISendHandler? {
         guard case let .privateSend(request) = sendData else { return nil }
+        guard !unsupportedBlockchainTypes.contains(request.token.blockchainType) else { return nil }
         guard let service = Core.privateSendService else { return nil }
         guard let account = Core.shared.accountManager.activeAccount else { return nil }
         guard let baseToken = baseToken(token: request.token) else { return nil }
@@ -27,6 +32,9 @@ public extension PrivateSendHandlerProvider {
         // The recipient, not the deposit address, which does not exist yet. That is fine for
         // *resolving* the handler (it keys on the wallet), but it is why the memo-capability gate is
         // re-evaluated against the deposit address after the commit rather than inferred here.
+        //
+        // Always a fresh handler owned by PrivateSendHandler, never the UI's shared one: the user's
+        // send settings arrive as the immutable `request.depositSettings` snapshot instead.
         guard let preSendHandler = SendHandlerFactory.preSendHandler(
             wallet: wallet,
             address: ResolvedAddress(address: request.recipient, issueTypes: [])
@@ -49,7 +57,7 @@ public extension PrivateSendHandlerProvider {
         switch token.type {
         case .native, .derived, .addressType:
             return token
-        case .eip20, .spl, .jetton, .stellar, .zanoAsset, .thorChainAsset:
+        case .eip20, .spl, .jetton, .stellar, .zanoAsset, .thorChainAsset, .xrpAsset:
             return try? Core.shared.marketKit.token(query: TokenQuery(blockchainType: token.blockchainType, tokenType: .native))
         case .unsupported:
             return nil

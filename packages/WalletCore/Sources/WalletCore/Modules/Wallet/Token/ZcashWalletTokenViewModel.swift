@@ -15,8 +15,9 @@ class ZcashWalletTokenViewModel: ObservableObject {
 
     @Published var zCashBalanceData: ZcashBalanceData
     @Published var balanceHidden: Bool
-    @Published var birthdayHeight: Int?
+    @Published var birthdayHeight: Int
     @Published var ironwoodActive: Bool
+    @Published var fundsSpendable: Bool
     @Published private(set) var wiping = false
 
     init(adapter: ZcashAdapter, wallet: Wallet) {
@@ -25,8 +26,11 @@ class ZcashWalletTokenViewModel: ObservableObject {
         zCashBalanceData = adapter.zCashBalanceData
         balanceHidden = balanceHiddenManager.balanceHidden
         ironwoodActive = adapter.isIronwoodActive
+        fundsSpendable = adapter.areFundsSpendable
 
-        birthdayHeight = restoreSettingsService.settings(accountId: wallet.account.id, blockchainType: wallet.token.blockchainType).birthdayHeight
+        // A wallet enabled without a stored height still syncs from somewhere; showing that
+        // height keeps the rescan entry point reachable for it.
+        birthdayHeight = restoreSettingsService.settings(accountId: wallet.account.id, blockchainType: wallet.token.blockchainType).birthdayHeight ?? adapter.birthdayHeight
 
         adapter.zCashBalanceDataPublisher
             .receive(on: DispatchQueue.main)
@@ -44,8 +48,15 @@ class ZcashWalletTokenViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.ironwoodActive = self?.adapter.isIronwoodActive ?? false
+                self?.fundsSpendable = self?.adapter.areFundsSpendable ?? false
+                self?.syncBirthdayHeight()
             }
             .store(in: &cancellables)
+    }
+
+    // The SDK may move a new wallet's birthday to a checkpoint of its own after prepare.
+    private func syncBirthdayHeight() {
+        birthdayHeight = restoreSettingsService.settings(accountId: wallet.account.id, blockchainType: wallet.token.blockchainType).birthdayHeight ?? adapter.birthdayHeight
     }
 
     private func recreateAdapter(birthdayHeight: Int) {

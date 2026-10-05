@@ -100,7 +100,8 @@ public class CrossPayData: ISendData {
             value: order.depositAmount,
             token: tokenIn,
             currency: currency,
-            rate: rateIn
+            rate: rateIn,
+            isAmount: true
         ))
 
         if let buffer = order.refundableBuffer, buffer > 0 {
@@ -110,7 +111,8 @@ public class CrossPayData: ISendData {
                 value: buffer,
                 token: tokenIn,
                 currency: currency,
-                rate: rateIn
+                rate: rateIn,
+                isAmount: true
             ))
         }
 
@@ -120,14 +122,16 @@ public class CrossPayData: ISendData {
         return [.init([amount, to], isFlow: true), .init(fields, isMain: false)]
     }
 
-    private func feeField(title: String, info: InfoDescription, value: Decimal, token: Token, currency: Currency, rate: Decimal?) -> SendField {
-        .fee(
+    // Amounts open in the coin, fees in fiat; a tap flips either
+    private func feeField(title: String, info: InfoDescription, value: Decimal, token: Token, currency: Currency, rate: Decimal?, isAmount: Bool = false) -> SendField {
+        SendField(FeeField(
             title: ComponentInformedTitle(title, info: info),
             amountData: .init(
                 appValue: AppValue(token: token, value: value),
                 currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * value) }
-            )
-        )
+            ),
+            initialFlipped: isAmount
+        ))
     }
 
     private static func formatted(amount: Decimal, token: Token) -> String {

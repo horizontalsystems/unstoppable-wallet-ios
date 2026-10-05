@@ -27,12 +27,13 @@ public class MultiSwapViewModel: ObservableObject {
     private let walletManager = Core.shared.walletManager
     private let adapterManager = Core.shared.adapterManager
     private let localStorage = Core.shared.localStorage
+    private let pathFinder = SwapPathFinder.make()
 
     @Published var currency: Currency
-    private let customDecimals: Int?
 
     private let hasExplicitToken: Bool
     private let autoResolveTokenOut: Bool
+    private let customDecimals: Int?
     private var tokensManuallySet = false
     private var currentAccountId: String?
     private var defaultTokensCancellable: AnyCancellable?
@@ -70,6 +71,13 @@ public class MultiSwapViewModel: ObservableObject {
     }
 
     @Published public var validProviders = [IMultiSwapProvider]()
+
+    // A 1-hop route offered when the pair can't be served directly: no provider supports it, or
+    // the ones that do came back with no quotes. It is never quoted itself.
+    @Published public private(set) var suggestedPath: SwapPath?
+
+    // The (pair, valid providers) of the last quote round that finished with zero quotes
+    private var emptyRoundKey: QuoteRoundKey?
 
     private var internalTokenIn: Token? {
         didSet {
@@ -203,6 +211,11 @@ public class MultiSwapViewModel: ObservableObject {
         }
     }
 
+    // The fraction-digit limit of the "You pay" amount input.
+    var amountInDecimals: Int {
+        tokenIn?.decimals ?? AmountInputValidator.defaultMaxDecimals
+    }
+
     public var amountIn: Decimal? {
         didSet {
             internalUserSelectedProviderId = nil
@@ -260,7 +273,10 @@ public class MultiSwapViewModel: ObservableObject {
 
     @Published public var currentQuote: Quote? {
         didSet {
-            amountOut = currentQuote?.quote.expectedBuyAmount
+            // Quotes can be more precise than tokenOut allows; never show more than will be received
+            amountOut = currentQuote.map { quote in
+                internalTokenOut.map { quote.quote.expectedBuyAmount.roundedDown(decimal: $0.decimals) } ?? quote.quote.expectedBuyAmount
+            }
             syncFiatAmountOut()
             syncPrice()
         }
@@ -332,9 +348,9 @@ public class MultiSwapViewModel: ObservableObject {
         providers = SwapProviderFactory.swappableProviders(ids: swapProviderManager.providers)
         currency = currencyManager.baseCurrency
         spendMode = .fromBalanceState
-        self.customDecimals = customDecimals
         hasExplicitToken = token != nil || tokenOut != nil
         self.autoResolveTokenOut = autoResolveTokenOut
+        self.customDecimals = customDecimals
         currentAccountId = accountManager.activeAccount?.id
 
         defer {
@@ -507,7 +523,15 @@ public class MultiSwapViewModel: ObservableObject {
             }
 
             if internalTokenIn == nil, let tokenIn {
-                internalTokenIn = activeWalletToken(for: tokenIn)
+                let token = activeWalletToken(for: tokenIn)
+
+                // An amount typed while there was no sell token may be more precise than the token allows.
+                // Rounded before the token is set, so the quote triggered by the token uses the rounded amount.
+                if let amountIn, amountIn.roundedDown(decimal: token.decimals) != amountIn {
+                    self.amountIn = amountIn.roundedDown(decimal: token.decimals)
+                }
+
+                internalTokenIn = token
             }
 
             return
@@ -617,6 +641,40 @@ public class MultiSwapViewModel: ObservableObject {
         } else {
             validProviders = []
         }
+
+        syncSuggestedPath()
+    }
+
+    private var currentRoundKey: QuoteRoundKey? {
+        guard let internalTokenIn, let internalTokenOut, !validProviders.isEmpty else {
+            return nil
+        }
+
+        return QuoteRoundKey(tokenIn: internalTokenIn, tokenOut: internalTokenOut, providerIds: Set(validProviders.map(\.id)))
+    }
+
+    // Scoped to the pair and its valid providers: a changed pair or an untried set of providers
+    // has not failed at anything yet. The amount is deliberately not part of it, so the
+    // suggestion stays put while the user edits the amount and leaves only once quotes arrive.
+    private var quotesUnavailable: Bool {
+        emptyRoundKey != nil && emptyRoundKey == currentRoundKey
+    }
+
+    private func syncSuggestedPath() {
+        var path: SwapPath?
+
+        if let internalTokenIn, let internalTokenOut, validProviders.isEmpty || quotesUnavailable {
+            path = pathFinder.find(
+                tokenIn: internalTokenIn,
+                tokenOut: internalTokenOut,
+                providers: providers,
+                suspensions: swapProviderManager.suspensions
+            )
+        }
+
+        if suggestedPath != path {
+            suggestedPath = path
+        }
     }
 
     private func syncCurrentQuote() {
@@ -654,12 +712,12 @@ public class MultiSwapViewModel: ObservableObject {
     }
 
     private func syncFiatAmountOut() {
-        guard let rateOut, let currentQuote else {
+        guard let rateOut, let amountOut else {
             fiatAmountOut = nil
             return
         }
 
-        fiatAmountOut = (currentQuote.quote.expectedBuyAmount * rateOut).rounded(decimal: 2)
+        fiatAmountOut = (amountOut * rateOut).rounded(decimal: 2)
     }
 
     func syncPriceImpact() {
@@ -697,6 +755,8 @@ public class MultiSwapViewModel: ObservableObject {
         if !quoting, !silent {
             quoting = true
         }
+
+        let roundKey = currentRoundKey
 
         quotesTask = Task { [weak self, validProviders] in
             let optionalQuotes: [Quote?] = await withTaskGroup(of: Quote?.self) { group in
@@ -747,8 +807,19 @@ public class MultiSwapViewModel: ObservableObject {
 
             if !Task.isCancelled {
                 await MainActor.run { [weak self, decorated] in
-                    self?.quoting = false
-                    self?.quotes = decorated
+                    guard let self else {
+                        return
+                    }
+
+                    quoting = false
+                    self.quotes = decorated
+
+                    let wasUnavailable = quotesUnavailable
+                    emptyRoundKey = decorated.isEmpty ? roundKey : nil
+
+                    if quotesUnavailable != wasUnavailable {
+                        syncSuggestedPath()
+                    }
                 }
             }
         }
@@ -768,7 +839,7 @@ public class MultiSwapViewModel: ObservableObject {
             let amountA = showAsIn ? amountIn : amountOut
             let amountB = showAsIn ? amountOut : amountIn
 
-            let formattedValue = ValueFormatter.instance.formatFull(value: amountB / amountA, decimalCount: tokenB.decimals)
+            let formattedValue = ValueFormatter.instance.formatShort(value: amountB / amountA, decimalCount: tokenB.decimals)
             price = formattedValue.map { "1 \(tokenA.coin.code) = \($0) \(tokenB.coin.code)" }
         } else {
             price = nil
@@ -807,6 +878,9 @@ public extension MultiSwapViewModel {
 
         if enteringFiat {
             fiatAmountIn = currentFiatAmountOut
+        } else if let currentAmountOut, let tokenIn = self.internalTokenIn {
+            // The buy amount can be more precise than the new sell token allows
+            amountIn = currentAmountOut.roundedDown(decimal: tokenIn.decimals)
         } else {
             amountIn = currentAmountOut
         }
@@ -817,16 +891,11 @@ public extension MultiSwapViewModel {
         syncPrice()
     }
 
-    // The network fee is only estimated on the confirmation screen, so 100% of an asset that also
-    // pays its own fee always ends in an insufficient balance error — offer it only for tokens
-    // whose fee is paid with a separate native asset.
-    var percentOptions: [Int] {
-        let feePaidFromAsset: Bool
+    var percentAllAvailable: Bool {
         switch tokenIn?.type {
-        case nil, .native, .derived, .addressType, .unsupported: feePaidFromAsset = true
-        default: feePaidFromAsset = false
+        case nil, .native, .derived, .addressType, .unsupported: false
+        default: true
         }
-        return feePaidFromAsset ? [25, 50, 75] : [25, 50, 75, 100]
     }
 
     func setAmountIn(percent: Int) {
@@ -934,6 +1003,12 @@ public extension MultiSwapViewModel {
 }
 
 extension MultiSwapViewModel {
+    private struct QuoteRoundKey: Equatable {
+        let tokenIn: Token
+        let tokenOut: Token
+        let providerIds: Set<String>
+    }
+
     public struct Quote {
         public let provider: IMultiSwapProvider
         public let quote: MultiSwapQuote

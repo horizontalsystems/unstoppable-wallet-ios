@@ -18,7 +18,7 @@ import SwiftUI
 /// { uuid, inboundTxHash }`, verified on Horizon by the server's StellarTracker.
 ///
 /// Registered under the server's `STELLARBROKER` provider id (so it appears via
-/// `/v1/providers` automatically); the three fallback ids resolve to nil and stay hidden.
+/// `/v2/providers` automatically); the three fallback ids resolve to nil and stay hidden.
 class StellarSwapMultiSwapProvider: IMultiSwapProvider {
     static let id = "STELLARBROKER"
     static let name = "StellarBroker"

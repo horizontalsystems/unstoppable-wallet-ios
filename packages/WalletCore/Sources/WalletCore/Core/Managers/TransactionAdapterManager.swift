@@ -52,6 +52,8 @@ public class TransactionAdapterManager {
                 transactionsAdapter = adapterFactory.stellarTransactionAdapter(transactionSource: source)
             } else if source.blockchainType == .solana {
                 transactionsAdapter = adapterFactory.solanaTransactionsAdapter(transactionSource: source)
+            } else if source.blockchainType == .xrp {
+                transactionsAdapter = adapterFactory.xrpTransactionAdapter(transactionSource: source)
             } else {
                 transactionsAdapter = adapter as? ITransactionsAdapter
             }

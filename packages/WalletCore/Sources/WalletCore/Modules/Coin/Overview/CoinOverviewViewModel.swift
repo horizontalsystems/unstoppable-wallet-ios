@@ -11,6 +11,7 @@ class CoinOverviewViewModel: ObservableObject {
     private let currencyManager = Core.shared.currencyManager
     private let languageManager = LanguageManager.shared
     private let walletManager = Core.shared.walletManager
+    private let restoreSettingsManager = Core.shared.restoreSettingsManager
     private let performanceDataManager = Core.shared.performanceDataManager
 
     private var tasks = Set<AnyTask>()
@@ -81,6 +82,8 @@ extension CoinOverviewViewModel {
         guard let account = walletData.account else {
             return
         }
+
+        restoreSettingsManager.saveDefaultSettingsIfNeeded(account: account, blockchainType: token.blockchainType)
 
         let wallet = Wallet(token: token, account: account)
         walletManager.save(wallets: [wallet])

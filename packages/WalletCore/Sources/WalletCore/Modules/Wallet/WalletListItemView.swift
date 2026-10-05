@@ -13,7 +13,7 @@ struct WalletListItemView: View, Equatable {
     var body: some View {
         Cell(
             left: {
-                BalanceCoinIconView(coin: item.wallet.coin, state: item.state, isReachable: isReachable, placeholderImage: item.wallet.token.placeholderImageName) {
+                BalanceCoinIconView(token: item.wallet.token, state: item.state, isReachable: isReachable) {
                     failedAction()
                 }
             },

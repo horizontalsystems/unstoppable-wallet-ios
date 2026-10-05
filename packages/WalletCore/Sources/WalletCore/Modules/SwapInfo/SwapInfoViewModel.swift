@@ -61,7 +61,7 @@ class SwapInfoViewModel: ObservableObject {
         let rateKeyOut = RateKey(token: swap.tokenOut, date: swap.date)
 
         var fields: [SendField] = []
-        if !swap.status.isExpected {
+        if swap.operation == .swap, !swap.status.isExpected {
             fields.append(
                 .simpleValue(
                     title: "swap_info.provider".localized,
@@ -77,18 +77,27 @@ class SwapInfoViewModel: ObservableObject {
             )
         )
 
-        // The estimate captured when the swap was sent; single route, so no baseline.
-        let precise = SwapProviderFactory.provider(id: swap.providerId)?.preciseEstimateTime ?? true
-        if let timeState = MultiSwapViewModel.timeState(for: swap.estimatedTime, precise: precise, baseline: nil) {
+        if swap.operation == .swap {
+            // The estimate captured when the swap was sent; single route, so no baseline.
+            let precise = SwapProviderFactory.provider(id: swap.providerId)?.preciseEstimateTime ?? true
+            if let timeState = MultiSwapViewModel.timeState(for: swap.estimatedTime, precise: precise, baseline: nil) {
+                fields.append(
+                    .simpleValue(
+                        title: ComponentInformedTitle("swap.swapped_time".localized, info: .swapTime),
+                        value: ComponentText(text: MultiSwapQuotesView.string(time: timeState.value), colorStyle: timeState.colorStyle)
+                    )
+                )
+            }
+        } else if swap.isPending, let estimatedTime = swap.estimatedTime {
             fields.append(
                 .simpleValue(
-                    title: ComponentInformedTitle("swap.swapped_time".localized, info: .swapTime),
-                    value: ComponentText(text: MultiSwapQuotesView.string(time: timeState.value), colorStyle: timeState.colorStyle)
+                    title: "private_send.estimated_time".localized,
+                    value: Duration.seconds(estimatedTime).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
                 )
             )
         }
 
-        if let recipient = swap.recipient {
+        if swap.operation != .privateSend, let recipient = swap.recipient {
             fields.append(
                 .recipient(
                     title: "swap_info.recipient".localized,
@@ -99,19 +108,26 @@ class SwapInfoViewModel: ObservableObject {
             )
         }
 
+        let amountIn = SendField.amount(
+            token: swap.tokenIn,
+            appValueType: .regular(appValue: AppValue(token: swap.tokenIn, value: swap.amountIn)),
+            currencyValue: rates[rateKeyIn].map { CurrencyValue(currency: $0.currency, value: swap.amountIn * $0.value) },
+        )
+
+        let amountOut = SendField.amount(
+            token: swap.tokenOut,
+            appValueType: .regular(appValue: AppValue(token: swap.tokenOut, value: swap.amountOut)),
+            currencyValue: rates[rateKeyOut].map { CurrencyValue(currency: $0.currency, value: swap.amountOut * $0.value) },
+        )
+
+        // Private send mirrors its confirmation: what the recipient gets, then the recipient
+        let flowFields: [SendField] = switch swap.operation {
+        case .privateSend: [amountOut] + (swap.recipient.map { [.address(value: $0, blockchainType: swap.tokenOut.blockchainType)] } ?? [])
+        case .swap, .crossPay: [amountIn, amountOut]
+        }
+
         let sections: [SendDataSection] = [
-            .init([
-                .amount(
-                    token: swap.tokenIn,
-                    appValueType: .regular(appValue: AppValue(token: swap.tokenIn, value: swap.amountIn)),
-                    currencyValue: rates[rateKeyIn].map { CurrencyValue(currency: $0.currency, value: swap.amountIn * $0.value) },
-                ),
-                .amount(
-                    token: swap.tokenOut,
-                    appValueType: .regular(appValue: AppValue(token: swap.tokenOut, value: swap.amountOut)),
-                    currencyValue: rates[rateKeyOut].map { CurrencyValue(currency: $0.currency, value: swap.amountOut * $0.value) },
-                ),
-            ], isFlow: true),
+            .init(flowFields, isFlow: true),
             .init(fields, isMain: false),
         ]
 
@@ -142,7 +158,7 @@ class SwapInfoViewModel: ObservableObject {
                 if leg.fromAsset == fromAsset {
                     title = "swap_info.deposit".localized(swap.tokenIn.coin.code)
                 } else if leg.toAsset == toAsset {
-                    title = "swap_info.send".localized(swap.tokenOut.coin.code)
+                    title = "swap_info.receive".localized(swap.tokenOut.coin.code)
                 }
             } else if leg.type == USwapMultiSwapProvider.legTypeSwap {
                 title = "swap_info.swap".localized

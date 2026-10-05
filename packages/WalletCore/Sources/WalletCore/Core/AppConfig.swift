@@ -4,7 +4,6 @@ import UIKit
 
 enum AppConfig {
     static let label = "io.horizontalsystems.unstoppable"
-    static let backupSalt = "unstoppable"
 
     static let companyName = "Horizontal Systems"
     static let reportEmail = "support.unstoppable@protonmail.com"
@@ -14,7 +13,6 @@ enum AppConfig {
     // Relying-party domain (WebAuthn RP ID) for passkey wallets in this app. Passed explicitly to every
     // PasskeyManager — see Stable's AppConfig.passkeyDomain for the stable app's value.
     static let passkeyDomain = "unstoppable.money"
-    static let analyticsLink = "https://unstoppable.money/analytics"
     static let privacyPolicyLink = "https://unstoppable.money/privacy-policy"
     static let appleTermsOfServiceLink = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula"
     static let nymVpnLink = "https://nymtechnologies.pxf.io/N9vnr1"
@@ -43,6 +41,7 @@ enum AppConfig {
         .base: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .zkSync: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .robinhood: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
+        .arc: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .arbitrumOne: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .gnosis: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .fantom: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",

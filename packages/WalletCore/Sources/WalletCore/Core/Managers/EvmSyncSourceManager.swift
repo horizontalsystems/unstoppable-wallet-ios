@@ -29,8 +29,15 @@ public class EvmSyncSourceManager {
         case .gnosis: return .gnosis(apiKeys: AppConfig.gnosisscanKeys)
         case .fantom: return .fantom(apiKeys: AppConfig.ftmscanKeys)
         case .base: return .basescan(apiKeys: AppConfig.basescanKeys)
-        case .zkSync: return .eraZkSync(apiKeys: AppConfig.eraZkSyncKeys)
+        // Etherscan V2 dropped zkSync Era and its own explorer was shut down, so it is read from
+        // Blockscout PRO like Robinhood, with the same key
+        case .zkSync: return EvmKit.TransactionSource(
+                name: "zksync.blockscout.com",
+                type: .etherscan(apiBaseUrl: "https://api.blockscout.com/v2", txBaseUrl: "https://zksync.blockscout.com", apiKeys: AppConfig.robinhoodKeys)
+            )
         case .robinhood: return .robinhood(apiKeys: AppConfig.robinhoodKeys)
+        // Arc is indexed through the shared Etherscan V2 endpoint, so it uses the Etherscan keys
+        case .arc: return .arc(apiKeys: AppConfig.etherscanKeys)
         case .tron: return EvmKit.TransactionSource(name: "trongrid", type: .etherscan(apiBaseUrl: "", txBaseUrl: "", apiKeys: []))
         default: fatalError("Non-supported EVM blockchain")
         }
@@ -234,6 +241,31 @@ extension EvmSyncSourceManager {
                 EvmSyncSource(
                     name: "Robinhood Chain",
                     rpcSource: .http(urls: [URL(string: "https://rpc.mainnet.chain.robinhood.com")!], auth: nil),
+                    transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+            ]
+        case .arc:
+            // The official rpc.mainnet.arc.io and its QuickNode mirror sit behind Cloudflare
+            // geo-blocking, so keyless providers reachable everywhere come first.
+            return [
+                EvmSyncSource(
+                    name: "PublicNode",
+                    rpcSource: .http(urls: [URL(string: "https://arc-rpc.publicnode.com")!], auth: nil),
+                    transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+                EvmSyncSource(
+                    name: "dRPC",
+                    rpcSource: .http(urls: [URL(string: "https://arc.drpc.org")!, URL(string: "https://rpc.drpc.mainnet.arc.io")!], auth: nil),
+                    transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+                EvmSyncSource(
+                    name: "Blockdaemon",
+                    rpcSource: .http(urls: [URL(string: "https://rpc.blockdaemon.mainnet.arc.io")!], auth: nil),
+                    transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+                EvmSyncSource(
+                    name: "Arc",
+                    rpcSource: .http(urls: [URL(string: "https://rpc.mainnet.arc.io")!], auth: nil),
                     transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
             ]

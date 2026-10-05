@@ -8,10 +8,13 @@ import StellarKit
 import ThorChainKit
 import TonSwift
 import TronKit
+import XrpKit
 import ZcashLightClientKit
 
 public enum SendData {
     case evm(blockchainType: BlockchainType, transactionData: TransactionData, token: Token)
+    case evmResend(blockchainType: BlockchainType, transaction: EvmKit.Transaction, type: ResendTransactionType)
+    case bitcoinResend(BitcoinResendRequest)
     case bitcoin(token: Token, params: SendParameters)
     case zcash(amount: Decimal, recipient: Recipient, memo: String?)
     case zcashResend(amount: Decimal, recipient: Recipient, memo: String?, initialTransactionSettings: InitialTransactionSettings)
@@ -22,12 +25,14 @@ public enum SendData {
     case ton(token: Token, amount: Decimal, address: FriendlyAddress, memo: String?)
     case stellar(data: StellarSendData, token: Token, memo: String?)
     case solana(token: Token, amount: Decimal, address: String, memo: String?)
+    // address is the classic r-address; an X-address is resolved by the pre-send handler, its tag lands in destinationTag
+    case xrp(token: Token, data: XrpSendData, destinationTag: UInt32?)
     // recipientHolder: external delivery address entered before confirmation when the account
     // can't hold tokenOut; empty when the swap is delivered to the account's own wallet. A
     // shared box rather than a value so a recipient edited on the confirmation screen is
     // visible to the swap screen that opened it.
     case swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, multiSwapQuote: MultiSwapQuote, recipientHolder: SwapExternalRecipientHolder)
-    case walletConnect(request: WalletConnectRequest)
+    indirect case walletConnect(inner: SendData?, request: WCRequest)
     case tonConnect(request: TonConnectSendTransactionRequest)
     case monero(token: Token, amount: MoneroSendAmount, address: String, memo: String?, selectedKeyImages: [String]?)
     case zano(token: Token, amount: ZanoSendAmount, address: String, memo: String?)
@@ -66,6 +71,12 @@ public struct PaymentInfo {
         self.chain = chain
         self.token = token
     }
+}
+
+public enum XrpSendData {
+    /// `address` is classic or an X-address as entered; a tag packed in an X-address must match `destinationTag`.
+    case payment(amount: Decimal, address: String)
+    case trustSet(currency: String, issuer: String, limit: Decimal)
 }
 
 public enum StellarSendData {

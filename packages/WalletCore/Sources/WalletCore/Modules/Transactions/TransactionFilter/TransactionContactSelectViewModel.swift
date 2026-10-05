@@ -7,6 +7,7 @@ class TransactionContactSelectViewModel: ObservableObject {
         BlockchainType.tron.uid,
         BlockchainType.ton.uid,
         BlockchainType.stellar.uid,
+        BlockchainType.xrp.uid,
         BlockchainType.zcash.uid,
     ]
     private let disposeBag = DisposeBag()

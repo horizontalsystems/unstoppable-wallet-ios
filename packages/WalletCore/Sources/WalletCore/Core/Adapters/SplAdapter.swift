@@ -52,7 +52,9 @@ private extension SplAdapter {
             return .notSynced(error: error.localizedDescription)
         }
     }
+}
 
+extension SplAdapter {
     static func balance(fullAccount: FullTokenAccount?) -> Decimal {
         guard let fullAccount else { return 0 }
         return Decimal(sign: .plus, exponent: -fullAccount.tokenAccount.decimals, significand: fullAccount.tokenAccount.decimalBalance)

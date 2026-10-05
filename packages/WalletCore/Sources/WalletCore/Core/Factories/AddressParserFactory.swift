@@ -57,7 +57,7 @@ enum AddressParserFactory {
             }
 
             return handlers
-        case .ethereum, .gnosis, .fantom, .polygon, .arbitrumOne, .avalanche, .optimism, .binanceSmartChain, .base, .zkSync, .robinhood:
+        case .ethereum, .gnosis, .fantom, .polygon, .arbitrumOne, .avalanche, .optimism, .binanceSmartChain, .base, .zkSync, .robinhood, .arc:
             let evmAddressParserItem = EvmAddressParser(blockchainType: blockchainType)
 
             var handlers = [IAddressParserItem]()
@@ -89,7 +89,14 @@ enum AddressParserFactory {
             }
             let zcashParserItem = ZcashAddressParserItem(parserType: .validator(validator), addressType: addressType)
 
-            return [zcashParserItem]
+            var handlers: [IAddressParserItem] = [zcashParserItem]
+            // name services only where ENS runs (send, contacts), as on Android; the ZNS indexer is mainnet only
+            if withEns, ZcashAdapter.networkType == .mainnet {
+                let resolver = ZnsResolver(networkManager: Core.shared.networkManager)
+                handlers.append(ZnsAddressParserItem(resolver: resolver, rawAddressParserItem: zcashParserItem))
+            }
+
+            return handlers
         case .solana:
             return [SolanaAddressParserItem()]
         case .ton:
@@ -99,8 +106,16 @@ enum AddressParserFactory {
         case .monero:
             return [MoneroAddressParserItem()]
         case .zano:
-            let aliasResolver = ZanoAliasResolver(zanoNodeManager: Core.shared.zanoNodeManager, networkManager: Core.shared.networkManager)
-            return [ZanoAddressParserItem(), ZanoAliasAddressParserItem(resolver: aliasResolver)]
+            var handlers: [IAddressParserItem] = [ZanoAddressParserItem()]
+            // aliases are a name service: only where ENS runs, as on Android (ZanoChainPlugin.domainAddressHandlers)
+            if withEns {
+                let aliasResolver = ZanoAliasResolver(zanoNodeManager: Core.shared.zanoNodeManager, networkManager: Core.shared.networkManager)
+                handlers.append(ZanoAliasAddressParserItem(resolver: aliasResolver))
+            }
+
+            return handlers
+        case .xrp:
+            return [XrpAddressParserItem()]
         case .unsupported: return []
         }
     }

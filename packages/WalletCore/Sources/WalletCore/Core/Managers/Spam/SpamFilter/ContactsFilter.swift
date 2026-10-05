@@ -1,6 +1,5 @@
 import Foundation
 import HsToolKit
-import MarketKit
 
 final class ContactsFilter: SpamFilter {
     var identifier: String { "contacts_whitelist" }
@@ -15,7 +14,7 @@ final class ContactsFilter: SpamFilter {
 
     func evaluate(_ transaction: SpamTransactionInfo) -> SpamFilterResult {
         for event in transaction.events.incoming + transaction.events.outgoing {
-            if isContact(address: event.address, blockchainType: transaction.blockchainType) {
+            if isContact(address: event.address) {
                 return .trusted
             }
         }
@@ -23,7 +22,11 @@ final class ContactsFilter: SpamFilter {
         return .ignore
     }
 
-    private func isContact(address: String, blockchainType: BlockchainType) -> Bool {
-        contactManager.name(blockchainType: blockchainType, address: address) != nil
+    // A contact's address is trusted on every network, as its saved spam verdicts are cleared on every network
+    private func isContact(address: String) -> Bool {
+        let address = address.lowercased()
+        return contactManager.all?.contains { contact in
+            contact.addresses.contains { $0.address.lowercased() == address }
+        } ?? false
     }
 }

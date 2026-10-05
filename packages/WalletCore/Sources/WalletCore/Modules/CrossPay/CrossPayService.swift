@@ -25,8 +25,13 @@ public final class CrossPayService {
     }
 
     // Reads only the already-synced asset map, never triggers a fetch: unsynced = "not supported yet".
+    // A recipient on an unsupported chain shows "not supported".
     public func supports(tokenIn: Token, tokenOut: Token) -> Bool {
-        supports(token: tokenIn) && supports(token: tokenOut)
+        guard !PrivateSendHandlerProvider.unsupportedBlockchainTypes.contains(tokenOut.blockchainType) else {
+            return false
+        }
+
+        return supports(token: tokenIn) && supports(token: tokenOut)
     }
 
     // Also the entry screen's "has the asset map landed" probe: ZEC is always in the provider's map.
@@ -67,7 +72,7 @@ public final class CrossPayService {
         do {
             result = try await api.rate(request)
         } catch {
-            throw Self.error(networkError: error, tokenOut: tokenOut)
+            throw Self.error(rateNetworkError: error, tokenOut: tokenOut)
         }
 
         // Every route delivers the identical requested output, so the cheapest deposit wins.
@@ -145,7 +150,9 @@ public final class CrossPayService {
             throw CrossPayError.commitFailed
         }
 
-        guard let depositAmount = amount else {
+        // The floor check below only sees this when the provider states one, so a transfer of nothing
+        // is refused on its own terms (Android CrossPayManager)
+        guard let depositAmount = amount, depositAmount > 0 else {
             throw CrossPayError.commitFailed
         }
 
@@ -170,7 +177,7 @@ public final class CrossPayService {
 
         // An undeliverable attachment fails once here at commit, not on every build re-entry.
         do {
-            _ = try USwapMultiSwapApi.Attachment.memo(attachment, memoType: request.tokenIn.blockchainType.memoType)
+            try USwapMultiSwapApi.Attachment.validate(attachment, blockchainType: request.tokenIn.blockchainType)
         } catch {
             throw CrossPayError.commitFailed
         }
@@ -207,6 +214,24 @@ private extension CrossPayService {
         let recognised = providerErrors.contains { providerError in providerError.errorCode.map(routeLevelCodes.contains) ?? false }
 
         return recognised ? .noRoute : nil
+    }
+
+    static func error(rateNetworkError: Error, tokenOut: Token) -> CrossPayError {
+        guard let responseError = rateNetworkError as? NetworkManager.ResponseError else {
+            return .networkError(rateNetworkError)
+        }
+
+        if responseError.statusCode == 503 {
+            return .providerSuspended
+        }
+
+        let providerErrors = USwapMultiSwapApi.rateProviderErrors(json: responseError.json)
+
+        guard !providerErrors.isEmpty else {
+            return .networkError(rateNetworkError)
+        }
+
+        return error(providerErrors: providerErrors, tokenOut: tokenOut) ?? .noRoute
     }
 
     static func error(networkError: Error, tokenOut: Token) -> CrossPayError {

@@ -5,6 +5,8 @@ import MarketKit
 public final class CrossPayHandlerProvider: SendHandler {
     override public class func instance(sendData: SendData) -> ISendHandler? {
         guard case let .crossPay(request) = sendData else { return nil }
+        // the tab refuses these recipients too; this keeps any other entry point from committing one
+        guard !PrivateSendHandlerProvider.unsupportedBlockchainTypes.contains(request.tokenOut.blockchainType) else { return nil }
         guard let service = Core.crossPayService else { return nil }
         guard let account = Core.shared.accountManager.activeAccount else { return nil }
         guard let baseToken = PrivateSendHandlerProvider.baseToken(token: request.tokenIn) else { return nil }
@@ -12,7 +14,9 @@ public final class CrossPayHandlerProvider: SendHandler {
         let wallet = Wallet(token: request.tokenIn, account: account)
 
         // Placeholder for handler resolution only — the real destination is the deposit address,
-        // which does not exist yet.
+        // which does not exist yet. Always a fresh handler owned by CrossPayHandler, never the UI's
+        // shared one: the user's send settings arrive as the immutable `request.depositSettings`
+        // snapshot instead.
         guard let preSendHandler = SendHandlerFactory.preSendHandler(
             wallet: wallet,
             address: ResolvedAddress(address: request.recipient, issueTypes: [])

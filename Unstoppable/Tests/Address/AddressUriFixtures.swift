@@ -19,6 +19,7 @@ enum AddressUriFixtures {
     static let stellar = "GA5XIGA5C7QTPTWXQHY6MCJRMTRZDOSHR6EFIBNDQTCQHG262N4GGKTM"
     static let zano = "ZxDqGRfH6NEMR6jrYJp8jsqL3pyZQTPVwwbgyRk7uPnSv8M5jUYg83mPRD2Pdmjmh1JS9zSpFAtPpEFEgQTBpD4y2BSEm9V8z"
     static let solana = "DgeAF3yWjZWSb6AKgKouuUfk4EDXsrgFVnUyVwsE3RiE"
+    static let xrp = "rf4sBLr1UTkzTNvmpvTMpWXiUHyoLHscqj"
 
     static func decimal(_ string: String) -> Decimal {
         guard let value = Decimal(string: string) else {

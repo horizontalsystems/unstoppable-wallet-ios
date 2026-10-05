@@ -55,10 +55,12 @@ class BitcoinSendSettingsViewModel: ObservableObject {
     }
 
     private func syncUtxos() {
-        let totalUtxos = handler.allUtxos.count
-        let usedUtxos = handler.customUtxos?.count ?? totalUtxos
+        guard let customUtxos = handler.customUtxos else {
+            utxos = "send.unspent_outputs.auto".localized
+            return
+        }
 
-        utxos = [usedUtxos.description, totalUtxos.description].joined(separator: " / ")
+        utxos = [customUtxos.count.description, handler.allUtxos.count.description].joined(separator: " / ")
     }
 }
 
@@ -67,8 +69,8 @@ extension BitcoinSendSettingsViewModel {
         handler.token.coin.code
     }
 
-    var lockTimeIntervalState: BitcoinPreSendHandler.LockTimeIntervalState {
-        handler.lockTimeIntervalState
+    var lockTimeSupported: Bool {
+        handler.lockTimeSupported
     }
 
     var lockTimeIntervalTitle: String {

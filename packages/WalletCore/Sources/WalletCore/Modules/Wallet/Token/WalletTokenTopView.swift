@@ -78,7 +78,7 @@ struct WalletTokenTopView<Content: View, Status: View>: View {
             switch button {
             case .send:
                 Coordinator.shared.present { isPresented in
-                    SendAddressViewWrapper(wallet: viewModel.wallet, isPresented: isPresented)
+                    PreSendViewWrapper(wallet: viewModel.wallet, isPresented: isPresented)
                 }
                 stat(page: .tokenPage, event: .openSend(token: viewModel.wallet.token))
             case .receive: viewModel.onTapReceive()
@@ -88,11 +88,6 @@ struct WalletTokenTopView<Content: View, Status: View>: View {
                 }
                 stat(page: .tokenPage, event: .open(page: .swap))
             case .chart: Coordinator.shared.presentCoinPage(coin: viewModel.wallet.coin, page: .tokenPage)
-            case .pay:
-                Coordinator.shared.present { isPresented in
-                    CrossPayView(wallet: viewModel.wallet, isPresented: isPresented)
-                }
-                stat(page: .tokenPage, event: .open(page: .crossPay))
             default: ()
             }
         }

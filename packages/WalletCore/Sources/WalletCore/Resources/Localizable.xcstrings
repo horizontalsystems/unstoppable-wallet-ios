@@ -13,16 +13,6 @@
     "#%lld" : {
 
     },
-    "%@ - %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ - %2$@"
-          }
-        }
-      }
-    },
     "%@ %@" : {
       "localizations" : {
         "en" : {
@@ -61,9 +51,6 @@
     "Chainalysis.com" : {
 
     },
-    "coin_analytics.indicators.disclaimer" : {
-
-    },
     "coin_overview.performance.assets" : {
 
     },
@@ -96,9 +83,6 @@
 
     },
     "No Handler" : {
-
-    },
-    "Premium" : {
 
     },
     "purchase.lifetime.description" : {

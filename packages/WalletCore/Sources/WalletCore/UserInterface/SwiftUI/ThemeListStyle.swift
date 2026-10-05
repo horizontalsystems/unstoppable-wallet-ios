@@ -3,6 +3,8 @@ import SwiftUI
 enum ThemeListStyle {
     case lawrence
     case bordered
+    // same as .bordered but without row separators
+    case borderedPlain
     case borderedLawrence
     case borderedPremium
     case transparent
@@ -51,7 +53,7 @@ struct ThemeListStyleModifier: ViewModifier {
                             lineWidth: .heightOneDp
                         )
                 )
-        case .bordered:
+        case .bordered, .borderedPlain:
             content
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
                 .overlay(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous).stroke(selected ? Color.themeJacob : Color.themeBlade, lineWidth: .heightOneDp))
@@ -76,7 +78,7 @@ struct ThemeListStyleButtonModifier: ViewModifier {
     func body(content: Content) -> some View {
         switch themeListStyle {
         case .lawrence, .borderedLawrence, .borderedPremium: content.background(isPressed ? Color.themeLawrence.pressed : Color.themeLawrence)
-        case .bordered: content.background(isPressed ? Color.themeLawrence.pressed : Color.clear)
+        case .bordered, .borderedPlain: content.background(isPressed ? Color.themeLawrence.pressed : Color.clear)
         case .transparent, .transparentInline: content.background(isPressed ? Color.themeLawrence.pressed : Color.themeTyler)
         case .blur, .steel10WithCorners: content
         }

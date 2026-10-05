@@ -56,7 +56,7 @@ public enum SwapProviderType: String, CaseIterable, Identifiable {
     case fair
 
     public var title: String {
-        rawValue.capitalized(with: .autoupdatingCurrent)
+        "swap.quotes.providers.risk_levels.\(rawValue)".localized
     }
 
     public var icon: String {

@@ -27,7 +27,7 @@ class CoinPageViewModel: ObservableObject {
 
     // wallet token with the largest balance, else an eligible representative (as in the picker's Top section)
     private static func swapToken(coin: Coin) -> Token? {
-        guard AppStateManager.instance.swapEnabled, let account = Core.shared.accountManager.activeAccount else {
+        guard AppStateManager.instance.swapEnabled, let account = Core.shared.accountManager.activeAccount, !account.watchAccount else {
             return nil
         }
 

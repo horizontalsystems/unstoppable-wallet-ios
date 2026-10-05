@@ -5,6 +5,7 @@
 "button.confirm" = "Confirmar";
 "button.continue" = "Continuar";
 "button.done" = "Concluído";
+"button.back" = "Voltar";
 "button.reset" = "Resetar";
 "button.import" = "Importar";
 "button.next" = "Próximo";
@@ -76,6 +77,7 @@
 "alert.revoking" = "Revogando";
 "alert.revoked" = "Revogado";
 "alert.cant_recognize" = "Impossível Reconhecer";
+"alert.change_wallet" = "Troque de carteira";
 "alert.not_founded" = "Não encontrado.";
 
 "alert.fee_too_low" = "Taxa Baixa Muito";
@@ -133,9 +135,9 @@
 
 // Access Camera
 
-"access_camera.message" = "%@ absolutely needs access to your tremendous camera for scanning that fantastic QR code. Believe me!.\n\nGo to Settings - > %@ and allow access to the camera.";
+"access_camera.message" = "O acesso deste app à sua câmera foi negado. Você pode permitir o acesso nos Ajustes.";
 "access_camera.not_supported" = "Seu dispositivo não suporta a leitura de um código de um item. Por favor, use um dispositivo com câmera.";
-"access_camera.settings" = "Configurações";
+"access_camera.settings" = "Abrir Ajustes";
 
 // Restore
 
@@ -194,7 +196,7 @@
 "coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.hybrid" = "Híbrido";
-"sync_mode.from_blockchain" = "Da Blockchain";
+"sync_mode.from_blockchain" = "Blockchain %@";
 "blockchain_settings.description" = "Selecione o formato de endereço para a moeda.";
 "blockchain_settings.footer" = "Prossiga com a opção recomendada se não tiver certeza. É importante escolher o formato correto ao restaurar uma carteira existente.";
 
@@ -340,6 +342,9 @@
 "balance.token.locked" = "Bloqueado";
 "balance.token.locked.stellar.description" = "A rede Stellar bloqueia 1 XLM para ativar a carteira e 0,5 XLM como reserva para cada token ativado em sua carteira.";
 "balance.token.locked.stellar.description.wallet_activation" = "Ativação da carteira";
+"balance.token.locked.xrp.description" = "O XRP Ledger bloqueia 1 XRP para ativar a carteira e 0,2 XRP como reserva para cada linha de confiança ou outro objeto de propriedade de sua carteira. A reserva é liberada quando o objeto é removido.";
+"balance.token.locked.xrp.other_objects" = "Outros objetos (%@)";
+"balance.token.xrp.account_not_activated" = "Esta conta ainda não foi ativada. O primeiro depósito deve ser de pelo menos 1 XRP; pagamentos menores são rejeitados pela rede.";
 "balance.token.locked.info.title" = "TravaTempo";
 "balance.token.locked.info.description" = "O remetente enviou esses fundos com um fechamento de gastos que expirará na data mostrada. \n\nNão se preocupe, o Bitcoin recebido já é seu, mas até que o período de bloqueio expire, você não pode gastá-los na rede Bitcoin.";
 "balance.token.not_relayed" = "Transmissão";
@@ -360,6 +365,8 @@
 \n\nTo maintain high level of privacy you may consider using VPN or TOR when making migration transactions.";
 "balance.token.migrate" = "Migrar";
 "error.zcash.migration_failed" = "A migração não pôde ser concluída. Nenhum fundo foi perdido — você pode tentar novamente mais tarde.";
+"error.zcash.sync_stalled" = "A sincronização travou. Puxe para baixo para tentar novamente.";
+"error.zcash.sync_required" = "Aguarde a carteira terminar a sincronização e tente novamente.";
 "zcash.migration.warning.title" = "Valor publicamente visível";
 "zcash.migration.warning" = "Mover fundos entre pools exige que o valor migrado seja publicamente visível na blockchain. O remetente, o destinatário e seus endereços permanecem privados.";
 
@@ -411,6 +418,7 @@
 "deposit.not_active.view_address" = "Ver meu endereço";
 "deposit.stellar.inactive_asset.title" = "Ativar Token";
 "deposit.stellar.inactive_asset.description" = "Para receber %@, você precisa ativar o token. A rede Stellar exige o estabelecimento de uma trustline para cada token. Sem ela, sua carteira não poderá receber %@ — a transação será rejeitada e os fundos não serão entregues.";
+"deposit.xrp.inactive_asset.description" = "Para receber %@, você precisa ativar o token. O XRP Ledger requer uma linha de confiança para cada token, que bloqueia 0,2 XRP do seu saldo enquanto existir. Sem ela, sua carteira não pode receber %@ – a transação será rejeitada e os fundos não serão entregues.";
 
 "deposit.used_addresses.title" = "Endereços Usados";
 "deposit.used_addresses.description" = "O número de endereços %@ muda para privacidade e segurança. Abaixo está uma lista de endereços usados neste carteira.";
@@ -444,9 +452,12 @@
 "send.title" = "Enviar %@";
 "send.title.shield" = "Shield %@";
 "send.send" = "Enviar";
+"send.tab.standard" = "Padrão";
+"send.tab.private" = "Privado";
+"send.tab.cross_pay" = "Cross Pay";
 "send.no_assets" = "Você não tem ativos para enviar.";
 "send.amount_placeholder" = "Montante";
-"send.address_placeholder" = "Endereço";
+"send.address_placeholder" = "Para endereço";
 "send.address_or_domain_placeholder" = "Endereço ou Domínio";
 "send.fee" = "Taxa";
 "send.network_fee" = "Taxa";
@@ -470,7 +481,7 @@
 "send.hodler_locktime_off" = "Desligado";
 "send.hodler_error.unsupported_address" = "O bloqueio de tempo só funciona com endereços P2PKH (iniciando com 1)";
 "send.fee_info.title" = "Taxa de tarifa";
-"send.fee_info.description" = "Blockchains exigem que os usuários paguem taxas de rede ao enviar transações. As taxas são mais altas quando muitas transações ocorrem na rede.\n\nA carteira %@ estima a taxa com base na atividade atual do blockchain e recomenda o valor ideal para que a transação seja processada dentro de um período de tempo razoável. \n\nA taxa recomendada mostrada como a quantidade de satoshi que o usuário precisa pagar por um único byte da transação. Assim, a taxa total depende do tamanho total da transação que é medido em bytes.\n\nOs usuários podem usar os controles fornecidos para aumentar ou diminuir o valor da taxa. A alteração na taxa altera a taxa total da transação que o usuário pagará.\n\nDefinir uma taxa abaixo do valor recomendado pode fazer com que uma transação seja mantida como pendente por horas ou rejeitada. Quanto menor o valor, mais tempo levará para a transação ser confirmada. Para transações onde a prioridade é importante, recomendamos definir uma taxa de comissão mais elevada.";
+"send.fee_info.description" = "Ao enviar uma transação, você precisa pagar uma taxa de rede. Quanto mais movimentada a rede, maior a taxa.\n\nO %@ sugere uma taxa ideal para que sua transação seja confirmada em um tempo razoável. Você pode aumentar ou diminuir esse valor.\n\nUma taxa muito baixa pode deixar sua transação pendente por muito tempo ou até fazer com que seja rejeitada. Para uma confirmação mais rápida, use uma taxa mais alta.";
 "send.transaction_inputs_outputs_info.title" = "Entradas / Saídas de Transação";
 "send.transaction_inputs_outputs_info.description" = "A maioria das transações em Bitcoin, bem como as transações em criptomoedas, incluindo Bitcoin Cash, Dash, e Litecoin, geram duas saídas. Uma saída é a quantidade que vai para o destinatário e a outra é a mudança de saída que é retornada ao remetente. A maneira como a maioria das carteiras constrói as transações torna mais fácil para um terceiro entender qual das saídas foi para a parte receptora e qual foi a quantia alterada retornada ao remetente. Como a saída retornada ao remetente será usada mais tarde em transações futuras, uma conexão entre essas duas transações se torna evidente.\n\nA carteira %@ implementa medidas para tornar mais difícil para alguém descobrir qual saída vai para onde.\n\nExistem duas opções disponíveis para usuários %@:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Embaralhar";
@@ -479,11 +490,14 @@
 "send.transaction_inputs_outputs_info.deterministic.description" = "Existe um padrão comumente aceitado para ordenar saídas de transações (conhecido como BIP69). Em carteiras de código aberto, esse padrão garante que os usuários de carteiras não precisem confiar em como os desenvolvedores do aplicativo implementam a ordem das saídas. Como esse padrão é novo, poucas carteiras o implementaram ainda. Como resultado, é possível ver no blockchain se uma transação foi enviada de uma carteira que usa esse padrão ou não.";
 "send.select_all" = "Selecionar Tudo";
 "send.unselect_all" = "Desmarcar Tudo";
+"send.balance.available" = "Disponível: %@";
+"send.balance.clear" = "Limpar";
 
 "send.confirmation.title" = "Confirmar Envio";
 "send.confirmation.you_send" = "Enviar";
 "send.confirmation.transfer" = "Transferir";
 "send.confirmation.to" = "Para";
+"send.confirmation.from" = "De";
 "send.confirmation.own" = "Próprio";
 "send.confirmation.contact_name" = "Nome do Contato";
 "send.confirmation.memo" = "Memo";
@@ -491,6 +505,16 @@
 "send.memo.public_warning" = "Este memo será público na blockchain.";
 "send.memo.private_warning" = "Esta nota será publicada na blockchain de forma criptografada.";
 "send.memo.local_warning" = "Este memo será salvo apenas no seu telefone.";
+"send.memo.too_long" = "Memo é muito longo";
+"send.xrp.destination_tag" = "Tag de Destino";
+"send.xrp.destination_tag.title" = "Tag de destino";
+"send.xrp.destination_tag.info" = "Exchanges e alguns serviços exigem uma etiqueta de destino para creditar seu depósito. A etiqueta é pública no livro razão.";
+"send.xrp.destination_tag.required" = "Este endereço requer uma etiqueta de destino. Pagamentos sem uma são rejeitados.";
+"send.xrp.destination_tag.invalid" = "A tag de destino deve ser um número inteiro de 0 a 4294967295.";
+"send.xrp.destination_tag.conflict" = "A tag de destino não corresponde à tag do endereço.";
+"send.xrp.address_error.network_mismatch" = "Rede inválida: este endereço pertence a outra rede XRP.";
+"send.xrp.activation.reserve_note" = "A ativação bloqueia %@ como uma reserva em sua carteira. É liberado se a linha de confiança for removida depois.";
+"send.xrp.activation.insufficient_balance" = "Você não tem XRP disponível suficiente para cobrir a reserva de linha de confiança e a taxa de rede.";
 "send.confirmation.fee" = "Taxa";
 "send.confirmation.fee_sponsored" = "Patrocinado";
 "send.confirmation.fee_paid_in" = "Pago em %@";
@@ -553,6 +577,7 @@
 "send.fee_settings.fee_rate_unavailable" = "Tarifa indisponível. Por favor, verifique as taxas de taxas manualmente";
 
 "send.unspent_outputs" = "UTxOs";
+"send.unspent_outputs.auto" = "Automático";
 "send.unspent_outputs.description" = "Escolha manualmente quais moedas gastar na transação.";
 "send.unspent_outputs.send_to" = "Enviar para";
 "send.unspent_outputs.change" = "Alterar";
@@ -596,13 +621,11 @@
 
 // Private Send
 
-"private_send.toggle.title" = "Envio Privado";
+"private_send.tab.caution.title" = "Envio Privado";
+"private_send.tab.caution.text" = "O Envio Privado oculta o vínculo direto on-chain entre seu endereço e o destinatário por meio de um intermediário confidencial.";
 "private_send.amount_caption" = "Valor que o destinatário recebe";
 "private_send.unavailable" = "Envio privado indisponível";
 "private_send.memo_unavailable" = "O memo não está disponível quando o Envio Privado está ativado";
-
-"private_send.info.title" = "Envio Privado";
-"private_send.info.description" = "O Envio Privado roteia sua transação por meio de um intermediário confidencial, ocultando o vínculo público entre seu endereço e o destinatário. Ambas as transações permanecem visíveis na blockchain, mas não estão diretamente conectadas entre si.";
 
 "private_send.fee" = "Taxa de envio privado";
 "private_send.fee.info" = "Esta taxa cobre o custo de processar sua transação de forma privada. Ela é cobrada além da taxa de rede e depende do valor que você enviar.";
@@ -669,14 +692,21 @@
 
 "swap.rate_not_available" = "Taxa não disponível";
 "swap.route" = "Rota";
-"swap.select" = "Selecionar";
+"token_selector.select" = "Selecionar";
 "swap.quoting" = "Cotação";
 "swap.select_token_in" = "Selecionar Token em";
 "swap.select_token_out" = "Selecionar Token de Saída";
 "swap.no_providers" = "Sem rotas";
+"swap.suggested_path.no_quotes_available" = "Sem ofertas disponíveis";
+"swap.suggested_path.text" = "Você pode %@ primeiro e depois %@ por %@.";
+"swap.suggested_path.text.part" = "trocar %@ por %@";
 "swap.enter_amount" = "Inserir Quantidade";
 "swap.no_quotes" = "Sem ofertas";
 "swap.error.no_memo" = "Esta rota não pode ser confirmada no momento. Por favor, atualize a cotação ou escolha outro provedor.";
+"swap.deposit_address" = "Endereço de depósito";
+"swap.deposit_memo" = "Memo de depósito";
+"swap.error.invalid_swap_memo" = "O memo do swap não contém um destinatário válido.";
+"swap.error.memo_recipient_mismatch" = "O destinatário no memo do swap não corresponde ao destinatário selecionado.";
 "swap.token_not_enabled" = "Token não ativado";
 "swap.token_syncing" = "Sincronização do Token";
 "swap.token_not_synced" = "Token não sincronizado";
@@ -690,6 +720,9 @@
 
 "swap.quotes.providers.risk_levels.title" = "Pontuação da rota";
 "swap.quotes.providers.risk_levels.description" = "Essas pontuações mostram como cada rota lida com swaps e verificações de transações.";
+"swap.quotes.providers.risk_levels.excellent" = "Excelente";
+"swap.quotes.providers.risk_levels.good" = "Bom";
+"swap.quotes.providers.risk_levels.fair" = "Razoável";
 "swap.quotes.providers.risk_levels.excellent.description" = "Execução direta on-chain. Sem verificações ou bloqueios. Reembolso automático se o swap falhar.";
 "swap.quotes.providers.risk_levels.good.description" = "As transações são verificadas automaticamente antes da conclusão. Se um problema for encontrado, o swap é rejeitado e os fundos são reembolsados.";
 "swap.quotes.providers.risk_levels.fair.description" = "Algumas transações podem precisar de verificação adicional. Se um problema for encontrado, os fundos geralmente são reembolsados automaticamente.";
@@ -798,7 +831,7 @@
 "swap.confirmation.swapping" = "Trocando";
 "swap.confirmation.refresh" = "Atualizar";
 "swap.confirmation.impact_high" = "Você perderá uma grande parte (%@) dos seus fundos neste swap.";
-"swap.confirmation.impact_too_high" = "%@ desativou a ação de troca para essa troca porque você está obtendo um preço extremamente desfavorável. Isso se deve a liquidez extremamente baixa.\nSe você ainda quiser trocar, use o site %@.";
+"swap.confirmation.impact_too_high" = "Esta troca resultaria em uma grande perda (%@) devido à liquidez muito baixa.";
 "swap.confirmation.impact_warning" = "Importante! Você está recebendo um preço extremamente desfavorável. Isso se deve a uma liquidez extremamente baixa.";
 
 "swap.confirmation.minimum_received" = "Garantido";
@@ -817,6 +850,8 @@
 "swap_history.title" = "Histórico de Swaps";
 "swap_history.all" = "Todos";
 "swap_history.empty" = "Você ainda não tem swaps pendentes ou anteriores.";
+"swap_history.status.depositing" = "Depositando…";
+"swap_history.status.swapping" = "Trocando…";
 
 // Swap Info
 
@@ -828,7 +863,7 @@
 "swap_info.view" = "Visualizar";
 "swap_info.deposit" = "Depósito %@";
 "swap_info.swap" = "Swap";
-"swap_info.send" = "Enviar %@";
+"swap_info.receive" = "Receber %@";
 "swap_info.refund" = "Reembolso %@";
 "swap_info.unknown" = "Desconhecido";
 "swap_info.request_refund" = "Solicitar reembolso";
@@ -936,7 +971,7 @@
 "market.top.floor_price" = "Andar:";
 "market.top.top_market_pairs" = "Principais Pares de Mercado";
 "market.top.top_platforms" = "Melhores Plataformas";
-"market.top.protocols" = "Protocolos";
+"market.top.protocols" = "Protocolos: %@";
 
 "market.pairs.volume" = "Volume";
 "top_pairs.title" = "Principais Pares de Mercado";
@@ -1066,8 +1101,8 @@
 "market.global.defi_cap.title" = "Mercado de DeFi";
 "market.global.defi_cap.description" = "Valor total de mercado de projetos DeFi";
 
-"market.etf.title" = "Total de Despesa líquida";
-"market.etf.description" = "A entrada líquida de um ETF é igual a seus fluxos de caixa menos outflows.";
+"market.etf.title" = "ETF de %@";
+"market.etf.description" = "Entrada líquida de todos os ETFs de %@, incluindo fundos à vista e baseados em futuros.";
 "market.etf.total_net_assets" = "Total de Ativos Líquidos";
 "market.etf.sort_by.highest_assets" = "Ativos mais altos";
 "market.etf.sort_by.lowest_assets" = "Menos Ativos";
@@ -1463,6 +1498,9 @@
 
 "transactions.ton_transaction.title" = "Ton Transação";
 "transactions.stellar_transaction.title" = "Transação Stellar";
+"transactions.xrp_transaction.title" = "Transação XRP Ledger";
+"transactions.trust_set" = "Linha de Confiança";
+"tx_info.operation_type" = "Tipo de operação";
 "transactions.contract" = "Contrato";
 
 // Transaction Info
@@ -1991,6 +2029,8 @@
 "add_token.invalid_asset_id" = "ID de ativo inválido";
 "add_token.input_placeholder.jetton_master_address" = "Endereço do Mestre Jetton";
 "add_token.input_placeholder.mint_address" = "Endereço Mint do token";
+"add_token.input_placeholder.xrp_currency" = "Código da moeda.Emissor";
+"add_token.invalid_xrp_currency" = "Referência de token XRP Ledger inválida";
 "add_token.invalid_mint_address" = "Endereço Solana inválido";
 "add_token.mint_address_not_found" = "Token não encontrado na blockchain %@";
 "add_token.coin_name" = "Nome da Moeda";
@@ -2001,6 +2041,7 @@
 
 "wallet_connect.title" = "WalletConnect";
 "wallet_connect.error.invalid_url" = "Endereço URL Inválido";
+"wallet_connect.error.expired_url" = "O link de conexão expirou, gere um novo no dApp";
 "wallet_connect.active_account" = "Carteira ativa";
 "wallet_connect.network" = "Rede";
 "wallet_connect.list.pending_requests" = "Solicitações Pendentes";
@@ -2011,6 +2052,7 @@
 "wallet_connect.main.premium_alert.subtitle.risky" = "Este site não é verificado. Conectar-se pode expô-lo a phishing e à perda de fundos.";
 "wallet_connect.main.premium_alert.subtitle.not_available" = "Falha na verificação da Proteção contra Fraudes. Conexão permitida, mas o domínio pode não ser seguro.";
 "wallet_connect.scam_protection" = "Proteção contra Fraudes";
+"wallet_connect.dapp_check" = "Verificação de dApp";
 "wallet_connect.scam_protection.deactivated" = "Desativada";
 "wallet_connect.scam_protection.risky" = "Arriscado";
 "wallet_connect.scam_protection.secure" = "Seguro";
@@ -2035,10 +2077,129 @@
 "ethereum_transaction.error.reverted" = "A transação não pode ser executada: %@";
 "wallet_connect.request_title" = "Chamada de Contrato";
 "wallet_connect.button.confirm" = "Confirmar";
+"wallet_connect.button.expired" = "Expirado";
 "wallet_connect.sign.request_title" = "Solicitação de assinatura";
+"wallet_connect.transaction.title" = "Confirmar transação";
+"wallet_connect.sign_transaction.title" = "Assinar transação";
+"wallet_connect.allowance.title" = "Autorização de Token";
+"wallet_connect.allowance.description" = "%@ poderá movimentar esses tokens em seu nome.";
+"wallet_connect.allowance.amount" = "Valor autorizado";
 "wallet_connect.sign.domain" = "Domínio";
 "wallet_connect.sign.dapp_name" = "dApp";
-"wallet_connect.sign.message" = "Mensagem não assinada";
+"wallet_connect.sign.message" = "Mensagem";
+"wallet_connect.request.transactions" = "Transações";
+"wallet_connect.request.signer" = "Signatário";
+"wallet_connect.solana.method_transfer" = "Transferência";
+"wallet_connect.solana.value" = "Valor";
+"wallet_connect.stellar.payment" = "Pagamento";
+"wallet_connect.stellar.create_account" = "Criar conta";
+"wallet_connect.stellar.account_merge" = "Mesclar conta";
+"wallet_connect.stellar.path_payment_send" = "Pagamento por caminho (Strict Send)";
+"wallet_connect.stellar.path_payment_receive" = "Pagamento por caminho (Strict Receive)";
+"wallet_connect.stellar.change_trust" = "Alterar confiança";
+"wallet_connect.stellar.manage_buy_offer" = "Gerenciar oferta de compra";
+"wallet_connect.stellar.manage_sell_offer" = "Gerenciar oferta de venda";
+"wallet_connect.stellar.passive_sell_offer" = "Criar oferta de venda passiva";
+"wallet_connect.stellar.set_options" = "Definir opções da conta";
+"wallet_connect.stellar.source" = "De";
+"wallet_connect.stellar.amount" = "Quantia";
+"wallet_connect.stellar.issuer" = "Emissor";
+"wallet_connect.stellar.send_amount" = "Quantia a enviar";
+"wallet_connect.stellar.send_max" = "Quantia máxima de envio";
+"wallet_connect.stellar.receive_min" = "Quantia mínima de recebimento";
+"wallet_connect.stellar.receive_amount" = "Quantia a receber";
+"wallet_connect.stellar.send_issuer" = "Emissor do ativo de envio";
+"wallet_connect.stellar.receive_issuer" = "Emissor do ativo de recebimento";
+"wallet_connect.stellar.asset" = "Ativo";
+"wallet_connect.stellar.pool_share" = "Participação no pool de liquidez";
+"wallet_connect.stellar.limit" = "Limite de Trustline";
+"wallet_connect.stellar.selling_asset" = "Ativo de venda";
+"wallet_connect.stellar.buying_asset" = "Ativo de compra";
+"wallet_connect.stellar.selling_issuer" = "Emissor do ativo de venda";
+"wallet_connect.stellar.buying_issuer" = "Emissor do ativo de compra";
+"wallet_connect.stellar.buy_amount" = "Quantia a comprar";
+"wallet_connect.stellar.sell_amount" = "Quantia a vender";
+"wallet_connect.stellar.buy_price" = "Preço (Venda por Compra)";
+"wallet_connect.stellar.sell_price" = "Preço (Compra por Venda)";
+"wallet_connect.stellar.offer_id" = "ID da oferta";
+"wallet_connect.stellar.master_weight" = "Peso da chave mestra";
+"wallet_connect.stellar.low_threshold" = "Limite baixo";
+"wallet_connect.stellar.medium_threshold" = "Limite médio";
+"wallet_connect.stellar.high_threshold" = "Limite alto";
+"wallet_connect.stellar.set_flags" = "Definir flags";
+"wallet_connect.stellar.clear_flags" = "Limpar flags";
+"wallet_connect.stellar.inflation_destination" = "Destino de inflação";
+"wallet_connect.stellar.home_domain" = "Domínio principal";
+"wallet_connect.stellar.signer_type" = "Tipo de signatário";
+"wallet_connect.stellar.signer" = "Signatário";
+"wallet_connect.stellar.signer_weight" = "Peso do signatário";
+"wallet_connect.stellar.signer_payload" = "Payload do signatário";
+"wallet_connect.stellar.memo_id" = "ID do memo";
+"wallet_connect.stellar.memo_hash" = "Hash do memo";
+"wallet_connect.stellar.memo_return_hash" = "Hash de retorno do memo";
+"wallet_connect.stellar.permissions.title" = "Permissões da conta";
+"wallet_connect.stellar.permissions.description" = "Esta transação altera as configurações da conta ou permissões de assinatura. Revise cuidadosamente o signatário, os pesos e os limites.";
+"wallet_connect.stellar.unknown.title" = "Operações desconhecidas";
+"wallet_connect.stellar.unknown.description" = "Algumas operações não podem ser exibidas completamente. Assine apenas se você confiar no app solicitante e entender a transação.";
+"wallet_connect.solana.unknown_lookup_address" = "Desconhecido (tabela de pesquisa de endereços)";
+"wallet_connect.solana.hidden_recipient.title" = "Destinatário oculto";
+"wallet_connect.solana.hidden_recipient.text" = "Esta transação transfere fundos para um endereço carregado de uma tabela de pesquisa. O destinatário não pode ser exibido. Assine apenas se você confiar neste dApp.";
+"wallet_connect.solana.unknown_instructions.title" = "Instruções desconhecidas";
+"wallet_connect.solana.unknown_instructions.text" = "Esta transação contém instruções adicionais cujos efeitos não são exibidos. Assine apenas se você confiar neste dApp.";
+"wallet_connect.solana.unreadable_transaction.title" = "Transação ilegível";
+"wallet_connect.solana.unreadable_transaction.text" = "Os detalhes desta transação não puderam ser decodificados, então você não pode ver o que ela faz: o destinatário, a quantia e os programas estão ocultos. Continue apenas se confiar totalmente neste app.";
+"wallet_connect.verdict.token_swap_native_value" = "Este swap de tokens também envia moedas nativas";
+"wallet_connect.verdict.swap_router_unsupported" = "1inch não é suportado em %@";
+"wallet_connect.verdict.swap_not_canonical_router" = "O swap do 1inch não está endereçado ao roteador oficial";
+"wallet_connect.verdict.missing_signer" = "A solicitação não especifica o endereço de assinatura";
+"wallet_connect.verdict.malformed_signer" = "O endereço de assinatura está malformado";
+"wallet_connect.verdict.signer_not_approved" = "O endereço de assinatura não está aprovado para %@";
+"wallet_connect.verdict.chain_not_in_session" = "A cadeia %@ não faz parte da sessão aprovada";
+"wallet_connect.verdict.origin_scam" = "Este dApp está marcado como golpe";
+"wallet_connect.verdict.origin_invalid" = "A origem do dApp não corresponde ao domínio verificado";
+"wallet_connect.verdict.typed_data_no_chain" = "Os dados tipados não possuem ID de cadeia, a assinatura pode ser reproduzida em outras cadeias";
+"wallet_connect.verdict.typed_data_chain_not_approved" = "O ID de cadeia %@ dos dados tipados não está aprovado";
+"wallet_connect.verdict.eth_sign_blind_hash" = "eth_sign sobre um hash bruto de 32 bytes é assinatura cega";
+"wallet_connect.verdict.eth_sign_unreadable" = "A mensagem eth_sign não é texto legível";
+"wallet_connect.verdict.solana_message_is_transaction" = "Esta mensagem é uma transação disfarçada, assiná-la a autorizaria";
+"wallet_connect.verdict.solana_message_unreadable" = "A mensagem solana_signMessage não é texto legível";
+"wallet_connect.verdict.permit_unlimited" = "Ao assinar, você permite que %@ mova qualquer quantidade deste token da sua carteira a qualquer momento até que a autorização seja revogada";
+"wallet_connect.sign_transaction.description" = "%@ receberá a transação assinada e poderá transmiti-la a qualquer momento.";
+"wallet_connect.connect.title" = "Conectar a %@";
+"wallet_connect.session.title" = "Conectado a %@";
+"wallet_connect.connect.wallet" = "Carteira";
+"wallet_connect.connect.description" = "Ao conectar, você permite que este app veja seu endereço público.";
+"wallet_connect.connect.unsupported" = "Este dApp requer redes ou métodos que esta carteira não suporta";
+"wallet_connect.defense.safe.title" = "Seguro";
+"wallet_connect.defense.safe.text" = "Eu verifiquei. Este dApp é seguro para conectar.";
+"wallet_connect.defense.danger.title" = "Perigo!";
+"wallet_connect.defense.danger.text" = "Este dApp não é verificado. Conectar pode colocar seus fundos em risco.";
+"wallet_connect.defense.scam.title" = "Golpe conhecido!";
+"wallet_connect.defense.scam.text" = "Este site está em uma lista de domínios maliciosos conhecidos. Conectar muito provavelmente resultará em perda de fundos.";
+"wallet_connect.defense.attention.title" = "Atenção!";
+"wallet_connect.defense.attention.text" = "Você pode se conectar a um site falso e perder fundos. Ative-me para ficar protegido.";
+"wallet_connect.defense.activate" = "Ativar";
+"wallet_connect.defense.loading" = "Verificando este dApp…";
+"wallet_connect.defense.not_available" = "A verificação de dApp não está disponível no momento";
+"wallet_connect.sign.request_type" = "Tipo de solicitação";
+"wallet_connect.sign.contract" = "Contrato";
+"wallet_connect.sign.network" = "Rede";
+"wallet_connect.list.requests" = "Solicitações";
+"wallet_connect.list.request.sign" = "Assinar";
+"wallet_connect.list.request.confirm" = "Confirmar";
+"wallet_connect.list.request.approve" = "Aprovar";
+"wallet_connect.list.disconnect.title" = "Desconectar %@";
+"wallet_connect.list.disconnect.description" = "Tem certeza de que deseja remover esta conexão?";
+"wallet_connect.error.invalid_url.title" = "URL inválida";
+"wallet_connect.error.invalid_url.description" = "Não foi possível conectar usando este link. Verifique e tente novamente.";
+"wallet_connect.error.request_failed.title" = "Solicitação falhou";
+"wallet_connect.error.request_failed.description" = "Algo deu errado e a solicitação não pôde ser concluída";
+"wallet_connect.verify.mismatch.title" = "Personificação detectada!";
+"wallet_connect.verify.mismatch.text" = "Esta solicitação vem de %@, que não corresponde ao site que alega ser. Esta é uma técnica comum de phishing.";
+"wallet_connect.verify.mismatch.no_origin" = "Esta solicitação vem de um site diferente do que alega ser. Esta é uma técnica comum de phishing.";
+"wallet_connect.verify.unknown.title" = "Site não verificado";
+"wallet_connect.verify.unknown.text" = "A identidade deste site não pôde ser confirmada. Verifique o endereço cuidadosamente antes de conectar.";
+"button.try_again" = "Tentar novamente";
 
 "wallet_connect.send.transaction" = "Enviar Transação";
 
@@ -2223,6 +2384,7 @@
 "zcash_network.auto_select" = "Selecionar servidor automaticamente";
 "zcash_network.auto_select.description" = "Conectar ao servidor atualizado mais rápido";
 "zcash_network.unreachable" = "Inacessível";
+"xrp_network.description" = "Escolha o nó que o app Unstoppable deve usar para sincronizar a(s) carteira(s).";
 
 "add_zcash_node.title" = "Adicionar servidor";
 "add_zcash_node.description" = "Insira o endereço do servidor lightwalletd (host ou host:porta).";
@@ -2251,7 +2413,7 @@
 "fee_settings.replace_by_fee.description" = "Essa opção permite que você reenvie uma transação travada aumentando o valor da taxa.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "O TimeLock funciona apenas para envios a endereços BIP44 (que começam com 1).";
-"fee_settings.time_lock.private_send_unavailable" = "Não disponível quando o Envio Privado está ativado.";
+"fee_settings.time_lock.not_applied" = "Não aplicado ao Envio Privado e ao Cross Pay.";
 
 "fee_settings.network_fee" = "Taxa de Rede";
 "fee_settings.network_fee.info" = "O custo estimado do envio de determinada transação na rede.";
@@ -2596,19 +2758,23 @@
 "open_crypto_pay.tx_info.proof_status.pending" = "Pendente";
 "open_crypto_pay.tx_info.proof_status.reconciliation" = "Reconciliação necessária";
 
-"balance.pay" = "Pagar";
-"cross_pay.title" = "Pagar";
 "cross_pay.send_to" = "Enviar para";
 "cross_pay.select_token" = "Selecionar token";
-"cross_pay.review" = "Revisar";
 "cross_pay.you_pay" = "Você paga";
 "cross_pay.you_pay.info" = "O valor depositado para financiar este pagamento, incluindo o custo de câmbio do provedor e uma reserva de slippage reembolsável. Qualquer parte não utilizada da reserva é devolvida à sua carteira.";
 "cross_pay.caution.insufficient_balance %@" = "Este pagamento precisa de %@ na sua carteira, incluindo taxas.";
-"cross_pay.error.token_unsupported" = "Este token não é compatível com pagamentos.";
-"cross_pay.error.below_minimum %@" = "O valor mínimo de pagamento é %@.";
-"cross_pay.error.above_maximum %@" = "O valor máximo de pagamento é %@.";
-"cross_pay.error.no_route" = "Nenhuma rota de pagamento está disponível para este token e valor.";
-"cross_pay.error.provider_suspended" = "O provedor de pagamento está temporariamente suspenso. Tente novamente mais tarde.";
-"cross_pay.error.network" = "Ocorreu um erro de rede. Verifique sua conexão e tente novamente.";
-"cross_pay.error.commit_failed" = "Não foi possível configurar este pagamento. Atualize para tentar novamente.";
+"cross_pay.error.token_unsupported" = "Token não suportado";
+"cross_pay.error.below_minimum %@" = "O valor mínimo é %@";
+"cross_pay.error.above_maximum %@" = "O valor máximo é %@";
+"cross_pay.error.no_route" = "Nenhuma rota disponível";
+"cross_pay.error.provider_suspended" = "O provedor de pagamento está temporariamente indisponível. Tente novamente mais tarde.";
+"cross_pay.error.network" = "Falha na cotação. Verifique a conexão.";
+"cross_pay.error.commit_failed" = "Não foi possível configurar o pagamento. Tente novamente mais tarde.";
 "cross_pay.unavailable" = "Pagamento indisponível";
+"cross_pay.you_will_pay" = "Você pagará";
+"cross_pay.quoting" = "Cotando...";
+"cross_pay.info.title" = "CrossPay";
+"cross_pay.info.text %@" = "O CrossPay permite enviar um ativo enquanto paga com outro. Seu %@ é convertido automaticamente no ativo que o destinatário recebe.";
+
+"swap.amount_min" = "(mín.)";
+"swap.amount_max" = "(máx.)";

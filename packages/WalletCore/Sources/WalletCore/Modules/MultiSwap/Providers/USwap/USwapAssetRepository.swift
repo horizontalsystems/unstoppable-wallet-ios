@@ -25,7 +25,9 @@ public final class USwapAssetRepository {
         "8453": .base,
         "324": .zkSync,
         "4663": .robinhood,
+        "5042": .arc,
         "stellar": .stellar,
+        "ripple": .xrp,
         "zano": .zano,
     ]
 
@@ -190,7 +192,7 @@ extension USwapAssetRepository {
 private extension USwapAssetRepository {
     static func tokenQueries(blockchainType: BlockchainType, address: String?, ticker: String?) -> [TokenQuery] {
         switch blockchainType {
-        case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .tron, .base, .zkSync, .robinhood:
+        case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .tron, .base, .zkSync, .robinhood, .arc:
             let tokenType: TokenType
 
             if let address, !address.isEmpty {
@@ -235,6 +237,15 @@ private extension USwapAssetRepository {
                         tokenType: .stellar(code: ticker, issuer: issuer)
                     ),
                 ]
+            }
+
+            return blockchainType.nativeTokenQueries
+
+        case .xrp:
+            // Native XRP only: the server lists no XRPL issued currency, and a trust-line asset
+            // has no canonical id, so it could not even be suspended (Android USwapProvider).
+            guard address?.isEmpty ?? true else {
+                return []
             }
 
             return blockchainType.nativeTokenQueries

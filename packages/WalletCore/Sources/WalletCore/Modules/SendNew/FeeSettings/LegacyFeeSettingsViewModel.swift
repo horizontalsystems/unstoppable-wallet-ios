@@ -41,7 +41,7 @@ class LegacyFeeSettingsViewModel: ObservableObject {
 
     private func sync() {
         applyEnabled = service.currentGasPrice != gasPrice
-        resetEnabled = service.recommendedGasPrice != gasPrice
+        resetEnabled = service.defaultGasPrice != gasPrice
 
         let warnings = EvmTransactionService.validateGasPrice(recommended: service.recommendedGasPrice, current: gasPrice)
         cautions = warnings.map(\.caution)
@@ -79,17 +79,17 @@ extension LegacyFeeSettingsViewModel {
     }
 
     func onReset() {
-        if case let .legacy(gasPrice) = service.recommendedGasPrice {
+        if case let .legacy(gasPrice) = service.defaultGasPrice {
             _gasPriceValue = feeViewItemFactory.decimalValue(value: gasPrice).description
             handleChange()
         }
     }
 
     func apply() {
-        guard let gasPrice, let recommendedGasPrice = service.recommendedGasPrice else {
+        guard let gasPrice, let defaultGasPrice = service.defaultGasPrice else {
             return
         }
 
-        service.set(gasPrice: gasPrice == recommendedGasPrice ? nil : gasPrice)
+        service.set(gasPrice: gasPrice == defaultGasPrice ? nil : gasPrice)
     }
 }

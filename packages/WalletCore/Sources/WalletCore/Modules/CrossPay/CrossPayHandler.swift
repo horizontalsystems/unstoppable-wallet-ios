@@ -66,6 +66,11 @@ extension CrossPayHandler: ISendHandler {
     var refreshPublisher: AnyPublisher<Void, Never>? { nil }
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
+        // committedOrder() creates an order with the provider, so the account is checked before it
+        guard accountManager.activeAccount?.watchAccount != true else {
+            throw CrossPayError.commitFailed
+        }
+
         let generation = withLock { () -> Int in
             self.syncGeneration += 1
             return self.syncGeneration
@@ -75,30 +80,23 @@ extension CrossPayHandler: ISendHandler {
 
         try Task.checkCancellation()
 
-        // Re-evaluated here: the deposit address only exists after the commit.
-        let memoText: String?
+        // The deposit, never the entered amount — different quantities in different tokens. Settings
+        // come from the request's immutable snapshot, never from a live UI-owned handler. The
+        // attachment is re-evaluated here (the deposit address only exists after the commit): a
+        // deposit the provider cannot match is typically unrecoverable, so one the chain's handler
+        // cannot carry fails rather than being dropped.
+        let result: SendDataResult
 
-        switch order.attachment {
-        case .none:
-            memoText = nil
-        case let .some(.text(value)):
-            // A deposit the provider cannot match by memo is typically unrecoverable — an
-            // undeliverable memo fails rather than being dropped.
-            guard preSendHandler.memoType(address: order.depositAddress).deliversAttachment else {
-                throw CrossPayError.commitFailed
-            }
-            memoText = value
-        case .some:
-            // No send path carries an unknown attachment kind.
+        do {
+            result = try preSendHandler.depositSendData(
+                amount: order.depositAmount,
+                address: order.depositAddress,
+                attachment: order.attachment,
+                settings: order.request.depositSettings
+            )
+        } catch {
             throw CrossPayError.commitFailed
         }
-
-        // The deposit, never the entered amount — different quantities in different tokens.
-        let result = preSendHandler.sendData(
-            amount: order.depositAmount,
-            address: order.depositAddress,
-            memo: memoText
-        )
 
         guard case let .valid(innerSendData) = result else {
             throw CrossPayError.commitFailed
@@ -167,6 +165,7 @@ extension CrossPayHandler: ISendHandler {
                 accountId: account.id,
                 providerId: order.providerId,
                 status: .notStarted,
+                operation: .crossPay,
                 tokenIn: order.request.tokenIn,
                 tokenOut: order.request.tokenOut,
                 amountIn: order.depositAmount,
@@ -177,6 +176,7 @@ extension CrossPayHandler: ISendHandler {
                 providerSwapId: order.providerSwapId,
                 sourceAddress: nil,
                 refundAddress: order.refundAddress,
+                estimatedTime: order.estimatedTime,
                 date: Date()
             ))
         }

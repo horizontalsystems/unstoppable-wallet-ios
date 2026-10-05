@@ -322,6 +322,15 @@ public extension USwapMultiSwapApi {
         return response.providerError
     }
 
+    // A refused /v2/rate may also answer a non-2xx carrying the same { routes, providerErrors } envelope
+    internal static func rateProviderErrors(json: Any?) -> [ProviderError] {
+        guard let json = json as? [String: Any], let response = Mapper<RateResponse>().map(JSON: json) else {
+            return []
+        }
+
+        return response.providerErrors.map(\.providerError)
+    }
+
     struct ProviderDescriptor {
         public let id: String
         public let executionType: String
@@ -562,9 +571,27 @@ public extension USwapMultiSwapApi {
             }
         }
 
+        // The mirror of `memo` for the chains whose crediting identifier is a numeric field of
+        // the transaction rather than a memo (XRP's Payment.DestinationTag). A text attachment is
+        // refused here for the same reason a tag is refused above: it would have to ride a memo the
+        // provider never reads, and an unmatched deposit is typically unrecoverable.
+        public static func destinationTag(_ attachment: Attachment?) throws -> UInt32? {
+            switch attachment {
+            case .none: return nil
+            case let .some(.destinationTag(value)):
+                // the wire value is a string even when the server sends a JSON number
+                guard let tag = XrpDestinationTag.parse(value) else { throw AttachmentError.outOfRange }
+                return tag
+            case .some: throw AttachmentError.unsupported
+            }
+        }
+
         public enum AttachmentError: Error {
             // A destination tag or an attachment kind this app does not know how to carry.
             case unsupported
+            // A numeric identifier the chain's field cannot hold; truncating it would credit
+            // somebody else's order.
+            case outOfRange
             // A text memo the transaction could technically hold, but which would never reach the
             // provider on this chain (local-only or encrypted on-chain).
             case undeliverable
@@ -829,7 +856,8 @@ extension USwapMultiSwapApi {
         let providerErrors: [ProviderErrorResponse]
 
         init(map: Map) throws {
-            routes = try map.value("routes")
+            // A full refusal may omit routes (or send null) and carry only providerErrors; malformed routes still fail
+            routes = map.JSON["routes"] == nil || map.JSON["routes"] is NSNull ? [] : try map.value("routes")
             providerErrors = (try? map.value("providerErrors")) ?? []
         }
     }

@@ -177,21 +177,15 @@ public class CellBuilderNew {
         case let .vStack(elements, _): return stackComponent(axis: .vertical, elements: elements)
         case let .vStackCentered(elements, _): return stackComponent(axis: .vertical, elements: elements, centered: true)
         case .text: return TextComponent()
-        case .textButton: return TextButtonComponent()
         case .image16: return ImageComponent(size: .iconSize16)
         case .image20: return ImageComponent(size: .iconSize20)
         case .image24: return ImageComponent(size: .iconSize24)
         case .image32: return ImageComponent(size: .iconSize32)
-        case .transactionImage: return TransactionImageComponent()
         case .switch: return SwitchComponent()
         case .primaryButton: return PrimaryButtonComponent()
-        case .primaryCircleButton: return PrimaryCircleButtonComponent()
         case .secondaryButton: return SecondaryButtonComponent()
         case .secondaryCircleButton: return SecondaryCircleButtonComponent()
         case .badge: return BadgeComponent()
-        case .spinner20: return SpinnerComponent(style: .small20)
-        case .spinner24: return SpinnerComponent(style: .medium24)
-        case .spinner48: return SpinnerComponent(style: .large48)
         case .determiniteSpinner20: return DeterminiteSpinnerComponent(size: .iconSize20)
         case .determiniteSpinner24: return DeterminiteSpinnerComponent(size: .iconSize24)
         case .determiniteSpinner48: return DeterminiteSpinnerComponent(size: .iconSize48)
@@ -224,21 +218,15 @@ public extension CellBuilderNew {
         case margin32
 
         case text(_ bind: (TextComponent) -> Void)
-        case textButton(_ bind: (TextButtonComponent) -> Void)
         case image16(_ bind: (ImageComponent) -> Void)
         case image20(_ bind: (ImageComponent) -> Void)
         case image24(_ bind: (ImageComponent) -> Void)
         case image32(_ bind: (ImageComponent) -> Void)
-        case transactionImage(_ bind: (TransactionImageComponent) -> Void)
         case `switch`(_ bind: (SwitchComponent) -> Void)
         case primaryButton(_ bind: (PrimaryButtonComponent) -> Void)
-        case primaryCircleButton(_ bind: (PrimaryCircleButtonComponent) -> Void)
         case secondaryButton(_ bind: (SecondaryButtonComponent) -> Void)
         case secondaryCircleButton(_ bind: (SecondaryCircleButtonComponent) -> Void)
         case badge(_ bind: (BadgeComponent) -> Void)
-        case spinner20(_ bind: (SpinnerComponent) -> Void)
-        case spinner24(_ bind: (SpinnerComponent) -> Void)
-        case spinner48(_ bind: (SpinnerComponent) -> Void)
         case determiniteSpinner20(_ bind: (DeterminiteSpinnerComponent) -> Void)
         case determiniteSpinner24(_ bind: (DeterminiteSpinnerComponent) -> Void)
         case determiniteSpinner48(_ bind: (DeterminiteSpinnerComponent) -> Void)
@@ -257,21 +245,15 @@ public extension CellBuilderNew {
             case .margin24: return "margin24"
             case .margin32: return "margin32"
             case .text: return "text"
-            case .textButton: return "textButton"
             case .image16: return "image16"
             case .image20: return "image20"
             case .image24: return "image24"
             case .image32: return "image32"
-            case .transactionImage: return "transactionImage"
             case .switch: return "switch"
             case .primaryButton: return "primaryButton"
-            case .primaryCircleButton: return "primaryCircleButton"
             case .secondaryButton: return "secondaryButton"
             case .secondaryCircleButton: return "secondaryCircleButton"
             case .badge: return "badge"
-            case .spinner20: return "spinner20"
-            case .spinner24: return "spinner24"
-            case .spinner48: return "spinner48"
             case .determiniteSpinner20: return "determiniteSpinner20"
             case .determiniteSpinner24: return "determiniteSpinner24"
             case .determiniteSpinner48: return "determiniteSpinner48"
@@ -300,16 +282,8 @@ public extension CellBuilderNew {
                 if let component = view as? TextComponent {
                     bind(component)
                 }
-            case let .textButton(bind):
-                if let component = view as? TextButtonComponent {
-                    bind(component)
-                }
             case let .image16(bind), let .image20(bind), let .image24(bind), let .image32(bind):
                 if let component = view as? ImageComponent {
-                    bind(component)
-                }
-            case let .transactionImage(bind):
-                if let component = view as? TransactionImageComponent {
                     bind(component)
                 }
             case let .switch(bind):
@@ -318,10 +292,6 @@ public extension CellBuilderNew {
                 }
             case let .primaryButton(bind):
                 if let component = view as? PrimaryButtonComponent {
-                    bind(component)
-                }
-            case let .primaryCircleButton(bind):
-                if let component = view as? PrimaryCircleButtonComponent {
                     bind(component)
                 }
             case let .secondaryButton(bind):
@@ -334,10 +304,6 @@ public extension CellBuilderNew {
                 }
             case let .badge(bind):
                 if let component = view as? BadgeComponent {
-                    bind(component)
-                }
-            case let .spinner20(bind), let .spinner24(bind), let .spinner48(bind):
-                if let component = view as? SpinnerComponent {
                     bind(component)
                 }
             case let .determiniteSpinner20(bind), let .determiniteSpinner24(bind), let .determiniteSpinner48(bind):

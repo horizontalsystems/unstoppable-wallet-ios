@@ -107,15 +107,12 @@ public class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     public func confirmationQuote(multiSwapQuote _: MultiSwapQuote, tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote {
         let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient)
 
-        // The memo carries the swap instruction; an inbound transfer without it is an
-        // unrecoverable donation to the vault. swapQuote resolves the destination strictly
-        // here, so a missing memo means the node itself withheld one.
-        let memo = try swapQuote.requiredMemo()
-
-        // the recipient is where the funds actually go; without one the account's own
-        // address is resolved (and must resolve — else the swap has no destination)
+        // Resolve the output recipient strictly and validate the node's memo before
+        // constructing any deposit transaction. Dry quotes never reach this path.
         let toAddress = try await resolveDestination(recipient: recipient, token: tokenOut)
+        let memo = try swapQuote.requiredMemo(expectedDestination: toAddress, blockchainType: tokenOut.blockchainType)
 
+        let finalQuote: SwapFinalQuote
         switch tokenIn.blockchainType {
         case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum:
             guard let router = swapQuote.router else {
@@ -176,7 +173,7 @@ public class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             // (native deposits transfer directly to the inbound address and carry no approval)
             let approval = (try? EvmKit.Address(hex: router)).flatMap { SwapApproval.build(spender: $0, tokenIn: tokenIn, amountIn: amountIn) }
 
-            return EvmSwapFinalQuote(
+            finalQuote = EvmSwapFinalQuote(
                 expectedBuyAmount: swapQuote.expectedAmountOut,
                 transactionData: transactionData,
                 transactionError: transactionError,
@@ -221,7 +218,7 @@ public class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 }
             }
 
-            return UtxoSwapFinalQuote(
+            finalQuote = UtxoSwapFinalQuote(
                 expectedBuyAmount: swapQuote.expectedAmountOut,
                 sendParameters: params,
                 slippage: slippage,
@@ -256,7 +253,7 @@ public class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 }
             }
 
-            return ThorChainSwapFinalQuote(
+            finalQuote = ThorChainSwapFinalQuote(
                 amountIn: amountIn,
                 expectedAmountOut: swapQuote.expectedAmountOut,
                 recipient: recipient,
@@ -272,6 +269,8 @@ public class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         default:
             throw SwapError.unsupportedTokenIn
         }
+        finalQuote.setDeposit(address: swapQuote.inboundAddress, memo: memo)
+        return finalQuote
     }
 
     private func estimatedTime(_ swapQuote: SwapQuote, tokenOut: Token) -> TimeInterval {
@@ -564,6 +563,12 @@ extension BaseThorChainMultiSwapProvider {
                 throw SwapError.noMemo
             }
 
+            return memo
+        }
+
+        func requiredMemo(expectedDestination: String, blockchainType: BlockchainType) throws -> String {
+            let memo = try requiredMemo()
+            try ThorChainSwapMemo.validate(memo, expectedDestination: expectedDestination, blockchainType: blockchainType)
             return memo
         }
 

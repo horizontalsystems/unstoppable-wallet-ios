@@ -1,0 +1,181 @@
+import Foundation
+import SwiftUI
+
+// Routes module events to screens; the only place UI knows how requests and proposals are shown
+enum WCPresenter {
+    static func pair(uri: String) {
+        guard let manager = Core.shared.walletConnect else { return }
+        guard let account = Core.shared.accountManager.activeAccount else {
+            presentNoAccount()
+            return
+        }
+
+        // a watch account signs nothing, so pairing would only end in an unsupported proposal
+        guard account.type.supportsWalletConnect else {
+            presentNotSupported(accountType: account.type)
+            return
+        }
+
+        Task {
+            do {
+                let kit = try manager.kit()
+                await MainActor.run {
+                    HudHelper.instance.show(banner: .waitingForSession)
+                }
+                try await kit.pair(uri: uri)
+            } catch let error as WCPairingService.PairingError where error != .proposalTimeout {
+                await MainActor.run {
+                    hideWaiting()
+                    presentInvalidUrl(error: error)
+                }
+            } catch {
+                await MainActor.run {
+                    hideWaiting()
+                    HudHelper.instance.show(banner: .error(string: error.smartDescription))
+                }
+            }
+        }
+    }
+
+    static func present(proposal item: WCProposalItem) {
+        hideWaiting()
+        let viewModel = WCConnectViewModel(item: item)
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            WCConnectView(viewModel: viewModel, isPresented: isPresented)
+        } onDismiss: {
+            // reject on any dismissal (swipe/cancel); a no-op once connect finished (guarded by `finished`)
+            viewModel.reject()
+        }
+    }
+
+    static func present(request item: WCRequestItem) {
+        guard item.request?.isExpired != true else {
+            Core.shared.walletConnect?.startedKit?.notifyRequestDismissed()
+            return
+        }
+        switch item.result {
+        case let .transaction(_, sendData):
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                WCSendSheetView(item: item, sendData: sendData, isPresented: isPresented)
+            } onDismiss: {
+                Core.shared.walletConnect?.startedKit?.notifyRequestDismissed()
+            }
+        case .signMessage:
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                WCSignMessageSheetView(item: item, isPresented: isPresented)
+            } onDismiss: {
+                Core.shared.walletConnect?.startedKit?.notifyRequestDismissed()
+            }
+        case .direct, .rejected:
+            ()
+        }
+    }
+
+    static func presentInvalidUrl(error: WCPairingService.PairingError) {
+        let description = error == .expiredUri ? "wallet_connect.error.expired_url".localized : "wallet_connect.error.invalid_url.description".localized
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            BottomSheetView(
+                items: [
+                    .title(icon: ThemeImage.error, title: "wallet_connect.error.invalid_url.title".localized),
+                    .text(text: description),
+                    .buttonGroup(.init(buttons: [
+                        .init(style: .gray, title: "button.cancel".localized) {
+                            isPresented.wrappedValue = false
+                        },
+                        .init(style: .yellow, title: "button.try_again".localized) {
+                            isPresented.wrappedValue = false
+                            presentScanner()
+                        },
+                    ], alignment: .horizontal)),
+                ]
+            )
+        }
+    }
+
+    static func presentRequestFailed() {
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            BottomSheetView(
+                items: [
+                    .title(icon: ThemeImage.error, title: "wallet_connect.error.request_failed.title".localized),
+                    .text(text: "wallet_connect.error.request_failed.description".localized),
+                    .buttonGroup(.init(buttons: [
+                        .init(style: .gray, title: "button.close".localized) {
+                            isPresented.wrappedValue = false
+                        },
+                    ])),
+                ]
+            )
+        }
+    }
+
+    static func presentDisconnect(dAppName: String, host: String, iconUrl: String?, onDisconnect: @escaping () -> Void) {
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            BottomSheetView(
+                items: [
+                    .custom(view: AnyView(WCDAppTitleView(iconUrl: iconUrl, title: "wallet_connect.list.disconnect.title".localized(dAppName), showGrabber: true))),
+                    .subtitle(text: host),
+                    .text(text: "wallet_connect.list.disconnect.description".localized),
+                    .buttonGroup(.init(buttons: [
+                        .init(style: .gray, title: "wallet_connect.button_disconnect".localized) {
+                            isPresented.wrappedValue = false
+                            onDisconnect()
+                        },
+                    ])),
+                ]
+            )
+        }
+    }
+
+    static func presentNoAccount() {
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            BottomSheetView(
+                items: [
+                    .title(icon: ThemeImage.warning, title: "wallet_connect.title".localized),
+                    .warning(text: "wallet_connect.no_account.description".localized),
+                    .buttonGroup(.init(buttons: [
+                        .init(style: .yellow, title: "button.ok".localized) {
+                            isPresented.wrappedValue = false
+                        },
+                    ])),
+                ]
+            )
+        }
+    }
+
+    static func presentNotSupported(accountType: AccountType) {
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            BottomSheetView(
+                items: [
+                    .title(icon: ThemeImage.warning, title: "wallet_connect.title".localized),
+                    .warning(text: "wallet_connect.non_supported_account.description".localized(accountType.description)),
+                    .buttonGroup(.init(buttons: [
+                        .init(style: .yellow, title: "wallet_connect.non_supported_account.switch".localized) {
+                            isPresented.wrappedValue = false
+
+                            DispatchQueue.main.async {
+                                Coordinator.shared.present { _ in
+                                    SwitchAccountView()
+                                }
+                            }
+                        },
+                    ])),
+                ]
+            )
+        }
+    }
+
+    private static func presentScanner() {
+        Coordinator.shared.present { isPresented in
+            ScanQrViewNew(reportAfterDismiss: true, isPresented: isPresented) { uri in
+                pair(uri: uri)
+            }
+            .ignoresSafeArea()
+        }
+    }
+
+    private static func hideWaiting() {
+        if HUD.instance.tag == HudHelper.BannerType.waitingForSessionKey {
+            HudHelper.instance.hide()
+        }
+    }
+}

@@ -6,7 +6,7 @@ import MarketKit
 import RxSwift
 
 class EvmPreSendHandler: PreSendHandler {
-    override class func instance(wallet: Wallet, address _: ResolvedAddress) -> IPreSendHandler? {
+    override class func instance(wallet: Wallet, address _: ResolvedAddress?) -> IPreSendHandler? {
         guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? ISendEthereumAdapter & IBalanceAdapter else { return nil }
         return EvmPreSendHandler(token: wallet.token, adapter: adapter)
     }

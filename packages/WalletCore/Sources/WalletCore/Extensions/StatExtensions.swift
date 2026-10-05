@@ -68,34 +68,6 @@ extension MarketGlobalModule.MetricsType {
     }
 }
 
-extension CoinProChartModule.ProChartType {
-    var statPage: StatPage {
-        switch self {
-        case .cexVolume: return .coinAnalyticsCexVolume
-        case .dexVolume: return .coinAnalyticsDexVolume
-        case .dexLiquidity: return .coinAnalyticsDexLiquidity
-        case .activeAddresses: return .coinAnalyticsActiveAddresses
-        case .txCount: return .coinAnalyticsTxCount
-        case .tvl: return .coinAnalyticsTvl
-        }
-    }
-}
-
-extension RankViewModel.RankType {
-    var statRankType: StatPage {
-        switch self {
-        case .cexVolume: return .coinRankCexVolume
-        case .dexVolume: return .coinRankDexVolume
-        case .dexLiquidity: return .coinRankDexLiquidity
-        case .address: return .coinRankAddress
-        case .txCount: return .coinRankTxCount
-        case .holders: return .coinRankHolders
-        case .fee: return .coinRankFee
-        case .revenue: return .coinRankRevenue
-        }
-    }
-}
-
 extension MarketModule.Top {
     var statMarketTop: StatMarketTop {
         switch self {
@@ -141,31 +113,6 @@ extension MarketModule.SortOrder {
         switch self {
         case .asc: return .lowestVolume
         case .desc: return .highestVolume
-        }
-    }
-}
-
-extension MarketTvlViewModel.DiffType {
-    var statField: String {
-        switch self {
-        case .percent: return "percent"
-        case .currencyValue: return "currency"
-        }
-    }
-}
-
-extension MarketTvlViewModel.Platforms {
-    var statPlatform: String {
-        switch self {
-        case .all: return "all"
-        case .ethereum: return "Ethereum"
-        case .solana: return "Solana"
-        case .binance: return "Binance"
-        case .avalanche: return "Avalanche"
-        case .terra: return "Terra"
-        case .fantom: return "Fantom"
-        case .arbitrum: return "Arbitrum"
-        case .polygon: return "Polygon"
         }
     }
 }

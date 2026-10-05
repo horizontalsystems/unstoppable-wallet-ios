@@ -758,6 +758,46 @@ class TransactionInfoViewItemFactory {
 
             feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(appValue: $0, rate: _rate($0.coin))) }
 
+        case let record as XrpTransactionRecord:
+            var viewItems: [TransactionInfoModule.ViewItem]
+
+            switch record.type {
+            case let .send(value, to, sentToSelf):
+                viewItems = sendSection(source: record.source, appValue: value, to: to, rates: item.rates, sentToSelf: sentToSelf, balanceHidden: balanceHidden)
+
+                if sentToSelf {
+                    viewItems.append(.sentToSelf)
+                }
+
+            case let .receive(value, from):
+                viewItems = receiveSection(source: record.source, appValue: value, from: from, rates: item.rates, balanceHidden: balanceHidden)
+
+            case let .trustSet(value, _):
+                let rate = _rate(value.coin)
+
+                viewItems = [
+                    amount(source: record.source, title: "transactions.trust_set".localized, subtitle: nil, appValue: value, rate: rate, type: .neutral, balanceHidden: balanceHidden),
+                ]
+
+                viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: value.coin?.code)))
+
+            case let .unsupported(type):
+                viewItems = [.value(title: "tx_info.operation_type".localized, value: type)]
+            }
+
+            // the tag is the counterparty's crediting id, shown next to the memo as on Android
+            if let destinationTag = record.destinationTag {
+                viewItems.append(.value(title: "send.xrp.destination_tag".localized, value: String(destinationTag)))
+            }
+
+            if let memo = record.memo {
+                viewItems.append(.memo(text: memo))
+            }
+
+            sections.append(.init(viewItems))
+
+            feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(appValue: $0, rate: _rate($0.coin))) }
+
         case let record as ZcashShieldingTransactionRecord:
             sections.append(.init([.actionTitle(iconName: record.direction.txIconName, iconDimmed: false, title: record.direction.txTitle, subTitle: nil)]))
 

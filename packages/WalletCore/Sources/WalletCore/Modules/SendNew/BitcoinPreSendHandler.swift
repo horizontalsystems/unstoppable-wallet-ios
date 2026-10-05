@@ -8,9 +8,9 @@ import RxSwift
 import SwiftUI
 
 class BitcoinPreSendHandler: PreSendHandler {
-    override class func instance(wallet: Wallet, address: ResolvedAddress) -> IPreSendHandler? {
+    override class func instance(wallet: Wallet, address _: ResolvedAddress?) -> IPreSendHandler? {
         guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? BitcoinBaseAdapter else { return nil }
-        return BitcoinPreSendHandler(token: wallet.token, address: address, adapter: adapter)
+        return BitcoinPreSendHandler(token: wallet.token, adapter: adapter)
     }
 
     let token: Token
@@ -39,7 +39,7 @@ class BitcoinPreSendHandler: PreSendHandler {
     }
 
     let rbfAllowed: Bool
-    let lockTimeIntervalState: LockTimeIntervalState
+    let lockTimeSupported: Bool
 
     var lockTimeInterval: HodlerPlugin.LockTimeInterval? {
         didSet {
@@ -66,15 +66,7 @@ class BitcoinPreSendHandler: PreSendHandler {
     private let balanceSubject = PassthroughSubject<Decimal, Never>()
     private let settingsModifiedSubject = PassthroughSubject<Bool, Never>()
 
-    private var pluginData: [UInt8: IPluginData] {
-        guard lockTimeIntervalState == .enabled, let lockTimeInterval else {
-            return [:]
-        }
-
-        return [HodlerPlugin.id: HodlerData(lockTimeInterval: lockTimeInterval)]
-    }
-
-    init(token: Token, address: ResolvedAddress, adapter: BitcoinBaseAdapter) {
+    init(token: Token, adapter: BitcoinBaseAdapter) {
         self.token = token
         self.adapter = adapter
 
@@ -88,12 +80,7 @@ class BitcoinPreSendHandler: PreSendHandler {
         defaultRbfEnabled = rbfAllowed ? blockchainManager.transactionRbfEnabled(blockchainType: blockchainType) : false
         rbfEnabled = rbfAllowed ? defaultRbfEnabled : false
 
-        let isLegacyAddress = address.address.hasPrefix("1")
-        if blockchainType != .bitcoin {
-            lockTimeIntervalState = .inactive
-        } else {
-            lockTimeIntervalState = isLegacyAddress ? .enabled : .disabled
-        }
+        lockTimeSupported = blockchainType == .bitcoin
 
         super.init()
 
@@ -112,6 +99,50 @@ class BitcoinPreSendHandler: PreSendHandler {
             .disposed(by: disposeBag)
 
         syncBalance()
+    }
+
+    // The time lock is a sticky user setting: it is applied only where it can be (a direct send to a
+    // P2PKH address) and silently skipped everywhere else, without being cleared.
+    static func timeLockApplicable(address: String) -> Bool {
+        address.hasPrefix("1")
+    }
+
+    private func pluginData(address: String) -> [UInt8: IPluginData] {
+        guard lockTimeSupported, let lockTimeInterval, Self.timeLockApplicable(address: address) else {
+            return [:]
+        }
+
+        return [HodlerPlugin.id: HodlerData(lockTimeInterval: lockTimeInterval)]
+    }
+
+    private var currentDepositSettings: BitcoinDepositSettings {
+        BitcoinDepositSettings(sortMode: sortMode, rbfEnabled: rbfEnabled, customUtxos: customUtxos)
+    }
+
+    private func buildSendData(
+        amount: Decimal,
+        address: String,
+        memo: String?,
+        pluginData: [UInt8: IPluginData],
+        settings: BitcoinDepositSettings
+    ) -> SendDataResult {
+        do {
+            try adapter.validate(address: address, pluginData: pluginData)
+        } catch {
+            return .invalid(cautions: [CautionNew(title: error.title, text: error.convertedError.localizedDescription, type: .error)])
+        }
+
+        let params = SendParameters(
+            address: address,
+            value: adapter.convertToSatoshi(value: amount),
+            sortType: adapter.convertToKitSortMode(sort: settings.sortMode),
+            rbfEnabled: settings.rbfEnabled,
+            memo: memo,
+            unspentOutputs: settings.customUtxos,
+            pluginData: pluginData
+        )
+
+        return .valid(sendData: .bitcoin(token: token, params: params))
     }
 
     private func syncBalance() {
@@ -164,30 +195,29 @@ extension BitcoinPreSendHandler: IPreSendHandler {
     }
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
-        do {
-            try adapter.validate(address: address, pluginData: pluginData)
-        } catch {
-            return .invalid(cautions: [CautionNew(title: error.title, text: error.convertedError.localizedDescription, type: .error)])
-        }
+        buildSendData(amount: amount, address: address, memo: memo, pluginData: pluginData(address: address), settings: currentDepositSettings)
+    }
 
-        let params = SendParameters(
-            address: address,
-            value: adapter.convertToSatoshi(value: amount),
-            sortType: adapter.convertToKitSortMode(sort: sortMode),
-            rbfEnabled: rbfEnabled,
-            memo: memo,
-            unspentOutputs: customUtxos,
-            pluginData: pluginData
-        )
+    func depositSendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
+        depositSendData(amount: amount, address: address, memo: memo, settings: nil)
+    }
 
-        return .valid(sendData: .bitcoin(token: token, params: params))
+    // The time lock is never part of the snapshot and plugin data is always empty: a deposit address
+    // must receive a plain, immediately spendable transfer.
+    var depositSettingsSnapshot: PreSendSettingsSnapshot? {
+        PreSendSettingsSnapshot(bitcoin: currentDepositSettings)
+    }
+
+    func depositSendData(amount: Decimal, address: String, memo: String?, settings: PreSendSettingsSnapshot?) -> SendDataResult {
+        buildSendData(amount: amount, address: address, memo: memo, pluginData: [:], settings: settings?.bitcoin ?? currentDepositSettings)
     }
 }
 
-extension BitcoinPreSendHandler {
-    enum LockTimeIntervalState {
-        case enabled
-        case disabled
-        case inactive
-    }
+// The deposit-relevant subset of the Bitcoin send settings, as immutable values. `@unchecked` only
+// because BitcoinCore's UnspentOutputInfo (a plain struct of Int/Data/TimeInterval/String?) does not
+// declare Sendable; every stored property is a value type.
+struct BitcoinDepositSettings: @unchecked Sendable {
+    let sortMode: TransactionDataSortMode
+    let rbfEnabled: Bool
+    let customUtxos: [UnspentOutputInfo]?
 }

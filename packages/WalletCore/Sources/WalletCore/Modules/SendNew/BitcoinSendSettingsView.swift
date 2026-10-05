@@ -48,12 +48,12 @@ struct BitcoinSendSettingsView: View {
                                 }
                             )
 
-                            if viewModel.lockTimeIntervalState != .inactive {
+                            if viewModel.lockTimeSupported {
                                 row(
                                     title: "fee_settings.time_lock".localized,
                                     subtitle: timeLockSubtitle,
                                     value: viewModel.lockTimeIntervalTitle,
-                                    action: viewModel.lockTimeIntervalState == .enabled ? {
+                                    action: {
                                         Coordinator.shared.present(type: .alert) { isPresented in
                                             OptionAlertView(
                                                 title: "fee_settings.time_lock".localized,
@@ -70,7 +70,7 @@ struct BitcoinSendSettingsView: View {
                                                 isPresented: isPresented
                                             )
                                         }
-                                    } : nil
+                                    }
                                 )
                             }
 
@@ -118,7 +118,7 @@ struct BitcoinSendSettingsView: View {
 
     private var timeLockSubtitle: AttibutedComponentText {
         let description = AttributedString("fee_settings.time_lock.description".localized + " ")
-        var warning = AttributedString("fee_settings.time_lock.private_send_unavailable".localized)
+        var warning = AttributedString("fee_settings.time_lock.not_applied".localized)
         warning.foregroundColor = Color.themeJacob
 
         return AttibutedComponentText(text: description + warning)

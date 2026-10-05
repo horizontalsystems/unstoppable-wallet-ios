@@ -11,16 +11,19 @@ enum BSModule {
         case let .title2(text):
             ThemeText(text, style: .body)
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, .margin32)
                 .padding(.top, .margin16)
         case let .subtitle(text):
             ThemeText(text, style: .subhead)
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, .margin32)
                 .padding(.bottom, .margin16)
         case let .subhead2(text):
             ThemeText(text, style: .subhead)
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, .margin32)
                 .padding(.top, .margin16)
                 .padding(.bottom, .margin24)
@@ -28,11 +31,13 @@ enum BSModule {
             ThemeText(text, style: .body, colorStyle: .secondary)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity, alignment: .center)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, .margin32)
                 .padding(.vertical, .margin16)
         case let .footer(text):
             ThemeText(text, style: .subhead)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, .margin32)
                 .padding(.top, .margin12)
                 .padding(.bottom, .margin24)

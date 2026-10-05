@@ -8,7 +8,6 @@ public class AdapterManager {
     private enum ZcashEndpointValidationError: Error {
         case noActiveAdapter
         case unavailable
-        case sendInProgress
     }
 
     private let disposeBag = DisposeBag()
@@ -21,6 +20,7 @@ public class AdapterManager {
     private let stellarKitManager: StellarKitManager
     private let zanoKitManager: ZanoKitManager
     private let solanaKitManager: SolanaKitManager
+    private let xrpKitManager: XrpKitManager
     private let moneroNodeManager: MoneroNodeManager
     private let zanoNodeManager: ZanoNodeManager
     private let zcashNodeManager: ZcashNodeManager
@@ -35,7 +35,7 @@ public class AdapterManager {
     private var _adapterData = AdapterData(adapterMap: [:], account: nil)
 
     init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager,
-         tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager, zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager,
+         tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager, zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager, xrpKitManager: XrpKitManager,
          btcBlockchainManager: BtcBlockchainManager, moneroNodeManager: MoneroNodeManager, zanoNodeManager: ZanoNodeManager, zcashNodeManager: ZcashNodeManager, thorChainKitManager: ThorChainKitManager, mayaChainKitManager: ThorChainKitManager)
     {
         self.adapterFactory = adapterFactory
@@ -46,6 +46,7 @@ public class AdapterManager {
         self.stellarKitManager = stellarKitManager
         self.zanoKitManager = zanoKitManager
         self.solanaKitManager = solanaKitManager
+        self.xrpKitManager = xrpKitManager
         self.moneroNodeManager = moneroNodeManager
         self.zanoNodeManager = zanoNodeManager
         self.zcashNodeManager = zcashNodeManager
@@ -77,6 +78,7 @@ public class AdapterManager {
         subscribe(disposeBag, mayaChainKitManager.kitUpdatedObservable) { [weak self] in self?.recreateAdapter(blockchainType: .mayaChain) }
         subscribe(disposeBag, tronKitManager.tronKitUpdatedObservable) { [weak self] in self?.handleUpdatedEvmKit(blockchainType: .tron) }
         subscribe(disposeBag, solanaKitManager.kitStoppedObservable) { [weak self] in self?.recreateAdapter(blockchainType: .solana) }
+        subscribe(disposeBag, xrpKitManager.kitStoppedObservable) { [weak self] in self?.recreateAdapter(blockchainType: .xrp) }
     }
 
     private func initAdapters(wallets: [Wallet], account: Account?) {
@@ -132,7 +134,7 @@ public class AdapterManager {
         })
     }
 
-    // Zcash changes the lightwalletd endpoint in place (synchronizer.switchTo), not by recreating the
+    // Zcash changes the lightwalletd endpoint in place (synchronizer.restartSync), not by recreating the
     // adapter over the same local DB (which would report synced from cache). switchTo validates the
     // server and throws on failure; on failure we revert the stored selection to the endpoint actually
     // applied so the UI stays in sync with reality.
@@ -256,14 +258,15 @@ extension AdapterManager {
         }
     }
 
+    private var zcashAdapter: ZcashAdapter? {
+        queue.sync {
+            _adapterData.adapterMap.first { wallet, _ in wallet.token.blockchainType == .zcash }?.value as? ZcashAdapter
+        }
+    }
+
     func validateZcashEndpoint(_ url: URL) async throws {
         let endpoint = ZcashAdapter.endpoint(url: url)
-
-        let adapter = queue.sync {
-            _adapterData.adapterMap.compactMap { wallet, adapter in
-                wallet.token.blockchainType == .zcash ? adapter as? ZcashAdapter : nil
-            }.first
-        }
+        let adapter = zcashAdapter
 
         guard let adapter else {
             // no live wallet: nothing to switch — validate reachability with the standalone
@@ -274,14 +277,7 @@ extension AdapterManager {
             return
         }
 
-        // switching reconfigures the synchronizer under a live broadcast; background-finishing
-        // work is bounded (local proving + 30s gRPC timeout per tx), so the refusal is short-lived.
-        // a migration is an ordinary send, so it holds the same "zcash-send" critical section.
-        let busy = await MainActor.run { Core.shared.backgroundTaskManager.isCriticalActive }
-        guard !busy else {
-            throw ZcashEndpointValidationError.sendInProgress
-        }
-
+        // a live send no longer refuses the switch: ZcashOperationGuard queues it behind the broadcast
         guard await adapter.isEndpointAvailable(endpoint) else {
             throw ZcashEndpointValidationError.unavailable
         }

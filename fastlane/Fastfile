@@ -126,6 +126,7 @@ def build_and_sign(match_type:, export_method:, app_ids:, scheme:, keychain_name
     export_method: export_method,
     clean: true,
     include_symbols: true,
+    disable_package_automatic_updates: true,
     export_options: {
       compileBitcode: false,
       iCloudContainerEnvironment: icloud_env,

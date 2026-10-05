@@ -40,7 +40,7 @@ class OutputSelectorViewModel2: ObservableObject {
             return false
         }
 
-        let selectedIds = (handler.customUtxos ?? all).map {
+        let selectedIds = (handler.customUtxos ?? []).map {
             OutputViewItem.id(hash: $0.transactionHash, index: $0.outputIndex)
         }
         selectedSet = Set(selectedIds)
@@ -82,7 +82,7 @@ class OutputSelectorViewModel2: ObservableObject {
 
 extension OutputSelectorViewModel2 {
     func toggle(viewItem: OutputViewItem) {
-        handler.customUtxos = handler.allUtxos.filter {
+        let selected = handler.allUtxos.filter {
             let id = OutputViewItem.id(hash: $0.transactionHash, index: $0.outputIndex)
 
             if viewItem.id == id {
@@ -92,11 +92,14 @@ extension OutputSelectorViewModel2 {
             }
         }
 
+        // nothing selected means the wallet picks the outputs itself
+        handler.customUtxos = selected.isEmpty ? nil : selected
+
         sync()
     }
 
     func unselectAll() {
-        handler.customUtxos = []
+        handler.customUtxos = nil
         sync()
     }
 

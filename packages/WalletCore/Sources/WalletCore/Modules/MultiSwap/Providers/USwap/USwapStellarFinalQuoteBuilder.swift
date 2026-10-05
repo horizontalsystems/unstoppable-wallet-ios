@@ -71,18 +71,17 @@ final class USwapStellarFinalQuoteBuilder: USwapFinalQuoteBuilder {
         )
 
         var transactionError: Error?
-        var fee: Decimal?
+        // Known before any check, so the fee row stays even when the deposit is refused (as Android)
+        let fee: Decimal? = try? await adapter.stellarKit.baseFee()
 
         do {
-            let result = try await StellarSendHelper.preparePayment(
+            _ = try await StellarSendHelper.preparePayment(
                 asset: asset,
                 amount: input.amountIn,
                 adjustNativeBalance: false,
                 accountId: deposit.address,
                 stellarKit: adapter.stellarKit
             )
-
-            fee = result.fee
         } catch {
             transactionError = error
         }

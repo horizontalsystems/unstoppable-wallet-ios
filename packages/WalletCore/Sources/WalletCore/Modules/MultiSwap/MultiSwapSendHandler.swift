@@ -12,6 +12,7 @@ class MultiSwapSendHandler: SendHandler {
     private let marketKit = Core.shared.marketKit
     private let accountManager = Core.shared.accountManager
     private let walletManager = Core.shared.walletManager
+    private let restoreSettingsManager = Core.shared.restoreSettingsManager
     private let swapHistoryManager = Core.shared.swapHistoryManager
     private let mevProtectionHelper = MevProtectionHelper()
 
@@ -136,6 +137,15 @@ extension MultiSwapSendHandler: ISendHandler {
     }
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
+        // the confirmation quote commits an order with the provider, so the account is checked before it, not after
+        guard let account = accountManager.activeAccount else {
+            throw SendError.noActiveAccount
+        }
+
+        guard !account.watchAccount else {
+            throw SwapBroadcasterError.noBroadcaster
+        }
+
         let quote = try await provider.confirmationQuote(
             multiSwapQuote: multiSwapQuote,
             tokenIn: tokenIn,
@@ -146,10 +156,6 @@ extension MultiSwapSendHandler: ISendHandler {
             transactionSettings: transactionSettings
         )
         quote.preciseEstimateTime = provider.preciseEstimateTime
-
-        guard accountManager.activeAccount != nil else {
-            throw SendError.noActiveAccount
-        }
 
         guard let broadcaster else {
             throw SwapBroadcasterError.noBroadcaster
@@ -192,6 +198,8 @@ extension MultiSwapSendHandler: ISendHandler {
            let activeAccount = accountManager.activeAccount,
            activeAccount.type.supports(token: tokenOut)
         {
+            restoreSettingsManager.saveDefaultSettingsIfNeeded(account: activeAccount, blockchainType: tokenOut.blockchainType)
+
             let wallet = Wallet(token: tokenOut, account: activeAccount)
             walletManager.save(wallets: [wallet])
         }
@@ -381,6 +389,7 @@ extension MultiSwapSendHandler {
         case noProposal
         case noActiveAccount
         case noSolanaAdapter
+        case noXrpAdapter
 
         case unsupportedTokenIn
         case unsupportedTokenOut
@@ -399,7 +408,7 @@ extension MultiSwapSendHandler {
         switch tokenIn.type {
         case .native, .derived, .addressType:
             baseToken = tokenIn
-        case .eip20, .spl, .jetton, .stellar, .zanoAsset, .thorChainAsset:
+        case .eip20, .spl, .jetton, .stellar, .zanoAsset, .thorChainAsset, .xrpAsset:
             baseToken = try? Core.shared.marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native))
         case .unsupported:
             baseToken = nil

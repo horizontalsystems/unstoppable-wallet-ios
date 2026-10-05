@@ -443,6 +443,7 @@ struct CoinOverviewView: View {
         case let .stellar(_, issuer): return issuer.shortened
         case let .zanoAsset(id): return id.shortened
         case let .thorChainAsset(denom): return denom
+        case let .xrpAsset(_, issuer): return issuer.shortened
         case let .unsupported(_, reference): return reference?.shortened
         }
     }
@@ -454,6 +455,7 @@ struct CoinOverviewView: View {
         case let .jetton(address): return address
         case let .stellar(code, issuer): return [code, issuer].joined(separator: "-")
         case let .thorChainAsset(denom): return denom
+        case let .xrpAsset(currency, issuer): return [currency, issuer].joined(separator: "-")
         case let .unsupported(_, reference): return reference
         default: return nil
         }

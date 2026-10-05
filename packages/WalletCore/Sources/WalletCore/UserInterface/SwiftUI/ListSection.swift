@@ -59,6 +59,13 @@ public struct ListSection<Content: View>: View {
                                 child
                                 HorizontalDivider()
                             }
+                        case .borderedPlain:
+                            VStack(spacing: 0) {
+                                ForEach(children) { child in
+                                    child
+                                }
+                            }
+                            .padding(.vertical, .margin8)
                         }
                     }
                     .modifier(ThemeListStyleModifier(themeListStyle: themeListStyle, selected: selected))

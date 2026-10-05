@@ -19,7 +19,7 @@ struct SwapInfoView: View {
                 content
             }
         }
-        .navigationTitle("swap_info.title".localized)
+        .navigationTitle(viewModel.swap.operation.title)
     }
 
     private var content: some View {

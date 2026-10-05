@@ -1,4 +1,5 @@
 import Foundation
+import MarketKit
 
 struct RawFullBackup {
     var accounts: [RawWalletBackup]
@@ -15,4 +16,7 @@ struct RawFullBackup {
 struct RawWalletBackup {
     let account: Account
     let enabledWallets: [WalletBackup.EnabledWallet]
+    // settings that live in the account data rather than in an enabled wallet: a Monero watch
+    // account's height, which Android writes there and reads from there
+    var restoreSettings: [BlockchainType: RestoreSettings] = [:]
 }

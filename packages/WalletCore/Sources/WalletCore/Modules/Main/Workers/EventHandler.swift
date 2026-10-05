@@ -2,7 +2,6 @@ import Combine
 import Foundation
 import MarketKit
 import SwiftUI
-import WalletConnectSign
 
 protocol IEventHandler {
     var signal: AnyPublisher<EventHandlerSignal, Never> { get }
@@ -14,10 +13,9 @@ enum EventHandlerSignal {
     case sendPage(SendTokenListViewModel.SendOptions)
     case cryptoPaySendPage(URL)
     case tonConnect(EventHandler.TonConnectParams)
-    case walletConnectHandleUrl(String)
-
-    case walletConnectProposal(WalletConnectSign.Session.Proposal)
-    case walletConnectRequest(WalletConnectRequest)
+    case walletConnectPair(String)
+    case walletConnectProposal(WCProposalItem)
+    case walletConnectRequest(WCRequestItem)
     case tonConnectRequest(TonConnectSendTransactionRequest)
     case tonConnectRequestFailed(TonConnectSendTransactionRequestError)
 

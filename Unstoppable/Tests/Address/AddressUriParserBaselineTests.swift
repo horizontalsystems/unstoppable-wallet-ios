@@ -157,6 +157,26 @@ struct AddressUriParserBaselineTests {
         #expect(result.memo == "Order123")
     }
 
+    // No standard scheme exists for the XRP Ledger; this is the one Android emits, so a QR made
+    // there scans here (BlockchainType+UriScheme).
+    @Test
+    func parseXrp() throws {
+        let result = try anyParser.parse(url: "xrp:\(AddressUriFixtures.xrp)?amount=12")
+
+        #expect(result.scheme == "xrp")
+        #expect(result.address == AddressUriFixtures.xrp)
+        #expect(result.amount == .decimals(Decimal(12)))
+    }
+
+    // XLS-2 / XLS-32 and Xaman carry the destination tag as `dt`; dropping it loses an exchange deposit
+    @Test
+    func parseXrpDestinationTag() throws {
+        let result = try anyParser.parse(url: "xrp:\(AddressUriFixtures.xrp)?amount=12&dt=123456")
+
+        #expect(result.destinationTag == "123456")
+        #expect(result.unhandledParameters.isEmpty)
+    }
+
     @Test
     func parseZcash() throws {
         let result = try anyParser.parse(url: "zcash:\(AddressUriFixtures.zecShielded)?amount=0.01")

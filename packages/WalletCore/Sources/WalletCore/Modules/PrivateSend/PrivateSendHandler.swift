@@ -11,6 +11,7 @@ final class PrivateSendHandler {
     let baseToken: Token
 
     private let request: PrivateSendRequest
+    // Created by PrivateSendHandlerProvider for this handler alone; nothing else mutates it.
     private let preSendHandler: IPreSendHandler
     private let service: PrivateSendService
     private let swapHistoryManager: SwapHistoryManager
@@ -70,6 +71,11 @@ extension PrivateSendHandler: ISendHandler {
     var refreshPublisher: AnyPublisher<Void, Never>? { nil }
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
+        // committedOrder() creates an order with the provider, so the account is checked before it
+        guard accountManager.activeAccount?.watchAccount != true else {
+            throw PrivateSendError.notQuoted
+        }
+
         let generation = withLock { () -> Int in
             self.syncGeneration += 1
             return self.syncGeneration
@@ -79,35 +85,23 @@ extension PrivateSendHandler: ISendHandler {
 
         try Task.checkCancellation()
 
-        // Re-evaluated here rather than at handler-resolution time, because the deposit address only
-        // exists after the commit.
-        let memoText: String?
+        // order.depositAmount, never the entered amount: under exact output they are structurally
+        // different quantities. Settings come from the request's immutable snapshot, never from a
+        // live UI-owned handler. The attachment is re-evaluated here rather than at handler-resolution
+        // time, because the deposit address only exists after the commit; the chain's handler decides
+        // how to carry it, and one it cannot carry fails the build.
+        let result: SendDataResult
 
-        switch order.attachment {
-        case .none:
-            memoText = nil
-        case let .some(.text(value)):
-            // The same gate the USwap deposit builders apply, through the same predicate — see
-            // MemoType.deliversAttachment for why only .onChainPublic is safe here. The handler is
-            // asked rather than the chain because it can narrow the answer by address (shielded vs
-            // transparent Zcash).
-            guard preSendHandler.memoType(address: order.depositAddress).deliversAttachment else {
-                throw PrivateSendError.attachmentUnsupported
-            }
-            memoText = value
-        case .some:
-            // No SendData case carries a destination tag, and an unknown attachment kind cannot be
-            // carried at all.
+        do {
+            result = try preSendHandler.depositSendData(
+                amount: order.depositAmount,
+                address: order.depositAddress,
+                attachment: order.attachment,
+                settings: order.request.depositSettings
+            )
+        } catch {
             throw PrivateSendError.attachmentUnsupported
         }
-
-        // order.depositAmount, never the entered amount: under exact output they are structurally
-        // different quantities.
-        let result = preSendHandler.sendData(
-            amount: order.depositAmount,
-            address: order.depositAddress,
-            memo: memoText
-        )
 
         guard case let .valid(innerSendData) = result else {
             throw PrivateSendError.innerSendDataUnavailable
@@ -178,6 +172,7 @@ extension PrivateSendHandler: ISendHandler {
             accountId: account.id,
             providerId: order.providerId,
             status: .notStarted,
+            operation: .privateSend,
             tokenIn: order.request.token,
             tokenOut: order.request.token,
             amountIn: order.depositAmount,
@@ -188,6 +183,7 @@ extension PrivateSendHandler: ISendHandler {
             providerSwapId: order.providerSwapId,
             sourceAddress: nil,
             refundAddress: order.refundAddress,
+            estimatedTime: order.estimatedTime,
             date: Date()
         ))
 

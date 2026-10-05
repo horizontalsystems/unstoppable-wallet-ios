@@ -188,17 +188,4 @@ extension MetricChartViewModel {
         let factory = MarketVaultChartFactory(currentLocale: LanguageManager.shared.currentLocale)
         return MetricChartViewModel(service: chartService, factory: factory)
     }
-
-    static func instance(coin: Coin, type: CoinProChartModule.ProChartType) -> MetricChartViewModel {
-        let chartFetcher = ProChartFetcher(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager, coin: coin, type: type)
-
-        let chartService = MetricChartService(
-            chartFetcher: chartFetcher,
-            interval: .byPeriod(.month1),
-            statPage: type.statPage
-        )
-
-        let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale)
-        return MetricChartViewModel(service: chartService, factory: factory)
-    }
 }

@@ -14,23 +14,20 @@ public class AppEventHandlerFactory {
     }
 
     private let marketKit: MarketKit.Kit
-    private let walletConnectSessionManager: WalletConnectSessionManager?
-    private let walletConnectRequestHandler: WalletConnectRequestChain?
+    private let walletConnect: WCManager?
     private let cloudBackupManager: CloudBackupManager
     private let accountManager: AccountManager
     private let lockManager: LockManager
 
     init(
         marketKit: MarketKit.Kit,
-        walletConnectSessionManager: WalletConnectSessionManager?,
-        walletConnectRequestHandler: WalletConnectRequestChain?,
+        walletConnect: WCManager?,
         cloudBackupManager: CloudBackupManager,
         accountManager: AccountManager,
         lockManager: LockManager
     ) {
         self.marketKit = marketKit
-        self.walletConnectSessionManager = walletConnectSessionManager
-        self.walletConnectRequestHandler = walletConnectRequestHandler
+        self.walletConnect = walletConnect
         self.cloudBackupManager = cloudBackupManager
         self.accountManager = accountManager
         self.lockManager = lockManager
@@ -42,14 +39,8 @@ public class AppEventHandlerFactory {
         let kinds = Self.kinds
         var handlers = [IEventHandler]()
 
-        if kinds.contains(.walletConnect), let walletConnectSessionManager, let walletConnectRequestHandler {
-            handlers.append(WalletConnectHandlerModule.handler(
-                walletConnectManager: walletConnectSessionManager,
-                walletConnectRequestHandler: walletConnectRequestHandler,
-                cloudAccountBackupManager: cloudBackupManager,
-                accountManager: accountManager,
-                lockManager: lockManager
-            ))
+        if kinds.contains(.walletConnect), let walletConnect {
+            handlers.append(WCEventHandler(manager: walletConnect))
         }
         // TonConnectEventHandler is disabled — DeepLinkRoute.tonConnect stays a known dangling route:
         // handlers.append(TonConnectEventHandler(tonConnectManager: tonConnectManager))

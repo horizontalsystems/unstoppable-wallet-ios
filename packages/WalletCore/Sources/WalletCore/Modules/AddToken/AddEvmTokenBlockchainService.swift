@@ -35,11 +35,22 @@ extension AddEvmTokenBlockchainService: IAddTokenBlockchainService {
     }
 
     func tokenQuery(reference: String) -> TokenQuery {
-        TokenQuery(blockchainType: blockchain.type, tokenType: .eip20(address: reference.lowercased()))
+        // the native coin's ERC-20 interface is the native coin itself (Android AddTokenService)
+        if let contract = blockchain.type.nativeTokenContract, reference.caseInsensitiveCompare(contract.address) == .orderedSame {
+            return TokenQuery(blockchainType: blockchain.type, tokenType: .native)
+        }
+
+        return TokenQuery(blockchainType: blockchain.type, tokenType: .eip20(address: reference.lowercased()))
     }
 
     func token(reference: String) async throws -> Token {
         guard let address = try? EvmKit.Address(hex: reference) else {
+            throw TokenError.invalidAddress
+        }
+
+        // Arc's transfer-log address is not a contract at all. The native coin's ERC-20 interface
+        // does not get here, `tokenQuery` resolves it to the native coin; the guard stays as a backstop.
+        guard !blockchain.type.isBlockedEip20(address: reference) else {
             throw TokenError.invalidAddress
         }
 

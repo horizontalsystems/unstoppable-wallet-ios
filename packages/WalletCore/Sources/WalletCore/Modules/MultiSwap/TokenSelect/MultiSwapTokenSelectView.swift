@@ -10,9 +10,9 @@ struct MultiSwapTokenSelectView: View {
     @Binding var currentToken: Token?
     @Binding var isPresented: Bool
 
-    init(title: String, currentToken: Binding<Token?>, otherToken: Token?, allowExternalReceive: Bool = false, isPresented: Binding<Bool>) {
+    init(title: String, currentToken: Binding<Token?>, otherToken: Token?, allowExternalReceive: Bool = false, excludeOtherToken: Bool = false, isPresented: Binding<Bool>) {
         self.title = title
-        _viewModel = .init(wrappedValue: MultiSwapTokenSelectViewModel(token: otherToken, allowExternalReceive: allowExternalReceive))
+        _viewModel = .init(wrappedValue: MultiSwapTokenSelectViewModel(token: otherToken, allowExternalReceive: allowExternalReceive, excludeToken: excludeOtherToken))
         _currentToken = currentToken
         _isPresented = isPresented
     }
@@ -150,7 +150,7 @@ struct MultiSwapTokenSelectView: View {
         // 20pt coin circle; non-native tokens get a 10pt chain badge on a 12pt background-colored plate
         @ViewBuilder private func chipIcon(token: Token) -> some View {
             ZStack(alignment: .bottomTrailing) {
-                CoinIconView(coin: token.coin, placeholderImage: token.placeholderImageName, size: 20)
+                CoinIconView(token: token, size: 20)
 
                 if !token.type.isNative {
                     RoundedRectangle(cornerRadius: 3, style: .continuous)
@@ -171,7 +171,7 @@ struct MultiSwapTokenSelectView: View {
             ClickableRow(action: {
                 select(item.token)
             }) {
-                CoinIconView(coin: item.token.coin, placeholderImage: item.token.placeholderImageName)
+                CoinIconView(token: item.token)
 
                 VStack(spacing: 1) {
                     HStack(spacing: .margin8) {

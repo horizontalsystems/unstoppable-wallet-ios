@@ -11,51 +11,32 @@ protocol IChartIndicatorsRepository {
 }
 
 class ChartIndicatorsRepository {
-    private var cancellables = Set<AnyCancellable>()
-
     private let localStorage: LocalStorage
     private let updatedSubject = PassthroughSubject<Void, Never>()
 
-    private let subscriptionManager: SubscriptionManager
-
-    init(localStorage: LocalStorage, subscriptionManager: SubscriptionManager) {
+    init(localStorage: LocalStorage) {
         self.localStorage = localStorage
-        self.subscriptionManager = subscriptionManager
-
-        subscriptionManager.$isAuthenticated
-            .sink { [weak self] _ in
-                self?.updatedSubject.send()
-            }
-            .store(in: &cancellables)
     }
 
     private var userIndicators: [ChartIndicator] {
         // for first time returns default list
         guard let indicatorData = localStorage.chartIndicators else {
-            return ChartIndicatorFactory.defaultIndicators(subscribed: true)
+            return ChartIndicatorFactory.defaultIndicators
         }
 
         let decoder = JSONDecoder()
         let results = try? decoder.decode(ChartIndicators.self, from: indicatorData)
 
-        return results?.indicators ?? ChartIndicatorFactory.defaultIndicators(subscribed: true)
+        return results?.indicators ?? ChartIndicatorFactory.defaultIndicators
     }
 }
 
 extension ChartIndicatorsRepository: IChartIndicatorsRepository {
     var indicators: [ChartIndicator] {
-        if subscriptionManager.isAuthenticated {
-            return userIndicators
-        } else {
-            return ChartIndicatorFactory.defaultIndicators(subscribed: false)
-        }
+        userIndicators
     }
 
     func set(indicators: [ChartIndicator]) {
-        guard subscriptionManager.isAuthenticated else {
-            return
-        }
-
         if indicators != userIndicators {
             let encoder = JSONEncoder()
             encoder.outputFormatting = .sortedKeys

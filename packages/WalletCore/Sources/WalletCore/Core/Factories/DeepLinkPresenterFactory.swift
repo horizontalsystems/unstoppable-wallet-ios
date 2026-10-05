@@ -7,6 +7,7 @@ public struct SendDeepLink {
     public let address: String?
     public let amount: AddressUri.Amount?
     public let memo: String?
+    public let destinationTag: String?
 }
 
 // Presentation seam for the view layer each app owns (its Coordinator / send flow):
@@ -20,7 +21,7 @@ public enum DeepLinkPresenterFactory {
     public static let sendPresenter: (SendDeepLink) -> Void = { link in
         Coordinator.shared.present { isPresented in
             SendTokenListView(
-                options: .init(blockchainTypes: link.blockchainTypes, tokenTypes: link.tokenTypes, address: link.address, amount: link.amount, memo: link.memo),
+                options: .init(blockchainTypes: link.blockchainTypes, tokenTypes: link.tokenTypes, address: link.address, amount: link.amount, memo: link.memo, destinationTag: link.destinationTag),
                 isPresented: isPresented
             )
         }

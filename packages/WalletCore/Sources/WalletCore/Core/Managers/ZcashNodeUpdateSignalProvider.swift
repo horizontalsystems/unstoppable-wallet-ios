@@ -61,6 +61,11 @@ class ZcashNodeUpdateSignalProvider {
                 self?.queue.async { [weak self] in self?.handle(state: state) }
             }
             .store(in: &adapterCancellables)
+
+        // engine-reported stall: probe right away, no debounce
+        zcashAdapter.stallSignalPublisher
+            .sink { [weak self] in self?.updateSignalSubject.send() }
+            .store(in: &adapterCancellables)
     }
 
     private func handle(state: AdapterState) {

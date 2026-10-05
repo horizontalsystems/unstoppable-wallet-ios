@@ -47,7 +47,7 @@ struct WatchSelectView: View {
                     ThemeList(tokens, bottomSpacing: 16) { token in
                         Cell(
                             left: {
-                                CoinIconView(coin: token.coin)
+                                CoinIconView(token: token)
                             },
                             middle: {
                                 MultiText(

@@ -199,11 +199,13 @@ public struct NoteField: SendFieldContent {
 }
 
 public struct SimpleValueField: SendFieldContent {
+    private let isPrimary: Bool
     public let icon: String?
     public let title: CustomStringConvertible
     public let value: CustomStringConvertible
 
-    public init(icon: String? = nil, title: CustomStringConvertible, value: CustomStringConvertible) {
+    public init(icon: String? = nil, title: CustomStringConvertible, value: CustomStringConvertible, isPrimary: Bool = false) {
+        self.isPrimary = isPrimary
         self.icon = icon
         self.title = title
         self.value = value
@@ -211,7 +213,7 @@ public struct SimpleValueField: SendFieldContent {
 
     @ViewBuilder @MainActor public func listRow() -> some View {
         Cell(
-            style: .secondary,
+            style: isPrimary ? .primary : .secondary,
             left: {
                 if let icon {
                     ThemeImage(icon, size: .iconSize20)
@@ -237,7 +239,9 @@ public struct AddressField: SendFieldContent {
     }
 
     @ViewBuilder @MainActor public func listRow() -> some View {
+        // the row's view model is built from the address once per identity, so a new address needs a new identity
         AddressRowsView(value: value, blockchainType: blockchainType)
+            .id([blockchainType.uid, value])
     }
 }
 
@@ -255,7 +259,9 @@ public struct RecipientField: SendFieldContent {
     }
 
     @ViewBuilder @MainActor public func listRow() -> some View {
+        // the row's view model is built from the address once per identity, so a new address needs a new identity
         RecipientRowsView(title: title, value: value, copyable: copyable, blockchainType: blockchainType)
+            .id([blockchainType.uid, value])
     }
 }
 
@@ -300,17 +306,19 @@ public struct PriceField: SendFieldContent {
 }
 
 public struct FeeField: SendFieldContent {
+    public let initialFlipped: Bool
     public let title: CustomStringConvertible
     public let amountData: AmountData?
 
-    public init(title: CustomStringConvertible, amountData: AmountData?) {
+    public init(title: CustomStringConvertible, amountData: AmountData?, initialFlipped: Bool = false) {
+        self.initialFlipped = initialFlipped
         self.title = title
         self.amountData = amountData
     }
 
     @ViewBuilder @MainActor public func listRow() -> some View {
         let feeData = FlipRow.TokenFeeData(amountData: amountData)
-        FlipRow(title: title, flipData: feeData, initialFlipped: false)
+        FlipRow(title: title, flipData: feeData, initialFlipped: initialFlipped)
     }
 }
 
@@ -324,23 +332,17 @@ public struct HexField: SendFieldContent {
     }
 
     @ViewBuilder @MainActor public func listRow() -> some View {
-        ListRow {
-            Text(title).textSubhead2()
-
-            Spacer()
-
-            Text(value)
-                .textSubhead1(color: .themeLeah)
-                .lineLimit(3)
-                .truncationMode(.middle)
-
-            Button(action: {
-                CopyHelper.copyAndNotify(value: value)
-            }) {
-                Image("copy_20").renderingMode(.template)
+        Cell(
+            style: .secondary,
+            middle: {
+                MiddleTextIcon(text: title)
+            },
+            right: {
+                RightButtonText(text: ComponentText(text: value.shortened, colorStyle: .primary), textStyle: .subhead, icon: "copy_filled") {
+                    CopyHelper.copyAndNotify(value: value)
+                }
             }
-            .buttonStyle(SecondaryCircleButtonStyle(style: .default))
-        }
+        )
     }
 }
 
@@ -394,7 +396,7 @@ extension SendField {
         private func formatted(full: Bool, showCode: Bool = true) -> String? {
             switch self {
             case let .regular(appValue): return full ? appValue.formattedFull(showCode: showCode) : appValue.formattedShort()
-            case let .infinity(code): return "swap.unlock.unlimited".localized + (showCode ? "\(code)" : "")
+            case let .infinity(code): return "∞" + (showCode ? " \(code)" : "")
             case let .withoutAmount(code): return "\(code)"
             }
         }

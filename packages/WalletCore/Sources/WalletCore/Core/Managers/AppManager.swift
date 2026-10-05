@@ -24,6 +24,7 @@ public class AppManager {
     private let tonKitManager: TonKitManager
     private let stellarKitManager: StellarKitManager
     private let solanaKitManager: SolanaKitManager
+    private let xrpKitManager: XrpKitManager
     private let swapHistoryManager: SwapHistoryManager
     private let moneroNodeManager: MoneroNodeManager
     private let zcashNodeAutoSelector: NodeAutoSelector
@@ -35,6 +36,7 @@ public class AppManager {
     private let willResignActiveSubject = PassthroughSubject<Void, Never>()
     private let didEnterBackgroundSubject = PassthroughSubject<Void, Never>()
     private let willEnterForegroundSubject = PassthroughSubject<Void, Never>()
+    private let isActiveSubject = CurrentValueSubject<Bool, Never>(false)
 
     init(widgetRefresher: IWidgetRefresher?, accountManager: AccountManager, walletManager: WalletManager, adapterManager: AdapterManager, lockManager: LockManager,
          keychainManager: KeychainManager, passcodeLockManager: PasscodeLockManager,
@@ -43,7 +45,7 @@ public class AppManager {
          logRecordManager: LogRecordManager, deeplinkStorage: DeeplinkStorage,
          evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager, statManager: StatManager,
          nftMetadataSyncer: NftMetadataSyncer, tonKitManager: TonKitManager,
-         stellarKitManager: StellarKitManager, solanaKitManager: SolanaKitManager,
+         stellarKitManager: StellarKitManager, solanaKitManager: SolanaKitManager, xrpKitManager: XrpKitManager,
          swapHistoryManager: SwapHistoryManager, moneroNodeManager: MoneroNodeManager, zcashNodeAutoSelector: NodeAutoSelector)
     {
         self.widgetRefresher = widgetRefresher
@@ -66,6 +68,7 @@ public class AppManager {
         self.tonKitManager = tonKitManager
         self.stellarKitManager = stellarKitManager
         self.solanaKitManager = solanaKitManager
+        self.xrpKitManager = xrpKitManager
         self.swapHistoryManager = swapHistoryManager
         self.moneroNodeManager = moneroNodeManager
         self.zcashNodeAutoSelector = zcashNodeAutoSelector
@@ -112,6 +115,7 @@ public extension AppManager {
 
     func willResignActive() {
         willResignActiveSubject.send()
+        isActiveSubject.send(false)
 
         coverManager.willResignActive()
         rateAppManager.onResignActive()
@@ -119,6 +123,7 @@ public extension AppManager {
 
     func didBecomeActive() {
         didBecomeActiveSubject.send()
+        isActiveSubject.send(true)
         didBecomeActiveSubjectOld.onNext(())
 
         coverManager.didBecomeActive()
@@ -135,6 +140,7 @@ public extension AppManager {
         tonKitManager.tonKit?.stopListener()
         stellarKitManager.stellarKit?.stopListener()
         solanaKitManager.solanaKit?.pause()
+        xrpKitManager.xrpKit?.pause()
     }
 
     func willEnterForeground() {
@@ -154,6 +160,8 @@ public extension AppManager {
         stellarKitManager.stellarKit?.startListener()
         solanaKitManager.solanaKit?.resume()
         solanaKitManager.solanaKit?.refresh()
+        xrpKitManager.xrpKit?.resume()
+        xrpKitManager.xrpKit?.refresh()
 
         AppStateManager.instance.syncIfRequired()
 
@@ -180,6 +188,14 @@ extension AppManager {
 
     var willEnterForegroundPublisher: AnyPublisher<Void, Never> {
         willEnterForegroundSubject.eraseToAnyPublisher()
+    }
+
+    var isActive: Bool {
+        isActiveSubject.value
+    }
+
+    var isActivePublisher: AnyPublisher<Bool, Never> {
+        isActiveSubject.eraseToAnyPublisher()
     }
 }
 

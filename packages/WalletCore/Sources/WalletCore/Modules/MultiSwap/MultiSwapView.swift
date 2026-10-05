@@ -20,14 +20,35 @@ struct MultiSwapView: View {
                 ScrollView {
                     VStack(spacing: 16) {
                         VStack(spacing: 0) {
+                            AvailableBalanceView(
+                                balance: viewModel.availableBalance,
+                                token: viewModel.tokenIn,
+                                allAvailable: viewModel.percentAllAvailable,
+                                currentValue: viewModel.amountIn,
+                                onSelect: { percent in
+                                    viewModel.setAmountIn(percent: percent)
+                                    focusedField = nil
+                                },
+                                onClear: {
+                                    viewModel.clearAmountIn()
+                                }
+                            )
+                            .padding(.top, 16)
+                            .padding(.horizontal, 16)
+                            .themeListTopView()
+
                             amountsView()
-                                .themeListTopView()
 
                             if let currentQuote = viewModel.currentQuote {
                                 quoteList(quote: currentQuote)
-                            } else {
-                                availableBalanceView(value: balanceValue())
                             }
+                        }
+
+                        if let path = viewModel.suggestedPath {
+                            MultiSwapSuggestedPathView(path: path) { token in
+                                viewModel.tokenOut = token
+                            }
+                            .padding(.horizontal, 16)
                         }
 
                         if let currentQuote = viewModel.currentQuote {
@@ -42,21 +63,6 @@ struct MultiSwapView: View {
                 }
             } bottomContent: {
                 buttonView()
-            } keyboardContent: {
-                if isInputActive {
-                    AmountAccessoryView(
-                        visible: isInputActive,
-                        enabledPercents: (viewModel.availableBalance ?? 0) > 0,
-                        percents: viewModel.percentOptions,
-                        onPercent: { percent in
-                            viewModel.setAmountIn(percent: percent)
-                            focusedField = nil
-                        },
-                        onTrash: {
-                            viewModel.clearAmountIn()
-                        }
-                    )
-                }
             }
             .animation(.easeOut(duration: 0.25), value: isInputActive)
         }
@@ -74,95 +80,59 @@ struct MultiSwapView: View {
     }
 
     @ViewBuilder private func amountsView() -> some View {
-        VStack(spacing: 8) {
-            boxInView().padding(.horizontal, 16)
+        VStack(spacing: 0) {
+            boxInView()
+                .padding(.horizontal, 16)
+                .padding(.top, 16)
+                .padding(.bottom, 24)
+
             boxSeparatorView()
-            boxOutView().padding(.horizontal, 16)
+
+            boxOutView()
+                .padding(.horizontal, 16)
+                .padding(.top, 16)
+                .padding(.bottom, 24)
+
+            Color.themeBlade.frame(height: .heightOnePixel)
         }
-        .padding(.vertical, 24)
-        .background(Color.themeTyler)
     }
 
     @ViewBuilder private func boxInView() -> some View {
-        HStack(spacing: 8) {
-            selectorButton(token: viewModel.tokenIn) {
-                Coordinator.shared.present { isPresented in
-                    MultiSwapTokenSelectView(
-                        title: "swap.you_pay".localized,
-                        currentToken: $viewModel.tokenIn,
-                        otherToken: viewModel.tokenOut,
-                        isPresented: isPresented
-                    )
-                }
+        SendInputView(
+            token: viewModel.tokenIn,
+            amountDecimals: viewModel.amountInDecimals,
+            amountString: $viewModel.amountString,
+            fiatAmountString: $viewModel.fiatAmountString,
+            coinPrice: viewModel.coinPriceIn,
+            currency: viewModel.currency,
+            focusedField: $focusedField,
+            amountField: .amount,
+            fiatField: .fiat
+        ) {
+            Coordinator.shared.present { isPresented in
+                MultiSwapTokenSelectView(
+                    title: "swap.you_pay".localized,
+                    currentToken: $viewModel.tokenIn,
+                    otherToken: viewModel.tokenOut,
+                    isPresented: isPresented
+                )
             }
-
-            VStack(alignment: .trailing, spacing: 0) {
-                TextField("", text: $viewModel.amountString, prompt: Text("0").foregroundColor(.themeGray))
-                    .multilineTextAlignment(.trailing)
-                    .foregroundColor(.themeLeah)
-                    .font(.themeHeadline1)
-                    .tint(.themeInputFieldTintColor)
-                    .keyboardType(.decimalPad)
-                    .focused($focusedField, equals: .amount)
-                    .frame(height: 33)
-
-                if viewModel.tokenIn != nil {
-                    if let coinPriceIn = viewModel.coinPriceIn {
-                        HStack(spacing: 0) {
-                            ThemeText(viewModel.currency.symbol, style: .body, colorStyle: viewModel.fiatAmountString.isEmpty ? .andy : .secondary)
-
-                            TextField("", text: $viewModel.fiatAmountString, prompt: Text("0").foregroundColor(.themeAndy))
-                                .fixedSize(horizontal: true, vertical: false)
-                                .multilineTextAlignment(.trailing)
-                                .foregroundColor(.themeGray)
-                                .font(.themeBody)
-                                .tint(.themeInputFieldTintColor)
-                                .keyboardType(.decimalPad)
-                                .focused($focusedField, equals: .fiat)
-                                .frame(height: 22)
-                                .disabled(coinPriceIn.expired)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                    } else {
-                        ThemeText("n/a".localized, style: .body, colorStyle: .andy)
-                            .frame(height: 22)
-                    }
-                } else {
-                    ThemeText("\(viewModel.currency.symbol)0", style: .body, colorStyle: .andy)
-                        .frame(height: 22)
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .trailing)
         }
     }
 
     @ViewBuilder private func boxSeparatorView() -> some View {
-        HStack(spacing: 0) {
-            Rectangle()
-                .fill(Color.themeBlade)
-                .frame(height: .heightOnePixel)
-                .frame(maxWidth: .infinity)
-
-            // an externally-delivered tokenOut can't become the sell side — the account
-            // can't sign transactions for it
-            Button(action: {
-                viewModel.interchange()
-            }) {
-                Image("arrow_medium_2_down_20").renderingMode(.template)
+        Color.themeBlade.frame(height: .heightOnePixel)
+            .overlay {
+                IconButton(icon: "arrow_m_down", style: .secondary, size: .small) {
+                    viewModel.interchange()
+                }
+                .disabled(viewModel.externalRecipientRequired)
             }
-            .buttonStyle(SecondaryCircleButtonStyle(style: .default))
-            .disabled(viewModel.externalRecipientRequired)
-
-            Rectangle()
-                .fill(Color.themeBlade)
-                .frame(height: .heightOnePixel)
-                .frame(maxWidth: .infinity)
-        }
     }
 
     @ViewBuilder private func boxOutView() -> some View {
         HStack(spacing: 8) {
-            selectorButton(token: viewModel.tokenOut) {
+            TokenSelectorButton(token: viewModel.tokenOut) {
                 Coordinator.shared.present { isPresented in
                     MultiSwapTokenSelectView(
                         title: "swap.you_get".localized,
@@ -177,8 +147,10 @@ struct MultiSwapView: View {
             Spacer()
 
             VStack(alignment: .trailing, spacing: 0) {
-                if let amountOut = viewModel.amountOut {
-                    ThemeText(amountOut.description, style: .headline1)
+                if let amountOut = viewModel.amountOut, let tokenOut = viewModel.tokenOut,
+                   let formatted = ValueFormatter.instance.formatFull(value: amountOut, decimalCount: tokenOut.decimals)
+                {
+                    ThemeText(formatted, style: .headline1)
                         .lineLimit(1)
                 } else {
                     ThemeText("0", style: .headline1, colorStyle: .secondary)
@@ -210,27 +182,6 @@ struct MultiSwapView: View {
                 } else {
                     ThemeText("\(viewModel.currency.symbol)0", style: .body, colorStyle: .andy)
                         .frame(height: 22)
-                }
-            }
-        }
-    }
-
-    @ViewBuilder private func selectorButton(token: Token?, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            HStack(spacing: 16) {
-                CoinIconView(coin: token.map(\.coin))
-
-                HStack(spacing: 8) {
-                    if let token {
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text(token.coin.code).textHeadline1()
-                            BadgeViewNew(token.fullBadge)
-                        }
-                    } else {
-                        Text("swap.select".localized).textHeadline2(color: .themeJacob)
-                    }
-
-                    ThemeImage("arrow_s_down", size: 20, colorStyle: .primary)
                 }
             }
         }
@@ -277,16 +228,6 @@ struct MultiSwapView: View {
         }
     }
 
-    @ViewBuilder private func availableBalanceView(value: String?) -> some View {
-        HStack(spacing: 8) {
-            ThemeText("send.available_balance".localized, style: .subhead)
-            Spacer()
-            ThemeText(value ?? "----", style: .subheadSB)
-                .multilineTextAlignment(.trailing)
-        }
-        .padding(16)
-    }
-
     @ViewBuilder private func quoteList(quote: MultiSwapViewModel.Quote) -> some View {
         VStack(spacing: 0) {
             Cell(
@@ -331,7 +272,8 @@ struct MultiSwapView: View {
                 }
             )
 
-            if let timeState = quote.timeState {
+            // On the swap screen the time is shown only when it needs attention
+            if let timeState = quote.timeState, case .attention = timeState {
                 Cell(
                     style: .secondary,
                     middle: {
@@ -452,14 +394,6 @@ struct MultiSwapView: View {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
             MultiSwapProviderTypeBottomSheet(isPresented: isPresented)
         }
-    }
-
-    private func balanceValue() -> String? {
-        guard let availableBalance = viewModel.availableBalance, let tokenIn = viewModel.tokenIn else {
-            return nil
-        }
-
-        return AppValue(token: tokenIn, value: availableBalance).formattedFull()
     }
 
     private func buttonState() -> (String, ThemeButton.Style, Bool, Bool, MultiSwapPreSwapStep?) {

@@ -5,10 +5,11 @@ import SolanaKit
 class SolanaTransactionConverter {
     // Display labels for the swap programs SolanaKit recognizes (`Transaction.programIds`).
     // Mirrors the EVM flow, where the exchange contract address maps to a label ("1inch v5").
-    private static let swapProgramLabels: [String: String] = [
-        KnownPrograms.jupiterV6: "Jupiter",
-        KnownPrograms.lifi: "LI.FI",
-        KnownPrograms.dflow: "DFlow",
+    private static let swapProgramLabels: [(program: String, label: String)] = [
+        (KnownPrograms.oneInchFusion, "1inch"),
+        (KnownPrograms.jupiterV6, "Jupiter"),
+        (KnownPrograms.lifi, "LI.FI"),
+        (KnownPrograms.dflow, "DFlow"),
     ]
 
     // ≈ one account's rent: classic ATA (165 bytes) ~0.00204 SOL, Token-2022 with extensions
@@ -28,10 +29,11 @@ class SolanaTransactionConverter {
         self.coinManager = coinManager
     }
 
-    // The display label of the first recognized swap program this transaction invoked, or nil.
-    private func swapExchangeName(transaction: SolanaKit.Transaction) -> String? {
-        guard let programIds = transaction.programIds else { return nil }
-        return programIds.split(separator: " ").lazy.compactMap { Self.swapProgramLabels[String($0)] }.first
+    // Aggregator priority, independent of instruction order (Fusion can execute via Jupiter).
+    static func swapExchangeName(programIds: String?) -> String? {
+        guard let programIds else { return nil }
+        let invokedPrograms = Set(programIds.split(separator: " ").map(String.init))
+        return swapProgramLabels.first { invokedPrograms.contains($0.program) }?.label
     }
 
     // The swap-relevant leg of one side: the SPL transfer when a native-SOL leg rides along
@@ -117,7 +119,7 @@ class SolanaTransactionConverter {
         // confirmation) — all are swaps. A side can carry a spurious SOL leg next to the real SPL one
         // (tx fee / token-account rent), so each side prefers its non-SOL leg via `primaryTransfer`
         // (`valueIn`/`valueOut` are nil when that side has no leg).
-        if let exchangeName = swapExchangeName(transaction: transaction) {
+        if let exchangeName = Self.swapExchangeName(programIds: transaction.programIds) {
             return SolanaSwapTransactionRecord(
                 transaction: transaction,
                 baseToken: baseToken,

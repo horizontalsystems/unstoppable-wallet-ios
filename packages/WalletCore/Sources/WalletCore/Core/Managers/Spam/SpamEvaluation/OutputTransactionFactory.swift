@@ -23,7 +23,18 @@ class OutputTransactionFactory {
                 default: return nil
                 }
             }
-            return recipients.isEmpty ? nil : recipients
+            guard !recipients.isEmpty else {
+                return nil
+            }
+            // A contract send is still the user's own, but, as on Android, a contract call
+            // gives no correlation context
+            return r.isContractCall ? [] : recipients
+
+        case let r as XrpTransactionRecord:
+            if case let .send(_, to, sentToSelf) = r.type, !sentToSelf {
+                return [to]
+            }
+            return nil
 
         case let r as SolanaOutgoingTransactionRecord:
             guard !r.sentToSelf, let to = r.to else {
@@ -54,6 +65,9 @@ class OutputTransactionFactory {
             return [r.from]
 
         case let r as StellarTransactionRecord:
+            guard !r.isContractCall else {
+                return []
+            }
             return ([r.type] + r.additionalActions).compactMap { action -> String? in
                 switch action {
                 case let .receivePayment(_, from): return from
@@ -61,6 +75,12 @@ class OutputTransactionFactory {
                 default: return nil
                 }
             }
+
+        case let r as XrpTransactionRecord:
+            if case let .receive(_, from) = r.type {
+                return [from]
+            }
+            return []
 
         case let r as SolanaIncomingTransactionRecord:
             return r.from.map { [$0] } ?? []

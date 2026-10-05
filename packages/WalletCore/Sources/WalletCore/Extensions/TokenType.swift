@@ -19,6 +19,7 @@ extension TokenType {
         case .stellar: return .stellar
         case .zanoAsset: return .zanoAsset
         case .thorChainAsset: return .thorChainAsset
+        case .xrpAsset: return .xrpAsset
         case .unsupported: return .unsupported
         }
     }
@@ -76,6 +77,7 @@ extension TokenType {
         case let .addressType(type): return type.rawValue
         case let .zanoAsset(id): return id
         case let .thorChainAsset(denom): return denom
+        case let .xrpAsset(currency, issuer): return [currency, issuer].joined(separator: "-")
         default: return nil
         }
     }

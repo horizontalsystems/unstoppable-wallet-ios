@@ -9,6 +9,7 @@ extension Token {
             switch blockchainType {
             case .optimism, .arbitrumOne, .base, .zkSync: return blockchain.name
             case .robinhood: return "Robinhood"
+            case .arc: return "Arc"
             default: return nil
             }
         case .eip20:
@@ -17,6 +18,7 @@ extension Token {
             case .binanceSmartChain: return "BEP20"
             case .tron: return "TRC20"
             case .robinhood: return "Robinhood"
+            case .arc: return "Arc"
             default: return blockchain.name
             }
         case .jetton:
@@ -42,6 +44,19 @@ extension Token {
         }
     }
 
+    var maskImageUrl: String? {
+        switch type {
+        case .native:
+            switch blockchainType {
+            case .optimism, .arbitrumOne, .base, .zkSync, .robinhood, .arc: return blockchainType.imageUrl
+            default: return nil
+            }
+        case .derived, .addressType: return nil
+        default:
+            return blockchainType.imageUrl
+        }
+    }
+
     var fullBadge: String {
         badge ?? "coin_platforms.native".localized
     }
@@ -54,6 +69,8 @@ extension Token {
     var sendToSelfAllowed: Bool {
         if case .native = type, blockchainType == .zcash { return false }
         if blockchainType == .tron { return false }
+        // the ledger rejects a payment to the sending account itself (temREDUNDANT)
+        if blockchainType == .xrp { return false }
 
         return true
     }

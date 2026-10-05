@@ -27,6 +27,7 @@ public class LocalStorage {
     private let keyUseMevProtection = "use-mev-protection"
     private let keyScamProtection = "scam-protection"
     private let keySpamFilterEnabled = "spam-filter"
+    private let keyContactsSpamCleared = "contacts-spam-cleared"
     private let keySwapTermsAccepted = "swap-terms-accepted"
     private let keySwapProvidersLastSyncTimestamp = "swap-providers-last-sync-timestamp"
     private let keySwapRecentTokenQueryIds = "swap-recent-token-query-ids"
@@ -103,13 +104,14 @@ extension LocalStorage {
         set { userDefaultsStorage.set(value: newValue, for: keyZCashRewind) }
     }
 
-    func defaultProvider(blockchainType: BlockchainType) -> SwapModule.Dex.Provider {
+    // nil for a chain with no legacy swap providers at all, such as Arc
+    func defaultProvider(blockchainType: BlockchainType) -> LegacySwapProvider? {
         let key = [keyDefaultProvider, blockchainType.uid].joined(separator: "|")
         let raw: String? = userDefaultsStorage.value(for: key)
-        return (raw.flatMap { SwapModule.Dex.Provider(rawValue: $0) }) ?? blockchainType.allowedProviders[0]
+        return (raw.flatMap { LegacySwapProvider(rawValue: $0) }) ?? blockchainType.legacySwapProviders.first
     }
 
-    func setDefaultProvider(blockchainType: BlockchainType, provider: SwapModule.Dex.Provider) {
+    func setDefaultProvider(blockchainType: BlockchainType, provider: LegacySwapProvider) {
         let key = [keyDefaultProvider, blockchainType.uid].joined(separator: "|")
         userDefaultsStorage.set(value: provider.rawValue, for: key)
     }
@@ -122,6 +124,11 @@ extension LocalStorage {
     var indicatorsShown: Bool {
         get { userDefaultsStorage.value(for: keyIndicatorsShown) ?? true }
         set { userDefaultsStorage.set(value: newValue, for: keyIndicatorsShown) }
+    }
+
+    var contactsSpamCleared: Bool {
+        get { userDefaultsStorage.value(for: keyContactsSpamCleared) ?? false }
+        set { userDefaultsStorage.set(value: newValue, for: keyContactsSpamCleared) }
     }
 
     var telegramSupportRequested: Bool {
@@ -298,7 +305,7 @@ extension LocalStorage {
         indicatorsShown = backup.indicatorsShown
         backup.swapProviders.forEach { provider in
             let blockchainType = BlockchainType(uid: provider.blockchainTypeId)
-            if let dexProvider = SwapModule.Dex.Provider(rawValue: provider.provider) {
+            if let dexProvider = LegacySwapProvider(rawValue: provider.provider) {
                 return setDefaultProvider(blockchainType: blockchainType, provider: dexProvider)
             }
         }

@@ -57,7 +57,8 @@ class AddressEventHandler {
             tokenTypes: allowedTokenType.map { [$0] },
             address: uri.address,
             amount: uri.amount,
-            memo: uri.memo
+            memo: uri.memo,
+            destinationTag: uri.destinationTag
         ))
     }
 }

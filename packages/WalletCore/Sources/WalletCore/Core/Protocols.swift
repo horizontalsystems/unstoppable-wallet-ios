@@ -13,6 +13,7 @@ import TonSwift
 import TronKit
 import UIKit
 import UniswapKit
+import XrpKit
 import ZcashLightClientKit
 
 public protocol IWidgetRefresher {
@@ -146,6 +147,23 @@ protocol ISendTonAdapter {
     func transferData(recipient: FriendlyAddress, amount: TonAdapter.SendAmount, comment: String?) throws -> TransferData
 }
 
+protocol ISendXrpAdapter {
+    /// The wallet's own classic address; a payment to it is refused by the ledger.
+    var address: String { get }
+    /// Network fee in XRP, sampled at adapter start (default 0.000012); the kit re-reads it at send time.
+    var fee: Decimal { get }
+    var baseReserve: Decimal { get }
+    /// XRP locked by each owned object; a TrustSet locks one increment while the line exists.
+    var ownerReserve: Decimal { get }
+    var availableXrpBalance: Decimal { get }
+    func doesAccountExist(address: String) async throws -> Bool
+    func requiresDestinationTag(address: String) async throws -> Bool
+    /// Whether `address` can receive this adapter's token: always true for XRP, a trust line for an issued token.
+    func canReceive(address: String) async throws -> Bool
+    func send(amount: Decimal, address: String, destinationTag: UInt32?, signer: XrpKit.Signer) async throws -> String
+    func setTrustLine(currency: String, issuer: String, limit: Decimal, signer: XrpKit.Signer) async throws -> String
+}
+
 protocol ISendSolanaAdapter {
     func sendSol(toAddress: String, amount: Decimal, signer: SolanaKit.Signer) async throws -> SolanaKit.FullTransaction
     func sendSpl(mintAddress: String, toAddress: String, amount: Decimal, decimals: Int, signer: SolanaKit.Signer) async throws -> SolanaKit.FullTransaction
@@ -204,17 +222,6 @@ protocol IFeeRateProvider {
 protocol IAppManager {
     var didBecomeActiveObservable: Observable<Void> { get }
     var willEnterForegroundObservable: Observable<Void> { get }
-}
-
-protocol IPresentDelegate: AnyObject {
-    func present(viewController: UIViewController)
-    func push(viewController: UIViewController)
-}
-
-extension IPresentDelegate {
-    func push(viewController _: UIViewController) {
-        // might be implemented by delegate
-    }
 }
 
 protocol Warning {
