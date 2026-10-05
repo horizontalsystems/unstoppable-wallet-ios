@@ -48,24 +48,24 @@ class ZcashTransactionPool {
     }
 
     private func zcashTransactions(_ transactions: [ZcashTransaction.Overview], lastBlockHeight: Int) async -> [ZcashTransactionWrapper] {
+        // One batched read for all transactions instead of two per transaction: the SDK's getMemos
+        // and getRecipients are both just a read of the same outputs (MOB-1953)
+        let outputsByRawID = await synchronizer.getTransactionOutputs(for: transactions)
+
         var wrapped = [ZcashTransactionWrapper]()
         for tx in transactions {
-            if let tx = try? await transactionWithAdditional(tx: tx, lastBlockHeight: lastBlockHeight) {
+            let outputs = outputsByRawID[tx.rawID] ?? []
+            let firstMemo = outputs
+                .compactMap(\.memo)
+                .compactMap { $0.toString() }
+                .first
+            let recipients = outputs.map(\.recipient)
+
+            if let tx = ZcashTransactionWrapper(accountId: accountId, tx: tx, memo: firstMemo, recipients: recipients, lastBlockHeight: lastBlockHeight) {
                 wrapped.append(tx)
             }
         }
         return wrapped
-    }
-
-    private func transactionWithAdditional(tx: ZcashTransaction.Overview, lastBlockHeight: Int) async throws -> ZcashTransactionWrapper? {
-        let memos: [Memo] = await (try? synchronizer.getMemos(for: tx)) ?? []
-        let firstMemo = memos
-            .compactMap { $0.toString() }
-            .first
-
-        let recipients = await synchronizer.getRecipients(for: tx)
-
-        return ZcashTransactionWrapper(accountId: accountId, tx: tx, memo: firstMemo, recipients: recipients, lastBlockHeight: lastBlockHeight)
     }
 
     private func sync(own: inout Set<ZcashTransactionWrapper>, incoming: [ZcashTransactionWrapper]) {

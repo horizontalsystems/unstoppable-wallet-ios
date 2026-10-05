@@ -87,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/Checkpoints",
       "state" : {
-        "revision" : "22371681c69aea01d1a24a7e578986f1c24427e8",
-        "version" : "1.0.31"
+        "revision" : "f97a50e2fbcc4341fdc66045cf1524d6f5db8443",
+        "version" : "1.0.32"
       }
     },
     {
@@ -276,8 +276,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/MarketKit.Swift",
       "state" : {
-        "revision" : "0c0ea2b0091c1c6e44817e059333e11792ee68f5",
-        "version" : "3.6.19"
+        "revision" : "564fed75db331c689faae1f651163185a51bbfca",
+        "version" : "3.6.20"
       }
     },
     {
@@ -708,8 +708,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/zodl-swift-wallet-sdk",
       "state" : {
-        "revision" : "16cf83dda01edb764fe8ace88711976f9139a18c",
-        "version" : "4.4.0-hs.1"
+        "revision" : "0be84a911c262d50d49d396711ee62e0ec26c24b",
+        "version" : "5.0.0-hs.1"
       }
     }
   ],

@@ -16,7 +16,7 @@ let package = Package(
         .package(url: "https://github.com/horizontalsystems/BitcoinCore.Swift", exact: "3.2.0"),
         .package(url: "https://github.com/horizontalsystems/BitcoinKit.Swift", exact: "3.0.1"),
         .package(url: "https://github.com/horizontalsystems/Chart.Swift", exact: "3.0.2"),
-        .package(url: "https://github.com/horizontalsystems/Checkpoints", exact: "1.0.31"),
+        .package(url: "https://github.com/horizontalsystems/Checkpoints", exact: "1.0.32"),
         .package(url: "https://github.com/Coeur/CollectionViewCenteredFlowLayout", from: "1.0.4"),
         .package(url: "https://github.com/krzyzanowskim/CryptoSwift", from: "1.9.0"),
         .package(url: "https://github.com/horizontalsystems/DashKit.Swift", exact: "3.1.0"),
@@ -33,7 +33,7 @@ let package = Package(
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess.git", from: "4.0.0"),
         .package(url: "https://github.com/onevcat/Kingfisher.git", from: "8.6.2"),
         .package(url: "https://github.com/horizontalsystems/LitecoinKit.Swift", exact: "3.0.2"),
-        .package(url: "https://github.com/horizontalsystems/MarketKit.Swift", exact: "3.6.19"),
+        .package(url: "https://github.com/horizontalsystems/MarketKit.Swift", exact: "3.6.20"),
         .package(url: "https://github.com/horizontalsystems/MoneroKit.Swift", exact: "0.2.12"),
         .package(url: "https://github.com/horizontalsystems/NftKit.Swift", exact: "2.0.2"),
         .package(url: "https://github.com/tristanhimmelman/ObjectMapper", exact: "4.2.0"),
@@ -52,9 +52,9 @@ let package = Package(
         .package(url: "https://github.com/horizontalsystems/UIExtensions.Swift", exact: "1.0.2"),
         .package(url: "https://github.com/horizontalsystems/UniswapKit.Swift", exact: "3.3.0"),
         .package(url: "https://github.com/horizontalsystems/XrpKit.Swift", exact: "1.0.0"),
-        // Ironwood sync/send hotfix: frozen upstream e58e14e + HS librustzcash pin (81152f63),
-        // binary FFI via the 2.6.0-ironwood-hs.1 release on the fork
-        .package(url: "https://github.com/horizontalsystems/zodl-swift-wallet-sdk", exact: "4.4.0-hs.1"),
+        // Upstream zodl 5.0.0 + HS static birthday estimation and lightwalletd ping APIs;
+        // binary FFI from the upstream 5.0.0 release
+        .package(url: "https://github.com/horizontalsystems/zodl-swift-wallet-sdk", exact: "5.0.0-hs.1"),
     ],
     targets: [
         .target(
