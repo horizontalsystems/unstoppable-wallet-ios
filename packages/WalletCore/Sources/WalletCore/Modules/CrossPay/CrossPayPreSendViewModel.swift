@@ -104,7 +104,7 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
     }
 
     // Rounded DOWN to the receive token's precision: an over-precise value could never pass the
-    // strict exactness check at commit.
+    // strict exactness check at preview.
     override func roundedInput(_ amount: Decimal?) -> Decimal? {
         guard let amount, let tokenOut else {
             return amount

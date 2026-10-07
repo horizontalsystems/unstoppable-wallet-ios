@@ -1,7 +1,8 @@
 import Foundation
 import MarketKit
 
-// What the `.crossPay` SendData case carries: deposit address and funding amount don't exist until commit.
+// What the `.crossPay` SendData case carries: the funding amount is known at preview, the deposit
+// address only after commit.
 public struct CrossPayRequest {
     public let tokenIn: Token // the funding token (the wallet being sent from)
     public let tokenOut: Token // what the recipient receives
@@ -21,19 +22,61 @@ public struct CrossPayRequest {
     }
 }
 
-// The committed order, produced by /v2/swap inside the handler on the confirmation screen.
-public struct CrossPayOrder {
+// A previewed route (/v3/preview), produced inside the handler for the confirmation screen. No order
+// exists yet: the token is handed to /v3/commit when the user slides. `stubDepositAddress` is a
+// ready-to-receive account on the sell chain the inner send is estimated against — never a
+// destination to send to.
+public struct CrossPayPreview {
     public let request: CrossPayRequest
-    public let depositAmount: Decimal // execution.amount in tokenIn — EXACTLY what to transfer
+    public let previewToken: String
+    public let depositAmount: Decimal // the preview's sellAmount in tokenIn — what the user confirms and what is transferred
     public let minSellAmount: Decimal? // below it the deposit is refunded and no swap happens
     public let amountOut: Decimal // what the recipient gets; == request.amount by the exactness check
+    public let stubDepositAddress: String
+    public let refundAddress: String // non-optional: the buffer refund lands here
+    public let estimatedTime: TimeInterval?
+    public let previewedAt: Date
+
+    public init(
+        request: CrossPayRequest,
+        previewToken: String,
+        depositAmount: Decimal,
+        minSellAmount: Decimal?,
+        amountOut: Decimal,
+        stubDepositAddress: String,
+        refundAddress: String,
+        estimatedTime: TimeInterval?,
+        previewedAt: Date
+    ) {
+        self.request = request
+        self.previewToken = previewToken
+        self.depositAmount = depositAmount
+        self.minSellAmount = minSellAmount
+        self.amountOut = amountOut
+        self.stubDepositAddress = stubDepositAddress
+        self.refundAddress = refundAddress
+        self.estimatedTime = estimatedTime
+        self.previewedAt = previewedAt
+    }
+
+    // No cross-asset fee figure: subtracting a tokenOut quantity from a tokenIn one is meaningless.
+    public var refundableBuffer: Decimal? {
+        minSellAmount.map { max(0, depositAmount - $0) }
+    }
+}
+
+// The committed order (/v3/commit on a preview), produced inside the handler when the user slides.
+public struct CrossPayOrder {
+    public let request: CrossPayRequest
+    public let depositAmount: Decimal // the PREVIEW's sellAmount in tokenIn — EXACTLY what to transfer
+    public let minSellAmount: Decimal? // below it the deposit is refunded and no swap happens
+    public let amountOut: Decimal // what the recipient gets
     public let providerId: String // tracking only — never shown in the UI
     public let depositAddress: String
     public let attachment: USwapMultiSwapApi.Attachment?
     public let providerSwapId: String
     public let refundAddress: String // non-optional: the buffer refund lands here
     public let estimatedTime: TimeInterval?
-    public let committedAt: Date
 
     public init(
         request: CrossPayRequest,
@@ -45,8 +88,7 @@ public struct CrossPayOrder {
         attachment: USwapMultiSwapApi.Attachment?,
         providerSwapId: String,
         refundAddress: String,
-        estimatedTime: TimeInterval?,
-        committedAt: Date
+        estimatedTime: TimeInterval?
     ) {
         self.request = request
         self.depositAmount = depositAmount
@@ -58,12 +100,29 @@ public struct CrossPayOrder {
         self.providerSwapId = providerSwapId
         self.refundAddress = refundAddress
         self.estimatedTime = estimatedTime
-        self.committedAt = committedAt
     }
 
-    // No cross-asset fee figure: subtracting a tokenOut quantity from a tokenIn one is meaningless.
-    public var refundableBuffer: Decimal? {
-        minSellAmount.map { max(0, depositAmount - $0) }
+    // Everything the commit does not restate is carried over from the preview the user confirmed.
+    public init(
+        preview: CrossPayPreview,
+        depositAmount: Decimal,
+        amountOut: Decimal,
+        depositAddress: String,
+        attachment: USwapMultiSwapApi.Attachment?,
+        providerSwapId: String
+    ) {
+        self.init(
+            request: preview.request,
+            depositAmount: depositAmount,
+            minSellAmount: preview.minSellAmount,
+            amountOut: amountOut,
+            providerId: CrossPayService.providerId,
+            depositAddress: depositAddress,
+            attachment: attachment,
+            providerSwapId: providerSwapId,
+            refundAddress: preview.refundAddress,
+            estimatedTime: preview.estimatedTime
+        )
     }
 }
 
@@ -77,6 +136,14 @@ public enum CrossPayError: Error {
     case providerSuspended
     case networkError(Error)
     case commitFailed
+    // /v3/commit refusals, by the server's discriminator. Toasted by the handler on a refused commit
+    // (the screen re-previews). `previewExpired` is also thrown out of sendData(...) when two preview
+    // passes in a row come back stale, in which case it is the confirmation screen's error view.
+    case rateChanged
+    case previewExpired
+    case commitRejected
+    // A second broadcast started while one was in flight (double-tap / overlapping send); never sent.
+    case alreadySending
 }
 
 extension CrossPayError: UserFacingError {
@@ -97,6 +164,14 @@ extension CrossPayError: UserFacingError {
             return "cross_pay.error.network".localized
         case .commitFailed:
             // One message for the whole commit-side taxonomy — internals would not help the user act.
+            return "cross_pay.error.commit_failed".localized
+        case .rateChanged:
+            return "swap.confirmation.commit.rate_changed".localized
+        case .previewExpired:
+            return "swap.confirmation.commit.refresh_required".localized
+        case .commitRejected:
+            return "swap.confirmation.commit.failed".localized
+        case .alreadySending:
             return "cross_pay.error.commit_failed".localized
         }
     }

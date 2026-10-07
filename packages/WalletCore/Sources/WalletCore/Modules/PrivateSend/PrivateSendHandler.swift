@@ -254,20 +254,23 @@ extension PrivateSendHandler: ISendHandler {
             throw error
         }
 
-        if let ref {
-            swapHistoryManager.resolve(trackingHandle: uid, txHash: ref)
+        // Empty ref = "submitted, id unknown" (Zcash resubmit path) — fall back to provider tracking.
+        let txHash = ref.flatMap { $0.isEmpty ? nil : $0 }
+
+        if let txHash {
+            swapHistoryManager.resolve(trackingHandle: uid, txHash: txHash)
         } else {
             swapHistoryManager.beginProviderTracking(trackingHandle: uid)
         }
 
         // Best-effort and off the critical path: funds have moved, so the screen must not wait on
         // the report. The track call carries the hash as a fallback.
-        if let ref {
+        if let txHash {
             let providerSwapId = order.providerSwapId
 
             Task { [service] in
                 do {
-                    try await service.reportSigned(uuid: providerSwapId, inboundTxHash: ref)
+                    try await service.reportSigned(uuid: providerSwapId, inboundTxHash: txHash)
                 } catch {
                     Core.instance?.logError(message: "private send signed report failed: \(error)", save: false)
                 }

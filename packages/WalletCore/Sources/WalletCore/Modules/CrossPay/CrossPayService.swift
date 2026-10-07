@@ -3,13 +3,14 @@ import Foundation
 import HsToolKit
 import MarketKit
 
-// /v2/swap in cross-asset exact-output mode; execution is a plain transfer to a deposit address.
-// Every /v2/swap creates a REAL order, so the entry screen's rate is display-only.
+// /v3/preview + /v3/commit in cross-asset exact-output mode; execution is a plain transfer to a
+// deposit address. The preview has no side effects (the confirmation screen re-runs it silently);
+// only /v3/commit creates a REAL order, so the entry screen's rate is display-only.
 public final class CrossPayService {
     public static let providerId = "NEAR"
 
     private let api: USwapMultiSwapApi
-    // A factory, as in PrivateSendService: the repository (and its first /v2/tokens fetch) is only
+    // A factory, as in PrivateSendService: the repository (and its first /v3/tokens fetch) is only
     // created when the CrossPay screen actually asks for it.
     private let assetRepository: (String) -> USwapAssetRepository
     private let commitRequestBuilder: USwapCommitRequestBuilder
@@ -48,7 +49,7 @@ public final class CrossPayService {
     }
 
     // Display-only: what the sender pays in tokenIn for the entered exact output. Never funded —
-    // the confirmation commits its own order.
+    // the confirmation previews and commits its own order.
     public func quote(tokenIn: Token, tokenOut: Token, amountOut: Decimal) async throws -> Decimal {
         let repository = assetRepository(Self.providerId)
 
@@ -85,9 +86,11 @@ public final class CrossPayService {
         return sellAmount
     }
 
-    // Throws CrossPayError only. NO rate-quote fallbacks: minSellAmount and amountOut come from
-    // the /v2/swap response alone.
-    public func commit(request: CrossPayRequest) async throws -> CrossPayOrder {
+    // No side effects: prices the route for the confirmation screen (re-run silently every
+    // `CrossPayData.quoteLifetime`). The order is created by `commit(preview:)` when the user
+    // slides. Throws CrossPayError only. NO rate-quote fallbacks: minSellAmount and amountOut come
+    // from the /v3/preview response alone.
+    public func preview(request: CrossPayRequest) async throws -> CrossPayPreview {
         let repository = assetRepository(Self.providerId)
 
         guard let sellAsset = repository.asset(token: request.tokenIn),
@@ -96,7 +99,7 @@ public final class CrossPayService {
             throw CrossPayError.tokenUnsupported
         }
 
-        // The buffer refund lands on the success path too, so a missing address fails the commit.
+        // The buffer refund lands on the success path too, so a missing address fails the preview.
         // ZEC → unified (CrossPay-only, Android parity): a transparent refund links shielded and
         // transparent activity.
         let refundAddress: String?
@@ -125,34 +128,32 @@ public final class CrossPayService {
             // Omitted: the app builds the transfer itself, the provider has no use for it.
             sourceAddress: nil,
             refundAddress: refundAddress
+            // No `networkFee`: the deposit is a plain transfer built and priced locally.
         )
 
         let response: USwapMultiSwapApi.SwapResponse
 
         do {
-            response = try await api.swap(swapRequest)
+            response = try await api.preview(swapRequest)
         } catch {
             throw Self.error(networkError: error, tokenOut: request.tokenOut)
         }
 
-        guard let uuid = response.uuid, !uuid.isEmpty else {
+        guard let previewToken = response.previewToken, !previewToken.isEmpty else {
             throw CrossPayError.commitFailed
         }
 
-        // Only a plain-transfer route may proceed — other kinds need real transaction building.
-        guard let execution = response.execution, case let .transfer(chain, depositAddress, amount, attachment, _) = execution else {
-            throw CrossPayError.commitFailed
-        }
-
-        // `execution.chain` is a chain id ("56") or name ("bsc"): only a recognised chain that
-        // resolves to a DIFFERENT blockchain is a mismatch.
-        if let executionBlockchainType = USwapAssetRepository.blockchainTypeMap[chain], executionBlockchainType != request.tokenIn.blockchainType {
-            throw CrossPayError.commitFailed
+        // The inner send is estimated against the stub so the confirmation screen shows a network
+        // fee. A provider that already names the deposit account at preview is estimated against
+        // that instead; with neither there is nothing to show and nothing to send — from the user's
+        // side, no route.
+        guard let stubDepositAddress = Self.nonEmpty(response.stubDepositAddress) ?? Self.nonEmpty(response.execution?.depositAddress) else {
+            throw CrossPayError.noRoute
         }
 
         // The floor check below only sees this when the provider states one, so a transfer of nothing
         // is refused on its own terms (Android CrossPayManager)
-        guard let depositAmount = amount, depositAmount > 0 else {
+        guard let depositAmount = response.sellAmount, depositAmount > 0 else {
             throw CrossPayError.commitFailed
         }
 
@@ -175,6 +176,75 @@ public final class CrossPayService {
             throw CrossPayError.commitFailed
         }
 
+        return CrossPayPreview(
+            request: request,
+            previewToken: previewToken,
+            depositAmount: depositAmount,
+            minSellAmount: minSellAmount,
+            amountOut: amountOut,
+            stubDepositAddress: stubDepositAddress,
+            refundAddress: refundAddress,
+            estimatedTime: response.estimatedTime,
+            previewedAt: Date()
+        )
+    }
+
+    // The only call with side effects: creates the order for a previewed route. Every failure is an
+    // authored reason the handler toasts before re-previewing; the token is never retried. The
+    // deposit address and attachment only exist from here on.
+    public func commit(preview: CrossPayPreview) async throws -> CrossPayOrder {
+        // Never create an order from a cancelled task.
+        try Task.checkCancellation()
+
+        let request = preview.request
+        let commit: USwapMultiSwapApi.CommitResponse
+
+        do {
+            commit = try await api.commit(.init(previewToken: preview.previewToken))
+        } catch is CancellationError {
+            throw CancellationError()
+        } catch {
+            // `commitError(networkError:)` reads the server's discriminator and the provider refusal
+            // out of the failure body; `error(networkError:tokenOut:)` turns both into an authored
+            // reason. The body itself is never interpolated into anything the user sees.
+            throw Self.error(networkError: USwapMultiSwapApi.commitError(networkError: error), tokenOut: request.tokenOut)
+        }
+
+        guard let uuid = commit.uuid, !uuid.isEmpty else {
+            throw CrossPayError.commitFailed
+        }
+
+        // Only a plain-transfer route may proceed — other kinds need real transaction building.
+        guard let execution = commit.execution, case let .transfer(chain, depositAddress, amount, attachment, _) = execution else {
+            throw CrossPayError.commitFailed
+        }
+
+        // `execution.chain` is a chain id ("56") or name ("bsc"): only a recognised chain that
+        // resolves to a DIFFERENT blockchain is a mismatch.
+        if let executionBlockchainType = USwapAssetRepository.blockchainTypeMap[chain], executionBlockchainType != request.tokenIn.blockchainType {
+            throw CrossPayError.commitFailed
+        }
+
+        // The transfer carries the PREVIEW's amount — the figure the user confirmed under the slide.
+        // The commit's own figure is not used; a discrepancy is logged (no amounts: live transfer
+        // values) and the order proceeds.
+        if let committedAmount = amount ?? commit.sellAmount, committedAmount != preview.depositAmount {
+            Core.instance?.logError(message: "CrossPay: commit sellAmount != preview", save: false)
+        }
+
+        // Never the entered amount: that's the requested output, not what the provider promised.
+        let amountOut = commit.expectedBuyAmount ?? preview.amountOut
+
+        guard amountOut > 0 else {
+            throw CrossPayError.commitFailed
+        }
+
+        if amountOut != request.amount {
+            // Contractual in exact-output mode: the commit delivers what the preview promised. A
+            // discrepancy is a provider bug worth a log; the order proceeds with the commit's number.
+            Core.instance?.logError(message: "CrossPay: commit expectedBuyAmount != requested", save: false)
+        }
+
         // An undeliverable attachment fails once here at commit, not on every build re-entry.
         do {
             try USwapMultiSwapApi.Attachment.validate(attachment, blockchainType: request.tokenIn.blockchainType)
@@ -183,18 +253,19 @@ public final class CrossPayService {
         }
 
         return CrossPayOrder(
-            request: request,
-            depositAmount: depositAmount,
-            minSellAmount: minSellAmount,
+            preview: preview,
+            depositAmount: preview.depositAmount,
             amountOut: amountOut,
-            providerId: Self.providerId,
             depositAddress: depositAddress,
             attachment: attachment,
-            providerSwapId: uuid,
-            refundAddress: refundAddress,
-            estimatedTime: response.estimatedTime,
-            committedAt: Date()
+            providerSwapId: uuid
         )
+    }
+
+    // Reports the broadcast hash to the backend. Best-effort for the caller: /v3/track carries the
+    // hash as a fallback.
+    public func reportSigned(uuid: String, inboundTxHash: String) async throws {
+        _ = try await api.signed(.init(uuid: uuid, inboundTxHash: inboundTxHash))
     }
 }
 
@@ -216,6 +287,10 @@ private extension CrossPayService {
         return recognised ? .noRoute : nil
     }
 
+    static func nonEmpty(_ string: String?) -> String? {
+        string.flatMap { $0.isEmpty ? nil : $0 }
+    }
+
     static func error(rateNetworkError: Error, tokenOut: Token) -> CrossPayError {
         guard let responseError = rateNetworkError as? NetworkManager.ResponseError else {
             return .networkError(rateNetworkError)
@@ -235,6 +310,26 @@ private extension CrossPayService {
     }
 
     static func error(networkError: Error, tokenOut: Token) -> CrossPayError {
+        // A failed /v3/commit: the server's discriminator first (the price moved / the token is stale),
+        // then the provider refusal it may carry (same fields as a /v3/rate providerError), then the
+        // HTTP status. Anything else is a refusal with no authored reason beyond "could not start".
+        if let commitError = networkError as? USwapMultiSwapApi.CommitError {
+            switch commitError.status {
+            case "rate_changed":
+                return .rateChanged
+            case "refresh_required":
+                return .previewExpired
+            default:
+                break
+            }
+
+            if let providerError = commitError.providerError, let reason = error(providerErrors: [providerError], tokenOut: tokenOut) {
+                return reason
+            }
+
+            return commitError.httpStatus == 503 ? .providerSuspended : .commitRejected
+        }
+
         guard let responseError = networkError as? NetworkManager.ResponseError else {
             return .networkError(networkError)
         }
@@ -243,7 +338,7 @@ private extension CrossPayService {
             return .providerSuspended
         }
 
-        // A failed /v2/swap carries the provider error as its body, same fields as /v2/rate's
+        // A failed /v3/preview carries the provider error as its body, same fields as /v3/rate's
         // `providerErrors`; only the parsed fields are read.
         if let providerError = USwapMultiSwapApi.providerError(networkError: networkError),
            let reason = error(providerErrors: [providerError], tokenOut: tokenOut)

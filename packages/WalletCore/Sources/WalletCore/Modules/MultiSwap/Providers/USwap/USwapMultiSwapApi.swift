@@ -89,9 +89,8 @@ public final class USwapMultiSwapApi {
     }
 
     // Transitional: v2 semantics (an order is created on every call) expressed as preview + commit in
-    // one shot. Used only by callers not yet migrated to the preview / commit split (the USwap
-    // sub-providers' confirmation quote, StellarSwap, Private send, CrossPay). Remove once the last of
-    // them calls `preview` and `commit` directly.
+    // one shot. Its only remaining caller is the native StellarSwap provider. Remove once it calls
+    // `preview` and `commit` directly.
     public func swap(_ request: SwapRequest) async throws -> SwapResponse {
         let preview = try await preview(request)
 
