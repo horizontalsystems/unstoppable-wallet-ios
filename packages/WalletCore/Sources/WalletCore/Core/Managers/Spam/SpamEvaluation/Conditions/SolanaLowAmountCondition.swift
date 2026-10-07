@@ -39,7 +39,7 @@ class SolanaLowAmountCondition: SpamCondition {
         switch event.value.kind {
         case .nft:
             return event.value.value > 0 ? 0 : riskScore
-        case .raw, .eip20Token:
+        case .raw, .unknownToken:
             return spamScore
         default:
             if event.value.value == 0 {

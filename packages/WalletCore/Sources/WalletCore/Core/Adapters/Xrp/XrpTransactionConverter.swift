@@ -73,7 +73,7 @@ class XrpTransactionConverter {
                 return AppValue(token: token, value: value)
             }
             let code = XrpKit.Kit.displayCurrencyCode(currency)
-            return AppValue(kind: .eip20Token(tokenName: code, tokenCode: code, tokenDecimals: XrpKitManager.issuedTokenDecimals), value: value)
+            return AppValue(tokenName: code, tokenCode: code, tokenDecimals: XrpKitManager.issuedTokenDecimals, value: value)
         }
     }
 }

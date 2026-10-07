@@ -20,6 +20,7 @@ class ManageWalletsViewModel: ObservableObject {
     @Published var filter = ""
 
     let blockchains: [Blockchain]
+    let canAddToken: Bool
     @Published var blockchainFilter: Blockchain? = nil {
         didSet {
             guard blockchainFilter != oldValue else {
@@ -30,13 +31,10 @@ class ManageWalletsViewModel: ObservableObject {
         }
     }
 
-    var canAddToken: Bool {
-        account.type.canAddTokens
-    }
-
     init(account: Account, restoreSettingsService: RestoreSettingsService) {
         self.account = account
         self.restoreSettingsService = restoreSettingsService
+        canAddToken = !AddTokenModule.items(account: account).isEmpty
         tokenInfoProvider = ManageWalletsTokenInfoProvider(restoreSettingsService: restoreSettingsService)
 
         wallets = Set(walletManager.activeWallets)

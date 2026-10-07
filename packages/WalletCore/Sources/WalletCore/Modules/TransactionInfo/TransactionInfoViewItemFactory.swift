@@ -24,10 +24,10 @@ class TransactionInfoViewItemFactory {
         extraProviderFactory.updatedPublisher
     }
 
-    private func amount(source: TransactionSource, title: String, subtitle: String?, appValue: AppValue, rate: CurrencyValue?, type: AmountType, balanceHidden: Bool) -> TransactionInfoModule.ViewItem {
+    private func amount(source _: TransactionSource, title: String, subtitle: String?, appValue: AppValue, rate: CurrencyValue?, type: AmountType, balanceHidden: Bool) -> TransactionInfoModule.ViewItem {
         let iconUrl = appValue.coin?.imageUrl
         let iconAlternativeUrl = appValue.coin?.image
-        let iconPlaceholderImageName = source.blockchainType.placeholderImageName(tokenProtocol: appValue.tokenProtocol)
+        let iconPlaceholderImageName = "placeholder_circle"
 
         let coin = appValue.token.flatMap { $0.isCustom ? nil : $0.coin }
 
@@ -140,7 +140,7 @@ class TransactionInfoViewItemFactory {
         switch appValue.kind {
         case let .token(token):
             return token.fullBadge
-        case let .eip20Token(tokenName, _, _):
+        case let .unknownToken(tokenName, _, _):
             return tokenName
         default:
             return nil

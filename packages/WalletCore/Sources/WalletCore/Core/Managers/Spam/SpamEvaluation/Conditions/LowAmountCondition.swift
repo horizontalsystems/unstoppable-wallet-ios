@@ -52,7 +52,7 @@ class LowAmountCondition: SpamCondition {
         switch event.value.kind {
         case .nft:
             return event.value.value > 0 ? 0 : riskScore
-        case .raw, .eip20Token:
+        case .raw, .unknownToken:
             return spamScore
         default:
             guard event.value.value > 0 else {

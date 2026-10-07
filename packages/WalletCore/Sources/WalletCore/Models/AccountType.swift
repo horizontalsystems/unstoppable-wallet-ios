@@ -225,13 +225,6 @@ public enum AccountType: Identifiable {
         }
     }
 
-    var canAddTokens: Bool {
-        switch self {
-        case .mnemonic, .evmPrivateKey, .trcPrivateKey: return true
-        default: return false
-        }
-    }
-
     var supportsWalletConnect: Bool {
         switch self {
         case .mnemonic, .evmPrivateKey: return true

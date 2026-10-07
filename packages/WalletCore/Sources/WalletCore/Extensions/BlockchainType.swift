@@ -36,10 +36,6 @@ extension BlockchainType {
         .solana,
     ]
 
-    func placeholderImageName(tokenProtocol: TokenProtocol?) -> String {
-        tokenProtocol.map { "\(uid)_\($0)_32" } ?? "placeholder_circle_32"
-    }
-
     var iconPlain32: String {
         "\(uid)_trx_32"
     }

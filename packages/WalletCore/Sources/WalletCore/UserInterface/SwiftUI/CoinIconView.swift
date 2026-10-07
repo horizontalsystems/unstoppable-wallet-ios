@@ -81,7 +81,7 @@ public struct CoinIconView: View {
 
     public init(token: Token?, size: CGFloat = 40, iconOpacity: Double = 1, iconOverlay: AnyView? = nil) {
         coin = token?.coin
-        placeholderImage = token?.placeholderImageName
+        placeholderImage = "placeholder_circle"
         maskImageUrl = token?.maskImageUrl
         self.size = size
         self.iconOpacity = iconOpacity

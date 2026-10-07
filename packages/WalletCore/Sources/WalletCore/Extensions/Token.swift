@@ -32,10 +32,6 @@ extension Token {
         coin.uid == tokenQuery.customCoinUid
     }
 
-    var placeholderImageName: String {
-        "\(blockchainType.uid)_\(type.tokenProtocol)_32"
-    }
-
     var badge: String? {
         switch type {
         case let .derived(derivation): return derivation.mnemonicDerivation.rawValue.uppercased()

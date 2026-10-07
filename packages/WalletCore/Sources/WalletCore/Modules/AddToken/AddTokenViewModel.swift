@@ -83,10 +83,6 @@ class AddTokenViewModel: ObservableObject {
 }
 
 extension AddTokenViewModel {
-    var canAddToken: Bool {
-        account.type.canAddTokens
-    }
-
     var blockchains: [Blockchain] {
         items.map(\.blockchain)
     }

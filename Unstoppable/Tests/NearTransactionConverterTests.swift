@@ -121,7 +121,7 @@ struct NearTransactionConverterTests {
         )
 
         #expect(metadataRequests.count == 0)
-        guard case let .receive(value, _, _) = record.type, case .eip20Token = value.kind else {
+        guard case let .receive(value, _, _) = record.type, case .unknownToken = value.kind else {
             Issue.record("expected an unknown token receive, got \(record.type)")
             return
         }

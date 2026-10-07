@@ -114,7 +114,7 @@ class OutputTransactionFactory {
     private static func filterZeroPoisoningEvents(_ events: [TransferEvent]) -> [TransferEvent] {
         events.filter {
             switch $0.value.kind { // check if token not is coinGecko (not valid)
-            case .raw, .eip20Token: return false
+            case .raw, .unknownToken: return false
             default: ()
             }
 

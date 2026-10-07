@@ -114,6 +114,6 @@ class NearTransactionConverter {
         let code = metadata?.symbol ?? transfer.contractId
         let value = Decimal(bigUInt: transfer.amount, decimals: decimals) ?? 0
 
-        return AppValue(kind: .eip20Token(tokenName: name, tokenCode: code, tokenDecimals: decimals), value: negate ? -value : value)
+        return AppValue(tokenName: name, tokenCode: code, tokenDecimals: decimals, value: negate ? -value : value)
     }
 }

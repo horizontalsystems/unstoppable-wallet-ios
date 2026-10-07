@@ -22,7 +22,7 @@ final class OutgoingPoisoningFilter: SpamFilter {
         // if somebody transfer from your wallet some token, which you don't add as wallet (like phising token) mark it spam
         if transaction.events.outgoing.contains(where: { event in
             switch event.value.kind {
-            case .raw, .eip20Token: return true
+            case .raw, .unknownToken: return true
             default: return false
             }
         }) {

@@ -8,9 +8,16 @@ enum AddTokenModule {
             return nil
         }
 
+        let accountItems = items(account: account)
+
+        guard !accountItems.isEmpty else { return nil }
+        return (account, accountItems)
+    }
+
+    static func items(account: Account) -> [Item] {
         var items = [Item]()
 
-        for blockchain in Core.shared.evmBlockchainManager.allBlockchains {
+        for blockchain in Core.shared.evmBlockchainManager.allBlockchains where blockchain.type.supports(accountType: account.type) {
             if let service: IAddTokenBlockchainService = AddEvmTokenBlockchainService(
                 blockchain: blockchain,
                 networkManager: Core.shared.networkManager,
@@ -72,8 +79,7 @@ enum AddTokenModule {
             items.append(item)
         }
 
-        guard !items.isEmpty else { return nil }
-        return (account, items)
+        return items
     }
 
     // static func viewController() -> UIViewController? {
