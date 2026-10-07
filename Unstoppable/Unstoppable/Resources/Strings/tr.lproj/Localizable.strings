@@ -515,6 +515,12 @@
 "send.xrp.address_error.network_mismatch" = "Geçersiz ağ: bu adres farklı bir XRP ağına ait.";
 "send.xrp.activation.reserve_note" = "Etkinleştirme, %@'i cüzdanınızda rezerv olarak kilitler. Güven çizgisi daha sonra kaldırılırsa serbest bırakılır.";
 "send.xrp.activation.insufficient_balance" = "Güven çizgisi rezervini ve ağ ücretini karşılamak için yeterli harcayabileceğiniz XRP'niz yok.";
+"send.near.receiver_registration" = "Alıcı Kaydı";
+"send.near.receiver_registration.info" = "Token sözleşmesi, bu tokena hiç sahip olmamış bir alıcıyı kaydetmek için tek seferlik bir depozito alır.";
+"send.near.storage_deposit_too_high" = "Bu token, alıcıyı kaydetmek için alışılmadık derecede yüksek bir depozito istiyor ve dolandırıcılık olabilir.";
+"send.near.storage_deposit_changed" = "Alıcı kayıt ücreti değişti. Yeni ücreti kontrol edip tekrar gönderin.";
+"send.near.previous_transaction_pending" = "Önceki bir işlem hâlâ beklemede. Tekrar göndermeden önce işlem geçmişinizi kontrol edin.";
+"send.near.rejected" = "Ağ bu işlemi reddetti. Hiçbir şey gönderilmedi.";
 "send.confirmation.fee" = "Ücret";
 "send.confirmation.fee_sponsored" = "Sponsorlu";
 "send.confirmation.fee_paid_in" = "%@ ile ödendi";
@@ -1454,6 +1460,7 @@
 "transactions.processing" = "İşleniyor";
 "transactions.completed" = "Tamamlandı";
 "transactions.failed" = "Başarısız";
+"transactions.not_processed" = "İşlenmedi";
 
 "transactions.receive" = "Al";
 "transactions.send" = "Gönderildi";
@@ -2062,7 +2069,7 @@
 "wallet_connect.button_reconnect" = "Yeniden bağlan";
 "wallet_connect.button_disconnect" = "Bağlantıyı Kes";
 "ethereum_transaction.error.title" = "Hata";
-"ethereum_transaction.error.insufficient_balance" = "İşlem, göndermek için %@ gerektirir.";
+"transaction.error.insufficient_balance" = "İşlem, göndermek için %@ gerektirir.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Mevcut %@ bakiyesi, işlem ücreti dahil bu işlemi gerçekleştirmek için gereken miktarın altında.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "Seçilen ücret tutarı çok düşüktür ve reddedilecektir!";
 "ethereum_transaction.error.nonce_already_in_block" = "İşlem zaten blokta!";
@@ -2380,6 +2387,7 @@
 "zcash_network.auto_select.description" = "En hızlı güncel sunucuya bağlan";
 "zcash_network.unreachable" = "Ulaşılamıyor";
 "xrp_network.description" = "Unstoppable uygulamasının cüzdan(lar)ı senkronize etmek için kullanacağı node’u seçin.";
+"near-protocol_network.description" = "Unstoppable uygulamasının cüzdan(lar)ı senkronize etmek için kullanacağı node’u seçin.";
 
 "add_zcash_node.title" = "Sunucu Ekle";
 "add_zcash_node.description" = "lightwalletd sunucu adresini girin (ana bilgisayar veya ana bilgisayar:port).";

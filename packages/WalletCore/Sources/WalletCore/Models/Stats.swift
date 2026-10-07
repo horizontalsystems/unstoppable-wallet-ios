@@ -28,6 +28,7 @@ enum StatPage: String {
     case blockchainSettingsZcash = "blockchain_settings_zcash"
     case blockchainSettingsZcashAdd = "blockchain_settings_zcash_add"
     case blockchainSettingsXrp = "blockchain_settings_xrp"
+    case blockchainSettingsNear = "blockchain_settings_near"
     case blockchainSettingsTron = "blockchain_settings_tron"
     case blockchainSettingsTronAdd = "blockchain_settings_tron_add"
     case checkAddress = "check_address"
@@ -227,6 +228,7 @@ enum StatEvent {
     case openBlockchainSettingsZano
     case openBlockchainSettingsZcash
     case openBlockchainSettingsXrp
+    case openBlockchainSettingsNear
     case openBlockchainSettingsTron
     case openBlockchainSettingsEvmAdd(chainUid: String)
     case openBlockchainSettingsMoneroAdd(chainUid: String)
@@ -274,6 +276,7 @@ enum StatEvent {
     case switchZanoNode(chainUid: String, name: String)
     case switchZcashNode(chainUid: String, name: String)
     case switchXrpNode(chainUid: String, name: String)
+    case switchNearNode(chainUid: String, name: String)
     case switchTronRpcSource(chainUid: String, name: String)
     case switchMarketTypeFilter(type: String)
     case switchFilterType(type: String)
@@ -327,7 +330,7 @@ enum StatEvent {
         case .importFull: return "import_full"
         case .importWallet: return "import_wallet"
         case .open, .openCategory, .openCoin, .openPlatform, .openReceive, .openResend, .openSector, .openSend, .openSendTokenList, .openTokenPage,
-             .openBlockchainSettingsBtc, .openBlockchainSettingsEvm, .openBlockchainSettingsMonero, .openBlockchainSettingsZano, .openBlockchainSettingsZcash, .openBlockchainSettingsXrp, .openBlockchainSettingsTron,
+             .openBlockchainSettingsBtc, .openBlockchainSettingsEvm, .openBlockchainSettingsMonero, .openBlockchainSettingsZano, .openBlockchainSettingsZcash, .openBlockchainSettingsXrp, .openBlockchainSettingsNear, .openBlockchainSettingsTron,
              .openBlockchainSettingsEvmAdd, .openBlockchainSettingsMoneroAdd, .openBlockchainSettingsZanoAdd, .openBlockchainSettingsZcashAdd, .openBlockchainSettingsTronAdd: return "open_page"
         case .openPremium: return "open_premium_from"
         case .openTokenInfo: return "open_token_info"
@@ -363,6 +366,7 @@ enum StatEvent {
         case .switchZanoNode: return "switch_zano_node"
         case .switchZcashNode: return "switch_zcash_node"
         case .switchXrpNode: return "switch_xrp_node"
+        case .switchNearNode: return "switch_near_node"
         case .switchTronRpcSource: return "switch_tron_rpc_source"
         case .switchField: return "switch_field"
         case .switchFilterType: return "switch_filter_type"
@@ -413,6 +417,7 @@ enum StatEvent {
         case .openBlockchainSettingsZano: return [.page: StatPage.blockchainSettingsZano.rawValue]
         case .openBlockchainSettingsZcash: return [.page: StatPage.blockchainSettingsZcash.rawValue]
         case .openBlockchainSettingsXrp: return [.page: StatPage.blockchainSettingsXrp.rawValue]
+        case .openBlockchainSettingsNear: return [.page: StatPage.blockchainSettingsNear.rawValue]
         case .openBlockchainSettingsTron: return [.page: StatPage.blockchainSettingsTron.rawValue]
         case let .openBlockchainSettingsEvmAdd(chainUid: chainUid): return [.page: StatPage.blockchainSettingsEvmAdd.rawValue, .chainUid: chainUid]
         case let .openCategory(categoryUid): return [.page: StatPage.coinCategory.rawValue, .categoryUid: categoryUid]

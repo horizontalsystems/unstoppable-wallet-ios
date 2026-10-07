@@ -27,6 +27,8 @@ public enum SendData {
     case solana(token: Token, amount: Decimal, address: String, memo: String?)
     // address is the classic r-address; an X-address is resolved by the pre-send handler, its tag lands in destinationTag
     case xrp(token: Token, data: XrpSendData, destinationTag: UInt32?)
+    // memo is carried only by a NEP-141 ft_transfer; a NEAR transfer has no field for it
+    case near(token: Token, amount: Decimal, address: String, memo: String?)
     // recipientHolder: external delivery address entered before confirmation when the account
     // can't hold tokenOut; empty when the swap is delivered to the account's own wallet. A
     // shared box rather than a value so a recipient edited on the confirmation screen is

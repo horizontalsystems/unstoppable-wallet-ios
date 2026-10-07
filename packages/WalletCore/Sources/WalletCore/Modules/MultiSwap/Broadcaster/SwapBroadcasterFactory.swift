@@ -37,6 +37,7 @@ public extension SwapBroadcasterFactory {
         StellarSwapBroadcaster.self,
         SolanaSwapBroadcaster.self,
         XrpSwapBroadcaster.self,
+        NearSwapBroadcaster.self,
         MoneroSwapBroadcaster.self,
         ZanoSwapBroadcaster.self,
         ThorChainSwapBroadcaster.self,

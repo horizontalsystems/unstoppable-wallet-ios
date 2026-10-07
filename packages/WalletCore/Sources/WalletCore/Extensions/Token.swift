@@ -71,6 +71,8 @@ extension Token {
         if blockchainType == .tron { return false }
         // the ledger rejects a payment to the sending account itself (temREDUNDANT)
         if blockchainType == .xrp { return false }
+        // Android NearAddressValidator refuses the account's own id as the receiver
+        if blockchainType == .near { return false }
 
         return true
     }

@@ -18,6 +18,7 @@ public enum AccountType: Identifiable {
     case solanaAddress(address: String)
     case stellarAccount(accountId: String)
     case xrpAddress(address: String)
+    case nearAddress(address: String)
     case thorChainAddress(address: String)
     case mayaChainAddress(address: String)
     case hdExtendedKey(key: HDExtendedKey)
@@ -74,6 +75,8 @@ public enum AccountType: Identifiable {
         case let .stellarAccount(accountId):
             privateData = accountId.hs.data
         case let .xrpAddress(address):
+            privateData = address.hs.data
+        case let .nearAddress(address):
             privateData = address.hs.data
         case let .thorChainAddress(address):
             privateData = address.hs.data
@@ -135,6 +138,7 @@ public enum AccountType: Identifiable {
             case (.stellar, .native), (.stellar, .stellar): return true
             case (.solana, .native), (.solana, .spl): return true
             case (.xrp, .native), (.xrp, .xrpAsset): return true
+            case (.near, .native), (.near, .nep141): return true
             default: return false
             }
         case let .hdExtendedKey(key):
@@ -195,6 +199,11 @@ public enum AccountType: Identifiable {
         case .xrpAddress:
             switch (token.blockchainType, token.type) {
             case (.xrp, .native), (.xrp, .xrpAsset): return true
+            default: return false
+            }
+        case .nearAddress:
+            switch (token.blockchainType, token.type) {
+            case (.near, .native), (.near, .nep141): return true
             default: return false
             }
         case .thorChainAddress:
@@ -262,6 +271,8 @@ public enum AccountType: Identifiable {
             return "Stellar Account"
         case .xrpAddress:
             return "XRP Address"
+        case .nearAddress:
+            return "NEAR Account"
         case .thorChainAddress:
             return "THORChain Address"
         case .mayaChainAddress:
@@ -315,6 +326,8 @@ public enum AccountType: Identifiable {
             return "stellar_account"
         case .xrpAddress:
             return "xrp_address"
+        case .nearAddress:
+            return "near_address"
         case .thorChainAddress:
             return "thorchain_address"
         case .mayaChainAddress:
@@ -358,6 +371,8 @@ public enum AccountType: Identifiable {
             return accountId
         case let .xrpAddress(address):
             return address
+        case let .nearAddress(address):
+            return address
         case let .thorChainAddress(address):
             return address
         case let .mayaChainAddress(address):
@@ -394,6 +409,7 @@ public enum AccountType: Identifiable {
         case .solanaAddress: return "Solana"
         case .stellarAccount: return "Stellar"
         case .xrpAddress: return "XRP"
+        case .nearAddress: return "NEAR"
         case .thorChainAddress: return "THORChain"
         case .mayaChainAddress: return "Maya"
         case let .hdExtendedKey(key):
@@ -432,6 +448,7 @@ public extension AccountType {
         case solanaAddress = "solana_address"
         case stellarAccount = "stellar_address"
         case xrpAddress = "xrp_address"
+        case nearAddress = "near_address"
         case thorChainAddress = "thorchain_address"
         case mayaChainAddress = "mayachain_address"
         case hdExtendedKey = "hd_extended_key"
@@ -452,6 +469,7 @@ public extension AccountType {
             case .solanaAddress: self = .solanaAddress
             case .stellarAccount: self = .stellarAccount
             case .xrpAddress: self = .xrpAddress
+            case .nearAddress: self = .nearAddress
             case .thorChainAddress: self = .thorChainAddress
             case .mayaChainAddress: self = .mayaChainAddress
             case .hdExtendedKey: self = .hdExtendedKey
@@ -487,6 +505,8 @@ extension AccountType: Hashable {
         case let (.stellarAccount(lhsAccountId), .stellarAccount(rhsAccountId)):
             return lhsAccountId == rhsAccountId
         case let (.xrpAddress(lhsAddress), .xrpAddress(rhsAddress)):
+            return lhsAddress == rhsAddress
+        case let (.nearAddress(lhsAddress), .nearAddress(rhsAddress)):
             return lhsAddress == rhsAddress
         case let (.thorChainAddress(lhsAddress), .thorChainAddress(rhsAddress)):
             return lhsAddress == rhsAddress
@@ -540,6 +560,9 @@ extension AccountType: Hashable {
             hasher.combine(accountId)
         case let .xrpAddress(address):
             hasher.combine("xrpAddress")
+            hasher.combine(address)
+        case let .nearAddress(address):
+            hasher.combine("nearAddress")
             hasher.combine(address)
         case let .thorChainAddress(address):
             hasher.combine("thorChainAddress")

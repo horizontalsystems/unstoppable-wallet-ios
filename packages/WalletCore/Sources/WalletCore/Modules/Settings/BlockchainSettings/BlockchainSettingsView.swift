@@ -76,6 +76,12 @@ struct BlockchainSettingsView: View {
                     }
 
                     stat(page: .blockchainSettings, event: .openBlockchainSettingsXrp)
+                case .near:
+                    Coordinator.shared.present { isPresented in
+                        NodeNetworkView(blockchain: item.blockchain, isPresented: isPresented)
+                    }
+
+                    stat(page: .blockchainSettings, event: .openBlockchainSettingsNear)
                 case .thorChain:
                     Coordinator.shared.present { isPresented in
                         ThorChainNetworkView(blockchain: item.blockchain, isPresented: isPresented)

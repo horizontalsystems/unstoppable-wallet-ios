@@ -515,6 +515,12 @@
 "send.xrp.address_error.network_mismatch" = "Неверная сеть: этот адрес относится к другой сети XRP.";
 "send.xrp.activation.reserve_note" = "Активация блокирует %@ в качестве резерва в вашем кошельке. Резерв освобождается, если доверительная линия удаляется позже.";
 "send.xrp.activation.insufficient_balance" = "У вас недостаточно доступного XRP для покрытия резерва доверительной линии и комиссии сети.";
+"send.near.receiver_registration" = "Регистрация получателя";
+"send.near.receiver_registration.info" = "Контракт токена взимает разовый депозит за регистрацию получателя, у которого ещё не было этого токена.";
+"send.near.storage_deposit_too_high" = "Этот токен требует необычно большой депозит для регистрации получателя и может быть мошенническим.";
+"send.near.storage_deposit_changed" = "Комиссия за регистрацию получателя изменилась. Проверьте новую комиссию и отправьте снова.";
+"send.near.previous_transaction_pending" = "Предыдущая транзакция ещё в ожидании. Проверьте историю транзакций, прежде чем отправлять снова.";
+"send.near.rejected" = "Сеть отклонила эту транзакцию. Ничего не отправлено.";
 "send.confirmation.fee" = "Комиссия";
 "send.confirmation.fee_sponsored" = "Спонсировано";
 "send.confirmation.fee_paid_in" = "Оплачено в %@";
@@ -1454,6 +1460,7 @@
 "transactions.processing" = "В процессе";
 "transactions.completed" = "Завершено";
 "transactions.failed" = "Не удалось";
+"transactions.not_processed" = "Не обработана";
 
 "transactions.receive" = "Получено";
 "transactions.send" = "Отправлено";
@@ -2062,7 +2069,7 @@
 "wallet_connect.button_reconnect" = "Повторное подключение";
 "wallet_connect.button_disconnect" = "Отсоединить";
 "ethereum_transaction.error.title" = "Ошибка";
-"ethereum_transaction.error.insufficient_balance" = "Для отправки транзакции требуется %@.";
+"transaction.error.insufficient_balance" = "Для отправки транзакции требуется %@.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Текущий баланс %@ ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "Выбранное значение комиссии слишком низкое и будет отклонено!";
 "ethereum_transaction.error.nonce_already_in_block" = "Транзакция уже в блоке!";
@@ -2380,6 +2387,7 @@
 "zcash_network.auto_select.description" = "Подключиться к самому быстрому актуальному серверу";
 "zcash_network.unreachable" = "Недоступен";
 "xrp_network.description" = "Выберите ноду, которую приложение Unstoppable будет использовать для синхронизации кошелька(ов).";
+"near-protocol_network.description" = "Выберите ноду, которую приложение Unstoppable будет использовать для синхронизации кошелька(ов).";
 
 "add_zcash_node.title" = "Добавить сервер";
 "add_zcash_node.description" = "Введите адрес сервера lightwalletd (хост или хост:порт).";

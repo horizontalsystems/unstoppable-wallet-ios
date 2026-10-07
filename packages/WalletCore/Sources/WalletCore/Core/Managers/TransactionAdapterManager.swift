@@ -54,6 +54,8 @@ public class TransactionAdapterManager {
                 transactionsAdapter = adapterFactory.solanaTransactionsAdapter(transactionSource: source)
             } else if source.blockchainType == .xrp {
                 transactionsAdapter = adapterFactory.xrpTransactionAdapter(transactionSource: source)
+            } else if source.blockchainType == .near {
+                transactionsAdapter = adapterFactory.nearTransactionAdapter(transactionSource: source)
             } else {
                 transactionsAdapter = adapter as? ITransactionsAdapter
             }

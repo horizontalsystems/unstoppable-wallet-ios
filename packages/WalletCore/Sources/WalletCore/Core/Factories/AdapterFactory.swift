@@ -21,6 +21,7 @@ public class AdapterFactory {
     private let zanoKitManager: ZanoKitManager
     private let solanaKitManager: SolanaKitManager
     private let xrpKitManager: XrpKitManager
+    private let nearKitManager: NearKitManager
     private let restoreSettingsManager: RestoreSettingsManager
     private let coinManager: CoinManager
     private let spamWrapper: SpamWrapper
@@ -28,7 +29,7 @@ public class AdapterFactory {
 
     public convenience init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zcashNodeManager: ZcashNodeManager,
                             btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
-                            zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager, xrpKitManager: XrpKitManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager,
+                            zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager, xrpKitManager: XrpKitManager, nearKitManager: NearKitManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager,
                             spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager)
     {
         self.init(
@@ -50,6 +51,7 @@ public class AdapterFactory {
             zanoKitManager: zanoKitManager,
             solanaKitManager: solanaKitManager,
             xrpKitManager: xrpKitManager,
+            nearKitManager: nearKitManager,
             restoreSettingsManager: restoreSettingsManager,
             coinManager: coinManager,
             spamWrapper: spamWrapper,
@@ -59,7 +61,7 @@ public class AdapterFactory {
 
     init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zcashNodeManager: ZcashNodeManager,
          btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, thorChainKitManager: ThorChainKitManager, mayaChainKitManager: ThorChainKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
-         zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager, xrpKitManager: XrpKitManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager,
+         zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager, xrpKitManager: XrpKitManager, nearKitManager: NearKitManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager,
          spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager)
     {
         self.evmBlockchainManager = evmBlockchainManager
@@ -75,6 +77,7 @@ public class AdapterFactory {
         self.zanoKitManager = zanoKitManager
         self.solanaKitManager = solanaKitManager
         self.xrpKitManager = xrpKitManager
+        self.nearKitManager = nearKitManager
         self.restoreSettingsManager = restoreSettingsManager
         self.coinManager = coinManager
         self.spamWrapper = spamWrapper
@@ -254,6 +257,16 @@ extension AdapterFactory {
         return nil
     }
 
+    func nearTransactionAdapter(transactionSource: TransactionSource) -> ITransactionsAdapter? {
+        let query = TokenQuery(blockchainType: .near, tokenType: .native)
+
+        if let nearKit = nearKitManager.nearKit, let baseToken = try? coinManager.token(query: query) {
+            return NearTransactionAdapter(nearKit: nearKit, source: transactionSource, baseToken: baseToken, coinManager: coinManager, spamWrapper: spamWrapper)
+        }
+
+        return nil
+    }
+
     func solanaTransactionsAdapter(transactionSource: TransactionSource) -> ITransactionsAdapter? {
         let query = TokenQuery(blockchainType: .solana, tokenType: .native)
 
@@ -373,6 +386,16 @@ extension AdapterFactory {
         case let (.xrpAsset(currency, issuer), .xrp):
             if let xrpKit = try? xrpKitManager.xrpKit(account: wallet.account) {
                 return XrpTokenAdapter(xrpKit: xrpKit, token: wallet.token, currency: currency, issuer: issuer)
+            }
+
+        case (.native, .near):
+            if let nearKit = try? nearKitManager.nearKit(account: wallet.account) {
+                return NearAdapter(nearKit: nearKit)
+            }
+
+        case let (.nep141(contractId), .near):
+            if let nearKit = try? nearKitManager.nearKit(account: wallet.account) {
+                return NearTokenAdapter(nearKit: nearKit, nearKitManager: nearKitManager, token: wallet.token, contractId: contractId)
             }
 
         default: ()

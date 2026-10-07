@@ -444,6 +444,7 @@ struct CoinOverviewView: View {
         case let .zanoAsset(id): return id.shortened
         case let .thorChainAsset(denom): return denom
         case let .xrpAsset(_, issuer): return issuer.shortened
+        case let .nep141(contractId): return contractId.shortened
         case let .unsupported(_, reference): return reference?.shortened
         }
     }
@@ -456,6 +457,7 @@ struct CoinOverviewView: View {
         case let .stellar(code, issuer): return [code, issuer].joined(separator: "-")
         case let .thorChainAsset(denom): return denom
         case let .xrpAsset(currency, issuer): return [currency, issuer].joined(separator: "-")
+        case let .nep141(contractId): return contractId
         case let .unsupported(_, reference): return reference
         default: return nil
         }
@@ -467,6 +469,7 @@ struct CoinOverviewView: View {
         case let .spl(address): return token.blockchain.explorerUrl(reference: address)
         case let .jetton(address): return token.blockchain.explorerUrl(reference: address)
         case let .stellar(code, issuer): return token.blockchain.explorerUrl(reference: [code, issuer].joined(separator: "-"))
+        case let .nep141(contractId): return "https://nearblocks.io/token/\(contractId)"
         case let .unsupported(_, reference): return token.blockchain.explorerUrl(reference: reference)
         default: return nil
         }

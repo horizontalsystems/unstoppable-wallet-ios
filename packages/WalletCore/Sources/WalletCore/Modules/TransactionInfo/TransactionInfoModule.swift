@@ -33,7 +33,8 @@ extension TransactionInfoModule {
         case actionTitle(iconName: String?, iconDimmed: Bool, title: String, subTitle: String?)
         case amount(title: String, subtitle: String?, iconUrl: String?, iconAlternativeUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType, coin: Coin?)
         case nftAmount(iconUrl: String?, iconPlaceholderImageName: String, nftAmount: String, type: AmountType, providerCollectionUid: String?, nftUid: NftUid?)
-        case status(status: TransactionStatus)
+        /// notProcessed: failed without reaching the chain, which is not an error to show as one.
+        case status(status: TransactionStatus, notProcessed: Bool = false)
         case option(option: Option)
         case date(date: Date)
         case from(value: String, valueTitle: String?, contactAddress: ContactAddress?)

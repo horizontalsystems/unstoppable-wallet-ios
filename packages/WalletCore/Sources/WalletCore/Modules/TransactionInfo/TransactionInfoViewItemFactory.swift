@@ -798,6 +798,48 @@ class TransactionInfoViewItemFactory {
 
             feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(appValue: $0, rate: _rate($0.coin))) }
 
+        case let record as NearTransactionRecord:
+            switch record.type {
+            case let .send(value, to, sentToSelf, memo):
+                var viewItems = sendSection(source: record.source, appValue: value, to: to, rates: item.rates, sentToSelf: sentToSelf, balanceHidden: balanceHidden)
+
+                if sentToSelf {
+                    viewItems.append(.sentToSelf)
+                }
+
+                if let memo {
+                    viewItems.append(.memo(text: memo))
+                }
+
+                sections.append(.init(viewItems))
+
+            case let .receive(value, from, memo):
+                var viewItems = receiveSection(source: record.source, appValue: value, from: from, rates: item.rates, balanceHidden: balanceHidden)
+
+                if let memo {
+                    viewItems.append(.memo(text: memo))
+                }
+
+                sections.append(.init(viewItems))
+
+            case let .contractCall(contractId, method, value):
+                sections.append(.init([
+                    .value(title: "tx_info.operation_type".localized, value: method ?? "transactions.contract_call".localized),
+                    .value(title: "transactions.contract".localized, value: contractId),
+                ]))
+
+                if let value {
+                    if value.value < 0 {
+                        sections.append(.init(sendSection(source: record.source, appValue: value, to: contractId, rates: item.rates, balanceHidden: balanceHidden)))
+                    } else {
+                        sections.append(.init(receiveSection(source: record.source, appValue: value, from: contractId, rates: item.rates, balanceHidden: balanceHidden)))
+                    }
+                }
+            }
+
+            // only when the account signed it: someone else paid for a transaction that only touched it
+            feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(appValue: $0, rate: _rate($0.coin))) }
+
         case let record as ZcashShieldingTransactionRecord:
             sections.append(.init([.actionTitle(iconName: record.direction.txIconName, iconDimmed: false, title: record.direction.txTitle, subTitle: nil)]))
 
@@ -882,7 +924,8 @@ class TransactionInfoViewItemFactory {
 
         var transactionViewItems: [TransactionInfoModule.ViewItem] = [
             .date(date: record.date),
-            .status(status: status),
+            // a NEAR transaction that expired before inclusion never reached the chain (Android `notProcessed`)
+            .status(status: status, notProcessed: (record as? NearTransactionRecord)?.expired == true),
         ]
 
         if let evmRecord = record as? EvmTransactionRecord, evmRecord.ownTransaction, let appValue = evmRecord.fee {

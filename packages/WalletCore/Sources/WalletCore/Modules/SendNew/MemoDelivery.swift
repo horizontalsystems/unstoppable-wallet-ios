@@ -60,6 +60,8 @@ public extension BlockchainType {
         // provider's tag there: USwapXrpFinalQuoteBuilder, XrpPreSendHandler's attachment
         // overload, and Attachment.validate below.
         case .xrp: .none
+        // only a NEP-141 ft_transfer carries a memo; a NEAR transfer and a deposit have no field for it (Android memoDelivery = None)
+        case .near: .none
         case .unsupported: .none
         }
     }
@@ -75,6 +77,7 @@ public extension BlockchainType {
         case .zcash: 512
         case .ton, .monero, .zano: 120
         case .thorChain, .mayaChain: 250
+        case .near: 256
         case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne,
              .gnosis, .fantom, .base, .zkSync, .robinhood, .arc, .tron, .solana, .xrp, .unsupported: nil
         }

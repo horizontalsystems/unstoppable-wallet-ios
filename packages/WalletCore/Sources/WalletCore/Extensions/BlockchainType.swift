@@ -32,6 +32,7 @@ extension BlockchainType {
         .ton,
         .stellar,
         .xrp,
+        .near,
         .solana,
     ]
 
@@ -73,6 +74,7 @@ extension BlockchainType {
             .optimism,
             .stellar,
             .xrp,
+            .near,
             .dash,
             .litecoin,
             .bitcoinCash,
@@ -166,6 +168,8 @@ extension BlockchainType {
             return self == .solana
         case .xrpAddress:
             return self == .xrp
+        case .nearAddress:
+            return self == .near
         case .thorChainAddress:
             return self == .thorChain
         case .mayaChainAddress:
@@ -247,6 +251,7 @@ extension BlockchainType {
         case .ton: return "TON"
         case .stellar: return "Stellar"
         case .xrp: return "XRP, XRPL tokens"
+        case .near: return "NEAR, NEP-141 tokens"
         case .thorChain: return "RUNE, THORChain assets"
         case .mayaChain: return "CACAO"
         case .solana: return "SOL, SPL tokens"
@@ -338,7 +343,7 @@ extension BlockchainType {
         case .zcash: return 75
         case .monero: return 120
         case .zano: return 60
-        case .binanceSmartChain, .arbitrumOne, .arc: return 1
+        case .binanceSmartChain, .arbitrumOne, .arc, .near: return 1
         case .thorChain, .mayaChain: return nil
         case .xrp: return 4
         case .solana, .unsupported: return nil

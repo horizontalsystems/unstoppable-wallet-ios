@@ -1,6 +1,6 @@
 import MarketKit
 
-private let fishingBlockchainSupports = EvmBlockchainManager.blockchainTypes + [.stellar, .tron, .xrp]
+private let fishingBlockchainSupports = EvmBlockchainManager.blockchainTypes + [.stellar, .tron, .xrp, .near]
 
 public enum AddressSecurityIssueType: CaseIterable, Identifiable {
     case phishing

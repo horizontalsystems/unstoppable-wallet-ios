@@ -99,6 +99,12 @@ public class AccountStorage {
             }
 
             type = .xrpAddress(address: address)
+        case .nearAddress:
+            guard let address = record.dataKey else {
+                return nil
+            }
+
+            type = .nearAddress(address: address)
         case .thorChainAddress:
             guard let address = record.dataKey else {
                 return nil
@@ -207,6 +213,9 @@ public class AccountStorage {
             dataKey = accountId
         case let .xrpAddress(address):
             typeName = .xrpAddress
+            dataKey = address
+        case let .nearAddress(address):
+            typeName = .nearAddress
             dataKey = address
         case let .thorChainAddress(address):
             typeName = .thorChainAddress
@@ -365,6 +374,7 @@ extension AccountStorage {
         case solanaAddress
         case stellarAccount
         case xrpAddress
+        case nearAddress
         case thorChainAddress
         case mayaChainAddress
         case hdExtendedKey

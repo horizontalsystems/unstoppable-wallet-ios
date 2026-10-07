@@ -515,6 +515,12 @@
 "send.xrp.address_error.network_mismatch" = "잘못된 네트워크: 이 주소는 다른 XRP 네트워크에 속합니다.";
 "send.xrp.activation.reserve_note" = "활성화하면 %@이(가) 지갑의 예비금으로 잠깁니다. 신뢰선을 나중에 제거하면 해제됩니다.";
 "send.xrp.activation.insufficient_balance" = "신뢰선 예비금과 네트워크 수수료를 충당할 수 있는 충분한 사용 가능한 XRP가 없습니다.";
+"send.near.receiver_registration" = "수신자 등록";
+"send.near.receiver_registration.info" = "토큰 컨트랙트는 이 토큰을 보유한 적이 없는 수신자를 등록하기 위해 일회성 예치금을 부과합니다.";
+"send.near.storage_deposit_too_high" = "이 토큰은 수신자 등록에 비정상적으로 큰 예치금을 요구하며 사기일 수 있습니다.";
+"send.near.storage_deposit_changed" = "수신자 등록 수수료가 변경되었습니다. 변경된 수수료를 확인한 후 다시 전송하세요.";
+"send.near.previous_transaction_pending" = "이전 트랜잭션이 아직 대기 중입니다. 다시 전송하기 전에 거래 내역을 확인하세요.";
+"send.near.rejected" = "네트워크가 이 트랜잭션을 거부했습니다. 아무것도 전송되지 않았습니다.";
 "send.confirmation.fee" = "수수료";
 "send.confirmation.fee_sponsored" = "스폰서됨";
 "send.confirmation.fee_paid_in" = "%@(으)로 지불";
@@ -1454,6 +1460,7 @@
 "transactions.processing" = "처리 중";
 "transactions.completed" = "완료됨";
 "transactions.failed" = "실패";
+"transactions.not_processed" = "처리되지 않음";
 
 "transactions.receive" = "수령";
 "transactions.send" = "전송됨";
@@ -2062,7 +2069,7 @@
 "wallet_connect.button_reconnect" = "재연결";
 "wallet_connect.button_disconnect" = "연결 해제";
 "ethereum_transaction.error.title" = "오류";
-"ethereum_transaction.error.insufficient_balance" = "거래에서 전송하려면 %@가 필요합니다.";
+"transaction.error.insufficient_balance" = "거래에서 전송하려면 %@가 필요합니다.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "현재 %@ 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "선택한 수수료 값이 너무 낮아 거부됩니다!";
 "ethereum_transaction.error.nonce_already_in_block" = "이미 차단된 거래!";
@@ -2380,6 +2387,7 @@
 "zcash_network.auto_select.description" = "가장 빠른 최신 서버에 연결";
 "zcash_network.unreachable" = "연결 불가";
 "xrp_network.description" = "Unstoppable 앱이 지갑 동기화에 사용할 노드를 선택하세요.";
+"near-protocol_network.description" = "Unstoppable 앱이 지갑 동기화에 사용할 노드를 선택하세요.";
 
 "add_zcash_node.title" = "서버 추가";
 "add_zcash_node.description" = "lightwalletd 서버 주소를 입력하세요 (호스트 또는 호스트:포트).";

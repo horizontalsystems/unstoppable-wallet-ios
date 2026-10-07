@@ -119,7 +119,7 @@ class TransactionInfoViewController: ThemeViewController {
         present(ThemeNavigationController(rootViewController: module), animated: true)
     }
 
-    private func statusRow(rowInfo: RowInfo, status: TransactionStatus) -> RowProtocol {
+    private func statusRow(rowInfo: RowInfo, status: TransactionStatus, notProcessed: Bool) -> RowProtocol {
         let hash: String
         var value: String
         var icon: UIImage?
@@ -139,9 +139,9 @@ class TransactionInfoViewController: ThemeViewController {
             value = "transactions.completed".localized
             icon = UIImage(named: "check_1_20")?.withTintColor(.themeRemus)
         case .failed:
-            hash = "failed"
-            value = "transactions.failed".localized
-            icon = UIImage(named: "warning_2_20")?.withTintColor(.themeLucian)
+            hash = notProcessed ? "not-processed" : "failed"
+            value = notProcessed ? "transactions.not_processed".localized : "transactions.failed".localized
+            icon = UIImage(named: "warning_2_20")?.withTintColor(notProcessed ? .themeGray : .themeLucian)
         }
 
         return CellBuilderNew.row(
@@ -529,8 +529,8 @@ class TransactionInfoViewController: ThemeViewController {
             }
 
             return CellComponent.nftAmountRow(tableView: tableView, rowInfo: rowInfo, iconUrl: iconUrl, iconPlaceholderImageName: iconPlaceholderImageName, nftAmount: nftAmount, type: type, onTapOpenNft: onTapOpenNft)
-        case let .status(status):
-            return statusRow(rowInfo: rowInfo, status: status)
+        case let .status(status, notProcessed):
+            return statusRow(rowInfo: rowInfo, status: status, notProcessed: notProcessed)
         case let .option(option):
             return optionRow(rowInfo: rowInfo, option: option)
         case let .date(date):

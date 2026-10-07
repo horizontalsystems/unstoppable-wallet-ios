@@ -13,6 +13,7 @@ struct WatchAccountGateTests {
         #expect(account(type: .solanaAddress(address: "So11111111111111111111111111111111111111112")).watchAccount)
         #expect(account(type: .stellarAccount(accountId: "GA...")).watchAccount)
         #expect(account(type: .xrpAddress(address: "rG...")).watchAccount)
+        #expect(account(type: .nearAddress(address: "alice.near")).watchAccount)
         #expect(account(type: .thorChainAddress(address: "thor1...")).watchAccount)
         #expect(account(type: .mayaChainAddress(address: "maya1...")).watchAccount)
         #expect(account(type: .moneroWatchAccount(address: "4...", viewKey: "key")).watchAccount)

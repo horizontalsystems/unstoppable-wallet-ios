@@ -664,6 +664,42 @@ class TransactionsViewItemFactory {
                 subTitle = type
             }
 
+        case let record as NearTransactionRecord:
+            switch record.type {
+            case let .send(value, to, _sentToSelf, _):
+                iconType = singleValueIconType(source: record.source, kind: value.kind)
+                title = "transactions.send".localized
+                subTitle = "transactions.to".localized(mapped(address: to, blockchainType: item.record.source.blockchainType))
+                primaryValue = TransactionsViewModel.Value(text: coinString(from: value, signType: _sentToSelf ? .never : .always), type: type(value: value, condition: _sentToSelf, .neutral, .outgoing))
+
+                if let currencyValue = item.currencyValue {
+                    secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                }
+
+                sentToSelf = _sentToSelf
+            case let .receive(value, from, _):
+                iconType = singleValueIconType(source: record.source, kind: value.kind)
+                title = "transactions.receive".localized
+                subTitle = "transactions.from".localized(mapped(address: from, blockchainType: item.record.source.blockchainType))
+                primaryValue = TransactionsViewModel.Value(text: coinString(from: value), type: type(value: value, .incoming))
+
+                if let currencyValue = item.currencyValue {
+                    secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                }
+            case let .contractCall(contractId, method, value):
+                iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
+                title = "transactions.contract_call".localized
+                subTitle = method.map { "\($0) · \(contractId.shortened)" } ?? contractId.shortened
+
+                if let value {
+                    primaryValue = TransactionsViewModel.Value(text: coinString(from: value), type: type(value: value, condition: value.value < 0, .outgoing, .incoming))
+
+                    if let currencyValue = item.currencyValue {
+                        secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                    }
+                }
+            }
+
         case let record as ZcashShieldingTransactionRecord:
             iconType = .localIcon(imageName: record.direction.txIconName)
             title = record.direction.txTitle

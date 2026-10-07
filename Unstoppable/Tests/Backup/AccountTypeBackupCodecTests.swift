@@ -29,6 +29,7 @@ struct AccountTypeBackupCodecTests {
             .solanaAddress: "solana_address",
             .stellarAccount: "stellar_address",
             .xrpAddress: "xrp_address",
+            .nearAddress: "near_address",
             .thorChainAddress: "thorchain_address",
             .mayaChainAddress: "mayachain_address",
             .hdExtendedKey: "hd_extended_key",

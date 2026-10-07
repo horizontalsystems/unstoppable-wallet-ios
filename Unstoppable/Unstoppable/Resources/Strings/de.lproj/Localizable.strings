@@ -515,6 +515,12 @@
 "send.xrp.address_error.network_mismatch" = "Ungültiges Netzwerk: Diese Adresse gehört zu einem anderen XRP-Netzwerk.";
 "send.xrp.activation.reserve_note" = "Die Aktivierung sperrt %@ als Reserve in Ihrem Wallet. Sie wird freigegeben, wenn die Vertrauenslinie später entfernt wird.";
 "send.xrp.activation.insufficient_balance" = "Sie haben nicht genug verfügbare XRP, um die Vertrauenslinie-Reserve und die Netzwerkgebühr zu decken.";
+"send.near.receiver_registration" = "Registrierung des Empfängers";
+"send.near.receiver_registration.info" = "Der Token-Vertrag erhebt eine einmalige Einzahlung, um einen Empfänger zu registrieren, der diesen Token noch nie besessen hat.";
+"send.near.storage_deposit_too_high" = "Dieser Token verlangt eine ungewöhnlich hohe Einzahlung für die Registrierung des Empfängers und könnte Betrug sein.";
+"send.near.storage_deposit_changed" = "Die Registrierungsgebühr für den Empfänger hat sich geändert. Prüfen Sie die neue Gebühr und senden Sie erneut.";
+"send.near.previous_transaction_pending" = "Eine vorherige Transaktion ist noch ausstehend. Prüfen Sie Ihren Transaktionsverlauf, bevor Sie erneut senden.";
+"send.near.rejected" = "Das Netzwerk hat diese Transaktion abgelehnt. Es wurde nichts gesendet.";
 "send.confirmation.fee" = "Gebühr";
 "send.confirmation.fee_sponsored" = "Gesponsert";
 "send.confirmation.fee_paid_in" = "Bezahlt in %@";
@@ -1454,6 +1460,7 @@
 "transactions.processing" = "Verarbeite";
 "transactions.completed" = "Abgeschlossen";
 "transactions.failed" = "Fehlgeschlagen";
+"transactions.not_processed" = "Nicht verarbeitet";
 
 "transactions.receive" = "Empfangen";
 "transactions.send" = "Gesendet";
@@ -2062,7 +2069,7 @@
 "wallet_connect.button_reconnect" = "Wiederverbinden";
 "wallet_connect.button_disconnect" = "Verbindung trennen";
 "ethereum_transaction.error.title" = "Fehler";
-"ethereum_transaction.error.insufficient_balance" = "Die Transaktion erfordert %@ zum Senden.";
+"transaction.error.insufficient_balance" = "Die Transaktion erfordert %@ zum Senden.";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "Das aktuelle %@-Guthaben liegt unter dem für die Abwicklung dieser Transaktion erforderlichen Betrag einschließlich der Transaktionsgebühr.";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "Der gewählte Gebührenwert ist zu niedrig und wird abgelehnt!";
 "ethereum_transaction.error.nonce_already_in_block" = "Transaktion bereits im Block!";
@@ -2380,6 +2387,7 @@
 "zcash_network.auto_select.description" = "Verbindung zum schnellsten aktuellen Server herstellen";
 "zcash_network.unreachable" = "Nicht erreichbar";
 "xrp_network.description" = "Wählen Sie den Knoten aus, den die Unstoppable-App zur Synchronisierung der Wallet(s) verwenden soll.";
+"near-protocol_network.description" = "Wählen Sie den Knoten aus, den die Unstoppable-App zur Synchronisierung der Wallet(s) verwenden soll.";
 
 "add_zcash_node.title" = "Server hinzufügen";
 "add_zcash_node.description" = "Geben Sie die Adresse des lightwalletd-Servers ein (Host oder Host:Port).";

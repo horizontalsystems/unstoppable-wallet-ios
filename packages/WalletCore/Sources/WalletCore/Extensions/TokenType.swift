@@ -20,6 +20,7 @@ extension TokenType {
         case .zanoAsset: return .zanoAsset
         case .thorChainAsset: return .thorChainAsset
         case .xrpAsset: return .xrpAsset
+        case .nep141: return .nep141
         case .unsupported: return .unsupported
         }
     }

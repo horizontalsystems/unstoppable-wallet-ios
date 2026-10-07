@@ -78,6 +78,8 @@ public enum DestinationHelper {
             address = try SolanaKitManager.address(accountType: account.type)
         case .xrp:
             address = try XrpKitManager.address(accountType: account.type)
+        case .near:
+            address = try NearKitManager.address(accountType: account.type)
         case .thorChain:
             address = try AccountAddress.thorChainAddress(account: account, network: .mainnet).raw
         case .mayaChain:

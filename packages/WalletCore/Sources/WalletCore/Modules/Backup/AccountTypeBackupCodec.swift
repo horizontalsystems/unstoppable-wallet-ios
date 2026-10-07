@@ -109,6 +109,8 @@ extension AccountTypeBackupCodec {
             // Android stores an X-address verbatim; the account is the classic address behind it,
             // as WatchViewModel does when the same address is added by hand
             return Decoded(.xrpAddress(address: XrpKit.Kit.decode(xAddress: string)?.classicAddress ?? string))
+        case .nearAddress:
+            return Decoded(.nearAddress(address: string))
         case .thorChainAddress:
             // Android stores the address as typed; the kit's canonical lowercase form keeps it one account
             return (try? ThorChainKit.Address(string, network: .mainnet)).map { Decoded(.thorChainAddress(address: $0.raw)) }

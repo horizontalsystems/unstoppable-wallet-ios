@@ -113,6 +113,7 @@ class WatchViewModel: ObservableObject {
         addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .solana))
         addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .stellar))
         addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .xrp))
+        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .near))
         addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .monero))
     }
 
@@ -205,6 +206,8 @@ class WatchViewModel: ObservableObject {
                 case .xrp:
                     // an X-address watches the account behind it; the tag is a payment detail, not an identity
                     accountType = .xrpAddress(address: XrpKit.Kit.decode(xAddress: address.raw)?.classicAddress ?? address.raw)
+                case .near:
+                    accountType = .nearAddress(address: address.raw)
                 case .thorChain:
                     // the parser passes the input through; an all-uppercase QR form must not become a second account
                     accountType = try .thorChainAddress(address: ThorChainKit.Address(address.raw, network: .mainnet).raw)
@@ -272,6 +275,9 @@ class WatchViewModel: ObservableObject {
 
         case .xrpAddress:
             tokenQueries = BlockchainType.xrp.nativeTokenQueries
+
+        case .nearAddress:
+            tokenQueries = BlockchainType.near.nativeTokenQueries
 
         case .thorChainAddress:
             tokenQueries = BlockchainType.thorChain.nativeTokenQueries

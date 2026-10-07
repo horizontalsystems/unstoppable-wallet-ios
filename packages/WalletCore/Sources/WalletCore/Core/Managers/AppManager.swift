@@ -25,6 +25,7 @@ public class AppManager {
     private let stellarKitManager: StellarKitManager
     private let solanaKitManager: SolanaKitManager
     private let xrpKitManager: XrpKitManager
+    private let nearKitManager: NearKitManager
     private let swapHistoryManager: SwapHistoryManager
     private let moneroNodeManager: MoneroNodeManager
     private let zcashNodeAutoSelector: NodeAutoSelector
@@ -45,7 +46,7 @@ public class AppManager {
          logRecordManager: LogRecordManager, deeplinkStorage: DeeplinkStorage,
          evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager, statManager: StatManager,
          nftMetadataSyncer: NftMetadataSyncer, tonKitManager: TonKitManager,
-         stellarKitManager: StellarKitManager, solanaKitManager: SolanaKitManager, xrpKitManager: XrpKitManager,
+         stellarKitManager: StellarKitManager, solanaKitManager: SolanaKitManager, xrpKitManager: XrpKitManager, nearKitManager: NearKitManager,
          swapHistoryManager: SwapHistoryManager, moneroNodeManager: MoneroNodeManager, zcashNodeAutoSelector: NodeAutoSelector)
     {
         self.widgetRefresher = widgetRefresher
@@ -69,6 +70,7 @@ public class AppManager {
         self.stellarKitManager = stellarKitManager
         self.solanaKitManager = solanaKitManager
         self.xrpKitManager = xrpKitManager
+        self.nearKitManager = nearKitManager
         self.swapHistoryManager = swapHistoryManager
         self.moneroNodeManager = moneroNodeManager
         self.zcashNodeAutoSelector = zcashNodeAutoSelector
@@ -141,6 +143,7 @@ public extension AppManager {
         stellarKitManager.stellarKit?.stopListener()
         solanaKitManager.solanaKit?.pause()
         xrpKitManager.xrpKit?.pause()
+        nearKitManager.nearKit?.pause()
     }
 
     func willEnterForeground() {
@@ -162,6 +165,8 @@ public extension AppManager {
         solanaKitManager.solanaKit?.refresh()
         xrpKitManager.xrpKit?.resume()
         xrpKitManager.xrpKit?.refresh()
+        nearKitManager.nearKit?.resume()
+        nearKitManager.nearKit?.refresh()
 
         AppStateManager.instance.syncIfRequired()
 

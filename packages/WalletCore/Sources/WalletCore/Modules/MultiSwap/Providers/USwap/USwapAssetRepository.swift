@@ -29,6 +29,7 @@ public final class USwapAssetRepository {
         "5042": .arc,
         "stellar": .stellar,
         "ripple": .xrp,
+        "near": .near,
         "zano": .zano,
         "thorchain-1": .thorChain,
         "mayachain-mainnet-v1": .mayaChain,
@@ -250,6 +251,15 @@ private extension USwapAssetRepository {
             // has no canonical id, so it could not even be suspended (Android USwapProvider).
             guard address?.isEmpty ?? true else {
                 return []
+            }
+
+            return blockchainType.nativeTokenQueries
+
+        case .near:
+            // `address` is the NEP-141 contract; native NEAR has none (the server routes it through
+            // wrap.near itself, which is not the user's wNEAR token) - Android USwapProvider
+            if let contractId = address, !contractId.isEmpty {
+                return [TokenQuery(blockchainType: .near, tokenType: .nep141(contractId: contractId))]
             }
 
             return blockchainType.nativeTokenQueries

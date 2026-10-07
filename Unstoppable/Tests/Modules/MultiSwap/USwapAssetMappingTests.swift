@@ -73,6 +73,37 @@ struct USwapAssetMappingTests {
         #expect(assetMap.isEmpty)
     }
 
+    // native NEAR has no contract; the server routes it through wrap.near itself (Android parity)
+    @Test func nearChainMapsNativeWithoutAddress() {
+        let assetMap = USwapAssetRepository.assetMap(
+            tokens: [.init(chain: "Near", chainId: "near", address: nil, identifier: "NEAR.NEAR")],
+            includeAsset: { _ in true }
+        )
+
+        #expect(assetMap[BlockchainType.near.nativeTokenQueries[0].id.lowercased()] == "NEAR.NEAR")
+    }
+
+    @Test func nearContractMapsToNep141() {
+        let contract = "usdt.tether-token.near"
+        let assetMap = USwapAssetRepository.assetMap(
+            tokens: [.init(chain: "Near", chainId: "near", address: contract, identifier: "NEAR.USDT-USDT.TETHER-TOKEN.NEAR")],
+            includeAsset: { _ in true }
+        )
+
+        let query = TokenQuery(blockchainType: .near, tokenType: .nep141(contractId: contract))
+        #expect(assetMap[query.id.lowercased()] == "NEAR.USDT-USDT.TETHER-TOKEN.NEAR")
+    }
+
+    // Android SwapSuspension: the chain code and the upper-cased contract
+    @Test func nearCanonicalIds() {
+        let blockchain = Blockchain(type: .near, name: "Near Protocol", explorerUrl: nil)
+        let near = Token(coin: Coin(uid: "near", name: "NEAR", code: "NEAR"), blockchain: blockchain, type: .native, decimals: 24)
+        let usdt = Token(coin: Coin(uid: "tether", name: "Tether", code: "USDT"), blockchain: blockchain, type: .nep141(contractId: "usdt.tether-token.near"), decimals: 6)
+
+        #expect(CanonicalAssetId.of(token: near) == "NEAR.NEAR")
+        #expect(CanonicalAssetId.of(token: usdt) == "NEAR.USDT.TETHER-TOKEN.NEAR")
+    }
+
     private var zcashTokenQueryId: String {
         BlockchainType.zcash.nativeTokenQueries[0].id.lowercased()
     }

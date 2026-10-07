@@ -515,6 +515,12 @@
 "send.xrp.address_error.network_mismatch" = "网络无效：此地址属于其他 XRP 网络。";
 "send.xrp.activation.reserve_note" = "激活会将 %@ 锁定为您钱包中的准备金。如果稍后删除信任线，将释放准备金。";
 "send.xrp.activation.insufficient_balance" = "您没有足够的可用 XRP 来支付信任线准备金和网络费用。";
+"send.near.receiver_registration" = "接收方注册";
+"send.near.receiver_registration.info" = "代币合约会收取一次性押金，用于注册从未持有过该代币的接收方。";
+"send.near.storage_deposit_too_high" = "该代币要求为注册接收方支付异常高的押金，可能是诈骗。";
+"send.near.storage_deposit_changed" = "接收方注册费已变更。请查看新的费用后重新发送。";
+"send.near.previous_transaction_pending" = "之前的一笔交易仍在处理中。再次发送前请查看交易记录。";
+"send.near.rejected" = "网络拒绝了此交易，未发送任何内容。";
 "send.confirmation.fee" = "费用";
 "send.confirmation.fee_sponsored" = "已赞助";
 "send.confirmation.fee_paid_in" = "以 %@ 支付";
@@ -1454,6 +1460,7 @@
 "transactions.processing" = "正在处理";
 "transactions.completed" = "已完成";
 "transactions.failed" = "失败";
+"transactions.not_processed" = "未处理";
 
 "transactions.receive" = "接收";
 "transactions.send" = "已发送";
@@ -2062,7 +2069,7 @@
 "wallet_connect.button_reconnect" = "重新连接";
 "wallet_connect.button_disconnect" = "断开连接";
 "ethereum_transaction.error.title" = "出错";
-"ethereum_transaction.error.insufficient_balance" = "交易需要%@才能发送。";
+"transaction.error.insufficient_balance" = "交易需要%@才能发送。";
 "ethereum_transaction.error.insufficient_balance_with_fee" = "當前%@餘額低於處理此交易所需的金額，包括交易費用。";
 "ethereum_transaction.error.lower_than_base_gas_limit" = "选定的费用值太低，将被拒绝！";
 "ethereum_transaction.error.nonce_already_in_block" = "交易已在区块中!";
@@ -2380,6 +2387,7 @@
 "zcash_network.auto_select.description" = "连接到最快的最新服务器";
 "zcash_network.unreachable" = "无法连接";
 "xrp_network.description" = "选择 Unstoppable 应用用于同步钱包的节点。";
+"near-protocol_network.description" = "选择 Unstoppable 应用用于同步钱包的节点。";
 
 "add_zcash_node.title" = "添加服务器";
 "add_zcash_node.description" = "输入 lightwalletd 服务器地址（主机或主机:端口）。";

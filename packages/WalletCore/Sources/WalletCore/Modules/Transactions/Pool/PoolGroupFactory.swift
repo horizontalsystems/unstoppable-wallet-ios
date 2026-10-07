@@ -18,7 +18,7 @@ public class PoolGroupFactory {
                 }
 
                 let poolSource: PoolSource
-                if Core.shared.evmBlockchainManager.allBlockchains.contains(where: { $0 == wallet.token.blockchain }) || wallet.token.blockchainType == .tron || wallet.token.blockchainType == .ton || wallet.token.blockchainType == .stellar || wallet.token.blockchainType == .xrp {
+                if Core.shared.evmBlockchainManager.allBlockchains.contains(where: { $0 == wallet.token.blockchain }) || wallet.token.blockchainType == .tron || wallet.token.blockchainType == .ton || wallet.token.blockchainType == .stellar || wallet.token.blockchainType == .xrp || wallet.token.blockchainType == .near {
                     poolSource = PoolSource(
                         token: nil,
                         blockchainType: wallet.token.blockchainType,
@@ -51,7 +51,7 @@ public class PoolGroupFactory {
             if contact != nil, address == nil {
                 return []
             }
-            if Core.shared.evmBlockchainManager.allBlockchains.contains(where: { $0.type == blockchainType }) || blockchainType == .tron || blockchainType == .ton || blockchainType == .stellar || blockchainType == .xrp {
+            if Core.shared.evmBlockchainManager.allBlockchains.contains(where: { $0.type == blockchainType }) || blockchainType == .tron || blockchainType == .ton || blockchainType == .stellar || blockchainType == .xrp || blockchainType == .near {
                 let poolSource = PoolSource(
                     token: nil,
                     blockchainType: blockchainType,

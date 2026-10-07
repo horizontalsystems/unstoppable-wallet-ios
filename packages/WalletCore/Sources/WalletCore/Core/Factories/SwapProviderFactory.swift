@@ -418,6 +418,7 @@ public enum SwapProviderResolver: ISwapProviderResolver {
                 USwapSolanaFinalQuoteBuilder(adapterManager: adapterManager, solanaKitManager: Core.shared.solanaKitManager),
                 USwapXrpFinalQuoteBuilder(adapterManager: adapterManager),
                 USwapThorChainFinalQuoteBuilder(adapterManager: adapterManager),
+                USwapNearFinalQuoteBuilder(adapterManager: adapterManager),
             ]
         )
     }

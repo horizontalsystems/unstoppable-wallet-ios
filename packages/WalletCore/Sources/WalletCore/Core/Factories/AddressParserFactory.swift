@@ -116,6 +116,8 @@ enum AddressParserFactory {
             return handlers
         case .xrp:
             return [XrpAddressParserItem()]
+        case .near:
+            return [NearAddressParserItem()]
         case .unsupported: return []
         }
     }

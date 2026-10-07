@@ -7,5 +7,6 @@ enum TokenProtocol {
     case zanoAsset
     case thorChainAsset
     case xrpAsset
+    case nep141
     case unsupported
 }

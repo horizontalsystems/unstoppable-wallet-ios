@@ -84,6 +84,9 @@ class TransactionInfoService {
         case let tx as XrpTransactionRecord:
             tokens.append(tx.mainValue?.token)
             tokens.append(tx.fee?.token)
+        case let tx as NearTransactionRecord:
+            tokens.append(tx.mainValue?.token)
+            tokens.append(tx.fee?.token)
         case let tx as StellarTransactionRecord:
             for action in [tx.type] + tx.additionalActions {
                 switch action {

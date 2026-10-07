@@ -114,6 +114,7 @@ enum CanonicalAssetId {
         .thorChain: "THOR",
         .mayaChain: "MAYA",
         .xrp: "XRP",
+        .near: "NEAR",
     ]
 
     /// The gas asset's ticker per chain — NOT always the chain code (`BASE.ETH`, `BSC.BNB`,
@@ -142,6 +143,7 @@ enum CanonicalAssetId {
         .thorChain: "RUNE",
         .mayaChain: "CACAO",
         .xrp: "XRP",
+        .near: "NEAR",
     ]
 
     private static let wrappedSolMint = "So11111111111111111111111111111111111111112"
@@ -186,6 +188,9 @@ enum CanonicalAssetId {
         case .xrpAsset:
             // No swap provider lists XRPL issued tokens yet.
             return nil
+
+        case let .nep141(contractId):
+            return "\(chain).\(contractId.uppercased())"
         }
     }
 

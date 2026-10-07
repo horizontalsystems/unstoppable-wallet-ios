@@ -334,6 +334,7 @@ extension USwapMultiSwapProvider {
         case noXrpAdapter
         case noTronAdapter
         case noEvmAdapter
+        case noNearAdapter
     }
 }
 

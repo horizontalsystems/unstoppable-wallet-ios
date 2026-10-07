@@ -146,6 +146,10 @@ enum AppConfig {
         ((Bundle.main.object(forInfoDictionaryKey: "SolanaAlchemyApiKeys") as? String) ?? "").components(separatedBy: ",")
     }
 
+    static var fastNearApiKey: String? {
+        (Bundle.main.object(forInfoDictionaryKey: "FastNearApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
+    }
+
     static var walletConnectV2ProjectKey: String? {
         (Bundle.main.object(forInfoDictionaryKey: "WallectConnectV2ProjectKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }

@@ -425,6 +425,7 @@ extension MultiSwapSendHandler {
         case noSolanaAdapter
         case noXrpAdapter
         case noTonAdapter
+        case noNearAdapter
 
         case unsupportedTokenIn
         case unsupportedTokenOut
@@ -443,7 +444,7 @@ extension MultiSwapSendHandler {
         switch tokenIn.type {
         case .native, .derived, .addressType:
             baseToken = tokenIn
-        case .eip20, .spl, .jetton, .stellar, .zanoAsset, .thorChainAsset, .xrpAsset:
+        case .eip20, .spl, .jetton, .stellar, .zanoAsset, .thorChainAsset, .xrpAsset, .nep141:
             baseToken = try? Core.shared.marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native))
         case .unsupported:
             baseToken = nil
