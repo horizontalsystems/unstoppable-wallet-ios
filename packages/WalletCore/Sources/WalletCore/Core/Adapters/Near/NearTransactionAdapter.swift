@@ -196,9 +196,10 @@ extension NearTransactionAdapter: ITransactionsAdapter {
                 before = (timestamp: last.timestamp, hash: last.hash)
             }
 
+            // records for the spam scan only: unknown token metadata is not read
             var records = [TransactionRecord]()
             for transaction in result {
-                await records.append(converter.transactionRecord(transaction: transaction))
+                await records.append(converter.transactionRecord(transaction: transaction, resolvesUnknownMetadata: false))
             }
             return records
         }

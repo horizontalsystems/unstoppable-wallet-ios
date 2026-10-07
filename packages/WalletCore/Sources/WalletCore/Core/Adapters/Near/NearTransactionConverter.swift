@@ -24,8 +24,11 @@ class NearTransactionConverter {
         self.ftMetadata = ftMetadata
     }
 
-    func transactionRecord(transaction: NearKit.Transaction) async -> NearTransactionRecord {
-        let type = await type(transaction: transaction)
+    /// `resolvesUnknownMetadata: false` skips the contract metadata read for tokens missing from
+    /// MarketKit: the spam scan needs only the kind of value, and a network round trip per unknown
+    /// contract would hold up the first history page behind it.
+    func transactionRecord(transaction: NearKit.Transaction, resolvesUnknownMetadata: Bool = true) async -> NearTransactionRecord {
+        let type = await type(transaction: transaction, resolvesUnknownMetadata: resolvesUnknownMetadata)
         let fee = transaction.isSigner(accountId: accountId) ? transaction.fee.map { nearValue(yocto: $0, negate: false) } : nil
 
         return NearTransactionRecord(
@@ -41,9 +44,9 @@ class NearTransactionConverter {
         )
     }
 
-    private func type(transaction: NearKit.Transaction) async -> NearTransactionRecord.`Type` {
+    private func type(transaction: NearKit.Transaction, resolvesUnknownMetadata: Bool) async -> NearTransactionRecord.`Type` {
         if let transfer = transaction.ftTransfers.first(where: { $0.from == accountId || $0.to == accountId }) {
-            return await ftType(transfer: transfer)
+            return await ftType(transfer: transfer, resolvesUnknownMetadata: resolvesUnknownMetadata)
         }
 
         let netNear = transaction.nearNetChange(accountId: accountId)
@@ -76,9 +79,9 @@ class NearTransactionConverter {
         return .contractCall(contractId: transaction.receiverId, method: method, value: nil)
     }
 
-    private func ftType(transfer: FtTransfer) async -> NearTransactionRecord.`Type` {
+    private func ftType(transfer: FtTransfer, resolvesUnknownMetadata: Bool) async -> NearTransactionRecord.`Type` {
         let outgoing = transfer.from == accountId
-        let value = await ftValue(transfer: transfer, negate: outgoing)
+        let value = await ftValue(transfer: transfer, negate: outgoing, resolvesUnknownMetadata: resolvesUnknownMetadata)
 
         if outgoing {
             return .send(value: value, to: transfer.to ?? transfer.contractId, sentToSelf: transfer.to == accountId, memo: transfer.memo)
@@ -92,7 +95,7 @@ class NearTransactionConverter {
         return AppValue(token: baseToken, value: negate ? -value : value)
     }
 
-    private func ftValue(transfer: FtTransfer, negate: Bool) async -> AppValue {
+    private func ftValue(transfer: FtTransfer, negate: Bool, resolvesUnknownMetadata: Bool) async -> AppValue {
         let query = TokenQuery(blockchainType: .near, tokenType: .nep141(contractId: transfer.contractId))
 
         if let token = try? coinManager.token(query: query) {
@@ -102,7 +105,10 @@ class NearTransactionConverter {
 
         // Not a known token: its metadata is read from the contract (cached by the kit) so the
         // amount has the right scale. Unreadable metadata shows the raw amount under the contract id.
-        let metadata = try? await ftMetadata(transfer.contractId)
+        var metadata: FtMetadata?
+        if resolvesUnknownMetadata {
+            metadata = try? await ftMetadata(transfer.contractId)
+        }
         let decimals = metadata?.decimals ?? 0
         let name = metadata.map(\.name).flatMap { $0.trimmingCharacters(in: .whitespaces).isEmpty ? nil : $0 } ?? transfer.contractId
         let code = metadata?.symbol ?? transfer.contractId

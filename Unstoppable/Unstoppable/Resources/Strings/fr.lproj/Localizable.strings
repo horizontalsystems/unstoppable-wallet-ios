@@ -1460,7 +1460,7 @@
 "transactions.processing" = "Traitement en cours";
 "transactions.completed" = "Terminé";
 "transactions.failed" = "Échec";
-"transactions.not_processed" = "Non traitée";
+"transactions.not_processed" = "Non traité";
 
 "transactions.receive" = "Recevoir";
 "transactions.send" = "Envoyée";

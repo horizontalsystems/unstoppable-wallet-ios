@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import NearKit
 import Testing
 @testable import WalletCore
 
@@ -119,6 +120,17 @@ struct NearSendDataTests {
         #expect(NearSendHelper.rejectedError(details: #"{"InvalidTxError":{"LackBalanceForState":{}}}"#) == .insufficientBalance)
         #expect(NearSendHelper.rejectedError(details: #"{"InvalidTxError":"Expired"}"#) == .rejected)
     }
+
+    // a dropped connection reaches the confirmation as the kit's error and reads as "no internet"
+    @Test func estimationWithoutConnectionShowsNoConnection() async {
+        let adapter = EstimateFailingAdapter(error: NoEndpointAvailable(underlying: URLError(.notConnectedToInternet)))
+
+        let estimation = await NearSendHelper.estimation(adapter: adapter, token: Self.nearToken, amount: 1, address: "alice.near", memo: nil, tokenBalance: 0)
+        let error = estimation.transactionError ?? NoEndpointAvailable(underlying: nil)
+
+        #expect(estimation.estimate == nil)
+        #expect(NearSendHelper.caution(transactionError: error, feeToken: Self.nearToken).text == AppError.noConnection.localizedDescription)
+    }
 }
 
 extension NearSendDataTests {
@@ -159,5 +171,27 @@ extension NearSendDataTests {
             transactionError: transactionError,
             previousTransactionPending: previousTransactionPending
         )
+    }
+
+    struct EstimateFailingAdapter: ISendNearAdapter {
+        let error: Error
+
+        let address = "alice.near"
+        let fee = Decimal(string: "0.0000446")!
+        let availableNear: Decimal = 1
+        let maxSendableBalance: Decimal = 0
+        let pendingTransactionHashes = Set<String>()
+
+        func doesAccountExist(address _: String) async throws -> Bool {
+            true
+        }
+
+        func estimate(address _: String, amount _: Decimal, memo _: String?) async throws -> NearSendEstimate {
+            throw error
+        }
+
+        func send(amount _: Decimal, address _: String, memo _: String?, estimate _: NearSendEstimate, signer _: NearKit.Signer) async throws -> String {
+            fatalError("not sent in these tests")
+        }
     }
 }

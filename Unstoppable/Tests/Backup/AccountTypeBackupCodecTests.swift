@@ -209,6 +209,20 @@ struct AccountTypeBackupCodecTests {
         #expect(AccountTypeBackupCodec.decode(data: "garbage".hs.data, type: .thorChainAddress) == nil)
     }
 
+    // Android writes the account id as UTF-8, implicit (64 hex) and named alike
+    @Test func roundTripsNearImplicitAndNamedAccounts() throws {
+        let implicit = "98793cd91a3f870fb126f66285808c7e094afcfc4eda8a970f6648cdf0dbd6de"
+        let named = "alice.near"
+
+        for address in [implicit, named] {
+            let accountType = AccountType.nearAddress(address: address)
+            let data = AccountTypeBackupCodec.data(accountType: accountType, moneroHeight: 0)
+
+            #expect(String(decoding: data, as: UTF8.self) == address)
+            #expect(try decoded(data, .nearAddress).accountType == accountType)
+        }
+    }
+
     // MARK: other types
 
     @Test func writesPlainStringTypesAsIs() {

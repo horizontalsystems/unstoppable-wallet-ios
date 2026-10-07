@@ -1,3 +1,4 @@
+import Alamofire
 import BitcoinCore
 import Eip20Kit
 import EvmKit
@@ -5,6 +6,8 @@ import Foundation
 import HdWalletKit
 import Hodler
 import HsToolKit
+import NearKit
+import XrpKit
 
 // use convertedError to convert user relevant errors from kits to show them localized in UI
 // localize converted error via AppError
@@ -90,6 +93,35 @@ extension HodlerPluginError: ConvertibleError {
 extension BitcoinCoreErrors.AddressConversionErrors: ConvertibleError {
     var convertedError: Error {
         AppError.addressInvalid
+    }
+}
+
+extension NearKit.NoEndpointAvailable: ConvertibleError {
+    var convertedError: Error {
+        underlying?.isNoConnection == true ? AppError.noConnection : self
+    }
+}
+
+extension XrpKit.NoEndpointAvailable: ConvertibleError {
+    var convertedError: Error {
+        underlying?.isNoConnection == true ? AppError.noConnection : self
+    }
+}
+
+private extension Error {
+    // the kits throw NoEndpointAvailable over the last transport error, which Alamofire wraps
+    var isNoConnection: Bool {
+        let error = (self as? AFError)?.underlyingError ?? self
+
+        if let urlError = error as? URLError {
+            return [.notConnectedToInternet, .networkConnectionLost, .cannotFindHost, .dnsLookupFailed].contains(urlError.code)
+        }
+
+        if case .noConnection? = convertedError as? AppError {
+            return true
+        }
+
+        return false
     }
 }
 

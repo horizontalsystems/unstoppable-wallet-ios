@@ -136,7 +136,7 @@ enum NearSendHelper {
             if let hash = newPendingHash(adapter: adapter, pendingBefore: pendingBefore) {
                 return hash
             }
-            throw isNoConnection(error) ? AppError.noConnection : error
+            throw error
         }
     }
 
@@ -150,23 +150,6 @@ enum NearSendHelper {
             return .insufficientBalance
         }
         return .rejected
-    }
-
-    // the kit wraps the transport error in NoEndpointAvailable once every endpoint has failed
-    private static func isNoConnection(_ error: Error) -> Bool {
-        var current: Error? = error
-
-        while let error = current {
-            if let urlError = error as? URLError, [.notConnectedToInternet, .cannotFindHost, .dnsLookupFailed, .networkConnectionLost].contains(urlError.code) {
-                return true
-            }
-            if case .noConnection? = error.convertedError as? AppError {
-                return true
-            }
-            current = (error as? NoEndpointAvailable)?.underlying
-        }
-
-        return false
     }
 }
 

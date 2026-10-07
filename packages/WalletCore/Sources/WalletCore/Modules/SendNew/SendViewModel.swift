@@ -150,7 +150,7 @@ public class SendViewModel: ObservableObject {
     }
 
     @MainActor private func report(error: Error) {
-        errorSubject.send(error.smartDescription)
+        errorSubject.send(error.convertedError.smartDescription)
     }
 }
 

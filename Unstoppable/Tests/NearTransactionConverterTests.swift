@@ -108,6 +108,39 @@ struct NearTransactionConverterTests {
         #expect(record.mainValue?.code == Self.usdtContract)
     }
 
+    // the spam scan at adapter creation: no contract read per unknown token ahead of the first page
+    @Test func spamScanRecordSkipsTokenMetadata() async throws {
+        let metadataRequests = MetadataRequests()
+        let record = try await Self.record(
+            signer: Self.other, receiver: Self.usdtContract,
+            actions: [Self.functionCall("ft_transfer", deposit: "1")],
+            ftTransfers: [Self.ftTransfer(from: Self.other, to: Self.own, amount: "2500000", memo: nil)],
+            metadata: try Self.metadata(symbol: "USDt", decimals: 6),
+            metadataRequests: metadataRequests,
+            resolvesUnknownMetadata: false
+        )
+
+        #expect(metadataRequests.count == 0)
+        guard case let .receive(value, _, _) = record.type, case .eip20Token = value.kind else {
+            Issue.record("expected an unknown token receive, got \(record.type)")
+            return
+        }
+        #expect(value.code == Self.usdtContract)
+    }
+
+    @Test func displayedRecordReadsTokenMetadata() async throws {
+        let metadataRequests = MetadataRequests()
+        _ = try await Self.record(
+            signer: Self.other, receiver: Self.usdtContract,
+            actions: [Self.functionCall("ft_transfer", deposit: "1")],
+            ftTransfers: [Self.ftTransfer(from: Self.other, to: Self.own, amount: "2500000", memo: nil)],
+            metadata: try Self.metadata(symbol: "USDt", decimals: 6),
+            metadataRequests: metadataRequests
+        )
+
+        #expect(metadataRequests.count == 1)
+    }
+
     @Test func otherSignedActionIsAContractCall() async throws {
         let record = try await Self.record(
             signer: Self.own, receiver: "wrap.near",
@@ -230,6 +263,10 @@ extension NearTransactionConverterTests {
         case unreadable
     }
 
+    final class MetadataRequests {
+        var count = 0
+    }
+
     static func record(
         signer: String,
         receiver: String,
@@ -240,7 +277,9 @@ extension NearTransactionConverterTests {
         status: String = "Success",
         failure: String? = nil,
         knownTokens: [Token] = [],
-        metadata: FtMetadata? = nil
+        metadata: FtMetadata? = nil,
+        metadataRequests: MetadataRequests? = nil,
+        resolvesUnknownMetadata: Bool = true
     ) async throws -> NearTransactionRecord {
         let values: [String: (any DatabaseValueConvertible)?] = try [
             "hash": "6zgh2u9DqHHiXzdy9ouTP7oGky2T4nugqzqt9wJZwNFm",
@@ -269,12 +308,13 @@ extension NearTransactionConverterTests {
             baseToken: nearToken,
             coinManager: StubCoinManager(tokens: tokens),
             ftMetadata: { _ in
+                metadataRequests?.count += 1
                 guard let metadata else { throw StubError.unreadable }
                 return metadata
             }
         )
 
-        return await converter.transactionRecord(transaction: transaction)
+        return await converter.transactionRecord(transaction: transaction, resolvesUnknownMetadata: resolvesUnknownMetadata)
     }
 }
 

@@ -1460,7 +1460,7 @@
 "transactions.processing" = "В процессе";
 "transactions.completed" = "Завершено";
 "transactions.failed" = "Не удалось";
-"transactions.not_processed" = "Не обработана";
+"transactions.not_processed" = "Не обработано";
 
 "transactions.receive" = "Получено";
 "transactions.send" = "Отправлено";
