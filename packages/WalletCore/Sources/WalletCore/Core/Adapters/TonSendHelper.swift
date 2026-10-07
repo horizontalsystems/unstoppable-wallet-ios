@@ -95,6 +95,31 @@ class TonSendHelper {
 
         return boc
     }
+
+    // Broadcasts and returns the TEP-467 normalized message hash the backend tracks the inbound by.
+    // The hash is derived BEFORE the send: once the boc is out, nothing may throw and report a
+    // broadcast transfer as failed.
+    static func sendReturningHash(
+        transferData: TransferData,
+        contract: WalletContract,
+        secretKey: Data
+    ) async throws -> String {
+        let boc = try await TonKit.Kit.boc(
+            transferData: transferData,
+            contract: contract,
+            secretKey: secretKey,
+            network: TonKitManager.network
+        )
+        let hash = try TonMessageHash.normalized(boc: boc)
+
+        try await TonKit.Kit.send(
+            boc: boc,
+            contract: contract,
+            network: TonKitManager.network
+        )
+
+        return hash
+    }
 }
 
 // UI Part

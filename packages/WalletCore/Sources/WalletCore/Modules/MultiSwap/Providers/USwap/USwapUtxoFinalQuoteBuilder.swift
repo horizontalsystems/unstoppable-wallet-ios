@@ -20,11 +20,8 @@ final class USwapUtxoFinalQuoteBuilder: USwapFinalQuoteBuilder {
         var sendInfo: SendInfo?
         var params: SendParameters?
 
-        guard let execution = input.response.execution else {
+        guard let deposit = input.deposit else {
             throw USwapMultiSwapProvider.SwapError.noTransactionData
-        }
-        guard let deposit = execution.depositInstruction() else {
-            throw USwapMultiSwapProvider.SwapError.invalidTransactionData
         }
 
         // A text memo IS deliverable here and must keep working: it reaches BitcoinCore's
@@ -64,7 +61,7 @@ final class USwapUtxoFinalQuoteBuilder: USwapFinalQuoteBuilder {
             transactionError: transactionError,
             fee: sendInfo?.fee,
             toAddress: input.destinationAddress,
-            depositAddress: deposit.address,
+            depositAddress: input.response.execution?.depositAddress,
             providerSwapId: input.providerSwapId
         )
     }

@@ -8,24 +8,51 @@ public protocol USwapFinalQuoteBuilder {
 
 public final class USwapFinalQuoteFactory {
     public struct Input {
+        // Where a transfer route sends the sell amount: the real deposit (from `execution`) after commit
+        // or on a thorchain route, or the preview's stub (`isStub`) that only serves the fee estimate.
+        // A stub build is estimate-only: the factory marks the quote `isEstimateOnly`, which withholds
+        // its executable until commit rebuilds against the real deposit. A transfer preview without a
+        // stub has nothing to estimate against and fails (`noTransactionData`).
+        public struct Deposit {
+            public let address: String
+            public let attachment: USwapMultiSwapApi.Attachment?
+            public let isStub: Bool
+
+            public init(address: String, attachment: USwapMultiSwapApi.Attachment?, isStub: Bool) {
+                self.address = address
+                self.attachment = attachment
+                self.isStub = isStub
+            }
+
+            init?(instruction: (address: String, attachment: USwapMultiSwapApi.Attachment?)?, isStub: Bool) {
+                guard let instruction else {
+                    return nil
+                }
+                self.init(address: instruction.address, attachment: instruction.attachment, isStub: isStub)
+            }
+        }
+
         public let tokenIn: Token
         public let amountIn: Decimal
         public let response: USwapMultiSwapApi.SwapResponse
-        public let providerSwapId: String
+        public let providerSwapId: String?
         public let destinationAddress: String
         public let slippage: Decimal?
         public let recipient: String?
         public let transactionSettings: TransactionSettings?
+        // nil on a transfer route without a stub (no fee estimate) and on signed / broker routes
+        public let deposit: Deposit?
 
         public init(
             tokenIn: Token,
             amountIn: Decimal,
             response: USwapMultiSwapApi.SwapResponse,
-            providerSwapId: String,
+            providerSwapId: String?,
             destinationAddress: String,
             slippage: Decimal?,
             recipient: String?,
-            transactionSettings: TransactionSettings?
+            transactionSettings: TransactionSettings?,
+            deposit: Deposit?
         ) {
             self.tokenIn = tokenIn
             self.amountIn = amountIn
@@ -35,6 +62,7 @@ public final class USwapFinalQuoteFactory {
             self.slippage = slippage
             self.recipient = recipient
             self.transactionSettings = transactionSettings
+            self.deposit = deposit
         }
     }
 
@@ -60,6 +88,14 @@ public final class USwapFinalQuoteFactory {
             }
         }
 
-        return try await matchingBuilders[0].build(input: input)
+        let quote = try await matchingBuilders[0].build(input: input)
+
+        // A stub build serves the fee row only: its payload targets the stand-in address, so the
+        // quote refuses to hand out an executable (every chain alike). Commit rebuilds it.
+        if input.deposit?.isStub == true {
+            quote.isEstimateOnly = true
+        }
+
+        return quote
     }
 }

@@ -19,6 +19,14 @@ public protocol IMultiSwapProvider {
     func validateTrustedProvider(tokenIn: Token, amountIn: Decimal) async throws -> Bool?
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView
     func track(swap: Swap) async throws -> Swap
+    // Creates the order for a previewed quote when the user confirms. Resolves to a `SwapCommitment`:
+    // the quote whose executable is broadcast (the same instance, or a rebuilt one when a transfer
+    // provider learns the deposit address only here) and the order id. `finalQuote` is the instance
+    // the confirmation screen is displaying, so nothing visible on it is written to; only the
+    // provider-private `providerContext` may be cleared, so a consumed preview is never committed twice.
+    func commit(finalQuote: SwapFinalQuote) async throws -> SwapCommitment
+    // Reports the broadcast hash to the backend after a successful submit. Best-effort.
+    func reportInboundTxHash(providerSwapId: String, txHash: String) async throws
 }
 
 public extension IMultiSwapProvider {
@@ -47,6 +55,25 @@ public extension IMultiSwapProvider {
 
     func mevProtectionAllowed(tokenIn _: Token, tokenOut _: Token) -> Bool {
         false
+    }
+
+    func commit(finalQuote: SwapFinalQuote) async throws -> SwapCommitment {
+        SwapCommitment(quote: finalQuote, providerSwapId: finalQuote.providerSwapId)
+    }
+
+    func reportInboundTxHash(providerSwapId _: String, txHash _: String) async throws {}
+}
+
+// What a confirmed order resolves to: the quote whose executable is broadcast and the order id the
+// record tracks by. Carried beside the quote so the previewed instance is never written to. The sell
+// amount is always the previewed one (the amount the user confirmed), so it is not repeated here.
+public struct SwapCommitment {
+    public let quote: SwapFinalQuote
+    public let providerSwapId: String?
+
+    public init(quote: SwapFinalQuote, providerSwapId: String?) {
+        self.quote = quote
+        self.providerSwapId = providerSwapId
     }
 }
 

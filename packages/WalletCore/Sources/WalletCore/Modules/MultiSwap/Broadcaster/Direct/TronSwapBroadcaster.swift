@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import TronKit
 
 class TronSwapBroadcaster: ISwapBroadcaster {
     private let tronKitWrapper: TronKitWrapper
@@ -16,11 +17,19 @@ class TronSwapBroadcaster: ISwapBroadcaster {
         guard let prepared = prepared as? DirectPrepared, let executable = prepared.executable as? TronExecutable else {
             throw SwapBroadcasterError.dataMismatch
         }
-        guard let created = executable.created else {
+        guard let kind = executable.kind else {
             throw MultiSwapSendHandler.SendError.invalidTransactionData
         }
 
-        _ = try await tronKitWrapper.send(createdTranaction: created)
+        let created: CreatedTransactionResponse
+
+        switch kind {
+        case let .created(serverCreated):
+            try await tronKitWrapper.send(createdTranaction: serverCreated)
+            created = serverCreated
+        case let .transfer(transfer):
+            created = try await tronKitWrapper.send(contract: transfer.contract, feeLimit: transfer.feeLimit)
+        }
 
         // The Tron tx hash IS the created transaction's `txID` (sha256 of raw_data — the value we
         // sign, which becomes the on-chain hash). Surface it as the broadcast hash so USwap swaps

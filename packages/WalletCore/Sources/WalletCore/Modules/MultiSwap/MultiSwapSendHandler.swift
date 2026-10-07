@@ -73,11 +73,10 @@ extension MultiSwapSendHandler: ISendHandler {
         broadcaster?.expirationDuration ?? 15
     }
 
-    // The swap confirm screen holds a committed provider quote (USwap's /v2/swap, and the
-    // equivalent commit call on every other provider). Don't auto re-request it on expiry —
-    // surface a "Refresh" button and let the user pull a fresh quote on demand.
+    // The confirmation quote has no side effects (USwap previews; the order is created by
+    // `provider.commit(finalQuote:)` when the user slides), so it is silently re-requested on expiry.
     var autoRefreshEnabled: Bool {
-        false
+        true
     }
 
     var menuItems: [SendMenuItem] {
@@ -137,7 +136,6 @@ extension MultiSwapSendHandler: ISendHandler {
     }
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
-        // the confirmation quote commits an order with the provider, so the account is checked before it, not after
         guard let account = accountManager.activeAccount else {
             throw SendError.noActiveAccount
         }
@@ -165,10 +163,8 @@ extension MultiSwapSendHandler: ISendHandler {
         // is read live at submit-time by the broadcaster (routing flag, not tx content)
         let otherSections = provider.mevProtectionAllowed(tokenIn: tokenIn, tokenOut: tokenOut) ? [mevProtectionHelper.section()] : []
 
-        let executable = quote.executable(tokenIn: tokenIn)
-        let prepared = try await broadcaster.prepare(executable)
-
-        return SendData(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote, prepared: prepared, broadcaster: broadcaster, otherSections: otherSections)
+        // the executable is built at send time: commit may rebuild the quote (transfer providers)
+        return SendData(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote, broadcaster: broadcaster, otherSections: otherSections)
     }
 
     func send(data: ISendData) async throws {
@@ -176,22 +172,52 @@ extension MultiSwapSendHandler: ISendHandler {
             throw SendError.invalidData
         }
 
+        // Creates the order. On failure the token is never reused: the reason is toasted and a fresh
+        // preview is requested, so the screen simply shows the new quote (no error sheet).
+        let commitment: SwapCommitment
+        do {
+            commitment = try await provider.commit(finalQuote: data.quote)
+        } catch {
+            let message = Self.commitFailureMessage(error)
+            await MainActor.run { HudHelper.instance.show(banner: .error(string: message)) }
+            refreshSubject.send()
+            throw CommitFailedError(underlying: error)
+        }
+
         let result: BroadcastResult
         do {
-            result = try await data.broadcaster.submit(data.prepared)
+            let executable = commitment.quote.executable(tokenIn: tokenIn)
+            let prepared = try await data.broadcaster.prepare(executable)
+            result = try await data.broadcaster.submit(prepared)
         } catch {
-            // Partial execution (e.g. an interactive broker session failing mid-trade after
-            // txs were signed/submitted): value may already have moved on-chain. Persist a
-            // trackable record with the last known hash BEFORE surfacing the error — tracking
-            // then resolves the real outcome (partial fills included) instead of the swap
-            // becoming an invisible ghost while the server record waits forever.
             if let partial = error as? IPartialExecutionError, let partialTxHash = partial.partialTxHash {
-                saveSwap(data: data, txHash: partialTxHash, trackingHandle: nil)
+                // Partial execution (e.g. an interactive broker session failing mid-trade after
+                // txs were signed/submitted): value may already have moved on-chain. Persist a
+                // trackable record with the last known hash BEFORE surfacing the error — tracking
+                // then resolves the real outcome (partial fills included) instead of the swap
+                // becoming an invisible ghost while the server record waits forever.
+                saveSwap(commitment: commitment, txHash: partialTxHash, trackingHandle: nil)
+            } else {
+                // The order exists and the preview is consumed: re-preview so a retry never reuses
+                // the committed quote (the unfunded order expires server-side).
+                refreshSubject.send()
             }
             throw error
         }
 
-        saveSwap(data: data, txHash: result.txHash, trackingHandle: result.trackingHandle)
+        saveSwap(commitment: commitment, txHash: result.txHash, trackingHandle: result.trackingHandle)
+
+        // Best-effort and off the critical path: funds have moved, so the screen must not wait on
+        // the report. The track call carries the hash as a fallback.
+        if let providerSwapId = commitment.providerSwapId, let txHash = result.txHash {
+            Task { [provider] in
+                do {
+                    try await provider.reportInboundTxHash(providerSwapId: providerSwapId, txHash: txHash)
+                } catch {
+                    Core.instance?.logError(message: "swap signed report failed: \(error)", save: false)
+                }
+            }
+        }
 
         // externally-delivered swaps must not auto-enable a wallet the account can't hold
         if !walletManager.activeWallets.contains(where: { $0.token == tokenOut }),
@@ -209,11 +235,12 @@ extension MultiSwapSendHandler: ISendHandler {
     /// successful broadcast, and the partial-execution one where the submit threw but value may
     /// already have moved (the two differ only in which hash/handle is known). No-op without an
     /// active account, matching the previous behaviour at both call sites.
-    private func saveSwap(data: SendData, txHash: String?, trackingHandle: String?) {
+    private func saveSwap(commitment: SwapCommitment, txHash: String?, trackingHandle: String?) {
         guard let account = accountManager.activeAccount else {
             return
         }
 
+        let quote = commitment.quote
         let swap = Swap(
             uid: UUID().uuidString,
             txHash: txHash,
@@ -224,14 +251,14 @@ extension MultiSwapSendHandler: ISendHandler {
             tokenIn: tokenIn,
             tokenOut: tokenOut,
             amountIn: amountIn,
-            amountOut: data.quote.amountOut,
-            recipient: data.quote.recipient,
-            toAddress: data.quote.recipient ?? data.quote.toAddress,
-            depositAddress: data.quote.depositAddress,
-            providerSwapId: data.quote.providerSwapId,
+            amountOut: quote.amountOut,
+            recipient: quote.recipient,
+            toAddress: quote.recipient ?? quote.toAddress,
+            depositAddress: quote.depositAddress,
+            providerSwapId: commitment.providerSwapId,
             sourceAddress: nil,
-            refundAddress: data.quote.refundAddress,
-            estimatedTime: data.quote.estimatedTime,
+            refundAddress: quote.refundAddress,
+            estimatedTime: quote.estimatedTime,
             date: Date(),
             fromAsset: nil,
             toAsset: nil,
@@ -241,6 +268,19 @@ extension MultiSwapSendHandler: ISendHandler {
 
         swapHistoryManager.save(swap: swap)
     }
+
+    // What the toast says when the order could not be created: the server's discriminator when it
+    // names one, a generic line otherwise (server-supplied text is never shown verbatim).
+    static func commitFailureMessage(_ error: Error) -> String {
+        switch (error as? USwapMultiSwapApi.CommitError)?.status {
+        case "rate_changed":
+            "swap.confirmation.commit.rate_changed".localized
+        case "refresh_required":
+            "swap.confirmation.commit.refresh_required".localized
+        default:
+            "swap.confirmation.commit.failed".localized
+        }
+    }
 }
 
 extension MultiSwapSendHandler {
@@ -249,16 +289,14 @@ extension MultiSwapSendHandler {
         let tokenOut: Token
         let amountIn: Decimal
         let quote: SwapFinalQuote
-        let prepared: IPrepared
         let broadcaster: ISwapBroadcaster
         let otherSections: [SendDataSection]
 
-        init(tokenIn: Token, tokenOut: Token, amountIn: Decimal, quote: SwapFinalQuote, prepared: IPrepared, broadcaster: ISwapBroadcaster, otherSections: [SendDataSection]) {
+        init(tokenIn: Token, tokenOut: Token, amountIn: Decimal, quote: SwapFinalQuote, broadcaster: ISwapBroadcaster, otherSections: [SendDataSection]) {
             self.tokenIn = tokenIn
             self.tokenOut = tokenOut
             self.amountIn = amountIn
             self.quote = quote
-            self.prepared = prepared
             self.broadcaster = broadcaster
             self.otherSections = otherSections
         }
@@ -376,6 +414,11 @@ extension MultiSwapSendHandler {
         }
     }
 
+    // The order could not be created; the handler already toasted the reason and re-previewed.
+    struct CommitFailedError: IHandledSendError {
+        let underlying: Error
+    }
+
     enum SendError: Error {
         case invalidData
         case invalidTransactionData
@@ -390,6 +433,7 @@ extension MultiSwapSendHandler {
         case noActiveAccount
         case noSolanaAdapter
         case noXrpAdapter
+        case noTonAdapter
 
         case unsupportedTokenIn
         case unsupportedTokenOut

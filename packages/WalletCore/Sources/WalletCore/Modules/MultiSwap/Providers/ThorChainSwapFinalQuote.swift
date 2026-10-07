@@ -43,7 +43,7 @@ class ThorChainSwapFinalQuote: SwapFinalQuote {
         UtxoSendHelper.feeFields(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate)
     }
 
-    override func executable(tokenIn: Token) -> ISwapExecutable {
+    override func buildExecutable(tokenIn: Token) -> ISwapExecutable {
         ThorChainExecutable(token: tokenIn, kind: kind, amount: amountIn, memo: memo)
     }
 

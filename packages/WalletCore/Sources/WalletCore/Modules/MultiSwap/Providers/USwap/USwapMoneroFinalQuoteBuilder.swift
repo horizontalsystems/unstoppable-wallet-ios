@@ -17,11 +17,8 @@ final class USwapMoneroFinalQuoteBuilder: USwapFinalQuoteBuilder {
         guard let adapter = adapterManager.adapter(for: input.tokenIn) as? MoneroAdapter else {
             throw USwapMultiSwapProvider.SwapError.noMoneroAdapter
         }
-        guard let execution = input.response.execution else {
+        guard let deposit = input.deposit else {
             throw USwapMultiSwapProvider.SwapError.noTransactionData
-        }
-        guard let deposit = execution.depositInstruction() else {
-            throw USwapMultiSwapProvider.SwapError.invalidTransactionData
         }
 
         // Thrown, not folded into `transactionError`: a Monero memo never leaves this device — the

@@ -53,7 +53,7 @@ public class EvmSwapFinalQuote: SwapFinalQuote {
         super.canSwap && gasPrice != nil && evmFeeData != nil && transactionData != nil
     }
 
-    override public func executable(tokenIn: Token) -> ISwapExecutable {
+    override func buildExecutable(tokenIn: Token) -> ISwapExecutable {
         EvmExecutable(
             token: tokenIn,
             transactionData: transactionData,

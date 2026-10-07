@@ -155,8 +155,13 @@ struct SwapExecutableTests {
 
         let executable = try #require(quote.executable(tokenIn: Self.token(blockchainType: .ton)) as? TonExecutable)
 
-        #expect(executable.transactionParam.validUntil == 123)
-        #expect(executable.transactionParam.messages.isEmpty)
+        guard case let .param(transactionParam)? = executable.kind else {
+            Issue.record("Expected a server-built param executable")
+            return
+        }
+
+        #expect(transactionParam.validUntil == 123)
+        #expect(transactionParam.messages.isEmpty)
     }
 
     @Test func tronQuoteCarriesCreatedTransactionAndNilTransferIntent() throws {
@@ -185,7 +190,10 @@ struct SwapExecutableTests {
 
         let executable = try #require(quote.executable(tokenIn: Self.token(blockchainType: .tron)) as? TronExecutable)
 
-        let executableCreated = try #require(executable.created)
+        guard case let .created(executableCreated)? = executable.kind else {
+            Issue.record("Expected a server-built created executable")
+            return
+        }
 
         #expect(executableCreated.txID == created.txID)
         #expect(executableCreated.rawDataHex == created.rawDataHex)
@@ -328,7 +336,11 @@ struct SwapExecutableTests {
         let executable = try #require(quote.executable(tokenIn: token) as? SolanaExecutable)
 
         #expect(executable.token == token)
-        #expect(executable.rawTransaction == rawTransaction)
+        guard case let .raw(executableRaw)? = executable.kind else {
+            Issue.record("Expected a server-built raw executable")
+            return
+        }
+        #expect(executableRaw == rawTransaction)
     }
 
     @Test func baseQuoteReturnsUnsupportedExecutable() {

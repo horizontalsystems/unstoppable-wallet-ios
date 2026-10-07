@@ -2,11 +2,14 @@ import Foundation
 import MarketKit
 
 class SolanaSwapFinalQuote: SwapFinalQuote {
-    let rawTransaction: Data
+    let rawTransaction: Data?
+    // plain transfer built locally for a USwap transfer route (no server transaction)
+    let transfer: SolanaTransferExecution?
     private let fee: Decimal?
 
     init(
-        rawTransaction: Data,
+        rawTransaction: Data?,
+        transfer: SolanaTransferExecution? = nil,
         expectedAmountOut: Decimal,
         recipient: String?,
         slippage: Decimal?,
@@ -18,17 +21,28 @@ class SolanaSwapFinalQuote: SwapFinalQuote {
         providerSwapId: String?
     ) {
         self.rawTransaction = rawTransaction
+        self.transfer = transfer
         self.fee = fee
 
         super.init(expectedBuyAmount: expectedAmountOut, slippage: slippage, recipient: recipient, estimatedTime: estimatedTime, transactionError: transactionError, toAddress: toAddress, depositAddress: depositAddress, providerSwapId: providerSwapId)
     }
 
-    override var canSwap: Bool {
-        super.canSwap && fee != nil
+    private var kind: SolanaExecutable.Kind? {
+        if let rawTransaction {
+            return .raw(rawTransaction)
+        }
+        if let transfer {
+            return .transfer(transfer)
+        }
+        return nil
     }
 
-    override func executable(tokenIn: Token) -> ISwapExecutable {
-        SolanaExecutable(token: tokenIn, rawTransaction: rawTransaction)
+    override var canSwap: Bool {
+        super.canSwap && fee != nil && kind != nil
+    }
+
+    override func buildExecutable(tokenIn: Token) -> ISwapExecutable {
+        SolanaExecutable(token: tokenIn, kind: kind)
     }
 
     override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {

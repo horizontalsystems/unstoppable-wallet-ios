@@ -17,11 +17,8 @@ final class USwapZanoFinalQuoteBuilder: USwapFinalQuoteBuilder {
         guard let adapter = adapterManager.adapter(for: input.tokenIn) as? ZanoAdapter else {
             throw USwapMultiSwapProvider.SwapError.noZanoAdapter
         }
-        guard let execution = input.response.execution else {
+        guard let deposit = input.deposit else {
             throw USwapMultiSwapProvider.SwapError.noTransactionData
-        }
-        guard let deposit = execution.depositInstruction() else {
-            throw USwapMultiSwapProvider.SwapError.invalidTransactionData
         }
 
         // Thrown, not folded into `transactionError`: the adapter passes a Zano memo as the

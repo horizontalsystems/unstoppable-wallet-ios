@@ -830,6 +830,9 @@
 "swap.confirmation.slide_to_swap" = "滑动切换";
 "swap.confirmation.swapping" = "交易";
 "swap.confirmation.refresh" = "刷新";
+"swap.confirmation.commit.rate_changed" = "价格已变动。请查看更新后的报价并重试。";
+"swap.confirmation.commit.refresh_required" = "报价已过期。已加载新的报价。";
+"swap.confirmation.commit.failed" = "无法开始兑换。已加载新的报价。";
 "swap.confirmation.impact_high" = "在此次兑换交易中，您将损失您资金中的很大一部分（%@）。";
 "swap.confirmation.impact_too_high" = "由于流动性极低，此兑换将造成重大损失（%@）。";
 "swap.confirmation.impact_warning" = "重要提示！您正在以极其不利的价格进行交易。这是因为流动性非常低。";

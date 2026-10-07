@@ -38,7 +38,7 @@ class StellarSwapFinalQuote: SwapFinalQuote {
         )
     }
 
-    override func executable(tokenIn: Token) -> ISwapExecutable {
+    override func buildExecutable(tokenIn: Token) -> ISwapExecutable {
         StellarExecutable(token: tokenIn, kind: .signed(transactionData))
     }
 

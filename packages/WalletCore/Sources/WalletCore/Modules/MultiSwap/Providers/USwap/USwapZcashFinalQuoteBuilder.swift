@@ -17,11 +17,8 @@ final class USwapZcashFinalQuoteBuilder: USwapFinalQuoteBuilder {
         guard let adapter = adapterManager.adapter(for: input.tokenIn) as? ZcashAdapter else {
             throw USwapMultiSwapProvider.SwapError.noZcashAdapter
         }
-        guard let execution = input.response.execution else {
+        guard let deposit = input.deposit else {
             throw USwapMultiSwapProvider.SwapError.noTransactionData
-        }
-        guard let deposit = execution.depositInstruction() else {
-            throw USwapMultiSwapProvider.SwapError.invalidTransactionData
         }
         guard let adapterRecipient = adapter.recipient(from: deposit.address) else {
             throw SendTransactionError.invalidAddress

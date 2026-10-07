@@ -320,18 +320,20 @@ public enum SwapProviderResolver: ISwapProviderResolver {
             builders: [
                 USwapEvmFinalQuoteBuilder(
                     evmBlockchainManager: Core.shared.evmBlockchainManager,
-                    evmFeeEstimator: EvmFeeEstimator()
+                    evmFeeEstimator: EvmFeeEstimator(),
+                    adapterManager: adapterManager
                 ),
                 USwapUtxoFinalQuoteBuilder(adapterManager: adapterManager),
                 USwapTronFinalQuoteBuilder(
-                    tronKitManager: Core.shared.tronAccountManager.tronKitManager
+                    tronKitManager: Core.shared.tronAccountManager.tronKitManager,
+                    adapterManager: adapterManager
                 ),
                 USwapZcashFinalQuoteBuilder(adapterManager: adapterManager),
-                USwapTonFinalQuoteBuilder(accountManager: Core.shared.accountManager),
+                USwapTonFinalQuoteBuilder(accountManager: Core.shared.accountManager, adapterManager: adapterManager),
                 USwapStellarFinalQuoteBuilder(adapterManager: adapterManager),
                 USwapMoneroFinalQuoteBuilder(adapterManager: adapterManager),
                 USwapZanoFinalQuoteBuilder(adapterManager: adapterManager),
-                USwapSolanaFinalQuoteBuilder(adapterManager: adapterManager),
+                USwapSolanaFinalQuoteBuilder(adapterManager: adapterManager, solanaKitManager: Core.shared.solanaKitManager),
                 USwapXrpFinalQuoteBuilder(adapterManager: adapterManager),
             ]
         )

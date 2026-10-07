@@ -17,11 +17,8 @@ final class USwapXrpFinalQuoteBuilder: USwapFinalQuoteBuilder {
         guard let adapter = adapterManager.adapter(for: input.tokenIn) as? ISendXrpAdapter else {
             throw USwapMultiSwapProvider.SwapError.noXrpAdapter
         }
-        guard let execution = input.response.execution else {
+        guard let deposit = input.deposit else {
             throw USwapMultiSwapProvider.SwapError.noTransactionData
-        }
-        guard let deposit = execution.depositInstruction() else {
-            throw USwapMultiSwapProvider.SwapError.invalidTransactionData
         }
 
         // Thrown, not folded into `transactionError`: on XRP the provider credits the deposit by

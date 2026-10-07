@@ -86,7 +86,7 @@ struct SwapDepositDetailsTests {
     }
 
     private static func confirmation(execution: USwapMultiSwapApi.Execution, rejectBuild: Bool = false) async throws -> SwapFinalQuote {
-        let response = USwapMultiSwapApi.SwapResponse(expectedBuyAmount: 1, minBuyAmount: nil, buyAsset: nil, estimatedTime: nil, execution: execution, uuid: "uuid", approvalSpender: nil)
+        let response = USwapMultiSwapApi.SwapResponse(expectedBuyAmount: 1, minBuyAmount: nil, buyAsset: nil, estimatedTime: nil, execution: execution, uuid: nil, approvalSpender: nil, previewToken: "preview-token")
         let provider = USwapMultiSwapProvider(subProvider: StubSubProvider(response: response), rateQuoteFactory: USwapRateQuoteFactory(builders: []), finalQuoteFactory: USwapFinalQuoteFactory(builders: [StubBuilder(rejectBuild: rejectBuild)]))
         return try await provider.confirmationQuote(multiSwapQuote: MultiSwapQuote(expectedBuyAmount: 1), tokenIn: token(.bitcoin), tokenOut: token(.ethereum), amountIn: 1, slippage: 1, recipient: destination, transactionSettings: nil)
     }
@@ -99,9 +99,15 @@ struct SwapDepositDetailsTests {
         func supports(tokenIn _: Token, tokenOut _: Token) -> Bool { true }
         func mevProtectionAllowed(tokenIn _: Token, tokenOut _: Token) -> Bool { false }
         func rate(input _: USwapRateInput) async throws -> USwapRateResult { throw USwapMultiSwapProvider.SwapError.noRoutes }
-        func commit(input _: USwapCommitInput) async throws -> USwapCommitResult {
-            USwapCommitResult(response: response, refundAddress: nil, destinationAddress: SwapDepositDetailsTests.destination)
+        func preview(input _: USwapPreviewInput) async throws -> USwapPreviewResult {
+            USwapPreviewResult(response: response, refundAddress: nil, destinationAddress: SwapDepositDetailsTests.destination)
         }
+
+        func commit(previewToken _: String) async throws -> USwapMultiSwapApi.CommitResponse {
+            USwapMultiSwapApi.CommitResponse(status: "ok", uuid: "uuid", sellAmount: nil, expectedBuyAmount: nil, minBuyAmount: nil, expiresAt: nil, replayed: false, execution: nil)
+        }
+
+        func reportSigned(uuid _: String, inboundTxHash _: String) async throws {}
 
         func validateTrustedProvider(tokenIn _: Token, amountIn _: Decimal) async throws -> Bool? { nil }
         func track(swap: Swap) async throws -> Swap { swap }

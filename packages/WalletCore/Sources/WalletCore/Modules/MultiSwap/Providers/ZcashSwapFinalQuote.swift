@@ -42,7 +42,7 @@ class ZcashSwapFinalQuote: SwapFinalQuote {
         super.canSwap && proposal != nil && fee != nil
     }
 
-    override func executable(tokenIn: Token) -> ISwapExecutable {
+    override func buildExecutable(tokenIn: Token) -> ISwapExecutable {
         ZcashExecutable(token: tokenIn, proposal: proposal)
     }
 

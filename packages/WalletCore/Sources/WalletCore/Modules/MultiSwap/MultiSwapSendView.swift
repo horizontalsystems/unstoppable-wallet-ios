@@ -39,10 +39,13 @@ struct MultiSwapSendView: View {
                             ThemeButton(text: "swap.quoting".localized, spinner: true, style: .secondary) {}
                                 .disabled(true)
                         }
-                    case .success, .failed:
+                    case .failed:
                         ThemeButton(text: "send.confirmation.refresh".localized, style: .secondary) {
                             sendViewModel.sync()
                         }
+                    case .success:
+                        // not sendable: the cautions explain why and the next silent refresh re-previews
+                        EmptyView()
                     }
                 }
             }

@@ -164,9 +164,9 @@ public final class ExolixUSwapSubProvider: DefaultUSwapSubProvider {
         )
     }
 
-    override public func commit(input: USwapCommitInput) async throws -> USwapCommitResult {
+    override public func preview(input: USwapPreviewInput) async throws -> USwapPreviewResult {
         guard supportsAlternateRouteSelection(tokenIn: input.tokenIn, tokenOut: input.tokenOut) else {
-            return try await super.commit(input: input)
+            return try await super.preview(input: input)
         }
 
         guard let assetIn = asset(token: input.tokenIn) else {
@@ -206,10 +206,9 @@ public final class ExolixUSwapSubProvider: DefaultUSwapSubProvider {
             tokenIn: input.tokenIn,
             transactionSettings: input.transactionSettings
         )
-        // Transitional: preview + commit in one call (v2 semantics) until the provider commits on Swap
-        let response = try await api.swap(request)
+        let response = try await api.preview(request)
 
-        return USwapCommitResult(
+        return USwapPreviewResult(
             response: response,
             refundAddress: request.refundAddress,
             destinationAddress: request.destinationAddress

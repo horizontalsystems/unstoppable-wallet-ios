@@ -830,6 +830,9 @@
 "swap.confirmation.slide_to_swap" = "Değiştirmek için kaydır";
 "swap.confirmation.swapping" = "Takas";
 "swap.confirmation.refresh" = "Yenile";
+"swap.confirmation.commit.rate_changed" = "Fiyat değişti. Güncellenen alıntıyı inceleyip tekrar deneyin.";
+"swap.confirmation.commit.refresh_required" = "Alıntı süresi doldu. Yeni bir alıntı yüklendi.";
+"swap.confirmation.commit.failed" = "Swap başlatılamadı. Yeni bir alıntı yüklendi.";
 "swap.confirmation.impact_high" = "Bu swap işleminde fonlarınızın büyük bir kısmını (%@) kaybedeceksiniz.";
 "swap.confirmation.impact_too_high" = "Bu takas, çok düşük likidite nedeniyle büyük bir kayba (%@) yol açar.";
 "swap.confirmation.impact_warning" = "Önemli! Son derece olumsuz bir fiyat alıyorsunuz. Bunun nedeni son derece düşük likiditedir.";

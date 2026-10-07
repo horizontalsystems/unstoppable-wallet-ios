@@ -830,6 +830,9 @@
 "swap.confirmation.slide_to_swap" = "밀어서 결제하기";
 "swap.confirmation.swapping" = "스와핑";
 "swap.confirmation.refresh" = "새로고침";
+"swap.confirmation.commit.rate_changed" = "가격이 변동되었습니다. 업데이트된 견적을 확인하고 다시 시도하세요.";
+"swap.confirmation.commit.refresh_required" = "견적이 만료되었습니다. 새 견적을 불러왔습니다.";
+"swap.confirmation.commit.failed" = "스왑을 시작할 수 없습니다. 새 견적을 불러왔습니다.";
 "swap.confirmation.impact_high" = "이 스왑으로 인해 자금의 상당 부분(%@)을 잃게 됩니다.";
 "swap.confirmation.impact_too_high" = "유동성이 매우 낮아 이 스왑은 큰 손실(%@)을 초래합니다.";
 "swap.confirmation.impact_warning" = "중요한 사항입니다! 매우 불리한 가격을 받고 있습니다. 이는 유동성이 극도로 낮기 때문입니다.";

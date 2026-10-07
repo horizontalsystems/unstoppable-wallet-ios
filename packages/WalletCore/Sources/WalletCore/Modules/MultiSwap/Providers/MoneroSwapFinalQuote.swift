@@ -52,7 +52,7 @@ class MoneroSwapFinalQuote: SwapFinalQuote {
         .monero(amount: amount, address: address)
     }
 
-    override func executable(tokenIn: Token) -> ISwapExecutable {
+    override func buildExecutable(tokenIn: Token) -> ISwapExecutable {
         MoneroExecutable(token: tokenIn, address: address, amount: amount, priority: priority, memo: memo)
     }
 

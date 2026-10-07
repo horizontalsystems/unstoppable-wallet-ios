@@ -830,6 +830,9 @@
 "swap.confirmation.slide_to_swap" = "Проведите для обмена";
 "swap.confirmation.swapping" = "Обмен";
 "swap.confirmation.refresh" = "Обновить";
+"swap.confirmation.commit.rate_changed" = "Цена изменилась. Проверьте обновлённую котировку и попробуйте снова.";
+"swap.confirmation.commit.refresh_required" = "Котировка истекла. Загружена новая котировка.";
+"swap.confirmation.commit.failed" = "Не удалось начать обмен. Загружена новая котировка.";
 "swap.confirmation.impact_high" = "При этом обмене вы потеряете значительную часть (%@) своих средств.";
 "swap.confirmation.impact_too_high" = "Этот обмен приведёт к большим потерям (%@) из-за очень низкой ликвидности.";
 "swap.confirmation.impact_warning" = "Важно! Вы получаете крайне невыгодную цену из-за низкой ликвидности.";

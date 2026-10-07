@@ -830,6 +830,9 @@
 "swap.confirmation.slide_to_swap" = "Wischen zum Tauschen";
 "swap.confirmation.swapping" = "Swapping";
 "swap.confirmation.refresh" = "Aktualisieren";
+"swap.confirmation.commit.rate_changed" = "Der Preis hat sich geändert. Prüfe das aktualisierte Angebot und versuche es erneut.";
+"swap.confirmation.commit.refresh_required" = "Das Angebot ist abgelaufen. Ein neues Angebot wurde geladen.";
+"swap.confirmation.commit.failed" = "Der Swap konnte nicht gestartet werden. Ein neues Angebot wurde geladen.";
 "swap.confirmation.impact_high" = "Du wirst bei diesem Swap einen großen Teil (%@) deiner Mittel verlieren.";
 "swap.confirmation.impact_too_high" = "Dieser Swap würde aufgrund sehr geringer Liquidität zu einem großen Verlust (%@) führen.";
 "swap.confirmation.impact_warning" = "Wichtig! Du bekommst einen extrem ungünstigen Preis. Dies ist auf die extrem niedrige Liquidität zurückzuführen.";

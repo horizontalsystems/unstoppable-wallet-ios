@@ -41,7 +41,7 @@ class XrpSwapFinalQuote: SwapFinalQuote {
         )
     }
 
-    override func executable(tokenIn: Token) -> ISwapExecutable {
+    override func buildExecutable(tokenIn: Token) -> ISwapExecutable {
         XrpExecutable(token: tokenIn, address: address, amount: amount, destinationTag: destinationTag)
     }
 

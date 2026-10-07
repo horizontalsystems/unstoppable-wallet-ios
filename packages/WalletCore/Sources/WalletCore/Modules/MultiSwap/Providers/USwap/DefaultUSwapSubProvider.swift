@@ -73,7 +73,7 @@ public class DefaultUSwapSubProvider: USwapSubProvider {
         return USwapRateResult(response: quote)
     }
 
-    public func commit(input: USwapCommitInput) async throws -> USwapCommitResult {
+    public func preview(input: USwapPreviewInput) async throws -> USwapPreviewResult {
         guard let assetIn = asset(token: input.tokenIn) else {
             throw SwapError.unsupportedTokenIn
         }
@@ -92,14 +92,28 @@ public class DefaultUSwapSubProvider: USwapSubProvider {
             recipient: input.recipient,
             transactionSettings: input.transactionSettings
         )
-        // Transitional: preview + commit in one call (v2 semantics) until the provider commits on Swap
-        let response = try await api.swap(request)
+        let response = try await api.preview(request)
 
-        return USwapCommitResult(
+        return USwapPreviewResult(
             response: response,
             refundAddress: request.refundAddress,
             destinationAddress: request.destinationAddress
         )
+    }
+
+    public func commit(previewToken: String) async throws -> USwapMultiSwapApi.CommitResponse {
+        do {
+            return try await api.commit(.init(previewToken: previewToken))
+        } catch {
+            if error is CancellationError {
+                throw error
+            }
+            throw USwapMultiSwapApi.commitError(networkError: error)
+        }
+    }
+
+    public func reportSigned(uuid: String, inboundTxHash: String) async throws {
+        _ = try await api.signed(.init(uuid: uuid, inboundTxHash: inboundTxHash))
     }
 
     public func validateTrustedProvider(tokenIn _: Token, amountIn _: Decimal) async throws -> Bool? {

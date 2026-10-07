@@ -40,6 +40,10 @@ public class SendViewModel: ObservableObject {
                 stopAutoQuoting()
                 syncTask = nil
             } else if oldValue {
+                // A sync dropped under the send (below) left `state` at .syncing with nothing in flight.
+                if state.isSyncing, syncTask == nil {
+                    sync(silent: true)
+                }
                 autoQuoteIfRequired()
             }
         }
@@ -157,14 +161,6 @@ public class SendViewModel: ObservableObject {
             .sink { [weak self] rates in self?.rates = rates.mapValues { $0.value } }
     }
 
-    @MainActor private func set(sending: Bool) {
-        self.sending = sending
-    }
-
-    @MainActor private func set(partiallyExecuted: Bool) {
-        self.partiallyExecuted = partiallyExecuted
-    }
-
     @MainActor private func report(error: Error) {
         errorSubject.send(error.smartDescription)
     }
@@ -243,15 +239,29 @@ public extension SendViewModel {
 
             if !Task.isCancelled {
                 await MainActor.run { [weak self, sendData, state] in
-                    self?.sendData = sendData
-                    self?.state = state
+                    guard let self, !Task.isCancelled else {
+                        return
+                    }
+                    // A send that started while this sync was in flight owns the screen: landing now
+                    // would swap the quote under it and re-arm the expiry timer. Mark the drop so the
+                    // send's end can re-sync instead of leaving `state` at .syncing with nothing in flight.
+                    guard !sending else {
+                        syncTask = nil
+                        return
+                    }
+
+                    self.sendData = sendData
+                    self.state = state
                 }
             }
         }
         .erased()
     }
 
-    func send() async throws {
+    // Main-actor isolated so the quote read and the `sending` flip happen in one turn: a silent
+    // re-preview landing in between would commit a quote other than the one on screen. The
+    // handler's send itself runs off the main actor as before.
+    @MainActor func send() async throws {
         do {
             guard let handler else {
                 throw SendError.noHandler
@@ -261,7 +271,7 @@ public extension SendViewModel {
                 throw SendError.noSendData
             }
 
-            await set(sending: true)
+            sending = true
 
             _ = try await handler.send(data: sendData)
 
@@ -272,11 +282,13 @@ public extension SendViewModel {
             // Order matters: mark the partial BEFORE clearing `sending`, whose didSet resumes
             // auto-quoting — the flag is what stops it (and the send button) coming back.
             if let partial = error as? IPartialExecutionError, partial.partialTxHash != nil {
-                await set(partiallyExecuted: true)
+                partiallyExecuted = true
             }
 
-            await set(sending: false)
-            await report(error: error)
+            sending = false
+            if !(error is IHandledSendError) {
+                report(error: error)
+            }
             throw error
         }
     }

@@ -7,6 +7,8 @@ import TronKit
 public class TronSwapFinalQuote: SwapFinalQuote {
     private let amountIn: Decimal
     let createdTransaction: CreatedTransactionResponse?
+    // plain transfer built locally for a USwap transfer route (no server transaction)
+    let transfer: TronTransferExecution?
     let transferIntent: TronTransferIntent?
     private let fees: [Fee]
 
@@ -17,6 +19,7 @@ public class TronSwapFinalQuote: SwapFinalQuote {
         slippage: Decimal?,
         estimatedTime: TimeInterval? = nil,
         createdTransaction: CreatedTransactionResponse?,
+        transfer: TronTransferExecution? = nil,
         transferIntent: TronTransferIntent? = nil,
         fees: [Fee],
         transactionError: Error?,
@@ -26,6 +29,7 @@ public class TronSwapFinalQuote: SwapFinalQuote {
     ) {
         self.amountIn = amountIn
         self.createdTransaction = createdTransaction
+        self.transfer = transfer
         self.transferIntent = transferIntent
         self.fees = fees
 
@@ -45,12 +49,22 @@ public class TronSwapFinalQuote: SwapFinalQuote {
         .tron(fees: fees)
     }
 
-    override public var canSwap: Bool {
-        super.canSwap && createdTransaction != nil
+    private var kind: TronExecutable.Kind? {
+        if let createdTransaction {
+            return .created(createdTransaction)
+        }
+        if let transfer {
+            return .transfer(transfer)
+        }
+        return nil
     }
 
-    override public func executable(tokenIn: Token) -> ISwapExecutable {
-        TronExecutable(created: createdTransaction, transferIntent: transferIntent, token: tokenIn)
+    override public var canSwap: Bool {
+        super.canSwap && kind != nil
+    }
+
+    override func buildExecutable(tokenIn: Token) -> ISwapExecutable {
+        TronExecutable(kind: kind, transferIntent: transferIntent, token: tokenIn)
     }
 
     override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {

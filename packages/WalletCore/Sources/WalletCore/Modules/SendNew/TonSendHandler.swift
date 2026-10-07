@@ -94,12 +94,17 @@ extension TonSendHandler: ISendHandler {
     }
 
     func send(data: ISendData) async throws {
+        _ = try await sendCapturingRef(data: data)
+    }
+}
+
+extension TonSendHandler: ISendHandlerRefCapturing {
+    func sendCapturingRef(data: ISendData) async throws -> String {
         guard let data = data as? SendData, let transferData = data.transferData else {
             throw SendError.invalidData
         }
 
-        let boc = try await TonKit.Kit.boc(transferData: transferData, contract: contract, secretKey: secretKey, network: TonKitManager.network)
-        try await TonKit.Kit.send(boc: boc, contract: contract, network: TonKitManager.network)
+        return try await TonSendHelper.sendReturningHash(transferData: transferData, contract: contract, secretKey: secretKey)
     }
 }
 

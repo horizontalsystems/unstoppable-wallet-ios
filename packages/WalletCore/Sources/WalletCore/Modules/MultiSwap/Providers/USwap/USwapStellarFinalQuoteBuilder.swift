@@ -20,12 +20,10 @@ final class USwapStellarFinalQuoteBuilder: USwapFinalQuoteBuilder {
 
         let asset = adapter.asset
 
-        guard let execution = input.response.execution else {
-            throw USwapMultiSwapProvider.SwapError.noTransactionData
-        }
+        let execution = input.response.execution
 
         if case .signedTransaction = execution {
-            guard let xdr = execution.primarySignable?.xdr else {
+            guard let xdr = execution?.primarySignable?.xdr else {
                 throw USwapMultiSwapProvider.SwapError.invalidTransactionData
             }
 
@@ -52,8 +50,8 @@ final class USwapStellarFinalQuoteBuilder: USwapFinalQuoteBuilder {
             throw USwapMultiSwapProvider.SwapError.noTransactionData
         }
 
-        guard let deposit = execution.depositInstruction() else {
-            throw USwapMultiSwapProvider.SwapError.invalidTransactionData
+        guard let deposit = input.deposit else {
+            throw USwapMultiSwapProvider.SwapError.noTransactionData
         }
 
         // A text memo IS deliverable here and must keep working: a Stellar text memo is a plain,

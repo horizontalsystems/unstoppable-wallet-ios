@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import SolanaKit
 
 class SolanaSwapBroadcaster: ISwapBroadcaster {
     private let account: Account
@@ -25,7 +26,31 @@ class SolanaSwapBroadcaster: ISwapBroadcaster {
             throw MultiSwapSendHandler.SendError.noSolanaAdapter
         }
 
-        let fullTransaction = try await adapter.sendRawTransaction(rawTransaction: executable.rawTransaction, signer: signer)
+        guard let kind = executable.kind else {
+            throw MultiSwapSendHandler.SendError.invalidTransactionData
+        }
+
+        let fullTransaction: SolanaKit.FullTransaction
+
+        switch kind {
+        case let .raw(rawTransaction):
+            fullTransaction = try await adapter.sendRawTransaction(rawTransaction: rawTransaction, signer: signer)
+        case let .transfer(transfer):
+            switch executable.token.type {
+            case .native:
+                fullTransaction = try await adapter.sendSol(toAddress: transfer.toAddress, amount: transfer.amount, signer: signer)
+            case let .spl(mintAddress):
+                fullTransaction = try await adapter.sendSpl(
+                    mintAddress: mintAddress,
+                    toAddress: transfer.toAddress,
+                    amount: transfer.amount,
+                    decimals: executable.token.decimals,
+                    signer: signer
+                )
+            default:
+                throw MultiSwapSendHandler.SendError.invalidTransactionData
+            }
+        }
 
         return BroadcastResult(txHash: fullTransaction.transaction.hash, trackingHandle: nil)
     }

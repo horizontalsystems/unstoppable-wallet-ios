@@ -144,7 +144,6 @@ extension SwapHistoryView {
             switch viewItem.swap.status {
             case .completed: .green
             case .failed, .actionRequired: .red
-            case .expired: .secondary
             default: .secondary
             }
         }

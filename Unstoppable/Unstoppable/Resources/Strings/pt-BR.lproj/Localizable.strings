@@ -830,6 +830,9 @@
 "swap.confirmation.slide_to_swap" = "Deslize para trocar";
 "swap.confirmation.swapping" = "Trocando";
 "swap.confirmation.refresh" = "Atualizar";
+"swap.confirmation.commit.rate_changed" = "O preço mudou. Revise a cotação atualizada e tente novamente.";
+"swap.confirmation.commit.refresh_required" = "A cotação expirou. Uma nova cotação foi carregada.";
+"swap.confirmation.commit.failed" = "Não foi possível iniciar o swap. Uma nova cotação foi carregada.";
 "swap.confirmation.impact_high" = "Você perderá uma grande parte (%@) dos seus fundos neste swap.";
 "swap.confirmation.impact_too_high" = "Esta troca resultaria em uma grande perda (%@) devido à liquidez muito baixa.";
 "swap.confirmation.impact_warning" = "Importante! Você está recebendo um preço extremamente desfavorável. Isso se deve a uma liquidez extremamente baixa.";

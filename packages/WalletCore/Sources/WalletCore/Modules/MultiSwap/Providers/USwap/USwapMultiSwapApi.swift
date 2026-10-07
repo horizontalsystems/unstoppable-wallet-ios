@@ -423,7 +423,7 @@ public extension USwapMultiSwapApi {
     // Turns whatever `commit(_:)` threw into a `CommitError`: parses the non-2xx body
     // (`{ status, reason | error | message, provider?, errorCode?, ... }`) and falls back to the HTTP
     // status alone when the body is unusable. A `CommitError` passes through unchanged.
-    static func commitError(networkError: Error) -> CommitError {
+    internal static func commitError(networkError: Error) -> CommitError {
         if let commitError = networkError as? CommitError {
             return commitError
         }
@@ -777,8 +777,10 @@ public extension USwapMultiSwapApi {
                 sellAmount: commit.sellAmount ?? sellAmount,
                 minSellAmount: minSellAmount,
                 exactOutput: exactOutput,
-                previewToken: previewToken,
-                stubDepositAddress: stubDepositAddress,
+                // consumed by the commit; the stub must never be mistaken for the deposit address once
+                // the execution carries the real one
+                previewToken: nil,
+                stubDepositAddress: nil,
                 expiresAt: commit.expiresAt ?? expiresAt
             )
         }
@@ -856,14 +858,23 @@ public extension USwapMultiSwapApi {
 
     enum Execution {
         case signedTransaction(chain: String, transactions: [SignableTx], approval: Approval?)
+        // `amount` and `unsignedTx` are kept for parsing fidelity only: a transfer is always built locally with the previewed amount and is never built or signed from them.
         case transfer(chain: String, depositAddress: String, amount: Decimal?, attachment: Attachment?, unsignedTx: SignableTx?)
         case thorchainDeposit(chain: String, inboundAddress: String, memo: String, delivery: Delivery)
         case stellarBroker(StellarBrokerParams)
 
+        var isTransfer: Bool {
+            if case .transfer = self {
+                return true
+            }
+            return false
+        }
+
         var primarySignable: SignableTx? {
             switch self {
             case let .signedTransaction(_, transactions, _): transactions.first
-            case let .transfer(_, _, _, _, unsignedTx): unsignedTx
+            // a transfer is always built locally from `depositAddress` + `attachment`; the server's `unsignedTx` is never signed
+            case .transfer: nil
             case let .thorchainDeposit(_, _, _, delivery): delivery.unsignedTx
             case .stellarBroker: nil
             }
@@ -878,16 +889,6 @@ public extension USwapMultiSwapApi {
             }
         }
 
-        // The amount the route wants deposited. Always transfer it as given — never recompute it.
-        public var transferAmount: Decimal? {
-            switch self {
-            case .signedTransaction: return nil
-            case let .transfer(_, _, amount, _, _): return amount
-            case .thorchainDeposit: return nil
-            case .stellarBroker: return nil
-            }
-        }
-
         public var chain: String? {
             switch self {
             case let .signedTransaction(chain, _, _): return chain
@@ -897,12 +898,12 @@ public extension USwapMultiSwapApi {
             }
         }
 
-        func depositInstruction() -> (address: String, amount: Decimal?, attachment: Attachment?)? {
+        func depositInstruction() -> (address: String, attachment: Attachment?)? {
             switch self {
-            case let .transfer(_, depositAddress, amount, attachment, _):
-                return (depositAddress, amount, attachment)
+            case let .transfer(_, depositAddress, _, attachment, _):
+                return (depositAddress, attachment)
             case let .thorchainDeposit(_, inboundAddress, memo, _):
-                return (inboundAddress, nil, .text(memo))
+                return (inboundAddress, .text(memo))
             case .signedTransaction, .stellarBroker:
                 return nil
             }
@@ -1259,7 +1260,14 @@ extension USwapMultiSwapApi {
             minBuyAmount = try? map.value("minBuyAmount", using: USwapMultiSwapApi.decimalTransform)
             expiresAt = try? map.value("expiresAt", using: USwapMultiSwapApi.millisecondsDateTransform)
             replayed = (try? map.value("replayed")) ?? false
-            execution = try? map.value("execution")
+            // Absent means "execute as previewed"; present must parse — a malformed execution that
+            // silently became nil would send the preview's stub build.
+            if map["execution"].currentValue != nil {
+                let parsed: ExecutionResponse = try map.value("execution")
+                execution = parsed
+            } else {
+                execution = nil
+            }
         }
 
         var response: CommitResponse {
