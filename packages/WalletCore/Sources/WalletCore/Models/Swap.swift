@@ -35,7 +35,7 @@ public struct Swap: Hashable {
     }
 
     static var pendingStatuses: [Status] {
-        [.notStarted, .pending, .swapping]
+        [.notStarted, .signed, .pending, .swapping]
     }
 
     public init(uid: String, txHash: String?, trackingHandle: String?, accountId: String, providerId: String, status: Status, operation: Operation = .swap, tokenIn: Token, tokenOut: Token, amountIn: Decimal, amountOut: Decimal, recipient: String?, toAddress: String, depositAddress: String?, providerSwapId: String?, sourceAddress: String?, refundAddress: String?, estimatedTime: TimeInterval? = nil, date: Date, fromAsset: String? = nil, toAsset: String? = nil, legs: [Leg]? = nil, pauseReason: String? = nil) {
@@ -66,6 +66,8 @@ public struct Swap: Hashable {
 
     public enum Status: String {
         case notStarted = "not_started"
+        // Inbound tx hash reported, deposit not yet observed (v3)
+        case signed
         case pending
         case swapping
         case completed
@@ -73,6 +75,8 @@ public struct Swap: Hashable {
         case unknown
         case failed
         case actionRequired = "action_required"
+        // Terminal: the deposit never arrived before the order's deadline (v3)
+        case expired
 
         var title: String {
             "swap_info.status.\(rawValue)".localized
@@ -80,7 +84,7 @@ public struct Swap: Hashable {
 
         var historyTitle: String {
             switch self {
-            case .notStarted: "swap_history.status.depositing".localized
+            case .notStarted, .signed: "swap_history.status.depositing".localized
             case .pending, .swapping: "swap_history.status.swapping".localized
             default: title
             }
@@ -88,7 +92,7 @@ public struct Swap: Hashable {
 
         public var isExpected: Bool {
             switch self {
-            case .notStarted, .pending, .swapping, .completed: true
+            case .notStarted, .signed, .pending, .swapping, .completed: true
             default: false
             }
         }
@@ -98,6 +102,7 @@ public struct Swap: Hashable {
             case .completed: ThemeImage("done_e_filled", size: 20, colorStyle: .green)
             case .failed, .actionRequired: ThemeImage("warning_filled", size: 20, colorStyle: .red)
             case .refunded: ThemeImage("arrow_return", size: 20, colorStyle: .secondary)
+            case .expired: ThemeImage("warning_filled", size: 20, colorStyle: .secondary)
             default: ProgressView(value: 0.55)
                 .progressViewStyle(DeterminiteSpinnerStyle())
                 .frame(width: 20, height: 20)

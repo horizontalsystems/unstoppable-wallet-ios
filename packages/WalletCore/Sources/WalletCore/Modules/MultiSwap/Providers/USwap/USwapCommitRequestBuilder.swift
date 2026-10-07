@@ -1,3 +1,4 @@
+import EvmKit
 import Foundation
 import MarketKit
 
@@ -31,7 +32,8 @@ public final class USwapCommitRequestBuilder {
         slippage: Decimal,
         tokenIn: Token,
         tokenOut: Token,
-        recipient: String?
+        recipient: String?,
+        transactionSettings: TransactionSettings?
     ) async throws -> USwapMultiSwapApi.SwapRequest {
         let destinationAddress = try await destinationAddress(recipient: recipient, token: tokenOut)
         let sourceAddress = try await sourceAddress(token: tokenIn)
@@ -46,8 +48,39 @@ public final class USwapCommitRequestBuilder {
             providerId: providerId,
             destinationAddress: destinationAddress,
             sourceAddress: sourceAddress,
-            refundAddress: refundAddress
+            refundAddress: refundAddress,
+            networkFee: Self.networkFee(tokenIn: tokenIn, transactionSettings: transactionSettings)
         )
+    }
+
+    // The user's fee setting as the server expects it. The `kind` must match the sell chain (a mismatch
+    // is a 400), so only the settings the server names are mapped: EVM gas price and the UTXO rate on
+    // bitcoin / litecoin / bitcoinCash / dash (eCash is not in the server's list). Everything else —
+    // account-abstraction, Monero, Zcash, bitcoin resend, Solana — sends nothing and the server prices
+    // the transaction itself.
+    static func networkFee(tokenIn: Token, transactionSettings: TransactionSettings?) -> USwapMultiSwapApi.NetworkFee? {
+        switch transactionSettings {
+        case let .evm(gasPriceData, _):
+            guard tokenIn.blockchainType.isEvm else {
+                return nil
+            }
+
+            switch gasPriceData.userDefined {
+            case let .legacy(gasPrice):
+                return .legacy(gasPrice: String(gasPrice))
+            case let .eip1559(maxFeePerGas, maxPriorityFeePerGas):
+                return .eip1559(maxFeePerGas: String(maxFeePerGas), maxPriorityFeePerGas: String(maxPriorityFeePerGas))
+            }
+        case let .bitcoin(satoshiPerByte):
+            switch tokenIn.blockchainType {
+            case .bitcoin, .litecoin, .bitcoinCash, .dash:
+                return .utxo(feeRate: satoshiPerByte)
+            default:
+                return nil
+            }
+        case .bitcoinResend, .monero, .aa, .zcash, .none:
+            return nil
+        }
     }
 
     func destinationAddress(recipient: String?, token: Token) async throws -> String {

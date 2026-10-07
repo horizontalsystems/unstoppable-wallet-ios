@@ -23,8 +23,13 @@ public final class USwapTracker {
 
         var swap = swap
         swap.status = Swap.Status(rawValue: response.status) ?? .unknown
-        swap.fromAsset = response.fromAsset
-        swap.toAsset = response.toAsset
+        // The v3 pre-observation body (`signed` / `not_started`) carries no assets; keep the saved ones.
+        if let fromAsset = response.fromAsset {
+            swap.fromAsset = fromAsset
+        }
+        if let toAsset = response.toAsset {
+            swap.toAsset = toAsset
+        }
         swap.pauseReason = swap.status == .actionRequired ? response.pauseReason : nil
         swap.legs = response.legs.map { leg in
             Swap.Leg(

@@ -10,7 +10,7 @@ class MultiSwapProviderManager {
     private let localStorage: LocalStorage
     private let networkManager: NetworkManager
 
-    private let baseUrl = "\(AppConfig.swapApiUrl)/v2"
+    private let baseUrl = "\(AppConfig.swapApiUrl)/v3"
     private var headers: HTTPHeaders?
 
     @PostPublished private(set) var providers: [String] = []

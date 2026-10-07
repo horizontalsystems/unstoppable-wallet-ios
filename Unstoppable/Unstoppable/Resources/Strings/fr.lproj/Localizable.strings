@@ -883,6 +883,8 @@
 "swap_info.status.unknown" = "Inconnu";
 "swap_info.status.failed" = "Échoué";
 "swap_info.status.action_required" = "Action requise";
+"swap_info.status.signed" = "Signé";
+"swap_info.status.expired" = "Expiré";
 
 // Market
 

@@ -62,7 +62,7 @@ struct SwapInfoView: View {
                                 legStatusIcon(leg: leg, index: index)
                                     .frame(width: 24, height: 40)
 
-                                ThemeText(leg.title, style: .subhead, colorStyle: leg.status == .notStarted ? .secondary : .primary)
+                                ThemeText(leg.title, style: .subhead, colorStyle: leg.status == .notStarted || leg.status == .signed ? .secondary : .primary)
                             }
 
                             Spacer()

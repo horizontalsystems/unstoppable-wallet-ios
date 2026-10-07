@@ -19,6 +19,21 @@ public final class USwapMultiSwapApi {
         }
     )
 
+    // Server timestamps (`expiresAt`) are millisecond epochs.
+    private static let millisecondsDateTransform = TransformOf<Date, Any>(
+        fromJSON: { value in
+            let milliseconds: Double? = switch value {
+            case let value as NSNumber: value.doubleValue
+            case let value as String: Double(value)
+            default: nil
+            }
+            return milliseconds.map { Date(timeIntervalSince1970: $0 / 1000) }
+        },
+        toJSON: { value in
+            value.map { $0.timeIntervalSince1970 * 1000 }
+        }
+    )
+
     private let baseURL: URL
     private let headers: HTTPHeaders?
     private let networkManager: NetworkManager
@@ -73,9 +88,66 @@ public final class USwapMultiSwapApi {
         )
     }
 
+    // Transitional: v2 semantics (an order is created on every call) expressed as preview + commit in
+    // one shot. Used only by callers not yet migrated to the preview / commit split (the USwap
+    // sub-providers' confirmation quote, StellarSwap, Private send, CrossPay). Remove once the last of
+    // them calls `preview` and `commit` directly.
     public func swap(_ request: SwapRequest) async throws -> SwapResponse {
+        let preview = try await preview(request)
+
+        guard let previewToken = preview.previewToken, !previewToken.isEmpty else {
+            throw CommitError(httpStatus: nil, status: nil, reason: "missing previewToken", providerError: nil)
+        }
+
+        // `commit` has side effects (creates the order): a quote cancelled after the preview must not create one.
+        try Task.checkCancellation()
+
+        let commit = try await commit(CommitRequest(previewToken: previewToken))
+
+        return preview.merging(commit: commit)
+    }
+
+    // No side effects: builds the route and returns it with a `previewToken` (no `uuid`). For transfer
+    // providers the response carries no `execution` yet, only an optional `stubDepositAddress`.
+    public func preview(_ request: SwapRequest) async throws -> SwapResponse {
         let response: SwapResponseMapping = try await networkManager.fetch(
-            url: endpoint("swap"),
+            url: endpoint("preview"),
+            method: .post,
+            parameters: request.parameters,
+            encoding: JSONEncoding.default,
+            headers: headers
+        )
+
+        return response.response
+    }
+
+    // The only call with side effects: creates the order for a previewed route. A non-2xx answer is
+    // rethrown as the raw network error (`commitError(networkError:)` turns it into a `CommitError`);
+    // a 2xx whose `status` is not `ok` or that carries no `uuid` is a failed commit too and throws
+    // `CommitError` directly. No retry semantics: the caller previews again.
+    public func commit(_ request: CommitRequest) async throws -> CommitResponse {
+        let response: CommitResponseMapping = try await networkManager.fetch(
+            url: endpoint("commit"),
+            method: .post,
+            parameters: request.parameters,
+            encoding: JSONEncoding.default,
+            headers: headers
+        )
+
+        let commit = response.response
+
+        guard commit.status == "ok", let uuid = commit.uuid, !uuid.isEmpty else {
+            throw CommitError(httpStatus: nil, status: commit.status, reason: nil, providerError: nil)
+        }
+
+        return commit
+    }
+
+    // Reports the inbound tx hash of a committed swap (after broadcast). Re-sending the same hash is a
+    // no-op; a different one replaces it while nothing is observed yet.
+    public func signed(_ request: SignedRequest) async throws -> SignedResponse {
+        let response: SignedResponseMapping = try await networkManager.fetch(
+            url: endpoint("signed"),
             method: .post,
             parameters: request.parameters,
             encoding: JSONEncoding.default,
@@ -131,7 +203,7 @@ public extension USwapMultiSwapApi {
         }
     }
 
-    // /v2/rate and /v2/swap take exactly one of sellAmount / buyAmount — neither or both is a 400.
+    // /v3/rate and /v3/preview take exactly one of sellAmount / buyAmount — neither or both is a 400.
     enum AmountSpec: Equatable {
         case sell(Decimal)
         case buy(Decimal)
@@ -295,9 +367,9 @@ public extension USwapMultiSwapApi {
         }
     }
 
-    // A failed /v2/rate answers 200 with `{ routes, providerErrors }`; a failed /v2/swap answers a
-    // non-2xx with the provider error *itself* as the body — `{ error, provider, errorCode?,
-    // minimumAmount?, maximumAmount? }`, the same field set (API.txt §4, §9). Parsing it here keeps
+    // A failed /v3/rate answers 200 with `{ routes, providerErrors }`; a failed /v3/preview (and a
+    // `provider_error` /v3/commit) answers a non-2xx with the provider error *itself* as the body —
+    // `{ error, provider, errorCode?, minimumAmount?, maximumAmount? }`, the same field set. Parsing it here keeps
     // both surfaces on one wire mapping, and hands the caller only structured fields, never the body.
     //
     // Explicitly internal despite the public extension: the only caller is PrivateSendService, in this
@@ -322,13 +394,155 @@ public extension USwapMultiSwapApi {
         return response.providerError
     }
 
-    // A refused /v2/rate may also answer a non-2xx carrying the same { routes, providerErrors } envelope
+    // A refused /v3/rate may also answer a non-2xx carrying the same { routes, providerErrors } envelope
     internal static func rateProviderErrors(json: Any?) -> [ProviderError] {
         guard let json = json as? [String: Any], let response = Mapper<RateResponse>().map(JSON: json) else {
             return []
         }
 
         return response.providerErrors.map(\.providerError)
+    }
+
+    // The outcome of a failed /v3/commit. `status` is the server's discriminator
+    // (in_progress | refresh_required | rate_changed | provider_error) when the body carried one; nil
+    // for a transport failure, a 2xx that was not `ok`, or an unrecognisable body. Never retried.
+    struct CommitError: Error {
+        public let httpStatus: Int?
+        public let status: String?
+        public let reason: String?
+        public let providerError: ProviderError?
+
+        public init(httpStatus: Int?, status: String?, reason: String?, providerError: ProviderError?) {
+            self.httpStatus = httpStatus
+            self.status = status
+            self.reason = reason
+            self.providerError = providerError
+        }
+    }
+
+    // Turns whatever `commit(_:)` threw into a `CommitError`: parses the non-2xx body
+    // (`{ status, reason | error | message, provider?, errorCode?, ... }`) and falls back to the HTTP
+    // status alone when the body is unusable. A `CommitError` passes through unchanged.
+    static func commitError(networkError: Error) -> CommitError {
+        if let commitError = networkError as? CommitError {
+            return commitError
+        }
+
+        guard let responseError = networkError as? NetworkManager.ResponseError else {
+            return CommitError(httpStatus: nil, status: nil, reason: nil, providerError: nil)
+        }
+
+        let json = responseError.json as? [String: Any]
+        let status = json?["status"] as? String
+        let reason = (json?["reason"] as? String) ?? (json?["error"] as? String) ?? (json?["message"] as? String)
+
+        // `provider_error` carries the provider refusal as the body even without the marker fields
+        // `providerError(networkError:)` insists on, so it is mapped unconditionally there.
+        let providerError: ProviderError? = if status == "provider_error" {
+            json.flatMap { Mapper<ProviderErrorResponse>().map(JSON: $0) }?.providerError
+        } else {
+            providerError(networkError: networkError)
+        }
+
+        return CommitError(
+            httpStatus: responseError.statusCode,
+            status: status,
+            reason: reason,
+            providerError: providerError
+        )
+    }
+
+    // The user's fee setting for the sell chain, sent with the preview so the returned transaction is
+    // already priced as it will be signed. Must match the sell asset's chain (otherwise a 400), so the
+    // caller only builds it for EVM and the UTXO chains the server lists; Solana sends none.
+    enum NetworkFee: Equatable {
+        case legacy(gasPrice: String) // wei, decimal string
+        case eip1559(maxFeePerGas: String, maxPriorityFeePerGas: String) // wei, decimal strings
+        case utxo(feeRate: Int) // sat/vB
+
+        fileprivate var parameters: Parameters {
+            switch self {
+            case let .legacy(gasPrice):
+                return ["kind": "legacy", "gasPrice": gasPrice]
+            case let .eip1559(maxFeePerGas, maxPriorityFeePerGas):
+                return ["kind": "eip1559", "maxFeePerGas": maxFeePerGas, "maxPriorityFeePerGas": maxPriorityFeePerGas]
+            case let .utxo(feeRate):
+                return ["kind": "utxo", "feeRate": feeRate]
+            }
+        }
+    }
+
+    struct CommitRequest {
+        public let previewToken: String
+
+        public init(previewToken: String) {
+            self.previewToken = previewToken
+        }
+
+        // Only the token: the inbound tx hash is reported after broadcast through `signed`, never here.
+        fileprivate var parameters: Parameters {
+            ["previewToken": previewToken]
+        }
+    }
+
+    struct CommitResponse {
+        public let status: String
+        public let uuid: String?
+        // Transfer providers: the committed order is a fresh quote, so these may differ from the preview
+        public let sellAmount: Decimal?
+        public let expectedBuyAmount: Decimal?
+        public let minBuyAmount: Decimal?
+        public let expiresAt: Date?
+        public let replayed: Bool
+        // Only for transfer providers (the deposit address exists once the order does); absent when the
+        // preview already carried the transaction
+        public let execution: Execution?
+
+        public init(
+            status: String,
+            uuid: String?,
+            sellAmount: Decimal?,
+            expectedBuyAmount: Decimal?,
+            minBuyAmount: Decimal?,
+            expiresAt: Date?,
+            replayed: Bool,
+            execution: Execution?
+        ) {
+            self.status = status
+            self.uuid = uuid
+            self.sellAmount = sellAmount
+            self.expectedBuyAmount = expectedBuyAmount
+            self.minBuyAmount = minBuyAmount
+            self.expiresAt = expiresAt
+            self.replayed = replayed
+            self.execution = execution
+        }
+    }
+
+    struct SignedRequest {
+        public let uuid: String
+        public let inboundTxHash: String
+
+        public init(uuid: String, inboundTxHash: String) {
+            self.uuid = uuid
+            self.inboundTxHash = inboundTxHash
+        }
+
+        fileprivate var parameters: Parameters {
+            ["uuid": uuid, "inboundTxHash": inboundTxHash]
+        }
+    }
+
+    struct SignedResponse {
+        public let uuid: String
+        public let status: String
+        public let hash: String?
+
+        public init(uuid: String, status: String, hash: String?) {
+            self.uuid = uuid
+            self.status = status
+            self.hash = hash
+        }
     }
 
     struct ProviderDescriptor {
@@ -359,6 +573,7 @@ public extension USwapMultiSwapApi {
         public let destinationAddress: String
         public let sourceAddress: String?
         public let refundAddress: String?
+        public let networkFee: NetworkFee?
 
         public init(
             sellAsset: String,
@@ -369,7 +584,8 @@ public extension USwapMultiSwapApi {
             providerId: String,
             destinationAddress: String,
             sourceAddress: String?,
-            refundAddress: String?
+            refundAddress: String?,
+            networkFee: NetworkFee? = nil
         ) {
             self.sellAsset = sellAsset
             self.buyAsset = buyAsset
@@ -380,6 +596,7 @@ public extension USwapMultiSwapApi {
             self.destinationAddress = destinationAddress
             self.sourceAddress = sourceAddress
             self.refundAddress = refundAddress
+            self.networkFee = networkFee
         }
 
         public init(
@@ -391,7 +608,8 @@ public extension USwapMultiSwapApi {
             providerId: String,
             destinationAddress: String,
             sourceAddress: String?,
-            refundAddress: String?
+            refundAddress: String?,
+            networkFee: NetworkFee? = nil
         ) {
             self.init(
                 sellAsset: sellAsset,
@@ -402,7 +620,8 @@ public extension USwapMultiSwapApi {
                 providerId: providerId,
                 destinationAddress: destinationAddress,
                 sourceAddress: sourceAddress,
-                refundAddress: refundAddress
+                refundAddress: refundAddress,
+                networkFee: networkFee
             )
         }
 
@@ -426,6 +645,9 @@ public extension USwapMultiSwapApi {
             if let refundAddress {
                 parameters["refundAddress"] = refundAddress
             }
+            if let networkFee {
+                parameters["networkFee"] = networkFee.parameters
+            }
             return parameters
         }
     }
@@ -439,6 +661,8 @@ public extension USwapMultiSwapApi {
             self.parameters = parameters
         }
 
+        // `inboundTxHash` stays in the body on purpose: the server keeps accepting it on /v3/track as a
+        // fallback for records whose hash was never reported through `signed`.
         public static func swap(
             uuid: String?,
             inboundTxHash: String?
@@ -502,6 +726,12 @@ public extension USwapMultiSwapApi {
         public let sellAmount: Decimal?
         public let minSellAmount: Decimal?
         public let exactOutput: Bool
+        // v3 preview: opaque token to pass to `commit`; nil on a v2-style (shim) result
+        public let previewToken: String?
+        // v3 preview of a transfer provider: a ready-to-receive account on the sell chain to estimate the
+        // network fee against. Never a destination to send to.
+        public let stubDepositAddress: String?
+        public let expiresAt: Date?
 
         public init(
             expectedBuyAmount: Decimal,
@@ -513,7 +743,10 @@ public extension USwapMultiSwapApi {
             approvalSpender: String?,
             sellAmount: Decimal? = nil,
             minSellAmount: Decimal? = nil,
-            exactOutput: Bool = false
+            exactOutput: Bool = false,
+            previewToken: String? = nil,
+            stubDepositAddress: String? = nil,
+            expiresAt: Date? = nil
         ) {
             self.expectedBuyAmount = expectedBuyAmount
             self.minBuyAmount = minBuyAmount
@@ -525,6 +758,29 @@ public extension USwapMultiSwapApi {
             self.sellAmount = sellAmount
             self.minSellAmount = minSellAmount
             self.exactOutput = exactOutput
+            self.previewToken = previewToken
+            self.stubDepositAddress = stubDepositAddress
+            self.expiresAt = expiresAt
+        }
+
+        // The previewed route completed by its commit: the order's `uuid`, and for transfer providers
+        // the execution (deposit address) and the committed amounts, which may differ from the preview.
+        public func merging(commit: CommitResponse) -> SwapResponse {
+            SwapResponse(
+                expectedBuyAmount: commit.expectedBuyAmount ?? expectedBuyAmount,
+                minBuyAmount: commit.minBuyAmount ?? minBuyAmount,
+                buyAsset: buyAsset,
+                estimatedTime: estimatedTime,
+                execution: commit.execution ?? execution,
+                uuid: commit.uuid,
+                approvalSpender: approvalSpender,
+                sellAmount: commit.sellAmount ?? sellAmount,
+                minSellAmount: minSellAmount,
+                exactOutput: exactOutput,
+                previewToken: previewToken,
+                stubDepositAddress: stubDepositAddress,
+                expiresAt: commit.expiresAt ?? expiresAt
+            )
         }
     }
 
@@ -719,21 +975,25 @@ public extension USwapMultiSwapApi {
 
     struct TrackResponse {
         public let status: String
-        public let fromAsset: String
-        public let toAsset: String
+        // Absent on the v3 pre-observation body (`signed` / `not_started`, `legs: []`)
+        public let fromAsset: String?
+        public let toAsset: String?
         public let toAmount: Decimal?
         public let legs: [Leg]
         public let provider: String?
         public let pauseReason: String?
+        // The inbound tx hash the server holds (reported through `signed`), when any
+        public let hash: String?
 
         public init(
             status: String,
-            fromAsset: String,
-            toAsset: String,
+            fromAsset: String?,
+            toAsset: String?,
             toAmount: Decimal?,
             legs: [Leg],
             provider: String?,
-            pauseReason: String?
+            pauseReason: String?,
+            hash: String? = nil
         ) {
             self.status = status
             self.fromAsset = fromAsset
@@ -742,6 +1002,7 @@ public extension USwapMultiSwapApi {
             self.legs = legs
             self.provider = provider
             self.pauseReason = pauseReason
+            self.hash = hash
         }
 
         public struct Leg {
@@ -941,6 +1202,9 @@ extension USwapMultiSwapApi {
         let sellAmount: Decimal?
         let minSellAmount: Decimal?
         let exactOutput: Bool
+        let previewToken: String?
+        let stubDepositAddress: String?
+        let expiresAt: Date?
 
         init(map: Map) throws {
             expectedBuyAmount = try map.value("expectedBuyAmount", using: USwapMultiSwapApi.decimalTransform)
@@ -953,6 +1217,9 @@ extension USwapMultiSwapApi {
             sellAmount = try? map.value("sellAmount", using: USwapMultiSwapApi.decimalTransform)
             minSellAmount = try? map.value("meta.near.minSellAmount", using: USwapMultiSwapApi.decimalTransform)
             exactOutput = (try? map.value("meta.near.exactOutput")) ?? false
+            previewToken = try? map.value("previewToken")
+            stubDepositAddress = try? map.value("stubDepositAddress")
+            expiresAt = try? map.value("expiresAt", using: USwapMultiSwapApi.millisecondsDateTransform)
         }
 
         var response: SwapResponse {
@@ -966,28 +1233,86 @@ extension USwapMultiSwapApi {
                 approvalSpender: approvalSpender,
                 sellAmount: sellAmount,
                 minSellAmount: minSellAmount,
-                exactOutput: exactOutput
+                exactOutput: exactOutput,
+                previewToken: previewToken,
+                stubDepositAddress: stubDepositAddress,
+                expiresAt: expiresAt
             )
+        }
+    }
+
+    struct CommitResponseMapping: ImmutableMappable {
+        let status: String
+        let uuid: String?
+        let sellAmount: Decimal?
+        let expectedBuyAmount: Decimal?
+        let minBuyAmount: Decimal?
+        let expiresAt: Date?
+        let replayed: Bool
+        let execution: ExecutionResponse?
+
+        init(map: Map) throws {
+            status = try map.value("status")
+            uuid = try? map.value("uuid")
+            sellAmount = try? map.value("sellAmount", using: USwapMultiSwapApi.decimalTransform)
+            expectedBuyAmount = try? map.value("expectedBuyAmount", using: USwapMultiSwapApi.decimalTransform)
+            minBuyAmount = try? map.value("minBuyAmount", using: USwapMultiSwapApi.decimalTransform)
+            expiresAt = try? map.value("expiresAt", using: USwapMultiSwapApi.millisecondsDateTransform)
+            replayed = (try? map.value("replayed")) ?? false
+            execution = try? map.value("execution")
+        }
+
+        var response: CommitResponse {
+            CommitResponse(
+                status: status,
+                uuid: uuid,
+                sellAmount: sellAmount,
+                expectedBuyAmount: expectedBuyAmount,
+                minBuyAmount: minBuyAmount,
+                expiresAt: expiresAt,
+                replayed: replayed,
+                execution: execution?.execution
+            )
+        }
+    }
+
+    struct SignedResponseMapping: ImmutableMappable {
+        let uuid: String
+        let status: String
+        let hash: String?
+
+        init(map: Map) throws {
+            uuid = try map.value("uuid")
+            status = try map.value("status")
+            hash = try? map.value("hash")
+        }
+
+        var response: SignedResponse {
+            SignedResponse(uuid: uuid, status: status, hash: hash)
         }
     }
 
     struct TrackResponseMapping: ImmutableMappable {
         let status: String
-        let fromAsset: String
-        let toAsset: String
+        let fromAsset: String?
+        let toAsset: String?
         let toAmount: Decimal?
         let legs: [LegMapping]
         let provider: String?
         let pauseReason: String?
+        let hash: String?
 
         init(map: Map) throws {
             status = try map.value("status")
-            fromAsset = try map.value("fromAsset")
-            toAsset = try map.value("toAsset")
+            // Before the deposit is observed /v3/track answers `{ uuid, status, providers, hash?, legs: [] }`
+            // with no assets, so only `status` is required.
+            fromAsset = try? map.value("fromAsset")
+            toAsset = try? map.value("toAsset")
             toAmount = try? map.value("toAmount", using: USwapMultiSwapApi.decimalTransform)
-            legs = try map.value("legs")
+            legs = (try? map.value("legs")) ?? []
             provider = (try? map.value("providers") as [String])?.first
             pauseReason = try? map.value("meta.pauseReason")
+            hash = try? map.value("hash")
         }
 
         var response: TrackResponse {
@@ -998,7 +1323,8 @@ extension USwapMultiSwapApi {
                 toAmount: toAmount,
                 legs: legs.map(\.leg),
                 provider: provider,
-                pauseReason: pauseReason
+                pauseReason: pauseReason,
+                hash: hash
             )
         }
 

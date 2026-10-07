@@ -883,6 +883,8 @@
 "swap_info.status.unknown" = "未知";
 "swap_info.status.failed" = "失败";
 "swap_info.status.action_required" = "需要操作";
+"swap_info.status.signed" = "已签名";
+"swap_info.status.expired" = "已过期";
 
 // Market
 

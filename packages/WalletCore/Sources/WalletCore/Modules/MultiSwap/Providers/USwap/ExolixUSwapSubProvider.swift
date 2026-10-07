@@ -203,8 +203,10 @@ public final class ExolixUSwapSubProvider: DefaultUSwapSubProvider {
             variant: variant,
             amountIn: input.amountIn,
             slippage: input.slippage,
-            tokenIn: input.tokenIn
+            tokenIn: input.tokenIn,
+            transactionSettings: input.transactionSettings
         )
+        // Transitional: preview + commit in one call (v2 semantics) until the provider commits on Swap
         let response = try await api.swap(request)
 
         return USwapCommitResult(
@@ -245,7 +247,8 @@ public final class ExolixUSwapSubProvider: DefaultUSwapSubProvider {
         variant: RouteVariant,
         amountIn: Decimal,
         slippage: Decimal,
-        tokenIn: Token
+        tokenIn: Token,
+        transactionSettings: TransactionSettings?
     ) async throws -> USwapMultiSwapApi.SwapRequest {
         let sourceAddress = try await commitRequestBuilder.sourceAddress(token: tokenIn)
         let refundAddress: String?
@@ -265,7 +268,8 @@ public final class ExolixUSwapSubProvider: DefaultUSwapSubProvider {
             providerId: info.id,
             destinationAddress: variant.destination,
             sourceAddress: sourceAddress,
-            refundAddress: refundAddress
+            refundAddress: refundAddress,
+            networkFee: USwapCommitRequestBuilder.networkFee(tokenIn: tokenIn, transactionSettings: transactionSettings)
         )
     }
 

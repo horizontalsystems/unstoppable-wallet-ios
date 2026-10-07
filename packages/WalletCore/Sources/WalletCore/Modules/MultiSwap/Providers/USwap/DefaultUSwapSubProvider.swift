@@ -89,8 +89,10 @@ public class DefaultUSwapSubProvider: USwapSubProvider {
             slippage: input.slippage,
             tokenIn: input.tokenIn,
             tokenOut: input.tokenOut,
-            recipient: input.recipient
+            recipient: input.recipient,
+            transactionSettings: input.transactionSettings
         )
+        // Transitional: preview + commit in one call (v2 semantics) until the provider commits on Swap
         let response = try await api.swap(request)
 
         return USwapCommitResult(

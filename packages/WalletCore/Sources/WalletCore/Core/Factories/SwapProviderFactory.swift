@@ -123,7 +123,7 @@ public enum SwapProviderResolver: ISwapProviderResolver {
     // Accessible so the app can build the same USwap API instance for the private send stack
     // instead of duplicating the base URL / api key construction.
     public static func uSwapApi(networkManager: NetworkManager) -> USwapMultiSwapApi {
-        guard let baseURL = URL(string: "\(AppConfig.swapApiUrl)/v2") else {
+        guard let baseURL = URL(string: "\(AppConfig.swapApiUrl)/v3") else {
             preconditionFailure("Invalid USwap API URL: \(AppConfig.swapApiUrl)")
         }
 
