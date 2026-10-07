@@ -262,6 +262,12 @@ public extension SendViewModel {
     // re-preview landing in between would commit a quote other than the one on screen. The
     // handler's send itself runs off the main actor as before.
     @MainActor func send() async throws {
+        // A second slide while one is in flight is dropped here, for every handler: the quote read
+        // and the flag flip below are one main-actor turn, so this check cannot interleave with them.
+        // Throws (handled, so not reported) rather than returns: callers treat a normal return as a
+        // successful send. Kept outside the `do` so the in-flight send's `sending` flag is not reset.
+        guard !sending else { throw AlreadySendingError() }
+
         do {
             guard let handler else {
                 throw SendError.noHandler
@@ -319,4 +325,6 @@ extension SendViewModel {
         case noHandler
         case noSendData
     }
+
+    struct AlreadySendingError: IHandledSendError {}
 }

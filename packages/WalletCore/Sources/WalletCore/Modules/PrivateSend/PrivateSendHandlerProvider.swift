@@ -2,11 +2,11 @@ import Foundation
 import MarketKit
 
 // Resolves an IPreSendHandler rather than an inner ISendHandler: there is no inner SendData to
-// resolve from until the order is committed. Nesting is structurally impossible, since the case
+// resolve from until the route is previewed. Nesting is structurally impossible, since the case
 // carries no inner SendData, so no anti-nesting guard is needed.
 public final class PrivateSendHandlerProvider: SendHandler {
     override public class func instance(sendData: SendData) -> ISendHandler? {
-        handler(sendData: sendData) { PrivateSendData(order: $0, inner: $1, innerHandler: $2) }
+        handler(sendData: sendData) { PrivateSendData(preview: $0, inner: $1, transactionSettings: $2) }
     }
 }
 
@@ -19,7 +19,7 @@ public extension PrivateSendHandlerProvider {
     // own data builder without copying any of this.
     static func handler(
         sendData: SendData,
-        dataBuilder: @escaping (PrivateSendOrder, ISendData, ISendHandler) -> PrivateSendData
+        dataBuilder: @escaping (PrivateSendPreview, ISendData, TransactionSettings?) -> PrivateSendData
     ) -> ISendHandler? {
         guard case let .privateSend(request) = sendData else { return nil }
         guard !unsupportedBlockchainTypes.contains(request.token.blockchainType) else { return nil }
@@ -31,7 +31,8 @@ public extension PrivateSendHandlerProvider {
 
         // The recipient, not the deposit address, which does not exist yet. That is fine for
         // *resolving* the handler (it keys on the wallet), but it is why the memo-capability gate is
-        // re-evaluated against the deposit address after the commit rather than inferred here.
+        // re-evaluated against the stub at preview and the deposit address after the commit rather
+        // than inferred here.
         //
         // Always a fresh handler owned by PrivateSendHandler, never the UI's shared one: the user's
         // send settings arrive as the immutable `request.depositSettings` snapshot instead.

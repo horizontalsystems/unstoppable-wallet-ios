@@ -46,15 +46,25 @@ public enum PrivateSendUnavailableReason: Error {
     case providerSuspended
     case networkError(Error)
     case tokenUnsupported
+    // /v3/preview named no account to estimate the deposit against: nothing can be shown or sent.
+    case noDepositEstimate
+    // /v3/commit refusals, by the server's discriminator. Only ever toasted by the handler (the
+    // screen re-previews), never rendered as the confirmation screen's error view.
+    case rateChanged
+    case previewExpired
+    case commitRejected
 }
 
 public enum PrivateSendError: Error {
     case notQuoted
+    case missingPreviewToken
     case missingUuid
     case unsupportedExecution
     case chainMismatch
     case missingDepositAmount
     case depositBelowMinimum
+    // The commit asked for more than the preview the user confirmed; never sent.
+    case depositAboveQuoted
     case invalidAmountOut
     case missingRefundAddress
     case attachmentUnsupported
@@ -91,6 +101,15 @@ extension PrivateSendUnavailableReason: UserFacingError {
             return "private_send.caution.network_error".localized
         case .tokenUnsupported:
             return "private_send.caution.token_unsupported".localized
+        case .noDepositEstimate:
+            // A route that cannot be estimated is, from the user's side, no route.
+            return "private_send.caution.no_route".localized
+        case .rateChanged:
+            return "swap.confirmation.commit.rate_changed".localized
+        case .previewExpired:
+            return "swap.confirmation.commit.refresh_required".localized
+        case .commitRejected:
+            return "swap.confirmation.commit.failed".localized
         }
     }
 

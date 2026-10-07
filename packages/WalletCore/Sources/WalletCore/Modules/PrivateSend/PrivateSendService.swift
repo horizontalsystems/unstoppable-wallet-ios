@@ -44,14 +44,16 @@ public final class PrivateSendService {
     }
 
     // Kept public for testing and for a future price-preview surface. The send flow itself only
-    // ever calls `commit(request:)`. The amount is the exact output the recipient receives.
+    // ever calls `preview(request:)` and `commit(preview:)`. The amount is the exact output the
+    // recipient receives.
     public func quote(token: Token, amount: Decimal) async throws -> PrivateSendQuote {
         try await bestRoute(token: token, amount: amount).quote
     }
 
-    // The single entry point used by PrivateSendHandler: quote and commit in one call, because
-    // under the synchronous-pre-send decision nothing else ever holds a bare PrivateSendQuote.
-    public func commit(request: PrivateSendRequest) async throws -> PrivateSendOrder {
+    // No side effects: prices the route for the confirmation screen (re-run silently every
+    // `PrivateSendData.quoteLifetime`). The order is created by `commit(preview:)` when the user
+    // slides. Under the synchronous-pre-send decision nothing else ever holds a bare PrivateSendQuote.
+    public func preview(request: PrivateSendRequest) async throws -> PrivateSendPreview {
         let token = request.token
         let providerIds = supportedProviderIds(token: token)
 
@@ -59,8 +61,8 @@ public final class PrivateSendService {
             throw PrivateSendUnavailableReason.tokenUnsupported
         }
 
-        // /v2/rate exists here only to *choose* a provider for /v2/swap to commit against: every
-        // economic value below already prefers the swap response and treats the rate quote as a
+        // /v3/rate exists here only to *choose* a provider for /v3/preview to price against: every
+        // economic value below already prefers the preview response and treats the rate quote as a
         // fallback. With a single candidate there is nothing to select between, so the round trip is
         // pure latency on the screen where the user is already waiting. The fan-out is not removed —
         // it runs again the moment a second confidential provider maps this token.
@@ -73,10 +75,9 @@ public final class PrivateSendService {
         let providerId = route?.quote.providerId ?? providerIds[0]
         let builder = commitRequestBuilder(providerId)
 
-        // The committing provider's own identifier for the token, in case two confidential providers
-        // name it differently. Without a rate response there is no second source for it, and no
-        // identifier at all is exactly what `isSupported(token:)` gates the toggle on, so the reason
-        // matches.
+        // The provider's own identifier for the token, in case two confidential providers name it
+        // differently. Without a rate response there is no second source for it, and no identifier at
+        // all is exactly what `isSupported(token:)` gates the toggle on, so the reason matches.
         guard let asset = assetRepository(providerId).asset(token: token) ?? route?.asset else {
             throw PrivateSendUnavailableReason.tokenUnsupported
         }
@@ -100,40 +101,37 @@ public final class PrivateSendService {
             // sender's address defeats the point of a private send.
             sourceAddress: nil,
             refundAddress: refundAddress
+            // No `networkFee`: the deposit is a plain transfer built and priced locally.
         )
 
         let response: USwapMultiSwapApi.SwapResponse
 
         do {
-            response = try await api.swap(swapRequest)
+            response = try await api.preview(swapRequest)
         } catch {
-            // Wrapped exactly like the `/v2/rate` call in `bestRoute`: a raw NetworkManager
+            // Wrapped exactly like the `/v3/rate` call in `bestRoute`: a raw NetworkManager
             // .ResponseError carries the pretty-printed server response body in its
             // `errorDescription`, and this error is rendered verbatim on the confirmation screen.
             // Only authored reasons may leave this method. `reason(networkError:)` reads the
             // structured provider-error fields out of the failure body, so a below-minimum amount
-            // still names the floor even when no /v2/rate call was made.
+            // still names the floor even when no /v3/rate call was made.
             throw Self.reason(networkError: error)
         }
 
-        guard let uuid = response.uuid, !uuid.isEmpty else {
-            throw PrivateSendError.missingUuid
+        guard let previewToken = response.previewToken, !previewToken.isEmpty else {
+            throw PrivateSendError.missingPreviewToken
         }
 
-        guard let execution = response.execution, case let .transfer(chain, depositAddress, amount, attachment, _) = execution else {
-            throw PrivateSendError.unsupportedExecution
-        }
-
-        // `execution.chain` is sometimes a chain id ("56") and sometimes a name ("bsc"), so only a
-        // recognised chain that resolves to a *different* blockchain is treated as a mismatch. An
-        // unrecognised string is not evidence of disagreement.
-        if let executionBlockchainType = USwapAssetRepository.blockchainTypeMap[chain], executionBlockchainType != token.blockchainType {
-            throw PrivateSendError.chainMismatch
+        // The inner send is estimated against the stub so the confirmation screen shows a network
+        // fee. A provider that already names the deposit account at preview is estimated against
+        // that instead; with neither there is nothing to show and nothing to send.
+        guard let stubDepositAddress = Self.nonEmpty(response.stubDepositAddress) ?? Self.nonEmpty(response.execution?.depositAddress) else {
+            throw PrivateSendUnavailableReason.noDepositEstimate
         }
 
         // Never substituted with the entered amount: in exact-output mode that is the *output*, a
         // structurally different quantity.
-        guard let depositAmount = amount else {
+        guard let depositAmount = response.sellAmount ?? route?.quote.sellAmount else {
             throw PrivateSendError.missingDepositAmount
         }
 
@@ -143,8 +141,8 @@ public final class PrivateSendService {
             throw PrivateSendError.depositBelowMinimum
         }
 
-        // Nil when /v2/swap omits it and there is no rate quote to fall back on. That is a known,
-        // handled state, not a substitutable one: `PrivateSendOrder.privateFee` then over-states the
+        // Nil when /v3/preview omits it and there is no rate quote to fall back on. That is a known,
+        // handled state, not a substitutable one: `PrivateSendPreview.privateFee` then over-states the
         // fee from `depositAmount` — shown as an upper bound rather than substituted with a guess.
         let minSellAmount = response.minSellAmount ?? route?.quote.minSellAmount
 
@@ -166,26 +164,111 @@ public final class PrivateSendService {
         if route == nil, let minAmountOut, minAmountOut != amountOut {
             // The same contractual check `bestRoute` runs on the rate quote, kept alive on the path
             // that never asks for one. A discrepancy is a provider bug worth a log, not a reason to
-            // abandon a committed order. The amounts are deliberately not logged: they are live
-            // transfer values for an in-flight private send.
+            // refuse the preview. The amounts are deliberately not logged: they are live transfer
+            // values for an in-flight private send.
             Core.instance?.logError(message: "PrivateSend: minBuyAmount != expectedBuyAmount (provider: \(providerId))", save: false)
         }
 
-        return PrivateSendOrder(
+        return PrivateSendPreview(
             request: request,
+            previewToken: previewToken,
+            providerId: providerId,
             depositAmount: depositAmount,
             minSellAmount: minSellAmount,
             amountOut: amountOut,
             minAmountOut: minAmountOut,
-            providerId: providerId,
-            depositAddress: depositAddress,
-            attachment: attachment,
-            providerSwapId: uuid,
+            stubDepositAddress: stubDepositAddress,
             refundAddress: refundAddress,
             // Nil is acceptable: PrivateSendData simply omits the "arrives in" row.
             estimatedTime: response.estimatedTime ?? route?.quote.estimatedTime,
-            committedAt: Date()
+            previewedAt: Date()
         )
+    }
+
+    // The only call with side effects: creates the order for a previewed route. Every failure is an
+    // authored reason the handler toasts before re-previewing; the token is never retried. The
+    // deposit address and attachment only exist from here on.
+    public func commit(preview: PrivateSendPreview) async throws -> PrivateSendOrder {
+        // Never create an order from a cancelled task.
+        try Task.checkCancellation()
+
+        let commit: USwapMultiSwapApi.CommitResponse
+
+        do {
+            commit = try await api.commit(.init(previewToken: preview.previewToken))
+        } catch is CancellationError {
+            throw CancellationError()
+        } catch {
+            // `commitError(networkError:)` reads the server's discriminator and the provider refusal
+            // out of the failure body; `reason(networkError:)` turns both into an authored reason.
+            // The body itself is never interpolated into anything the user sees.
+            throw Self.reason(networkError: USwapMultiSwapApi.commitError(networkError: error))
+        }
+
+        guard let uuid = commit.uuid, !uuid.isEmpty else {
+            throw PrivateSendError.missingUuid
+        }
+
+        guard let execution = commit.execution, case let .transfer(chain, depositAddress, amount, attachment, _) = execution else {
+            throw PrivateSendError.unsupportedExecution
+        }
+
+        // `execution.chain` is sometimes a chain id ("56") and sometimes a name ("bsc"), so only a
+        // recognised chain that resolves to a *different* blockchain is treated as a mismatch. An
+        // unrecognised string is not evidence of disagreement.
+        if let executionBlockchainType = USwapAssetRepository.blockchainTypeMap[chain], executionBlockchainType != preview.request.token.blockchainType {
+            throw PrivateSendError.chainMismatch
+        }
+
+        // Exact output: the server decides what to deposit, and the committed order is a fresh quote,
+        // so the commit's figure is the one to transfer. Never the entered amount (the *output*).
+        guard let depositAmount = amount ?? commit.sellAmount else {
+            throw PrivateSendError.missingDepositAmount
+        }
+
+        guard depositAmount > 0 else {
+            throw PrivateSendError.depositBelowMinimum
+        }
+
+        // The slide authorized the previewed ceiling and nothing above it: an order that wants more
+        // is refused like any other failed commit (it expires unfunded) and the screen re-previews.
+        guard depositAmount <= preview.depositAmount else {
+            throw PrivateSendError.depositAboveQuoted
+        }
+
+        // A deposit below the floor is refunded whole and no swap happens.
+        if let minSellAmount = preview.minSellAmount, depositAmount < minSellAmount {
+            throw PrivateSendError.depositBelowMinimum
+        }
+
+        let amountOut = commit.expectedBuyAmount ?? preview.amountOut
+
+        guard amountOut > 0 else {
+            throw PrivateSendError.invalidAmountOut
+        }
+
+        if amountOut != preview.amountOut {
+            // Contractual in exact-output mode: the commit delivers what the preview promised. A
+            // discrepancy is a provider bug worth a log; the order proceeds with the commit's numbers.
+            // The amounts are deliberately not logged: they are live transfer values.
+            Core.instance?.logError(message: "PrivateSend: commit expectedBuyAmount != preview (provider: \(preview.providerId))", save: false)
+        }
+
+        return PrivateSendOrder(
+            preview: preview,
+            depositAmount: depositAmount,
+            amountOut: amountOut,
+            minAmountOut: commit.minBuyAmount ?? preview.minAmountOut,
+            depositAddress: depositAddress,
+            attachment: attachment,
+            providerSwapId: uuid
+        )
+    }
+
+    // Reports the broadcast hash to the backend. Best-effort for the caller: /v3/track carries the
+    // hash as a fallback.
+    public func reportSigned(uuid: String, inboundTxHash: String) async throws {
+        _ = try await api.signed(.init(uuid: uuid, inboundTxHash: inboundTxHash))
     }
 }
 
@@ -257,10 +340,10 @@ private extension PrivateSendService {
         return Route(quote: quote, asset: asset)
     }
 
-    // The one mapping from provider errors to authored reasons, shared by both surfaces that produce
-    // them: the `providerErrors` array of a /v2/rate envelope and the single error body of a failed
-    // /v2/swap. Returns nil when nothing in the errors is recognisable, so each caller can decide its
-    // own fallback (`.noRoute` for an empty rate response, the HTTP status for a failed commit)
+    // The one mapping from provider errors to authored reasons, shared by every surface that produces
+    // them: the `providerErrors` array of a /v3/rate envelope and the single error body of a failed
+    // /v3/preview or /v3/commit. Returns nil when nothing in the errors is recognisable, so each
+    // caller can decide its own fallback (`.noRoute` for an empty rate response, the HTTP status for a failed preview)
     // instead of a second copy of this logic drifting from the first.
     static func reason(providerErrors: [USwapMultiSwapApi.ProviderError]) -> PrivateSendUnavailableReason? {
         let minimums = providerErrors
@@ -288,7 +371,7 @@ private extension PrivateSendService {
         }
 
         // An amountOutOfRange that carries no figures (API.txt §4 line 358 shows exactly that shape on
-        // /v2/swap) is still a route-level refusal, and "no private route for this token and amount"
+        // a failed preview) is still a route-level refusal, and "no private route for this token and amount"
         // is honest about it. Anything else is not ours to interpret.
         let routeLevelCodes: Set<String> = ["amountOutOfRange", "routeNotFound"]
         let recognised = providerErrors.contains { providerError in providerError.errorCode.map(routeLevelCodes.contains) ?? false }
@@ -296,7 +379,31 @@ private extension PrivateSendService {
         return recognised ? .noRoute : nil
     }
 
+    static func nonEmpty(_ string: String?) -> String? {
+        string.flatMap { $0.isEmpty ? nil : $0 }
+    }
+
     static func reason(networkError: Error) -> PrivateSendUnavailableReason {
+        // A failed /v3/commit: the server's discriminator first (the price moved / the token is stale),
+        // then the provider refusal it may carry (same fields as a /v3/rate providerError), then the
+        // HTTP status. Anything else is a refusal with no authored reason beyond "could not start".
+        if let commitError = networkError as? USwapMultiSwapApi.CommitError {
+            switch commitError.status {
+            case "rate_changed":
+                return .rateChanged
+            case "refresh_required":
+                return .previewExpired
+            default:
+                break
+            }
+
+            if let providerError = commitError.providerError, let reason = reason(providerErrors: [providerError]) {
+                return reason
+            }
+
+            return commitError.httpStatus == 503 ? .providerSuspended : .commitRejected
+        }
+
         guard let responseError = networkError as? NetworkManager.ResponseError else {
             // No HTTP response at all: a transport failure.
             return .networkError(networkError)
@@ -306,8 +413,8 @@ private extension PrivateSendService {
             return .providerSuspended
         }
 
-        // A failed /v2/swap answers with the provider error as its body, carrying the same
-        // minimumAmount / maximumAmount / errorCode fields /v2/rate reports in `providerErrors`. Only
+        // A failed /v3/preview answers with the provider error as its body, carrying the same
+        // minimumAmount / maximumAmount / errorCode fields /v3/rate reports in `providerErrors`. Only
         // those parsed fields are read — the body itself is never interpolated into anything the user
         // sees, because `NetworkManager.ResponseError.errorDescription` *is* the pretty-printed body.
         if let providerError = USwapMultiSwapApi.providerError(networkError: networkError),

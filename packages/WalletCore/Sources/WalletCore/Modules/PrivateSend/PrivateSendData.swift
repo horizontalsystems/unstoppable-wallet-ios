@@ -4,22 +4,24 @@ import MarketKit
 // `open`, not `final`: every veto below is identical on both platforms and is written once here,
 // while `sections(...)` is the seam each app re-authors in its own SendField idiom.
 open class PrivateSendData: ISendData {
-    // A committed quote is only honoured for this long. Past it the screen dead-ends rather than
-    // pretending to be current — the sellAmount ceiling is what the slide-to-send authorizes.
+    // How long a preview is shown before it is silently re-requested. The preview has no side
+    // effects, so a refresh costs nothing; the order is created only when the user slides.
     public static let quoteLifetime: TimeInterval = 15
 
-    public let order: PrivateSendOrder
+    public let preview: PrivateSendPreview
+    // The inner send estimated against the preview's stub deposit address: it supplies the network
+    // fee rows and the balance vetoes. The one that is broadcast is rebuilt at send time against the
+    // committed deposit address, with the same `transactionSettings`.
     public let inner: ISendData
-    // The handler that produced `inner`, carried here deliberately rather than read back off
-    // PrivateSendHandler at send time: two overlapping sendData(...) calls each prepare their own
-    // handler/data pair, and broadcasting through the wrong one would send a transaction built
-    // against different TransactionSettings than the user confirmed. Never rendered.
-    public let innerHandler: ISendHandler
+    // The settings the inner send was estimated with, captured so the send-time rebuild against the
+    // real deposit address is priced exactly as the user confirmed it. The handler that produced
+    // `inner` is not carried: the one that broadcasts is resolved afresh at send time.
+    public let transactionSettings: TransactionSettings?
 
-    public init(order: PrivateSendOrder, inner: ISendData, innerHandler: ISendHandler) {
-        self.order = order
+    public init(preview: PrivateSendPreview, inner: ISendData, transactionSettings: TransactionSettings?) {
+        self.preview = preview
         self.inner = inner
-        self.innerHandler = innerHandler
+        self.transactionSettings = transactionSettings
     }
 
     public var feeData: FeeData? {
@@ -27,7 +29,7 @@ open class PrivateSendData: ISendData {
     }
 
     public var rateCoins: [Coin] {
-        inner.rateCoins + [order.request.token.coin]
+        inner.rateCoins + [preview.request.token.coin]
     }
 
     public var amountAdjusted: Bool {
@@ -50,30 +52,30 @@ open class PrivateSendData: ISendData {
     }
 
     open func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
-        let token = order.request.token
+        let token = preview.request.token
         let rate = rates[token.coin.uid]
 
         let amount = SendField.amount(
             token: token,
-            appValueType: .regular(appValue: AppValue(token: token, value: order.amountOut)),
-            currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * order.amountOut) }
+            appValueType: .regular(appValue: AppValue(token: token, value: preview.amountOut)),
+            currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * preview.amountOut) }
         )
 
         let to = SendField.address(
-            value: order.request.recipient,
+            value: preview.request.recipient,
             blockchainType: token.blockchainType
         )
 
         var fields: [SendField] = inner.fields(baseToken: baseToken, currency: currency, rates: rates)
 
-        if let estimatedTime = order.estimatedTime {
+        if let estimatedTime = preview.estimatedTime {
             fields.append(.simpleValue(
                 title: "private_send.estimated_time".localized,
                 value: Duration.seconds(estimatedTime).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
             ))
         }
 
-        if let buffer = order.refundableBuffer, buffer > 0 {
+        if let buffer = preview.refundableBuffer, buffer > 0 {
             fields.append(feeField(
                 title: "private_send.reserved_amount".localized,
                 info: InfoDescription(title: "private_send.reserved_amount".localized, description: "private_send.reserved_amount.info".localized),
@@ -88,7 +90,7 @@ open class PrivateSendData: ISendData {
         fields.append(feeField(
             title: "private_send.fee".localized,
             info: InfoDescription(title: "private_send.fee".localized, description: "private_send.fee.info".localized),
-            value: order.privateFee,
+            value: preview.privateFee,
             token: token,
             currency: currency,
             rate: rate
