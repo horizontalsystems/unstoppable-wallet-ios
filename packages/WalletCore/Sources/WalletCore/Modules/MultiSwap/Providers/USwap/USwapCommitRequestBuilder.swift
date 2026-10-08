@@ -6,6 +6,7 @@ public final class USwapCommitRequestBuilder {
     private struct DestinationCacheKey: Hashable {
         let accountId: String
         let blockchainType: BlockchainType
+        let shielded: Bool
     }
 
     private let providerId: String
@@ -18,7 +19,8 @@ public final class USwapCommitRequestBuilder {
             token.blockchain.type.isEvm ||
                 token.blockchainType == .tron ||
                 token.blockchainType == .ton ||
-                token.blockchainType == .solana
+                token.blockchainType == .solana ||
+                token.blockchainType == .zcash
         }
     ) {
         self.providerId = providerId
@@ -88,12 +90,20 @@ public final class USwapCommitRequestBuilder {
             return recipient
         }
 
+        // A ZEC output goes to the wallet's unified address when the provider can deliver to a
+        // shielded receiver (published per provider by /v3/providers); transparent otherwise.
+        let shielded = token.blockchainType == .zcash && Core.shared.swapProviderManager.deliversShieldedZcash(providerId: providerId)
+
         let cacheKey = Core.shared.accountManager.activeAccount.map {
-            DestinationCacheKey(accountId: $0.id, blockchainType: token.blockchainType)
+            DestinationCacheKey(accountId: $0.id, blockchainType: token.blockchainType, shielded: shielded)
         }
         let temporary = cacheKey.flatMap { temporaryDestinationAddresses[$0] }
             .map { DestinationHelper.Destination(address: $0, type: .nonExisting) }
-        let resolved = try await DestinationHelper.resolveDestination(token: token, temporary: temporary)
+        let resolved = if shielded {
+            try await DestinationHelper.resolveDestinationUnified(token: token, temporary: temporary)
+        } else {
+            try await DestinationHelper.resolveDestination(token: token, temporary: temporary)
+        }
 
         if resolved.type == .nonExisting, let cacheKey {
             temporaryDestinationAddresses[cacheKey] = resolved.address
@@ -107,11 +117,21 @@ public final class USwapCommitRequestBuilder {
             return nil
         }
 
-        return try await DestinationHelper.resolveDestination(token: token).address
+        return try await Self.ownAddress(token: token)
     }
 
     func refundAddress(token: Token) async throws -> String? {
-        try await DestinationHelper.resolveDestination(token: token).address
+        try await Self.ownAddress(token: token)
+    }
+
+    // The wallet's own address on the sell chain. For Zcash it is the unified address: it lets a
+    // provider read a long memo from the source and refund to the shielded pool.
+    private static func ownAddress(token: Token) async throws -> String {
+        if token.blockchainType == .zcash {
+            return try await DestinationHelper.resolveDestinationUnified(token: token).address
+        }
+
+        return try await DestinationHelper.resolveDestination(token: token).address
     }
 
     func chainId(token: Token) -> String? {

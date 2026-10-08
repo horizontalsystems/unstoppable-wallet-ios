@@ -33,6 +33,7 @@ public class LocalStorage {
     private let keySwapRecentTokenQueryIds = "swap-recent-token-query-ids"
     private let keyUSwapProviders = "uswap-providers"
     private let keyUSwapSuspensions = "uswap-suspensions"
+    private let keyUSwapExecutionTypes = "uswap-execution-types"
     private let keySwapEnabled = "swap_enabled"
     private let keyAppStateLastSyncTimestamp = "app-state-last-sync-timestamp"
     private let keyForceEnableSwap = "force-enable-swap"
@@ -221,6 +222,13 @@ extension LocalStorage {
     var uSwapSuspensions: String? {
         get { userDefaultsStorage.value(for: keyUSwapSuspensions) }
         set { userDefaultsStorage.set(value: newValue, for: keyUSwapSuspensions) }
+    }
+
+    // Per-provider executionType (JSON, provider id -> string). Cached alongside the provider list
+    // so a cold launch keeps shielded ZEC delivery decisions until the next sync.
+    var uSwapExecutionTypes: String? {
+        get { userDefaultsStorage.value(for: keyUSwapExecutionTypes) }
+        set { userDefaultsStorage.set(value: newValue, for: keyUSwapExecutionTypes) }
     }
 
     var swapEnabled: Bool {

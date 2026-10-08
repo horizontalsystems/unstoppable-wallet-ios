@@ -33,9 +33,10 @@ struct MultiSwapExternalRecipientView: View {
                         onProceed(resolvedAddress.address)
                         isPresented = false
                     }
-                    // The provider is not chosen yet at this step, and only Maya delivers ZEC
-                    // to shielded/unified receivers — every provider accepts transparent, so
-                    // an external ZEC recipient is restricted to transparent addresses.
+                    // The provider is not chosen yet at this step, and only vault-settled
+                    // (thorchain_deposit) providers deliver ZEC to shielded/unified receivers —
+                    // every provider accepts transparent, so an external ZEC recipient is
+                    // restricted to transparent addresses.
                     .environment(\.addressParserFilter, token.blockchainType == .zcash ? .zCashTransparentOnly : nil)
                 }
             }

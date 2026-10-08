@@ -7,6 +7,8 @@ import ThorChainKit
 // MsgDeposit of the sell amount carrying the memo; only when the server names an inbound vault
 // is it a bank send to that vault, carrying the memo.
 final class USwapThorChainFinalQuoteBuilder: USwapFinalQuoteBuilder {
+    private static let cosmosMemoDeliveryKind = "cosmos_memo"
+
     private let adapterManager: AdapterManager
 
     init(adapterManager: AdapterManager) {
@@ -20,8 +22,14 @@ final class USwapThorChainFinalQuoteBuilder: USwapFinalQuoteBuilder {
     func build(input: USwapFinalQuoteFactory.Input) async throws -> SwapFinalQuote {
         // Only a thorchain_deposit route is executable on these chains; the memo was validated by
         // USwapMultiSwapProvider before the builder runs.
-        guard case let .thorchainDeposit(_, inboundAddress, memo, _) = input.response.execution else {
+        guard case let .thorchainDeposit(_, inboundAddress, memo, delivery) = input.response.execution else {
             throw USwapMultiSwapProvider.SwapError.noTransactionData
+        }
+
+        // A cosmos_memo route is a MsgDeposit on the chain itself and names no vault. A vault
+        // address alongside it contradicts the route, so nothing is sent to it.
+        if delivery.kind == Self.cosmosMemoDeliveryKind, !inboundAddress.isEmpty {
+            throw USwapMultiSwapProvider.SwapError.invalidTransactionData
         }
 
         let network: ThorChainKit.Network = input.tokenIn.blockchainType == .mayaChain ? .mayaMainnet : .mainnet

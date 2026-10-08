@@ -105,10 +105,12 @@ extension MultiSwapSendHandler: ISendHandler {
                     return
                 }
 
-                // Only Maya delivers ZEC to shielded/unified receivers — every other provider
-                // needs a transparent recipient (CEX routes reject shielded ones at order
-                // creation), matching the restriction on the pre-confirmation recipient page.
-                let parserFilter: AddressParserFactory.ParserFilter? = tokenOut.blockchainType == .zcash && !(provider is MayaMultiSwapProvider) ? .zCashTransparentOnly : nil
+                // Only vault-settled providers (per their /v3/providers executionType) deliver ZEC to
+                // shielded/unified receivers — every other provider needs a transparent recipient
+                // (CEX routes reject shielded ones at order creation), matching the restriction on
+                // the pre-confirmation recipient page.
+                let deliversShielded = Core.shared.swapProviderManager.deliversShieldedZcash(providerId: provider.id)
+                let parserFilter: AddressParserFactory.ParserFilter? = tokenOut.blockchainType == .zcash && !deliversShielded ? .zCashTransparentOnly : nil
 
                 Coordinator.shared.present { _ in
                     MultiSwapRecipientView(address: self.recipient, token: self.tokenOut, allowRemoval: !self.recipientRequired, parserFilter: parserFilter) { [weak self] recipient in

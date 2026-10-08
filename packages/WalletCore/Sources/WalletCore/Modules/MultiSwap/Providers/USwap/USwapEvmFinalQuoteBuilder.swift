@@ -38,6 +38,21 @@ final class USwapEvmFinalQuoteBuilder: USwapFinalQuoteBuilder {
                 throw USwapMultiSwapProvider.SwapError.invalidTransactionData
             }
 
+            // A vault deposit must reach the vault: either the router's `depositWithExpiry` (native
+            // and ERC-20 sells alike) or the inbound vault itself. Router, vault and `to` all come
+            // from the same server response, so this is a consistency check against server bugs,
+            // not a defence against a hostile server; the calldata (vault, amount, memo) is not
+            // decoded.
+            if case let .thorchainDeposit(_, inboundAddress, _, delivery) = input.response.execution {
+                let allowed = [delivery.router, inboundAddress]
+                    .compactMap { $0?.lowercased() }
+                    .filter { !$0.isEmpty }
+
+                guard allowed.contains(to.lowercased()) else {
+                    throw USwapMultiSwapProvider.SwapError.invalidTransactionData
+                }
+            }
+
             // An absent `value` is 0 (ERC-20 calldata txs legitimately omit it); a present one must parse.
             let value: BigUInt
             if let rawValue = jsonObject["value"], !(rawValue is NSNull) {

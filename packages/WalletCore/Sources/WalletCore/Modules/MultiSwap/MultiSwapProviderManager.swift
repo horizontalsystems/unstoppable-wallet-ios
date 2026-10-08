@@ -5,6 +5,8 @@ import HsToolKit
 import ObjectMapper
 
 class MultiSwapProviderManager {
+    private static let vaultExecutionType = "thorchain_deposit"
+
     private let expiration: TimeInterval = 60 * 60
 
     private let localStorage: LocalStorage
@@ -17,6 +19,12 @@ class MultiSwapProviderManager {
     /// Scoped asset/chain/pair suspensions, indexed by provider id. Applied by `MultiSwapViewModel`
     /// when it decides which providers can serve the current pair.
     @PostPublished private(set) var suspensions = SwapSuspensionIndex()
+    /// `executionType` per provider id, as published by `/v3/providers`. Route capabilities that
+    /// depend on how a provider settles (e.g. shielded ZEC delivery) are read from here, never
+    /// from a provider id. Written on the main actor but read from swap builders off it, so every
+    /// access goes through `executionTypesLock`.
+    private var _executionTypes = [String: String]()
+    private let executionTypesLock = NSLock()
 
     init(localStorage: LocalStorage, networkManager: NetworkManager, apiKey: String?) {
         self.localStorage = localStorage
@@ -34,13 +42,14 @@ class MultiSwapProviderManager {
         }
 
         let hadSuspensions = restoreSuspensions()
+        let hadExecutionTypes = restoreExecutionTypes()
 
-        // Force a fetch when suspensions have never been stored, even if the provider list is still
-        // within its TTL. Upgrading from a build that predates suspensions leaves a FRESH
-        // `swap-providers-last-sync-timestamp` beside an empty suspension cache, so the ordinary
-        // TTL check would skip the sync and leave the first hour after the update completely
-        // unenforced — precisely the window where a live suspension matters.
-        sync(force: !hadSuspensions)
+        // Force a fetch when suspensions or execution types have never been stored, even if the
+        // provider list is still within its TTL. Upgrading from a build that predates them leaves a
+        // FRESH `swap-providers-last-sync-timestamp` beside an empty cache, so the ordinary TTL check
+        // would skip the sync and leave the first hour after the update unenforced (suspensions) or
+        // without shielded ZEC delivery (execution types).
+        sync(force: !hadSuspensions || !hadExecutionTypes)
     }
 
     /// Used only until the first successful `/providers` response — a fresh install needs SOMETHING
@@ -92,6 +101,42 @@ class MultiSwapProviderManager {
 
         suspensions = SwapSuspensionIndex(byProvider: byProvider)
         return true
+    }
+
+    private func syncExecutionTypes(responses: [ProviderResponse]) {
+        var byProvider = [String: String]()
+
+        for response in responses {
+            if let executionType = response.executionType, !executionType.isEmpty {
+                byProvider[response.provider] = executionType
+            }
+        }
+
+        executionTypesLock.withLock { _executionTypes = byProvider }
+
+        if let data = try? JSONSerialization.data(withJSONObject: byProvider) {
+            localStorage.uSwapExecutionTypes = String(data: data, encoding: .utf8)
+        }
+    }
+
+    /// Returns whether a stored cache was found; an empty map still round-trips as `{}`.
+    private func restoreExecutionTypes() -> Bool {
+        guard let raw = localStorage.uSwapExecutionTypes, let data = raw.data(using: .utf8),
+              let json = (try? JSONSerialization.jsonObject(with: data)) as? [String: String]
+        else {
+            return false
+        }
+
+        executionTypesLock.withLock { _executionTypes = json }
+        return true
+    }
+
+    /// Whether a provider can pay a ZEC output to a shielded / unified receiver. Vault-settled
+    /// (thorchain_deposit) providers deliver from their own ZEC client, which addresses unified
+    /// receivers; transfer venues reject shielded recipients at order creation. Read from
+    /// /v3/providers so the server, not the app, decides per provider. Safe to call off-main.
+    func deliversShieldedZcash(providerId: String) -> Bool {
+        executionTypesLock.withLock { _executionTypes[providerId] } == Self.vaultExecutionType
     }
 
     private static func encode(byProvider: [String: [SwapSuspension]]) -> String? {
@@ -149,6 +194,7 @@ class MultiSwapProviderManager {
         // Suspensions FIRST. `providers` is the signal the view model subscribes to, so everything
         // it will read must already be in place by the time that assignment publishes.
         syncSuspensions(responses: responses)
+        syncExecutionTypes(responses: responses)
         syncProviders(uSwapProviders: ids)
 
         localStorage.uSwapProviders = ids.joined(separator: ",")
@@ -166,12 +212,15 @@ extension MultiSwapProviderManager {
         /// including suspension, is managed in one place.
         let quotes: Bool
         let suspensions: [SwapSuspension]
+        /// How the provider settles (`thorchain_deposit`, `signed_transaction`, ...).
+        let executionType: String?
 
         init(map: Map) throws {
             provider = try map.value("provider")
             suspended = (try? map.value("suspended")) ?? false
             quotes = (try? map.value("quotes")) ?? true
             suspensions = (try? map.value("suspensions")) ?? []
+            executionType = try? map.value("executionType")
         }
     }
 }
