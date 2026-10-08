@@ -1,5 +1,6 @@
 import Foundation
 import HsToolKit
+import MarketKit
 
 public protocol ISwapProviderResolver {
     static func providerInfo(id: String) -> USwapProviderInfo?
@@ -64,8 +65,6 @@ public class SwapProviderFactory {
         }
 
         let names: [String: String] = [
-            ThorChainMultiSwapProvider.id: ThorChainMultiSwapProvider.name,
-            MayaMultiSwapProvider.id: MayaMultiSwapProvider.name,
             AllBridgeMultiSwapProvider.id: AllBridgeMultiSwapProvider.name,
             UniswapV3MultiSwapProvider.id: UniswapV3MultiSwapProvider.name,
             PancakeV3MultiSwapProvider.id: PancakeV3MultiSwapProvider.name,
@@ -108,6 +107,8 @@ public enum SwapProviderResolver: ISwapProviderResolver {
             defaultUSwapEntry(info: .cce),
             barterUSwapEntry(info: .barter),
             oneInchUSwapEntry(info: .oneInch),
+            thorChainUSwapEntry(info: .thorChain),
+            thorChainUSwapEntry(info: .maya),
             defaultUSwapEntry(info: .pegasus),
             defaultUSwapEntry(info: .circle),
             jupiterUSwapEntry(info: .jupiter),
@@ -164,6 +165,10 @@ public enum SwapProviderResolver: ISwapProviderResolver {
 
     private static func axelarUSwapEntry(info: USwapProviderInfo) -> Entry {
         Entry(info: info, makeProvider: { axelarUSwapProvider(info: info) })
+    }
+
+    private static func thorChainUSwapEntry(info: USwapProviderInfo) -> Entry {
+        Entry(info: info, makeProvider: { thorChainUSwapProvider(info: info) })
     }
 
     private static func defaultUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
@@ -290,6 +295,36 @@ public enum SwapProviderResolver: ISwapProviderResolver {
         return uSwapProvider(subProvider: subProvider)
     }
 
+    // Shared by every vault-deposit (thorchain_deposit) provider: the token list served for the
+    // provider id, not the code, tells them apart.
+    private static func thorChainUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
+        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
+        let subProvider = DefaultUSwapSubProvider(
+            info: info,
+            api: api,
+            assetRepository: USwapAssetRepository(
+                providerId: info.id,
+                api: api,
+                storage: Core.shared.swapAssetStorage
+            ),
+            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
+            tracker: uSwapTracker(api: api),
+            supportsSourceToken: supportsThorChainDeposit
+        )
+
+        return uSwapProvider(subProvider: subProvider)
+    }
+
+    // A vault deposit needs the swap memo to reach the vault. The app can carry it on chains
+    // whose memo is public on-chain (UTXO OP_RETURN, THORChain/Maya memo), inside a server-built
+    // EVM transaction (calldata / router call), or through a vault's shielded memo address on
+    // Zcash. Solana, Tron and XRP deposits built here carry no text memo, so they are not offered
+    // as a sell side even though the server lists them.
+    private static func supportsThorChainDeposit(token: Token) -> Bool {
+        let blockchainType = token.blockchainType
+        return blockchainType.isEvm || blockchainType == .zcash || blockchainType.memoType == .onChainPublic
+    }
+
     private static func stellarSwapProvider() -> IMultiSwapProvider {
         let api = uSwapApi(networkManager: NetworkManager(logger: nil))
 
@@ -352,6 +387,7 @@ public enum SwapProviderResolver: ISwapProviderResolver {
                 USwapZanoFinalQuoteBuilder(adapterManager: adapterManager),
                 USwapSolanaFinalQuoteBuilder(adapterManager: adapterManager, solanaKitManager: Core.shared.solanaKitManager),
                 USwapXrpFinalQuoteBuilder(adapterManager: adapterManager),
+                USwapThorChainFinalQuoteBuilder(adapterManager: adapterManager),
             ]
         )
     }
@@ -374,18 +410,6 @@ public enum SwapProviderResolver: ISwapProviderResolver {
     }
 
     public static func provider(id: String) -> IMultiSwapProvider? {
-        if id == ThorChainMultiSwapProvider.id {
-            return ThorChainMultiSwapProvider(
-                tracker: uSwapTracker(networkManager: Core.shared.networkManager)
-            )
-        }
-
-        if id == MayaMultiSwapProvider.id {
-            return MayaMultiSwapProvider(
-                tracker: uSwapTracker(networkManager: Core.shared.networkManager)
-            )
-        }
-
         if id == AllBridgeMultiSwapProvider.id {
             return AllBridgeMultiSwapProvider()
         }

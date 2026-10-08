@@ -16,32 +16,6 @@ public final class LifiUSwapSubProvider: DefaultUSwapSubProvider {
         .arc: "ARC",
     ]
 
-    private let supportsSourceToken: (Token) -> Bool
-
-    public init(
-        info: USwapProviderInfo,
-        api: USwapMultiSwapApi,
-        assetRepository: USwapAssetRepository?,
-        commitRequestBuilder: USwapCommitRequestBuilder,
-        tracker: USwapTracker,
-        supportsSourceToken: @escaping (Token) -> Bool = { _ in true }
-    ) {
-        self.supportsSourceToken = supportsSourceToken
-
-        super.init(
-            info: info,
-            api: api,
-            assetRepository: assetRepository,
-            commitRequestBuilder: commitRequestBuilder,
-            tracker: tracker
-        )
-    }
-
-    override public func supports(tokenIn: Token, tokenOut: Token) -> Bool {
-        supportsSourceToken(tokenIn)
-            && super.supports(tokenIn: tokenIn, tokenOut: tokenOut)
-    }
-
     override func asset(token: Token) -> String? {
         if token.blockchainType == .solana {
             switch token.type {

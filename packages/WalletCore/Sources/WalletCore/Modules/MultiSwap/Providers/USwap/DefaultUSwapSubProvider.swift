@@ -9,19 +9,24 @@ public class DefaultUSwapSubProvider: USwapSubProvider {
     private let assetRepository: USwapAssetRepository?
     let commitRequestBuilder: USwapCommitRequestBuilder
     private let tracker: USwapTracker
+    // Sell-side capability hook: lets an entry exclude source tokens it cannot execute
+    // (e.g. chains whose deposit cannot carry the route's memo) even when the server lists them.
+    private let supportsSourceToken: (Token) -> Bool
 
     public init(
         info: USwapProviderInfo,
         api: USwapMultiSwapApi,
         assetRepository: USwapAssetRepository?,
         commitRequestBuilder: USwapCommitRequestBuilder,
-        tracker: USwapTracker
+        tracker: USwapTracker,
+        supportsSourceToken: @escaping (Token) -> Bool = { _ in true }
     ) {
         self.info = info
         self.api = api
         self.assetRepository = assetRepository
         self.commitRequestBuilder = commitRequestBuilder
         self.tracker = tracker
+        self.supportsSourceToken = supportsSourceToken
     }
 
     public var syncPublisher: AnyPublisher<Void, Never>? {
@@ -33,7 +38,7 @@ public class DefaultUSwapSubProvider: USwapSubProvider {
     }
 
     public func supports(tokenIn: Token, tokenOut: Token) -> Bool {
-        asset(token: tokenIn) != nil && asset(token: tokenOut) != nil
+        supportsSourceToken(tokenIn) && asset(token: tokenIn) != nil && asset(token: tokenOut) != nil
     }
 
     public func rate(input: USwapRateInput) async throws -> USwapRateResult {

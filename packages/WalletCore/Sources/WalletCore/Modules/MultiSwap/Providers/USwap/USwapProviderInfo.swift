@@ -143,6 +143,22 @@ public extension USwapProviderInfo {
         requireTerms: true
     )
 
+    static let thorChain = USwapProviderInfo(
+        id: "THORCHAIN",
+        name: "THORChain",
+        icon: "swap_provider_thorchain",
+        type: .excellent,
+        requireTerms: true
+    )
+
+    static let maya = USwapProviderInfo(
+        id: "MAYACHAIN",
+        name: "Maya Protocol",
+        icon: "swap_provider_maya",
+        type: .excellent,
+        requireTerms: true
+    )
+
     static let axelarIts = USwapProviderInfo(
         id: "AXELAR_ITS",
         name: "Axelar ITS",

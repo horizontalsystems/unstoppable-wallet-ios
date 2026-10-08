@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MarketKit
+import ThorChainKit
 
 public final class USwapAssetRepository {
     public static let blockchainTypeMap: [String: BlockchainType] = [
@@ -29,6 +30,8 @@ public final class USwapAssetRepository {
         "stellar": .stellar,
         "ripple": .xrp,
         "zano": .zano,
+        "thorchain-1": .thorChain,
+        "mayachain-mainnet-v1": .mayaChain,
     ]
 
     private static let expiration: TimeInterval = 60 * 60
@@ -178,6 +181,7 @@ extension USwapAssetRepository {
 
             for tokenQuery in tokenQueries(
                 blockchainType: blockchainType,
+                identifier: token.identifier,
                 address: token.address,
                 ticker: token.ticker
             ) {
@@ -190,7 +194,7 @@ extension USwapAssetRepository {
 }
 
 private extension USwapAssetRepository {
-    static func tokenQueries(blockchainType: BlockchainType, address: String?, ticker: String?) -> [TokenQuery] {
+    static func tokenQueries(blockchainType: BlockchainType, identifier: String, address: String?, ticker: String?) -> [TokenQuery] {
         switch blockchainType {
         case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .tron, .base, .zkSync, .robinhood, .arc:
             let tokenType: TokenType
@@ -265,6 +269,26 @@ private extension USwapAssetRepository {
             return supportedDerivations.map {
                 TokenQuery(blockchainType: .litecoin, tokenType: .derived(derivation: $0))
             }
+
+        case .thorChain:
+            // THORChain-chain entries carry no address: the identifier IS the asset notation
+            // (THOR.RUNE, THOR.TCY, THOR.RUJI, or a secured asset such as BTC-BTC / ETH-USDC-0X…).
+            // The bank denom follows ThorChainKit's rules: "rune" is the native coin, everything
+            // else is a thorChainAsset token ("tcy", "x/ruji", "btc-btc", "eth-usdc-0xa0b8…").
+            guard let asset = try? ThorChainKit.Asset(notation: identifier) else {
+                return []
+            }
+
+            let denom = ThorChainKit.Denom.denom(for: asset)
+            return [TokenQuery(blockchainType: .thorChain, tokenType: denom == "rune" ? .native : .thorChainAsset(denom: denom))]
+
+        case .mayaChain:
+            // Only the settlement coin is served (MAYA.CACAO); Maya lists no secured assets.
+            guard let asset = try? ThorChainKit.Asset(notation: identifier), asset == .cacao else {
+                return []
+            }
+
+            return blockchainType.nativeTokenQueries
 
         default:
             return []

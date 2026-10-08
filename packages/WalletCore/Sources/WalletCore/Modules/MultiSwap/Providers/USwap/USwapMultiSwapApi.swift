@@ -859,6 +859,9 @@ public extension USwapMultiSwapApi {
         case signedTransaction(chain: String, transactions: [SignableTx], approval: Approval?)
         // `amount` and `unsignedTx` are kept for parsing fidelity only: a transfer is always built locally with the previewed amount and is never built or signed from them.
         case transfer(chain: String, depositAddress: String, amount: Decimal?, attachment: Attachment?, unsignedTx: SignableTx?)
+        // `inboundAddress` is empty when the server names no vault (a settlement-native sell such as
+        // RUNE / CACAO / a secured asset, `delivery.kind == "cosmos_memo"`): it is then a MsgDeposit
+        // carrying the memo, with no deposit address to display or send to.
         case thorchainDeposit(chain: String, inboundAddress: String, memo: String, delivery: Delivery)
         case stellarBroker(StellarBrokerParams)
 
@@ -883,7 +886,7 @@ public extension USwapMultiSwapApi {
             switch self {
             case .signedTransaction: nil
             case let .transfer(_, depositAddress, _, _, _): depositAddress
-            case let .thorchainDeposit(_, inboundAddress, _, _): inboundAddress
+            case let .thorchainDeposit(_, inboundAddress, _, _): inboundAddress.isEmpty ? nil : inboundAddress
             case .stellarBroker: nil
             }
         }
@@ -902,7 +905,8 @@ public extension USwapMultiSwapApi {
             case let .transfer(_, depositAddress, _, attachment, _):
                 return (depositAddress, attachment)
             case let .thorchainDeposit(_, inboundAddress, memo, _):
-                return (inboundAddress, .text(memo))
+                // no vault: a MsgDeposit has no deposit address
+                return inboundAddress.isEmpty ? nil : (inboundAddress, .text(memo))
             case .signedTransaction, .stellarBroker:
                 return nil
             }
@@ -1393,7 +1397,8 @@ extension USwapMultiSwapApi {
             case "thorchain_deposit":
                 self = try .thorchainDeposit(
                     chain: map.value("chain"),
-                    inboundAddress: map.value("inboundAddress"),
+                    // absent for a settlement-native sell (`delivery.kind == "cosmos_memo"`)
+                    inboundAddress: (try? map.value("inboundAddress")) ?? "",
                     memo: map.value("memo"),
                     delivery: map.value("delivery")
                 )

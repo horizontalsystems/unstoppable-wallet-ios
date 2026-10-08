@@ -54,8 +54,6 @@ class MultiSwapProviderManager {
     private static let bootstrapProviders = [
         UniswapV3MultiSwapProvider.id,
         PancakeV3MultiSwapProvider.id,
-        ThorChainMultiSwapProvider.id,
-        MayaMultiSwapProvider.id,
     ]
 
     private func syncProviders(uSwapProviders: [String]) {
