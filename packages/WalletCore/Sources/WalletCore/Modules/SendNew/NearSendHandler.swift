@@ -34,25 +34,42 @@ extension NearSendHandler: ISendHandler {
     }
 
     func sendData(transactionSettings _: TransactionSettings?) async throws -> ISendData {
-        let estimation = await NearSendHelper.estimation(
-            adapter: adapter, token: token, amount: amount, address: address, memo: memo,
-            tokenBalance: adapter.balanceData.available
-        )
+        var amount = amount
+        var result = await estimation(amount: amount)
+
+        // "Max" sends the whole spendable balance, as on most chains (Tron, EVM, Solana): once the
+        // receiver's estimate is known, the amount becomes the balance net of what this transfer
+        // needs up front, far less for a named or existing account than for a new one (Android
+        // `SendTransactionServiceNear.maxSendableAmount`)
+        if token.type.isNative, amount == adapter.availableNear, let estimate = result.estimate {
+            let maxAmount = adapter.availableNear - (estimate.requiredNear - amount)
+            if maxAmount > 0, maxAmount != amount {
+                amount = maxAmount
+                result = await estimation(amount: amount)
+            }
+        }
 
         return SendData(
             token: token,
             amount: amount,
             address: address,
             memo: memo,
-            estimate: estimation.estimate,
-            fee: estimation.estimate?.fee ?? adapter.fee,
-            transactionError: estimation.transactionError,
+            estimate: result.estimate,
+            fee: result.estimate?.fee ?? adapter.fee,
+            transactionError: result.transactionError,
             previousTransactionPending: !adapter.pendingTransactionHashes.isEmpty
         )
     }
 
     func send(data: ISendData) async throws {
         _ = try await sendCapturingRef(data: data)
+    }
+
+    private func estimation(amount: Decimal) async -> NearSendHelper.Estimation {
+        await NearSendHelper.estimation(
+            adapter: adapter, token: token, amount: amount, address: address, memo: memo,
+            tokenBalance: adapter.balanceData.available
+        )
     }
 }
 

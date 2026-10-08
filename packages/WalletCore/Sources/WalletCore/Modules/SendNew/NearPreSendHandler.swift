@@ -49,7 +49,7 @@ class NearPreSendHandler: PreSendHandler {
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe { [weak self] _ in
                 guard let self else { return }
-                balanceSubject.send(adapter.maxSendableBalance)
+                balanceSubject.send(adapter.balanceData.available)
             }
             .disposed(by: disposeBag)
 
@@ -115,10 +115,10 @@ extension NearPreSendHandler: IPreSendHandler {
         stateSubject.eraseToAnyPublisher()
     }
 
-    // NEAR keeps back the balance a transfer to any receiver needs (Android `maxSendableBalance`);
-    // a token is not reduced, its fee is paid in NEAR
+    // the whole spendable balance, as most chains: for NEAR the confirmation takes out what the
+    // transfer to the actual receiver needs (NearSendHandler); a token's fee is paid in NEAR
     var balance: Decimal {
-        adapter.maxSendableBalance
+        adapter.balanceData.available
     }
 
     var balancePublisher: AnyPublisher<Decimal, Never> {

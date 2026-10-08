@@ -125,11 +125,10 @@ struct NearRecipientCheckTests {
         #expect(try USwapMultiSwapApi.Attachment.memo(nil, memoType: BlockchainType.near.memoType) == nil)
     }
 
-    // "send max" keeps back what a transfer to a new implicit account needs
-    @Test func spendableNearIsTheMaxSendableBalance() {
+    // the whole spendable balance is offered, as on most chains; the confirmation takes out what the transfer needs
+    @Test func wholeSpendableBalanceIsOffered() {
         let adapter = StubSendNearAdapter(exists: true)
-        #expect(Self.handler(adapter: adapter, address: nil).balance == adapter.maxSendableBalance)
-        #expect(NearAdapter.worstCaseTransferRequired == Decimal(string: "0.015349895375")!)
+        #expect(Self.handler(adapter: adapter, address: nil).balance == adapter.balanceData.available)
     }
 }
 
@@ -202,7 +201,6 @@ extension NearRecipientCheckTests {
         let address = NearRecipientCheckTests.ownAddress
         let fee = Decimal(string: "0.0000446")!
         let availableNear: Decimal = 1
-        let maxSendableBalance = 1 - NearAdapter.worstCaseTransferRequired
         let pendingTransactionHashes = Set<String>()
 
         enum LookupError: Error {

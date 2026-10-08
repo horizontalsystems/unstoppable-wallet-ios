@@ -8,8 +8,6 @@ class NearAdapter {
     static let decimals = NearAmount.decimals
     // Android DEFAULT_FEE: a transfer to a named account at the usual gas price, shown until an estimate arrives
     static let defaultFee = Decimal(string: "0.0000446")!
-    // the balance a NEAR transfer to any receiver needs, so "send max" never fails the balance check (Android WORST_CASE_TRANSFER_REQUIRED)
-    static let worstCaseTransferRequired = near(yocto: NearKit.Kit.worstCaseTransferRequired)
 
     let nearKit: NearKit.Kit
     private var cancellables = Set<AnyCancellable>()
@@ -111,10 +109,6 @@ extension NearAdapter: ISendNearAdapter {
 
     var availableNear: Decimal {
         Self.near(yocto: nearKit.availableBalance)
-    }
-
-    var maxSendableBalance: Decimal {
-        max(0, availableNear - Self.worstCaseTransferRequired)
     }
 
     var pendingTransactionHashes: Set<String> {

@@ -169,7 +169,6 @@ protocol ISendNearAdapter {
     var address: String { get }
     var fee: Decimal { get }
     var availableNear: Decimal { get }
-    var maxSendableBalance: Decimal { get }
     var pendingTransactionHashes: Set<String> { get }
     func doesAccountExist(address: String) async throws -> Bool
     func estimate(address: String, amount: Decimal, memo: String?) async throws -> NearSendEstimate

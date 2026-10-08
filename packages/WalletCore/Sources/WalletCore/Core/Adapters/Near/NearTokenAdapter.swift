@@ -104,10 +104,6 @@ extension NearTokenAdapter: ISendNearAdapter {
         NearAdapter.near(yocto: nearKit.availableBalance)
     }
 
-    var maxSendableBalance: Decimal {
-        balanceData.available
-    }
-
     var pendingTransactionHashes: Set<String> {
         Set(((try? nearKit.pendingTransactions()) ?? []).map(\.hash))
     }
