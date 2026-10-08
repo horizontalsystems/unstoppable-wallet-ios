@@ -702,7 +702,6 @@
 "swap.suggested_path.text.part" = "将 %@ 兑换为 %@";
 "swap.enter_amount" = "输入金额";
 "swap.no_quotes" = "没有报价";
-"swap.error.no_memo" = "此路由目前无法确认。请刷新报价或选择其他提供商。";
 "swap.deposit_address" = "充值地址";
 "swap.deposit_memo" = "充值备注";
 "swap.error.invalid_swap_memo" = "兑换备注缺少有效的收款人。";
@@ -840,8 +839,6 @@
 "swap.dex_info.content_allowance" = "当执行令牌交换时，交易所可以代表用户花费的金额。 在进行实际互换交易之前，需要先确定足够的备抵。";
 "swap.dex_info.header_price_impact" = "价格影响";
 "swap.dex_info.content_price_impact" = "预期价格和显示价格的偏差通常会增加互兑金额。";
-
-"swap.maya.shielded_address.error" = "无法获取用于备注（Memo）的屏蔽地址（Maya）。";
 
 // Swap History
 

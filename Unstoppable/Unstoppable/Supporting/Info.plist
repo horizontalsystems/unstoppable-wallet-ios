@@ -151,10 +151,6 @@
 	<string>$(HS_PROVIDER_API_KEY)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	<key>MayaAffiliate</key>
-	<string>${MAYA_AFFILIATE}</string>
-	<key>MayaAffiliateBps</key>
-	<string>${MAYA_AFFILIATE_BPS}</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>googlechrome</string>
@@ -210,10 +206,6 @@
 	<string>${POLYGONSCAN_API_KEYS}</string>
 	<key>SnowtraceApiKeys</key>
 	<string>${SNOWTRACE_API_KEYS}</string>
-	<key>ThorchainAffiliate</key>
-	<string>${THORCHAIN_AFFILIATE}</string>
-	<key>ThorchainAffiliateBps</key>
-	<string>${THORCHAIN_AFFILIATE_BPS}</string>
 	<key>SolanaAlchemyApiKeys</key>
 	<string>${SOLANA_ALCHEMY_API_KEYS}</string>
 	<key>TronGridApiKeys</key>

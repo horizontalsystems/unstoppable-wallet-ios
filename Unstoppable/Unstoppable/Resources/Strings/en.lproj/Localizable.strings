@@ -702,7 +702,6 @@
 "swap.suggested_path.text.part" = "swap %@ to %@";
 "swap.enter_amount" = "Enter Amount";
 "swap.no_quotes" = "No Quotes";
-"swap.error.no_memo" = "This route can’t be confirmed right now. Please refresh the quote or choose another provider.";
 "swap.deposit_address" = "Deposit Address";
 "swap.deposit_memo" = "Deposit Memo";
 "swap.error.invalid_swap_memo" = "The swap memo is missing a valid recipient.";
@@ -840,8 +839,6 @@
 "swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
 "swap.dex_info.header_price_impact" = "Price Impact";
 "swap.dex_info.content_price_impact" = "The expected price deviation from a shown price typically increases with the swap amount.";
-
-"swap.maya.shielded_address.error" = "Can't fetch shielded address for Memo (Maya)";
 
 // Swap History
 

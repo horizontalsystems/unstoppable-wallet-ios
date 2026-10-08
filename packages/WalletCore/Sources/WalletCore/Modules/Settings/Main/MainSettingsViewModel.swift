@@ -74,12 +74,6 @@ class MainSettingsViewModel: ObservableObject {
         }
     }
 
-    @Published var mayaStagenetEnabled: Bool {
-        didSet {
-            testNetManager.set(mayaStagenetEnabled: mayaStagenetEnabled)
-        }
-    }
-
     @Published var emulateZcashMigration: Bool {
         didSet {
             localStorage.emulateZcashMigration = emulateZcashMigration
@@ -108,7 +102,6 @@ class MainSettingsViewModel: ObservableObject {
         simulateFailSwap = localStorage.simulateFailSwap
         emulatePurchase = localStorage.emulatePurchase
         testNetEnabled = testNetManager.testNetEnabled
-        mayaStagenetEnabled = testNetManager.mayaStagenetEnabled
         emulateZcashMigration = localStorage.emulateZcashMigration
         debuggingAmlResult = localStorage.debuggingAmlCheckResult
 

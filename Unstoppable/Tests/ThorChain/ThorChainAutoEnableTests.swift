@@ -1,7 +1,6 @@
 import BigInt
 import Foundation
 import MarketKit
-import ObjectMapper
 import Testing
 import ThorChainKit
 @testable import WalletCore
@@ -9,43 +8,6 @@ import ThorChainKit
 struct ThorChainAutoEnableTests {
     private static let ownAddress = "thor1le9eykyndunax8k24w8fykd8ndx35w2h27c008"
     private static let otherAddress = "thor1g98cy3n9mmjrpn0sxmn63lztelera37n8n67c0"
-
-    // MARK: - Secured asset map entries
-
-    @Test func securedAssetMapsToThorChainAssetKey() throws {
-        let entries = try BaseThorChainMultiSwapProvider.securedAssetMapEntries(
-            securedAssets: [Self.securedAsset("BTC-BTC")]
-        )
-
-        let expectedKey = TokenQuery(blockchainType: .thorChain, tokenType: .thorChainAsset(denom: "btc-btc")).id.lowercased()
-        #expect(entries == [expectedKey: "BTC-BTC"])
-    }
-
-    @Test func securedContractAssetKeepsContractInDenomAndOriginalValue() throws {
-        let notation = "ETH-USDC-0XA0B86991C6218B36C1D19D4A2E9EB0CE3606EB48"
-        let entries = try BaseThorChainMultiSwapProvider.securedAssetMapEntries(
-            securedAssets: [Self.securedAsset(notation)]
-        )
-
-        let expectedKey = TokenQuery(
-            blockchainType: .thorChain,
-            tokenType: .thorChainAsset(denom: "eth-usdc-0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
-        ).id.lowercased()
-        #expect(entries == [expectedKey: notation])
-    }
-
-    @Test func invalidSecuredNotationIsSkipped() throws {
-        let entries = try BaseThorChainMultiSwapProvider.securedAssetMapEntries(
-            securedAssets: [Self.securedAsset("BTCBTC"), Self.securedAsset("AVAX-AVAX")]
-        )
-
-        let expectedKey = TokenQuery(blockchainType: .thorChain, tokenType: .thorChainAsset(denom: "avax-avax")).id.lowercased()
-        #expect(entries == [expectedKey: "AVAX-AVAX"])
-    }
-
-    private static func securedAsset(_ notation: String) throws -> BaseThorChainMultiSwapProvider.SecuredAsset {
-        try BaseThorChainMultiSwapProvider.SecuredAsset(JSONString: "{\"asset\":\"\(notation)\"}")
-    }
 
     // MARK: - Auto-enable queries
 

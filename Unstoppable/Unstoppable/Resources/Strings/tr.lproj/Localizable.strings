@@ -702,7 +702,6 @@
 "swap.suggested_path.text.part" = "%@ varlığını %@ ile takas";
 "swap.enter_amount" = "Miktarı Girin";
 "swap.no_quotes" = "Teklif Yok";
-"swap.error.no_memo" = "Bu rota şu anda onaylanamıyor. Lütfen teklifi yenileyin veya başka bir sağlayıcı seçin.";
 "swap.deposit_address" = "Yatırma Adresi";
 "swap.deposit_memo" = "Yatırma Notu";
 "swap.error.invalid_swap_memo" = "Swap notu geçerli bir alıcı içermiyor.";
@@ -840,8 +839,6 @@
 "swap.dex_info.content_allowance" = "Bir takas işlemi gerçekleştirirken bir borsanın bir kullanıcı adına harcayabileceği miktar. Gerçek bir takas işlemi gerçekleşmeden önce yeterli izin belirleyen bir önceki işlem gereklidir.";
 "swap.dex_info.header_price_impact" = "Fiyat Etkisi";
 "swap.dex_info.content_price_impact" = "Gösterilen bir fiyattan beklenen fiyat sapması tipik olarak takas tutarı ile artar.";
-
-"swap.maya.shielded_address.error" = "Memo (Maya) için shielded adres alınamadı";
 
 // Swap History
 

@@ -33,8 +33,8 @@ final class USwapThorChainFinalQuoteBuilder: USwapFinalQuoteBuilder {
         }
 
         let network: ThorChainKit.Network = input.tokenIn.blockchainType == .mayaChain ? .mayaMainnet : .mainnet
-        // As in BaseThorChainMultiSwapProvider: a settlement-native input (RUNE, CACAO, secured) has
-        // no vault to pay into and takes a MsgDeposit; anything with an inbound address is a transfer.
+        // A settlement-native input (RUNE, CACAO, secured) has no vault to pay into and takes a
+        // MsgDeposit; anything with an inbound address is a transfer.
         let kind: ThorChainExecutable.Kind
         if !inboundAddress.isEmpty {
             kind = try .send(recipient: ThorChainKit.Address(inboundAddress, network: network))

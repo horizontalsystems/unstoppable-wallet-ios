@@ -170,22 +170,6 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "GasFreeApiSecret") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
 
-    static var thorchainAffiliate: String? {
-        (Bundle.main.object(forInfoDictionaryKey: "ThorchainAffiliate") as? String).flatMap { $0.isEmpty ? nil : $0 }
-    }
-
-    static var thorchainAffiliateBps: Int? {
-        (Bundle.main.object(forInfoDictionaryKey: "ThorchainAffiliateBps") as? String).flatMap { $0.isEmpty ? nil : Int($0) }
-    }
-
-    static var mayaAffiliate: String? {
-        (Bundle.main.object(forInfoDictionaryKey: "MayaAffiliate") as? String).flatMap { $0.isEmpty ? nil : $0 }
-    }
-
-    static var mayaAffiliateBps: Int? {
-        (Bundle.main.object(forInfoDictionaryKey: "MayaAffiliateBps") as? String).flatMap { $0.isEmpty ? nil : Int($0) }
-    }
-
     static var uswapApiKey: String? {
         (Bundle.main.object(forInfoDictionaryKey: "USwapApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }

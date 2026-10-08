@@ -702,7 +702,6 @@
 "swap.suggested_path.text.part" = "%@ in %@ tauschen";
 "swap.enter_amount" = "Betrag eingeben";
 "swap.no_quotes" = "Keine Angebote";
-"swap.error.no_memo" = "Diese Route kann derzeit nicht bestätigt werden. Bitte aktualisieren Sie das Angebot oder wählen Sie einen anderen Anbieter.";
 "swap.deposit_address" = "Einzahlungsadresse";
 "swap.deposit_memo" = "Einzahlungs-Memo";
 "swap.error.invalid_swap_memo" = "Das Swap-Memo enthält keinen gültigen Empfänger.";
@@ -840,8 +839,6 @@
 "swap.dex_info.content_allowance" = "Die Menge, die eine Börse im Namen eines Benutzers für Token-Austausche ausgeben kann. Eine vorhergehende Transaktion, die eine ausreichende Zulage festlegt, ist erforderlich, bevor eine tatsächliche Austauschtransaktion stattfinden kann.";
 "swap.dex_info.header_price_impact" = "Preisauswirkungen";
 "swap.dex_info.content_price_impact" = "Erwartete Preisabweichung von einem angezeigten Preis, steigt normalerweise mit dem Tauschbetrag.";
-
-"swap.maya.shielded_address.error" = "Abgeschirmte Adresse für Memo (Maya) kann nicht abgerufen werden";
 
 // Swap History
 

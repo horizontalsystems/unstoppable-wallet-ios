@@ -702,7 +702,6 @@
 "swap.suggested_path.text.part" = "échanger %@ contre %@";
 "swap.enter_amount" = "Entrez le montant";
 "swap.no_quotes" = "Aucun prix disponible";
-"swap.error.no_memo" = "Cet itinéraire ne peut pas être confirmé pour le moment. Veuillez actualiser le devis ou choisir un autre fournisseur.";
 "swap.deposit_address" = "Adresse de dépôt";
 "swap.deposit_memo" = "Mémo de dépôt";
 "swap.error.invalid_swap_memo" = "Le mémo du swap ne contient pas de destinataire valide.";
@@ -840,8 +839,6 @@
 "swap.dex_info.content_allowance" = "La somme qu'une bourse peut dépenser au nom d'un utilisateur lors de l'exécution d'échanges de jetons. Une transaction de procédure établissant une autorisation suffisante est nécessaire avant qu'une transaction d'échange réelle puisse avoir lieu.";
 "swap.dex_info.header_price_impact" = "Impact prix";
 "swap.dex_info.content_price_impact" = "L'écart de prix attendu par rapport à un prix affiché, augmente généralement avec le montant de l\'échange.";
-
-"swap.maya.shielded_address.error" = "Impossible d’obtenir l’adresse protégée pour Memo (Maya)";
 
 // Swap History
 

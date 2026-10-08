@@ -7,9 +7,9 @@ import ObjectMapper
 /// Two kinds of provider need this and for different reasons:
 ///  - Providers uswap-server quotes: it already refuses a suspended request, so honouring the rule
 ///    here is purely so the user never sees a card that is going to fail.
-///  - Providers the APP quotes itself (Uniswap, PancakeSwap, and THORChain/Maya,
-///    which have native implementations here): no server call happens at all, so this filter is the
-///    ONLY enforcement that exists. Dropping it would make those providers unsuspendable.
+///  - Providers the APP quotes itself (Uniswap, PancakeSwap, which have native implementations
+///    here): no server call happens at all, so this filter is the ONLY enforcement that exists.
+///    Dropping it would make those providers unsuspendable.
 public struct SwapSuspension: ImmutableMappable {
     public enum Kind: String {
         case asset

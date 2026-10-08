@@ -694,24 +694,6 @@ public extension USwapMultiSwapApi {
 
             return .init(path: "track/evm", parameters: parameters)
         }
-
-        public static func thorchain(
-            providerId: String,
-            toAddress: String,
-            inboundTxHash: String?,
-            fromAsset: String?,
-            toAsset: String?
-        ) -> Self {
-            var parameters: [String: Any] = [
-                "provider": providerId,
-                "toAddress": toAddress,
-            ]
-            parameters.appendNotNil(key: "inboundTxHash", inboundTxHash)
-            parameters.appendNotNil(key: "fromAsset", fromAsset)
-            parameters.appendNotNil(key: "toAsset", toAsset)
-
-            return .init(path: "track/thorchain", parameters: parameters)
-        }
     }
 
     struct SwapResponse {

@@ -564,13 +564,6 @@ struct MainSettingsView: View {
             }
 
             ListRow {
-                Toggle(isOn: $viewModel.mayaStagenetEnabled) {
-                    Text("Maya Stagenet Enabled").themeBody()
-                }
-                .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-            }
-
-            ListRow {
                 Toggle(isOn: $viewModel.emulateZcashMigration) {
                     Text("Emulate ZEC Migration").themeBody()
                 }

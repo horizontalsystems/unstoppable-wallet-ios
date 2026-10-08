@@ -702,7 +702,6 @@
 "swap.suggested_path.text.part" = "trocar %@ por %@";
 "swap.enter_amount" = "Inserir Quantidade";
 "swap.no_quotes" = "Sem ofertas";
-"swap.error.no_memo" = "Esta rota não pode ser confirmada no momento. Por favor, atualize a cotação ou escolha outro provedor.";
 "swap.deposit_address" = "Endereço de depósito";
 "swap.deposit_memo" = "Memo de depósito";
 "swap.error.invalid_swap_memo" = "O memo do swap não contém um destinatário válido.";
@@ -840,8 +839,6 @@
 "swap.dex_info.content_allowance" = "O montante que uma exchange pode gastar em nome do usuário na execução de trocas simbólicas. É necessária uma margem suficiente para que uma transação de troca efetiva possa ocorrer.";
 "swap.dex_info.header_price_impact" = "Impacto de preço";
 "swap.dex_info.content_price_impact" = "O desvio de preço esperado de um valor mostrado, normalmente aumenta com o montante de swap.";
-
-"swap.maya.shielded_address.error" = "Não foi possível obter o endereço blindado para Memo (Maya)";
 
 // Swap History
 
