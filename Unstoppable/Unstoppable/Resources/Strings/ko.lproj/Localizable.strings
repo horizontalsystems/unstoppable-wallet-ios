@@ -803,11 +803,6 @@
 "swap.advanced_settings.error.invalid_slippage" = "올바르지 않은 슬립";
 "swap.advanced_settings.error.invalid_deadline" = "올바르지 않은 마감 시간";
 
-"swap.one_inch.error.cannot_estimate" = "추정 오류";
-"swap.one_inch.error.cannot_estimate.info" = "잔액을 확인하여 수수료를 충당하기에 충분한 %@이 있는지 확인하십시오. 또는 가격 슬리피지 금액을 늘리고 다시 시도하십시오. 3초 후에 자동 재시도합니다...";
-"swap.one_inch.error.insufficient_liquidity" = "유동성 부족";
-"swap.one_inch.error.insufficient_liquidity.info" = "이 거래를 처리할 수 있는 유동성이 충분하지 않을 수 있습니다. 금액을 낮추십시오.";
-
 "swap.service" = "서비스";
 "swap.service.title" = "서비스";
 

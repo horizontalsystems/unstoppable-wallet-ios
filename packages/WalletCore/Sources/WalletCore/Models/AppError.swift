@@ -6,7 +6,6 @@ enum AppError: Error {
     case binance(reason: BinanceError)
     case zcash(reason: ZcashError)
     case ethereum(reason: EthereumError)
-    case oneInch(reason: OneInchError)
     case invalidWords(count: Int)
     case wordsChecksum
     case addressInvalid
@@ -41,12 +40,6 @@ enum AppError: Error {
         case transactionUnderpriced
         case tipsHigherThanMaxFee
     }
-
-    enum OneInchError: Error {
-        case insufficientBalanceWithFee
-        case cannotEstimate
-        case insufficientLiquidity
-    }
 }
 
 extension AppError: LocalizedError {
@@ -80,12 +73,6 @@ extension AppError: LocalizedError {
             case .replacementTransactionUnderpriced: return "ethereum_transaction.error.replacement_transaction_underpriced".localized
             case .transactionUnderpriced: return "ethereum_transaction.error.transaction_underpriced".localized
             case .tipsHigherThanMaxFee: return "ethereum_transaction.error.tips_higher_than_max_fee".localized
-            }
-        case let .oneInch(reason):
-            switch reason {
-            case .insufficientBalanceWithFee: return "" // localized in modules
-            case .cannotEstimate: return "" // localized in modules
-            case .insufficientLiquidity: return "swap.one_inch.error.insufficient_liquidity.info".localized
             }
         case let .invalidWords(count):
             return "restore_error.mnemonic_word_count".localized("\(count)")

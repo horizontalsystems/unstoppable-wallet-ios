@@ -803,11 +803,6 @@
 "swap.advanced_settings.error.invalid_slippage" = "Deslizamiento no válido";
 "swap.advanced_settings.error.invalid_deadline" = "Fecha límite no válida";
 
-"swap.one_inch.error.cannot_estimate" = "Error de estimación";
-"swap.one_inch.error.cannot_estimate.info" = "¡Error! Comprueba el saldo y asegúrate de que hay suficientes %@ para cubrir la comisión. O intente aumentar la cantidad del deslizamiento del precio e intente de nuevo. Volverá a intentarlo en 3 segundos...";
-"swap.one_inch.error.insufficient_liquidity" = "Liquidez insuficiente";
-"swap.one_inch.error.insufficient_liquidity.info" = "Probablemente no hay suficiente liquidez disponible para procesar esta operación. Intente reducir la cantidad.";
-
 "swap.service" = "Servicio";
 "swap.service.title" = "Servicio";
 

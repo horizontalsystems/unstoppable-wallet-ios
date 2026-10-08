@@ -4,7 +4,6 @@ import EvmKit
 import Foundation
 import HdWalletKit
 import MarketKit
-import OneInchKit
 import RxRelay
 import RxSwift
 import UniswapKit

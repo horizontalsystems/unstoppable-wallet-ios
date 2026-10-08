@@ -154,10 +154,6 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "UnstoppableDomainsApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
 
-    static var oneInchApiKey: String? {
-        (Bundle.main.object(forInfoDictionaryKey: "OneInchApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
-    }
-
     static var pimlicoApiKey: String? {
         (Bundle.main.object(forInfoDictionaryKey: "PimlicoApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
@@ -172,16 +168,6 @@ enum AppConfig {
 
     static var gasFreeApiSecret: String? {
         (Bundle.main.object(forInfoDictionaryKey: "GasFreeApiSecret") as? String).flatMap { $0.isEmpty ? nil : $0 }
-    }
-
-    static var oneInchCommissionAddress: String? {
-        (Bundle.main.object(forInfoDictionaryKey: "OneInchCommissionAddress") as? String).flatMap { $0.isEmpty ? nil : $0 }
-    }
-
-    static var oneInchCommission: Decimal? {
-        (Bundle.main.object(forInfoDictionaryKey: "OneInchCommission") as? String).flatMap {
-            $0.isEmpty ? nil : Decimal(string: $0, locale: Locale(identifier: "en_US_POSIX"))
-        }
     }
 
     static var thorchainAffiliate: String? {

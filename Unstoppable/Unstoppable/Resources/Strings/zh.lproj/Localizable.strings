@@ -803,11 +803,6 @@
 "swap.advanced_settings.error.invalid_slippage" = "无效延误";
 "swap.advanced_settings.error.invalid_deadline" = "无效截止日期";
 
-"swap.one_inch.error.cannot_estimate" = "估计错误";
-"swap.one_inch.error.cannot_estimate.info" = "错误！检查余额并确保有足够的%@来支付费用。或者尝试增加价格下跌金额并重试。将在3秒后重试...";
-"swap.one_inch.error.insufficient_liquidity" = "流动性不足";
-"swap.one_inch.error.insufficient_liquidity.info" = "可能没有足够的流动资金来处理此交易。请尝试降低减少金额。";
-
 "swap.service" = "服务";
 "swap.service.title" = "服务";
 

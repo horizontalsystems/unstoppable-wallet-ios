@@ -803,11 +803,6 @@
 "swap.advanced_settings.error.invalid_slippage" = "Недействительное отклонение";
 "swap.advanced_settings.error.invalid_deadline" = "Недействительный срок выполнения";
 
-"swap.one_inch.error.cannot_estimate" = "Ошибка оценки";
-"swap.one_inch.error.cannot_estimate.info" = "Проверьте баланс, чтобы убедиться, что у вас достаточно %@ для покрытия комиссии. Или попробуйте увеличить сумму допустимого проскальзывания и повторите попытку. Автоматическая попытка через 3 секунды...";
-"swap.one_inch.error.insufficient_liquidity" = "Недостаточная ликвидность";
-"swap.one_inch.error.insufficient_liquidity.info" = "Вероятно, нет достаточной ликвидности для выполнения этой сделки. Попробуйте уменьшить сумму.";
-
 "swap.service" = "Сервис";
 "swap.service.title" = "Сервис";
 

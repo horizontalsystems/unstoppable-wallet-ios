@@ -803,11 +803,6 @@
 "swap.advanced_settings.error.invalid_slippage" = "Geçersiz Kayma";
 "swap.advanced_settings.error.invalid_deadline" = "Geçersiz Son Tarih";
 
-"swap.one_inch.error.cannot_estimate" = "Tahmin Hatası";
-"swap.one_inch.error.cannot_estimate.info" = "Hata! Bakiyeyi kontrol edin ve ücreti karşılayacak kadar %@ olduğundan emin olun. Veya fiyat kayma miktarını artırmayı deneyin ve tekrar deneyin. 3 saniye sonra tekrar denenecektir...";
-"swap.one_inch.error.insufficient_liquidity" = "Likidite Yetersiz";
-"swap.one_inch.error.insufficient_liquidity.info" = "Muhtemelen bu işlemin gerçekleşmesi için yeterli likidite mevcut değil. Tutarı düşürmeyi deneyin.";
-
 "swap.service" = "Hizmet";
 "swap.service.title" = "Hizmet";
 

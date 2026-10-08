@@ -198,12 +198,6 @@
 		<string>CoinPriceListIntent</string>
 		<string>SingleCoinPriceIntent</string>
 	</array>
-	<key>OneInchApiKey</key>
-	<string>${ONE_INCH_API_KEY}</string>
-	<key>OneInchCommission</key>
-	<string>${ONE_INCH_COMMISSION}</string>
-	<key>OneInchCommissionAddress</key>
-	<string>${ONE_INCH_COMMISSION_ADDRESS}</string>
 	<key>OpenSeaApiKey</key>
 	<string>${OPEN_SEA_API_KEY}</string>
 	<key>OptimismEtherscanApiKeys</key>

@@ -803,11 +803,6 @@
 "swap.advanced_settings.error.invalid_slippage" = "Invalid Slippage";
 "swap.advanced_settings.error.invalid_deadline" = "Invalid Deadline";
 
-"swap.one_inch.error.cannot_estimate" = "Estimation Error";
-"swap.one_inch.error.cannot_estimate.info" = "Check the balance to ensure there is enough %@ to cover the fee. Or try increasing the price slippage amount and try again. Will auto-retry in 3 sec...";
-"swap.one_inch.error.insufficient_liquidity" = "Insufficient Liquidity";
-"swap.one_inch.error.insufficient_liquidity.info" = "Likely there is not enough liquidity available to process this trade. Try lowering the amount.";
-
 "swap.service" = "Service";
 "swap.service.title" = "Service";
 

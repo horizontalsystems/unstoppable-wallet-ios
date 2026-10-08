@@ -803,11 +803,6 @@
 "swap.advanced_settings.error.invalid_slippage" = "Ungültige Slippage";
 "swap.advanced_settings.error.invalid_deadline" = "Ungültige Frist";
 
-"swap.one_inch.error.cannot_estimate" = "Schätzungsfehler";
-"swap.one_inch.error.cannot_estimate.info" = "Fehler! Überprüfen Sie Ihr Guthaben und vergewissern Sie sich, dass genügend %@ zur Deckung der Gebühr vorhanden sind. Oder versuchen Sie, die Kursdifferenz zu erhöhen und versuchen Sie es erneut. Wird in 3 Sekunden erneut versucht...";
-"swap.one_inch.error.insufficient_liquidity" = "Unzureichende Liquidität";
-"swap.one_inch.error.insufficient_liquidity.info" = "Wahrscheinlich ist nicht genügend Liquidität vorhanden, um diesen Handel abzuwickeln. Versuchen Sie einen niedrigeren Betrag.";
-
 "swap.service" = "Dienst";
 "swap.service.title" = "Dienst";
 
