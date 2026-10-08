@@ -40,6 +40,8 @@ public final class USwapFinalQuoteFactory {
         public let slippage: Decimal?
         public let recipient: String?
         public let transactionSettings: TransactionSettings?
+        // decided by the provider from the route's execution
+        public let mevProtectionAllowed: Bool
         // nil on a transfer route without a stub (no fee estimate) and on signed / broker routes
         public let deposit: Deposit?
 
@@ -52,6 +54,7 @@ public final class USwapFinalQuoteFactory {
             slippage: Decimal?,
             recipient: String?,
             transactionSettings: TransactionSettings?,
+            mevProtectionAllowed: Bool,
             deposit: Deposit?
         ) {
             self.tokenIn = tokenIn
@@ -62,6 +65,7 @@ public final class USwapFinalQuoteFactory {
             self.slippage = slippage
             self.recipient = recipient
             self.transactionSettings = transactionSettings
+            self.mevProtectionAllowed = mevProtectionAllowed
             self.deposit = deposit
         }
     }

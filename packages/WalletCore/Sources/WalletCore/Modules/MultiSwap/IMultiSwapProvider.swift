@@ -13,7 +13,6 @@ public protocol IMultiSwapProvider {
     var syncPublisher: AnyPublisher<Void, Never>? { get }
     func slippageSupported(tokenIn: Token, tokenOut: Token) -> Bool
     func supports(tokenIn: Token, tokenOut: Token) -> Bool
-    func mevProtectionAllowed(tokenIn: Token, tokenOut: Token) -> Bool
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote
     func confirmationQuote(multiSwapQuote: MultiSwapQuote, tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote
     func validateTrustedProvider(tokenIn: Token, amountIn: Decimal) async throws -> Bool?
@@ -51,10 +50,6 @@ public extension IMultiSwapProvider {
             return result == .dirty ? false : nil
         }
         return true
-    }
-
-    func mevProtectionAllowed(tokenIn _: Token, tokenOut _: Token) -> Bool {
-        false
     }
 
     func commit(finalQuote: SwapFinalQuote) async throws -> SwapCommitment {

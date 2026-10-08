@@ -34,10 +34,6 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
         subProvider.supports(tokenIn: tokenIn, tokenOut: tokenOut)
     }
 
-    public func mevProtectionAllowed(tokenIn: Token, tokenOut: Token) -> Bool {
-        subProvider.mevProtectionAllowed(tokenIn: tokenIn, tokenOut: tokenOut)
-    }
-
     public func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {
         let result = try await subProvider.rate(
             input: USwapRateInput(
@@ -120,6 +116,7 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
                 slippage: effectiveSlippage,
                 recipient: recipient,
                 transactionSettings: transactionSettings,
+                mevProtectionAllowed: Self.mevProtectionAllowed(execution: execution, tokenIn: tokenIn, tokenOut: tokenOut),
                 deposit: deposit
             )
         )
@@ -199,6 +196,7 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
                     slippage: context.slippage,
                     recipient: context.recipient,
                     transactionSettings: context.transactionSettings,
+                    mevProtectionAllowed: false,
                     deposit: USwapFinalQuoteFactory.Input.Deposit(instruction: instruction, isStub: false)
                 )
             )
@@ -302,6 +300,15 @@ extension USwapMultiSwapProvider {
 
     static let legTypeNativeSend = "native_send"
     static let legTypeSwap = "swap"
+
+    // MEV protection is a property of the route, not the provider: only a server-built signed
+    // transaction on a Merkle-supported same-chain EVM pair can be broadcast through the private RPC.
+    private static func mevProtectionAllowed(execution: USwapMultiSwapApi.Execution?, tokenIn: Token, tokenOut: Token) -> Bool {
+        guard case .signedTransaction = execution else {
+            return false
+        }
+        return MerkleTransactionAdapter.allowProtection(blockchainTypeIn: tokenIn.blockchainType, blockchainTypeOut: tokenOut.blockchainType)
+    }
 
     enum SwapError: Error {
         case unsupportedTokenIn

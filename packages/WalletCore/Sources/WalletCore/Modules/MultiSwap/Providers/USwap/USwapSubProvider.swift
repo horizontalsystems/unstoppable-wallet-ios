@@ -8,7 +8,6 @@ public protocol USwapSubProvider {
 
     func slippageSupported(tokenIn: Token, tokenOut: Token) -> Bool
     func supports(tokenIn: Token, tokenOut: Token) -> Bool
-    func mevProtectionAllowed(tokenIn: Token, tokenOut: Token) -> Bool
     func rate(input: USwapRateInput) async throws -> USwapRateResult
     // No side effects: the route for the confirmation screen (carries a `previewToken`)
     func preview(input: USwapPreviewInput) async throws -> USwapPreviewResult

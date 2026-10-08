@@ -116,6 +116,7 @@ final class USwapEvmFinalQuoteBuilder: USwapFinalQuoteBuilder {
             gasPrice: gasPrice,
             evmFeeData: evmFeeData,
             nonce: input.transactionSettings?.nonce,
+            mevProtectionAllowed: input.mevProtectionAllowed,
             approval: approval,
             toAddress: input.destinationAddress,
             depositAddress: input.response.execution?.depositAddress,

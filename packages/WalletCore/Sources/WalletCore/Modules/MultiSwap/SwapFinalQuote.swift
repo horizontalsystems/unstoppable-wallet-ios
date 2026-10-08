@@ -14,6 +14,8 @@ public class SwapFinalQuote {
     public let providerSwapId: String?
     public var refundAddress: String?
     public var minAmountOut: Decimal?
+    // Set by the provider from the route: the send handler offers the MEV toggle only when true.
+    public let mevProtectionAllowed: Bool
     // Provider-private state carried from the preview to `IMultiSwapProvider.commit(finalQuote:)`;
     // cleared once the preview is committed so the same token can never be committed twice.
     var providerContext: AnyObject?
@@ -35,7 +37,8 @@ public class SwapFinalQuote {
         depositAddress: String? = nil,
         providerSwapId: String? = nil,
         refundAddress: String? = nil,
-        minAmountOut: Decimal? = nil
+        minAmountOut: Decimal? = nil,
+        mevProtectionAllowed: Bool = false
     ) {
         self.expectedBuyAmount = expectedBuyAmount
         self.slippage = slippage
@@ -47,6 +50,7 @@ public class SwapFinalQuote {
         self.providerSwapId = providerSwapId
         self.refundAddress = refundAddress
         self.minAmountOut = minAmountOut
+        self.mevProtectionAllowed = mevProtectionAllowed
     }
 
     public var amountOut: Decimal {

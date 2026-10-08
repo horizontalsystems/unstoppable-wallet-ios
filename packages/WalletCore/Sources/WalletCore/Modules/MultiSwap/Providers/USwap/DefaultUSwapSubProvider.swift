@@ -36,10 +36,6 @@ public class DefaultUSwapSubProvider: USwapSubProvider {
         asset(token: tokenIn) != nil && asset(token: tokenOut) != nil
     }
 
-    public func mevProtectionAllowed(tokenIn _: Token, tokenOut _: Token) -> Bool {
-        false
-    }
-
     public func rate(input: USwapRateInput) async throws -> USwapRateResult {
         guard let assetIn = asset(token: input.tokenIn) else {
             throw SwapError.unsupportedTokenIn

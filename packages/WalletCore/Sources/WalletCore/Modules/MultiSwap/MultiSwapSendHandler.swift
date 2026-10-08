@@ -159,9 +159,9 @@ extension MultiSwapSendHandler: ISendHandler {
             throw SwapBroadcasterError.noBroadcaster
         }
 
-        // MEV eligibility rides on the EVM quote (set by the provider); the toggle itself
+        // MEV eligibility rides on the quote (set by the provider when it builds the quote); the toggle itself
         // is read live at submit-time by the broadcaster (routing flag, not tx content)
-        let otherSections = provider.mevProtectionAllowed(tokenIn: tokenIn, tokenOut: tokenOut) ? [mevProtectionHelper.section()] : []
+        let otherSections = quote.mevProtectionAllowed ? [mevProtectionHelper.section()] : []
 
         // the executable is built at send time: commit may rebuild the quote (transfer providers)
         return SendData(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote, broadcaster: broadcaster, otherSections: otherSections)
