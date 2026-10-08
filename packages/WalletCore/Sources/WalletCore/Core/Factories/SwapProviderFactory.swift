@@ -64,7 +64,6 @@ public class SwapProviderFactory {
         }
 
         let names: [String: String] = [
-            OneInchMultiSwapProvider.id: OneInchMultiSwapProvider.name,
             ThorChainMultiSwapProvider.id: ThorChainMultiSwapProvider.name,
             MayaMultiSwapProvider.id: MayaMultiSwapProvider.name,
             AllBridgeMultiSwapProvider.id: AllBridgeMultiSwapProvider.name,
@@ -108,6 +107,7 @@ public enum SwapProviderResolver: ISwapProviderResolver {
             exolixUSwapEntry(info: .exolix),
             defaultUSwapEntry(info: .cce),
             barterUSwapEntry(info: .barter),
+            oneInchUSwapEntry(info: .oneInch),
             defaultUSwapEntry(info: .pegasus),
             defaultUSwapEntry(info: .circle),
             jupiterUSwapEntry(info: .jupiter),
@@ -148,6 +148,10 @@ public enum SwapProviderResolver: ISwapProviderResolver {
 
     private static func barterUSwapEntry(info: USwapProviderInfo) -> Entry {
         Entry(info: info, makeProvider: { barterUSwapProvider(info: info) })
+    }
+
+    private static func oneInchUSwapEntry(info: USwapProviderInfo) -> Entry {
+        Entry(info: info, makeProvider: { oneInchUSwapProvider(info: info) })
     }
 
     private static func lifiUSwapEntry(info: USwapProviderInfo) -> Entry {
@@ -202,6 +206,19 @@ public enum SwapProviderResolver: ISwapProviderResolver {
     private static func barterUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
         let api = uSwapApi(networkManager: NetworkManager(logger: nil))
         let subProvider = BarterUSwapSubProvider(
+            info: info,
+            api: api,
+            assetRepository: nil,
+            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
+            tracker: uSwapTracker(api: api)
+        )
+
+        return uSwapProvider(subProvider: subProvider)
+    }
+
+    private static func oneInchUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
+        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
+        let subProvider = OneInchUSwapSubProvider(
             info: info,
             api: api,
             assetRepository: nil,
@@ -357,13 +374,6 @@ public enum SwapProviderResolver: ISwapProviderResolver {
     }
 
     public static func provider(id: String) -> IMultiSwapProvider? {
-        if id == OneInchMultiSwapProvider.id, let apiKey = AppConfig.oneInchApiKey {
-            return OneInchMultiSwapProvider(
-                apiKey: apiKey,
-                tracker: uSwapTracker(networkManager: Core.shared.networkManager)
-            )
-        }
-
         if id == ThorChainMultiSwapProvider.id {
             return ThorChainMultiSwapProvider(
                 tracker: uSwapTracker(networkManager: Core.shared.networkManager)

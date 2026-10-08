@@ -135,6 +135,14 @@ public extension USwapProviderInfo {
         requireTerms: true
     )
 
+    static let oneInch = USwapProviderInfo(
+        id: "ONEINCH",
+        name: "1inch",
+        icon: "swap_provider_1inch",
+        type: .excellent,
+        requireTerms: true
+    )
+
     static let axelarIts = USwapProviderInfo(
         id: "AXELAR_ITS",
         name: "Axelar ITS",

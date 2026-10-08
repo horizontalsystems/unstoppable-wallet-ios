@@ -52,7 +52,6 @@ class MultiSwapProviderManager {
     /// used to be unioned into every sync, which made them impossible to switch off from the
     /// backend no matter what the server said.
     private static let bootstrapProviders = [
-        OneInchMultiSwapProvider.id,
         UniswapV3MultiSwapProvider.id,
         PancakeV3MultiSwapProvider.id,
         ThorChainMultiSwapProvider.id,
