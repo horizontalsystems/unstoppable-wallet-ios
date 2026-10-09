@@ -23,13 +23,15 @@ final class USwapStellarFinalQuoteBuilder: USwapFinalQuoteBuilder {
         let execution = input.response.execution
 
         if case .signedTransaction = execution {
-            guard let xdr = execution?.primarySignable?.xdr else {
+            guard let signable = execution?.primarySignable, signable.kind == "stellar", let xdr = signable.xdr else {
                 throw USwapMultiSwapProvider.SwapError.invalidTransactionData
             }
 
             let fee = (try? TransactionEnvelopeXDR(fromBase64: xdr)).map {
                 Decimal($0.txFee) / 10_000_000
             }
+
+            let transactionError = balanceError(adapter: adapter, tokenIn: input.tokenIn, amountIn: input.amountIn, fee: fee ?? 0)
 
             return StellarSwapFinalQuote(
                 amountIn: input.amountIn,
@@ -40,14 +42,10 @@ final class USwapStellarFinalQuoteBuilder: USwapFinalQuoteBuilder {
                 transactionData: .envelope(xdr),
                 token: input.tokenIn,
                 fee: fee,
-                transactionError: nil,
+                transactionError: transactionError,
                 toAddress: input.destinationAddress,
                 providerSwapId: input.providerSwapId
             )
-        }
-
-        if case .stellarBroker = execution {
-            throw USwapMultiSwapProvider.SwapError.noTransactionData
         }
 
         guard let deposit = input.deposit else {
@@ -98,5 +96,24 @@ final class USwapStellarFinalQuoteBuilder: USwapFinalQuoteBuilder {
             depositAddress: input.response.execution?.depositAddress,
             providerSwapId: input.providerSwapId
         )
+    }
+
+    /// Pre-flight balance check so the confirm screen shows the standard insufficient-balance
+    /// caution instead of failing at send. Two legs: the SELL asset itself (the adapter is
+    /// per-token — `balanceData.available` is that asset's balance, reserve-adjusted for
+    /// native), and the native XLM needed for fees.
+    private func balanceError(adapter: StellarAdapter, tokenIn: Token, amountIn: Decimal, fee: Decimal) -> Error? {
+        if tokenIn.type != .native {
+            let assetAvailable = adapter.balanceData.available
+            guard assetAvailable >= amountIn else {
+                return StellarSendHelper.TransactionError.insufficientStellarBalance(balance: assetAvailable)
+            }
+        }
+        let availableNative = adapter.stellarKit.account?.availableBalance ?? 0
+        let requiredNative = tokenIn.type == .native ? amountIn + fee : fee
+        guard availableNative >= requiredNative else {
+            return StellarSendHelper.TransactionError.insufficientStellarBalance(balance: availableNative)
+        }
+        return nil
     }
 }

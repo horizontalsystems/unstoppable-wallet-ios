@@ -42,7 +42,7 @@ public final class USwapFinalQuoteFactory {
         public let transactionSettings: TransactionSettings?
         // decided by the provider from the route's execution
         public let mevProtectionAllowed: Bool
-        // nil on a transfer route without a stub (no fee estimate) and on signed / broker routes
+        // nil on a transfer route without a stub (no fee estimate) and on signed routes
         public let deposit: Deposit?
 
         public init(

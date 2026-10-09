@@ -102,6 +102,39 @@ public extension USwapProviderInfo {
         requireTerms: true
     )
 
+    static let soroswap = USwapProviderInfo(
+        id: "SOROSWAP",
+        name: "Soroswap",
+        icon: "stellar_stellar_32",
+        type: .excellent,
+        requireTerms: true
+    )
+
+    static let aquarius = USwapProviderInfo(
+        id: "AQUARIUS",
+        name: "Aquarius",
+        icon: "stellar_stellar_32",
+        type: .excellent,
+        requireTerms: true
+    )
+
+    static let stellarDex = USwapProviderInfo(
+        id: "STELLAR_DEX",
+        name: "Stellar DEX",
+        icon: "stellar_stellar_32",
+        type: .excellent,
+        requireTerms: true
+    )
+
+    // History only: records made through the former single Stellar card. Never quoted.
+    static let stellarBroker = USwapProviderInfo(
+        id: "STELLARBROKER",
+        name: "StellarBroker",
+        icon: "stellar_stellar_32",
+        type: .excellent,
+        requireTerms: true
+    )
+
     static let pegasus = USwapProviderInfo(
         id: "PEGASUS",
         name: "PegasusSwap",

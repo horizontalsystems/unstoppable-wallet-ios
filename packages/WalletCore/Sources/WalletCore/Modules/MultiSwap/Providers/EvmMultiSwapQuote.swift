@@ -10,7 +10,7 @@ class EvmMultiSwapQuote: MultiSwapQuote {
     }
 
     override var customButtonState: MultiSwapButtonState? {
-        allowanceState.customButtonState
+        super.customButtonState ?? allowanceState.customButtonState
     }
 
     override func cautions() -> [CautionNew] {

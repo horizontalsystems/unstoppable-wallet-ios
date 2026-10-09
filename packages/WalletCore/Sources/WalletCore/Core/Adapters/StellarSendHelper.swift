@@ -86,7 +86,7 @@ class StellarSendHelper {
     }
 
     /// Returns the submitted transaction's hash — swap flows report it to uswap-server's
-    /// `/v2/track` as `inboundTxHash` (verified on Horizon by the server).
+    /// `/v3/track` as `inboundTxHash` (verified on Horizon by the server).
     @discardableResult static func send(
         transactionData: TransactionData,
         token _: Token,

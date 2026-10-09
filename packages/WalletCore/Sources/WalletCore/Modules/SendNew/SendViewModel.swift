@@ -27,9 +27,8 @@ public class SendViewModel: ObservableObject {
     @Published public var sendData: ISendData?
 
     // A live send owns the screen: the quote-expiry timer is stopped so it can't swap the
-    // send button for "Refresh" mid-send (for broadcast providers the window is 1-3 s, but a
-    // StellarBroker session runs for minutes — a mid-session "Refresh" would allow a second
-    // committed quote and a concurrent double-spending session). Any sync already in flight is
+    // send button for "Refresh" mid-send (a mid-send "Refresh" would allow a second committed
+    // quote and a concurrent second execution). Any sync already in flight is
     // cancelled with it: it would otherwise land and overwrite `sendData`/`state` mid-send,
     // re-quoting under the running execution. On failure the expiry clock resumes from the
     // ORIGINAL deadline, so an already-stale quote expires immediately; success dismisses
@@ -48,12 +47,6 @@ public class SendViewModel: ObservableObject {
             }
         }
     }
-
-    // Set when a send threw AFTER value may already have moved on-chain (a broker session that
-    // signed and submitted, then failed mid-trade). The swap is already persisted and tracking
-    // owns the outcome from here, so the screen must NOT return to a retryable state — sliding
-    // again would run a second execution on top of a partially-filled one.
-    @Published private(set) var partiallyExecuted = false
 
     @Published var transactionSettingsModified = false
 
@@ -132,11 +125,6 @@ public class SendViewModel: ObservableObject {
     }
 
     public var canSend: Bool {
-        // A partially-executed send is never retryable — see `partiallyExecuted`.
-        guard !partiallyExecuted else {
-            return false
-        }
-
         guard let sendData, sendData.canSend else {
             return false
         }
@@ -176,7 +164,7 @@ public extension SendViewModel {
     }
 
     internal func autoQuoteIfRequired() {
-        guard !sending, !partiallyExecuted, !state.isSyncing, let nextRefreshTime else {
+        guard !sending, !state.isSyncing, let nextRefreshTime else {
             return
         }
 
@@ -285,12 +273,6 @@ public extension SendViewModel {
                 try? recentAddressStorage.save(address: address, blockchainUid: handler.baseToken.blockchain.uid)
             }
         } catch {
-            // Order matters: mark the partial BEFORE clearing `sending`, whose didSet resumes
-            // auto-quoting — the flag is what stops it (and the send button) coming back.
-            if let partial = error as? IPartialExecutionError, partial.partialTxHash != nil {
-                partiallyExecuted = true
-            }
-
             sending = false
             if !(error is IHandledSendError) {
                 report(error: error)

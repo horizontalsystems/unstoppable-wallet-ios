@@ -44,7 +44,7 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
             )
         )
 
-        return try await rateQuoteFactory.build(
+        let quote = try await rateQuoteFactory.build(
             input: .init(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
@@ -53,6 +53,10 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
                 replay: result.replay
             )
         )
+
+        quote.activationAsset = StellarActivationHelper.activationRequiredAsset(tokenOut: tokenOut)
+
+        return quote
     }
 
     // No side effects: previews the route (with the user's fee setting) and estimates the fee against
@@ -166,7 +170,7 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
         }
 
         if let execution = commit.execution {
-            // A signed / thorchain / broker preview already carries its final transaction; a
+            // A signed / thorchain preview already carries its final transaction; a
             // different one at commit would mean signing something the user never reviewed.
             if let previewExecution = context.response.execution, !previewExecution.isTransfer {
                 throw SwapError.invalidTransactionData
@@ -219,7 +223,7 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
         }
 
         // No execution at commit: only a preview that carried its real execution (signed_transaction,
-        // thorchain_deposit, stellar_broker, or a transfer already resolved at preview) can be
+        // thorchain_deposit, or a transfer already resolved at preview) can be
         // executed as previewed. A transfer preview built against the stub has nothing to send to.
         guard context.response.execution != nil else {
             throw SwapError.noTransactionData
@@ -242,12 +246,16 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
     public func preSwapView(
         step: MultiSwapPreSwapStep,
         tokenIn: Token,
-        tokenOut _: Token,
+        tokenOut: Token,
         amount: Decimal,
         isPresented: Binding<Bool>,
         onSuccess: @escaping () -> Void
     ) -> AnyView {
-        rateQuoteFactory.preSwapView(
+        if let view = StellarActivationHelper.preSwapView(step: step, tokenOut: tokenOut, isPresented: isPresented, onSuccess: onSuccess) {
+            return view
+        }
+
+        return rateQuoteFactory.preSwapView(
             step: step,
             tokenIn: tokenIn,
             amount: amount,

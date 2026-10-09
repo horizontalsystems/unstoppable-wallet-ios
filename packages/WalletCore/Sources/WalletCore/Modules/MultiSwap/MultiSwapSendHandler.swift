@@ -192,18 +192,9 @@ extension MultiSwapSendHandler: ISendHandler {
             let prepared = try await data.broadcaster.prepare(executable)
             result = try await data.broadcaster.submit(prepared)
         } catch {
-            if let partial = error as? IPartialExecutionError, let partialTxHash = partial.partialTxHash {
-                // Partial execution (e.g. an interactive broker session failing mid-trade after
-                // txs were signed/submitted): value may already have moved on-chain. Persist a
-                // trackable record with the last known hash BEFORE surfacing the error — tracking
-                // then resolves the real outcome (partial fills included) instead of the swap
-                // becoming an invisible ghost while the server record waits forever.
-                saveSwap(commitment: commitment, txHash: partialTxHash, trackingHandle: nil)
-            } else {
-                // The order exists and the preview is consumed: re-preview so a retry never reuses
-                // the committed quote (the unfunded order expires server-side).
-                refreshSubject.send()
-            }
+            // The order exists and the preview is consumed: re-preview so a retry never reuses
+            // the committed quote (the unfunded order expires server-side).
+            refreshSubject.send()
             throw error
         }
 
@@ -233,10 +224,8 @@ extension MultiSwapSendHandler: ISendHandler {
         }
     }
 
-    /// Persist the pending swap record both completion paths need — the normal one after a
-    /// successful broadcast, and the partial-execution one where the submit threw but value may
-    /// already have moved (the two differ only in which hash/handle is known). No-op without an
-    /// active account, matching the previous behaviour at both call sites.
+    /// Persist the pending swap record after a successful broadcast, keyed by the submitted
+    /// transaction hash and/or the broadcaster's tracking handle. No-op without an active account.
     private func saveSwap(commitment: SwapCommitment, txHash: String?, trackingHandle: String?) {
         guard let account = accountManager.activeAccount else {
             return

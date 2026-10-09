@@ -88,24 +88,6 @@ public final class USwapMultiSwapApi {
         )
     }
 
-    // Transitional: v2 semantics (an order is created on every call) expressed as preview + commit in
-    // one shot. Its only remaining caller is the native StellarSwap provider. Remove once it calls
-    // `preview` and `commit` directly.
-    public func swap(_ request: SwapRequest) async throws -> SwapResponse {
-        let preview = try await preview(request)
-
-        guard let previewToken = preview.previewToken, !previewToken.isEmpty else {
-            throw CommitError(httpStatus: nil, status: nil, reason: "missing previewToken", providerError: nil)
-        }
-
-        // `commit` has side effects (creates the order): a quote cancelled after the preview must not create one.
-        try Task.checkCancellation()
-
-        let commit = try await commit(CommitRequest(previewToken: previewToken))
-
-        return preview.merging(commit: commit)
-    }
-
     // No side effects: builds the route and returns it with a `previewToken` (no `uuid`). For transfer
     // providers the response carries no `execution` yet, only an optional `stubDepositAddress`.
     public func preview(_ request: SwapRequest) async throws -> SwapResponse {
@@ -845,7 +827,6 @@ public extension USwapMultiSwapApi {
         // RUNE / CACAO / a secured asset, `delivery.kind == "cosmos_memo"`): it is then a MsgDeposit
         // carrying the memo, with no deposit address to display or send to.
         case thorchainDeposit(chain: String, inboundAddress: String, memo: String, delivery: Delivery)
-        case stellarBroker(StellarBrokerParams)
 
         var isTransfer: Bool {
             if case .transfer = self {
@@ -860,7 +841,6 @@ public extension USwapMultiSwapApi {
             // a transfer is always built locally from `depositAddress` + `attachment`; the server's `unsignedTx` is never signed
             case .transfer: nil
             case let .thorchainDeposit(_, _, _, delivery): delivery.unsignedTx
-            case .stellarBroker: nil
             }
         }
 
@@ -869,7 +849,6 @@ public extension USwapMultiSwapApi {
             case .signedTransaction: nil
             case let .transfer(_, depositAddress, _, _, _): depositAddress
             case let .thorchainDeposit(_, inboundAddress, _, _): inboundAddress.isEmpty ? nil : inboundAddress
-            case .stellarBroker: nil
             }
         }
 
@@ -878,7 +857,6 @@ public extension USwapMultiSwapApi {
             case let .signedTransaction(chain, _, _): return chain
             case let .transfer(chain, _, _, _, _): return chain
             case let .thorchainDeposit(chain, _, _, _): return chain
-            case .stellarBroker: return nil
             }
         }
 
@@ -889,31 +867,9 @@ public extension USwapMultiSwapApi {
             case let .thorchainDeposit(_, inboundAddress, memo, _):
                 // no vault: a MsgDeposit has no deposit address
                 return inboundAddress.isEmpty ? nil : (inboundAddress, .text(memo))
-            case .signedTransaction, .stellarBroker:
+            case .signedTransaction:
                 return nil
             }
-        }
-    }
-
-    struct StellarBrokerParams {
-        public let sellingAsset: String
-        public let buyingAsset: String
-        public let sellingAmount: String
-        public let slippageTolerance: Double
-        public let partnerKey: String?
-
-        public init(
-            sellingAsset: String,
-            buyingAsset: String,
-            sellingAmount: String,
-            slippageTolerance: Double,
-            partnerKey: String?
-        ) {
-            self.sellingAsset = sellingAsset
-            self.buyingAsset = buyingAsset
-            self.sellingAmount = sellingAmount
-            self.slippageTolerance = slippageTolerance
-            self.partnerKey = partnerKey
         }
     }
 
@@ -1355,7 +1311,6 @@ extension USwapMultiSwapApi {
         case signedTransaction(chain: String, transactions: [SignableTxResponse], approval: ApprovalResponse?)
         case transfer(chain: String, depositAddress: String, amount: Decimal?, attachment: Attachment?, unsignedTx: SignableTxResponse?)
         case thorchainDeposit(chain: String, inboundAddress: String, memo: String, delivery: DeliveryResponse)
-        case stellarBroker(StellarBrokerParams)
 
         init(map: Map) throws {
             let method: String = try map.value("method")
@@ -1384,16 +1339,6 @@ extension USwapMultiSwapApi {
                     memo: map.value("memo"),
                     delivery: map.value("delivery")
                 )
-            case "stellar_broker":
-                self = try .stellarBroker(
-                    StellarBrokerParams(
-                        sellingAsset: map.value("sellingAsset"),
-                        buyingAsset: map.value("buyingAsset"),
-                        sellingAmount: map.value("sellingAmount"),
-                        slippageTolerance: map.value("slippageTolerance"),
-                        partnerKey: try? map.value("partnerKey")
-                    )
-                )
             default:
                 throw MapError(key: "method", currentValue: method, reason: "Unsupported execution method")
             }
@@ -1407,8 +1352,6 @@ extension USwapMultiSwapApi {
                 nil
             case let .thorchainDeposit(_, _, _, delivery):
                 delivery.approval?.spender
-            case .stellarBroker:
-                nil
             }
         }
 
@@ -1435,8 +1378,6 @@ extension USwapMultiSwapApi {
                     memo: memo,
                     delivery: delivery.delivery
                 )
-            case let .stellarBroker(params):
-                .stellarBroker(params)
             }
         }
     }

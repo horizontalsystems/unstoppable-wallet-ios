@@ -17,7 +17,7 @@ public final class PrivateSendTokenManager {
 
     // The repository factory is injected so an app that already memoises repositories elsewhere
     // (the private send service uses the same ones) shares instances rather than duplicating the
-    // per-provider GET /v2/tokens traffic.
+    // per-provider GET /v3/tokens traffic.
     public init(registry: ConfidentialProviderRegistry, repository: @escaping (String) -> USwapAssetRepository) {
         self.registry = registry
         makeRepository = repository

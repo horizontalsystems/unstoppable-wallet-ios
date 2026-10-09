@@ -238,7 +238,7 @@ struct SwapExecutableTests {
     }
 
     @Test func stellarQuoteCarriesTokenInAndTransactionData() throws {
-        // the switch passes the handler's tokenIn to StellarSendHelper.send, NOT the quote's stored token
+        // the broadcaster passes the handler's tokenIn to StellarSendHelper.send, NOT the quote's stored token
         let storedToken = Self.token(blockchainType: .stellar)
         let tokenIn = Token(
             coin: Coin(uid: "other-coin", name: "Other", code: "OTH"),
@@ -261,9 +261,7 @@ struct SwapExecutableTests {
         let executable = try #require(quote.executable(tokenIn: tokenIn) as? StellarExecutable)
 
         #expect(executable.token == tokenIn)
-        guard case let .signed(transactionData) = executable.kind,
-              case let .envelope(envelope) = transactionData
-        else {
+        guard case let .envelope(envelope) = executable.transactionData else {
             Issue.record("expected .envelope")
             return
         }

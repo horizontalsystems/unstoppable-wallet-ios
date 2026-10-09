@@ -20,7 +20,8 @@ public final class USwapCommitRequestBuilder {
                 token.blockchainType == .tron ||
                 token.blockchainType == .ton ||
                 token.blockchainType == .solana ||
-                token.blockchainType == .zcash
+                token.blockchainType == .zcash ||
+                token.blockchainType == .stellar
         }
     ) {
         self.providerId = providerId

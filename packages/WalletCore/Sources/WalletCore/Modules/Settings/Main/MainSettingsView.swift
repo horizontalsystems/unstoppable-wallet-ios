@@ -516,13 +516,6 @@ struct MainSettingsView: View {
             }
 
             ListRow {
-                Toggle(isOn: $viewModel.stellarBrokerEnabled) {
-                    Text("Enable StellarBroker").themeBody()
-                }
-                .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-            }
-
-            ListRow {
                 Toggle(isOn: $viewModel.emulateEvmSwapSend) {
                     Text("Emulate EVM Swap Send").themeBody()
                 }
