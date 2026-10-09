@@ -1,7 +1,6 @@
 import Foundation
 import MarketKit
 import Testing
-import UniswapKit
 @testable import WalletCore
 
 struct LegacyModuleContractTests {
@@ -57,10 +56,6 @@ struct LegacyModuleContractTests {
         #expect(wrongBlockchain.localizedDescription == "send.error.invalid_blockchain".localized)
         #expect(wrongToken.localizedDescription == "send.error.invalid_token".localized)
         #expect(invalidUri.localizedDescription == "alert.cant_recognize".localized)
-        let v2: Error = UniswapKit.Kit.TradeError.tradeNotFound
-        let v3: Error = UniswapKit.KitV3.TradeError.tradeNotFound
-        #expect(v2.localizedDescription == "swap.trade_error.not_found".localized)
-        #expect(v3.localizedDescription == "swap.trade_error.not_found".localized)
     }
 
     @Test func feeFactoryPreservesDecimalPrecisionAndNonnegativeSteps() {

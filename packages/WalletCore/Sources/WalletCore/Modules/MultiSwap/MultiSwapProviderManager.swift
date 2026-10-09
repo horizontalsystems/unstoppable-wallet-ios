@@ -35,11 +35,7 @@ class MultiSwapProviderManager {
             headers = HTTPHeaders([HTTPHeader(name: "x-api-key", value: apiKey)])
         }
 
-        if let cached = localStorage.uSwapProviders?.components(separatedBy: ",") {
-            syncProviders(uSwapProviders: cached)
-        } else {
-            syncProviders(uSwapProviders: Self.bootstrapProviders)
-        }
+        syncProviders(uSwapProviders: localStorage.uSwapProviders?.components(separatedBy: ",").filter { !$0.isEmpty } ?? [])
 
         let hadSuspensions = restoreSuspensions()
         let hadExecutionTypes = restoreExecutionTypes()
@@ -51,19 +47,6 @@ class MultiSwapProviderManager {
         // without shielded ZEC delivery (execution types).
         sync(force: !hadSuspensions || !hadExecutionTypes)
     }
-
-    /// Used only until the first successful `/providers` response — a fresh install needs SOMETHING
-    /// to show. Everything here is a client-native provider, because those are the only ones that
-    /// can be quoted without the server having told us they exist.
-    ///
-    /// Note these are a starting point, NOT a floor: once the server answers, its list replaces
-    /// this wholesale. That is deliberate and load-bearing for suspension — the client-native ids
-    /// used to be unioned into every sync, which made them impossible to switch off from the
-    /// backend no matter what the server said.
-    private static let bootstrapProviders = [
-        UniswapV3MultiSwapProvider.id,
-        PancakeV3MultiSwapProvider.id,
-    ]
 
     private func syncProviders(uSwapProviders: [String]) {
         providers = uSwapProviders
@@ -207,10 +190,6 @@ extension MultiSwapProviderManager {
         let provider: String
         /// Whole-provider kill switch.
         let suspended: Bool
-        /// Whether uswap-server can quote this provider. `false` for ids the app implements
-        /// natively (Uniswap / PancakeSwap / AllBridge) — they are listed purely so their policy,
-        /// including suspension, is managed in one place.
-        let quotes: Bool
         let suspensions: [SwapSuspension]
         /// How the provider settles (`thorchain_deposit`, `signed_transaction`, ...).
         let executionType: String?
@@ -218,7 +197,6 @@ extension MultiSwapProviderManager {
         init(map: Map) throws {
             provider = try map.value("provider")
             suspended = (try? map.value("suspended")) ?? false
-            quotes = (try? map.value("quotes")) ?? true
             suspensions = (try? map.value("suspensions")) ?? []
             executionType = try? map.value("executionType")
         }

@@ -106,7 +106,7 @@ final class USwapEvmFinalQuoteBuilder: USwapFinalQuoteBuilder {
                 )
                 evmFeeData = estimatedFeeData
 
-                try BaseEvmMultiSwapProvider.validateBalance(
+                try Self.validateBalance(
                     evmKitWrapper: evmKitWrapper,
                     transactionData: transactionData,
                     evmFeeData: estimatedFeeData,
@@ -190,5 +190,15 @@ final class USwapEvmFinalQuoteBuilder: USwapFinalQuoteBuilder {
             return BigUInt(hex, radix: 16)
         }
         return BigUInt(string)
+    }
+
+    private static func validateBalance(evmKitWrapper: EvmKitWrapper, transactionData: TransactionData, evmFeeData: EvmFeeData, gasPriceData: GasPriceData) throws {
+        let evmBalance = evmKitWrapper.evmKit.accountState?.balance ?? 0
+        let txAmount = transactionData.value
+        let feeAmount = evmFeeData.totalFee(gasPrice: gasPriceData.userDefined)
+
+        if txAmount + feeAmount > evmBalance {
+            throw AppError.ethereum(reason: .insufficientBalanceWithFee)
+        }
     }
 }

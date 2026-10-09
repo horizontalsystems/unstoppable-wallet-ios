@@ -97,7 +97,6 @@ struct SwapDepositDetailsTests {
         var syncPublisher: AnyPublisher<Void, Never>? { nil }
         func slippageSupported(tokenIn _: Token, tokenOut _: Token) -> Bool { true }
         func supports(tokenIn _: Token, tokenOut _: Token) -> Bool { true }
-        func mevProtectionAllowed(tokenIn _: Token, tokenOut _: Token) -> Bool { false }
         func rate(input _: USwapRateInput) async throws -> USwapRateResult { throw USwapMultiSwapProvider.SwapError.noRoutes }
         func preview(input _: USwapPreviewInput) async throws -> USwapPreviewResult {
             USwapPreviewResult(response: response, refundAddress: nil, destinationAddress: SwapDepositDetailsTests.destination)

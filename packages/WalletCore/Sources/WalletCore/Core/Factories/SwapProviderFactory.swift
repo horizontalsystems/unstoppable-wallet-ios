@@ -44,10 +44,20 @@ public class SwapProviderFactory {
         return nil
     }
 
-    /// Providers no longer offered for swapping. They stay resolvable through `provider(id:)` so
-    /// swaps already made with them keep resolving their type and stage layout in history, but no
-    /// quote card is built for them — the server may still list the id purely to carry policy.
-    private static let retiredProviderIds: Set<String> = [AllBridgeMultiSwapProvider.id, USwapProviderInfo.stellarBroker.id]
+    /// Covers only the Stellar history-only entry (STELLARBROKER). It stays registered and resolves
+    /// through `provider(id:)` for tracking, but is never quoted; the server may still list the id.
+    private static let retiredProviderIds: Set<String> = [USwapProviderInfo.stellarBroker.id]
+
+    /// History only: swaps made through the former client-quoted providers. These ids resolve to no
+    /// provider, so they are never quoted and never tracked; the name keeps old records readable.
+    private static let retiredProviderNames: [String: String] = [
+        "UNISWAP_V3": "Uniswap",
+        "PANCAKESWAP": "PancakeSwap",
+        "ALLBRIDGE": "AllBridge",
+        "uniswap": "Uniswap",
+        "pancake": "PancakeSwap",
+        "quickswap": "QuickSwap",
+    ]
 
     // The ordinary swap screen must never offer a confidential or retired provider. Not automatic:
     // a registered entry resolves through `provider(id:)` (which tracking needs) and
@@ -60,17 +70,7 @@ public class SwapProviderFactory {
     }
 
     public static func providerName(id: String) -> String? {
-        if let info = providerInfo(id: id) {
-            return info.name
-        }
-
-        let names: [String: String] = [
-            AllBridgeMultiSwapProvider.id: AllBridgeMultiSwapProvider.name,
-            UniswapV3MultiSwapProvider.id: UniswapV3MultiSwapProvider.name,
-            PancakeV3MultiSwapProvider.id: PancakeV3MultiSwapProvider.name,
-        ]
-
-        return names[id]
+        providerInfo(id: id)?.name ?? retiredProviderNames[id]
     }
 
     // test seam: registry is global mutable state
@@ -431,39 +431,11 @@ public enum SwapProviderResolver: ISwapProviderResolver {
         )
     }
 
-    private static func uSwapTracker(networkManager: NetworkManager) -> USwapTracker {
-        uSwapTracker(api: uSwapApi(networkManager: networkManager))
-    }
-
     public static func providerInfo(id: String) -> USwapProviderInfo? {
         entries[id]?.info
     }
 
     public static func provider(id: String) -> IMultiSwapProvider? {
-        if id == AllBridgeMultiSwapProvider.id {
-            return AllBridgeMultiSwapProvider()
-        }
-
-        if id == UniswapV3MultiSwapProvider.id,
-           let provider = try? UniswapV3MultiSwapProvider(
-               tracker: uSwapTracker(networkManager: Core.shared.networkManager)
-           )
-        {
-            return provider
-        }
-
-        if id == PancakeV3MultiSwapProvider.id,
-           let provider = try? PancakeV3MultiSwapProvider(
-               tracker: uSwapTracker(networkManager: Core.shared.networkManager)
-           )
-        {
-            return provider
-        }
-
-        if let entry = entries[id] {
-            return entry.makeProvider()
-        }
-
-        return nil
+        entries[id]?.makeProvider()
     }
 }

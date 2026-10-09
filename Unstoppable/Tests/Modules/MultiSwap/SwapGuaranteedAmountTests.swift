@@ -122,7 +122,6 @@ extension SwapGuaranteedAmountTests {
 
         func slippageSupported(tokenIn _: Token, tokenOut _: Token) -> Bool { true }
         func supports(tokenIn _: Token, tokenOut _: Token) -> Bool { true }
-        func mevProtectionAllowed(tokenIn _: Token, tokenOut _: Token) -> Bool { false }
 
         func rate(input _: USwapRateInput) async throws -> USwapRateResult {
             throw USwapMultiSwapProvider.SwapError.noRoutes

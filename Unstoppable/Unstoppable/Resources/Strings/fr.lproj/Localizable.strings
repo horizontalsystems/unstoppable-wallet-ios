@@ -681,8 +681,6 @@
 "swap.approving_button" = "En cours d'approbation...";
 "swap.revoking_button" = "Révocation en cours...";
 "swap.not_available_button" = "Solde N/A";
-"swap.trade_error.not_found" = "Impossible d'échanger ces tokens";
-"swap.trade_error.wrap_unwrap_not_allowed" = "Ce service n'autorise pas l'emballage/décompression. S'il vous plaît, essayez un autre service de swap. 1Inch recommandé";
 "swap.button_error.insufficient_balance" = "Solde insuffisant";
 "swap.switch_provider.title" = "Service de Swap";
 "swap.amount_type.coin" = "Pièce";

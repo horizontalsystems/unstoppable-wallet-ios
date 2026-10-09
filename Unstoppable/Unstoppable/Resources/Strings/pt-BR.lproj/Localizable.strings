@@ -681,8 +681,6 @@
 "swap.approving_button" = "Aprovando...";
 "swap.revoking_button" = "Revogando...";
 "swap.not_available_button" = "Saldo N/A";
-"swap.trade_error.not_found" = "Não é possível trocar esses tokens";
-"swap.trade_error.wrap_unwrap_not_allowed" = "Este serviço não permite embalagem/desagregação. Por favor, tente outro serviço de troca. 1Inch recomendado";
 "swap.button_error.insufficient_balance" = "Saldo insuficiente";
 "swap.switch_provider.title" = "Serviço de Troca";
 "swap.amount_type.coin" = "Moeda";

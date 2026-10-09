@@ -628,10 +628,9 @@ public class MultiSwapViewModel: ObservableObject {
             let suspensions = swapProviderManager.suspensions
 
             validProviders = providers.filter { provider in
-                // Scoped suspension from uswap-server (asset / chain / directed pair). Checked
-                // HERE, in the one place every provider passes through, rather than inside each
-                // `supports` implementation — and it is the only enforcement that exists for the
-                // providers this app quotes natively, since those never reach the server.
+                // Scoped suspension from uswap-server (asset / chain / directed pair), checked here,
+                // in the one place every provider passes through, so a card the server would refuse
+                // is never shown.
                 guard !suspensions.isSuspended(providerId: provider.id, tokenIn: internalTokenIn, tokenOut: internalTokenOut) else {
                     return false
                 }
