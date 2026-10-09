@@ -5,12 +5,11 @@ import RxSwift
 import Testing
 @testable import WalletCore
 
-// The receiver checks of Android `NearAddressValidator`, done by the pre-send handler: the account
-// itself is refused, a named account must exist, an unanswered lookup lets the address through and
-// an implicit account is never asked about (the first transfer creates it).
+// The receiver check of Android `NearAddressValidator` the address parser cannot make: the account
+// itself is refused (whether a named account exists is NearAddressParserItemTests).
 struct NearRecipientCheckTests {
     @Test func ownAccountIsRefused() {
-        let handler = Self.handler(address: Self.ownAddress)
+        let handler = Self.handler()
 
         let cautions = Self.cautions(handler.sendData(amount: 1, address: Self.ownAddress, memo: nil))
 
@@ -18,61 +17,13 @@ struct NearRecipientCheckTests {
         #expect(cautions.first?.title == "send.address.invalid_address".localized)
     }
 
-    @Test func missingNamedAccountIsRefused() async {
-        let adapter = StubSendNearAdapter(exists: false)
-        let handler = Self.handler(adapter: adapter, address: Self.named)
-
-        await handler.lookupTask?.value
-
-        #expect(adapter.queried == [Self.named])
-        let cautions = Self.cautions(handler.sendData(amount: 1, address: Self.named, memo: nil))
-        #expect(cautions.first?.text == "send.address.invalid_address".localized)
-    }
-
-    @Test func existingNamedAccountPasses() async {
-        let adapter = StubSendNearAdapter(exists: true)
-        let handler = Self.handler(adapter: adapter, address: Self.named)
-
-        await handler.lookupTask?.value
-
-        #expect(Self.isValid(handler.sendData(amount: 1, address: Self.named, memo: nil)))
-    }
-
-    // the node did not answer: a blip while typing must not lock the form; the kit asks again on send
-    @Test func unansweredLookupPasses() async {
-        let adapter = StubSendNearAdapter(exists: nil)
-        let handler = Self.handler(adapter: adapter, address: Self.named)
-
-        await handler.lookupTask?.value
-
-        #expect(adapter.queried == [Self.named])
-        #expect(Self.isValid(handler.sendData(amount: 1, address: Self.named, memo: nil)))
-    }
-
-    @Test func implicitAccountIsNotLookedUp() async {
-        let adapter = StubSendNearAdapter(exists: false)
-        let handler = Self.handler(adapter: adapter, address: Self.implicit)
-
-        await handler.lookupTask?.value
-
-        #expect(handler.lookupTask == nil)
-        #expect(adapter.queried.isEmpty)
-        #expect(Self.isValid(handler.sendData(amount: 1, address: Self.implicit, memo: nil)))
-    }
-
-    // a "no" for the previous address does not stick to the next one
-    @Test func lookupFollowsTheAddress() async {
-        let adapter = StubSendNearAdapter(exists: false)
-        let handler = Self.handler(adapter: adapter, address: Self.named)
-        await handler.lookupTask?.value
-
-        handler.set(address: Self.implicit)
-
-        #expect(Self.isValid(handler.sendData(amount: 1, address: Self.implicit, memo: nil)))
+    @Test func namedAndImplicitAccountsPass() {
+        #expect(Self.isValid(Self.handler().sendData(amount: 1, address: Self.named, memo: nil)))
+        #expect(Self.isValid(Self.handler().sendData(amount: 1, address: Self.implicit, memo: nil)))
     }
 
     @Test func malformedAccountIdIsRefused() {
-        let handler = Self.handler(address: nil)
+        let handler = Self.handler()
 
         let cautions = Self.cautions(handler.sendData(amount: 1, address: "Alice..near", memo: nil))
 
@@ -81,23 +32,23 @@ struct NearRecipientCheckTests {
 
     // only a NEP-141 ft_transfer carries a memo (Android `sendMemoSupport`)
     @Test func memoOnlyForTokens() throws {
-        #expect(Self.handler(address: nil).memoType(address: Self.implicit) == .none)
-        #expect(Self.handler(token: Self.usdtToken, address: nil).memoType(address: Self.implicit) == .onChainPublic)
+        #expect(Self.handler().memoType(address: Self.implicit) == .none)
+        #expect(Self.handler(token: Self.usdtToken).memoType(address: Self.implicit) == .onChainPublic)
 
-        let nativeSend = try #require(Self.sendData(Self.handler(address: nil).sendData(amount: 1, address: Self.implicit, memo: "hi")))
+        let nativeSend = try #require(Self.sendData(Self.handler().sendData(amount: 1, address: Self.implicit, memo: "hi")))
         #expect(nativeSend.memo == nil)
 
-        let tokenSend = try #require(Self.sendData(Self.handler(token: Self.usdtToken, address: nil).sendData(amount: 1, address: Self.implicit, memo: "hi")))
+        let tokenSend = try #require(Self.sendData(Self.handler(token: Self.usdtToken).sendData(amount: 1, address: Self.implicit, memo: "hi")))
         #expect(tokenSend.memo == "hi")
 
-        let blankMemo = try #require(Self.sendData(Self.handler(token: Self.usdtToken, address: nil).sendData(amount: 1, address: Self.implicit, memo: "  ")))
+        let blankMemo = try #require(Self.sendData(Self.handler(token: Self.usdtToken).sendData(amount: 1, address: Self.implicit, memo: "  ")))
         #expect(blankMemo.memo == nil)
     }
 
     // A NEAR deposit is a plain transfer with no memo field (Android `memoDelivery = None`): a token
     // handler must not let its own memo support carry the provider's attachment.
     @Test func depositRefusesAnyAttachment() {
-        let handler = Self.handler(token: Self.usdtToken, address: nil)
+        let handler = Self.handler(token: Self.usdtToken)
 
         #expect(throws: USwapMultiSwapApi.Attachment.AttachmentError.undeliverable) {
             try handler.depositSendData(amount: 1, address: Self.implicit, attachment: .text("order-42"), settings: nil)
@@ -108,7 +59,7 @@ struct NearRecipientCheckTests {
     }
 
     @Test func depositWithoutAttachmentPaysTheDepositAddress() throws {
-        let handler = Self.handler(token: Self.usdtToken, address: Self.named)
+        let handler = Self.handler(token: Self.usdtToken)
 
         let result = try handler.depositSendData(amount: 25, address: Self.implicit, attachment: nil, settings: nil)
         let sendData = try #require(Self.sendData(result))
@@ -118,17 +69,16 @@ struct NearRecipientCheckTests {
         #expect(sendData.memo == nil)
     }
 
+    // a Private Send or Cross Pay payout to NEAR is not refused up front (unlike XRP and Stellar)
+    @Test func nearRecipientIsNotRefusedUpFront() {
+        #expect(!PrivateSendHandlerProvider.unsupportedBlockchainTypes.contains(.near))
+    }
+
     @Test func swapDepositAttachmentIsRefused() throws {
         #expect(throws: USwapMultiSwapApi.Attachment.AttachmentError.undeliverable) {
             try USwapMultiSwapApi.Attachment.memo(.text("order-42"), memoType: BlockchainType.near.memoType)
         }
         #expect(try USwapMultiSwapApi.Attachment.memo(nil, memoType: BlockchainType.near.memoType) == nil)
-    }
-
-    // the whole spendable balance is offered, as on most chains; the confirmation takes out what the transfer needs
-    @Test func wholeSpendableBalanceIsOffered() {
-        let adapter = StubSendNearAdapter(exists: true)
-        #expect(Self.handler(adapter: adapter, address: nil).balance == adapter.balanceData.available)
     }
 }
 
@@ -151,8 +101,8 @@ extension NearRecipientCheckTests {
         decimals: 6
     )
 
-    static func handler(token: Token = NearRecipientCheckTests.nearToken, adapter: StubSendNearAdapter = StubSendNearAdapter(exists: true), address: String?) -> NearPreSendHandler {
-        NearPreSendHandler(token: token, adapter: adapter, address: address)
+    static func handler(token: Token = NearRecipientCheckTests.nearToken) -> NearPreSendHandler {
+        NearPreSendHandler(token: token, adapter: StubSendNearAdapter())
     }
 
     static func cautions(_ result: SendDataResult) -> [CautionNew] {
@@ -178,20 +128,6 @@ extension NearRecipientCheckTests {
     }
 
     final class StubSendNearAdapter: ISendNearAdapter, IBalanceAdapter {
-        private let exists: Bool?
-        private let lock = NSLock()
-        private var _queried = [String]()
-
-        init(exists: Bool?) {
-            self.exists = exists
-        }
-
-        var queried: [String] {
-            lock.lock()
-            defer { lock.unlock() }
-            return _queried
-        }
-
         let isMainNet = true
         let balanceState: AdapterState = .synced
         let balanceStateUpdatedObservable: Observable<AdapterState> = .never()
@@ -202,19 +138,6 @@ extension NearRecipientCheckTests {
         let fee = Decimal(string: "0.0000446")!
         let availableNear: Decimal = 1
         let pendingTransactionHashes = Set<String>()
-
-        enum LookupError: Error {
-            case unreachable
-        }
-
-        func doesAccountExist(address: String) async throws -> Bool {
-            lock.lock()
-            _queried.append(address)
-            lock.unlock()
-
-            guard let exists else { throw LookupError.unreachable }
-            return exists
-        }
 
         func estimate(address _: String, amount _: Decimal, memo _: String?) async throws -> NearSendEstimate {
             fatalError("not estimated in these tests")

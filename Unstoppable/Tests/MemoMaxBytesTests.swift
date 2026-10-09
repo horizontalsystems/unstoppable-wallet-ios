@@ -17,6 +17,7 @@ struct MemoMaxBytesTests {
         (.zano, 120),
         (.thorChain, 250),
         (.mayaChain, 250),
+        (.near, 256),
     ])
     func limitPerNetwork(blockchainType: BlockchainType, maxBytes: Int) {
         #expect(blockchainType.memoMaxBytes == maxBytes)

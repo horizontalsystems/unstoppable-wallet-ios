@@ -4,35 +4,24 @@ import MarketKit
 import NearKit
 import RxSwift
 
-/// The receiver checks of Android `NearAddressValidator`, which on iOS live here because the address
-/// parser does not know the account: a well-formed account id, never the account itself, and a named
-/// account that exists. An implicit (64-hex) receiver is not asked about: the first transfer creates
-/// it. The existence lookup is permissive: only a definite "no" blocks the form, an unanswered one
-/// lets the address through (the kit asks again before a NEAR transfer).
+/// The receiver check of Android `NearAddressValidator` the address parser cannot make, because it
+/// does not know the account: never the account itself. Whether a named account exists is checked by
+/// the parser (`NearAddressParserItem`), for every screen that takes a NEAR address.
 class NearPreSendHandler: PreSendHandler {
-    override class func instance(wallet: Wallet, address: ResolvedAddress?) -> IPreSendHandler? {
+    override class func instance(wallet: Wallet, address _: ResolvedAddress?) -> IPreSendHandler? {
         guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? ISendNearAdapter & IBalanceAdapter else { return nil }
-        return NearPreSendHandler(token: wallet.token, adapter: adapter, address: address?.address)
+        return NearPreSendHandler(token: wallet.token, adapter: adapter)
     }
 
     private let token: Token
     private let adapter: ISendNearAdapter & IBalanceAdapter
 
-    /// The answer for the address it was asked about; nil while unknown or when the node failed to answer.
-    private var accountExists: (address: String, exists: Bool?)?
-    private(set) var lookupTask: Task<Void, Never>?
-    /// Bumped on every address change, so a lookup started for an earlier address never lands.
-    private var lookupGeneration = 0
-
     private let stateSubject = PassthroughSubject<AdapterState, Never>()
     private let balanceSubject = PassthroughSubject<Decimal, Never>()
-    // NEAR has no destination tag: the field stays hidden, and a republished .hidden is the signal
-    // the form recomputes on once the lookup answers (as XrpPreSendHandler)
-    private let destinationTagStateSubject = PassthroughSubject<DestinationTagState, Never>()
 
     private let disposeBag = DisposeBag()
 
-    init(token: Token, adapter: ISendNearAdapter & IBalanceAdapter, address: String?) {
+    init(token: Token, adapter: ISendNearAdapter & IBalanceAdapter) {
         self.token = token
         self.adapter = adapter
 
@@ -52,41 +41,6 @@ class NearPreSendHandler: PreSendHandler {
                 balanceSubject.send(adapter.balanceData.available)
             }
             .disposed(by: disposeBag)
-
-        lookup(address: address)
-    }
-
-    deinit {
-        lookupTask?.cancel()
-    }
-
-    private func lookup(address: String?) {
-        lookupTask?.cancel()
-        lookupGeneration += 1
-        accountExists = nil
-
-        guard let address, Self.needsExistenceCheck(address: address) else { return }
-
-        let generation = lookupGeneration
-
-        lookupTask = Task { [weak self, adapter] in
-            let exists = try? await adapter.doesAccountExist(address: address)
-            if Task.isCancelled { return }
-            guard let self else { return }
-
-            // checked and applied on main, where set(address:) runs, so a stale answer cannot
-            // slip in between the check and the write
-            await MainActor.run {
-                guard generation == self.lookupGeneration else { return }
-                self.accountExists = (address: address, exists: exists)
-                self.destinationTagStateSubject.send(.hidden)
-            }
-        }
-    }
-
-    // a named account exists only once created; an implicit one is created by the first transfer
-    static func needsExistenceCheck(address: String) -> Bool {
-        NearKit.Kit.isValid(accountId: address) && !NearKit.Kit.isImplicit(accountId: address)
     }
 
     private func invalid(_ text: String, title: String? = nil) -> SendDataResult {
@@ -125,10 +79,6 @@ extension NearPreSendHandler: IPreSendHandler {
         balanceSubject.eraseToAnyPublisher()
     }
 
-    var destinationTagStatePublisher: AnyPublisher<DestinationTagState, Never> {
-        destinationTagStateSubject.eraseToAnyPublisher()
-    }
-
     // only a NEP-141 ft_transfer carries a memo (Android `sendMemoSupport`)
     func memoType(address _: String?) -> MemoType {
         if case .nep141 = token.type {
@@ -140,11 +90,6 @@ extension NearPreSendHandler: IPreSendHandler {
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
         if let error = recipientError(address: address) {
             return error
-        }
-
-        // a definite "no" is a property of the address, so it belongs here; an unknown answer is not
-        if let accountExists, accountExists.address == address, accountExists.exists == false {
-            return invalid("send.address.invalid_address".localized)
         }
 
         let hasMemo = memo.map { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty } ?? false
@@ -172,9 +117,5 @@ extension NearPreSendHandler: IPreSendHandler {
     func depositSendData(amount: Decimal, address: String, attachment: USwapMultiSwapApi.Attachment?, settings _: PreSendSettingsSnapshot?) throws -> SendDataResult {
         _ = try USwapMultiSwapApi.Attachment.memo(attachment, memoType: token.blockchainType.memoType)
         return depositSendData(amount: amount, address: address, memo: nil)
-    }
-
-    func set(address: String?) {
-        lookup(address: address)
     }
 }

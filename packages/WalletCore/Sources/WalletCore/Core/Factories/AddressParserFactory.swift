@@ -117,7 +117,7 @@ enum AddressParserFactory {
         case .xrp:
             return [XrpAddressParserItem()]
         case .near:
-            return [NearAddressParserItem()]
+            return [NearAddressParserItem(rpcUrls: Core.shared.nearNodeManager.rpcUrls(network: Core.shared.nearKitManager.network))]
         case .unsupported: return []
         }
     }

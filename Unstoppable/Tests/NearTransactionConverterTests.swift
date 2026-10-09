@@ -209,6 +209,39 @@ struct NearTransactionConverterTests {
         #expect(to == Self.other)
     }
 
+    // A forged NEP-141 event: someone else's contract logs a transfer from the account to a lookalike.
+    // Only the account's signature moves its tokens, so the outgoing leg goes to the spam check, and
+    // a token the account does not hold makes it spam (OutgoingPoisoningFilter)
+    @Test func forgedOutgoingTransferIsSpam() async throws {
+        let record = try await Self.record(
+            signer: Self.other, receiver: Self.usdtContract,
+            actions: [Self.functionCall("emit", deposit: "0")],
+            ftTransfers: [Self.ftTransfer(from: Self.own, to: "alixe.near", amount: "1000000000", memo: nil)],
+            resolvesUnknownMetadata: false
+        )
+
+        guard case let .send(_, to, _, _) = record.type else {
+            Issue.record("expected a send, got \(record.type)")
+            return
+        }
+        #expect(to == "alixe.near")
+        #expect(record.transferEvents.outgoing.count == 1)
+
+        let info = SpamTransactionInfo(hash: record.transactionHash, blockchainType: .near, timestamp: 0, blockHeight: nil, events: record.transferEvents)
+        #expect(OutgoingPoisoningFilter().evaluate(info) == .spam)
+    }
+
+    // the account's own send is never handed to the spam check
+    @Test func ownSendHasNoSpamEvents() async throws {
+        let record = try await Self.record(
+            signer: Self.own, receiver: Self.other,
+            actions: [Self.transfer(Self.oneNear)],
+            nearTransfers: [Self.nearTransfer(from: Self.own, to: Self.other, amount: Self.oneNear)]
+        )
+
+        #expect(record.transferEvents.isEmpty)
+    }
+
     // someone else's call that paid the account in two assets is checked for phishing
     @Test func unsignedContractCallIncomingIsCheckedForPhishing() async throws {
         let record = try await Self.record(

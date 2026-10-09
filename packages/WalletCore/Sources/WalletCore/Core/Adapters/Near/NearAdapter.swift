@@ -115,10 +115,6 @@ extension NearAdapter: ISendNearAdapter {
         Set(((try? nearKit.pendingTransactions()) ?? []).map(\.hash))
     }
 
-    func doesAccountExist(address: String) async throws -> Bool {
-        try await nearKit.doesAccountExist(accountId: address)
-    }
-
     func estimate(address: String, amount: Decimal, memo _: String?) async throws -> NearSendEstimate {
         let estimate = try await nearKit.estimateNearTransfer(receiverId: address)
         let fee = Self.near(yocto: estimate.fee)

@@ -170,7 +170,6 @@ protocol ISendNearAdapter {
     var fee: Decimal { get }
     var availableNear: Decimal { get }
     var pendingTransactionHashes: Set<String> { get }
-    func doesAccountExist(address: String) async throws -> Bool
     func estimate(address: String, amount: Decimal, memo: String?) async throws -> NearSendEstimate
     func send(amount: Decimal, address: String, memo: String?, estimate: NearSendEstimate, signer: NearKit.Signer) async throws -> String
 }

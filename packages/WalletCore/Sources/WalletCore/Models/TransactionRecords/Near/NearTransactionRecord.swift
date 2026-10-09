@@ -51,8 +51,14 @@ class NearTransactionRecord: TransactionRecord, TransferEventsProvider {
         }
     }
 
+    // Only the account's signature moves its NEAR or its tokens (NEP-141 has no allowance), so an
+    // outgoing leg in a transaction someone else signed is a forged event log: handed to the spam
+    // check as outgoing, as an EVM external contract call is (iOS only: Android checks incoming only)
     var transferEvents: TransferEvents {
-        .init(incoming: signed ? [] : Self.eventsForPhishingCheck(type: type))
+        guard !signed else {
+            return .init()
+        }
+        return .init(incoming: Self.eventsForPhishingCheck(type: type), outgoing: Self.outgoingEvents(type: type))
     }
 }
 
@@ -71,6 +77,14 @@ extension NearTransactionRecord {
         case let .receive(value, from, _): return [.init(address: from, value: value)]
         case let .contractCall(_, _, incoming, _): return incoming
         case .send: return []
+        }
+    }
+
+    static func outgoingEvents(type: Type) -> [TransferEvent] {
+        switch type {
+        case let .send(value, to, _, _): return [.init(address: to, value: value)]
+        case let .contractCall(_, _, _, outgoing): return outgoing
+        case .receive: return []
         }
     }
 }

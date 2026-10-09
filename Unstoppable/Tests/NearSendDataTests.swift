@@ -137,8 +137,10 @@ struct NearSendDataTests {
     // needs (Android `SendTransactionServiceNear.maxSendableAmount`)
     @Test func maxSendIsReducedToTheReceiversMaximum() async throws {
         let adapter = MaxSendAdapter()
+        // what "Max" puts in the field: the balance the send form offers
+        let max = NearPreSendHandler(token: Self.nearToken, adapter: adapter).balance
 
-        let data = try await Self.sendData(handler: Self.handler(adapter: adapter, amount: 1))
+        let data = try await Self.sendData(handler: Self.handler(adapter: adapter, amount: max))
 
         #expect(data.amount == 1 - MaxSendAdapter.reserve)
         #expect(data.canSend)
@@ -156,6 +158,26 @@ struct NearSendDataTests {
         #expect(data.amount == 1)
         #expect(!data.canSend)
         #expect(adapter.estimated == [1])
+    }
+
+    // Past signing the kit keeps a transaction that may have reached a node as pending: a failed
+    // broadcast that left a new pending record is a success, or the user would send twice (Android
+    // SendTransactionServiceNear)
+    @Test func failureThatLeftANewPendingTransactionIsASuccess() async throws {
+        let adapter = BroadcastAdapter(pendingBefore: ["old"], pendingAfter: ["old", "new"], error: URLError(.timedOut))
+
+        let hash = try await NearSendHelper.send(adapter: adapter, amount: 1, address: "alice.near", memo: nil, estimate: Self.estimate(requiredNear: 1), signer: Self.signer())
+
+        #expect(hash == "new")
+    }
+
+    // an older pending send is not mistaken for this one
+    @Test func failureWithoutANewPendingTransactionIsThrown() async throws {
+        let adapter = BroadcastAdapter(pendingBefore: ["old"], pendingAfter: ["old"], error: URLError(.timedOut))
+
+        await #expect(throws: URLError.self) {
+            try await NearSendHelper.send(adapter: adapter, amount: 1, address: "alice.near", memo: nil, estimate: Self.estimate(requiredNear: 1), signer: Self.signer())
+        }
     }
 
     // with less than the transfer needs, the amount stays and the caution names what is required
@@ -262,7 +284,8 @@ extension NearSendDataTests {
         let isMainNet = true
         let balanceState: AdapterState = .synced
         let balanceStateUpdatedObservable: Observable<AdapterState> = .never()
-        let balanceData = BalanceData(balance: 100)
+        // as NearAdapter: the spendable balance is the spendable NEAR
+        var balanceData: BalanceData { BalanceData(balance: availableNear) }
         let balanceDataUpdatedObservable: Observable<BalanceData> = .never()
 
         let address = "bob.near"
@@ -272,10 +295,6 @@ extension NearSendDataTests {
 
         init(availableNear: Decimal = 1) {
             self.availableNear = availableNear
-        }
-
-        func doesAccountExist(address _: String) async throws -> Bool {
-            true
         }
 
         func estimate(address _: String, amount: Decimal, memo _: String?) async throws -> NearSendEstimate {
@@ -291,6 +310,46 @@ extension NearSendDataTests {
         }
     }
 
+    static func signer() throws -> NearKit.Signer {
+        try NearKit.Signer.instance(seed: Data(repeating: 1, count: 64))
+    }
+
+    /// A broadcast that fails; the kit's pending set reads `pendingBefore` until `send` runs, then `pendingAfter`.
+    final class BroadcastAdapter: ISendNearAdapter {
+        private let lock = NSLock()
+        private var sent = false
+        private let pendingBefore: Set<String>
+        private let pendingAfter: Set<String>
+        private let error: Error
+
+        init(pendingBefore: Set<String>, pendingAfter: Set<String>, error: Error) {
+            self.pendingBefore = pendingBefore
+            self.pendingAfter = pendingAfter
+            self.error = error
+        }
+
+        let address = "bob.near"
+        let fee = Decimal(string: "0.0000446")!
+        let availableNear: Decimal = 1
+
+        var pendingTransactionHashes: Set<String> {
+            lock.lock()
+            defer { lock.unlock() }
+            return sent ? pendingAfter : pendingBefore
+        }
+
+        func estimate(address _: String, amount _: Decimal, memo _: String?) async throws -> NearSendEstimate {
+            fatalError("not estimated in these tests")
+        }
+
+        func send(amount _: Decimal, address _: String, memo _: String?, estimate _: NearSendEstimate, signer _: NearKit.Signer) async throws -> String {
+            lock.lock()
+            sent = true
+            lock.unlock()
+            throw error
+        }
+    }
+
     struct EstimateFailingAdapter: ISendNearAdapter {
         let error: Error
 
@@ -298,10 +357,6 @@ extension NearSendDataTests {
         let fee = Decimal(string: "0.0000446")!
         let availableNear: Decimal = 1
         let pendingTransactionHashes = Set<String>()
-
-        func doesAccountExist(address _: String) async throws -> Bool {
-            true
-        }
 
         func estimate(address _: String, amount _: Decimal, memo _: String?) async throws -> NearSendEstimate {
             throw error
