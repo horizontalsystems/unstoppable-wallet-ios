@@ -159,6 +159,12 @@ public final class PrivateSendService {
             throw PrivateSendError.invalidAmountOut
         }
 
+        // Exact output: a re-priced amount would silently deliver the recipient something else, so a
+        // preview promising anything but the requested amount is never shown (mirrors CrossPay).
+        guard amountOut == request.amount else {
+            throw PrivateSendError.invalidAmountOut
+        }
+
         let minAmountOut = response.minBuyAmount ?? route?.quote.minBuyAmount
 
         if route == nil, let minAmountOut, minAmountOut != amountOut {
@@ -226,8 +232,12 @@ public final class PrivateSendService {
             throw PrivateSendError.missingDepositAmount
         }
 
-        guard depositAmount > 0 else {
-            throw PrivateSendError.depositBelowMinimum
+        // Every committed amount present must be positive, not just the one transferred: a commit
+        // whose `sellAmount` is zero or below has no valid deposit even if `execution.amount` is set.
+        for committedAmount in [amount, commit.sellAmount].compactMap({ $0 }) {
+            guard committedAmount > 0 else {
+                throw PrivateSendError.depositBelowMinimum
+            }
         }
 
         // The slide authorized the previewed ceiling and nothing above it: an order that wants more
@@ -241,17 +251,19 @@ public final class PrivateSendService {
             throw PrivateSendError.depositBelowMinimum
         }
 
-        // Private send is exact-output: a commit promising anything other than the amount the user
-        // asked to deliver is rejected as a rate change (a fresh preview follows) rather than
-        // proceeding with a different delivery.
-        if let expectedBuyAmount = commit.expectedBuyAmount, expectedBuyAmount != preview.request.amount {
-            throw PrivateSendUnavailableReason.rateChanged
-        }
-
+        // The effective output is the commit's figure, or the preview's when the commit omits it.
         let amountOut = commit.expectedBuyAmount ?? preview.amountOut
 
         guard amountOut > 0 else {
             throw PrivateSendError.invalidAmountOut
+        }
+
+        // Private send is exact-output: an order delivering anything other than the amount the user
+        // asked to send — whether the commit states it or it falls back to the preview's — is
+        // rejected as a rate change (a fresh preview follows) rather than proceeding with a
+        // different delivery.
+        guard amountOut == preview.request.amount else {
+            throw PrivateSendUnavailableReason.rateChanged
         }
 
         return PrivateSendOrder(

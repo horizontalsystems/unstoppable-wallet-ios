@@ -226,24 +226,34 @@ public final class CrossPayService {
         }
 
         // The transfer carries the PREVIEW's amount — the figure the user confirmed under the slide.
-        // A commit asking for MORE than that would leave the order underfunded, so it is rejected as
-        // a rate change (a fresh preview follows). A lower or equal figure is accepted: in
-        // exact-output mode the server refunds the overpayment.
+        // Every committed amount present (`execution.amount`, `commit.sellAmount`) must be positive:
+        // a zero or negative figure means the order has no valid deposit, so the commit fails rather
+        // than funding it with the preview's amount. A commit asking for MORE than the preview would
+        // leave the order underfunded, so it is rejected as a rate change (a fresh preview follows).
+        // A lower or equal figure is accepted: in exact-output mode the server refunds the overpayment.
+        for committedAmount in [amount, commit.sellAmount].compactMap({ $0 }) {
+            guard committedAmount > 0 else {
+                throw CrossPayError.commitFailed
+            }
+        }
+
         if let committedAmount = amount ?? commit.sellAmount, committedAmount > preview.depositAmount {
             throw CrossPayError.rateChanged
         }
 
-        // CrossPay is exact-output: a commit promising anything other than the requested amount is
-        // rejected as a rate change rather than proceeding with a different delivery.
-        if let expectedBuyAmount = commit.expectedBuyAmount, expectedBuyAmount != request.amount {
-            throw CrossPayError.rateChanged
-        }
-
         // Never the entered amount: that's the requested output, not what the provider promised.
+        // The commit's figure wins; without one, the preview's figure stands.
         let amountOut = commit.expectedBuyAmount ?? preview.amountOut
 
         guard amountOut > 0 else {
             throw CrossPayError.commitFailed
+        }
+
+        // CrossPay is exact-output: whichever figure is effective (commit or preview), anything other
+        // than the requested amount is rejected as a rate change rather than proceeding with a
+        // different delivery. The commit is safe on its own, not only via the preview's own checks.
+        guard amountOut == request.amount else {
+            throw CrossPayError.rateChanged
         }
 
         // An undeliverable attachment fails once here at commit, not on every build re-entry.
