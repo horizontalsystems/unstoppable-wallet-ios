@@ -147,6 +147,15 @@ extension SolanaSendHandler {
 
                     title = "fee_settings.errors.insufficient_balance".localized
                     text = "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? "")
+
+                case let .insufficientTokenBalance(balance, token):
+                    // The sent token, not feeToken: an SPL shortfall formatted with SOL decimals would
+                    // show a wrong figure, not merely a wrong symbol.
+                    let appValue = AppValue(token: token, value: balance)
+                    let balanceString = appValue.formattedShort()
+
+                    title = "fee_settings.errors.insufficient_balance".localized
+                    text = "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? "")
                 }
             } else {
                 title = "ethereum_transaction.error.title".localized
@@ -219,6 +228,7 @@ extension SolanaSendHandler {
 
     enum TransactionError: Error {
         case insufficientSolBalance(balance: Decimal)
+        case insufficientTokenBalance(balance: Decimal, token: Token)
     }
 }
 

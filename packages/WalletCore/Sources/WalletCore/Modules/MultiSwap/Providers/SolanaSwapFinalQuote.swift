@@ -57,6 +57,15 @@ class SolanaSwapFinalQuote: SwapFinalQuote {
 
                 title = "fee_settings.errors.insufficient_balance".localized
                 text = "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? "")
+
+            case let .insufficientTokenBalance(balance, token):
+                // The sold token, not baseToken: an SPL shortfall formatted with SOL decimals would
+                // show a wrong figure, not merely a wrong symbol.
+                let appValue = AppValue(token: token, value: balance)
+                let balanceString = appValue.formattedShort()
+
+                title = "fee_settings.errors.insufficient_balance".localized
+                text = "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? "")
             }
         } else {
             title = "ethereum_transaction.error.title".localized

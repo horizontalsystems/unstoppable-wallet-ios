@@ -42,9 +42,20 @@ final class USwapSolanaFinalQuoteBuilder: USwapFinalQuoteBuilder {
             let estimatedFee = try adapter.estimateFee(rawTransaction: rawTransaction)
             fee = estimatedFee
 
-            let totalRequired = (input.tokenIn.type.isNative ? input.amountIn : 0) + estimatedFee
-            if adapter.balanceData.available < totalRequired {
-                throw SolanaSendHandler.TransactionError.insufficientSolBalance(balance: adapter.balanceData.available)
+            if input.tokenIn.type.isNative {
+                let solBalance = adapter.balanceData.available
+                if solBalance < input.amountIn + estimatedFee {
+                    throw SolanaSendHandler.TransactionError.insufficientSolBalance(balance: solBalance)
+                }
+            } else {
+                // SPL token: SOL covers the fee, the token covers the amount
+                let solBalance = solanaKitManager.solanaKit?.balance ?? 0
+                if solBalance < estimatedFee {
+                    throw SolanaSendHandler.TransactionError.insufficientSolBalance(balance: solBalance)
+                }
+                if adapter.balanceData.available < input.amountIn {
+                    throw SolanaSendHandler.TransactionError.insufficientTokenBalance(balance: adapter.balanceData.available, token: input.tokenIn)
+                }
             }
         } catch {
             transactionError = error
@@ -86,6 +97,8 @@ final class USwapSolanaFinalQuoteBuilder: USwapFinalQuoteBuilder {
             let solBalance = solanaKitManager.solanaKit?.balance ?? 0
             if solBalance < fee {
                 transactionError = SolanaSendHandler.TransactionError.insufficientSolBalance(balance: solBalance)
+            } else if adapter.balanceData.available < input.amountIn {
+                transactionError = SolanaSendHandler.TransactionError.insufficientTokenBalance(balance: adapter.balanceData.available, token: input.tokenIn)
             }
         }
 
