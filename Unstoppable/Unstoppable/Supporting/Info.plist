@@ -137,6 +137,8 @@
 	<string>${ROBINHOOD_API_KEYS}</string>
 	<key>EtherscanApiKeys</key>
 	<string>${ETHERSCAN_API_KEYS}</string>
+	<key>FastNearApiKey</key>
+	<string>${FAST_NEAR_API_KEY}</string>
 	<key>FtmscanApiKeys</key>
 	<string>${FTMSCAN_API_KEYS}</string>
 	<key>GasFreeApiKey</key>
