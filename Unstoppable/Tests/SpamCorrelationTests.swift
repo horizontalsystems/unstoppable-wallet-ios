@@ -14,9 +14,10 @@ struct SpamCorrelationTests {
     @Test func matchLengthIsFourByDefaultAndThreeForSolana() throws {
         let cache = try makeCache(rows: [("0xabc000000000000000000000000000000000fed", 0, nil)])
         let context = context(from: "0xabc111111111111111111111111111111111fed", timestamp: 0)
+        let normalize = SpamWrapper.addressNormalizer(blockchainType: .ethereum)
 
-        #expect(AddressSimilarityCondition(cache: cache).evaluate(context) == 0)
-        #expect(AddressSimilarityCondition(cache: cache, minMatchLength: 3).evaluate(context) == 8)
+        #expect(AddressSimilarityCondition(cache: cache, normalize: normalize).evaluate(context) == 0)
+        #expect(AddressSimilarityCondition(cache: cache, minMatchLength: 3, normalize: normalize).evaluate(context) == 8)
     }
 
     @Test func tronLeadingTIsStripped() throws {
@@ -26,7 +27,35 @@ struct SpamCorrelationTests {
         let context = context(blockchainType: .tron, from: incoming, timestamp: 0)
 
         // without stripping, "TABC" == "TABC" would score the prefix
-        #expect(AddressSimilarityCondition(cache: cache).evaluate(context) == 0)
+        #expect(AddressSimilarityCondition(cache: cache, normalize: SpamWrapper.addressNormalizer(blockchainType: .tron)).evaluate(context) == 0)
+    }
+
+    // The condition knows no chain: an address is compared as given, lowercased, unless the chain's
+    // normalizer says otherwise
+    @Test func withoutNormalizerAddressesCompareAsGiven() throws {
+        let cache = try makeCache(rows: [("0xabc000000000000000000000000000000000fed", 0, nil)])
+        let context = context(from: "0xABC111111111111111111111111111111111FED", timestamp: 0)
+
+        // "0xab" == "0xab" and "0fed" != "1fed": the shared "0x" scores the prefix
+        #expect(AddressSimilarityCondition(cache: cache).evaluate(context) == 4)
+    }
+
+    @Test func chainNormalizers() {
+        let evm = SpamWrapper.addressNormalizer(blockchainType: .ethereum)
+        let tron = SpamWrapper.addressNormalizer(blockchainType: .tron)
+        let near = SpamWrapper.addressNormalizer(blockchainType: .near)
+
+        #expect(evm?("0xAbC") == "AbC")
+        #expect(tron?("T" + String(repeating: "a", count: 33)) == String(repeating: "a", count: 33))
+        // a NEAR name drops its top-level account, shared by every name under it
+        #expect(near?("alice.near") == "alice")
+        #expect(near?("pay.alice.tg") == "pay.alice")
+        #expect(near?(String(repeating: "a", count: 64)) == String(repeating: "a", count: 64))
+        #expect(near?("0xabc") == "abc")
+        // Solana, XRP, Stellar compare as given; Tron's "T" rule no longer applies to them
+        #expect(SpamWrapper.addressNormalizer(blockchainType: .solana) == nil)
+        #expect(SpamWrapper.addressNormalizer(blockchainType: .xrp) == nil)
+        #expect(SpamWrapper.addressNormalizer(blockchainType: .stellar) == nil)
     }
 
     // MARK: - Time / block correlation

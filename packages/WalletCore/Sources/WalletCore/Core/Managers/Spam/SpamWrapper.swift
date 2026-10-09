@@ -1,4 +1,5 @@
 import HsToolKit
+import MarketKit
 import RxSwift
 
 public class SpamWrapper {
@@ -72,10 +73,24 @@ public class SpamWrapper {
                 ],
                 spamThreshold: Self.spamThreshold
             ))
+        } else if source.blockchainType == .near {
+            // As on Android: a normal amount is trusted on its value alone, correlation only scores
+            // the gray zone. Addresses compare on 2 characters, names being short
+            evaluator.append(GrayZoneGateCondition(
+                values: [
+                    ZeroValueCondition(score: Self.zeroValueIncoming, logger: logger),
+                    LowAmountCondition(spamScore: Self.spamThreshold, riskScore: Self.amountRiskScore, dangerScore: Self.amountDangerScore, logger: logger),
+                ],
+                correlation: [
+                    AddressSimilarityCondition(cache: outputCache, minMatchLength: 2, normalize: Self.addressNormalizer(blockchainType: .near), prefixScore: Self.addressPartScore, suffixScore: Self.addressPartScore, logger: logger),
+                    TimeCorrelationCondition(cache: outputCache, blockScore: Self.correlationBlockScore, timeScore: Self.correlationTimeScore, logger: logger),
+                ],
+                spamThreshold: Self.spamThreshold
+            ))
         } else {
             evaluator
                 .append(ZeroValueCondition(score: Self.zeroValueIncoming, logger: logger))
-                .append(AddressSimilarityCondition(cache: outputCache, prefixScore: Self.addressPartScore, suffixScore: Self.addressPartScore, logger: logger))
+                .append(AddressSimilarityCondition(cache: outputCache, normalize: Self.addressNormalizer(blockchainType: source.blockchainType), prefixScore: Self.addressPartScore, suffixScore: Self.addressPartScore, logger: logger))
                 .append(LowAmountCondition(spamScore: Self.spamThreshold, riskScore: Self.amountRiskScore, dangerScore: Self.amountDangerScore, logger: logger))
                 .append(TimeCorrelationCondition(cache: outputCache, blockScore: Self.correlationBlockScore, timeScore: Self.correlationTimeScore, logger: logger))
         }
@@ -89,6 +104,32 @@ public class SpamWrapper {
             outputCache: outputCache,
             logger: logger
         )
+    }
+}
+
+extension SpamWrapper {
+    /// What a chain's addresses share, dropped before two addresses are compared for similarity; nil
+    /// compares them as given.
+    static func addressNormalizer(blockchainType: BlockchainType) -> ((String) -> String)? {
+        if EvmBlockchainManager.blockchainTypes.contains(blockchainType) {
+            return { $0.stripping(prefix: "0x") }
+        }
+
+        switch blockchainType {
+        // "T" opens every 34-char Tron address and carries no more information than "0x"
+        case .tron:
+            return { $0.count == 34 && $0.hasPrefix("T") ? String($0.dropFirst()) : $0 }
+        // a name drops its top-level account (".near", ".tg"), which every name under it shares
+        case .near:
+            return { address in
+                if let dot = address.lastIndex(of: ".") {
+                    return String(address[..<dot])
+                }
+                return address.stripping(prefix: "0x")
+            }
+        default:
+            return nil
+        }
     }
 }
 

@@ -5,18 +5,23 @@ import Foundation
 final class GrayZoneGateCondition: SpamCondition {
     var identifier: String { "gray_zone_gate" }
 
-    private let value: SpamCondition
+    private let values: [SpamCondition]
     private let correlation: [SpamCondition]
     private let spamThreshold: Int
 
-    init(value: SpamCondition, correlation: [SpamCondition], spamThreshold: Int = 7) {
-        self.value = value
+    // several value conditions add up, as Android's value pass adds the zero-value and dust points
+    init(values: [SpamCondition], correlation: [SpamCondition], spamThreshold: Int = 7) {
+        self.values = values
         self.correlation = correlation
         self.spamThreshold = spamThreshold
     }
 
+    convenience init(value: SpamCondition, correlation: [SpamCondition], spamThreshold: Int = 7) {
+        self.init(values: [value], correlation: correlation, spamThreshold: spamThreshold)
+    }
+
     func evaluate(_ context: SpamEvaluationContext) -> Int {
-        let valueScore = value.evaluate(context)
+        let valueScore = values.reduce(0) { $0 + $1.evaluate(context) }
 
         guard valueScore > 0, valueScore < spamThreshold else {
             return valueScore

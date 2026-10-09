@@ -6,6 +6,7 @@ final class AddressSimilarityCondition: SpamCondition {
 
     private let cache: OutputTransactionCache
     private let minMatchLength: Int
+    private let normalizer: ((String) -> String)?
     private let prefixScore: Int
     private let suffixScore: Int
     private let logger: Logger?
@@ -13,12 +14,14 @@ final class AddressSimilarityCondition: SpamCondition {
     init(
         cache: OutputTransactionCache,
         minMatchLength: Int = 4,
+        normalize: ((String) -> String)? = nil,
         prefixScore: Int = 4,
         suffixScore: Int = 4,
         logger: Logger? = nil
     ) {
         self.cache = cache
         self.minMatchLength = minMatchLength
+        normalizer = normalize
         self.prefixScore = prefixScore
         self.suffixScore = suffixScore
         self.logger = logger
@@ -77,12 +80,9 @@ final class AddressSimilarityCondition: SpamCondition {
         return bestScore
     }
 
-    // "T" opens every 34-char Tron address and carries no more information than "0x"
+    // what a chain's addresses share carries no information; the chain's normalizer drops it
     private func normalize(_ address: String) -> String {
-        if address.count == 34, address.hasPrefix("T") {
-            return address.dropFirst().lowercased()
-        }
-        return address.stripping(prefix: "0x").lowercased()
+        (normalizer?(address) ?? address).lowercased()
     }
 
     private func hasSimilarPrefix(_ address1: String, _ address2: String) -> Bool {
