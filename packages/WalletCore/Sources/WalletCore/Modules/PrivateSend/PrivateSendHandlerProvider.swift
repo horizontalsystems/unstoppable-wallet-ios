@@ -15,11 +15,6 @@ public extension PrivateSendHandlerProvider {
     // are mostly exchanges that need one.
     static let unsupportedBlockchainTypes: Set<BlockchainType> = [.xrp, .stellar]
 
-    // Chains that cannot fund an order yet. Refused before the commit, so no order is left unpaid:
-    // Android has no NEAR deposit builder either and fails only after committing. Supporting a
-    // NEAR deposit is a separate task.
-    static let unsupportedSourceBlockchainTypes: Set<BlockchainType> = [.near]
-
     // Shared resolution, exposed so an app that only needs different field rendering can supply its
     // own data builder without copying any of this.
     static func handler(
@@ -28,7 +23,6 @@ public extension PrivateSendHandlerProvider {
     ) -> ISendHandler? {
         guard case let .privateSend(request) = sendData else { return nil }
         guard !unsupportedBlockchainTypes.contains(request.token.blockchainType) else { return nil }
-        guard !unsupportedSourceBlockchainTypes.contains(request.token.blockchainType) else { return nil }
         guard let service = Core.privateSendService else { return nil }
         guard let account = Core.shared.accountManager.activeAccount else { return nil }
         guard let baseToken = baseToken(token: request.token) else { return nil }

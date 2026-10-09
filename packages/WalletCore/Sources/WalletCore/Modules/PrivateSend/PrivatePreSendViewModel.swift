@@ -60,9 +60,7 @@ final class PrivatePreSendViewModel: BasePreSendViewModel {
     // A nil service yields false permanently, so an app that never wires private send is unaffected.
     // Chains PrivateSendHandlerProvider rejects are not offered by the tab either.
     private static func isSupported(token: Token, service: PrivateSendService?) -> Bool {
-        guard !PrivateSendHandlerProvider.unsupportedBlockchainTypes.contains(token.blockchainType),
-              !PrivateSendHandlerProvider.unsupportedSourceBlockchainTypes.contains(token.blockchainType)
-        else {
+        guard !PrivateSendHandlerProvider.unsupportedBlockchainTypes.contains(token.blockchainType) else {
             return false
         }
 

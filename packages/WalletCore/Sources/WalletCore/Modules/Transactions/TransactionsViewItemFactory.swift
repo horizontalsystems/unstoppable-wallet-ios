@@ -686,17 +686,17 @@ class TransactionsViewItemFactory {
                 if let currencyValue = item.currencyValue {
                     secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
                 }
-            case let .contractCall(contractId, method, value):
-                iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
+            case let .contractCall(contractId, method, incoming, outgoing):
+                // a swap or a wrap lists each asset it moved, as an EVM contract call does
+                let incomingValues = incoming.map(\.value)
+                let outgoingValues = outgoing.map(\.value)
+
+                iconType = self.iconType(source: record.source, incomingValues: incomingValues, outgoingValues: outgoingValues, nftMetadata: [:])
                 title = "transactions.contract_call".localized
                 subTitle = method.map { "\($0) · \(contractId.shortened)" } ?? contractId.shortened
 
-                if let value {
-                    primaryValue = TransactionsViewModel.Value(text: coinString(from: value), type: type(value: value, condition: value.value < 0, .outgoing, .incoming))
-
-                    if let currencyValue = item.currencyValue {
-                        secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
-                    }
+                if !incomingValues.isEmpty || !outgoingValues.isEmpty {
+                    (primaryValue, secondaryValue) = values(incomingValues: incomingValues, outgoingValues: outgoingValues, currencyValue: item.currencyValue, nftMetadata: [:])
                 }
             }
 

@@ -10,12 +10,15 @@ class NearTransactionRecord: TransactionRecord, TransferEventsProvider {
     let pending: Bool
     /// Failed because it was never included before its block hash expired: nothing happened on chain.
     let expired: Bool
+    /// The account signed it: what it brought, such as a swap's proceeds, is not an attempt to mislead.
+    let signed: Bool
 
-    init(source: TransactionSource, hash: String, blockHeight: Int?, timestamp: Int, pending: Bool, failed: Bool, expired: Bool, type: Type, fee: AppValue?, spam: Bool = false) {
+    init(source: TransactionSource, hash: String, blockHeight: Int?, timestamp: Int, pending: Bool, failed: Bool, expired: Bool, signed: Bool, type: Type, fee: AppValue?, spam: Bool = false) {
         self.type = type
         self.fee = fee
         self.pending = pending
         self.expired = expired
+        self.signed = signed
 
         super.init(
             source: source,
@@ -44,12 +47,12 @@ class NearTransactionRecord: TransactionRecord, TransferEventsProvider {
         switch type {
         case let .send(value, _, _, _): return value
         case let .receive(value, _, _): return value
-        case let .contractCall(_, _, value): return value
+        case let .contractCall(_, _, incoming, outgoing): return (incoming + outgoing).count == 1 ? (incoming + outgoing)[0].value : nil
         }
     }
 
     var transferEvents: TransferEvents {
-        .init(incoming: Self.eventsForPhishingCheck(type: type))
+        .init(incoming: signed ? [] : Self.eventsForPhishingCheck(type: type))
     }
 }
 
@@ -57,16 +60,17 @@ extension NearTransactionRecord {
     enum `Type` {
         case send(value: AppValue, to: String, sentToSelf: Bool, memo: String?)
         case receive(value: AppValue, from: String, memo: String?)
-        /// Any other transaction the account signed, or one that touched it without moving value to
-        /// it; `value` is the NEAR it moved, if any.
-        case contractCall(contractId: String, method: String?, value: AppValue?)
+        /// Any other transaction, with the account's net movement per asset: none for a call that
+        /// moved nothing, several for a swap or a wrap (Android `Type.ContractCall`).
+        case contractCall(contractId: String, method: String?, incoming: [TransferEvent], outgoing: [TransferEvent])
     }
 
     /// Incoming transfers only, the shape the phishing (address poisoning) check compares against.
     static func eventsForPhishingCheck(type: Type) -> [TransferEvent] {
         switch type {
         case let .receive(value, from, _): return [.init(address: from, value: value)]
-        default: return []
+        case let .contractCall(_, _, incoming, _): return incoming
+        case .send: return []
         }
     }
 }

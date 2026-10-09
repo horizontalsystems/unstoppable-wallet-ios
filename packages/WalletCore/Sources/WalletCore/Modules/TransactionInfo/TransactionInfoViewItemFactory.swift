@@ -822,18 +822,18 @@ class TransactionInfoViewItemFactory {
 
                 sections.append(.init(viewItems))
 
-            case let .contractCall(contractId, method, value):
+            case let .contractCall(contractId, method, incoming, outgoing):
                 sections.append(.init([
                     .value(title: "tx_info.operation_type".localized, value: method ?? "transactions.contract_call".localized),
                     .value(title: "transactions.contract".localized, value: contractId),
                 ]))
 
-                if let value {
-                    if value.value < 0 {
-                        sections.append(.init(sendSection(source: record.source, appValue: value, to: contractId, rates: item.rates, balanceHidden: balanceHidden)))
-                    } else {
-                        sections.append(.init(receiveSection(source: record.source, appValue: value, from: contractId, rates: item.rates, balanceHidden: balanceHidden)))
-                    }
+                for event in outgoing {
+                    sections.append(.init(sendSection(source: record.source, appValue: event.value, to: event.address, rates: item.rates, balanceHidden: balanceHidden)))
+                }
+
+                for event in incoming {
+                    sections.append(.init(receiveSection(source: record.source, appValue: event.value, from: event.address, rates: item.rates, balanceHidden: balanceHidden)))
                 }
             }
 

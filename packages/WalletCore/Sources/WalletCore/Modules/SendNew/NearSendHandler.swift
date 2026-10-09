@@ -15,6 +15,8 @@ class NearSendHandler: SendHandler {
     private let amount: Decimal
     private let address: String
     private let memo: String?
+    // a Private Send or Cross Pay deposit must go out exactly as the order asks
+    var allowsAmountAdjustment = true
 
     init(signer: NearKit.Signer, token: Token, baseToken: Token, adapter: ISendNearAdapter & IBalanceAdapter, amount: Decimal, address: String, memo: String?) {
         self.signer = signer
@@ -41,7 +43,7 @@ extension NearSendHandler: ISendHandler {
         // receiver's estimate is known, the amount becomes the balance net of what this transfer
         // needs up front, far less for a named or existing account than for a new one (Android
         // `SendTransactionServiceNear.maxSendableAmount`)
-        if token.type.isNative, amount == adapter.availableNear, let estimate = result.estimate {
+        if allowsAmountAdjustment, token.type.isNative, amount == adapter.availableNear, let estimate = result.estimate {
             let maxAmount = adapter.availableNear - (estimate.requiredNear - amount)
             if maxAmount > 0, maxAmount != amount {
                 amount = maxAmount
@@ -72,6 +74,8 @@ extension NearSendHandler: ISendHandler {
         )
     }
 }
+
+extension NearSendHandler: IAmountAdjustingSendHandler {}
 
 extension NearSendHandler: ISendHandlerRefCapturing {
     // Same broadcast path as `send`, returning the on-chain tx hash. The estimate is the one the

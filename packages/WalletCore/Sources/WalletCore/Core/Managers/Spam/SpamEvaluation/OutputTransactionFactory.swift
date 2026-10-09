@@ -42,6 +42,17 @@ class OutputTransactionFactory {
             }
             return [to]
 
+        // anything the account signed is its own; a contract call gives the recipients of its legs
+        case let r as NearTransactionRecord:
+            guard r.signed else {
+                return nil
+            }
+            switch r.type {
+            case let .send(_, to, sentToSelf, _): return sentToSelf ? [] : [to]
+            case let .contractCall(_, _, _, outgoing): return outgoing.map(\.address)
+            case .receive: return []
+            }
+
         case let r as ContractCallTransactionRecord:
             return r.outgoingEvents.map(\.address)
 
@@ -84,6 +95,13 @@ class OutputTransactionFactory {
 
         case let r as SolanaIncomingTransactionRecord:
             return r.from.map { [$0] } ?? []
+
+        case let r as NearTransactionRecord:
+            switch r.type {
+            case let .receive(_, from, _): return [from]
+            case let .contractCall(_, _, incoming, outgoing): return sentElseReceived(outgoing: filterZeroPoisoningEvents(outgoing), incoming: incoming)
+            case .send: return []
+            }
 
         case let r as SolanaUnknownTransactionRecord:
             let incoming = r.incomingTransfers.compactMap(\.address)

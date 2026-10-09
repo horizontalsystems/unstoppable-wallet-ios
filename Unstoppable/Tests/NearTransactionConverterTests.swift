@@ -5,9 +5,10 @@ import NearKit
 import Testing
 @testable import WalletCore
 
-// Android `NearTransactionConverter`: a token movement wins over the NEAR attached to it, a signed
-// transfer is a send, anything else signed is a contract call, NEAR arriving is a receive; the fee
-// is the account's only when it signed. An expired transaction is failed and "not processed".
+// Android `NearTransactionConverter`: the net change of each asset across the transaction. One asset
+// moving is a send or a receive, several are a contract call listing each; NEAR paid into a call is a
+// contract call; the fee is the account's only when it signed. An expired transaction is failed and
+// "not processed".
 struct NearTransactionConverterTests {
     @Test func signedTransferIsASend() async throws {
         let record = try await Self.record(
@@ -76,7 +77,7 @@ struct NearTransactionConverterTests {
         #expect(value.value == Decimal(string: "-2.5")!)
         #expect(to == Self.other)
         #expect(memo == "order-42")
-        // outgoing token sends stay out of the phishing check (TECH_DEBT F-3)
+        // what the account signed stays out of the phishing check
         #expect(record.transferEvents.incoming.isEmpty)
     }
 
@@ -149,25 +150,94 @@ struct NearTransactionConverterTests {
             fee: "44636512500000000000"
         )
 
-        guard case let .contractCall(contractId, method, value) = record.type else {
+        guard case let .contractCall(contractId, method, incoming, outgoing) = record.type else {
             Issue.record("expected a contract call, got \(record.type)")
             return
         }
         #expect(contractId == "wrap.near")
         #expect(method == "near_deposit")
-        #expect(value?.value == -1)
+        #expect(incoming.isEmpty)
+        #expect(outgoing.map(\.value.value) == [-1])
+        #expect(outgoing.first?.address == "wrap.near")
+        #expect(record.mainValue?.value == -1)
         #expect(record.fee != nil)
+    }
+
+    // a wrap moves two assets: one contract call listing both, in both histories
+    @Test func wrapShowsBothLegs() async throws {
+        let record = try await Self.record(
+            signer: Self.own, receiver: Self.usdtContract,
+            actions: [Self.functionCall("near_deposit", deposit: Self.oneNear)],
+            nearTransfers: [Self.nearTransfer(from: Self.own, to: Self.usdtContract, amount: Self.oneNear, kind: "FunctionCallDeposit", methodName: "near_deposit")],
+            ftTransfers: [Self.ftTransfer(from: nil, to: Self.own, amount: "1000000", memo: nil)],
+            knownTokens: [Self.usdtToken]
+        )
+
+        guard case let .contractCall(_, _, incoming, outgoing) = record.type else {
+            Issue.record("expected a contract call, got \(record.type)")
+            return
+        }
+        #expect(incoming.map(\.value.value) == [1])
+        #expect(incoming.first?.value.token == Self.usdtToken)
+        // a mint: the contract is the other side
+        #expect(incoming.first?.address == Self.usdtContract)
+        #expect(outgoing.map(\.value.value) == [-1])
+        #expect(record.mainValue == nil)
+        // what the account signed itself is not checked for phishing
+        #expect(record.transferEvents.incoming.isEmpty)
+    }
+
+    // the receiver's registration and the 1 yocto proof belong to the token send, net of the refund
+    @Test func registrationNextToATokenSendIsNotANearMovement() async throws {
+        let record = try await Self.record(
+            signer: Self.own, receiver: Self.usdtContract,
+            actions: [Self.functionCall("storage_deposit", deposit: "1250000000000000000000"), Self.functionCall("ft_transfer", deposit: "1")],
+            nearTransfers: [
+                Self.nearTransfer(from: Self.own, to: Self.usdtContract, amount: "1250000000000000000000", kind: "FunctionCallDeposit", methodName: "storage_deposit"),
+                Self.nearTransfer(from: Self.own, to: Self.usdtContract, amount: "1", kind: "FunctionCallDeposit", methodName: "ft_transfer"),
+                Self.nearTransfer(from: Self.usdtContract, to: Self.own, amount: "1250000000000000000000"),
+            ],
+            ftTransfers: [Self.ftTransfer(from: Self.own, to: Self.other, amount: "2500000", memo: nil)],
+            knownTokens: [Self.usdtToken]
+        )
+
+        guard case let .send(value, to, _, _) = record.type else {
+            Issue.record("expected a token send, got \(record.type)")
+            return
+        }
+        #expect(value.token == Self.usdtToken)
+        #expect(to == Self.other)
+    }
+
+    // someone else's call that paid the account in two assets is checked for phishing
+    @Test func unsignedContractCallIncomingIsCheckedForPhishing() async throws {
+        let record = try await Self.record(
+            signer: Self.other, receiver: Self.usdtContract,
+            actions: [Self.functionCall("payout", deposit: "0")],
+            nearTransfers: [Self.nearTransfer(from: Self.usdtContract, to: Self.own, amount: Self.oneNear)],
+            ftTransfers: [Self.ftTransfer(from: Self.other, to: Self.own, amount: "2500000", memo: nil)],
+            knownTokens: [Self.usdtToken]
+        )
+
+        guard case let .contractCall(_, _, incoming, outgoing) = record.type else {
+            Issue.record("expected a contract call, got \(record.type)")
+            return
+        }
+        #expect(incoming.count == 2)
+        #expect(outgoing.isEmpty)
+        #expect(record.transferEvents.incoming.count == 2)
     }
 
     @Test func signedActionWithoutMethodIsNamedByItsType() async throws {
         let record = try await Self.record(signer: Self.own, receiver: Self.own, actions: [TxActionJson(type: "AddKey")])
 
-        guard case let .contractCall(_, method, value) = record.type else {
+        guard case let .contractCall(_, method, incoming, outgoing) = record.type else {
             Issue.record("expected a contract call, got \(record.type)")
             return
         }
         #expect(method == "AddKey")
-        #expect(value == nil)
+        #expect(incoming.isEmpty && outgoing.isEmpty)
+        #expect(record.mainValue == nil)
     }
 
     @Test func failedTransactionIsFailed() async throws {
@@ -224,6 +294,7 @@ extension NearTransactionConverterTests {
         let amount: String
         let kind: String
         let success: Bool
+        var methodName: String?
     }
 
     struct FtTransferJson: Encodable {
@@ -242,8 +313,8 @@ extension NearTransactionConverterTests {
         TxActionJson(type: "FunctionCall", deposit: deposit, methodName: method)
     }
 
-    static func nearTransfer(from: String, to: String, amount: String, kind: String = "Transfer") -> NearTransferJson {
-        NearTransferJson(from: from, to: to, amount: amount, kind: kind, success: true)
+    static func nearTransfer(from: String, to: String, amount: String, kind: String = "Transfer", methodName: String? = nil) -> NearTransferJson {
+        NearTransferJson(from: from, to: to, amount: amount, kind: kind, success: true, methodName: methodName)
     }
 
     static func ftTransfer(from: String?, to: String?, amount: String, memo: String?) -> FtTransferJson {

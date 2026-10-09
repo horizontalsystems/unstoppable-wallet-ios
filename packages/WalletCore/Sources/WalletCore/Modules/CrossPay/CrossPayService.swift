@@ -26,12 +26,9 @@ public final class CrossPayService {
     }
 
     // Reads only the already-synced asset map, never triggers a fetch: unsynced = "not supported yet".
-    // A recipient on an unsupported chain, or a funding token on a chain that cannot fund an order
-    // yet, shows "not supported".
+    // A recipient on an unsupported chain shows "not supported".
     public func supports(tokenIn: Token, tokenOut: Token) -> Bool {
-        guard !PrivateSendHandlerProvider.unsupportedBlockchainTypes.contains(tokenOut.blockchainType),
-              !PrivateSendHandlerProvider.unsupportedSourceBlockchainTypes.contains(tokenIn.blockchainType)
-        else {
+        guard !PrivateSendHandlerProvider.unsupportedBlockchainTypes.contains(tokenOut.blockchainType) else {
             return false
         }
 

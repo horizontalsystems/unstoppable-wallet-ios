@@ -95,6 +95,7 @@ extension LowAmountCondition {
         "BNB": .init(0.0002),
         "POL": .init(1),
         "SOL": .init(0.0001),
+        "NEAR": .init(0.01),
     ]
 
     /// Cent-sized stablecoin transfers are common test sends, so a stablecoin is spam on value alone

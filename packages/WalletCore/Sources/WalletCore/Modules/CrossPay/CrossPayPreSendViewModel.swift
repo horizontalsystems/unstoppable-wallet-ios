@@ -194,11 +194,6 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
             return false
         }
 
-        // a funding chain the handler provider refuses is not offered by the tab either
-        guard !PrivateSendHandlerProvider.unsupportedSourceBlockchainTypes.contains(token.blockchainType) else {
-            return false
-        }
-
         guard PrivateSendHandlerProvider.baseToken(token: token) != nil else {
             return false
         }

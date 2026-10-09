@@ -87,6 +87,9 @@ class TransactionInfoService {
         case let tx as NearTransactionRecord:
             tokens.append(tx.mainValue?.token)
             tokens.append(tx.fee?.token)
+            if case let .contractCall(_, _, incoming, outgoing) = tx.type {
+                tokens.append(contentsOf: (incoming + outgoing).map(\.value.token))
+            }
         case let tx as StellarTransactionRecord:
             for action in [tx.type] + tx.additionalActions {
                 switch action {

@@ -145,6 +145,19 @@ struct NearSendDataTests {
         #expect(adapter.estimated == [1, 1 - MaxSendAdapter.reserve])
     }
 
+    // a Private Send or Cross Pay deposit goes out exactly as the order asks; a shortfall is reported instead
+    @Test func depositAmountIsNeverReduced() async throws {
+        let adapter = MaxSendAdapter()
+        let handler = try Self.handler(adapter: adapter, amount: 1)
+        handler.allowsAmountAdjustment = false
+
+        let data = try await Self.sendData(handler: handler)
+
+        #expect(data.amount == 1)
+        #expect(!data.canSend)
+        #expect(adapter.estimated == [1])
+    }
+
     // with less than the transfer needs, the amount stays and the caution names what is required
     @Test func maxSendBelowTheReserveIsInsufficient() async throws {
         let adapter = MaxSendAdapter(availableNear: Decimal(string: "0.0001")!)
