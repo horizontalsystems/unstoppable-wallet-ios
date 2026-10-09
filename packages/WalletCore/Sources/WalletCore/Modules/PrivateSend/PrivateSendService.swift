@@ -241,17 +241,17 @@ public final class PrivateSendService {
             throw PrivateSendError.depositBelowMinimum
         }
 
+        // Private send is exact-output: a commit promising anything other than the amount the user
+        // asked to deliver is rejected as a rate change (a fresh preview follows) rather than
+        // proceeding with a different delivery.
+        if let expectedBuyAmount = commit.expectedBuyAmount, expectedBuyAmount != preview.request.amount {
+            throw PrivateSendUnavailableReason.rateChanged
+        }
+
         let amountOut = commit.expectedBuyAmount ?? preview.amountOut
 
         guard amountOut > 0 else {
             throw PrivateSendError.invalidAmountOut
-        }
-
-        if amountOut != preview.amountOut {
-            // Contractual in exact-output mode: the commit delivers what the preview promised. A
-            // discrepancy is a provider bug worth a log; the order proceeds with the commit's numbers.
-            // The amounts are deliberately not logged: they are live transfer values.
-            Core.instance?.logError(message: "PrivateSend: commit expectedBuyAmount != preview (provider: \(preview.providerId))", save: false)
         }
 
         return PrivateSendOrder(

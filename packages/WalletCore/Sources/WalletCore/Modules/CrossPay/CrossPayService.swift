@@ -226,10 +226,17 @@ public final class CrossPayService {
         }
 
         // The transfer carries the PREVIEW's amount — the figure the user confirmed under the slide.
-        // The commit's own figure is not used; a discrepancy is logged (no amounts: live transfer
-        // values) and the order proceeds.
-        if let committedAmount = amount ?? commit.sellAmount, committedAmount != preview.depositAmount {
-            Core.instance?.logError(message: "CrossPay: commit sellAmount != preview", save: false)
+        // A commit asking for MORE than that would leave the order underfunded, so it is rejected as
+        // a rate change (a fresh preview follows). A lower or equal figure is accepted: in
+        // exact-output mode the server refunds the overpayment.
+        if let committedAmount = amount ?? commit.sellAmount, committedAmount > preview.depositAmount {
+            throw CrossPayError.rateChanged
+        }
+
+        // CrossPay is exact-output: a commit promising anything other than the requested amount is
+        // rejected as a rate change rather than proceeding with a different delivery.
+        if let expectedBuyAmount = commit.expectedBuyAmount, expectedBuyAmount != request.amount {
+            throw CrossPayError.rateChanged
         }
 
         // Never the entered amount: that's the requested output, not what the provider promised.
@@ -237,12 +244,6 @@ public final class CrossPayService {
 
         guard amountOut > 0 else {
             throw CrossPayError.commitFailed
-        }
-
-        if amountOut != request.amount {
-            // Contractual in exact-output mode: the commit delivers what the preview promised. A
-            // discrepancy is a provider bug worth a log; the order proceeds with the commit's number.
-            Core.instance?.logError(message: "CrossPay: commit expectedBuyAmount != requested", save: false)
         }
 
         // An undeliverable attachment fails once here at commit, not on every build re-entry.
