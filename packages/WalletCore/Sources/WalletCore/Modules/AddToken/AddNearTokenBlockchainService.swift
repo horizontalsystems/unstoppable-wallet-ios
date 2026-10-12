@@ -18,8 +18,8 @@ class AddNearTokenBlockchainService {
     static func contractId(reference: String) -> String? {
         var text = reference.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        if text.hasPrefix("http") {
-            guard let range = text.range(of: "/token/") else { return nil }
+        // a contract id such as `http.near` has no `/token/` and is kept whole, as on Android
+        if text.hasPrefix("http"), let range = text.range(of: "/token/") {
             text = String(text[range.upperBound...])
             if let end = text.firstIndex(where: { $0 == "?" || $0 == "#" }) {
                 text = String(text[..<end])

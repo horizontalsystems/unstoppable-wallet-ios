@@ -39,7 +39,7 @@ final class AddressSimilarityCondition: SpamCondition {
             return 0
         }
 
-        let incomingAddresses = context.transaction.events.incoming.map { normalize($0.address) }
+        let incomingAddresses = context.transaction.events.incoming.map(\.address)
 
         return bestMatch(incomingAddresses: incomingAddresses, cachedOutputs: cachedOutputs)
     }
@@ -49,21 +49,23 @@ final class AddressSimilarityCondition: SpamCondition {
         let maxScore = prefixScore + suffixScore
 
         for incomingAddress in incomingAddresses {
-            for cached in cachedOutputs {
-                let normalizedCached = normalize(cached.address)
+            let normalizedIncoming = normalize(incomingAddress)
 
-                // Skip if same address (legitimate return transaction)
-                guard incomingAddress != normalizedCached else {
+            for cached in cachedOutputs {
+                // Skip if same address (legitimate return transaction). Only the full address counts:
+                // two accounts the normalizer maps alike, such as `alice.near` and `alice.tg`, are a lookalike
+                guard incomingAddress.lowercased() != cached.address.lowercased() else {
                     continue
                 }
 
+                let normalizedCached = normalize(cached.address)
                 var score = 0
 
-                if hasSimilarPrefix(incomingAddress, normalizedCached) {
+                if hasSimilarPrefix(normalizedIncoming, normalizedCached) {
                     score += prefixScore
                 }
 
-                if hasSimilarSuffix(incomingAddress, normalizedCached) {
+                if hasSimilarSuffix(normalizedIncoming, normalizedCached) {
                     score += suffixScore
                 }
 

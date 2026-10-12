@@ -29,10 +29,15 @@ struct NearSpamPolicyTests {
     }
 
     @Test func lookalikeUnderAnotherTopLevelAccountIsSpam() throws {
-        // "alice.tg" vs "alice.near" compare "alice" with "alice": the same name, not a lookalike
-        #expect(try !isSpam(events: incoming(from: "alice.tg", near: "0.005"), timestamp: 999_999, counterparties: [("alice.near", 0)]))
+        // "alice.tg" is another account than "alice.near": "alice" vs "alice" matches both ends, 3 (risk) + 8 = 11
+        #expect(try isSpam(events: incoming(from: "alice.tg", near: "0.005"), timestamp: 999_999, counterparties: [("alice.near", 0)]))
         // "alise.tg" vs "alice.near": "al" matches
         #expect(try isSpam(events: incoming(from: "alise.tg", near: "0.005"), timestamp: 999_999, counterparties: [("alice.near", 0)]))
+    }
+
+    // only the full address is a return: the account the user paid, whatever its case
+    @Test func dustBackFromThePaidAccountIsNotALookalike() throws {
+        #expect(try !isSpam(events: incoming(from: "Alice.NEAR", near: "0.005"), timestamp: 999_999, counterparties: [("alice.near", 0)]))
     }
 
     @Test func hexAccountsCompareOnTwoCharacters() throws {

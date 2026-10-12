@@ -21,6 +21,12 @@ struct NearTokenReferenceTests {
         #expect(AddNearTokenBlockchainService.contractId(reference: "https://nearblocks.io/token/usdt.tether-token.near/?tab=holders") == "usdt.tether-token.near")
     }
 
+    // a contract id that only starts like a link is still an id, as on Android
+    @Test func contractIdStartingWithHttpIsAccepted() {
+        #expect(AddNearTokenBlockchainService.contractId(reference: "http.near") == "http.near")
+        #expect(AddNearTokenBlockchainService.contractId(reference: "httpcoin.near") == "httpcoin.near")
+    }
+
     @Test func referenceIsTrimmedAndLowercased() {
         #expect(AddNearTokenBlockchainService.contractId(reference: "  USDT.Tether-Token.NEAR  ") == "usdt.tether-token.near")
     }
