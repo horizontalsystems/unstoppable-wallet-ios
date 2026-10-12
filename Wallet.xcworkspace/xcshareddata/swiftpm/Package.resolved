@@ -1,5 +1,5 @@
 {
-  "originHash" : "e19a64eff70e0cc096d45b698c87179b642e88a376987ef443c84538da55629c",
+  "originHash" : "503d5def7464d401ed93fdbace333d546b705a0e8f65c036041dcf2bd955306c",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -240,8 +240,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/HsToolKit.Swift.git",
       "state" : {
-        "revision" : "7e30bef1e23916ff7bd57cc4f9797ce4b0eace14",
-        "version" : "2.0.6"
+        "revision" : "a6a4b12c3cfe57de8e3deb89bdb787ca96b99f28",
+        "version" : "2.0.7"
       }
     },
     {
@@ -276,8 +276,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/MarketKit.Swift",
       "state" : {
-        "revision" : "564fed75db331c689faae1f651163185a51bbfca",
-        "version" : "3.6.20"
+        "revision" : "aeee63c7975ce11f3ecde2c54e5aec9c815b202a",
+        "version" : "3.6.21"
       }
     },
     {
@@ -287,6 +287,15 @@
       "state" : {
         "revision" : "942f411f766b531550a4a6ff5a72520a1d228a30",
         "version" : "0.2.12"
+      }
+    },
+    {
+      "identity" : "nearkit.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/horizontalsystems/NearKit.Swift.git",
+      "state" : {
+        "revision" : "a912ab7dcfe28552f1510d82c75deae8e9a2154b",
+        "version" : "1.0.0"
       }
     },
     {
@@ -690,8 +699,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/XrpKit.Swift",
       "state" : {
-        "revision" : "4a06bac0577d623a4959c1ea93b87baa654f78b3",
-        "version" : "1.0.0"
+        "revision" : "1d23162b5d7db175e0b317756daa3fb9ef89b0da",
+        "version" : "1.0.1"
       }
     },
     {
