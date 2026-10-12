@@ -143,6 +143,7 @@ struct NearSendDataTests {
         let data = try await Self.sendData(handler: Self.handler(adapter: adapter, amount: max))
 
         #expect(data.amount == 1 - MaxSendAdapter.reserve)
+        #expect(data.amountAdjusted)
         #expect(data.canSend)
         #expect(adapter.estimated == [1, 1 - MaxSendAdapter.reserve])
     }
@@ -156,6 +157,7 @@ struct NearSendDataTests {
         let data = try await Self.sendData(handler: handler)
 
         #expect(data.amount == 1)
+        #expect(!data.amountAdjusted)
         #expect(!data.canSend)
         #expect(adapter.estimated == [1])
     }
@@ -197,6 +199,7 @@ struct NearSendDataTests {
         let data = try await Self.sendData(handler: Self.handler(adapter: adapter, amount: Decimal(string: "0.5")!))
 
         #expect(data.amount == Decimal(string: "0.5")!)
+        #expect(!data.amountAdjusted)
         #expect(adapter.estimated == [Decimal(string: "0.5")!])
     }
 

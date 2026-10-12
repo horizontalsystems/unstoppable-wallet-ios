@@ -59,7 +59,8 @@ extension NearSendHandler: ISendHandler {
             estimate: result.estimate,
             fee: result.estimate?.fee ?? adapter.fee,
             transactionError: result.transactionError,
-            previousTransactionPending: !adapter.pendingTransactionHashes.isEmpty
+            previousTransactionPending: !adapter.pendingTransactionHashes.isEmpty,
+            amountAdjusted: amount != self.amount
         )
     }
 
@@ -99,8 +100,13 @@ extension NearSendHandler {
         private let fee: Decimal
         private let transactionError: Error?
         private let previousTransactionPending: Bool
+        // "Max" took the fee out of the entered amount: a deposit that must go out exact refuses it
+        let amountAdjusted: Bool
 
-        init(token: Token, amount: Decimal, address: String, memo: String?, estimate: NearSendEstimate?, fee: Decimal, transactionError: Error?, previousTransactionPending: Bool) {
+        init(
+            token: Token, amount: Decimal, address: String, memo: String?, estimate: NearSendEstimate?, fee: Decimal, transactionError: Error?,
+            previousTransactionPending: Bool, amountAdjusted: Bool = false
+        ) {
             self.token = token
             self.amount = amount
             self.address = address
@@ -109,6 +115,7 @@ extension NearSendHandler {
             self.fee = fee
             self.transactionError = transactionError
             self.previousTransactionPending = previousTransactionPending
+            self.amountAdjusted = amountAdjusted
         }
 
         var feeData: FeeData? {

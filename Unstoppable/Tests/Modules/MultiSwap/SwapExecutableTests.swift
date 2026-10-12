@@ -13,6 +13,22 @@ import TronKit
 // build-argument equivalence oracle: executable(tokenIn:) must repackage
 // exactly the fields MultiSwapSendHandler.send reads from each quote today
 struct SwapExecutableTests {
+    private static func nearQuote(address: String) -> NearSwapFinalQuote {
+        NearSwapFinalQuote(
+            token: token(blockchainType: .near),
+            address: address,
+            amount: 3,
+            estimate: nil,
+            fee: 0.1,
+            previousTransactionPending: false,
+            expectedAmountOut: 2,
+            recipient: nil,
+            slippage: nil,
+            transactionError: nil,
+            toAddress: "to"
+        )
+    }
+
     private static func token(blockchainType: BlockchainType = .ethereum) -> Token {
         Token(
             coin: Coin(uid: "test-coin", name: "Test", code: "TST"),
@@ -339,6 +355,27 @@ struct SwapExecutableTests {
             return
         }
         #expect(executableRaw == rawTransaction)
+    }
+
+    @Test func nearQuoteCarriesTokenInAddressAndAmount() throws {
+        let token = Self.token(blockchainType: .near)
+        let quote = Self.nearQuote(address: "deposit.near")
+
+        let executable = try #require(quote.executable(tokenIn: token) as? NearExecutable)
+
+        #expect(executable.token == token)
+        #expect(executable.address == "deposit.near")
+        #expect(executable.amount == 3)
+    }
+
+    // built against the preview's stand-in deposit (placeholder.near) for the fee row only: nothing to send
+    @Test func nearQuoteBuiltOnTheStubDepositIsNotExecutable() {
+        let quote = Self.nearQuote(address: "placeholder.near")
+        quote.isEstimateOnly = true
+
+        let executable = quote.executable(tokenIn: Self.token(blockchainType: .near))
+
+        #expect(executable is UnsupportedExecutable)
     }
 
     @Test func baseQuoteReturnsUnsupportedExecutable() {
