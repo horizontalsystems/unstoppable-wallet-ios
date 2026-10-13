@@ -21,7 +21,7 @@ struct SwapHistoryView: View {
                                             path.append(viewModel.correctedSwap(viewItem.swap))
                                         }) {
                                             switch viewItem.swap.operation {
-                                            case .swap: ItemView(viewItem: viewItem)
+                                            case .swap, .splitSwap: ItemView(viewItem: viewItem)
                                             case .privateSend, .crossPay: OperationItemView(viewItem: viewItem)
                                             }
                                         }

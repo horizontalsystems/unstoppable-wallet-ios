@@ -2,217 +2,274 @@ import Alamofire
 import Foundation
 import ObjectMapper
 
-// Split swap: one sell asset swapped into one buy asset and delivered to several addresses.
-// Request / response shapes mirror the Swapuz split-order API (POST /api/split-order/rate,
-// POST /api/split-order), with USwap asset ids in place of Swapuz coin / network pairs.
+// Split swap (/v3/split/*): one deposit of the sell asset delivered as several outputs. The calls
+// mirror the simple v3 flow with the buy side pluralised; the deposit side (sell amount, fee, the
+// transfer, the preview token) keeps its meaning.
 extension USwapMultiSwapApi {
-    private static let stubRateFactor = Decimal(99) / 100
+    func splitRate(_ request: SplitRequest) async throws -> SplitRateResult {
+        let response: SplitRateResponseMapping = try await networkManager.fetch(
+            url: endpoint("split/rate"),
+            method: .post,
+            parameters: request.parameters,
+            encoding: JSONEncoding.default,
+            headers: headers
+        )
 
-    // TODO: integrate backend split-order endpoints (reference: Swapuz POST /api/split-order/rate, POST /api/split-order)
-    // `stubRate` only feeds the stub; remove it at integration.
-    func splitRate(_ request: SplitRateRequest, stubRate: Decimal) async throws -> SplitRateResponse {
-        try await Task.sleep(nanoseconds: 600_000_000)
-        try Task.checkCancellation()
-
-        let outputs = request.outputs.map { output in
-            SplitRateResultOutput(
-                buyAsset: output.buyAsset,
-                amount: output.amount,
-                amountResult: request.depositAmount * output.amount / 100 * stubRate * Self.stubRateFactor
-            )
-        }
-
-        let total = outputs.map(\.amountResult).reduce(0, +)
-
-        return SplitRateResponse(
-            amount: request.depositAmount,
-            outputs: outputs,
-            minAmount: nil,
-            maxAmount: nil,
-            guaranteedAmount: total * Self.stubRateFactor,
-            estimatedTime: 900
+        return SplitRateResult(
+            routes: response.routes.map(\.route),
+            providerErrors: response.providerErrors.map(\.providerError)
         )
     }
 
-    // TODO: integrate backend split-order endpoints (reference: Swapuz POST /api/split-order/rate, POST /api/split-order)
-    // The stub returns an EMPTY deposit address, so the confirmation fails until the backend is integrated.
-    func createSplitOrder(_ request: CreateSplitOrderRequest) async throws -> SplitOrderResponse {
-        try await Task.sleep(nanoseconds: 600_000_000)
-        try Task.checkCancellation()
+    // No side effects: the split route with a `previewToken` and a `stubDepositAddress` for the fee
+    // estimate. A split preview never carries an execution.
+    func splitPreview(_ request: SplitRequest) async throws -> SplitRoute {
+        let response: SplitRouteMapping = try await networkManager.fetch(
+            url: endpoint("split/preview"),
+            method: .post,
+            parameters: request.parameters,
+            encoding: JSONEncoding.default,
+            headers: headers
+        )
 
-        return SplitOrderResponse(
-            publicUid: UUID().uuidString,
-            status: "Remaining",
-            depositAmount: request.depositAmount,
-            depositAddress: "",
-            depositMemo: nil,
-            expiresAt: nil
+        return response.route
+    }
+
+    // Creates the split order. Failures follow `commit(_:)`: a non-2xx is rethrown as the raw network
+    // error, a 2xx that is not `ok` or carries no `splitUuid` throws `CommitError` directly.
+    func splitCommit(_ request: CommitRequest) async throws -> SplitCommitResponse {
+        let response: SplitCommitResponseMapping = try await networkManager.fetch(
+            url: endpoint("split/commit"),
+            method: .post,
+            parameters: ["previewToken": request.previewToken],
+            encoding: JSONEncoding.default,
+            headers: headers
+        )
+
+        let commit = response.response
+
+        guard commit.status == "ok", let splitUuid = commit.splitUuid, !splitUuid.isEmpty else {
+            throw CommitError(httpStatus: nil, status: commit.status, reason: nil, providerError: nil)
+        }
+
+        return commit
+    }
+
+    // Reports the inbound tx hash for every output of the split
+    func splitSigned(splitUuid: String, inboundTxHash: String) async throws {
+        let _: SplitSignedResponseMapping = try await networkManager.fetch(
+            url: endpoint("split/signed"),
+            method: .post,
+            parameters: ["splitUuid": splitUuid, "inboundTxHash": inboundTxHash],
+            encoding: JSONEncoding.default,
+            headers: headers
         )
     }
 }
 
 extension USwapMultiSwapApi {
-    enum SplitAmountType: String {
-        case absolute = "Absolute"
-        case percent = "Percent"
-    }
-
-    struct SplitRateRequest {
+    // Body of /v3/split/rate (`providerIds`) and /v3/split/preview (`providerId`, addresses, fee).
+    // Outputs are percent shares of the deposit, in request order.
+    struct SplitRequest {
         let sellAsset: String
-        let depositAmount: Decimal
-        let amountType: SplitAmountType
+        let sellAmount: Decimal
+        let slippage: Decimal
         let chainId: String?
-        let providerIds: [String]
-        let outputs: [SplitRateOutput]
+        let outputs: [SplitRequestOutput]
+        var providerIds: [String] = []
+        var providerId: String?
+        var sourceAddress: String?
+        var refundAddress: String?
+        var networkFee: NetworkFee?
 
         var parameters: Parameters {
             var parameters: Parameters = [
                 "sellAsset": sellAsset,
-                "depositAmount": depositAmount.description,
-                "amountType": amountType.rawValue,
-                "providers": providerIds,
+                "sellAmount": sellAmount.description,
+                "amountType": "percent",
+                "slippage": slippage,
                 "outputs": outputs.map(\.parameters),
             ]
 
+            if !providerIds.isEmpty {
+                parameters["providers"] = providerIds
+            }
+            if let providerId {
+                parameters["provider"] = providerId
+            }
             if let chainId {
                 parameters["chainId"] = chainId
             }
-
-            return parameters
-        }
-    }
-
-    struct SplitRateOutput {
-        let buyAsset: String
-        let amount: Decimal
-
-        var parameters: Parameters {
-            [
-                "buyAsset": buyAsset,
-                "amount": amount.description,
-            ]
-        }
-    }
-
-    struct CreateSplitOrderRequest {
-        let sellAsset: String
-        let depositAmount: Decimal
-        let amountType: SplitAmountType
-        let providerIds: [String]
-        let refundAddress: String?
-        let refundMemo: String?
-        let outputs: [SplitOrderOutput]
-
-        var parameters: Parameters {
-            var parameters: Parameters = [
-                "sellAsset": sellAsset,
-                "depositAmount": depositAmount.description,
-                "amountType": amountType.rawValue,
-                "providers": providerIds,
-                "outputs": outputs.map(\.parameters),
-            ]
-
+            if let sourceAddress {
+                parameters["sourceAddress"] = sourceAddress
+            }
             if let refundAddress {
                 parameters["refundAddress"] = refundAddress
             }
-
-            if let refundMemo {
-                parameters["refundMemo"] = refundMemo
+            if let networkFee {
+                parameters["networkFee"] = networkFee.parameters
             }
 
             return parameters
         }
     }
 
-    struct SplitOrderOutput {
+    struct SplitRequestOutput {
         let buyAsset: String
-        let address: String
-        let memo: String?
-        let amount: Decimal
+        let percent: Int
+        var destinationAddress: String?
 
         var parameters: Parameters {
             var parameters: Parameters = [
                 "buyAsset": buyAsset,
-                "address": address,
-                "amount": amount.description,
+                "amount": String(percent),
             ]
 
-            if let memo {
-                parameters["memo"] = memo
+            if let destinationAddress {
+                parameters["destinationAddress"] = destinationAddress
             }
 
             return parameters
         }
     }
+}
 
-    public struct SplitRateResponse {
-        public let amount: Decimal
-        public let outputs: [SplitRateResultOutput]
-        public let minAmount: Decimal?
-        public let maxAmount: Decimal?
-        public let guaranteedAmount: Decimal?
+public extension USwapMultiSwapApi {
+    struct SplitRateResult {
+        public let routes: [SplitRoute]
+        public let providerErrors: [ProviderError]
+    }
+
+    struct SplitRoute {
+        public let providerId: String
+        // sorted by `index`, i.e. in request order
+        public let outputs: [SplitRouteOutput]
         public let estimatedTime: TimeInterval?
+        public let previewToken: String?
+        public let stubDepositAddress: String?
+
+        public var expectedBuyAmount: Decimal {
+            outputs.map(\.expectedBuyAmount).reduce(0, +)
+        }
+
+        // The locked total of a fixed-rate split; nil when any output floats
+        public var minBuyAmount: Decimal? {
+            let mins = outputs.compactMap(\.minBuyAmount)
+            return mins.count == outputs.count ? mins.reduce(0, +) : nil
+        }
     }
 
-    public struct SplitRateResultOutput {
+    struct SplitRouteOutput {
+        public let index: Int
         public let buyAsset: String
-        public let amount: Decimal
-        public let amountResult: Decimal
+        public let destinationAddress: String?
+        public let sellAmount: Decimal?
+        public let expectedBuyAmount: Decimal
+        public let minBuyAmount: Decimal?
     }
 
-    public struct SplitOrderResponse {
-        public let publicUid: String
+    struct SplitCommitResponse {
         public let status: String
-        public let depositAmount: Decimal
-        public let depositAddress: String
-        public let depositMemo: String?
+        public let splitUuid: String?
         public let expiresAt: Date?
+        public let execution: Execution?
+        // sorted by `index`
+        public let outputs: [SplitCommitOutput]
+    }
+
+    struct SplitCommitOutput {
+        public let index: Int
+        public let uuid: String
+        public let destinationAddress: String?
+        public let sellAmount: Decimal?
+        public let expectedBuyAmount: Decimal?
+        public let minBuyAmount: Decimal?
     }
 }
 
-// Response mappings for the backend integration; unused by the stubs above.
 extension USwapMultiSwapApi {
     struct SplitRateResponseMapping: ImmutableMappable {
-        let response: SplitRateResponse
+        let routes: [SplitRouteMapping]
+        let providerErrors: [ProviderErrorResponse]
 
         init(map: Map) throws {
-            let outputs: [SplitRateResultOutputMapping] = try map.value("outputs")
+            // A full refusal may omit routes (or send null) and carry only providerErrors
+            routes = map.JSON["routes"] == nil || map.JSON["routes"] is NSNull ? [] : try map.value("routes")
+            providerErrors = (try? map.value("providerErrors")) ?? []
+        }
+    }
 
-            response = try SplitRateResponse(
-                amount: map.value("amount", using: USwapMultiSwapApi.decimalTransform),
-                outputs: outputs.map(\.output),
-                minAmount: try? map.value("minAmount", using: USwapMultiSwapApi.decimalTransform),
-                maxAmount: try? map.value("maxAmount", using: USwapMultiSwapApi.decimalTransform),
-                guaranteedAmount: try? map.value("guaranteedAmount", using: USwapMultiSwapApi.decimalTransform),
-                estimatedTime: try? map.value("estimatedTime")
+    struct SplitRouteMapping: ImmutableMappable {
+        let route: SplitRoute
+
+        init(map: Map) throws {
+            let outputs: [SplitRouteOutputMapping] = try map.value("outputs")
+
+            route = SplitRoute(
+                providerId: ((try? map.value("providers") as [String]) ?? []).first ?? "",
+                outputs: outputs.map(\.output).sorted { $0.index < $1.index },
+                estimatedTime: try? map.value("estimatedTime.total"),
+                previewToken: try? map.value("previewToken"),
+                stubDepositAddress: try? map.value("stubDepositAddress")
             )
         }
     }
 
-    struct SplitRateResultOutputMapping: ImmutableMappable {
-        let output: SplitRateResultOutput
+    struct SplitRouteOutputMapping: ImmutableMappable {
+        let output: SplitRouteOutput
 
         init(map: Map) throws {
-            output = try SplitRateResultOutput(
+            output = try SplitRouteOutput(
+                index: map.value("index"),
                 buyAsset: map.value("buyAsset"),
-                amount: map.value("amount", using: USwapMultiSwapApi.decimalTransform),
-                amountResult: map.value("amountResult", using: USwapMultiSwapApi.decimalTransform)
+                destinationAddress: try? map.value("destinationAddress"),
+                sellAmount: try? map.value("sellAmount", using: USwapMultiSwapApi.decimalTransform),
+                expectedBuyAmount: map.value("expectedBuyAmount", using: USwapMultiSwapApi.decimalTransform),
+                minBuyAmount: try? map.value("minBuyAmount", using: USwapMultiSwapApi.decimalTransform)
             )
         }
     }
 
-    struct SplitOrderResponseMapping: ImmutableMappable {
-        let response: SplitOrderResponse
+    struct SplitCommitResponseMapping: ImmutableMappable {
+        let response: SplitCommitResponse
 
         init(map: Map) throws {
-            response = try SplitOrderResponse(
-                publicUid: map.value("publicUid"),
-                status: map.value("status"),
-                depositAmount: map.value("depositAmount", using: USwapMultiSwapApi.decimalTransform),
-                depositAddress: map.value("depositAddress"),
-                depositMemo: try? map.value("depositMemo"),
-                expiresAt: try? map.value("expiresAt", using: ISO8601DateTransform())
+            let status: String = try map.value("status")
+            let outputs: [SplitCommitOutputMapping] = (try? map.value("outputs")) ?? []
+
+            // Present must parse: a malformed execution that silently became nil would leave nothing to send
+            let execution: ExecutionResponse? = map["execution"].currentValue != nil ? try map.value("execution") : nil
+
+            response = SplitCommitResponse(
+                status: status,
+                splitUuid: try? map.value("splitUuid"),
+                expiresAt: try? map.value("expiresAt", using: USwapMultiSwapApi.millisecondsDateTransform),
+                execution: execution?.execution,
+                outputs: outputs.map(\.output).sorted { $0.index < $1.index }
             )
+        }
+    }
+
+    struct SplitCommitOutputMapping: ImmutableMappable {
+        let output: SplitCommitOutput
+
+        init(map: Map) throws {
+            output = try SplitCommitOutput(
+                index: map.value("index"),
+                uuid: map.value("uuid"),
+                destinationAddress: try? map.value("destinationAddress"),
+                sellAmount: try? map.value("sellAmount", using: USwapMultiSwapApi.decimalTransform),
+                expectedBuyAmount: try? map.value("expectedBuyAmount", using: USwapMultiSwapApi.decimalTransform),
+                minBuyAmount: try? map.value("minBuyAmount", using: USwapMultiSwapApi.decimalTransform)
+            )
+        }
+    }
+
+    struct SplitSignedResponseMapping: ImmutableMappable {
+        let splitUuid: String
+
+        init(map: Map) throws {
+            splitUuid = try map.value("splitUuid")
         }
     }
 }

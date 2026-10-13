@@ -117,7 +117,7 @@ public class DefaultUSwapSubProvider: USwapSubProvider {
         _ = try await api.signed(.init(uuid: uuid, inboundTxHash: inboundTxHash))
     }
 
-    public func splitRate(tokenIn: Token, tokenOut: Token, amountIn: Decimal, percents: [Int]) async throws -> USwapMultiSwapApi.SplitRateResponse {
+    public func splitRate(tokenIn: Token, tokenOut: Token, amountIn: Decimal, percents: [Int]) async throws -> USwapMultiSwapApi.SplitRoute {
         guard let assetIn = asset(token: tokenIn) else {
             throw SwapError.unsupportedTokenIn
         }
@@ -126,57 +126,65 @@ public class DefaultUSwapSubProvider: USwapSubProvider {
             throw SwapError.unsupportedTokenOut
         }
 
-        let request = USwapMultiSwapApi.SplitRateRequest(
+        var request = USwapMultiSwapApi.SplitRequest(
             sellAsset: assetIn,
-            depositAmount: amountIn,
-            amountType: .percent,
+            sellAmount: amountIn,
+            slippage: MultiSwapSlippage.default,
             chainId: commitRequestBuilder.chainId(token: tokenIn),
-            providerIds: [info.id],
-            outputs: percents.map { .init(buyAsset: assetOut, amount: Decimal($0)) }
+            outputs: percents.map { .init(buyAsset: assetOut, percent: $0) }
         )
+        request.providerIds = [info.id]
 
-        return try await api.splitRate(request, stubRate: stubSplitRate(tokenIn: tokenIn, tokenOut: tokenOut))
+        let result = try await api.splitRate(request)
+
+        guard let route = result.routes.first else {
+            throw SwapError.noRoutes
+        }
+
+        return route
     }
 
-    public func splitCommit(tokenIn: Token, tokenOut: Token, amountIn: Decimal, recipients: [SplitRecipient]) async throws -> USwapSplitCommitResult {
-        guard let assetIn = asset(token: tokenIn) else {
+    public func splitPreview(input: USwapSplitPreviewInput) async throws -> USwapSplitPreviewResult {
+        guard let assetIn = asset(token: input.tokenIn) else {
             throw SwapError.unsupportedTokenIn
         }
 
-        guard let assetOut = asset(token: tokenOut) else {
+        guard let assetOut = asset(token: input.tokenOut) else {
             throw SwapError.unsupportedTokenOut
         }
 
-        let refundAddress = try await commitRequestBuilder.refundAddress(token: tokenIn)
+        let refundAddress = try await commitRequestBuilder.refundAddress(token: input.tokenIn)
 
-        let request = USwapMultiSwapApi.CreateSplitOrderRequest(
+        var request = USwapMultiSwapApi.SplitRequest(
             sellAsset: assetIn,
-            depositAmount: amountIn,
-            amountType: .percent,
-            providerIds: [info.id],
-            refundAddress: refundAddress,
-            refundMemo: nil,
-            outputs: recipients.map { .init(buyAsset: assetOut, address: $0.address, memo: nil, amount: Decimal($0.percent)) }
+            sellAmount: input.amountIn,
+            slippage: input.slippage,
+            chainId: commitRequestBuilder.chainId(token: input.tokenIn),
+            outputs: input.recipients.map { .init(buyAsset: assetOut, percent: $0.percent, destinationAddress: $0.address) }
         )
+        request.providerId = info.id
+        request.sourceAddress = try await commitRequestBuilder.sourceAddress(token: input.tokenIn)
+        request.refundAddress = refundAddress
+        request.networkFee = USwapCommitRequestBuilder.networkFee(tokenIn: input.tokenIn, transactionSettings: input.transactionSettings)
 
-        let order = try await api.createSplitOrder(request)
+        let route = try await api.splitPreview(request)
 
-        return USwapSplitCommitResult(order: order, refundAddress: refundAddress, chain: commitRequestBuilder.chainId(token: tokenIn))
+        return USwapSplitPreviewResult(route: route, refundAddress: refundAddress)
     }
 
-    // TODO: stub only — remove with the `stubRate` argument once the backend split rate is integrated
-    private func stubSplitRate(tokenIn: Token, tokenOut: Token) -> Decimal {
-        let marketKit = Core.shared.marketKit
-        let currencyCode = Core.shared.currencyManager.baseCurrency.code
-
-        let priceIn = marketKit.coinPrice(coinUid: tokenIn.coin.uid, currencyCode: currencyCode)?.value ?? 1
-        let priceOut = marketKit.coinPrice(coinUid: tokenOut.coin.uid, currencyCode: currencyCode)?.value ?? 1
-
-        guard priceOut != 0 else {
-            return 1
+    public func splitCommit(previewToken: String) async throws -> USwapMultiSwapApi.SplitCommitResponse {
+        do {
+            return try await api.splitCommit(.init(previewToken: previewToken))
+        } catch {
+            if error is CancellationError {
+                throw error
+            }
+            throw USwapMultiSwapApi.commitError(networkError: error)
         }
+    }
 
-        return priceIn / priceOut
+    public func reportSplitSigned(splitUuid: String, inboundTxHash: String) async throws {
+        try await api.splitSigned(splitUuid: splitUuid, inboundTxHash: inboundTxHash)
     }
 
     public func validateTrustedProvider(tokenIn _: Token, amountIn _: Decimal) async throws -> Bool? {
@@ -184,13 +192,11 @@ public class DefaultUSwapSubProvider: USwapSubProvider {
     }
 
     public func track(swap: Swap) async throws -> Swap {
-        try await tracker.track(
-            swap: swap,
-            request: .swap(
-                uuid: swap.providerSwapId,
-                inboundTxHash: swap.txHash
-            )
-        )
+        let request: USwapMultiSwapApi.TrackRequest = swap.operation == .splitSwap
+            ? .split(splitUuid: swap.providerSwapId, inboundTxHash: swap.txHash)
+            : .swap(uuid: swap.providerSwapId, inboundTxHash: swap.txHash)
+
+        return try await tracker.track(swap: swap, request: request)
     }
 
     func asset(token: Token) -> String? {

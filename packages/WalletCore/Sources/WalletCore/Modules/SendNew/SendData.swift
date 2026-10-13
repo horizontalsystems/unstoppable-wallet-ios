@@ -35,7 +35,7 @@ public enum SendData {
     // visible to the swap screen that opened it.
     case swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, multiSwapQuote: MultiSwapQuote, recipientHolder: SwapExternalRecipientHolder)
     // Private (split) swap: tokenIn swapped into one tokenOut delivered to several recipients
-    case splitSwap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: ISplitSwapProvider, quote: SplitMultiSwapQuote, recipients: [SplitRecipient])
+    case splitSwap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: ISplitSwapProvider, recipients: [SplitRecipient])
     indirect case walletConnect(inner: SendData?, request: WCRequest)
     case tonConnect(request: TonConnectSendTransactionRequest)
     case monero(token: Token, amount: MoneroSendAmount, address: String, memo: String?, selectedKeyImages: [String]?)

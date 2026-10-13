@@ -27,8 +27,8 @@ final class SplitSwapViewModel: MultiSwapViewModel {
     private let splitSubject = PassthroughSubject<Void, Never>()
     private var splitCancellables = Set<AnyCancellable>()
 
-    override init(token: Token? = nil, tokenOut: Token? = nil, autoResolveTokenOut: Bool = true) {
-        super.init(token: token, tokenOut: tokenOut, autoResolveTokenOut: autoResolveTokenOut)
+    override init(token: Token? = nil, tokenOut: Token? = nil, autoResolveTokenOut: Bool = true, customDecimals: Int? = nil) {
+        super.init(token: token, tokenOut: tokenOut, autoResolveTokenOut: autoResolveTokenOut, customDecimals: customDecimals)
 
         splitSubject
             .debounce(for: .milliseconds(250), scheduler: DispatchQueue.main)
@@ -157,7 +157,7 @@ extension SplitSwapViewModel {
 
         let splitRecipients = zip(addresses, quote.percents).map { SplitRecipient(address: $0, percent: $1) }
 
-        return .splitSwap(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider, quote: quote, recipients: splitRecipients)
+        return .splitSwap(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider, recipients: splitRecipients)
     }
 
     func set(splitPercent: Int) {

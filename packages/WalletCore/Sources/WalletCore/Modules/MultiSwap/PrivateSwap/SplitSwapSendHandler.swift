@@ -4,25 +4,25 @@ import MarketKit
 
 class SplitSwapSendHandler: SendHandler {
     override class func instance(sendData: WalletCore.SendData) -> ISendHandler? {
-        guard case let .splitSwap(tokenIn, tokenOut, amountIn, provider, quote, recipients) = sendData else { return nil }
+        guard case let .splitSwap(tokenIn, tokenOut, amountIn, provider, recipients) = sendData else { return nil }
 
         guard let baseToken = MultiSwapSendHandler.baseToken(tokenIn: tokenIn) else {
             return nil
         }
 
-        return SplitSwapSendHandler(baseToken: baseToken, tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider, quote: quote, recipients: recipients)
+        return SplitSwapSendHandler(baseToken: baseToken, tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider, recipients: recipients)
     }
 
     private let accountManager = Core.shared.accountManager
     private let walletManager = Core.shared.walletManager
     private let restoreSettingsManager = Core.shared.restoreSettingsManager
+    private let swapHistoryManager = Core.shared.swapHistoryManager
 
     let baseToken: Token
     let tokenIn: Token
     let tokenOut: Token
     let amountIn: Decimal
     let provider: ISplitSwapProvider
-    let quote: SplitMultiSwapQuote
     let recipients: [SplitRecipient]
 
     // resolved once per confirmation: the mechanism is fixed by (chain, account)
@@ -30,13 +30,14 @@ class SplitSwapSendHandler: SendHandler {
         try? SwapBroadcasterFactory.broadcaster(blockchainType: tokenIn.blockchainType, account: $0)
     }
 
-    init(baseToken: Token, tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: ISplitSwapProvider, quote: SplitMultiSwapQuote, recipients: [SplitRecipient]) {
+    private let refreshSubject = PassthroughSubject<Void, Never>()
+
+    init(baseToken: Token, tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: ISplitSwapProvider, recipients: [SplitRecipient]) {
         self.baseToken = baseToken
         self.tokenIn = tokenIn
         self.tokenOut = tokenOut
         self.amountIn = amountIn
         self.provider = provider
-        self.quote = quote
         self.recipients = recipients
     }
 }
@@ -50,9 +51,10 @@ extension SplitSwapSendHandler: ISendHandler {
         broadcaster?.expirationDuration ?? 15
     }
 
-    // Same as the standard swap: the confirmation holds a committed order, refreshed on demand only
+    // As the standard swap: the confirmation quote is a side-effect-free preview, silently re-requested on
+    // expiry; the order is created by `provider.splitCommit(finalQuote:)` when the user slides.
     var autoRefreshEnabled: Bool {
-        false
+        true
     }
 
     // The recipients and the split are chosen before confirmation: only the generic fee settings remain
@@ -61,11 +63,10 @@ extension SplitSwapSendHandler: ISendHandler {
     }
 
     var refreshPublisher: AnyPublisher<Void, Never>? {
-        nil
+        refreshSubject.eraseToAnyPublisher()
     }
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
-        // the confirmation quote commits an order with the provider, so the account is checked before it, not after
         guard let account = accountManager.activeAccount else {
             throw MultiSwapSendHandler.SendError.noActiveAccount
         }
@@ -74,30 +75,28 @@ extension SplitSwapSendHandler: ISendHandler {
             throw SwapBroadcasterError.noBroadcaster
         }
 
-        let finalQuote = try await provider.splitConfirmationQuote(
-            quote: quote,
+        let preview = try await provider.splitPreview(
             tokenIn: tokenIn,
             tokenOut: tokenOut,
             amountIn: amountIn,
             recipients: recipients,
+            slippage: MultiSwapSlippage.default,
             transactionSettings: transactionSettings
         )
-        finalQuote.preciseEstimateTime = provider.preciseEstimateTime
+        preview.quote.preciseEstimateTime = provider.preciseEstimateTime
 
         guard let broadcaster else {
             throw SwapBroadcasterError.noBroadcaster
         }
 
-        let prepared = try await broadcaster.prepare(finalQuote.executable(tokenIn: tokenIn))
-
+        // the executable is built at send time, from the quote commit rebuilds against the real deposit
         return SendData(
             tokenIn: tokenIn,
             tokenOut: tokenOut,
             amountIn: amountIn,
-            quote: finalQuote,
-            prepared: prepared,
+            quote: preview.quote,
             broadcaster: broadcaster,
-            splitQuote: quote,
+            outputAmounts: preview.outputAmounts,
             recipients: recipients
         )
     }
@@ -107,8 +106,41 @@ extension SplitSwapSendHandler: ISendHandler {
             throw MultiSwapSendHandler.SendError.invalidData
         }
 
-        // TODO: save split swap to history (also on partial execution, as MultiSwapSendHandler does)
-        _ = try await data.broadcaster.submit(data.prepared)
+        // Creates the order. On failure the token is never reused: the reason is toasted and a fresh
+        // preview is requested.
+        let commitment: SplitSwapCommitment
+        do {
+            commitment = try await provider.splitCommit(finalQuote: data.quote)
+        } catch {
+            let message = MultiSwapSendHandler.commitFailureMessage(error)
+            await MainActor.run { HudHelper.instance.show(banner: .error(string: message)) }
+            refreshSubject.send()
+            throw MultiSwapSendHandler.CommitFailedError(underlying: error)
+        }
+
+        let result: BroadcastResult
+        do {
+            let executable = commitment.quote.executable(tokenIn: tokenIn)
+            let prepared = try await data.broadcaster.prepare(executable)
+            result = try await data.broadcaster.submit(prepared)
+        } catch {
+            // The order exists and the preview is consumed: re-preview so a retry never reuses it
+            refreshSubject.send()
+            throw error
+        }
+
+        saveSwap(commitment: commitment, txHash: result.txHash, trackingHandle: result.trackingHandle)
+
+        // Best-effort and off the critical path: funds have moved, so the screen must not wait on the report
+        if let txHash = result.txHash {
+            Task { [provider] in
+                do {
+                    try await provider.reportSplitInboundTxHash(splitUuid: commitment.splitUuid, txHash: txHash)
+                } catch {
+                    Core.instance?.logError(message: "split swap signed report failed: \(error)", save: false)
+                }
+            }
+        }
 
         // externally-delivered swaps must not auto-enable a wallet the account can't hold
         if !walletManager.activeWallets.contains(where: { $0.token == tokenOut }),
@@ -121,11 +153,44 @@ extension SplitSwapSendHandler: ISendHandler {
             walletManager.save(wallets: [wallet])
         }
     }
+
+    // One record for the whole split, tracked by its `splitUuid`. The addresses live with the provider
+    // order, so the record names no single recipient.
+    private func saveSwap(commitment: SplitSwapCommitment, txHash: String?, trackingHandle: String?) {
+        guard let account = accountManager.activeAccount else {
+            return
+        }
+
+        let quote = commitment.quote
+        let swap = Swap(
+            uid: UUID().uuidString,
+            txHash: txHash,
+            trackingHandle: trackingHandle,
+            accountId: account.id,
+            providerId: provider.id,
+            status: .pending,
+            operation: .splitSwap,
+            tokenIn: tokenIn,
+            tokenOut: tokenOut,
+            amountIn: amountIn,
+            amountOut: quote.amountOut,
+            recipient: nil,
+            toAddress: recipients.first?.address ?? "",
+            depositAddress: quote.depositAddress,
+            providerSwapId: commitment.splitUuid,
+            sourceAddress: nil,
+            refundAddress: quote.refundAddress,
+            estimatedTime: quote.estimatedTime,
+            date: Date()
+        )
+
+        swapHistoryManager.save(swap: swap)
+    }
 }
 
 extension SplitSwapSendHandler {
     final class SendData: MultiSwapSendHandler.SendData {
-        let splitQuote: SplitMultiSwapQuote
+        let outputAmounts: [Decimal]
         let recipients: [SplitRecipient]
 
         init(
@@ -133,15 +198,14 @@ extension SplitSwapSendHandler {
             tokenOut: Token,
             amountIn: Decimal,
             quote: SwapFinalQuote,
-            prepared: IPrepared,
             broadcaster: ISwapBroadcaster,
-            splitQuote: SplitMultiSwapQuote,
+            outputAmounts: [Decimal],
             recipients: [SplitRecipient]
         ) {
-            self.splitQuote = splitQuote
+            self.outputAmounts = outputAmounts
             self.recipients = recipients
 
-            super.init(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote, prepared: prepared, broadcaster: broadcaster, otherSections: [])
+            super.init(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote, broadcaster: broadcaster, otherSections: [])
         }
 
         // Input, then an output + address pair per recipient. The arrow sits only under the input;
@@ -157,7 +221,7 @@ extension SplitSwapSendHandler {
             var dividers: [SendDataSection.FlowDivider] = [.arrow]
 
             for (index, recipient) in recipients.enumerated() {
-                let amountOut = splitQuote.outputAmounts.indices.contains(index) ? splitQuote.outputAmounts[index] : quote.amountOut * Decimal(recipient.percent) / 100
+                let amountOut = outputAmounts.indices.contains(index) ? outputAmounts[index] : quote.amountOut * Decimal(recipient.percent) / 100
 
                 if index > 0 {
                     dividers.append(.line)

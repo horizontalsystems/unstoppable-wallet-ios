@@ -275,72 +275,234 @@ extension USwapMultiSwapProvider: ISplitSwapProvider {
             throw SplitSwapError.invalidPercents
         }
 
-        let response = try await subProvider.splitRate(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, percents: percents)
+        let route = try await subProvider.splitRate(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, percents: percents)
+
+        guard route.outputs.count == percents.count else {
+            throw SplitSwapError.invalidRoute
+        }
 
         return SplitMultiSwapQuote(
             percents: percents,
-            outputAmounts: response.outputs.map(\.amountResult),
-            guaranteedAmountOut: response.guaranteedAmount,
-            estimatedTime: response.estimatedTime
+            outputAmounts: route.outputs.map(\.expectedBuyAmount),
+            guaranteedAmountOut: route.minBuyAmount,
+            estimatedTime: route.estimatedTime
         )
     }
 
-    public func splitConfirmationQuote(
-        quote: SplitMultiSwapQuote,
+    // A split preview never carries an execution: the fee is estimated against the stub deposit and the
+    // order is created in `splitCommit(finalQuote:)` when the user confirms.
+    public func splitPreview(
         tokenIn: Token,
         tokenOut: Token,
         amountIn: Decimal,
         recipients: [SplitRecipient],
+        slippage: Decimal,
         transactionSettings: TransactionSettings?
-    ) async throws -> SwapFinalQuote {
+    ) async throws -> SplitSwapPreview {
         guard recipients.map(\.percent).reduce(0, +) == 100 else {
             throw SplitSwapError.invalidPercents
         }
 
-        let result = try await subProvider.splitCommit(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, recipients: recipients)
-        let order = result.order
+        let result = try await subProvider.splitPreview(
+            input: USwapSplitPreviewInput(
+                tokenIn: tokenIn,
+                tokenOut: tokenOut,
+                amountIn: amountIn,
+                recipients: recipients,
+                slippage: slippage,
+                transactionSettings: transactionSettings
+            )
+        )
+        let route = result.route
 
-        // Always the case with the stubbed split order (no backend yet)
-        guard !order.depositAddress.isEmpty else {
-            throw SplitSwapError.noDepositAddress
+        guard let previewToken = route.previewToken, !previewToken.isEmpty else {
+            throw SwapError.invalidTransactionData
         }
 
-        // TODO: on backend integration verify this mapping against the real split order: the final
-        // quote builders of signable chains (EVM, Tron, Solana...) expect an unsigned transaction in
-        // the execution, which the order has to supply (or be built here from the deposit address).
+        guard route.outputs.count == recipients.count, route.outputs.allSatisfy({ $0.expectedBuyAmount > 0 }) else {
+            throw SplitSwapError.invalidRoute
+        }
+
+        guard let stub = route.stubDepositAddress, !stub.isEmpty else {
+            throw SwapError.noTransactionData
+        }
+
         let response = USwapMultiSwapApi.SwapResponse(
-            expectedBuyAmount: quote.expectedBuyAmount,
-            minBuyAmount: quote.guaranteedAmountOut,
+            expectedBuyAmount: route.expectedBuyAmount,
+            minBuyAmount: route.minBuyAmount,
             buyAsset: nil,
-            estimatedTime: quote.estimatedTime,
-            execution: .transfer(
-                chain: result.chain ?? "",
-                depositAddress: order.depositAddress,
-                amount: order.depositAmount,
-                attachment: order.depositMemo.map { .text($0) },
-                unsignedTx: nil
-            ),
-            uuid: order.publicUid,
+            estimatedTime: route.estimatedTime,
+            execution: nil,
+            uuid: nil,
             approvalSpender: nil
         )
+        let destinationAddress = recipients.first?.address ?? ""
+        let effectiveSlippage: Decimal? = route.minBuyAmount != nil ? slippage : nil
 
         let finalQuote = try await finalQuoteFactory.build(
             input: .init(
                 tokenIn: tokenIn,
                 amountIn: amountIn,
                 response: response,
-                providerSwapId: order.publicUid,
-                destinationAddress: recipients.first?.address ?? "",
-                slippage: quote.guaranteedAmountOut != nil ? MultiSwapSlippage.default : nil,
+                providerSwapId: nil,
+                destinationAddress: destinationAddress,
+                slippage: effectiveSlippage,
                 recipient: nil,
-                transactionSettings: transactionSettings
+                transactionSettings: transactionSettings,
+                mevProtectionAllowed: false,
+                deposit: USwapFinalQuoteFactory.Input.Deposit(address: stub, attachment: nil, isStub: true)
             )
         )
 
         finalQuote.refundAddress = result.refundAddress
-        finalQuote.minAmountOut = quote.guaranteedAmountOut
-        finalQuote.setDeposit(address: order.depositAddress, memo: order.depositMemo)
-        return finalQuote
+        finalQuote.minAmountOut = route.minBuyAmount
+        finalQuote.providerContext = SplitPreviewContext(
+            previewToken: previewToken,
+            tokenIn: tokenIn,
+            amountIn: amountIn,
+            slippage: effectiveSlippage,
+            transactionSettings: transactionSettings,
+            destinationAddress: destinationAddress,
+            refundAddress: result.refundAddress,
+            response: response,
+            route: route
+        )
+
+        return SplitSwapPreview(quote: finalQuote, outputAmounts: route.outputs.map(\.expectedBuyAmount))
+    }
+
+    // Creates the split order and rebuilds the one transfer against the real deposit. As for a simple
+    // transfer route, the transfer moves the amount the user saw, never the commit's.
+    public func splitCommit(finalQuote: SwapFinalQuote) async throws -> SplitSwapCommitment {
+        guard let context = finalQuote.providerContext as? SplitPreviewContext else {
+            throw SwapError.invalidTransactionData
+        }
+
+        // commit has side effects: never create an order from a cancelled task
+        try Task.checkCancellation()
+
+        let commit = try await subProvider.splitCommit(previewToken: context.previewToken)
+
+        // the token is consumed: a second slide on the same quote must re-preview, never re-commit
+        finalQuote.providerContext = nil
+
+        guard let splitUuid = commit.splitUuid, !splitUuid.isEmpty,
+              let execution = commit.execution, execution.isTransfer,
+              let instruction = execution.depositInstruction()
+        else {
+            throw SwapError.invalidTransactionData
+        }
+
+        let previewOutputs = context.route.outputs
+        guard commit.outputs.count == previewOutputs.count else {
+            throw SplitSwapError.invalidRoute
+        }
+
+        var committedAmountOut: Decimal = 0
+        for (committed, previewed) in zip(commit.outputs, previewOutputs) {
+            guard committed.index == previewed.index, !committed.uuid.isEmpty else {
+                throw SplitSwapError.invalidRoute
+            }
+
+            // Each output's floor can only hold or improve on what the user confirmed
+            if let committedMin = committed.minBuyAmount, let previewedMin = previewed.minBuyAmount, committedMin < previewedMin {
+                throw SwapError.invalidTransactionData
+            }
+
+            let amountOut = committed.expectedBuyAmount ?? previewed.expectedBuyAmount
+            guard amountOut > 0 else {
+                throw SplitSwapError.invalidRoute
+            }
+
+            committedAmountOut += amountOut
+        }
+
+        let committedMinAmountOut: Decimal? = {
+            let mins = commit.outputs.compactMap(\.minBuyAmount)
+            return mins.count == commit.outputs.count ? mins.reduce(0, +) : context.response.minBuyAmount
+        }()
+
+        let response = USwapMultiSwapApi.SwapResponse(
+            expectedBuyAmount: committedAmountOut,
+            minBuyAmount: committedMinAmountOut,
+            buyAsset: nil,
+            estimatedTime: context.response.estimatedTime,
+            execution: execution,
+            uuid: splitUuid,
+            approvalSpender: nil,
+            expiresAt: commit.expiresAt
+        )
+
+        let quote = try await finalQuoteFactory.build(
+            input: .init(
+                tokenIn: context.tokenIn,
+                amountIn: context.amountIn,
+                response: response,
+                providerSwapId: splitUuid,
+                destinationAddress: context.destinationAddress,
+                slippage: context.slippage,
+                recipient: nil,
+                transactionSettings: context.transactionSettings,
+                mevProtectionAllowed: false,
+                deposit: USwapFinalQuoteFactory.Input.Deposit(address: instruction.address, attachment: instruction.attachment, isStub: false)
+            )
+        )
+
+        // e.g. the real deposit address needs more than the balance allows
+        if let error = quote.transactionError {
+            throw error
+        }
+        guard quote.canSwap else {
+            throw SwapError.invalidTransactionData
+        }
+
+        quote.preciseEstimateTime = finalQuote.preciseEstimateTime
+        quote.refundAddress = context.refundAddress
+        quote.minAmountOut = committedMinAmountOut
+        quote.setDeposit(address: instruction.address, memo: instruction.attachment?.text)
+
+        return SplitSwapCommitment(quote: quote, splitUuid: splitUuid)
+    }
+
+    public func reportSplitInboundTxHash(splitUuid: String, txHash: String) async throws {
+        try await subProvider.reportSplitSigned(splitUuid: splitUuid, inboundTxHash: txHash)
+    }
+}
+
+extension USwapMultiSwapProvider {
+    // What `splitCommit(finalQuote:)` needs from the split preview
+    private final class SplitPreviewContext {
+        let previewToken: String
+        let tokenIn: Token
+        let amountIn: Decimal
+        let slippage: Decimal?
+        let transactionSettings: TransactionSettings?
+        let destinationAddress: String
+        let refundAddress: String?
+        let response: USwapMultiSwapApi.SwapResponse
+        let route: USwapMultiSwapApi.SplitRoute
+
+        init(
+            previewToken: String,
+            tokenIn: Token,
+            amountIn: Decimal,
+            slippage: Decimal?,
+            transactionSettings: TransactionSettings?,
+            destinationAddress: String,
+            refundAddress: String?,
+            response: USwapMultiSwapApi.SwapResponse,
+            route: USwapMultiSwapApi.SplitRoute
+        ) {
+            self.previewToken = previewToken
+            self.tokenIn = tokenIn
+            self.amountIn = amountIn
+            self.slippage = slippage
+            self.transactionSettings = transactionSettings
+            self.destinationAddress = destinationAddress
+            self.refundAddress = refundAddress
+            self.response = response
+            self.route = route
+        }
     }
 }
 

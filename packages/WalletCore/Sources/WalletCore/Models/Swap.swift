@@ -115,10 +115,12 @@ public struct Swap: Hashable {
         case swap
         case privateSend = "private_send"
         case crossPay = "cross_pay"
+        // one deposit delivered to several addresses, recorded and tracked as one swap by its splitUuid
+        case splitSwap = "split_swap"
 
         var title: String {
             switch self {
-            case .swap: "swap_info.title".localized
+            case .swap, .splitSwap: "swap_info.title".localized
             case .privateSend: "private_send.tab.caution.title".localized
             case .crossPay: "cross_pay.info.title".localized
             }

@@ -20,7 +20,7 @@ public final class USwapMultiSwapApi {
     )
 
     // Server timestamps (`expiresAt`) are millisecond epochs.
-    private static let millisecondsDateTransform = TransformOf<Date, Any>(
+    static let millisecondsDateTransform = TransformOf<Date, Any>(
         fromJSON: { value in
             let milliseconds: Double? = switch value {
             case let value as NSNumber: value.doubleValue
@@ -35,8 +35,8 @@ public final class USwapMultiSwapApi {
     )
 
     private let baseURL: URL
-    private let headers: HTTPHeaders?
-    private let networkManager: NetworkManager
+    let headers: HTTPHeaders?
+    let networkManager: NetworkManager
 
     public init(baseURL: URL, apiKey: String?, networkManager: NetworkManager) {
         self.baseURL = baseURL
@@ -150,7 +150,7 @@ public final class USwapMultiSwapApi {
         return response.response
     }
 
-    private func endpoint(_ path: String) -> String {
+    func endpoint(_ path: String) -> String {
         baseURL.appendingPathComponent(path).absoluteString
     }
 }
@@ -441,7 +441,7 @@ public extension USwapMultiSwapApi {
         case eip1559(maxFeePerGas: String, maxPriorityFeePerGas: String) // wei, decimal strings
         case utxo(feeRate: Int) // sat/vB
 
-        fileprivate var parameters: Parameters {
+        var parameters: Parameters {
             switch self {
             case let .legacy(gasPrice):
                 return ["kind": "legacy", "gasPrice": gasPrice]
@@ -653,6 +653,18 @@ public extension USwapMultiSwapApi {
             parameters.appendNotNil(key: "inboundTxHash", inboundTxHash)
 
             return .init(path: "track", parameters: parameters)
+        }
+
+        // The whole split by its `splitUuid`: the aggregate status plus every output's track body
+        public static func split(
+            splitUuid: String?,
+            inboundTxHash: String?
+        ) -> Self {
+            var parameters = [String: Any]()
+            parameters.appendNotNil(key: "splitUuid", splitUuid)
+            parameters.appendNotNil(key: "inboundTxHash", inboundTxHash)
+
+            return .init(path: "split/track", parameters: parameters)
         }
     }
 
@@ -1231,6 +1243,23 @@ extension USwapMultiSwapApi {
 
         init(map: Map) throws {
             status = try map.value("status")
+
+            // /v3/split/track: the top-level status is the aggregate (least-finished output); the
+            // split reads as one swap whose amount out is the sum of the outputs and whose legs are theirs
+            if map.JSON["splitUuid"] != nil, map.JSON["outputs"] != nil {
+                let outputs: [TrackResponseMapping] = try map.value("outputs")
+                let toAmounts = outputs.compactMap(\.toAmount)
+
+                fromAsset = outputs.first?.fromAsset
+                toAsset = outputs.first?.toAsset
+                toAmount = !outputs.isEmpty && toAmounts.count == outputs.count ? toAmounts.reduce(0, +) : nil
+                legs = outputs.flatMap(\.legs)
+                provider = (try? map.value("providers") as [String])?.first
+                pauseReason = outputs.first(where: { $0.status == "action_required" })?.pauseReason
+                hash = try? map.value("hash")
+                return
+            }
+
             // Before the deposit is observed /v3/track answers `{ uuid, status, providers, hash?, legs: [] }`
             // with no assets, so only `status` is required.
             fromAsset = try? map.value("fromAsset")

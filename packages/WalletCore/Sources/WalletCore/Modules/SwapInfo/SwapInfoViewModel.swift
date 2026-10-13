@@ -61,7 +61,7 @@ class SwapInfoViewModel: ObservableObject {
         let rateKeyOut = RateKey(token: swap.tokenOut, date: swap.date)
 
         var fields: [SendField] = []
-        if swap.operation == .swap, !swap.status.isExpected {
+        if [.swap, .splitSwap].contains(swap.operation), !swap.status.isExpected {
             fields.append(
                 .simpleValue(
                     title: "swap_info.provider".localized,
@@ -77,7 +77,7 @@ class SwapInfoViewModel: ObservableObject {
             )
         )
 
-        if swap.operation == .swap {
+        if [.swap, .splitSwap].contains(swap.operation) {
             // The estimate captured when the swap was sent; single route, so no baseline.
             let precise = SwapProviderFactory.provider(id: swap.providerId)?.preciseEstimateTime ?? true
             if let timeState = MultiSwapViewModel.timeState(for: swap.estimatedTime, precise: precise, baseline: nil) {
@@ -123,7 +123,7 @@ class SwapInfoViewModel: ObservableObject {
         // Private send mirrors its confirmation: what the recipient gets, then the recipient
         let flowFields: [SendField] = switch swap.operation {
         case .privateSend: [amountOut] + (swap.recipient.map { [.address(value: $0, blockchainType: swap.tokenOut.blockchainType)] } ?? [])
-        case .swap, .crossPay: [amountIn, amountOut]
+        case .swap, .splitSwap, .crossPay: [amountIn, amountOut]
         }
 
         let sections: [SendDataSection] = [

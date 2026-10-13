@@ -203,8 +203,8 @@ extension MultiSwapProviderManager {
         let suspensions: [SwapSuspension]
         /// How the provider settles (`thorchain_deposit`, `signed_transaction`, ...).
         let executionType: String?
-        /// Whether the provider can quote a split swap (one output token delivered to several
-        /// addresses) for the Private swap tab.
+        /// Whether the provider serves the `/v3/split/*` endpoints (one deposit delivered to several
+        /// addresses), i.e. can be quoted on the Private swap tab.
         let split: Bool
 
         init(map: Map) throws {
@@ -212,10 +212,7 @@ extension MultiSwapProviderManager {
             suspended = (try? map.value("suspended")) ?? false
             suspensions = (try? map.value("suspensions")) ?? []
             executionType = try? map.value("executionType")
-            // TODO: remove stub default once backend returns "split"
-            split = (try? map.value("split")) ?? Self.stubSplitProviderIds.contains(provider)
+            split = (try? map.value("splitSwaps")) ?? false
         }
-
-        private static let stubSplitProviderIds: Set<String> = [USwapProviderInfo.swapuz.id]
     }
 }

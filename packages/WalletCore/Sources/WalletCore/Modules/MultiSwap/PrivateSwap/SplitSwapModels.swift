@@ -13,7 +13,7 @@ public struct SplitRecipient {
 enum SplitSwapError: Error {
     case notSupported
     case invalidPercents
-    case noDepositAddress
+    case invalidRoute
 }
 
 // A split swap quote: one output token delivered to several addresses. `expectedBuyAmount` is the
@@ -30,4 +30,17 @@ public final class SplitMultiSwapQuote: MultiSwapQuote {
 
         super.init(expectedBuyAmount: outputAmounts.reduce(0, +), estimatedTime: estimatedTime)
     }
+}
+
+// The previewed split: the quote of the one deposit transfer, and each output's expected amount in recipient order
+public struct SplitSwapPreview {
+    public let quote: SwapFinalQuote
+    public let outputAmounts: [Decimal]
+}
+
+// A created split order: the transfer to send (its amount out is the committed total) and the
+// `splitUuid` the split is tracked by as a whole
+public struct SplitSwapCommitment {
+    public let quote: SwapFinalQuote
+    public let splitUuid: String
 }
