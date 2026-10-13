@@ -3,12 +3,14 @@ import Foundation
 import GRDB
 import MarketKit
 import Testing
+@testable import Unstoppable
 @testable import WalletCore
 
-// When enabling NEAR asks which account a phrase opens (Android `RestoreSettingsServiceAccountPickerTest`).
-// The restore flow and the "chain already enabled" rule live in view models built on Core.shared and are
-// checked by hand (spec 2026-10-13 §11).
-struct NearRestoreSettingsServiceTests {
+// When enabling a chain asks its restore settings (Android `RestoreSettingsServiceAccountPickerTest`): the
+// service decides whether to ask, the registered handler decides what. The restore flow and the
+// "chain already enabled" rule live in view models built on Core.shared and are checked by hand.
+@Suite(.serialized)
+struct RestoreSettingsServiceTests {
     private static let mnemonic = AccountType.mnemonic(words: Array(repeating: "abandon", count: 11) + ["about"], salt: "", bip39Compliant: true)
 
     private static let near = Token(
@@ -24,8 +26,25 @@ struct NearRestoreSettingsServiceTests {
         var cancellables = Set<AnyCancellable>()
     }
 
+    // asks for a mnemonic only, as the NEAR handler does
+    private final class StubHandler: RestoreSettingsHandler, IRestoreSettingsHandler {
+        override class func instance(blockchainType: BlockchainType, accountType: AccountType?) -> IRestoreSettingsHandler? {
+            guard blockchainType == .near, case .mnemonic = accountType else {
+                return nil
+            }
+            return StubHandler()
+        }
+
+        func request(token _: Token, statPage _: StatPage?, onEnter _: @escaping (RestoreSettings) -> Void, onCancel _: @escaping () -> Void) {}
+    }
+
+    init() {
+        RestoreSettingsHandlerFactory.reset()
+        RestoreSettingsHandlerFactory.register(StubHandler.self)
+    }
+
     private func makeService() throws -> (RestoreSettingsService, RestoreSettingsManager, Recorder) {
-        let path = FileManager.default.temporaryDirectory.appendingPathComponent("near-restore-settings-\(UUID().uuidString).sqlite").path
+        let path = FileManager.default.temporaryDirectory.appendingPathComponent("restore-settings-\(UUID().uuidString).sqlite").path
         let dbPool = try DatabasePool(path: path)
         try dbPool.write { db in
             try db.create(table: RestoreSettingRecord.databaseTableName) { t in
@@ -49,19 +68,16 @@ struct NearRestoreSettingsServiceTests {
         Account(id: UUID().uuidString, level: 0, name: "Account", type: type, origin: origin, backedUp: true, fileBackedUp: false)
     }
 
-    @Test func restoredPhraseWithoutChoiceIsAsked() throws {
+    @Test func missingSettingIsAskedByTheHandler() throws {
         let (service, _, recorder) = try makeService()
 
         service.approveSettings(token: Self.near, account: Self.account())
 
         #expect(recorder.approved.isEmpty)
-        guard case .nearAccount? = recorder.requests.first?.type else {
-            Issue.record("expected a NEAR account request")
-            return
-        }
+        #expect(recorder.requests.first?.handler is StubHandler)
     }
 
-    @Test func restoredPhraseWithChoiceIsNotAsked() throws {
+    @Test func storedSettingIsNotAskedAgain() throws {
         let (service, manager, recorder) = try makeService()
         let account = Self.account()
         manager.save(settings: [.nearAccountId: "alice.near"], account: account, blockchainType: .near)
@@ -72,7 +88,7 @@ struct NearRestoreSettingsServiceTests {
         #expect(recorder.approved == [[:]])
     }
 
-    @Test func createdPhraseIsNotAsked() throws {
+    @Test func createdAccountIsNotAsked() throws {
         let (service, _, recorder) = try makeService()
 
         service.approveSettings(token: Self.near, account: Self.account(origin: .created))
@@ -82,7 +98,8 @@ struct NearRestoreSettingsServiceTests {
         #expect(recorder.approved.first?.nearAccountId == nil)
     }
 
-    @Test func watchAccountIsNotAsked() throws {
+    // no handler for a watch account: nothing to ask
+    @Test func accountWithoutHandlerIsNotAsked() throws {
         let (service, _, recorder) = try makeService()
 
         service.approveSettings(token: Self.near, account: Self.account(type: .nearAddress(address: "alice.near")))
@@ -91,11 +108,17 @@ struct NearRestoreSettingsServiceTests {
         #expect(recorder.approved == [[:]])
     }
 
-    @Test func enteredChoiceIsApproved() throws {
+    @Test func enteredSettingsAreApproved() throws {
         let (service, _, recorder) = try makeService()
 
         service.enter(settings: [.nearAccountId: "alice.near"], token: Self.near)
 
         #expect(recorder.approved.first?.nearAccountId == "alice.near")
+    }
+
+    @Test func factoryFindsTheFirstMatchingHandler() {
+        #expect(RestoreSettingsHandlerFactory.handler(blockchainType: .near, accountType: Self.mnemonic) is StubHandler)
+        #expect(RestoreSettingsHandlerFactory.handler(blockchainType: .near, accountType: .nearAddress(address: "alice.near")) == nil)
+        #expect(RestoreSettingsHandlerFactory.handler(blockchainType: .bitcoin, accountType: Self.mnemonic) == nil)
     }
 }

@@ -20,13 +20,26 @@ struct NearAccountNameView: View {
                             .padding(.horizontal, .margin16)
 
                         InputTextRow {
-                            TextField("alice.near" as String, text: $viewModel.name)
-                                .font(.themeBody)
-                                .tint(.themeInputFieldTintColor)
-                                .autocorrectionDisabled()
-                                .autocapitalization(.none)
-                                .focused($inputFocused)
-                                .modifier(RightChecking(state: checkingStateBinding))
+                            PrimarySizedHStack {
+                                InputTextView(placeholder: "alice.near", text: $viewModel.name)
+                                    .textInputAutocapitalization(.never)
+                                    .autocorrectionDisabled()
+                                    .focused($inputFocused)
+                                    .modifier(RightChecking(state: checkingStateBinding))
+                            } trailing: {
+                                ShortcutButtonsView(
+                                    showDelete: .init(get: { !viewModel.name.isEmpty }, set: { _ in }),
+                                    items: [.text("button.paste".localized)],
+                                    onTap: { _ in
+                                        if let string = UIPasteboard.general.string {
+                                            viewModel.name = string.trimmingCharacters(in: .whitespacesAndNewlines)
+                                        }
+                                    },
+                                    onTapDelete: {
+                                        viewModel.name = ""
+                                    }
+                                )
+                            }
                         }
                         .modifier(CautionBorder(cautionState: cautionStateBinding))
                         .modifier(CautionPrompt(cautionState: cautionStateBinding))

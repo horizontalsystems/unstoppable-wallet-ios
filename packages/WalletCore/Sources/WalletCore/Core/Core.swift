@@ -15,6 +15,7 @@ public class Core {
         NodeNetworkHandlerFactory.unstoppableHandlers.forEach { NodeNetworkHandlerFactory.register($0) }
         TransactionServiceFactory.unstoppableTransactionServices.forEach { TransactionServiceFactory.register($0) }
         SwapBroadcasterFactory.register(SwapBroadcasterFactory.unstoppableBroadcasters)
+        RestoreSettingsHandlerFactory.unstoppableHandlers.forEach { RestoreSettingsHandlerFactory.register($0) }
         if let walletConnect = core.walletConnect {
             WCSendHandlerProvider.registry = walletConnect.sendHandlerRegistry
             SendHandlerFactory.register(WCSendHandlerProvider.self)

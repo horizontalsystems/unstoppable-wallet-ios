@@ -68,13 +68,9 @@ extension NearAccountPickerViewModel {
         state = .loading
 
         do {
+            // the implicit account comes first and is always listed, even unfunded: the page never
+            // closes on its own (Android does, which on iOS flashes the sheet)
             let accountIds = try await NearKit.Kit.findAccounts(publicKey: publicKey, network: network, rpcUrls: rpcUrls, fastNearApiKey: AppConfig.fastNearApiKey)
-
-            // only the implicit account: nothing to choose, so the page closes on its own (Android)
-            if accountIds.count <= 1, accounts.isEmpty {
-                useDefault()
-                return
-            }
 
             let entered = accounts.filter { !accountIds.contains($0.accountId) }
             let found = await withTaskGroup(of: Account.self) { group in
