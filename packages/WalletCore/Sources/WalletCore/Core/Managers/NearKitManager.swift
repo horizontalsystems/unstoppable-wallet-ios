@@ -7,6 +7,7 @@ import RxSwift
 
 public class NearKitManager {
     private let restoreStateManager: RestoreStateManager
+    private let restoreSettingsManager: RestoreSettingsManager
     private let marketKit: MarketKit.Kit
     private let walletManager: WalletManager
     private let nodeManager: NearNodeManager
@@ -17,13 +18,18 @@ public class NearKitManager {
 
     private weak var _nearKit: NearKit.Kit?
     private var currentAccount: Account?
+    private var currentAccountId: String?
     private var watchedContractIds = Set<String>()
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).near-kit-manager", qos: .userInitiated)
     private let kitStoppedRelay = PublishRelay<Void>()
 
-    public init(restoreStateManager: RestoreStateManager, marketKit: MarketKit.Kit, walletManager: WalletManager, nodeManager: NearNodeManager, testNetManager: TestNetManager) {
+    public init(
+        restoreStateManager: RestoreStateManager, restoreSettingsManager: RestoreSettingsManager, marketKit: MarketKit.Kit, walletManager: WalletManager,
+        nodeManager: NearNodeManager, testNetManager: TestNetManager
+    ) {
         self.restoreStateManager = restoreStateManager
+        self.restoreSettingsManager = restoreSettingsManager
         self.marketKit = marketKit
         self.walletManager = walletManager
         self.nodeManager = nodeManager
@@ -50,6 +56,7 @@ public class NearKitManager {
 
             _nearKit = nil
             currentAccount = nil
+            currentAccountId = nil
             watchedContractIds = []
             ftBalancesCancellable?.cancel()
             ftBalancesCancellable = nil
@@ -58,11 +65,17 @@ public class NearKitManager {
     }
 
     private func _nearKit(account: Account) throws -> NearKit.Kit {
-        if let _nearKit, let currentAccount, currentAccount == account {
+        let accountId = try address(account: account)
+
+        if let _nearKit, let currentAccount, currentAccount == account, currentAccountId == accountId {
             return _nearKit
         }
 
-        let accountId = try Self.address(accountType: account.type)
+        // the same wallet now opens another of its phrase's accounts: the old kit must stop syncing
+        if let _nearKit, currentAccount == account {
+            _nearKit.stop()
+        }
+
         let network = Self.network
 
         let kit = try NearKit.Kit.instance(
@@ -78,6 +91,7 @@ public class NearKitManager {
 
         _nearKit = kit
         currentAccount = account
+        currentAccountId = accountId
         watchedContractIds = []
 
         subscribe(nearKit: kit, account: account)
@@ -167,7 +181,19 @@ extension NearKitManager {
 }
 
 extension NearKitManager {
-    static func address(accountType: AccountType) throws -> String {
+    /// The account the wallet opens: for a restored phrase the one chosen on restore (mainnet only),
+    /// otherwise the phrase's implicit account; for a watch account its address.
+    func address(account: Account) throws -> String {
+        if case .mnemonic = account.type, network == .mainNet,
+           let chosen = restoreSettingsManager.settings(accountId: account.id, blockchainType: .near).nearAccountId
+        {
+            return chosen
+        }
+
+        return try Self.implicitAddress(accountType: account.type)
+    }
+
+    private static func implicitAddress(accountType: AccountType) throws -> String {
         switch accountType {
         case .mnemonic:
             guard let seed = accountType.mnemonicSeed else {

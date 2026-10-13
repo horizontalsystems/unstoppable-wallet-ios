@@ -29,6 +29,9 @@ class ManageWalletsTokenInfoProvider {
                 if let height = settings.birthdayHeight {
                     return InfoItem(token: token, type: .birthdayHeight(height: height))
                 }
+            case .nearAccountId:
+                // the chosen account is the wallet's address; there is nothing more to show
+                ()
             }
         }
 
@@ -68,7 +71,7 @@ extension ManageWalletsTokenInfoProvider {
             break
         }
 
-        if isEnabled, !token.blockchainType.restoreSettingTypes.isEmpty {
+        if isEnabled, token.blockchainType.restoreSettingTypes.contains(.birthdayHeight) {
             return true
         }
 

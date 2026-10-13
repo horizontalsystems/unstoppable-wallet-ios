@@ -324,10 +324,14 @@ public class Core {
         )
 
         xrpKitManager = XrpKitManager(restoreStateManager: restoreStateManager, marketKit: marketKit, walletManager: walletManager, nodeManager: xrpNodeManager, testNetManager: testNetManager)
-        nearKitManager = NearKitManager(restoreStateManager: restoreStateManager, marketKit: marketKit, walletManager: walletManager, nodeManager: nearNodeManager, testNetManager: testNetManager)
 
         let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)
         restoreSettingsManager = RestoreSettingsManager(storage: restoreSettingsStorage)
+
+        nearKitManager = NearKitManager(
+            restoreStateManager: restoreStateManager, restoreSettingsManager: restoreSettingsManager, marketKit: marketKit, walletManager: walletManager,
+            nodeManager: nearNodeManager, testNetManager: testNetManager
+        )
 
         zanoKitManager = ZanoKitManager(restoreSettingsManager: restoreSettingsManager, walletManager: walletManager, zanoNodeManager: zanoNodeManager)
         predefinedBlockchainService = PredefinedBlockchainService(restoreSettingsManager: restoreSettingsManager)

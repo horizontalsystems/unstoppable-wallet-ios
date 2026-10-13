@@ -79,7 +79,7 @@ public enum DestinationHelper {
         case .xrp:
             address = try XrpKitManager.address(accountType: account.type)
         case .near:
-            address = try NearKitManager.address(accountType: account.type)
+            address = try Core.shared.nearKitManager.address(account: account)
         case .thorChain:
             address = try AccountAddress.thorChainAddress(account: account, network: .mainnet).raw
         case .mayaChain:
