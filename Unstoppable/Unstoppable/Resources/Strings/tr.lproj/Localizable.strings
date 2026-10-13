@@ -693,6 +693,8 @@
 "swap.private.caution.text" = "Gizli Takas, alınan tutarı birden fazla adrese bölerek işlem akışının izlenmesini zorlaştırır.";
 "swap.private.recipients.title" = "Alıcılar";
 "swap.private.recipients.description" = "Alıcı adreslerini ekleyin ve alınan tutarın aralarında nasıl bölüneceğini seçin.";
+"swap.private.duplicate_addresses.title" = "Yinelenen Adresler";
+"swap.private.duplicate_addresses.text" = "Aynı adresi kullanmak, bölmenin sağladığı gizlilik avantajını azaltır.";
 "swap.private.address" = "Adres %d";
 "swap.private.enter_addresses" = "Adresleri Girin";
 "swap.token_select.popular_tokens" = "Popüler Tokenlar";

@@ -12,7 +12,7 @@ struct SplitPercentSlider: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            ThemeText("\(percent)%", style: .body, colorStyle: .secondary)
+            ThemeText("\(percent)%", style: .subhead, colorStyle: .secondary)
                 .monospacedDigit()
 
             GeometryReader { geometry in
@@ -47,7 +47,7 @@ struct SplitPercentSlider: View {
             }
             .frame(height: thumbSize)
 
-            ThemeText("\(100 - percent)%", style: .body, colorStyle: .secondary)
+            ThemeText("\(100 - percent)%", style: .subhead, colorStyle: .secondary)
                 .monospacedDigit()
         }
         .accessibilityElement(children: .ignore)

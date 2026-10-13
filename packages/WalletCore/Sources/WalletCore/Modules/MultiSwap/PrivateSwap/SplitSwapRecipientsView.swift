@@ -13,6 +13,7 @@ struct SplitSwapRecipientsView: View {
                         ThemeText("swap.private.recipients.description".localized, style: .subhead, colorStyle: .secondary)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 16)
+                            .padding(.bottom, 8)
 
                         VStack(spacing: 12) {
                             ForEach(viewModel.recipients.indices, id: \.self) { index in
@@ -26,7 +27,18 @@ struct SplitSwapRecipientsView: View {
                                 set: { viewModel.set(splitPercent: $0) }
                             )
                         )
-                        .padding(.top, 8)
+                        .padding(.top, 4)
+
+                        if viewModel.hasDuplicateRecipients {
+                            AlertCardView(
+                                .init(
+                                    title: "swap.private.duplicate_addresses.title".localized,
+                                    text: "swap.private.duplicate_addresses.text".localized,
+                                    type: .caution
+                                )
+                            )
+                            .padding(.top, 16)
+                        }
                     }
                     .padding(EdgeInsets(top: 12, leading: 16, bottom: 32, trailing: 16))
                 }
@@ -57,13 +69,22 @@ struct SplitSwapRecipientsView: View {
         ListSection {
             Cell(
                 left: {
-                    ThemeImage("wallet_filled", size: 24, colorStyle: .secondary)
+                    ThemeImage(contactName(index: index) != nil ? "user_filled" : "wallet_filled", size: 24, colorStyle: .secondary)
                 },
                 middle: {
                     HStack(spacing: 8) {
-                        if let address = viewModel.recipients[index]?.address {
-                            ThemeText(address.shortened, style: .headline2, colorStyle: .primary)
-                                .lineLimit(1)
+                        if let address = viewModel.recipients[index] {
+                            if let contactName = contactName(index: index) {
+                                VStack(alignment: .leading, spacing: 0) {
+                                    ThemeText(contactName, style: .headline2, colorStyle: .primary)
+                                        .lineLimit(1)
+                                    ThemeText(address.address.shortened, style: .subhead, colorStyle: addressColorStyle(address: address, index: index, regular: .secondary))
+                                        .lineLimit(1)
+                                }
+                            } else {
+                                ThemeText(address.address.shortened, style: .headline2, colorStyle: addressColorStyle(address: address, index: index, regular: .primary))
+                                    .lineLimit(1)
+                            }
                         } else {
                             ThemeText("swap.private.address".localized(index + 1), style: .headline2, colorStyle: .primary)
                                 .lineLimit(1)
@@ -83,6 +104,19 @@ struct SplitSwapRecipientsView: View {
                 }
             )
         }
+    }
+
+    // A flagged address stays red; a repeat of an earlier recipient's address is yellow
+    private func addressColorStyle(address: ResolvedAddress, index: Int, regular: ColorStyle) -> ColorStyle {
+        if !address.issueTypes.isEmpty {
+            return .red
+        }
+
+        return viewModel.isDuplicateRecipient(at: index) ? .yellow : regular
+    }
+
+    private func contactName(index: Int) -> String? {
+        viewModel.contactNames.indices.contains(index) ? viewModel.contactNames[index] : nil
     }
 
     private func amountText(index: Int) -> ComponentText? {

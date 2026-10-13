@@ -693,6 +693,8 @@
 "swap.private.caution.text" = "L'Échange Privé répartit le montant reçu entre plusieurs adresses, ce qui rend le flux de transactions plus difficile à tracer.";
 "swap.private.recipients.title" = "Destinataires";
 "swap.private.recipients.description" = "Ajoutez les adresses des destinataires et choisissez comment le montant reçu est réparti entre elles.";
+"swap.private.duplicate_addresses.title" = "Adresses en double";
+"swap.private.duplicate_addresses.text" = "Utiliser la même adresse réduit l’avantage de confidentialité de la répartition.";
 "swap.private.address" = "Adresse %d";
 "swap.private.enter_addresses" = "Saisir les adresses";
 "swap.token_select.popular_tokens" = "Tokens Populaires";

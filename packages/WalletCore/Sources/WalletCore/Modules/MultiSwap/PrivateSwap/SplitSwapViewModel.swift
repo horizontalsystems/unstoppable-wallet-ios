@@ -12,7 +12,12 @@ final class SplitSwapViewModel: MultiSwapViewModel {
 
     // Share of the output delivered to Address 1; Address 2 gets the rest
     @Published private(set) var splitPercent = SplitSwapViewModel.defaultPercent
-    @Published private(set) var recipients: [ResolvedAddress?] = [nil, nil]
+    @Published private(set) var recipients: [ResolvedAddress?] = [nil, nil] {
+        didSet { syncContactNames() }
+    }
+
+    // Contact book name of each recipient address, if any
+    @Published private(set) var contactNames: [String?] = [nil, nil]
 
     // Output amounts of the last quote, kept while a split change requotes so the cards don't blank out
     @Published private(set) var lastOutputAmounts: [Decimal]?
@@ -24,6 +29,7 @@ final class SplitSwapViewModel: MultiSwapViewModel {
     // an older round and must not clear `pendingSplitRequote`
     private var splitRequoteScheduled = false
 
+    private let contactManager = Core.shared.contactManager
     private let splitSubject = PassthroughSubject<Void, Never>()
     private var splitCancellables = Set<AnyCancellable>()
 
@@ -88,6 +94,16 @@ final class SplitSwapViewModel: MultiSwapViewModel {
         pendingSplitRequote = false
     }
 
+    private func syncContactNames() {
+        contactNames = recipients.map { recipient in
+            guard let recipient, let tokenOut else {
+                return nil
+            }
+
+            return contactManager.name(blockchainType: tokenOut.blockchainType, address: recipient.address)
+        }
+    }
+
     private func runSplitRequote() {
         syncQuotes()
         splitRequoteScheduled = false
@@ -106,6 +122,28 @@ extension SplitSwapViewModel {
 
     var splitQuote: SplitMultiSwapQuote? {
         currentQuote?.quote as? SplitMultiSwapQuote
+    }
+
+    // A recipient whose address an earlier recipient already uses
+    func isDuplicateRecipient(at index: Int) -> Bool {
+        guard recipients.indices.contains(index), let key = recipientKey(at: index) else {
+            return false
+        }
+
+        return (0 ..< index).contains { recipientKey(at: $0) == key }
+    }
+
+    var hasDuplicateRecipients: Bool {
+        recipients.indices.contains { isDuplicateRecipient(at: $0) }
+    }
+
+    // EVM addresses are case-insensitive (checksum casing); other chains compare exactly
+    private func recipientKey(at index: Int) -> String? {
+        guard let address = recipients[index]?.address else {
+            return nil
+        }
+
+        return tokenOut?.blockchainType.isEvm == true ? address.lowercased() : address
     }
 
     var requoting: Bool {

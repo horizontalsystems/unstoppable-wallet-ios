@@ -693,6 +693,8 @@
 "swap.private.caution.text" = "Private Swap splits the received amount across multiple addresses, making the transaction flow harder to trace.";
 "swap.private.recipients.title" = "Recipients";
 "swap.private.recipients.description" = "Add recipient addresses and choose how the received amount is split between them.";
+"swap.private.duplicate_addresses.title" = "Duplicate Addresses";
+"swap.private.duplicate_addresses.text" = "Using the same address reduces the privacy benefit of splitting.";
 "swap.private.address" = "Address %d";
 "swap.private.enter_addresses" = "Enter Addresses";
 "swap.token_select.popular_tokens" = "Popular Tokens";

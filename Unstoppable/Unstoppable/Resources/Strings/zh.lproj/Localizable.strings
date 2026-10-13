@@ -693,6 +693,8 @@
 "swap.private.caution.text" = "隐私兑换会将收到的金额分配到多个地址，使交易流向更难被追踪。";
 "swap.private.recipients.title" = "收款人";
 "swap.private.recipients.description" = "添加收款人地址，并选择收到的金额在他们之间如何分配。";
+"swap.private.duplicate_addresses.title" = "地址重复";
+"swap.private.duplicate_addresses.text" = "使用相同的地址会降低拆分带来的隐私保护效果。";
 "swap.private.address" = "地址 %d";
 "swap.private.enter_addresses" = "输入地址";
 "swap.token_select.popular_tokens" = "热门代币";
