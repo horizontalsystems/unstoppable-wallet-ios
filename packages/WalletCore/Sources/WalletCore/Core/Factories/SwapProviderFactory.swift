@@ -119,6 +119,7 @@ public enum SwapProviderResolver: ISwapProviderResolver {
             axelarUSwapEntry(info: .axelarIts),
             defaultUSwapEntry(info: .lizex),
             defaultUSwapEntry(info: .bitania),
+            defaultUSwapEntry(info: .xswap),
         ].map { entry in
             (entry.info.id, entry)
         }
