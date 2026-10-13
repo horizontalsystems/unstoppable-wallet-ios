@@ -217,4 +217,13 @@ public extension USwapProviderInfo {
         preciseEstimateTime: false,
         requireTerms: true
     )
+
+    static let xswap = USwapProviderInfo(
+        id: "XSWAP",
+        name: "XSwap",
+        icon: "swap_provider_xswap",
+        type: .good,
+        preciseEstimateTime: false,
+        requireTerms: true
+    )
 }
