@@ -1,5 +1,5 @@
 {
-  "originHash" : "503d5def7464d401ed93fdbace333d546b705a0e8f65c036041dcf2bd955306c",
+  "originHash" : "6e00e071453209483329326950a137dceb715a8f54b42c7554b5fdc1008d5aa3",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -294,8 +294,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/NearKit.Swift.git",
       "state" : {
-        "revision" : "a912ab7dcfe28552f1510d82c75deae8e9a2154b",
-        "version" : "1.0.0"
+        "revision" : "4dfcb8a7ade12f5069577ed538b3ccea75605117",
+        "version" : "1.1.0"
       }
     },
     {
