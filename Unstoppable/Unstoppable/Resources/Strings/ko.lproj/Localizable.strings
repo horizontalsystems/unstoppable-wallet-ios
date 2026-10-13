@@ -190,6 +190,19 @@
 "restore.cloud.password.placeholder" = "백업 비밀번호";
 "restore.cloud.password.description" = "이 백업 파일의 비밀번호를 입력하여 데이터를 복원하세요.";
 
+"restore.near_account.title" = "NEAR 계정";
+"restore.near_account.description" = "이 복구 문구는 둘 이상의 NEAR 계정을 관리합니다. 이 지갑에서 사용할 계정을 선택하세요.";
+"restore.near_account.search_failed" = "이 복구 문구에 연결된 계정을 검색하지 못했습니다. 다시 시도하거나, 계정 이름을 입력하거나, 기본 계정을 사용하세요.";
+"restore.near_account.default_account" = "기본 계정";
+"restore.near_account.use_default" = "기본 계정 사용";
+"restore.near_account.enter_name" = "계정 이름 입력";
+"restore.near_account_name.title" = "계정 이름";
+"restore.near_account_name.description" = "이 복구 문구가 관리하는 NEAR 계정을 입력하세요(예: alice.near).";
+"restore.near_account_name.invalid" = "올바른 NEAR 계정 이름이 아닙니다";
+"restore.near_account_name.not_found" = "존재하지 않는 계정입니다";
+"restore.near_account_name.no_access" = "이 복구 문구는 이 계정에 대한 전체 액세스 권한이 없습니다";
+"restore.near_account_name.check_failed" = "계정을 확인하지 못했습니다. 다시 시도하세요.";
+
 // Coin Settings
 
 "coin_settings.title" = "블록체인 설정";

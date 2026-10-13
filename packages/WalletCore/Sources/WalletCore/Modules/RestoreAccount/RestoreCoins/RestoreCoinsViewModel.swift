@@ -1,5 +1,6 @@
 import Combine
 import MarketKit
+import NearKit
 import SwiftUI
 
 class RestoreCoinsViewModel: ObservableObject {
@@ -24,6 +25,7 @@ class RestoreCoinsViewModel: ObservableObject {
 
     private var pendingTokenRequest: TokenRequest?
     private var birthdayEntered = false
+    private var nearAccountEntered = false
 
     init(
         accountName: String,
@@ -86,7 +88,9 @@ extension RestoreCoinsViewModel {
                 currentlyEnabled: tokens.filter(\.type.isDefault),
                 allowEmpty: false
             )
-        } else if !blockchain.type.restoreSettingTypes.isEmpty {
+        } else if blockchain.type.restoreSettingTypes.contains(.nearAccountId) {
+            requestNearAccount(token: firstToken)
+        } else if blockchain.type.restoreSettingTypes.contains(.birthdayHeight) {
             requestRestoreSettings(token: firstToken)
         } else {
             handleApprove(blockchain: blockchain, tokens: [firstToken])
@@ -171,6 +175,39 @@ extension RestoreCoinsViewModel {
                 syncItems() // revert toggle in UI
             }
         }
+    }
+
+    // the same rule as RestoreSettingsService: a restored phrase picks among the NEAR accounts its key
+    // controls; the choice is a mainnet setting, testnet always opens the implicit account
+    private func requestNearAccount(token: Token) {
+        guard Core.shared.nearKitManager.network == .mainNet, case .mnemonic = accountType,
+              let seed = accountType.mnemonicSeed, let publicKey = try? NearKit.Signer.publicKey(seed: seed)
+        else {
+            handleApprove(blockchain: token.blockchain, tokens: [token])
+            return
+        }
+
+        nearAccountEntered = false
+        Coordinator.shared.present { [weak self] isPresented in
+            NearAccountPickerView(publicKey: publicKey, isPresented: isPresented, onSelect: { accountId in
+                self?.handleNearAccountEntered(token: token, accountId: accountId)
+            }, onUseDefault: {
+                self?.handleNearAccountEntered(token: token, accountId: nil)
+            })
+        } onDismiss: { [weak self] in
+            guard let self else { return }
+            if !nearAccountEntered {
+                syncItems() // revert toggle in UI
+            }
+        }
+    }
+
+    private func handleNearAccountEntered(token: Token, accountId: String?) {
+        nearAccountEntered = true
+        if let accountId {
+            restoreSettingsMap[token] = [.nearAccountId: accountId]
+        }
+        handleApprove(blockchain: token.blockchain, tokens: [token])
     }
 
     private func handleBirthdayEntered(token: Token, height: Int) {

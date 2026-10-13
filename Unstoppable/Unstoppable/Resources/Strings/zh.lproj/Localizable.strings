@@ -190,6 +190,19 @@
 "restore.cloud.password.placeholder" = "备份密码";
 "restore.cloud.password.description" = "输入此备份文件的密码以恢复您的数据。";
 
+"restore.near_account.title" = "NEAR 账户";
+"restore.near_account.description" = "此助记词控制多个 NEAR 账户。请选择要在此钱包中使用的账户。";
+"restore.near_account.search_failed" = "无法搜索与此助记词关联的账户。请重试、输入账户名称或使用默认账户。";
+"restore.near_account.default_account" = "默认账户";
+"restore.near_account.use_default" = "使用默认账户";
+"restore.near_account.enter_name" = "输入账户名称";
+"restore.near_account_name.title" = "账户名称";
+"restore.near_account_name.description" = "输入此助记词控制的 NEAR 账户，例如 alice.near。";
+"restore.near_account_name.invalid" = "无效的 NEAR 账户名称";
+"restore.near_account_name.not_found" = "此账户不存在";
+"restore.near_account_name.no_access" = "此助记词对该账户没有完全访问权限";
+"restore.near_account_name.check_failed" = "无法检查该账户，请重试。";
+
 // Coin Settings
 
 "coin_settings.title" = "区块链设置";

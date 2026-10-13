@@ -190,6 +190,19 @@
 "restore.cloud.password.placeholder" = "Пароль резервной копии";
 "restore.cloud.password.description" = "Введите пароль для этого файла резервной копии, чтобы восстановить данные.";
 
+"restore.near_account.title" = "Аккаунт NEAR";
+"restore.near_account.description" = "Эта фраза восстановления управляет несколькими аккаунтами NEAR. Выберите, какой использовать в этом кошельке.";
+"restore.near_account.search_failed" = "Не удалось найти аккаунты, связанные с этой фразой восстановления. Повторите попытку, введите имя аккаунта или используйте аккаунт по умолчанию.";
+"restore.near_account.default_account" = "Аккаунт по умолчанию";
+"restore.near_account.use_default" = "Использовать аккаунт по умолчанию";
+"restore.near_account.enter_name" = "Ввести имя аккаунта";
+"restore.near_account_name.title" = "Имя аккаунта";
+"restore.near_account_name.description" = "Введите аккаунт NEAR, которым управляет эта фраза восстановления, например alice.near.";
+"restore.near_account_name.invalid" = "Недопустимое имя аккаунта NEAR";
+"restore.near_account_name.not_found" = "Такого аккаунта не существует";
+"restore.near_account_name.no_access" = "У этой фразы восстановления нет полного доступа к этому аккаунту";
+"restore.near_account_name.check_failed" = "Не удалось проверить аккаунт. Повторите попытку.";
+
 // Coin Settings
 
 "coin_settings.title" = "Настройки блокчейна";

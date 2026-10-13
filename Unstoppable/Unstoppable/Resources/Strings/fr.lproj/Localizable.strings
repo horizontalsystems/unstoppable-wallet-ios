@@ -190,6 +190,19 @@
 "restore.cloud.password.placeholder" = "Mot de passe de la sauvegarde";
 "restore.cloud.password.description" = "Entrez le mot de passe de ce fichier de sauvegarde pour restaurer vos données.";
 
+"restore.near_account.title" = "Compte NEAR";
+"restore.near_account.description" = "Cette phrase de récupération contrôle plusieurs comptes NEAR. Choisissez celui à utiliser dans ce portefeuille.";
+"restore.near_account.search_failed" = "Impossible de rechercher les comptes liés à cette phrase de récupération. Réessayez, saisissez le nom du compte ou utilisez le compte par défaut.";
+"restore.near_account.default_account" = "Compte par défaut";
+"restore.near_account.use_default" = "Utiliser le compte par défaut";
+"restore.near_account.enter_name" = "Saisir le nom du compte";
+"restore.near_account_name.title" = "Nom du compte";
+"restore.near_account_name.description" = "Saisissez un compte NEAR contrôlé par cette phrase de récupération, par exemple alice.near.";
+"restore.near_account_name.invalid" = "Nom de compte NEAR invalide";
+"restore.near_account_name.not_found" = "Ce compte n'existe pas";
+"restore.near_account_name.no_access" = "Cette phrase de récupération n'a pas d'accès complet à ce compte";
+"restore.near_account_name.check_failed" = "Impossible de vérifier le compte. Réessayez.";
+
 // Coin Settings
 
 "coin_settings.title" = "Paramètres de la Blockchain";

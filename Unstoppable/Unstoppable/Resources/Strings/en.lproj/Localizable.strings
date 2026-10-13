@@ -190,6 +190,19 @@
 "restore.cloud.password.placeholder" = "Backup Password";
 "restore.cloud.password.description" = "Enter the password for this backup file to restore your data.";
 
+"restore.near_account.title" = "NEAR Account";
+"restore.near_account.description" = "This recovery phrase controls more than one NEAR account. Choose the one to use in this wallet.";
+"restore.near_account.search_failed" = "Couldn't search for accounts linked to this recovery phrase. Try again, enter the account name, or use the default account.";
+"restore.near_account.default_account" = "Default account";
+"restore.near_account.use_default" = "Use Default Account";
+"restore.near_account.enter_name" = "Enter Account Name";
+"restore.near_account_name.title" = "Account Name";
+"restore.near_account_name.description" = "Enter a NEAR account this recovery phrase controls, such as alice.near.";
+"restore.near_account_name.invalid" = "Not a valid NEAR account name";
+"restore.near_account_name.not_found" = "This account does not exist";
+"restore.near_account_name.no_access" = "This recovery phrase has no full access to this account";
+"restore.near_account_name.check_failed" = "Couldn't check the account. Try again.";
+
 // Coin Settings
 
 "coin_settings.title" = "Blockchain Settings";

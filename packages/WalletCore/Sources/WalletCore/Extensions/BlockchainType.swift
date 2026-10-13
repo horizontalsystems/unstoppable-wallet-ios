@@ -48,6 +48,7 @@ extension BlockchainType {
     var restoreSettingTypes: [RestoreSettingType] {
         switch self {
         case .zcash, .monero, .zano: return [.birthdayHeight]
+        case .near: return [.nearAccountId]
         default: return []
         }
     }

@@ -187,7 +187,10 @@ extension ManageWalletsViewModel {
     }
 
     private func enable(token: Token) {
-        if !token.blockchainType.restoreSettingTypes.isEmpty {
+        // settings are asked once per chain: a token of a chain already running uses that chain's settings
+        let chainEnabled = wallets.contains { $0.token.blockchainType == token.blockchainType }
+
+        if !token.blockchainType.restoreSettingTypes.isEmpty, !chainEnabled {
             restoreSettingsService.approveSettings(token: token, account: account)
         } else {
             saveWallet(for: token)

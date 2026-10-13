@@ -190,6 +190,19 @@
 "restore.cloud.password.placeholder" = "Passwort sichern";
 "restore.cloud.password.description" = "Geben Sie das Passwort für diese Sicherungsdatei ein, um Ihre Daten wiederherzustellen.";
 
+"restore.near_account.title" = "NEAR-Konto";
+"restore.near_account.description" = "Diese Wiederherstellungsphrase verwaltet mehr als ein NEAR-Konto. Wähle das Konto, das in dieser Wallet verwendet werden soll.";
+"restore.near_account.search_failed" = "Die Suche nach Konten dieser Wiederherstellungsphrase ist fehlgeschlagen. Versuche es erneut, gib den Kontonamen ein oder verwende das Standardkonto.";
+"restore.near_account.default_account" = "Standardkonto";
+"restore.near_account.use_default" = "Standardkonto verwenden";
+"restore.near_account.enter_name" = "Kontonamen eingeben";
+"restore.near_account_name.title" = "Kontoname";
+"restore.near_account_name.description" = "Gib ein NEAR-Konto ein, das diese Wiederherstellungsphrase verwaltet, z. B. alice.near.";
+"restore.near_account_name.invalid" = "Kein gültiger NEAR-Kontoname";
+"restore.near_account_name.not_found" = "Dieses Konto existiert nicht";
+"restore.near_account_name.no_access" = "Diese Wiederherstellungsphrase hat keinen vollen Zugriff auf dieses Konto";
+"restore.near_account_name.check_failed" = "Das Konto konnte nicht geprüft werden. Versuche es erneut.";
+
 // Coin Settings
 
 "coin_settings.title" = "Blockchain-Einstellungen";

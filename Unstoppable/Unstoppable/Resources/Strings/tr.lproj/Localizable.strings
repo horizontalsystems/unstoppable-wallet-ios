@@ -190,6 +190,19 @@
 "restore.cloud.password.placeholder" = "Yedek Şifre";
 "restore.cloud.password.description" = "Verilerinizi geri yüklemek için bu yedekleme dosyasının şifresini girin.";
 
+"restore.near_account.title" = "NEAR Hesabı";
+"restore.near_account.description" = "Bu kurtarma ifadesi birden fazla NEAR hesabını yönetiyor. Bu cüzdanda kullanılacak hesabı seçin.";
+"restore.near_account.search_failed" = "Bu kurtarma ifadesine bağlı hesaplar aranamadı. Tekrar deneyin, hesap adını girin veya varsayılan hesabı kullanın.";
+"restore.near_account.default_account" = "Varsayılan hesap";
+"restore.near_account.use_default" = "Varsayılan Hesabı Kullan";
+"restore.near_account.enter_name" = "Hesap Adını Gir";
+"restore.near_account_name.title" = "Hesap Adı";
+"restore.near_account_name.description" = "Bu kurtarma ifadesinin yönettiği bir NEAR hesabı girin, örneğin alice.near.";
+"restore.near_account_name.invalid" = "Geçerli bir NEAR hesap adı değil";
+"restore.near_account_name.not_found" = "Bu hesap mevcut değil";
+"restore.near_account_name.no_access" = "Bu kurtarma ifadesinin bu hesaba tam erişimi yok";
+"restore.near_account_name.check_failed" = "Hesap kontrol edilemedi. Tekrar deneyin.";
+
 // Coin Settings
 
 "coin_settings.title" = "Blok Zinciri Ayarları";

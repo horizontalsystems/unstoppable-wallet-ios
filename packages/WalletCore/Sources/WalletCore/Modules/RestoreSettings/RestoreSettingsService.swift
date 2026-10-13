@@ -52,6 +52,12 @@ extension RestoreSettingsService {
             return
         }
 
+        // created accounts returned above; a watch account has nothing to choose
+        if blockchainType.restoreSettingTypes.contains(.nearAccountId), existingSettings[.nearAccountId] == nil, let account, case .mnemonic = account.type {
+            requestSubject.send(Request(token: token, type: .nearAccount(accountType: account.type)))
+            return
+        }
+
         approveSettingsSubject.send(TokenWithSettings(token: token, settings: [:]))
     }
 
@@ -69,6 +75,10 @@ extension RestoreSettingsService {
         approveSettingsSubject.send(tokenWithSettings)
 
         return tokenWithSettings
+    }
+
+    func enter(settings: RestoreSettings, token: Token) {
+        approveSettingsSubject.send(TokenWithSettings(token: token, settings: settings))
     }
 
     func cancel(token: Token) {
@@ -99,5 +109,6 @@ extension RestoreSettingsService {
 
     enum RequestType {
         case birthdayHeight
+        case nearAccount(accountType: AccountType)
     }
 }
