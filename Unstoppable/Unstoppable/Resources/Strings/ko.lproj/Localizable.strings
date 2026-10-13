@@ -695,6 +695,8 @@
 "swap.private.recipients.description" = "수신자 주소를 추가하고 받는 금액을 어떻게 나눌지 선택하세요.";
 "swap.private.duplicate_addresses.title" = "중복된 주소";
 "swap.private.duplicate_addresses.text" = "같은 주소를 사용하면 분할로 얻는 개인정보 보호 효과가 줄어듭니다.";
+"swap.private.invalid_split.title" = "잘못된 분할";
+"swap.private.invalid_split.text" = "공급자가 이 분할 비율을 지원하지 않습니다. 계속하려면 분할을 조정하세요.";
 "swap.private.address" = "주소 %d";
 "swap.private.enter_addresses" = "주소 입력";
 "swap.token_select.popular_tokens" = "인기 토큰";

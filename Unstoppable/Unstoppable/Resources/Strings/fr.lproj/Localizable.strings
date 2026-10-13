@@ -695,6 +695,8 @@
 "swap.private.recipients.description" = "Ajoutez les adresses des destinataires et choisissez comment le montant reçu est réparti entre elles.";
 "swap.private.duplicate_addresses.title" = "Adresses en double";
 "swap.private.duplicate_addresses.text" = "Utiliser la même adresse réduit l’avantage de confidentialité de la répartition.";
+"swap.private.invalid_split.title" = "Répartition non valide";
+"swap.private.invalid_split.text" = "Le fournisseur ne prend pas en charge ce ratio de répartition. Ajustez la répartition pour continuer.";
 "swap.private.address" = "Adresse %d";
 "swap.private.enter_addresses" = "Saisir les adresses";
 "swap.token_select.popular_tokens" = "Tokens Populaires";

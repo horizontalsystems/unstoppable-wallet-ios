@@ -695,6 +695,8 @@
 "swap.private.recipients.description" = "Add recipient addresses and choose how the received amount is split between them.";
 "swap.private.duplicate_addresses.title" = "Duplicate Addresses";
 "swap.private.duplicate_addresses.text" = "Using the same address reduces the privacy benefit of splitting.";
+"swap.private.invalid_split.title" = "Invalid split";
+"swap.private.invalid_split.text" = "The provider doesn’t support this split ratio. Adjust the split to continue.";
 "swap.private.address" = "Address %d";
 "swap.private.enter_addresses" = "Enter Addresses";
 "swap.token_select.popular_tokens" = "Popular Tokens";

@@ -29,6 +29,17 @@ struct SplitSwapRecipientsView: View {
                         )
                         .padding(.top, 4)
 
+                        if viewModel.splitUnavailable {
+                            AlertCardView(
+                                .init(
+                                    title: "swap.private.invalid_split.title".localized,
+                                    text: "swap.private.invalid_split.text".localized,
+                                    type: .critical
+                                )
+                            )
+                            .padding(.top, 16)
+                        }
+
                         if viewModel.hasDuplicateRecipients {
                             AlertCardView(
                                 .init(
@@ -120,8 +131,8 @@ struct SplitSwapRecipientsView: View {
     }
 
     private func amountText(index: Int) -> ComponentText? {
-        guard let tokenOut = viewModel.tokenOut, let amount = viewModel.outputAmount(at: index) else {
-            return nil
+        guard !viewModel.splitUnavailable, let tokenOut = viewModel.tokenOut, let amount = viewModel.outputAmount(at: index) else {
+            return ComponentText(text: "n/a".localized, colorStyle: .secondary)
         }
 
         let formatted = AppValue(token: tokenOut, value: amount).formattedShort() ?? amount.description

@@ -695,6 +695,8 @@
 "swap.private.recipients.description" = "添加收款人地址，并选择收到的金额在他们之间如何分配。";
 "swap.private.duplicate_addresses.title" = "地址重复";
 "swap.private.duplicate_addresses.text" = "使用相同的地址会降低拆分带来的隐私保护效果。";
+"swap.private.invalid_split.title" = "拆分无效";
+"swap.private.invalid_split.text" = "服务商不支持此拆分比例。请调整拆分后继续。";
 "swap.private.address" = "地址 %d";
 "swap.private.enter_addresses" = "输入地址";
 "swap.token_select.popular_tokens" = "热门代币";

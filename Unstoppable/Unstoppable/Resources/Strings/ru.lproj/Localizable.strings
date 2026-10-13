@@ -695,6 +695,8 @@
 "swap.private.recipients.description" = "Добавьте адреса получателей и выберите, как полученная сумма будет распределена между ними.";
 "swap.private.duplicate_addresses.title" = "Повторяющиеся адреса";
 "swap.private.duplicate_addresses.text" = "Использование одного и того же адреса снижает конфиденциальность разделения.";
+"swap.private.invalid_split.title" = "Недопустимое разделение";
+"swap.private.invalid_split.text" = "Провайдер не поддерживает такое соотношение разделения. Измените разделение, чтобы продолжить.";
 "swap.private.address" = "Адрес %d";
 "swap.private.enter_addresses" = "Введите адреса";
 "swap.token_select.popular_tokens" = "Популярные токены";

@@ -163,9 +163,19 @@ extension SplitSwapViewModel {
         return nil
     }
 
+    // The last round for the current split ratio returned no quote: the ratio was quoted fine before
+    // (that is how the recipients screen is reached), so the provider refuses this split
+    var splitUnavailable: Bool {
+        !requoting && currentQuote == nil && (amountIn ?? 0) > 0 && !validProviders.isEmpty
+    }
+
     var recipientsButtonState: PreSendButtonState {
         if requoting {
             return .init(title: "swap.quoting".localized, disabled: true, showProgress: true)
+        }
+
+        if splitUnavailable {
+            return .init(title: "send.next_button".localized, disabled: true, showProgress: false)
         }
 
         if recipients.contains(where: { $0 == nil }) {
@@ -208,8 +218,10 @@ extension SplitSwapViewModel {
             return
         }
 
-        if let outputAmounts = splitQuote?.outputAmounts {
-            lastOutputAmounts = outputAmounts
+        // A settled state hands its amounts to the requote: a valid split its quote's, an invalid one
+        // none (n/a while loading). A change during a requote keeps what the requote already shows.
+        if !requoting {
+            lastOutputAmounts = splitQuote?.outputAmounts
         }
 
         self.splitPercent = percent

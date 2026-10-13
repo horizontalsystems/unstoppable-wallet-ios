@@ -695,6 +695,8 @@
 "swap.private.recipients.description" = "Añada las direcciones de los destinatarios y elija cómo se reparte entre ellas el monto recibido.";
 "swap.private.duplicate_addresses.title" = "Direcciones duplicadas";
 "swap.private.duplicate_addresses.text" = "Usar la misma dirección reduce el beneficio de privacidad de la división.";
+"swap.private.invalid_split.title" = "División no válida";
+"swap.private.invalid_split.text" = "El proveedor no admite esta proporción de división. Ajuste la división para continuar.";
 "swap.private.address" = "Dirección %d";
 "swap.private.enter_addresses" = "Introducir direcciones";
 "swap.token_select.popular_tokens" = "Tokens Populares";
