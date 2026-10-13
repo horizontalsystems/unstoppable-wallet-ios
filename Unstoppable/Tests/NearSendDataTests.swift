@@ -182,6 +182,19 @@ struct NearSendDataTests {
         }
     }
 
+    // the phrase's key removed from the chosen account, or only a function-call key left: a clear reason, not the kit's text
+    @Test func lostOrLimitedAccessIsExplained() async throws {
+        let lost = BroadcastAdapter(pendingBefore: [], pendingAfter: [], error: NearKit.SendError.accessKeyNotFound)
+        let limited = BroadcastAdapter(pendingBefore: [], pendingAfter: [], error: NearKit.SendError.notFullAccessKey)
+
+        await #expect(throws: NearSendHelper.SendError.accessLost) {
+            try await NearSendHelper.send(adapter: lost, amount: 1, address: "alice.near", memo: nil, estimate: Self.estimate(requiredNear: 1), signer: Self.signer())
+        }
+        await #expect(throws: NearSendHelper.SendError.notFullAccessKey) {
+            try await NearSendHelper.send(adapter: limited, amount: 1, address: "alice.near", memo: nil, estimate: Self.estimate(requiredNear: 1), signer: Self.signer())
+        }
+    }
+
     // with less than the transfer needs, the amount stays and the caution names what is required
     @Test func maxSendBelowTheReserveIsInsufficient() async throws {
         let adapter = MaxSendAdapter(availableNear: Decimal(string: "0.0001")!)

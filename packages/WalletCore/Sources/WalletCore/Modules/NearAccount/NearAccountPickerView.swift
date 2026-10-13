@@ -30,7 +30,7 @@ struct NearAccountPickerView: View {
                                 nameEntryPresented = true
                             }
                             ThemeButton(text: "restore.near_account.use_default".localized, mode: .transparent, size: .small) {
-                                viewModel.useDefault()
+                                Task { await viewModel.useDefault() }
                             }
                         }
                     }
@@ -52,12 +52,13 @@ struct NearAccountPickerView: View {
                     Task { await viewModel.add(accountId: accountId) }
                 }
             }
-            .task {
-                await viewModel.load()
-            }
             .onReceive(viewModel.finishPublisher) {
                 isPresented = false
             }
+        }
+        // on the stack, not its root page: the root reappears when the name entry is popped, the stack does not
+        .task {
+            await viewModel.load()
         }
     }
 
@@ -71,30 +72,42 @@ struct NearAccountPickerView: View {
 
                     ListSection {
                         ForEach(rows) { row in
-                            ClickableRow(action: {
-                                viewModel.selectedAccountId = row.accountId
-                            }) {
-                                Image(viewModel.selectedAccountId == row.accountId ? "circle_radioon_24" : "circle_radiooff_24")
-
-                                VStack(alignment: .leading, spacing: 1) {
-                                    Text(row.title).themeBody()
-                                    if !row.subtitle.isEmpty {
-                                        Text(row.subtitle).themeSubhead2()
+                            Cell(
+                                left: {
+                                    Image.checkbox(active: viewModel.selectedAccountId == row.accountId)
+                                },
+                                middle: {
+                                    MultiText(title: row.title, subtitle: row.subtitle.isEmpty ? nil : row.subtitle)
+                                },
+                                action: {
+                                    withAnimation(.linear(duration: 0.2)) {
+                                        viewModel.selectedAccountId = row.accountId
                                     }
                                 }
-                            }
+                            )
                         }
                     }
                     .themeListStyle(.bordered)
 
-                    ListSection {
-                        ClickableRow(action: {
-                            nameEntryPresented = true
-                        }) {
-                            Text("restore.near_account.enter_name".localized).themeBody()
-                            Spacer()
-                            Image.disclosureIcon
+                    if let selected = rows.first(where: { $0.accountId == viewModel.selectedAccountId }) {
+                        ForEach(selected.warnings, id: \.self) { warning in
+                            AlertCardView(warning.alertCardItem)
+                                .transition(.opacity)
                         }
+                    }
+
+                    ListSection {
+                        Cell(
+                            middle: {
+                                MultiText(title: "restore.near_account.enter_name".localized)
+                            },
+                            right: {
+                                Image.disclosureIcon
+                            },
+                            action: {
+                                nameEntryPresented = true
+                            }
+                        )
                     }
                     .themeListStyle(.bordered)
                 }
@@ -108,6 +121,16 @@ struct NearAccountPickerView: View {
             }
             .buttonStyle(PrimaryButtonStyle(style: .yellow))
             .disabled(viewModel.selectedAccountId == nil)
+        }
+    }
+}
+
+private extension NearAccountPickerViewModel.Warning {
+    var alertCardItem: AlertCardViewItem {
+        switch self {
+        case .accessLost: return AlertCardViewItem(text: "restore.near_account.access_lost".localized, type: .critical)
+        case .otherFullAccessKeys: return AlertCardViewItem(text: "restore.near_account.other_keys_warning".localized, type: .critical)
+        case .contract: return AlertCardViewItem(text: "restore.near_account.contract_warning".localized, type: .caution)
         }
     }
 }

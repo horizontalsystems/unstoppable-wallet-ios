@@ -196,6 +196,9 @@
 "restore.near_account.default_account" = "默认账户";
 "restore.near_account.use_default" = "使用默认账户";
 "restore.near_account.enter_name" = "输入账户名称";
+"restore.near_account.other_keys_warning" = "其他密钥也拥有此账户的完全访问权限。持有这些密钥的人可以转移资金或移除你的助记词的访问权限。";
+"restore.near_account.contract_warning" = "此账户部署了智能合约。根据其代码，它可能会转移账户资金。仅在你了解其作用时继续。";
+"restore.near_account.access_lost" = "此助记词已无法访问该账户。可能已在其他钱包中被移除。";
 "restore.near_account_name.title" = "账户名称";
 "restore.near_account_name.description" = "输入此助记词控制的 NEAR 账户，例如 alice.near。";
 "restore.near_account_name.invalid" = "无效的 NEAR 账户名称";
@@ -532,6 +535,7 @@
 "send.near.receiver_registration.info" = "代币合约会收取一次性押金，用于注册从未持有过该代币的接收方。";
 "send.near.storage_deposit_too_high" = "该代币要求为注册接收方支付异常高的押金，可能是诈骗。";
 "send.near.storage_deposit_changed" = "接收方注册费已变更。请查看新的费用后重新发送。";
+"send.near.not_full_access_key" = "此助记词对该账户只有受限访问权限，无法发送资金。";
 "send.near.previous_transaction_pending" = "之前的一笔交易仍在处理中。再次发送前请查看交易记录。";
 "send.near.rejected" = "网络拒绝了此交易，未发送任何内容。";
 "send.confirmation.fee" = "费用";

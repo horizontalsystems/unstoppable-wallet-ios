@@ -37,13 +37,19 @@ extension NearAccountNameViewModel {
         state == .loading
     }
 
+    // a refused name stays refused until it is edited (editing resets the state to idle); a failed
+    // check can be tried again as is
     var buttonEnabled: Bool {
-        state != .loading && !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        switch state {
+        case .idle, .checkFailed: return !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        case .loading, .failed: return false
+        }
     }
 
     var cautionState: CautionState {
         switch state {
         case let .failed(text): return .caution(Caution(text: text, type: .error))
+        case .checkFailed: return .caution(Caution(text: "restore.near_account_name.check_failed".localized, type: .error))
         default: return .none
         }
     }
@@ -71,7 +77,7 @@ extension NearAccountNameViewModel {
                     result = .idle
                 }
             } catch {
-                result = .failed(text: "restore.near_account_name.check_failed".localized)
+                result = .checkFailed
             }
 
             if Task.isCancelled { return }
@@ -91,5 +97,6 @@ extension NearAccountNameViewModel {
         case idle
         case loading
         case failed(text: String)
+        case checkFailed
     }
 }

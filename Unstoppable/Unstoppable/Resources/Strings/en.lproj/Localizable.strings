@@ -196,6 +196,9 @@
 "restore.near_account.default_account" = "Default account";
 "restore.near_account.use_default" = "Use Default Account";
 "restore.near_account.enter_name" = "Enter Account Name";
+"restore.near_account.other_keys_warning" = "Other keys also have full access to this account. Whoever holds them can move its funds or remove your recovery phrase's access.";
+"restore.near_account.contract_warning" = "A smart contract is deployed on this account. Depending on its code, it can move the account's funds. Continue only if you know what it does.";
+"restore.near_account.access_lost" = "This recovery phrase no longer has access to this account. It may have been removed in another wallet.";
 "restore.near_account_name.title" = "Account Name";
 "restore.near_account_name.description" = "Enter a NEAR account this recovery phrase controls, such as alice.near.";
 "restore.near_account_name.invalid" = "Not a valid NEAR account name";
@@ -532,6 +535,7 @@
 "send.near.receiver_registration.info" = "The token contract charges a one-time deposit to register a receiver that has never held this token.";
 "send.near.storage_deposit_too_high" = "This token asks for an unusually large deposit to register the receiver and may be a scam.";
 "send.near.storage_deposit_changed" = "The receiver registration fee has changed. Check the updated fee and send again.";
+"send.near.not_full_access_key" = "This recovery phrase has only limited access to this account and can't send funds.";
 "send.near.previous_transaction_pending" = "A previous transaction is still pending. Check your transaction history before sending again.";
 "send.near.rejected" = "The network rejected this transaction. Nothing was sent.";
 "send.confirmation.fee" = "Fee";

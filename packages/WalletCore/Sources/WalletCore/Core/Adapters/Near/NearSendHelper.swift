@@ -124,6 +124,9 @@ enum NearSendHelper {
             // the confirmation showed another deposit; the next refresh shows the new one
             case .storageDepositChanged: throw SendError.storageDepositChanged
             case .storageDepositTooHigh: throw SendError.storageDepositTooHigh
+            // the phrase's key was removed from a chosen named account, or only limited access remains
+            case .accessKeyNotFound: throw SendError.accessLost
+            case .notFullAccessKey: throw SendError.notFullAccessKey
             case let .rejected(details):
                 // kept as pending when the kit cannot tell whether an earlier attempt got it on chain
                 if let hash = newPendingHash(adapter: adapter, pendingBefore: pendingBefore) {
@@ -167,6 +170,8 @@ extension NearSendHelper {
         case storageDepositTooHigh
         case rejected
         case insufficientBalance
+        case accessLost
+        case notFullAccessKey
 
         var errorDescription: String? {
             switch self {
@@ -174,6 +179,8 @@ extension NearSendHelper {
             case .storageDepositTooHigh: return "send.near.storage_deposit_too_high".localized
             case .rejected: return "send.near.rejected".localized
             case .insufficientBalance: return "fee_settings.errors.insufficient_balance".localized
+            case .accessLost: return "restore.near_account.access_lost".localized
+            case .notFullAccessKey: return "send.near.not_full_access_key".localized
             }
         }
     }

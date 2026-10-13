@@ -196,6 +196,9 @@
 "restore.near_account.default_account" = "Conta padrão";
 "restore.near_account.use_default" = "Usar conta padrão";
 "restore.near_account.enter_name" = "Inserir nome da conta";
+"restore.near_account.other_keys_warning" = "Outras chaves também têm acesso total a esta conta. Quem as possui pode mover os fundos ou remover o acesso da sua frase de recuperação.";
+"restore.near_account.contract_warning" = "Um contrato inteligente está implantado nesta conta. Dependendo do código, ele pode mover os fundos da conta. Continue apenas se souber o que ele faz.";
+"restore.near_account.access_lost" = "Esta frase de recuperação não tem mais acesso a esta conta. O acesso pode ter sido removido em outra carteira.";
 "restore.near_account_name.title" = "Nome da conta";
 "restore.near_account_name.description" = "Insira uma conta NEAR controlada por esta frase de recuperação, por exemplo alice.near.";
 "restore.near_account_name.invalid" = "Nome de conta NEAR inválido";
@@ -532,6 +535,7 @@
 "send.near.receiver_registration.info" = "O contrato do token cobra um depósito único para registrar um destinatário que nunca teve este token.";
 "send.near.storage_deposit_too_high" = "Este token pede um depósito excepcionalmente alto para registrar o destinatário e pode ser um golpe.";
 "send.near.storage_deposit_changed" = "A taxa de registro do destinatário mudou. Confira a nova taxa e envie novamente.";
+"send.near.not_full_access_key" = "Esta frase de recuperação tem apenas acesso limitado a esta conta e não pode enviar fundos.";
 "send.near.previous_transaction_pending" = "Uma transação anterior ainda está pendente. Confira seu histórico de transações antes de enviar novamente.";
 "send.near.rejected" = "A rede rejeitou esta transação. Nada foi enviado.";
 "send.confirmation.fee" = "Taxa";

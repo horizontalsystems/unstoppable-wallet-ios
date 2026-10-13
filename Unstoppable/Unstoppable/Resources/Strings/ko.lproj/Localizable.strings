@@ -196,6 +196,9 @@
 "restore.near_account.default_account" = "기본 계정";
 "restore.near_account.use_default" = "기본 계정 사용";
 "restore.near_account.enter_name" = "계정 이름 입력";
+"restore.near_account.other_keys_warning" = "다른 키도 이 계정에 대한 전체 액세스 권한을 가지고 있습니다. 해당 키를 가진 사람은 자금을 옮기거나 복구 문구의 액세스 권한을 제거할 수 있습니다.";
+"restore.near_account.contract_warning" = "이 계정에는 스마트 컨트랙트가 배포되어 있습니다. 코드에 따라 계정의 자금을 옮길 수 있습니다. 동작을 알고 있는 경우에만 계속하세요.";
+"restore.near_account.access_lost" = "이 복구 문구는 더 이상 이 계정에 액세스할 수 없습니다. 다른 지갑에서 제거되었을 수 있습니다.";
 "restore.near_account_name.title" = "계정 이름";
 "restore.near_account_name.description" = "이 복구 문구가 관리하는 NEAR 계정을 입력하세요(예: alice.near).";
 "restore.near_account_name.invalid" = "올바른 NEAR 계정 이름이 아닙니다";
@@ -532,6 +535,7 @@
 "send.near.receiver_registration.info" = "토큰 컨트랙트는 이 토큰을 보유한 적이 없는 수신자를 등록하기 위해 일회성 예치금을 부과합니다.";
 "send.near.storage_deposit_too_high" = "이 토큰은 수신자 등록에 비정상적으로 큰 예치금을 요구하며 사기일 수 있습니다.";
 "send.near.storage_deposit_changed" = "수신자 등록 수수료가 변경되었습니다. 변경된 수수료를 확인한 후 다시 전송하세요.";
+"send.near.not_full_access_key" = "이 복구 문구는 이 계정에 대한 제한된 액세스 권한만 있어 자금을 보낼 수 없습니다.";
 "send.near.previous_transaction_pending" = "이전 트랜잭션이 아직 대기 중입니다. 다시 전송하기 전에 거래 내역을 확인하세요.";
 "send.near.rejected" = "네트워크가 이 트랜잭션을 거부했습니다. 아무것도 전송되지 않았습니다.";
 "send.confirmation.fee" = "수수료";

@@ -34,13 +34,27 @@ class NearAccountPickerViewModel: ObservableObject {
         publicKey.implicitAccountId
     }
 
+    // details only inform the choice: an account whose details fail to load is still listed
     private func account(accountId: String) async -> Account {
-        let state = try? await NearKit.Kit.accountState(accountId: accountId, network: network, rpcUrls: rpcUrls, fastNearApiKey: AppConfig.fastNearApiKey)
-        return Account(accountId: accountId, available: state?.available)
+        async let state = try? NearKit.Kit.accountState(accountId: accountId, network: network, rpcUrls: rpcUrls, fastNearApiKey: AppConfig.fastNearApiKey)
+        async let keys = try? NearKit.Kit.accessKeys(accountId: accountId, network: network, rpcUrls: rpcUrls, fastNearApiKey: AppConfig.fastNearApiKey)
+
+        let accountState = await state
+        let fullAccessKeys = await keys?.filter(\.isFullAccess).map(\.publicKey)
+        let ownKey = publicKey.description
+
+        return Account(
+            accountId: accountId,
+            isImplicit: accountId == implicitAccountId,
+            available: accountState?.available,
+            hasContract: accountState?.hasContract,
+            accessLost: accountState.flatMap { state in fullAccessKeys.map { state.exists && !$0.contains(ownKey) } },
+            otherFullAccessKeys: fullAccessKeys.map { $0.contains { $0 != ownKey } }
+        )
     }
 
     private func rows() -> [Row] {
-        accounts.map { account in
+        Self.ordered(accounts).map { account in
             let isImplicit = account.accountId == implicitAccountId
             var subtitleParts = [String]()
 
@@ -55,9 +69,73 @@ class NearAccountPickerViewModel: ObservableObject {
             return Row(
                 accountId: account.accountId,
                 title: isImplicit ? account.accountId.shortened : account.accountId,
-                subtitle: subtitleParts.joined(separator: " · ")
+                subtitle: subtitleParts.joined(separator: " · "),
+                warnings: Self.warnings(account: account)
             )
         }
+    }
+
+    private static func warnings(account: Account) -> [Warning] {
+        var warnings = [Warning]()
+
+        if account.accessLost == true {
+            warnings.append(.accessLost)
+        } else if account.otherFullAccessKeys == true {
+            warnings.append(.otherFullAccessKeys)
+        }
+        if account.hasContract == true {
+            warnings.append(.contract)
+        }
+
+        return warnings
+    }
+}
+
+extension NearAccountPickerViewModel {
+    /// Spec 2026-10-13 §6.3: a key anyone can add to their own account must not make that account
+    /// the default. Full-access keys only, as Android counts them.
+    static func group(_ account: Account) -> Group {
+        if account.isImplicit {
+            return account.accessLost == true ? .implicitLost : .implicitOwn
+        }
+
+        guard let hasContract = account.hasContract, let otherFullAccessKeys = account.otherFullAccessKeys else {
+            return .namedShared
+        }
+
+        return hasContract || otherFullAccessKeys ? .namedShared : .namedOwn
+    }
+
+    /// The list: own named accounts, shared named ones, the implicit one, a lost implicit one; richest first in each.
+    static func ordered(_ accounts: [Account]) -> [Account] {
+        accounts.enumerated()
+            .sorted { lhs, rhs in
+                let lhsGroup = group(lhs.element)
+                let rhsGroup = group(rhs.element)
+                if lhsGroup != rhsGroup {
+                    return lhsGroup.rawValue < rhsGroup.rawValue
+                }
+                let lhsAvailable = lhs.element.available ?? 0
+                let rhsAvailable = rhs.element.available ?? 0
+                if lhsAvailable != rhsAvailable {
+                    return lhsAvailable > rhsAvailable
+                }
+                return lhs.offset < rhs.offset
+            }
+            .map(\.element)
+    }
+
+    /// The default choice: an own named account, else the own implicit one, else a shared named one, else the lost implicit one.
+    static func preselected(_ accounts: [Account]) -> String? {
+        let ordered = ordered(accounts)
+
+        for group in [Group.namedOwn, .implicitOwn, .namedShared, .implicitLost] {
+            if let account = ordered.first(where: { self.group($0) == group }) {
+                return account.accountId
+            }
+        }
+
+        return nil
     }
 }
 
@@ -88,7 +166,7 @@ extension NearAccountPickerViewModel {
             // keep the search's order: implicit first, then the index's order
             accounts = accountIds.compactMap { accountId in found.first { $0.accountId == accountId } } + entered
             if selectedAccountId == nil {
-                selectedAccountId = implicitAccountId
+                selectedAccountId = Self.preselected(accounts)
             }
             state = .loaded(rows: rows())
         } catch is CancellationError {
@@ -119,7 +197,20 @@ extension NearAccountPickerViewModel {
         finishSubject.send()
     }
 
-    func useDefault() {
+    /// The implicit account, unless the phrase's key is known to be gone from it. A check that fails
+    /// lets it through: a failed search is usually the connection, and the implicit account is the phrase's own.
+    @MainActor
+    func useDefault() async {
+        let accountState = try? await NearKit.Kit.accountState(accountId: implicitAccountId, network: network, rpcUrls: rpcUrls, fastNearApiKey: AppConfig.fastNearApiKey)
+
+        if let accountState, accountState.exists,
+           let hasFullAccess = try? await NearKit.Kit.hasFullAccess(accountId: implicitAccountId, publicKey: publicKey, network: network, rpcUrls: rpcUrls, fastNearApiKey: AppConfig.fastNearApiKey),
+           !hasFullAccess
+        {
+            HudHelper.instance.show(banner: .error(string: "restore.near_account.access_lost".localized))
+            return
+        }
+
         onUseDefault()
         finishSubject.send()
     }
@@ -136,12 +227,32 @@ extension NearAccountPickerViewModel {
         let accountId: String
         let title: String
         let subtitle: String
+        let warnings: [Warning]
 
         var id: String { accountId }
     }
 
-    private struct Account {
+    enum Warning: Equatable {
+        case accessLost
+        case otherFullAccessKeys
+        case contract
+    }
+
+    enum Group: Int {
+        case namedOwn
+        case namedShared
+        case implicitOwn
+        case implicitLost
+    }
+
+    struct Account {
         let accountId: String
+        let isImplicit: Bool
         let available: BigUInt?
+        let hasContract: Bool?
+        /// The account exists but the phrase's key is not among its full-access keys; nil when unknown.
+        let accessLost: Bool?
+        /// A key other than the phrase's can also sign anything for the account; nil when unknown.
+        let otherFullAccessKeys: Bool?
     }
 }

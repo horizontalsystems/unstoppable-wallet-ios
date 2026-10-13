@@ -196,6 +196,9 @@
 "restore.near_account.default_account" = "Compte par défaut";
 "restore.near_account.use_default" = "Utiliser le compte par défaut";
 "restore.near_account.enter_name" = "Saisir le nom du compte";
+"restore.near_account.other_keys_warning" = "D'autres clés ont aussi un accès complet à ce compte. Leurs détenteurs peuvent déplacer ses fonds ou retirer l'accès de votre phrase de récupération.";
+"restore.near_account.contract_warning" = "Un contrat intelligent est déployé sur ce compte. Selon son code, il peut déplacer les fonds du compte. Ne continuez que si vous savez ce qu'il fait.";
+"restore.near_account.access_lost" = "Cette phrase de récupération n'a plus accès à ce compte. L'accès a peut-être été retiré dans un autre portefeuille.";
 "restore.near_account_name.title" = "Nom du compte";
 "restore.near_account_name.description" = "Saisissez un compte NEAR contrôlé par cette phrase de récupération, par exemple alice.near.";
 "restore.near_account_name.invalid" = "Nom de compte NEAR invalide";
@@ -532,6 +535,7 @@
 "send.near.receiver_registration.info" = "Le contrat du token prélève un dépôt unique pour enregistrer un destinataire qui n'a jamais détenu ce token.";
 "send.near.storage_deposit_too_high" = "Ce token demande un dépôt anormalement élevé pour enregistrer le destinataire et pourrait être une arnaque.";
 "send.near.storage_deposit_changed" = "Les frais d'enregistrement du destinataire ont changé. Vérifiez les nouveaux frais et renvoyez.";
+"send.near.not_full_access_key" = "Cette phrase de récupération n'a qu'un accès limité à ce compte et ne peut pas envoyer de fonds.";
 "send.near.previous_transaction_pending" = "Une transaction précédente est toujours en attente. Vérifiez votre historique des transactions avant de renvoyer.";
 "send.near.rejected" = "Le réseau a rejeté cette transaction. Rien n'a été envoyé.";
 "send.confirmation.fee" = "Frais";

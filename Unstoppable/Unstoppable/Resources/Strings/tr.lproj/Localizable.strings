@@ -196,6 +196,9 @@
 "restore.near_account.default_account" = "Varsayılan hesap";
 "restore.near_account.use_default" = "Varsayılan Hesabı Kullan";
 "restore.near_account.enter_name" = "Hesap Adını Gir";
+"restore.near_account.other_keys_warning" = "Başka anahtarların da bu hesaba tam erişimi var. Bu anahtarlara sahip olanlar fonları taşıyabilir veya kurtarma ifadenizin erişimini kaldırabilir.";
+"restore.near_account.contract_warning" = "Bu hesapta bir akıllı sözleşme dağıtılmış. Koduna bağlı olarak hesabın fonlarını taşıyabilir. Yalnızca ne yaptığını biliyorsanız devam edin.";
+"restore.near_account.access_lost" = "Bu kurtarma ifadesinin artık bu hesaba erişimi yok. Erişim başka bir cüzdanda kaldırılmış olabilir.";
 "restore.near_account_name.title" = "Hesap Adı";
 "restore.near_account_name.description" = "Bu kurtarma ifadesinin yönettiği bir NEAR hesabı girin, örneğin alice.near.";
 "restore.near_account_name.invalid" = "Geçerli bir NEAR hesap adı değil";
@@ -532,6 +535,7 @@
 "send.near.receiver_registration.info" = "Token sözleşmesi, bu tokena hiç sahip olmamış bir alıcıyı kaydetmek için tek seferlik bir depozito alır.";
 "send.near.storage_deposit_too_high" = "Bu token, alıcıyı kaydetmek için alışılmadık derecede yüksek bir depozito istiyor ve dolandırıcılık olabilir.";
 "send.near.storage_deposit_changed" = "Alıcı kayıt ücreti değişti. Yeni ücreti kontrol edip tekrar gönderin.";
+"send.near.not_full_access_key" = "Bu kurtarma ifadesinin bu hesaba yalnızca sınırlı erişimi var ve fon gönderemez.";
 "send.near.previous_transaction_pending" = "Önceki bir işlem hâlâ beklemede. Tekrar göndermeden önce işlem geçmişinizi kontrol edin.";
 "send.near.rejected" = "Ağ bu işlemi reddetti. Hiçbir şey gönderilmedi.";
 "send.confirmation.fee" = "Ücret";
