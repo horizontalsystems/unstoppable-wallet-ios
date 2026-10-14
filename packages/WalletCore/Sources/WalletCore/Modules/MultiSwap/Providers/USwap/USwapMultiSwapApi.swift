@@ -916,6 +916,8 @@ public extension USwapMultiSwapApi {
         public let pauseReason: String?
         // The inbound tx hash the server holds (reported through `signed`), when any
         public let hash: String?
+        // /v3/split/track only: every recipient's own track body, in recipient order
+        public let outputs: [Output]?
 
         public init(
             status: String,
@@ -925,7 +927,8 @@ public extension USwapMultiSwapApi {
             legs: [Leg],
             provider: String?,
             pauseReason: String?,
-            hash: String? = nil
+            hash: String? = nil,
+            outputs: [Output]? = nil
         ) {
             self.status = status
             self.fromAsset = fromAsset
@@ -935,6 +938,25 @@ public extension USwapMultiSwapApi {
             self.provider = provider
             self.pauseReason = pauseReason
             self.hash = hash
+            self.outputs = outputs
+        }
+
+        public struct Output {
+            public let index: Int
+            public let status: String
+            public let toAddress: String?
+            public let fromAmount: Decimal?
+            public let toAmount: Decimal?
+            public let legs: [Leg]
+
+            public init(index: Int, status: String, toAddress: String?, fromAmount: Decimal?, toAmount: Decimal?, legs: [Leg]) {
+                self.index = index
+                self.status = status
+                self.toAddress = toAddress
+                self.fromAmount = fromAmount
+                self.toAmount = toAmount
+                self.legs = legs
+            }
         }
 
         public struct Leg {
@@ -1240,9 +1262,16 @@ extension USwapMultiSwapApi {
         let provider: String?
         let pauseReason: String?
         let hash: String?
+        let index: Int?
+        let toAddress: String?
+        let fromAmount: Decimal?
+        let outputs: [TrackResponseMapping]?
 
         init(map: Map) throws {
             status = try map.value("status")
+            index = try? map.value("index")
+            toAddress = try? map.value("toAddress")
+            fromAmount = try? map.value("fromAmount", using: USwapMultiSwapApi.decimalTransform)
 
             // /v3/split/track: the top-level status is the aggregate (least-finished output); the
             // split reads as one swap whose amount out is the sum of the outputs and whose legs are theirs
@@ -1257,6 +1286,7 @@ extension USwapMultiSwapApi {
                 provider = (try? map.value("providers") as [String])?.first
                 pauseReason = outputs.first(where: { $0.status == "action_required" })?.pauseReason
                 hash = try? map.value("hash")
+                self.outputs = outputs
                 return
             }
 
@@ -1269,6 +1299,7 @@ extension USwapMultiSwapApi {
             provider = (try? map.value("providers") as [String])?.first
             pauseReason = try? map.value("meta.pauseReason")
             hash = try? map.value("hash")
+            outputs = nil
         }
 
         var response: TrackResponse {
@@ -1280,7 +1311,17 @@ extension USwapMultiSwapApi {
                 legs: legs.map(\.leg),
                 provider: provider,
                 pauseReason: pauseReason,
-                hash: hash
+                hash: hash,
+                outputs: outputs?.enumerated().map { position, output in
+                    TrackResponse.Output(
+                        index: output.index ?? position,
+                        status: output.status,
+                        toAddress: output.toAddress,
+                        fromAmount: output.fromAmount,
+                        toAmount: output.toAmount,
+                        legs: output.legs.map(\.leg)
+                    )
+                }
             )
         }
 

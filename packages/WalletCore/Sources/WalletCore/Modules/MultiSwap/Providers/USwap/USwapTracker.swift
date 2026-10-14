@@ -31,15 +31,18 @@ public final class USwapTracker {
             swap.toAsset = toAsset
         }
         swap.pauseReason = swap.status == .actionRequired ? response.pauseReason : nil
-        swap.legs = response.legs.map { leg in
-            Swap.Leg(
-                status: Swap.Status(rawValue: leg.status) ?? .unknown,
-                type: leg.type,
-                chainId: leg.chainId,
-                txHash: leg.txHash,
-                fromAsset: leg.fromAsset,
-                toAsset: leg.toAsset
-            )
+        swap.legs = response.legs.map(Self.leg)
+        if let outputs = response.outputs {
+            swap.outputs = outputs.map { output in
+                Swap.Output(
+                    index: output.index,
+                    status: Swap.Status(rawValue: output.status) ?? .unknown,
+                    toAddress: output.toAddress,
+                    fromAmount: output.fromAmount,
+                    toAmount: output.toAmount,
+                    legs: output.legs.map(Self.leg)
+                )
+            }
         }
 
         if swap.status == .completed, let toAmount = response.toAmount {
@@ -47,5 +50,16 @@ public final class USwapTracker {
         }
 
         return swap
+    }
+
+    private static func leg(_ leg: USwapMultiSwapApi.TrackResponse.Leg) -> Swap.Leg {
+        Swap.Leg(
+            status: Swap.Status(rawValue: leg.status) ?? .unknown,
+            type: leg.type,
+            chainId: leg.chainId,
+            txHash: leg.txHash,
+            fromAsset: leg.fromAsset,
+            toAsset: leg.toAsset
+        )
     }
 }

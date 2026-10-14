@@ -28,6 +28,8 @@ public struct Swap: Hashable {
     public var fromAsset: String?
     public var toAsset: String?
     public var legs: [Leg]?
+    // split swaps only: one entry per recipient, as the split track reports them
+    public var outputs: [Output]?
     var pauseReason: String?
 
     var isPending: Bool {
@@ -38,7 +40,7 @@ public struct Swap: Hashable {
         [.notStarted, .signed, .pending, .swapping]
     }
 
-    public init(uid: String, txHash: String?, trackingHandle: String?, accountId: String, providerId: String, status: Status, operation: Operation = .swap, tokenIn: Token, tokenOut: Token, amountIn: Decimal, amountOut: Decimal, recipient: String?, toAddress: String, depositAddress: String?, providerSwapId: String?, sourceAddress: String?, refundAddress: String?, estimatedTime: TimeInterval? = nil, date: Date, fromAsset: String? = nil, toAsset: String? = nil, legs: [Leg]? = nil, pauseReason: String? = nil) {
+    public init(uid: String, txHash: String?, trackingHandle: String?, accountId: String, providerId: String, status: Status, operation: Operation = .swap, tokenIn: Token, tokenOut: Token, amountIn: Decimal, amountOut: Decimal, recipient: String?, toAddress: String, depositAddress: String?, providerSwapId: String?, sourceAddress: String?, refundAddress: String?, estimatedTime: TimeInterval? = nil, date: Date, fromAsset: String? = nil, toAsset: String? = nil, legs: [Leg]? = nil, outputs: [Output]? = nil, pauseReason: String? = nil) {
         self.uid = uid
         self.txHash = txHash
         self.trackingHandle = trackingHandle
@@ -61,6 +63,7 @@ public struct Swap: Hashable {
         self.fromAsset = fromAsset
         self.toAsset = toAsset
         self.legs = legs
+        self.outputs = outputs
         self.pauseReason = pauseReason
     }
 
@@ -137,6 +140,15 @@ public extension Swap {
         public let fromAsset: String
         public let toAsset: String
     }
+
+    struct Output: Hashable {
+        public let index: Int
+        public let status: Status
+        public let toAddress: String?
+        public let fromAmount: Decimal?
+        public let toAmount: Decimal?
+        public let legs: [Leg]
+    }
 }
 
 struct SwapRecord: Codable {
@@ -162,6 +174,7 @@ struct SwapRecord: Codable {
     let fromAsset: String?
     let toAsset: String?
     let legs: [Leg]?
+    let outputs: [Output]?
     let pauseReason: String?
 }
 
@@ -173,6 +186,15 @@ extension SwapRecord {
         let txHash: String
         let fromAsset: String
         let toAsset: String
+    }
+
+    struct Output: Codable {
+        let index: Int
+        let status: String
+        let toAddress: String?
+        let fromAmount: String?
+        let toAmount: String?
+        let legs: [Leg]
     }
 }
 
@@ -204,6 +226,7 @@ extension SwapRecord: FetchableRecord, PersistableRecord {
         static let fromAsset = Column(CodingKeys.fromAsset)
         static let toAsset = Column(CodingKeys.toAsset)
         static let legs = Column(CodingKeys.legs)
+        static let outputs = Column(CodingKeys.outputs)
         static let pauseReason = Column(CodingKeys.pauseReason)
     }
 }

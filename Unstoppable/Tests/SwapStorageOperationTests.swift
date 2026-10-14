@@ -50,6 +50,22 @@ struct SwapStorageOperationTests {
         #expect(privateSend.trackingHandle == nil)
         #expect(privateSend.operation == .privateSend)
     }
+
+    @Test func splitOutputsSurviveSaveAndRead() throws {
+        let (storage, _) = try Self.storage()
+        let leg = Swap.Leg(status: .pending, type: "native_send", chainId: "bitcoin", txHash: "", fromAsset: "BTC.BTC", toAsset: "BTC.BTC")
+        let outputs = [
+            Swap.Output(index: 0, status: .completed, toAddress: "bc1qfirst", fromAmount: 0.6, toAmount: 1.25, legs: []),
+            Swap.Output(index: 1, status: .swapping, toAddress: "bc1qsecond", fromAmount: 0.4, toAmount: nil, legs: [leg]),
+        ]
+        var swap = Self.swap(uid: "split", operation: .splitSwap)
+        swap.outputs = outputs
+        try storage.save(swap: swap)
+
+        let saved = try #require(try storage.swaps(accountId: Self.accountId, limit: 1).first)
+
+        #expect(saved.outputs == outputs)
+    }
 }
 
 extension SwapStorageOperationTests {
@@ -110,6 +126,7 @@ extension SwapStorageOperationTests {
                 t.column(SwapRecord.Columns.toAsset.name, .text)
                 t.column(SwapRecord.Columns.legs.name, .text)
                 t.column(SwapRecord.Columns.pauseReason.name, .text)
+                t.column(SwapRecord.Columns.outputs.name, .text)
             }
         }
 

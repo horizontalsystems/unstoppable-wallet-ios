@@ -50,14 +50,15 @@ class SwapStorage {
                 date: record.date,
                 fromAsset: record.fromAsset,
                 toAsset: record.toAsset,
-                legs: record.legs?.map { leg in
-                    Swap.Leg(
-                        status: Swap.Status(rawValue: leg.status) ?? .unknown,
-                        type: leg.type,
-                        chainId: leg.chainId,
-                        txHash: leg.txHash,
-                        fromAsset: leg.fromAsset,
-                        toAsset: leg.toAsset
+                legs: record.legs?.map { Self.leg(record: $0) },
+                outputs: record.outputs?.map { output in
+                    Swap.Output(
+                        index: output.index,
+                        status: Swap.Status(rawValue: output.status) ?? .unknown,
+                        toAddress: output.toAddress,
+                        fromAmount: output.fromAmount.flatMap { Decimal(string: $0) },
+                        toAmount: output.toAmount.flatMap { Decimal(string: $0) },
+                        legs: output.legs.map { Self.leg(record: $0) }
                     )
                 },
                 pauseReason: record.pauseReason
@@ -88,17 +89,40 @@ class SwapStorage {
             date: swap.date,
             fromAsset: swap.fromAsset,
             toAsset: swap.toAsset,
-            legs: swap.legs?.map { leg in
-                SwapRecord.Leg(
-                    status: leg.status.rawValue,
-                    type: leg.type,
-                    chainId: leg.chainId,
-                    txHash: leg.txHash,
-                    fromAsset: leg.fromAsset,
-                    toAsset: leg.toAsset
+            legs: swap.legs?.map { Self.record(leg: $0) },
+            outputs: swap.outputs?.map { output in
+                SwapRecord.Output(
+                    index: output.index,
+                    status: output.status.rawValue,
+                    toAddress: output.toAddress,
+                    fromAmount: output.fromAmount?.description,
+                    toAmount: output.toAmount?.description,
+                    legs: output.legs.map { Self.record(leg: $0) }
                 )
             },
             pauseReason: swap.pauseReason
+        )
+    }
+
+    private static func leg(record leg: SwapRecord.Leg) -> Swap.Leg {
+        Swap.Leg(
+            status: Swap.Status(rawValue: leg.status) ?? .unknown,
+            type: leg.type,
+            chainId: leg.chainId,
+            txHash: leg.txHash,
+            fromAsset: leg.fromAsset,
+            toAsset: leg.toAsset
+        )
+    }
+
+    private static func record(leg: Swap.Leg) -> SwapRecord.Leg {
+        SwapRecord.Leg(
+            status: leg.status.rawValue,
+            type: leg.type,
+            chainId: leg.chainId,
+            txHash: leg.txHash,
+            fromAsset: leg.fromAsset,
+            toAsset: leg.toAsset
         )
     }
 }
