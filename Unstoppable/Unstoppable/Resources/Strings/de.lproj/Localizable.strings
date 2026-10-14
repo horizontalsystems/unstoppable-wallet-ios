@@ -329,6 +329,7 @@
 "balance.hide_coin" = "Ocultar moneda";
 "balance.rate_per_coin" = "%@ pro %@";
 "balance.syncing" = "Synchronisieren...";
+"balance.confirming" = "Bestätigung…";
 "balance.searching" = "Transaktionen werden gesucht...";
 "balance.connecting" = "Verbinde...";
 "balance.stopped" = "Stoppen";
@@ -385,6 +386,7 @@
 "error.zcash.sync_required" = "Warten Sie, bis die Wallet die Synchronisierung abgeschlossen hat, und versuchen Sie es erneut.";
 "zcash.migration.warning.title" = "Öffentlich sichtbarer Betrag";
 "zcash.migration.warning" = "Das Verschieben von Mitteln zwischen Pools erfordert, dass der migrierte Betrag auf der Blockchain öffentlich sichtbar ist. Der Absender, der Empfänger und Ihre Adressen bleiben privat.";
+"zcash.shielding_progress" = "ZEC wird abgeschirmt (%d/%d)";
 
 "balance.token.receive_address" = "Dirección de recepción";
 "balance.token.account.inactive.description" = "Transaktionen werden nach der Aktivierung angezeigt";
@@ -614,6 +616,7 @@
 "send.token_syncing" = "Token-Synchronisation";
 "send.token_not_synced" = "Token nicht synchronisiert";
 "send.insufficient_balance" = "Unzureichendes Guthaben";
+"send.shield_coin" = "%@ abschirmen zum Senden";
 "send.continue_anyway" = "Trotzdem fortfahren";
 
 "send.address.enter_address" = "Adresse eingeben";
@@ -741,6 +744,7 @@
 "swap.error.memo_recipient_mismatch" = "Der Empfänger im Swap-Memo stimmt nicht mit dem ausgewählten Empfänger überein.";
 "swap.token_not_enabled" = "Token nicht aktiviert";
 "swap.enable_coin" = "%@ aktivieren";
+"swap.shield_coin" = "%@ abschirmen zum Tauschen";
 "swap.token_not_synced" = "Token nicht synchronisiert";
 "swap.insufficient_balance" = "Unzureichendes Guthaben";
 

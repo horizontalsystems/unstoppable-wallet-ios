@@ -43,4 +43,28 @@ struct ZcashBalanceComposeTests {
         #expect(data.full == 5)
         #expect(data.transparent == 0.5)
     }
+
+    // spec 2026-10-14 §5.0: the available balance is everything the user will be able to spend
+
+    @Test func balanceDataAddsTransparentAboveThreshold() {
+        let data = ZcashBalanceData(id: "w", full: 2, available: 2, transparent: 5, orchard: 0)
+        #expect(data.balanceData.available == 7)
+        #expect(data.balanceData.total == 7)
+    }
+
+    @Test func balanceDataSkipsTransparentAtThreshold() {
+        let data = ZcashBalanceData(id: "w", full: 2, available: 2, transparent: ZcashAdapter.minimalThreshold, orchard: 0)
+        #expect(data.balanceData.available == 2)
+        #expect(data.balanceData.total == 2 + ZcashAdapter.minimalThreshold)
+    }
+
+    @Test func balanceDataAvailableIncludesUnconfirmedPrivate() {
+        let data = ZcashBalanceData(id: "w", full: 4, available: 2, transparent: 0, orchard: 0)
+        #expect(data.balanceData.available == 4)
+    }
+
+    @Test func balanceDataKeepsStaleAvailableAboveFull() {
+        let data = ZcashBalanceData(id: "w", full: 2, available: 3, transparent: 0, orchard: 0)
+        #expect(data.balanceData.available == 3)
+    }
 }

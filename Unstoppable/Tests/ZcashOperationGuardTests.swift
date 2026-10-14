@@ -7,12 +7,15 @@ struct ZcashOperationGuardTests {
         let guardActor = ZcashOperationGuard()
         let order = OrderLog()
 
+        let held = Latch()
+
         async let submission: Void = try guardActor.withSubmission(timeout: 5) {
             await order.append("submit-start")
+            await held.open()
             try await Task.sleep(seconds: 0.2)
             await order.append("submit-end")
         }
-        try await Task.sleep(seconds: 0.05)
+        await held.wait()
         try await guardActor.withLifecycle(timeout: 5) { await order.append("lifecycle") }
         try await submission
 
@@ -23,8 +26,13 @@ struct ZcashOperationGuardTests {
     @Test func submissionGivesUpAfterTimeoutWhileLifecycleHolds() async throws {
         let guardActor = ZcashOperationGuard()
 
-        async let lifecycle: Void = try guardActor.withLifecycle(timeout: 5) { try await Task.sleep(seconds: 0.5) }
-        try await Task.sleep(seconds: 0.05)
+        let held = Latch()
+
+        async let lifecycle: Void = try guardActor.withLifecycle(timeout: 5) {
+            await held.open()
+            try await Task.sleep(seconds: 0.5)
+        }
+        await held.wait()
 
         await #expect(throws: ZcashOperationGuard.Failure.self) {
             try await guardActor.withSubmission(timeout: 0.1) {}
@@ -39,6 +47,22 @@ struct ZcashOperationGuardTests {
             try await guardActor.withSubmission(timeout: 1) { throw Boom() }
         }
         try await guardActor.withLifecycle(timeout: 0.1) {}
+    }
+}
+
+// Waiting on a fixed sleep for the other task to take the guard is a race under a loaded test run;
+// the body opens the latch once it is inside, and the test waits for that.
+private actor Latch {
+    private var isOpen = false
+
+    func open() {
+        isOpen = true
+    }
+
+    func wait() async {
+        while !isOpen {
+            try? await Task.sleep(seconds: 0.01)
+        }
     }
 }
 

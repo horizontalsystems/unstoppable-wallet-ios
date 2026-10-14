@@ -91,6 +91,41 @@ class ZcashTransactionPool {
     func transaction(by hash: String) -> ZcashTransactionWrapper? {
         transactions(filter: .all, address: nil).first { $0.transactionHash == hash }
     }
+
+    func contains(hash: String) -> Bool {
+        stateQueue.sync {
+            confirmedTransactions.contains { $0.transactionHash == hash } || pendingTransactions.contains { $0.transactionHash == hash }
+        }
+    }
+
+    // The newest by mined height, unmined ones newest of all; expired unmined and failed ones do not count. Not
+    // by timestamp: an unmined wrapper's timestamp is the wrap time, renewed on every resync.
+    private func latest(lastBlockHeight: Int, where isIncluded: (ZcashTransactionWrapper) -> Bool) -> ZcashTransactionWrapper? {
+        let snapshot = stateQueue.sync { confirmedTransactions.union(pendingTransactions) }
+
+        return snapshot
+            .filter { transaction in
+                guard isIncluded(transaction), !transaction.failed else {
+                    return false
+                }
+                if transaction.minedHeight == nil, let expiryHeight = transaction.expiryHeight, expiryHeight > 0, expiryHeight <= lastBlockHeight {
+                    return false
+                }
+                return true
+            }
+            .max { lhs, rhs in
+                (lhs.minedHeight ?? Int.max, lhs.expiryHeight ?? 0, lhs.timestamp) < (rhs.minedHeight ?? Int.max, rhs.expiryHeight ?? 0, rhs.timestamp)
+            }
+    }
+
+    /// The wallet's newest own transaction: a send, a shielding or an internal transfer; incoming ones do not count.
+    func latestOwnTransaction(lastBlockHeight: Int) -> ZcashTransactionWrapper? {
+        latest(lastBlockHeight: lastBlockHeight) { $0.isSentTransaction || $0.shieldDirection != nil }
+    }
+
+    func latestShielding(lastBlockHeight: Int) -> ZcashTransactionWrapper? {
+        latest(lastBlockHeight: lastBlockHeight) { $0.shieldDirection == .shield }
+    }
 }
 
 extension ZcashTransactionPool {
