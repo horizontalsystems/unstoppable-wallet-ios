@@ -126,17 +126,37 @@ struct MultiSwapView: View {
     }
 
     @ViewBuilder private func buttonView(vm: MultiSwapViewModel) -> some View {
-        let (title, style, disabled, showProgress, preSwapStep) = buttonState(vm: vm)
+        let (title, style, disabled, showProgress, progress, preSwapStep) = buttonState(vm: vm)
 
-        ThemeButton(text: title, spinner: showProgress, style: style) {
+        ThemeButton(text: title, spinner: showProgress, progress: progress, style: style) {
             if vm.tokenInWalletState == .notEnabled {
                 focusedField = nil
                 vm.enableTokenIn()
+            } else if case .required = vm.spendStep {
+                focusedField = nil
+                presentSpendStep(vm: vm)
             } else {
                 validatePreSwapSteps(preSwapStep, vm: vm)
             }
         }
         .disabled(disabled)
+    }
+
+    // the sell wallet's own step, such as shielding ZEC: its screen comes from the wallet's handler, not the provider
+    private func presentSpendStep(vm: MultiSwapViewModel) {
+        guard let handler = vm.spendStepHandler else {
+            return
+        }
+
+        vm.stopAutoQuoting()
+
+        Coordinator.shared.present { isPresented in
+            handler.view(isPresented: isPresented) {
+                vm.syncSpendStep()
+            }
+        } onDismiss: {
+            vm.autoQuoteIfRequired()
+        }
     }
 
     private func validatePreSwapSteps(_ preSwapStep: MultiSwapPreSwapStep?, vm: MultiSwapViewModel) {
@@ -345,11 +365,12 @@ struct MultiSwapView: View {
         }
     }
 
-    private func buttonState(vm: MultiSwapViewModel) -> (String, ThemeButton.Style, Bool, Bool, MultiSwapPreSwapStep?) {
+    private func buttonState(vm: MultiSwapViewModel) -> (String, ThemeButton.Style, Bool, Bool, Double?, MultiSwapPreSwapStep?) {
         let title: String
         var style: ThemeButton.Style = .primary
         var disabled = true
         var showProgress = false
+        var progress: Double?
         var preSwapStep: MultiSwapPreSwapStep?
 
         if vm.validatingProvider {
@@ -379,6 +400,19 @@ struct MultiSwapView: View {
             title = "swap.token_not_enabled".localized
         } else if let adapterState = vm.adapterState, !vm.spendMode.spendAllowed(state: adapterState) {
             title = "swap.token_not_synced".localized
+        } else if let spendStep = vm.spendStep {
+            // asked before the balance check: the step covers the amounts between spendable and available
+            switch spendStep {
+            case let .required(stepTitle):
+                title = stepTitle
+                style = .secondary
+                disabled = false
+            case let .pending(stepTitle, stepProgress):
+                title = stepTitle
+                style = .secondary
+                showProgress = stepProgress == nil
+                progress = stepProgress
+            }
         } else if let availableBalance = vm.availableBalance, let amountIn = vm.amountIn, amountIn > availableBalance {
             title = "swap.insufficient_balance".localized
         } else if let currentQuote = vm.currentQuote, let state = currentQuote.quote.customButtonState {
@@ -392,7 +426,7 @@ struct MultiSwapView: View {
             disabled = false
         }
 
-        return (title, style, disabled, showProgress, preSwapStep)
+        return (title, style, disabled, showProgress, progress, preSwapStep)
     }
 }
 
