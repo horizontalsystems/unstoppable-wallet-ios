@@ -306,9 +306,11 @@ public struct RecipientField: SendFieldContent {
 
 public struct SelfAddressField: SendFieldContent {
     public let value: String
+    public let title: String?
 
-    public init(value: String) {
+    public init(value: String, title: String? = nil) {
         self.value = value
+        self.title = title
     }
 
     @ViewBuilder @MainActor public func listRow() -> some View {
@@ -317,7 +319,7 @@ public struct SelfAddressField: SendFieldContent {
                 ThemeImage("wallet_filled", size: .iconSize24)
             },
             middle: {
-                MultiText(subtitle: ComponentText(text: "send.confirmation.send_to_own".localized, colorStyle: .primary), description: value)
+                MultiText(subtitle: ComponentText(text: title ?? "send.confirmation.send_to_own".localized, colorStyle: .primary), description: value)
             }
         )
     }
@@ -507,8 +509,8 @@ public extension SendField {
         SendField(RecipientField(title: title, value: value, copyable: copyable, blockchainType: blockchainType))
     }
 
-    static func selfAddress(value: String) -> SendField {
-        SendField(SelfAddressField(value: value))
+    static func selfAddress(value: String, title: String? = nil) -> SendField {
+        SendField(SelfAddressField(value: value, title: title))
     }
 
     static func price(title: String, tokenA: Token, tokenB: Token, amountA: Decimal, amountB: Decimal) -> SendField {

@@ -372,7 +372,7 @@
 "balance.token.transparent.info.description" = "Sie besitzen ein ZEC-Guthaben auf einer transparenten Adresse. Um es in Unstoppable zu verwenden, muss es für vollständige Privatsphäre abgeschirmt werden.";
 "balance.token.transparent.detected.title" = "Transparenter ZEC erkannt";
 "balance.token.transparent.detected.description" = "Sie besitzen ein ZEC-Guthaben auf einer transparenten Adresse. Um es in Unstoppable zu verwenden, muss es für vollständige Privatsphäre abgeschirmt werden.";
-"balance.token.shield" = "Proteger";
+"balance.token.shield" = "Abschirmen";
 "balance.token.migration.required" = "Migration erforderlich";
 "transactions.migrate" = "Migrieren";
 "transactions.migrate.to_ironwood" = "nach Ironwood";
@@ -468,7 +468,6 @@
 // Send
 
 "send.title" = "Senden %@";
-"send.title.shield" = "Schutz %@";
 "send.send" = "Senden";
 "send.tab.standard" = "Standard";
 "send.tab.private" = "Privat";
@@ -557,6 +556,7 @@
 "send.confirmation.status" = "Status";
 "send.confirmation.status.failed" = "Fehlgeschlagen";
 "send.confirmation.send_to_own" = "Transaktion wird an eigene Adresse gesendet";
+"send.confirmation.send_to_shielded" = "An Ihre abgeschirmte Adresse";
 "send.confirmation.operation" = "Vorgang";
 "send.confirmation.transaction_xdr" = "Transaktion XDR";
 
@@ -567,6 +567,8 @@
 "send.confirmation.refresh" = "Aktualisieren";
 "send.confirmation.refreshing" = "Aktualisierung läuft";
 "send.confirmation.slide_to_send" = "Zum Senden wischen";
+"send.confirmation.shield_title" = "Abschirmung bestätigen";
+"send.confirmation.slide_to_shield" = "Zum Abschirmen wischen";
 "send.confirmation.sending" = "Wird gesendet";
 "send.confirmation.unexpected_error" = "Unerwarteter Fehler";
 "send.confirmation.unexpected_error.text" = "Beim Senden deiner Transaktion ist ein Fehler aufgetreten. Bitte versuche es erneut oder kopiere den Fehlercode und kontaktiere den Support.";

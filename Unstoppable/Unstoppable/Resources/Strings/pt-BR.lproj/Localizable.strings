@@ -468,7 +468,6 @@
 // Send
 
 "send.title" = "Enviar %@";
-"send.title.shield" = "Shield %@";
 "send.send" = "Enviar";
 "send.tab.standard" = "Padrão";
 "send.tab.private" = "Privado";
@@ -557,6 +556,7 @@
 "send.confirmation.status" = "Status";
 "send.confirmation.status.failed" = "Falhou";
 "send.confirmation.send_to_own" = "A transação será enviada para o próprio endereço";
+"send.confirmation.send_to_shielded" = "Para o seu endereço blindado";
 "send.confirmation.operation" = "Operação";
 "send.confirmation.transaction_xdr" = "Transação XDR";
 
@@ -567,6 +567,8 @@
 "send.confirmation.refresh" = "Atualizar";
 "send.confirmation.refreshing" = "Atualizando";
 "send.confirmation.slide_to_send" = "Deslize para enviar";
+"send.confirmation.shield_title" = "Confirmar blindagem";
+"send.confirmation.slide_to_shield" = "Deslize para blindar";
 "send.confirmation.sending" = "Enviando";
 "send.confirmation.unexpected_error" = "Erro inesperado";
 "send.confirmation.unexpected_error.text" = "Algo deu errado ao enviar sua transação. Tente novamente ou copie o código de erro e entre em contato com o suporte.";

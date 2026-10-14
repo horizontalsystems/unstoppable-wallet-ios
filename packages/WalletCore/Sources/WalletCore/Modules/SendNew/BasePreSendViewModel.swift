@@ -350,4 +350,5 @@ struct PreSendButtonState {
     let title: String
     let disabled: Bool
     let showProgress: Bool
+    var progress: Double?
 }

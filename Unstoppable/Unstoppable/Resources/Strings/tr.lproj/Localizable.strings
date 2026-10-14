@@ -468,7 +468,6 @@
 // Send
 
 "send.title" = "%@ gönder";
-"send.title.shield" = "Shield %@";
 "send.send" = "Gönder";
 "send.tab.standard" = "Standart";
 "send.tab.private" = "Gizli";
@@ -557,6 +556,7 @@
 "send.confirmation.status" = "Durum";
 "send.confirmation.status.failed" = "Başarısız";
 "send.confirmation.send_to_own" = "İşlem kendi adresinize gönderilecek";
+"send.confirmation.send_to_shielded" = "Shielded adresinize";
 "send.confirmation.operation" = "İşlem";
 "send.confirmation.transaction_xdr" = "İşlem XDR";
 
@@ -567,6 +567,8 @@
 "send.confirmation.refresh" = "Yenile";
 "send.confirmation.refreshing" = "Yenileniyor";
 "send.confirmation.slide_to_send" = "Göndermek için Kaydırın";
+"send.confirmation.shield_title" = "Shield işlemini onaylayın";
+"send.confirmation.slide_to_shield" = "Shield etmek için Kaydırın";
 "send.confirmation.sending" = "Gönderiliyor";
 "send.confirmation.unexpected_error" = "Beklenmeyen hata";
 "send.confirmation.unexpected_error.text" = "İşleminiz gönderilirken bir hata oluştu. Lütfen tekrar deneyin veya hata kodunu kopyalayıp destek ekibiyle iletişime geçin.";

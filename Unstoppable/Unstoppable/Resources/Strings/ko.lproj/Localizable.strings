@@ -468,7 +468,6 @@
 // Send
 
 "send.title" = "전송 %@";
-"send.title.shield" = "차폐(Shield)%@";
 "send.send" = "전송";
 "send.tab.standard" = "일반";
 "send.tab.private" = "프라이빗";
@@ -557,6 +556,7 @@
 "send.confirmation.status" = "상태";
 "send.confirmation.status.failed" = "실패";
 "send.confirmation.send_to_own" = "交易将发送至自己的地址";
+"send.confirmation.send_to_shielded" = "내 보호 주소로";
 "send.confirmation.operation" = "작업";
 "send.confirmation.transaction_xdr" = "트랜잭션 XDR";
 
@@ -567,6 +567,8 @@
 "send.confirmation.refresh" = "새로고침";
 "send.confirmation.refreshing" = "새로 고침 중";
 "send.confirmation.slide_to_send" = "슬라이드하여 보내기";
+"send.confirmation.shield_title" = "보호 확인";
+"send.confirmation.slide_to_shield" = "슬라이드하여 보호(Shield)";
 "send.confirmation.sending" = "전송중";
 "send.confirmation.unexpected_error" = "예기치 못한 오류";
 "send.confirmation.unexpected_error.text" = "트랜잭션 전송 중 문제가 발생했습니다. 다시 시도하거나 오류 코드를 복사하여 지원팀에 문의하세요.";

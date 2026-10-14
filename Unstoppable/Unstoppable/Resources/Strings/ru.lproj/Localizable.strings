@@ -468,7 +468,6 @@
 // Send
 
 "send.title" = "Отправить %@";
-"send.title.shield" = "Shield %@";
 "send.send" = "Отправить";
 "send.tab.standard" = "Обычная";
 "send.tab.private" = "Приватная";
@@ -557,6 +556,7 @@
 "send.confirmation.status" = "Статус";
 "send.confirmation.status.failed" = "Не удалось";
 "send.confirmation.send_to_own" = "Транзакция будет отправлена на собственный адрес";
+"send.confirmation.send_to_shielded" = "На ваш shielded адрес";
 "send.confirmation.operation" = "Операция";
 "send.confirmation.transaction_xdr" = "Транзакция XDR";
 
@@ -567,6 +567,8 @@
 "send.confirmation.refresh" = "Обновить";
 "send.confirmation.refreshing" = "Перезагрузка";
 "send.confirmation.slide_to_send" = "Проведите для отправки";
+"send.confirmation.shield_title" = "Подтвердить shielding";
+"send.confirmation.slide_to_shield" = "Проведите для shielding";
 "send.confirmation.sending" = "Отправка";
 "send.confirmation.unexpected_error" = "Непредвиденная ошибка";
 "send.confirmation.unexpected_error.text" = "При отправке транзакции произошла ошибка. Пожалуйста, попробуйте ещё раз или скопируйте код ошибки и обратитесь в службу поддержки.";

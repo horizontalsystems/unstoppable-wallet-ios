@@ -468,7 +468,6 @@
 // Send
 
 "send.title" = "Send %@";
-"send.title.shield" = "Shield %@";
 "send.send" = "Send";
 "send.tab.standard" = "Standard";
 "send.tab.private" = "Private";
@@ -557,6 +556,7 @@
 "send.confirmation.status" = "Status";
 "send.confirmation.status.failed" = "Failed";
 "send.confirmation.send_to_own" = "To own address";
+"send.confirmation.send_to_shielded" = "To your shielded address";
 "send.confirmation.operation" = "Operation";
 "send.confirmation.transaction_xdr" = "Transaction XDR";
 
@@ -567,6 +567,8 @@
 "send.confirmation.refresh" = "Refresh";
 "send.confirmation.refreshing" = "Refreshing";
 "send.confirmation.slide_to_send" = "Slide to Send";
+"send.confirmation.shield_title" = "Confirm Shielding";
+"send.confirmation.slide_to_shield" = "Slide to Shield";
 "send.confirmation.sending" = "Sending";
 "send.confirmation.unexpected_error" = "Unexpected Error";
 "send.confirmation.unexpected_error.text" = "Something went wrong while sending your transaction. Please try again or copy the error code and contact support.";

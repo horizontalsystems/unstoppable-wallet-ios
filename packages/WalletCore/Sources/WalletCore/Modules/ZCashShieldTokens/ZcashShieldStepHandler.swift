@@ -128,8 +128,8 @@ extension ZcashShieldStepHandler: ISpendStepHandler {
         }
     }
 
-    func view(isPresented _: Binding<Bool>, onSuccess _: @escaping () -> Void) -> AnyView {
-        let view = ShieldSendView(amount: snapshot.balance.transparent, address: adapter.uAddress?.stringEncoded)
+    func view(isPresented _: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
+        let view = ShieldSendView(amount: snapshot.balance.transparent, address: adapter.uAddress?.stringEncoded, onSuccess: onSuccess)
         return AnyView(ThemeNavigationStack { view })
     }
 

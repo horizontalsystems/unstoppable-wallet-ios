@@ -468,7 +468,6 @@
 // Send
 
 "send.title" = "发送%@";
-"send.title.shield" = "屏蔽 %@";
 "send.send" = "发送​​";
 "send.tab.standard" = "标准";
 "send.tab.private" = "隐私";
@@ -557,6 +556,7 @@
 "send.confirmation.status" = "状态";
 "send.confirmation.status.failed" = "失败";
 "send.confirmation.send_to_own" = "交易将发送至自己的地址";
+"send.confirmation.send_to_shielded" = "至您的屏蔽地址";
 "send.confirmation.operation" = "操作";
 "send.confirmation.transaction_xdr" = "交易 XDR";
 
@@ -567,6 +567,8 @@
 "send.confirmation.refresh" = "刷新";
 "send.confirmation.refreshing" = "正在刷新";
 "send.confirmation.slide_to_send" = "滑动发送";
+"send.confirmation.shield_title" = "确认屏蔽";
+"send.confirmation.slide_to_shield" = "滑动屏蔽";
 "send.confirmation.sending" = "发送中";
 "send.confirmation.unexpected_error" = "异常错误";
 "send.confirmation.unexpected_error.text" = "发送交易时发生错误。请重试，或复制错误代码并联系支持团队。";

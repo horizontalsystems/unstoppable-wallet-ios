@@ -191,7 +191,12 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
             }
         }) {
             HStack(spacing: .margin8) {
-                if state.showProgress {
+                if let progress = state.progress {
+                    ProgressView(value: max(0.1, progress))
+                        .progressViewStyle(DeterminiteSpinnerStyle())
+                        .frame(size: .iconSize20)
+                        .spinning()
+                } else if state.showProgress {
                     ProgressView()
                 }
 

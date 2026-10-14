@@ -5,10 +5,12 @@ import SwiftUI
 struct RegularSendView: View {
     @StateObject var sendViewModel: SendViewModel
 
+    private let title: String?
     private let onSuccess: () -> Void
 
-    init(sendData: SendData, address: String? = nil, onSuccess: @escaping () -> Void) {
+    init(sendData: SendData, address: String? = nil, title: String? = nil, onSuccess: @escaping () -> Void) {
         _sendViewModel = .init(wrappedValue: SendViewModel(sendData: sendData, address: address))
+        self.title = title
         self.onSuccess = onSuccess
     }
 
@@ -56,7 +58,7 @@ struct RegularSendView: View {
                 }
             }
         }
-        .navigationTitle("send.confirmation.title".localized)
+        .navigationTitle(title ?? "send.confirmation.title".localized)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

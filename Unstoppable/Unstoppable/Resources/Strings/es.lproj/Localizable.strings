@@ -372,7 +372,7 @@
 "balance.token.transparent.info.description" = "Tienes un saldo de ZEC en una dirección transparente. Para usarlo en Unstoppable, debe ser protegido (shielded) para garantizar total privacidad.";
 "balance.token.transparent.detected.title" = "ZEC transparente detectado";
 "balance.token.transparent.detected.description" = "Tienes un saldo de ZEC en una dirección transparente. Para usarlo en Unstoppable, debe ser protegido (shielded) para garantizar total privacidad.";
-"balance.token.shield" = "Blindado";
+"balance.token.shield" = "Proteger";
 "balance.token.migration.required" = "Migración requerida";
 "transactions.migrate" = "Migrar";
 "transactions.migrate.to_ironwood" = "a Ironwood";
@@ -468,7 +468,6 @@
 // Send
 
 "send.title" = "Enviar %@";
-"send.title.shield" = "Proteger %@";
 "send.send" = "Enviar";
 "send.tab.standard" = "Estándar";
 "send.tab.private" = "Privado";
@@ -557,6 +556,7 @@
 "send.confirmation.status" = "Estado";
 "send.confirmation.status.failed" = "Falló";
 "send.confirmation.send_to_own" = "La transacción se enviará a la propia dirección";
+"send.confirmation.send_to_shielded" = "A tu dirección protegida";
 "send.confirmation.operation" = "Operación";
 "send.confirmation.transaction_xdr" = "Transacción XDR";
 
@@ -567,6 +567,8 @@
 "send.confirmation.refresh" = "Actualizar";
 "send.confirmation.refreshing" = "Actualizando";
 "send.confirmation.slide_to_send" = "Deslizar para enviar";
+"send.confirmation.shield_title" = "Confirmar protección";
+"send.confirmation.slide_to_shield" = "Deslizar para proteger";
 "send.confirmation.sending" = "Enviar";
 "send.confirmation.unexpected_error" = "Error inesperado";
 "send.confirmation.unexpected_error.text" = "Algo salió mal al enviar tu transacción. Inténtalo de nuevo o copia el código de error y contacta con soporte.";
