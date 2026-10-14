@@ -21,9 +21,10 @@ struct MultiSwapView: View {
                     VStack(spacing: 16) {
                         VStack(spacing: 0) {
                             AvailableBalanceView(
-                                balance: viewModel.availableBalance,
+                                // a balance read mid-sync is not the real one yet
+                                balance: viewModel.tokenInWalletState == .ready ? viewModel.availableBalance : nil,
                                 token: viewModel.tokenIn,
-                                allAvailable: viewModel.percentAllAvailable,
+                                allAvailable: viewModel.tokenInWalletState == .ready && viewModel.percentAllAvailable,
                                 currentValue: viewModel.amountIn,
                                 onSelect: { percent in
                                     viewModel.setAmountIn(percent: percent)
@@ -191,7 +192,12 @@ struct MultiSwapView: View {
         let (title, style, disabled, showProgress, preSwapStep) = buttonState()
 
         ThemeButton(text: title, spinner: showProgress, style: style) {
-            validatePreSwapSteps(preSwapStep)
+            if viewModel.tokenInWalletState == .notEnabled {
+                focusedField = nil
+                viewModel.enableTokenIn()
+            } else {
+                validatePreSwapSteps(preSwapStep)
+            }
         }
         .disabled(disabled)
     }
@@ -406,6 +412,13 @@ struct MultiSwapView: View {
         if viewModel.validatingProvider {
             title = "swap.proceed_button".localized
             showProgress = true
+        } else if viewModel.tokenInWalletState == .notEnabled, let tokenIn = viewModel.tokenIn {
+            title = "swap.enable_coin".localized(tokenIn.coin.code)
+            style = .secondary
+            disabled = false
+        } else if viewModel.tokenInWalletState == .syncing {
+            title = "balance.syncing".localized
+            showProgress = true
         } else if viewModel.quoting {
             title = "swap.quoting".localized
             showProgress = true
@@ -421,9 +434,6 @@ struct MultiSwapView: View {
             title = "swap.no_quotes".localized
         } else if viewModel.adapterState == nil {
             title = "swap.token_not_enabled".localized
-        } else if let adapterState = viewModel.adapterState, adapterState.syncing, !viewModel.spendMode.spendAllowed(state: adapterState) {
-            title = "swap.token_syncing".localized
-            showProgress = true
         } else if let adapterState = viewModel.adapterState, !viewModel.spendMode.spendAllowed(state: adapterState) {
             title = "swap.token_not_synced".localized
         } else if let availableBalance = viewModel.availableBalance, let amountIn = viewModel.amountIn, amountIn > availableBalance {

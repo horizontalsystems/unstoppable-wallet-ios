@@ -728,7 +728,7 @@
 "swap.error.invalid_swap_memo" = "兑换备注缺少有效的收款人。";
 "swap.error.memo_recipient_mismatch" = "兑换备注中的收款人与选择的收款人不匹配。";
 "swap.token_not_enabled" = "代币未启用";
-"swap.token_syncing" = "代币同步";
+"swap.enable_coin" = "启用 %@";
 "swap.token_not_synced" = "代币未同步";
 "swap.insufficient_balance" = "可用额度不足";
 

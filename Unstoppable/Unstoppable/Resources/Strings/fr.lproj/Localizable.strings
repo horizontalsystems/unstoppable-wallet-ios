@@ -728,7 +728,7 @@
 "swap.error.invalid_swap_memo" = "Le mémo du swap ne contient pas de destinataire valide.";
 "swap.error.memo_recipient_mismatch" = "Le destinataire dans le mémo du swap ne correspond pas au destinataire sélectionné.";
 "swap.token_not_enabled" = "Token non activés";
-"swap.token_syncing" = "Synchronisation des token";
+"swap.enable_coin" = "Activer %@";
 "swap.token_not_synced" = "Token non synchronisé";
 "swap.insufficient_balance" = "Solde insuffisant";
 

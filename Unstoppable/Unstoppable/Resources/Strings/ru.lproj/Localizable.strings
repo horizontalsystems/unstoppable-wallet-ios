@@ -728,7 +728,7 @@
 "swap.error.invalid_swap_memo" = "В мемо свопа отсутствует действительный получатель.";
 "swap.error.memo_recipient_mismatch" = "Получатель в мемо свопа не совпадает с выбранным получателем.";
 "swap.token_not_enabled" = "Токен не включен";
-"swap.token_syncing" = "Синхронизация токенов";
+"swap.enable_coin" = "Включить %@";
 "swap.token_not_synced" = "Токен не синхронизирован";
 "swap.insufficient_balance" = "Недостаточный баланс";
 

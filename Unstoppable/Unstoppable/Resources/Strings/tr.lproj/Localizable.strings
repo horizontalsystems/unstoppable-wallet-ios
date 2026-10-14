@@ -728,7 +728,7 @@
 "swap.error.invalid_swap_memo" = "Swap notu geçerli bir alıcı içermiyor.";
 "swap.error.memo_recipient_mismatch" = "Swap notundaki alıcı, seçilen alıcıyla eşleşmiyor.";
 "swap.token_not_enabled" = "Jeton Etkin Değil";
-"swap.token_syncing" = "Token Senkronizasyonu";
+"swap.enable_coin" = "%@ Etkinleştir";
 "swap.token_not_synced" = "Jeton Senkronize Edilmedi";
 "swap.insufficient_balance" = "Yetersiz Bakiye";
 

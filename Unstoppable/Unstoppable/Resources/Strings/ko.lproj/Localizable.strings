@@ -728,7 +728,7 @@
 "swap.error.invalid_swap_memo" = "스왑 메모에 유효한 수신자가 없습니다.";
 "swap.error.memo_recipient_mismatch" = "스왑 메모의 수신자가 선택한 수신자와 일치하지 않습니다.";
 "swap.token_not_enabled" = "토큰 활성화되지 않음";
-"swap.token_syncing" = "토큰 동기화 중";
+"swap.enable_coin" = "%@ 활성화";
 "swap.token_not_synced" = "토큰 동기화되지 않음";
 "swap.insufficient_balance" = "잔액 부족";
 

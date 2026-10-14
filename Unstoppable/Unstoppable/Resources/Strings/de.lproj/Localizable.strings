@@ -728,7 +728,7 @@
 "swap.error.invalid_swap_memo" = "Das Swap-Memo enthält keinen gültigen Empfänger.";
 "swap.error.memo_recipient_mismatch" = "Der Empfänger im Swap-Memo stimmt nicht mit dem ausgewählten Empfänger überein.";
 "swap.token_not_enabled" = "Token nicht aktiviert";
-"swap.token_syncing" = "Token-Synchronisation";
+"swap.enable_coin" = "%@ aktivieren";
 "swap.token_not_synced" = "Token nicht synchronisiert";
 "swap.insufficient_balance" = "Unzureichendes Guthaben";
 

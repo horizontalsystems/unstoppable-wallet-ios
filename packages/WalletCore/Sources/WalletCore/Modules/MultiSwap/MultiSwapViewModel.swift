@@ -28,6 +28,8 @@ public class MultiSwapViewModel: ObservableObject {
     private let adapterManager = Core.shared.adapterManager
     private let localStorage = Core.shared.localStorage
     private let pathFinder = SwapPathFinder.make()
+    private let restoreSettingsService: RestoreSettingsService
+    private let restoreSettingsView: RestoreSettingsView
 
     @Published var currency: Currency
 
@@ -197,6 +199,9 @@ public class MultiSwapViewModel: ObservableObject {
     @Published public var adapterState: AdapterState?
     @Published public var availableBalance: Decimal?
 
+    // the sell token has an active wallet; its adapter is created asynchronously after the wallet is saved
+    @Published private var tokenInWalletActive = false
+
     var spendMode: BalanceAdapterSpendMode
 
     @Published var coinPriceIn: CoinPrice? {
@@ -352,6 +357,7 @@ public class MultiSwapViewModel: ObservableObject {
         self.autoResolveTokenOut = autoResolveTokenOut
         self.customDecimals = customDecimals
         currentAccountId = accountManager.activeAccount?.id
+        (restoreSettingsService, restoreSettingsView) = RestoreSettingsModule.module(statPage: .swap)
 
         defer {
             if token != nil || tokenOut != nil {
@@ -401,6 +407,13 @@ public class MultiSwapViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
+        restoreSettingsService.approveSettingsPublisher
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
+            .sink { [weak self] tokenWithSettings in
+                self?.handleApproveRestoreSettings(token: tokenWithSettings.token, settings: tokenWithSettings.settings)
+            }
+            .store(in: &cancellables)
+
         subscribeToProviders()
 
         syncFiatAmountIn()
@@ -413,6 +426,8 @@ public class MultiSwapViewModel: ObservableObject {
     private func handle(walletData: WalletManager.WalletData) {
         let accountChanged = walletData.account?.id != currentAccountId
         currentAccountId = walletData.account?.id
+
+        tokenInWalletActive = internalTokenIn.map { token in walletData.wallets.contains { $0.token == token } } ?? false
 
         if accountChanged {
             // an external recipient entered for the previous account must not silently
@@ -568,6 +583,8 @@ public class MultiSwapViewModel: ObservableObject {
     private func syncAdapter() {
         balanceDisposeBag = .init()
 
+        let walletActive = internalTokenIn.map { token in walletManager.activeWallets.contains { $0.token == token } } ?? false
+
         if let internalTokenIn,
            let wallet = walletManager.activeWallets.first(where: { $0.token == internalTokenIn }),
            let adapter = adapterManager.balanceAdapter(for: wallet)
@@ -577,6 +594,7 @@ public class MultiSwapViewModel: ObservableObject {
             let mode = adapter.spendMode
 
             DispatchQueue.main.async { [weak self] in
+                self?.tokenInWalletActive = walletActive
                 self?.adapterState = balanceState
                 self?.availableBalance = balance
                 self?.spendMode = mode
@@ -600,6 +618,7 @@ public class MultiSwapViewModel: ObservableObject {
                 .disposed(by: balanceDisposeBag)
         } else {
             DispatchQueue.main.async { [weak self] in
+                self?.tokenInWalletActive = walletActive
                 self?.adapterState = nil
                 self?.availableBalance = nil
                 self?.spendMode = .fromBalanceState
@@ -898,7 +917,7 @@ public extension MultiSwapViewModel {
     }
 
     func setAmountIn(percent: Int) {
-        guard let tokenIn, let availableBalance else {
+        guard tokenInWalletState == .ready, let tokenIn, let availableBalance else {
             return
         }
 
@@ -1002,6 +1021,70 @@ public extension MultiSwapViewModel {
 }
 
 extension MultiSwapViewModel {
+    var tokenInWalletState: TokenInWalletState {
+        guard let internalTokenIn else {
+            return .ready
+        }
+
+        if let adapterState {
+            return adapterState.syncing && !spendMode.spendAllowed(state: adapterState) ? .syncing : .ready
+        }
+
+        if tokenInWalletActive {
+            return .syncing
+        }
+
+        // a token the account can't hold keeps "Token Not Enabled"
+        guard let account = accountManager.activeAccount, account.type.supports(token: internalTokenIn) else {
+            return .ready
+        }
+
+        return .notEnabled
+    }
+
+    /// Enables the sell token. A chain not running yet asks its restore settings first, as Manage Wallets
+    /// does: a restored account synced from scratch takes too long, and one synced from today misses its funds.
+    func enableTokenIn() {
+        guard let tokenIn = internalTokenIn, let account = accountManager.activeAccount,
+              !walletManager.activeWallets.contains(where: { $0.token == tokenIn })
+        else {
+            return
+        }
+
+        let chainEnabled = walletManager.activeWallets.contains { $0.token.blockchainType == tokenIn.blockchainType }
+
+        if !tokenIn.blockchainType.restoreSettingTypes.isEmpty, !chainEnabled {
+            restoreSettingsService.approveSettings(token: tokenIn, account: account)
+        } else {
+            saveWallet(token: tokenIn, account: account)
+        }
+    }
+
+    private func handleApproveRestoreSettings(token: Token, settings: RestoreSettings) {
+        guard let account = accountManager.activeAccount else {
+            return
+        }
+
+        if !settings.isEmpty {
+            restoreSettingsService.save(settings: settings, account: account, blockchainType: token.blockchainType)
+        }
+
+        saveWallet(token: token, account: account)
+    }
+
+    private func saveWallet(token: Token, account: Account) {
+        walletManager.save(wallets: [Wallet(token: token, account: account)])
+        stat(page: .swap, event: .enableToken(token: token))
+    }
+}
+
+extension MultiSwapViewModel {
+    enum TokenInWalletState {
+        case ready
+        case notEnabled
+        case syncing
+    }
+
     private struct QuoteRoundKey: Equatable {
         let tokenIn: Token
         let tokenOut: Token
