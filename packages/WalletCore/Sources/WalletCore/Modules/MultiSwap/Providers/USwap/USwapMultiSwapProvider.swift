@@ -319,9 +319,15 @@ extension USwapMultiSwapProvider: ISplitSwapProvider {
             throw SwapError.invalidTransactionData
         }
 
-        guard route.outputs.count == recipients.count, route.outputs.allSatisfy({ $0.expectedBuyAmount > 0 }) else {
+        guard route.outputs.allSatisfy({ $0.expectedBuyAmount > 0 }) else {
             throw SplitSwapError.invalidRoute
         }
+
+        try Self.validateSplitOutputs(
+            route.outputs.map { ($0.index, $0.destinationAddress) },
+            recipients: recipients,
+            tokenOut: tokenOut
+        )
 
         guard let stub = route.stubDepositAddress, !stub.isEmpty else {
             throw SwapError.noTransactionData
@@ -365,7 +371,9 @@ extension USwapMultiSwapProvider: ISplitSwapProvider {
             destinationAddress: destinationAddress,
             refundAddress: result.refundAddress,
             response: response,
-            route: route
+            route: route,
+            tokenOut: tokenOut,
+            recipients: recipients
         )
 
         return SplitSwapPreview(quote: finalQuote, outputAmounts: route.outputs.map(\.expectedBuyAmount))
@@ -394,6 +402,14 @@ extension USwapMultiSwapProvider: ISplitSwapProvider {
         }
 
         let previewOutputs = context.route.outputs
+
+        // the order must pay exactly the recipients the user confirmed, in the confirmed order
+        try Self.validateSplitOutputs(
+            commit.outputs.map { ($0.index, $0.destinationAddress) },
+            recipients: context.recipients,
+            tokenOut: context.tokenOut
+        )
+
         guard commit.outputs.count == previewOutputs.count else {
             throw SplitSwapError.invalidRoute
         }
@@ -481,6 +497,8 @@ extension USwapMultiSwapProvider {
         let refundAddress: String?
         let response: USwapMultiSwapApi.SwapResponse
         let route: USwapMultiSwapApi.SplitRoute
+        let tokenOut: Token
+        let recipients: [SplitRecipient]
 
         init(
             previewToken: String,
@@ -491,7 +509,9 @@ extension USwapMultiSwapProvider {
             destinationAddress: String,
             refundAddress: String?,
             response: USwapMultiSwapApi.SwapResponse,
-            route: USwapMultiSwapApi.SplitRoute
+            route: USwapMultiSwapApi.SplitRoute,
+            tokenOut: Token,
+            recipients: [SplitRecipient]
         ) {
             self.previewToken = previewToken
             self.tokenIn = tokenIn
@@ -502,6 +522,29 @@ extension USwapMultiSwapProvider {
             self.refundAddress = refundAddress
             self.response = response
             self.route = route
+            self.tokenOut = tokenOut
+            self.recipients = recipients
+        }
+    }
+
+    // Output `i` must be the request's output `i` (indices exactly 0..<count, as the screen pairs
+    // amounts with recipients by position) and pay recipient `i`'s address. Funds sent to an order
+    // paying anyone else could never be recovered, so a missing or different destination fails.
+    private static func validateSplitOutputs(_ outputs: [(index: Int, destinationAddress: String?)], recipients: [SplitRecipient], tokenOut: Token) throws {
+        guard outputs.count == recipients.count else {
+            throw SplitSwapError.invalidRoute
+        }
+
+        // EVM addresses are case-insensitive (checksum casing); other chains compare exactly
+        let normalized: (String) -> String = tokenOut.blockchainType.isEvm ? { $0.lowercased() } : { $0 }
+
+        for (position, (output, recipient)) in zip(outputs, recipients).enumerated() {
+            guard output.index == position,
+                  let destination = output.destinationAddress,
+                  normalized(destination) == normalized(recipient.address)
+            else {
+                throw SplitSwapError.invalidRoute
+            }
         }
     }
 }

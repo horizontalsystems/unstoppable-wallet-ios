@@ -183,7 +183,9 @@ class SwapInfoViewModel: ObservableObject {
 
     // Each output's share of the deposit; the last one takes the rounding remainder so they add up to 100
     static func percents(outputs: [Swap.Output]) -> [Int] {
-        let amounts = outputs.map { $0.fromAmount ?? $0.toAmount ?? 0 }
+        // One unit for every output: the deposit shares (tokenIn) when all are known, else the payouts (tokenOut)
+        let fromAmounts = outputs.compactMap(\.fromAmount)
+        let amounts = fromAmounts.count == outputs.count ? fromAmounts : outputs.map { $0.toAmount ?? 0 }
         let total = amounts.reduce(0, +)
 
         guard total > 0 else {
