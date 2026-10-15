@@ -12,6 +12,7 @@ class RestoreMnemonicViewModel: ObservableObject {
     private let regex = try! NSRegularExpression(pattern: "\\S+")
     private var mnemonicItems: [WordItem] = []
     private var selectedLanguage: Mnemonic.Language = .english
+    private var wordListKind: WordListKind?
     private var passphrase: String = ""
     private var cursorOffset = 0
 
@@ -63,35 +64,70 @@ class RestoreMnemonicViewModel: ObservableObject {
     private func syncMnemonicItems(text: String) {
         let matches = regex.matches(in: text, range: NSRange(location: 0, length: (text as NSString).length))
 
-        mnemonicItems = matches.compactMap { match in
+        let words: [(word: String, range: NSRange)] = matches.compactMap { match in
             guard let range = Range(match.range, in: text) else { return nil }
-            let word = String(text[range]).lowercased()
+            return (String(text[range]).lowercased(), match.range)
+        }
+
+        // The BIP39 and Monero wordlists overlap; the first finished word that belongs to
+        // exactly one of them fixes the wordlist. The word under the cursor is still being typed.
+        wordListKind = words
+            .filter { !hasCursor(range: $0.range) }
+            .compactMap { Self.exclusiveWordListKind(word: $0.word, bip39WordList: wordList) }
+            .first
+
+        mnemonicItems = words.map { word, range in
             let type: WordItemType
 
-            // Monero legacy words are accepted alongside the BIP39 list; the two wordlists
-            // are fully disjoint, so a finished phrase is unambiguous.
-            if wordList.contains(word) || MoneroMnemonic.isValid(word: word) {
+            if isValidWord(word, partial: false) {
                 type = .correct
-            } else if wordList.contains(where: { $0.hasPrefix(word) }) || MoneroMnemonic.isValid(word: word, partial: true) {
+            } else if isValidWord(word, partial: true) {
                 type = .correctPrefix
             } else {
                 type = .incorrect
             }
 
-            return WordItem(word: word, range: match.range, type: type)
+            return WordItem(word: word, range: range, type: type)
+        }
+    }
+
+    private static func isBip39Word(_ word: String, wordList: [String], partial: Bool) -> Bool {
+        partial ? wordList.contains { $0.hasPrefix(word) } : wordList.contains(word)
+    }
+
+    private static func exclusiveWordListKind(word: String, bip39WordList: [String]) -> WordListKind? {
+        switch (isBip39Word(word, wordList: bip39WordList, partial: false), MoneroMnemonic.isValid(word: word)) {
+        case (true, false): return .bip39
+        case (false, true): return .monero
+        default: return nil
+        }
+    }
+
+    private func isValidWord(_ word: String, partial: Bool) -> Bool {
+        switch wordListKind {
+        case .bip39: return Self.isBip39Word(word, wordList: wordList, partial: partial)
+        case .monero: return MoneroMnemonic.isValid(word: word, partial: partial)
+        case nil: return Self.isBip39Word(word, wordList: wordList, partial: partial) || MoneroMnemonic.isValid(word: word, partial: partial)
         }
     }
 
     private func possibleMnemonicWords(string: String) -> [String] {
-        wordList.filter { $0.hasPrefix(string) } + MoneroMnemonic.suggestions(prefix: string)
+        let bip39Words = wordList.filter { $0.hasPrefix(string) }
+        let moneroWords = MoneroMnemonic.suggestions(prefix: string)
+
+        switch wordListKind {
+        case .bip39: return bip39Words
+        case .monero: return moneroWords
+        case nil: return bip39Words + moneroWords.filter { !bip39Words.contains($0) }
+        }
     }
 
-    private func hasCursor(item: WordItem) -> Bool {
-        cursorOffset >= item.range.lowerBound && cursorOffset <= item.range.upperBound
+    private func hasCursor(range: NSRange) -> Bool {
+        cursorOffset >= range.lowerBound && cursorOffset <= range.upperBound
     }
 
     private var cursorItem: WordItem? {
-        mnemonicItems.first { hasCursor(item: $0) }
+        mnemonicItems.first { hasCursor(range: $0.range) }
     }
 
     private var resolvedName: String {
@@ -169,7 +205,7 @@ extension RestoreMnemonicViewModel {
             switch item.type {
             case .correct: return false
             case .incorrect: return true
-            case .correctPrefix: return !hasCursor(item: item)
+            case .correctPrefix: return !hasCursor(range: item.range)
             }
         }
 
@@ -203,11 +239,18 @@ extension RestoreMnemonicViewModel {
             let words = mnemonicItems.map(\.word)
 
             let accountType: AccountType
-            if words.count == MoneroMnemonic.wordCount {
-                // 25 words can only be a Monero legacy seed: BIP39 tops out at 24
+            switch wordListKind {
+            case .monero:
                 accountType = try resolveMoneroAccountType(words: words)
-            } else {
+            case .bip39:
                 accountType = try resolveAccountType(words: words)
+            case nil:
+                // Every word is in both wordlists, so only the count tells: BIP39 tops out at 24
+                if words.count == MoneroMnemonic.wordCount {
+                    accountType = try resolveMoneroAccountType(words: words)
+                } else {
+                    accountType = try resolveAccountType(words: words)
+                }
             }
 
             proceedSubject.send((resolvedName, accountType))
@@ -222,6 +265,11 @@ extension RestoreMnemonicViewModel {
 // MARK: - Types
 
 extension RestoreMnemonicViewModel {
+    enum WordListKind {
+        case bip39
+        case monero
+    }
+
     enum MoneroRestoreError: Error {
         case invalidChecksum
     }
