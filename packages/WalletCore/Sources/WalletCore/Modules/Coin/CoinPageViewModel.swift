@@ -54,6 +54,6 @@ class CoinPageViewModel: ObservableObject {
         let tokens = ((try? Core.shared.marketKit.fullCoins(coinUids: [coin.uid]).first?.tokens) ?? [])
             .filter { account.type.supports(token: $0) && BlockchainType.supported.contains($0.blockchainType) }
 
-        return tokens.sorted(by: [.codeNativeFirst, .blockchainOrder, .badge], context: TokenSortContext()).first
+        return tokens.sorted(by: [.codeNativeFirst, .blockchainOrder, .tokenTypeOrder, .badge], context: TokenSortContext()).first
     }
 }

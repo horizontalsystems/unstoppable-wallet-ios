@@ -154,7 +154,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                 }
 
                 let representative = eligible
-                    .sorted(by: [.codeNativeFirst, .blockchainOrder, .badge], context: context)
+                    .sorted(by: [.codeNativeFirst, .blockchainOrder, .tokenTypeOrder, .badge], context: context)
                     .first { !excludedIds.contains($0.tokenQuery.id) }
 
                 guard let representative else {
