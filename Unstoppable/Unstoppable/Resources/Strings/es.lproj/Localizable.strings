@@ -329,6 +329,7 @@
 "balance.hide_coin" = "Ocultar moneda";
 "balance.rate_per_coin" = "%@ por %@";
 "balance.syncing" = "Sincronizando...";
+"balance.confirming" = "Confirmando";
 "balance.searching" = "Buscando transacciones…";
 "balance.connecting" = "Conectando...";
 "balance.stopped" = "Detenido";
@@ -371,7 +372,7 @@
 "balance.token.transparent.info.description" = "Tienes un saldo de ZEC en una dirección transparente. Para usarlo en Unstoppable, debe ser protegido (shielded) para garantizar total privacidad.";
 "balance.token.transparent.detected.title" = "ZEC transparente detectado";
 "balance.token.transparent.detected.description" = "Tienes un saldo de ZEC en una dirección transparente. Para usarlo en Unstoppable, debe ser protegido (shielded) para garantizar total privacidad.";
-"balance.token.shield" = "Blindado";
+"balance.token.shield" = "Proteger";
 "balance.token.migration.required" = "Migración requerida";
 "transactions.migrate" = "Migrar";
 "transactions.migrate.to_ironwood" = "a Ironwood";
@@ -385,6 +386,7 @@
 "error.zcash.sync_required" = "Espera a que la billetera termine de sincronizarse e inténtalo de nuevo.";
 "zcash.migration.warning.title" = "Monto públicamente visible";
 "zcash.migration.warning" = "Mover fondos entre pools requiere que el monto migrado sea públicamente visible en la blockchain. El remitente, el destinatario y sus direcciones permanecen privados.";
+"zcash.shielding" = "Shielding ZEC";
 
 "balance.token.receive_address" = "Dirección de recepción";
 "balance.token.account.inactive.description" = "Las transacciones aparecerán después de la activación";
@@ -466,7 +468,6 @@
 // Send
 
 "send.title" = "Enviar %@";
-"send.title.shield" = "Proteger %@";
 "send.send" = "Enviar";
 "send.tab.standard" = "Estándar";
 "send.tab.private" = "Privado";
@@ -555,6 +556,7 @@
 "send.confirmation.status" = "Estado";
 "send.confirmation.status.failed" = "Falló";
 "send.confirmation.send_to_own" = "La transacción se enviará a la propia dirección";
+"send.confirmation.send_to_shielded" = "A tu dirección protegida";
 "send.confirmation.operation" = "Operación";
 "send.confirmation.transaction_xdr" = "Transacción XDR";
 
@@ -565,6 +567,8 @@
 "send.confirmation.refresh" = "Actualizar";
 "send.confirmation.refreshing" = "Actualizando";
 "send.confirmation.slide_to_send" = "Deslizar para enviar";
+"send.confirmation.shield_title" = "Confirmar protección";
+"send.confirmation.slide_to_shield" = "Deslizar para proteger";
 "send.confirmation.sending" = "Enviar";
 "send.confirmation.unexpected_error" = "Error inesperado";
 "send.confirmation.unexpected_error.text" = "Algo salió mal al enviar tu transacción. Inténtalo de nuevo o copia el código de error y contacta con soporte.";
@@ -614,6 +618,7 @@
 "send.token_syncing" = "Sincronización de tokens";
 "send.token_not_synced" = "Token no sincronizado";
 "send.insufficient_balance" = "Saldo insuficiente";
+"send.shield_coin" = "Shield %@ para enviar";
 "send.continue_anyway" = "Continuar de todos modos";
 
 "send.address.enter_address" = "Ingresar dirección";
@@ -741,6 +746,7 @@
 "swap.error.memo_recipient_mismatch" = "El destinatario en el memo del swap no coincide con el destinatario seleccionado.";
 "swap.token_not_enabled" = "Token no habilitado";
 "swap.enable_coin" = "Habilitar %@";
+"swap.shield_coin" = "Shield %@ para intercambiar";
 "swap.token_not_synced" = "Token no sincronizado";
 "swap.insufficient_balance" = "Saldo insuficiente";
 

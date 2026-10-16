@@ -21,6 +21,10 @@ public class MultiSwapViewModel: ObservableObject {
 
     private var balanceDisposeBag = DisposeBag()
 
+    // the sell wallet's step before spending, such as shielding transparent ZEC: per wallet, like the balance adapter
+    private(set) var spendStepHandler: ISpendStepHandler?
+    private var spendStepCancellable: AnyCancellable?
+
     private var providers: [IMultiSwapProvider] = []
     let swapProviderManager = Core.shared.swapProviderManager
     private let currencyManager = Core.shared.currencyManager
@@ -204,6 +208,8 @@ public class MultiSwapViewModel: ObservableObject {
     // the sell token has an active wallet; its adapter is created asynchronously after the wallet is saved
     @Published private var tokenInWalletActive = false
 
+    @Published var spendStep: SpendStep?
+
     var spendMode: BalanceAdapterSpendMode
 
     @Published var coinPriceIn: CoinPrice? {
@@ -229,6 +235,7 @@ public class MultiSwapViewModel: ObservableObject {
 
             syncQuotes()
             syncFiatAmountIn()
+            syncSpendStep()
 
             let amount = AmountDecimalParser.parseAnyDecimal(from: amountString)
 
@@ -602,12 +609,14 @@ public class MultiSwapViewModel: ObservableObject {
             let balanceState = adapter.balanceState
             let balance = adapter.balanceData.available
             let mode = adapter.spendMode
+            let spendStepHandler = SpendStepHandlerFactory.handler(wallet: wallet, purpose: .swap)
 
             DispatchQueue.main.async { [weak self] in
                 self?.tokenInWalletActive = walletActive
                 self?.adapterState = balanceState
                 self?.availableBalance = balance
                 self?.spendMode = mode
+                self?.set(spendStepHandler: spendStepHandler)
             }
 
             adapter.balanceStateUpdatedObservable
@@ -632,8 +641,23 @@ public class MultiSwapViewModel: ObservableObject {
                 self?.adapterState = nil
                 self?.availableBalance = nil
                 self?.spendMode = .fromBalanceState
+                self?.set(spendStepHandler: nil)
             }
         }
+    }
+
+    private func set(spendStepHandler: ISpendStepHandler?) {
+        self.spendStepHandler = spendStepHandler
+
+        spendStepCancellable = spendStepHandler?.updatedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.syncSpendStep() }
+
+        syncSpendStep()
+    }
+
+    func syncSpendStep() {
+        spendStep = amountIn.flatMap { spendStepHandler?.step(amount: $0) }
     }
 
     func subscribeToProviders() {

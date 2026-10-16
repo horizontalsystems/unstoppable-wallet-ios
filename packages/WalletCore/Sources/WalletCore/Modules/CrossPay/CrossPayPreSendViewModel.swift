@@ -29,6 +29,7 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
     @Published private(set) var quoteState: QuoteState? {
         didSet {
             syncSendData()
+            syncSpendStep()
         }
     }
 
@@ -41,12 +42,12 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
     }
 
     // The predefined address and amount belong to the sending chain and token, never carried over.
-    init(wallet: Wallet, handler: IPreSendHandler?, service: CrossPayService?) {
+    init(wallet: Wallet, handler: IPreSendHandler?, spendStepHandler: ISpendStepHandler?, service: CrossPayService?) {
         self.service = service
         isSupported = Self.isSupported(token: wallet.token, service: service)
 
         // No receive token yet, so no coin price to subscribe to.
-        super.init(wallet: wallet, handler: handler, predefinedAddress: nil, amount: nil, initialInputToken: nil)
+        super.init(wallet: wallet, handler: handler, spendStepHandler: spendStepHandler, predefinedAddress: nil, amount: nil, initialInputToken: nil)
 
         // Until the asset map lands the tab stays hidden; a pending quote stays in Loading and is
         // re-scheduled here.
@@ -119,6 +120,16 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
 
     override func setAmountIn(percent _: Int) {}
 
+    // The amount leaving the wallet is the quoted pay amount, not the typed amount in the receive token.
+    override func syncSpendStep() {
+        guard case let .success(payAmount) = quoteState else {
+            spendStep = nil
+            return
+        }
+
+        spendStep = spendStepHandler?.step(amount: payAmount)
+    }
+
     // Never calls `handler.set(address:)`: the shared handler's address-dependent state belongs to the
     // Standard tab, and the deposit address does not exist until the order is committed.
     override func syncSendData() {
@@ -174,8 +185,15 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
         case .error:
             return PreSendButtonState(title: "cross_pay.unavailable".localized, disabled: true, showProgress: false)
         case let .success(payAmount):
-            if let availableBalance, payAmount > availableBalance {
-                return PreSendButtonState(title: "send.insufficient_balance".localized, disabled: true, showProgress: false)
+            switch spendStep {
+            case let .required(title):
+                return PreSendButtonState(title: title, disabled: false, showProgress: false)
+            case let .pending(title, progress):
+                return PreSendButtonState(title: title, disabled: true, showProgress: progress == nil, progress: progress)
+            case nil:
+                if let availableBalance, payAmount > availableBalance {
+                    return PreSendButtonState(title: "send.insufficient_balance".localized, disabled: true, showProgress: false)
+                }
             }
         case .none:
             ()

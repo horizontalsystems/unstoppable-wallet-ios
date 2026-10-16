@@ -329,6 +329,7 @@
 "balance.hide_coin" = "코인 숨기기";
 "balance.rate_per_coin" = "%@ 당 %@";
 "balance.syncing" = "동기화 중입니다...";
+"balance.confirming" = "확인 중";
 "balance.searching" = "거래 검색 중...";
 "balance.connecting" = "연결 중...";
 "balance.stopped" = "은행 정지";
@@ -385,6 +386,7 @@
 "error.zcash.sync_required" = "지갑 동기화가 완료될 때까지 기다린 후 다시 시도하세요.";
 "zcash.migration.warning.title" = "공개적으로 표시되는 금액";
 "zcash.migration.warning" = "풀 간 자금 이동 시 마이그레이션된 금액이 블록체인에서 공개적으로 표시됩니다. 발신자, 수신자 및 귀하의 주소는 비공개로 유지됩니다.";
+"zcash.shielding" = "Shielding ZEC";
 
 "balance.token.receive_address" = "수신 주소";
 "balance.token.account.inactive.description" = "활성화 후 트랜잭션이 표시됩니다";
@@ -466,7 +468,6 @@
 // Send
 
 "send.title" = "전송 %@";
-"send.title.shield" = "차폐(Shield)%@";
 "send.send" = "전송";
 "send.tab.standard" = "일반";
 "send.tab.private" = "프라이빗";
@@ -555,6 +556,7 @@
 "send.confirmation.status" = "상태";
 "send.confirmation.status.failed" = "실패";
 "send.confirmation.send_to_own" = "交易将发送至自己的地址";
+"send.confirmation.send_to_shielded" = "내 보호 주소로";
 "send.confirmation.operation" = "작업";
 "send.confirmation.transaction_xdr" = "트랜잭션 XDR";
 
@@ -565,6 +567,8 @@
 "send.confirmation.refresh" = "새로고침";
 "send.confirmation.refreshing" = "새로 고침 중";
 "send.confirmation.slide_to_send" = "슬라이드하여 보내기";
+"send.confirmation.shield_title" = "보호 확인";
+"send.confirmation.slide_to_shield" = "슬라이드하여 보호(Shield)";
 "send.confirmation.sending" = "전송중";
 "send.confirmation.unexpected_error" = "예기치 못한 오류";
 "send.confirmation.unexpected_error.text" = "트랜잭션 전송 중 문제가 발생했습니다. 다시 시도하거나 오류 코드를 복사하여 지원팀에 문의하세요.";
@@ -614,6 +618,7 @@
 "send.token_syncing" = "토큰 동기화 중";
 "send.token_not_synced" = "토큰 동기화되지 않음";
 "send.insufficient_balance" = "잔액 부족";
+"send.shield_coin" = "전송용 %@ Shield";
 "send.continue_anyway" = "그래도 계속하기";
 
 "send.address.enter_address" = "주소 입력";
@@ -741,6 +746,7 @@
 "swap.error.memo_recipient_mismatch" = "스왑 메모의 수신자가 선택한 수신자와 일치하지 않습니다.";
 "swap.token_not_enabled" = "토큰 활성화되지 않음";
 "swap.enable_coin" = "%@ 활성화";
+"swap.shield_coin" = "스왑용 %@ Shield";
 "swap.token_not_synced" = "토큰 동기화되지 않음";
 "swap.insufficient_balance" = "잔액 부족";
 

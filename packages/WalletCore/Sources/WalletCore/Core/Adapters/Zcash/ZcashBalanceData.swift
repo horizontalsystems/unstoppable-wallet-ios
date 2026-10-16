@@ -22,8 +22,13 @@ class ZcashBalanceData: Record, Equatable {
         super.init()
     }
 
+    // available is everything the user will be able to spend: now, once confirmed, or once the transparent
+    // funds are shielded (spec 2026-10-14 §5.0); `available` itself stays the private spendable balance
     var balanceData: BalanceData {
-        BalanceData(total: full + transparent, available: available)
+        BalanceData(
+            total: full + transparent,
+            available: ZcashShieldHelper.balance(available: available, full: full, transparent: transparent, threshold: ZcashAdapter.minimalThreshold)
+        )
     }
 
     override public class var databaseTableName: String {

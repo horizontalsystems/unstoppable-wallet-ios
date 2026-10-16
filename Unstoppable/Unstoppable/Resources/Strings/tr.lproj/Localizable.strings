@@ -329,6 +329,7 @@
 "balance.hide_coin" = "Coin’i Gizle";
 "balance.rate_per_coin" = "%@ = 1 %@";
 "balance.syncing" = "Eşitleniyor...";
+"balance.confirming" = "Onaylanıyor";
 "balance.searching" = "İşlemler aranıyor ...";
 "balance.connecting" = "Bağlanıyor...";
 "balance.stopped" = "Durduruldu";
@@ -385,6 +386,7 @@
 "error.zcash.sync_required" = "Cüzdanın senkronizasyonu tamamlamasını bekleyin ve tekrar deneyin.";
 "zcash.migration.warning.title" = "Herkese Açık Görünür Tutar";
 "zcash.migration.warning" = "Havuzlar arasında fon taşımak, taşınan tutarın blok zincirinde herkese açık olarak görünür olmasını gerektirir. Gönderen, alıcı ve adresleriniz gizli kalır.";
+"zcash.shielding" = "Shielding ZEC";
 
 "balance.token.receive_address" = "Alım Adresi";
 "balance.token.account.inactive.description" = "Cüzdan etkinleştirildikten sonra işlemler görünecektir.";
@@ -466,7 +468,6 @@
 // Send
 
 "send.title" = "%@ gönder";
-"send.title.shield" = "Shield %@";
 "send.send" = "Gönder";
 "send.tab.standard" = "Standart";
 "send.tab.private" = "Gizli";
@@ -555,6 +556,7 @@
 "send.confirmation.status" = "Durum";
 "send.confirmation.status.failed" = "Başarısız";
 "send.confirmation.send_to_own" = "İşlem kendi adresinize gönderilecek";
+"send.confirmation.send_to_shielded" = "Shielded adresinize";
 "send.confirmation.operation" = "İşlem";
 "send.confirmation.transaction_xdr" = "İşlem XDR";
 
@@ -565,6 +567,8 @@
 "send.confirmation.refresh" = "Yenile";
 "send.confirmation.refreshing" = "Yenileniyor";
 "send.confirmation.slide_to_send" = "Göndermek için Kaydırın";
+"send.confirmation.shield_title" = "Shield işlemini onaylayın";
+"send.confirmation.slide_to_shield" = "Shield etmek için Kaydırın";
 "send.confirmation.sending" = "Gönderiliyor";
 "send.confirmation.unexpected_error" = "Beklenmeyen hata";
 "send.confirmation.unexpected_error.text" = "İşleminiz gönderilirken bir hata oluştu. Lütfen tekrar deneyin veya hata kodunu kopyalayıp destek ekibiyle iletişime geçin.";
@@ -614,6 +618,7 @@
 "send.token_syncing" = "Token Senkronizasyonu";
 "send.token_not_synced" = "Jeton Senkronize Edilmedi";
 "send.insufficient_balance" = "Yetersiz Bakiye";
+"send.shield_coin" = "Göndermek için %@ Shield";
 "send.continue_anyway" = "Yine de Devam Et";
 
 "send.address.enter_address" = "Adresini Giriniz";
@@ -741,6 +746,7 @@
 "swap.error.memo_recipient_mismatch" = "Swap notundaki alıcı, seçilen alıcıyla eşleşmiyor.";
 "swap.token_not_enabled" = "Jeton Etkin Değil";
 "swap.enable_coin" = "%@ Etkinleştir";
+"swap.shield_coin" = "Takas için %@ Shield";
 "swap.token_not_synced" = "Jeton Senkronize Edilmedi";
 "swap.insufficient_balance" = "Yetersiz Bakiye";
 

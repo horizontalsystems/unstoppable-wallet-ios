@@ -14,6 +14,11 @@ class ZcashHistoryService {
     private(set) var transactionPool: ZcashTransactionPool?
     var lastBlockHeight: Int = 0
 
+    // a shielding the wallet just broadcast, until the pool has its record (reSyncPending catches up
+    // asynchronously): the forms waiting on it must not offer another shielding meanwhile
+    private let sentShieldingLock = NSLock()
+    private var sentShieldingHash: String?
+
     // queue-confined tail of the serialized operation chain
     private var chainedTask: Task<Void, Never>?
 
@@ -73,6 +78,26 @@ class ZcashHistoryService {
         default:
             logger?.log(level: .debug, message: "Event: \(event)")
         }
+    }
+
+    func noteShieldingSent(transactionHash: String) {
+        sentShieldingLock.lock()
+        sentShieldingHash = transactionHash
+        sentShieldingLock.unlock()
+    }
+
+    var sentShieldingPending: Bool {
+        sentShieldingLock.lock()
+        defer { sentShieldingLock.unlock() }
+
+        guard let hash = sentShieldingHash else {
+            return false
+        }
+        if transactionPool?.contains(hash: hash) == true {
+            sentShieldingHash = nil
+            return false
+        }
+        return true
     }
 
     func reSyncPending() {

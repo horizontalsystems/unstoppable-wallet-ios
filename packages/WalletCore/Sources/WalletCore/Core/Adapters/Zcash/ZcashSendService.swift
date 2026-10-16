@@ -6,7 +6,7 @@ import ZcashLightClientKit
 class ZcashSendService {
     // Custom fee (zip317 marginal fee) and tx expiry are kept wired end-to-end but the SDK has no
     // public parameter for them yet; the flag gates the fee-settings UI until upstream support lands.
-    static let customFeeEnabled = true
+    static let customFeeEnabled = false
 
     // RESEARCH SHIM: upstream has no ZcashSDK.defaultZip317MarginalFee (HS delta, replayed in step 3).
     static let defaultZip317MarginalFee = Zatoshi(5000) // ZCASH_MARGINAL_FEE

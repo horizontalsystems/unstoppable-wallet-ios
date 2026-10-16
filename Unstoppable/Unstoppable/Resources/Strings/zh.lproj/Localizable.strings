@@ -329,6 +329,7 @@
 "balance.hide_coin" = "隐藏币种";
 "balance.rate_per_coin" = "%@ / %@";
 "balance.syncing" = "正在同步...";
+"balance.confirming" = "确认中";
 "balance.searching" = "正在搜索交易…...";
 "balance.connecting" = "正在连接...";
 "balance.stopped" = "已停止";
@@ -385,6 +386,7 @@
 "error.zcash.sync_required" = "请等待钱包完成同步后再试。";
 "zcash.migration.warning.title" = "公开可见金额";
 "zcash.migration.warning" = "在池之间转移资金需要迁移金额在区块链上公开可见。发送方、接收方和您的地址仍然保持私密。";
+"zcash.shielding" = "Shielding ZEC";
 
 "balance.token.receive_address" = "收款地址";
 "balance.token.account.inactive.description" = "激活后将显示交易记录";
@@ -466,7 +468,6 @@
 // Send
 
 "send.title" = "发送%@";
-"send.title.shield" = "屏蔽 %@";
 "send.send" = "发送​​";
 "send.tab.standard" = "标准";
 "send.tab.private" = "隐私";
@@ -555,6 +556,7 @@
 "send.confirmation.status" = "状态";
 "send.confirmation.status.failed" = "失败";
 "send.confirmation.send_to_own" = "交易将发送至自己的地址";
+"send.confirmation.send_to_shielded" = "至您的屏蔽地址";
 "send.confirmation.operation" = "操作";
 "send.confirmation.transaction_xdr" = "交易 XDR";
 
@@ -565,6 +567,8 @@
 "send.confirmation.refresh" = "刷新";
 "send.confirmation.refreshing" = "正在刷新";
 "send.confirmation.slide_to_send" = "滑动发送";
+"send.confirmation.shield_title" = "确认屏蔽";
+"send.confirmation.slide_to_shield" = "滑动屏蔽";
 "send.confirmation.sending" = "发送中";
 "send.confirmation.unexpected_error" = "异常错误";
 "send.confirmation.unexpected_error.text" = "发送交易时发生错误。请重试，或复制错误代码并联系支持团队。";
@@ -614,6 +618,7 @@
 "send.token_syncing" = "代币同步";
 "send.token_not_synced" = "代币未同步";
 "send.insufficient_balance" = "可用额度不足";
+"send.shield_coin" = "Shield %@ 以发送";
 "send.continue_anyway" = "仍要继续";
 
 "send.address.enter_address" = "输入地址";
@@ -741,6 +746,7 @@
 "swap.error.memo_recipient_mismatch" = "兑换备注中的收款人与选择的收款人不匹配。";
 "swap.token_not_enabled" = "代币未启用";
 "swap.enable_coin" = "启用 %@";
+"swap.shield_coin" = "Shield %@ 以兑换";
 "swap.token_not_synced" = "代币未同步";
 "swap.insufficient_balance" = "可用额度不足";
 

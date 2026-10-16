@@ -550,6 +550,23 @@ extension ZcashAdapter {
         try await sendService.migrationProposal()
     }
 
+    // the shield step of the send and swap forms (spec 2026-10-14 §5.2)
+    func latestOwnTransaction(lastBlockHeight: Int) -> ZcashTransactionWrapper? {
+        historyService.transactionPool?.latestOwnTransaction(lastBlockHeight: lastBlockHeight)
+    }
+
+    func latestShielding(lastBlockHeight: Int) -> ZcashTransactionWrapper? {
+        historyService.transactionPool?.latestShielding(lastBlockHeight: lastBlockHeight)
+    }
+
+    func noteShieldingSent(transactionHash: String) {
+        historyService.noteShieldingSent(transactionHash: transactionHash)
+    }
+
+    var sentShieldingPending: Bool {
+        historyService.sentShieldingPending
+    }
+
     func clearMigrationHistory() {
         migrator.clearOnWipe()
     }

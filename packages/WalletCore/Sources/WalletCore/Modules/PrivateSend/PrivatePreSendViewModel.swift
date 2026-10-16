@@ -13,11 +13,11 @@ final class PrivatePreSendViewModel: BasePreSendViewModel {
     // and never triggers a fetch on the render path.
     @Published private(set) var isSupported: Bool
 
-    init(wallet: Wallet, handler: IPreSendHandler?, service: PrivateSendService?, predefinedAddress: ResolvedAddress?, amount: Decimal?) {
+    init(wallet: Wallet, handler: IPreSendHandler?, spendStepHandler: ISpendStepHandler?, service: PrivateSendService?, predefinedAddress: ResolvedAddress?, amount: Decimal?) {
         self.service = service
         isSupported = Self.isSupported(token: wallet.token, service: service)
 
-        super.init(wallet: wallet, handler: handler, predefinedAddress: predefinedAddress, amount: amount, initialInputToken: wallet.token)
+        super.init(wallet: wallet, handler: handler, spendStepHandler: spendStepHandler, predefinedAddress: predefinedAddress, amount: amount, initialInputToken: wallet.token)
 
         service?.syncPublisher
             .receive(on: DispatchQueue.main)

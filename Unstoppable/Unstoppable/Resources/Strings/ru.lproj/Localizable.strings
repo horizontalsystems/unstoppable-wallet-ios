@@ -329,6 +329,7 @@
 "balance.hide_coin" = "Скрыть";
 "balance.rate_per_coin" = "%@ за %@";
 "balance.syncing" = "Идет синхронизация...";
+"balance.confirming" = "Подтверждение";
 "balance.searching" = "Поиск транзакций...";
 "balance.connecting" = "Подключение...";
 "balance.stopped" = "Остановлено";
@@ -385,6 +386,7 @@
 "error.zcash.sync_required" = "Дождитесь окончания синхронизации кошелька и попробуйте снова.";
 "zcash.migration.warning.title" = "Публично видимая сумма";
 "zcash.migration.warning" = "Перемещение средств между пулами требует, чтобы мигрируемая сумма была публично видна в блокчейне. Отправитель, получатель и ваши адреса остаются конфиденциальными.";
+"zcash.shielding" = "Shielding ZEC";
 
 "balance.token.receive_address" = "Адрес получателя";
 "balance.token.account.inactive.description" = "Транзакции появятся после активации";
@@ -466,7 +468,6 @@
 // Send
 
 "send.title" = "Отправить %@";
-"send.title.shield" = "Shield %@";
 "send.send" = "Отправить";
 "send.tab.standard" = "Обычная";
 "send.tab.private" = "Приватная";
@@ -555,6 +556,7 @@
 "send.confirmation.status" = "Статус";
 "send.confirmation.status.failed" = "Не удалось";
 "send.confirmation.send_to_own" = "Транзакция будет отправлена на собственный адрес";
+"send.confirmation.send_to_shielded" = "На ваш shielded адрес";
 "send.confirmation.operation" = "Операция";
 "send.confirmation.transaction_xdr" = "Транзакция XDR";
 
@@ -565,6 +567,8 @@
 "send.confirmation.refresh" = "Обновить";
 "send.confirmation.refreshing" = "Перезагрузка";
 "send.confirmation.slide_to_send" = "Проведите для отправки";
+"send.confirmation.shield_title" = "Подтвердить shielding";
+"send.confirmation.slide_to_shield" = "Проведите для shielding";
 "send.confirmation.sending" = "Отправка";
 "send.confirmation.unexpected_error" = "Непредвиденная ошибка";
 "send.confirmation.unexpected_error.text" = "При отправке транзакции произошла ошибка. Пожалуйста, попробуйте ещё раз или скопируйте код ошибки и обратитесь в службу поддержки.";
@@ -614,6 +618,7 @@
 "send.token_syncing" = "Синхронизация токенов";
 "send.token_not_synced" = "Токен не синхронизирован";
 "send.insufficient_balance" = "Недостаточный баланс";
+"send.shield_coin" = "Shield %@ для отправки";
 "send.continue_anyway" = "Всё равно продолжить";
 
 "send.address.enter_address" = "Введите адрес";
@@ -741,6 +746,7 @@
 "swap.error.memo_recipient_mismatch" = "Получатель в мемо свопа не совпадает с выбранным получателем.";
 "swap.token_not_enabled" = "Токен не включен";
 "swap.enable_coin" = "Включить %@";
+"swap.shield_coin" = "Shield %@ для обмена";
 "swap.token_not_synced" = "Токен не синхронизирован";
 "swap.insufficient_balance" = "Недостаточный баланс";
 

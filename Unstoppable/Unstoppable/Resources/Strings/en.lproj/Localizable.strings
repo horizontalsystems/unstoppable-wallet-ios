@@ -329,6 +329,7 @@
 "balance.hide_coin" = "Hide Coin";
 "balance.rate_per_coin" = "%@ per %@";
 "balance.syncing" = "Syncing...";
+"balance.confirming" = "Confirming";
 "balance.searching" = "Searching transactions...";
 "balance.connecting" = "Connecting...";
 "balance.stopped" = "Stopped";
@@ -385,6 +386,7 @@
 "error.zcash.sync_required" = "Wait for the wallet to finish syncing and try again.";
 "zcash.migration.warning.title" = "Publicly Visible Amount";
 "zcash.migration.warning" = "Moving funds between pools requires the migrated amount to be publicly visible on the blockchain. The sender, recipient and your addresses remain private.";
+"zcash.shielding" = "Shielding ZEC";
 
 "balance.token.receive_address" = "Receive Address";
 "balance.token.account.inactive.description" = "Transactions will appear after activation";
@@ -466,7 +468,6 @@
 // Send
 
 "send.title" = "Send %@";
-"send.title.shield" = "Shield %@";
 "send.send" = "Send";
 "send.tab.standard" = "Standard";
 "send.tab.private" = "Private";
@@ -555,6 +556,7 @@
 "send.confirmation.status" = "Status";
 "send.confirmation.status.failed" = "Failed";
 "send.confirmation.send_to_own" = "To own address";
+"send.confirmation.send_to_shielded" = "To your shielded address";
 "send.confirmation.operation" = "Operation";
 "send.confirmation.transaction_xdr" = "Transaction XDR";
 
@@ -565,6 +567,8 @@
 "send.confirmation.refresh" = "Refresh";
 "send.confirmation.refreshing" = "Refreshing";
 "send.confirmation.slide_to_send" = "Slide to Send";
+"send.confirmation.shield_title" = "Confirm Shielding";
+"send.confirmation.slide_to_shield" = "Slide to Shield";
 "send.confirmation.sending" = "Sending";
 "send.confirmation.unexpected_error" = "Unexpected Error";
 "send.confirmation.unexpected_error.text" = "Something went wrong while sending your transaction. Please try again or copy the error code and contact support.";
@@ -614,6 +618,7 @@
 "send.token_syncing" = "Token Syncing";
 "send.token_not_synced" = "Token Not Synced";
 "send.insufficient_balance" = "Insufficient Balance";
+"send.shield_coin" = "Shield %@ to Send";
 "send.continue_anyway" = "Continue Anyway";
 
 "send.address.enter_address" = "Enter Address";
@@ -741,6 +746,7 @@
 "swap.error.memo_recipient_mismatch" = "The recipient in the swap memo does not match the selected recipient.";
 "swap.token_not_enabled" = "Token Not Enabled";
 "swap.enable_coin" = "Enable %@";
+"swap.shield_coin" = "Shield %@ to Swap";
 "swap.token_not_synced" = "Token Not Synced";
 "swap.insufficient_balance" = "Insufficient Balance";
 
