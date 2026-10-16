@@ -1,5 +1,5 @@
 {
-  "originHash" : "6e00e071453209483329326950a137dceb715a8f54b42c7554b5fdc1008d5aa3",
+  "originHash" : "bc6c2701a6360663d0ff8013e68a7496ade308ceeb8d386f93510937fb94b307",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -285,8 +285,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/MoneroKit.Swift",
       "state" : {
-        "revision" : "942f411f766b531550a4a6ff5a72520a1d228a30",
-        "version" : "0.2.12"
+        "revision" : "217193af3e96388da4f92d615aa38d9578738a60",
+        "version" : "0.2.13"
       }
     },
     {
