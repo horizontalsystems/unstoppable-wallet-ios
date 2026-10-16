@@ -128,7 +128,19 @@ extension ZcashShieldStepHandler: ISpendStepHandler {
     }
 
     func view(isPresented _: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
-        let view = ShieldSendView(amount: snapshot.balance.transparent, address: adapter.uAddress?.stringEncoded, onSuccess: onSuccess)
+        // the sent shielding is only a flag until the pool has its record: refresh the snapshot before the form
+        // re-reads the step, or it offers the shielding again until the next pool event
+        let view = ShieldSendView(amount: snapshot.balance.transparent, address: adapter.uAddress?.stringEncoded) { [weak self] in
+            guard let self else {
+                onSuccess()
+                return
+            }
+
+            syncQueue.async {
+                self.sync()
+                DispatchQueue.main.async(execute: onSuccess)
+            }
+        }
         return AnyView(ThemeNavigationStack { view })
     }
 

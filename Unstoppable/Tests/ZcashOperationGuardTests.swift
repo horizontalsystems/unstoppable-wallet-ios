@@ -27,16 +27,19 @@ struct ZcashOperationGuardTests {
         let guardActor = ZcashOperationGuard()
 
         let held = Latch()
+        let release = Latch()
 
+        // held until the submission has given up: a timed hold could end before the submission asks
         async let lifecycle: Void = try guardActor.withLifecycle(timeout: 5) {
             await held.open()
-            try await Task.sleep(seconds: 0.5)
+            await release.wait()
         }
         await held.wait()
 
         await #expect(throws: ZcashOperationGuard.Failure.self) {
             try await guardActor.withSubmission(timeout: 0.1) {}
         }
+        await release.open()
         try await lifecycle
     }
 
