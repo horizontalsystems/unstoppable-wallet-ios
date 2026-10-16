@@ -176,6 +176,14 @@ public extension USwapProviderInfo {
         requireTerms: true
     )
 
+    static let uniswap = USwapProviderInfo(
+        id: "UNISWAP",
+        name: "Uniswap",
+        icon: "swap_provider_uniswap",
+        type: .excellent,
+        requireTerms: true
+    )
+
     static let thorChain = USwapProviderInfo(
         id: "THORCHAIN",
         name: "THORChain",

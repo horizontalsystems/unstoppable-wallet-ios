@@ -110,6 +110,7 @@ public enum SwapProviderResolver: ISwapProviderResolver {
             stellarUSwapEntry(info: .stellarDex),
             historyUSwapEntry(info: .stellarBroker),
             oneInchUSwapEntry(info: .oneInch),
+            uniswapUSwapEntry(info: .uniswap),
             thorChainUSwapEntry(info: .thorChain),
             thorChainUSwapEntry(info: .maya),
             defaultUSwapEntry(info: .pegasus),
@@ -165,6 +166,10 @@ public enum SwapProviderResolver: ISwapProviderResolver {
 
     private static func oneInchUSwapEntry(info: USwapProviderInfo) -> Entry {
         Entry(info: info, makeProvider: { oneInchUSwapProvider(info: info) })
+    }
+
+    private static func uniswapUSwapEntry(info: USwapProviderInfo) -> Entry {
+        Entry(info: info, makeProvider: { uniswapUSwapProvider(info: info) })
     }
 
     private static func lifiUSwapEntry(info: USwapProviderInfo) -> Entry {
@@ -264,6 +269,19 @@ public enum SwapProviderResolver: ISwapProviderResolver {
     private static func oneInchUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
         let api = uSwapApi(networkManager: NetworkManager(logger: nil))
         let subProvider = OneInchUSwapSubProvider(
+            info: info,
+            api: api,
+            assetRepository: nil,
+            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
+            tracker: uSwapTracker(api: api)
+        )
+
+        return uSwapProvider(subProvider: subProvider)
+    }
+
+    private static func uniswapUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
+        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
+        let subProvider = UniswapUSwapSubProvider(
             info: info,
             api: api,
             assetRepository: nil,
