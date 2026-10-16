@@ -157,6 +157,17 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
         let state = viewModel.buttonState
 
         Button(action: {
+            // the wallet's own step comes first: its screen is the handler's, not the confirmation
+            if case .required = viewModel.spendStep, let handler = viewModel.spendStepHandler {
+                focusField = nil
+                Coordinator.shared.present { isPresented in
+                    handler.view(isPresented: isPresented) {
+                        viewModel.syncSpendStep()
+                    }
+                }
+                return
+            }
+
             guard let resolvedAddress = viewModel.resolvedAddress else { return }
             guard let data = viewModel.sendData?.sendData else { return }
 
@@ -201,6 +212,8 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
                 }
 
                 Text(state.title)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
             }
         }
         .disabled(state.disabled)

@@ -49,6 +49,8 @@ public struct ThemeButton: View {
 
                 Text(text)
                     .font(size.textStyle.font)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
             }
             .offset(x: 0, y: size == .small ? -1 : 0)
         }

@@ -6,7 +6,7 @@ import SwiftUI
 /// transparent ZEC, or by waiting for confirmations. The adapter's available balance already counts them; the
 /// forms ask the step before their own amount checks and know only its button and screen. An instance is made
 /// per form and wallet.
-protocol ISpendStepHandler {
+public protocol ISpendStepHandler {
     /// The step `amount` needs, or nil when the spendable balance covers it or the whole balance does not.
     func step(amount: Decimal) -> SpendStep?
     /// The screen the step's button opens, presented through the Coordinator.
@@ -14,14 +14,14 @@ protocol ISpendStepHandler {
     var updatedPublisher: AnyPublisher<Void, Never> { get }
 }
 
-enum SpendStep: Equatable {
+public enum SpendStep: Equatable {
     case required(title: String)
     /// The form waits: a running step with its `progress` in 0...1, or confirmations with no progress to show.
     case pending(title: String, progress: Double?)
 }
 
 /// What the funds a form checks are about to be spent on; the step's button names it.
-enum SpendStepPurpose {
+public enum SpendStepPurpose {
     case send
     case swap
 }

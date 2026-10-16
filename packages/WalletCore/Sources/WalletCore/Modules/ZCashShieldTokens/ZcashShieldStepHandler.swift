@@ -75,7 +75,7 @@ class ZcashShieldStepHandler: SpendStepHandler {
         }
 
         var heldOutput: Decimal = 0
-        if let shielding = adapter.latestShielding(lastBlockHeight: lastBlockHeight), ZcashShieldHelper.isAnchoring(minedHeight: shielding.minedHeight, lastBlockHeight: lastBlockHeight) {
+        if let shielding = adapter.latestShielding(lastBlockHeight: lastBlockHeight), ZcashShieldHelper.isHeld(minedHeight: shielding.minedHeight, lastBlockHeight: lastBlockHeight) {
             heldOutput = shielding.value.decimalValue.decimalValue
         }
 
@@ -96,9 +96,8 @@ class ZcashShieldStepHandler: SpendStepHandler {
             case .send: return "send.shield_coin".localized(token.coin.code)
             case .swap: return "swap.shield_coin".localized(token.coin.code)
             }
-        case let .shielding(progress):
-            let threshold = ZcashSDK.defaultRewindDistance
-            return "zcash.shielding_progress".localized(ZcashShieldHelper.confirmations(progress: progress, threshold: threshold), threshold)
+        case .shielding:
+            return "zcash.shielding".localized
         case .confirming:
             return "balance.confirming".localized
         }

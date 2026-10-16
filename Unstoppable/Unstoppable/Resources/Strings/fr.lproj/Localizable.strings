@@ -329,7 +329,7 @@
 "balance.hide_coin" = "Masquer la monnaie";
 "balance.rate_per_coin" = "%@ par %@";
 "balance.syncing" = "Synchronisation...";
-"balance.confirming" = "Confirmation…";
+"balance.confirming" = "Confirmation";
 "balance.searching" = "Recherche des transactions…...";
 "balance.connecting" = "Connexion en cours...";
 "balance.stopped" = "Arrêté";
@@ -386,7 +386,7 @@
 "error.zcash.sync_required" = "Attendez que le portefeuille termine la synchronisation, puis réessayez.";
 "zcash.migration.warning.title" = "Montant publiquement visible";
 "zcash.migration.warning" = "Le transfert de fonds entre les pools nécessite que le montant migré soit publiquement visible sur la blockchain. L'expéditeur, le destinataire et vos adresses restent privés.";
-"zcash.shielding_progress" = "Protection des ZEC (%d/%d)";
+"zcash.shielding" = "Shielding ZEC";
 
 "balance.token.receive_address" = "Adresse de réception";
 "balance.token.account.inactive.description" = "Les transactions apparaîtront après l’activation";
@@ -618,7 +618,7 @@
 "send.token_syncing" = "Synchronisation des token";
 "send.token_not_synced" = "Token non synchronisé";
 "send.insufficient_balance" = "Solde insuffisant";
-"send.shield_coin" = "Protéger des %@ pour envoyer";
+"send.shield_coin" = "Shield %@ pour envoyer";
 "send.continue_anyway" = "Continuer quand même";
 
 "send.address.enter_address" = "Entrer l'adresse";
@@ -746,7 +746,7 @@
 "swap.error.memo_recipient_mismatch" = "Le destinataire dans le mémo du swap ne correspond pas au destinataire sélectionné.";
 "swap.token_not_enabled" = "Token non activés";
 "swap.enable_coin" = "Activer %@";
-"swap.shield_coin" = "Protéger des %@ pour échanger";
+"swap.shield_coin" = "Shield %@ pour échanger";
 "swap.token_not_synced" = "Token non synchronisé";
 "swap.insufficient_balance" = "Solde insuffisant";
 

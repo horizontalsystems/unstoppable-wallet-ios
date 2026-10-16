@@ -329,7 +329,7 @@
 "balance.hide_coin" = "Coin’i Gizle";
 "balance.rate_per_coin" = "%@ = 1 %@";
 "balance.syncing" = "Eşitleniyor...";
-"balance.confirming" = "Onaylanıyor…";
+"balance.confirming" = "Onaylanıyor";
 "balance.searching" = "İşlemler aranıyor ...";
 "balance.connecting" = "Bağlanıyor...";
 "balance.stopped" = "Durduruldu";
@@ -386,7 +386,7 @@
 "error.zcash.sync_required" = "Cüzdanın senkronizasyonu tamamlamasını bekleyin ve tekrar deneyin.";
 "zcash.migration.warning.title" = "Herkese Açık Görünür Tutar";
 "zcash.migration.warning" = "Havuzlar arasında fon taşımak, taşınan tutarın blok zincirinde herkese açık olarak görünür olmasını gerektirir. Gönderen, alıcı ve adresleriniz gizli kalır.";
-"zcash.shielding_progress" = "ZEC shield ediliyor (%d/%d)";
+"zcash.shielding" = "Shielding ZEC";
 
 "balance.token.receive_address" = "Alım Adresi";
 "balance.token.account.inactive.description" = "Cüzdan etkinleştirildikten sonra işlemler görünecektir.";
@@ -618,7 +618,7 @@
 "send.token_syncing" = "Token Senkronizasyonu";
 "send.token_not_synced" = "Jeton Senkronize Edilmedi";
 "send.insufficient_balance" = "Yetersiz Bakiye";
-"send.shield_coin" = "Göndermek için %@'i shield et";
+"send.shield_coin" = "Göndermek için %@ Shield";
 "send.continue_anyway" = "Yine de Devam Et";
 
 "send.address.enter_address" = "Adresini Giriniz";
@@ -746,7 +746,7 @@
 "swap.error.memo_recipient_mismatch" = "Swap notundaki alıcı, seçilen alıcıyla eşleşmiyor.";
 "swap.token_not_enabled" = "Jeton Etkin Değil";
 "swap.enable_coin" = "%@ Etkinleştir";
-"swap.shield_coin" = "Takas için %@'i shield et";
+"swap.shield_coin" = "Takas için %@ Shield";
 "swap.token_not_synced" = "Jeton Senkronize Edilmedi";
 "swap.insufficient_balance" = "Yetersiz Bakiye";
 

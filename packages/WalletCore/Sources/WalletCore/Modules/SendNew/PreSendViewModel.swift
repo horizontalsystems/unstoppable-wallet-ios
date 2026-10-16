@@ -23,6 +23,7 @@ public class PreSendViewModel: BasePreSendViewModel {
         self.init(
             wallet: wallet,
             handler: SendHandlerFactory.preSendHandler(wallet: wallet, address: predefinedAddress),
+            spendStepHandler: SpendStepHandlerFactory.handler(wallet: wallet, purpose: .send),
             predefinedAddress: predefinedAddress,
             amount: amount,
             memo: memo,
@@ -30,8 +31,8 @@ public class PreSendViewModel: BasePreSendViewModel {
         )
     }
 
-    public init(wallet: Wallet, handler: IPreSendHandler?, predefinedAddress: ResolvedAddress?, amount: Decimal?, memo: String?, destinationTag: String? = nil, customDecimals: Int? = nil) {
-        super.init(wallet: wallet, handler: handler, predefinedAddress: predefinedAddress, amount: amount, initialInputToken: wallet.token, customDecimals: customDecimals)
+    public init(wallet: Wallet, handler: IPreSendHandler?, spendStepHandler: ISpendStepHandler? = nil, predefinedAddress: ResolvedAddress?, amount: Decimal?, memo: String?, destinationTag: String? = nil, customDecimals: Int? = nil) {
+        super.init(wallet: wallet, handler: handler, spendStepHandler: spendStepHandler, predefinedAddress: predefinedAddress, amount: amount, initialInputToken: wallet.token, customDecimals: customDecimals)
 
         if let handler {
             destinationTagState = handler.destinationTagState

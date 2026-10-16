@@ -329,7 +329,7 @@
 "balance.hide_coin" = "Hide Coin";
 "balance.rate_per_coin" = "%@ per %@";
 "balance.syncing" = "Syncing...";
-"balance.confirming" = "Confirming…";
+"balance.confirming" = "Confirming";
 "balance.searching" = "Searching transactions...";
 "balance.connecting" = "Connecting...";
 "balance.stopped" = "Stopped";
@@ -386,7 +386,7 @@
 "error.zcash.sync_required" = "Wait for the wallet to finish syncing and try again.";
 "zcash.migration.warning.title" = "Publicly Visible Amount";
 "zcash.migration.warning" = "Moving funds between pools requires the migrated amount to be publicly visible on the blockchain. The sender, recipient and your addresses remain private.";
-"zcash.shielding_progress" = "Shielding ZEC (%d/%d)";
+"zcash.shielding" = "Shielding ZEC";
 
 "balance.token.receive_address" = "Receive Address";
 "balance.token.account.inactive.description" = "Transactions will appear after activation";

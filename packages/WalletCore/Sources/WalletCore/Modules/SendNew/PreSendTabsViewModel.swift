@@ -24,10 +24,11 @@ final class PreSendTabsViewModel: ObservableObject {
 
         let handler = SendHandlerFactory.preSendHandler(wallet: wallet, address: predefinedAddress)
         self.handler = handler
+        let spendStepHandler = SpendStepHandlerFactory.handler(wallet: wallet, purpose: .send)
 
-        standard = PreSendViewModel(wallet: wallet, handler: handler, predefinedAddress: predefinedAddress, amount: amount, memo: memo, destinationTag: destinationTag)
-        privateSend = PrivatePreSendViewModel(wallet: wallet, handler: handler, service: Core.privateSendService, predefinedAddress: predefinedAddress, amount: amount)
-        crossPay = CrossPayPreSendViewModel(wallet: wallet, handler: handler, service: Core.crossPayService)
+        standard = PreSendViewModel(wallet: wallet, handler: handler, spendStepHandler: spendStepHandler, predefinedAddress: predefinedAddress, amount: amount, memo: memo, destinationTag: destinationTag)
+        privateSend = PrivatePreSendViewModel(wallet: wallet, handler: handler, spendStepHandler: spendStepHandler, service: Core.privateSendService, predefinedAddress: predefinedAddress, amount: amount)
+        crossPay = CrossPayPreSendViewModel(wallet: wallet, handler: handler, spendStepHandler: spendStepHandler, service: Core.crossPayService)
 
         settingsModified = handler?.settingsModified ?? false
 

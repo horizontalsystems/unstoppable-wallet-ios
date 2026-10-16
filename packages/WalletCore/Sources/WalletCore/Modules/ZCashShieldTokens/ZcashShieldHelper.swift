@@ -3,8 +3,9 @@ import Foundation
 /// Transparent ZEC is spent only once shielded (spec 2026-10-14 §5.3). Pure, so it is tested without the
 /// SDK: the wallet's balances and its newest shielding in, what a send or swap form offers out.
 enum ZcashShieldHelper {
-    /// A transfer proposal spends a shielding's output only once the shielding is this deep; the wallet summary
-    /// counts it as spendable earlier, by the transparent inputs' height.
+    /// A transfer proposal spends a shielding's output only once the shielding sits at or below the anchor, this
+    /// many confirmations deep (the SDK's trusted policy); the wallet summary counts it earlier, by the
+    /// transparent inputs' age (zcash_client_sqlite 0.22.0 wallet/common.rs: `t.block <= anchor_height`).
     static let anchorConfirmations = 3
 
     enum Step: Equatable {
@@ -34,9 +35,10 @@ enum ZcashShieldHelper {
         return available - heldBack
     }
 
-    /// The step `amount` needs: a running shielding is waited out, else the transparent funds are shielded, else
-    /// confirming private funds are waited for; nil when the spendable balance covers the amount or the whole
-    /// balance does not.
+    /// The step `amount` needs: a running shielding is waited out; private funds still confirming are waited for
+    /// when they cover the amount (the wallet's own change confirms in a few blocks, a shielding takes ten and a
+    /// fee); only then the transparent funds are shielded. Nil when the spendable balance covers the amount or
+    /// the whole balance does not.
     static func step(amount: Decimal, available: Decimal, full: Decimal, transparent: Decimal, threshold: Decimal, shieldingProgress: Double?, heldOutput: Decimal) -> Step? {
         let spendable = spendable(available: available, full: full, heldOutput: heldOutput)
         let balance = balance(available: available, full: full, transparent: transparent, threshold: threshold)
@@ -49,7 +51,7 @@ enum ZcashShieldHelper {
             return .shielding(progress: shieldingProgress)
         }
 
-        return shieldable(transparent: transparent, threshold: threshold) > 0 ? .shield : .confirming
+        return amount <= max(full, available) ? .confirming : .shield
     }
 
     /// Confirmations of a transaction over the threshold, or nil once its output is spendable, when it failed, or
@@ -72,16 +74,12 @@ enum ZcashShieldHelper {
     }
 
     /// Whether a mined shielding is in the window where the summary may count its output but a proposal rejects it.
-    static func isAnchoring(minedHeight: Int?, lastBlockHeight: Int) -> Bool {
+    static func isHeld(minedHeight: Int?, lastBlockHeight: Int) -> Bool {
         guard let minedHeight, lastBlockHeight > 0 else {
             return false
         }
 
         let confirmations = lastBlockHeight - minedHeight + 1
         return confirmations >= 1 && confirmations < anchorConfirmations
-    }
-
-    static func confirmations(progress: Double, threshold: Int) -> Int {
-        Int((progress * Double(threshold)).rounded())
     }
 }

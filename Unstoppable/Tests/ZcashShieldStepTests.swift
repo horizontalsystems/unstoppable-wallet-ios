@@ -3,7 +3,7 @@ import Testing
 @testable import WalletCore
 
 // Spec 2026-10-14 §5.3: a form's balance is everything the user will be able to spend; the step bridges the
-// spendable part and the rest: Shielding in flight → Shield the transparent funds → Confirming private funds.
+// spendable part and the rest: Shielding in flight → Confirming private funds that cover it → Shield the transparent funds.
 struct ZcashShieldStepTests {
     private typealias Helper = ZcashShieldHelper
 
@@ -66,8 +66,16 @@ struct ZcashShieldStepTests {
         #expect(step(amount: 1, available: 0, full: 3.9998) == .confirming)
     }
 
-    // both waits run in parallel: shielding is offered while other funds confirm
-    @Test func shieldOfferedWhileOtherFundsConfirm() {
+    // confirming private funds that cover the amount are waited for rather than shielded: the wallet's own
+    // change confirms in a few blocks, a shielding takes ten and a fee
+    @Test func amountCoveredByConfirmingFundsWaitsEvenWithTransparent() {
+        #expect(step(amount: 1, available: 0, full: 3.4, transparent: 2) == .confirming)
+        #expect(step(amount: 3.4, available: 0, full: 3.4, transparent: 2) == .confirming)
+    }
+
+    // both waits run in parallel: shielding is offered right away when the private funds will not cover the amount
+    @Test func shieldOfferedWhenConfirmingFundsFallShort() {
+        #expect(step(amount: 3.40000001, available: 0, full: 3.4, transparent: 2) == .shield)
         #expect(step(amount: 7.5, available: 2, full: 3, transparent: 5) == .shield)
     }
 
@@ -146,20 +154,28 @@ struct ZcashShieldStepTests {
         #expect(Helper.progress(minedHeight: 100, failed: false, lastBlockHeight: 109, confirmationsThreshold: 10) == nil)
     }
 
-    @Test func confirmationsRoundTripForEveryStep() {
+    @Test func progressGrowsWithEveryConfirmation() {
         for confirmations in 0 ..< 10 {
             let progress = Helper.progress(minedHeight: 100, failed: false, lastBlockHeight: 99 + confirmations, confirmationsThreshold: 10)
-            #expect(progress.map { Helper.confirmations(progress: $0, threshold: 10) } == confirmations)
+            #expect(progress == Double(confirmations) / 10)
         }
     }
 
-    // MARK: Anchoring
+    // MARK: Held output
 
-    @Test func anchoringCoversFirstTwoConfirmationsOnly() {
-        #expect(!Helper.isAnchoring(minedHeight: nil, lastBlockHeight: 100))
-        #expect(Helper.isAnchoring(minedHeight: 100, lastBlockHeight: 100))
-        #expect(Helper.isAnchoring(minedHeight: 100, lastBlockHeight: 101))
-        #expect(!Helper.isAnchoring(minedHeight: 100, lastBlockHeight: 102))
-        #expect(!Helper.isAnchoring(minedHeight: 100, lastBlockHeight: 0))
+    // the summary counts a shielding's output by its transparent inputs' age; a proposal spends it only once the
+    // shielding is at or below the anchor (trusted policy: 3 confirmations of the shielding itself)
+    @Test func outputIsHeldUntilTheShieldingIsAnchored() {
+        #expect(!Helper.isHeld(minedHeight: nil, lastBlockHeight: 100))
+        #expect(Helper.isHeld(minedHeight: 100, lastBlockHeight: 100))
+        #expect(Helper.isHeld(minedHeight: 100, lastBlockHeight: 101))
+        #expect(!Helper.isHeld(minedHeight: 100, lastBlockHeight: 102))
+        #expect(!Helper.isHeld(minedHeight: 100, lastBlockHeight: 0))
+    }
+
+    // 2 confirmations: the summary already counts the output, the amount needs it → still Shielding
+    @Test func heldOutputKeepsShieldingUntilAnchored() {
+        #expect(step(amount: 0.0051, available: 0.00529606, full: 0.00529606, shieldingProgress: 0.2, heldOutput: 0.00185) == .shielding(progress: 0.2))
+        #expect(step(amount: 0.003, available: 0.00529606, full: 0.00529606, shieldingProgress: 0.2, heldOutput: 0.00185) == nil)
     }
 }

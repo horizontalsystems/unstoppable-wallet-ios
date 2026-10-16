@@ -8,6 +8,8 @@ import MarketKit
 public class BasePreSendViewModel: ObservableObject {
     let wallet: Wallet
     let handler: IPreSendHandler?
+    // the wallet's step before spending, such as shielding transparent ZEC; shared by the tabs like `handler`
+    let spendStepHandler: ISpendStepHandler?
 
     // Overrides the input token's decimals when rounding percent/max and fiat-derived amounts.
     private let customDecimals: Int?
@@ -27,6 +29,7 @@ public class BasePreSendViewModel: ObservableObject {
         didSet {
             syncFiatAmount()
             syncSendData()
+            syncSpendStep()
 
             var amount = AmountDecimalParser.parseAnyDecimal(from: amountString)
 
@@ -94,6 +97,7 @@ public class BasePreSendViewModel: ObservableObject {
 
     @Published public private(set) var adapterState: AdapterState?
     @Published public private(set) var availableBalance: Decimal?
+    @Published var spendStep: SpendStep?
 
     private var enteringFiat = false
 
@@ -104,9 +108,10 @@ public class BasePreSendViewModel: ObservableObject {
 
     // `initialInputToken` is the token `inputToken` resolves to at construction time; the coin price is
     // subscribed for it up front. Nil means no token is chosen yet, so no price is subscribed.
-    init(wallet: Wallet, handler: IPreSendHandler?, predefinedAddress: ResolvedAddress?, amount: Decimal?, initialInputToken: Token?, customDecimals: Int? = nil) {
+    init(wallet: Wallet, handler: IPreSendHandler?, spendStepHandler: ISpendStepHandler? = nil, predefinedAddress: ResolvedAddress?, amount: Decimal?, initialInputToken: Token?, customDecimals: Int? = nil) {
         self.wallet = wallet
         self.handler = handler
+        self.spendStepHandler = spendStepHandler
         self.customDecimals = customDecimals
         resolvedAddress = predefinedAddress
 
@@ -153,8 +158,18 @@ public class BasePreSendViewModel: ObservableObject {
                 .store(in: &cancellables)
         }
 
+        spendStepHandler?.updatedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.syncSpendStep() }
+            .store(in: &cancellables)
+
         syncContactName()
         syncFiatAmount()
+    }
+
+    // The amount the step is asked for is the one leaving the wallet; a tab denominated in another token overrides it.
+    func syncSpendStep() {
+        spendStep = amount.flatMap { spendStepHandler?.step(amount: $0) }
     }
 
     func set(address: ResolvedAddress?) {
@@ -222,6 +237,7 @@ public class BasePreSendViewModel: ObservableObject {
         let title: String
         var disabled = true
         var showProgress = false
+        var progress: Double?
 
         if !isReachable {
             title = "alert.no_internet".localized
@@ -234,6 +250,17 @@ public class BasePreSendViewModel: ObservableObject {
             title = "send.token_not_synced".localized
         } else if amount == nil {
             title = "send.enter_amount".localized
+        } else if let spendStep {
+            // asked before the balance check: the step covers the amounts between spendable and available
+            switch spendStep {
+            case let .required(stepTitle):
+                title = stepTitle
+                disabled = false
+            case let .pending(stepTitle, stepProgress):
+                title = stepTitle
+                showProgress = stepProgress == nil
+                progress = stepProgress
+            }
         } else if let availableBalance, let amount, amount > availableBalance {
             title = "send.insufficient_balance".localized
         } else if resolvedAddress == nil {
@@ -245,7 +272,7 @@ public class BasePreSendViewModel: ObservableObject {
             disabled = sendData == nil
         }
 
-        return PreSendButtonState(title: title, disabled: disabled, showProgress: showProgress)
+        return PreSendButtonState(title: title, disabled: disabled, showProgress: showProgress, progress: progress)
     }
 
     func subscribeCoinPrice(token: Token?) {
