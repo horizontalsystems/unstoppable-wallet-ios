@@ -51,7 +51,8 @@ public class MultiSwapViewModel: ObservableObject {
     // External delivery address entered before confirmation for a tokenOut the account
     // can't hold. Shared with the confirmation handler, which writes back into it when the
     // user edits the recipient there. Cleared whenever tokenOut changes or the account
-    // switches, so it can only ever hold an address meant for the current pair.
+    // switches, and when tokenIn changes while the address is optional, so it can only ever
+    // hold an address meant for the current pair.
     let externalRecipientHolder = SwapExternalRecipientHolder()
 
     var externalRecipient: String? {
@@ -91,6 +92,15 @@ public class MultiSwapViewModel: ObservableObject {
         didSet {
             guard internalTokenIn != oldValue else {
                 return
+            }
+
+            // An optional recipient set on the confirmation screen may not suit the new sell
+            // chain (a unified ZEC address does not fit a UTXO route memo), and would otherwise
+            // be picked up as the next confirmation's initial recipient. A required one stays:
+            // an account that cannot hold ZEC sells from one chain family only, so its sell
+            // chain never moves between a UTXO route and a memo-capable one.
+            if !externalRecipientRequired {
+                externalRecipientHolder.address = nil
             }
 
             syncValidProviders()

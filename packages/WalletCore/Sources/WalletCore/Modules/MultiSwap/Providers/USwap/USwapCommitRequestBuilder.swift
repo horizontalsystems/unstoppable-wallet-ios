@@ -38,7 +38,7 @@ public final class USwapCommitRequestBuilder {
         recipient: String?,
         transactionSettings: TransactionSettings?
     ) async throws -> USwapMultiSwapApi.SwapRequest {
-        let destinationAddress = try await destinationAddress(recipient: recipient, token: tokenOut)
+        let destinationAddress = try await destinationAddress(recipient: recipient, tokenIn: tokenIn, tokenOut: tokenOut)
         let sourceAddress = try await sourceAddress(token: tokenIn)
         let refundAddress = try await refundAddress(token: tokenIn)
 
@@ -86,24 +86,25 @@ public final class USwapCommitRequestBuilder {
         }
     }
 
-    func destinationAddress(recipient: String?, token: Token) async throws -> String {
+    func destinationAddress(recipient: String?, tokenIn: Token, tokenOut: Token) async throws -> String {
         if let recipient {
             return recipient
         }
 
         // A ZEC output goes to the wallet's unified address when the provider can deliver to a
-        // shielded receiver (published per provider by /v3/providers); transparent otherwise.
-        let shielded = token.blockchainType == .zcash && Core.shared.swapProviderManager.deliversShieldedZcash(providerId: providerId)
+        // shielded receiver (published per provider by /v3/providers) and the sell chain's memo can
+        // name it (an OP_RETURN cannot); transparent otherwise.
+        let shielded = tokenOut.blockchainType == .zcash && Core.shared.swapProviderManager.deliversShieldedZcash(providerId: providerId, tokenIn: tokenIn)
 
         let cacheKey = Core.shared.accountManager.activeAccount.map {
-            DestinationCacheKey(accountId: $0.id, blockchainType: token.blockchainType, shielded: shielded)
+            DestinationCacheKey(accountId: $0.id, blockchainType: tokenOut.blockchainType, shielded: shielded)
         }
         let temporary = cacheKey.flatMap { temporaryDestinationAddresses[$0] }
             .map { DestinationHelper.Destination(address: $0, type: .nonExisting) }
         let resolved = if shielded {
-            try await DestinationHelper.resolveDestinationUnified(token: token, temporary: temporary)
+            try await DestinationHelper.resolveDestinationUnified(token: tokenOut, temporary: temporary)
         } else {
-            try await DestinationHelper.resolveDestination(token: token, temporary: temporary)
+            try await DestinationHelper.resolveDestination(token: tokenOut, temporary: temporary)
         }
 
         if resolved.type == .nonExisting, let cacheKey {

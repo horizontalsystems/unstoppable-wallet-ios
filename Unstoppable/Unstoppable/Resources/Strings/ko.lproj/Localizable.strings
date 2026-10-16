@@ -788,6 +788,8 @@
 "swap.price_impact.info" = "표시된 가격 대비 예상 가격 편차로, 일반적으로 스왑 금액이 클수록 증가합니다.";
 "swap.high_price_impact" = "높은 가격 영향";
 "swap.recipient" = "수령인";
+"swap.recipient.error.transparent_zcash_required" = "선택한 제공자는 투명한(t-) Zcash 주소로만 전송할 수 있습니다";
+"swap.recipient.error.shielded_zcash_required" = "여기에는 보호된(u- 또는 zs-) Zcash 주소만 사용할 수 있습니다";
 "swap.external_recipient.description" = "스왑된 자금을 받을 지갑입니다.";
 "swap.slippage" = "미끄러짐";
 "swap.swapped_time" = "스왑 시간";

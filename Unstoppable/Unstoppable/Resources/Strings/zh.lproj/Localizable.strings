@@ -788,6 +788,8 @@
 "swap.price_impact.info" = "相对于所显示价格的预期价格偏差，通常会随着兑换金额的增加而增大。";
 "swap.high_price_impact" = "高价格影响";
 "swap.recipient" = "收款人";
+"swap.recipient.error.transparent_zcash_required" = "选定的提供商只能交付到透明(t-)Zcash地址";
+"swap.recipient.error.shielded_zcash_required" = "此处只能使用隐匿(u-或zs-)Zcash地址";
 "swap.external_recipient.description" = "将接收兑换资金的钱包。";
 "swap.slippage" = "滑点";
 "swap.swapped_time" = "兑换时间";

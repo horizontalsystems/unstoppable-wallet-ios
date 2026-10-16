@@ -55,7 +55,7 @@ public class DefaultUSwapSubProvider: USwapSubProvider {
         // the account may be unable to receive tokenOut at all (external-recipient
         // swap) — the recipient entered before confirmation then supplies the
         // destination, so a failed resolution must not kill the dry quote.
-        _ = try? await commitRequestBuilder.destinationAddress(recipient: nil, token: input.tokenOut)
+        _ = try? await commitRequestBuilder.destinationAddress(recipient: nil, tokenIn: input.tokenIn, tokenOut: input.tokenOut)
 
         let request = USwapMultiSwapApi.RateRequest(
             sellAsset: assetIn,

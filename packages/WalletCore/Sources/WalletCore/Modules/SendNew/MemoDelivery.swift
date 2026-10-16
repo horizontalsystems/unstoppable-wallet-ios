@@ -82,6 +82,19 @@ public extension BlockchainType {
              .gnosis, .fantom, .base, .zkSync, .robinhood, .arc, .tron, .solana, .xrp, .unsupported: nil
         }
     }
+
+    // Chains whose transfer memo rides an OP_RETURN output (80 bytes on Bitcoin, Litecoin and Dash, 220 on
+    // Bitcoin Cash and eCash), as on Android (MemoDelivery.kt memoRidesOpReturn): a swap route memo there
+    // cannot name a unified Zcash address. TON and Stellar memos are short too, but no vault route sells
+    // them into ZEC.
+    var memoRidesOpReturn: Bool {
+        switch self {
+        case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash: true
+        case .zcash, .monero, .zano, .ton, .stellar, .thorChain, .mayaChain, .near, .xrp,
+             .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne,
+             .gnosis, .fantom, .base, .zkSync, .robinhood, .arc, .tron, .solana, .unsupported: false
+        }
+    }
 }
 
 public extension USwapMultiSwapApi.Attachment {

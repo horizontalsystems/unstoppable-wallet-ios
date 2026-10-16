@@ -39,6 +39,26 @@ struct ThorChainSwapMemoTests {
         }
     }
 
+    // A ZEC destination on a UTXO sell is the transparent address (spec 2026-10-16): Base58, compared exactly
+    @Test func acceptsTransparentZcashDestination() throws {
+        let transparent = "t1RBzFrCTWSZe3FJbDewtveUMRX2og4kKph"
+        try ThorChainSwapMemo.validate("=:z:\(transparent):65336282/1/0:uws:100", expectedDestination: transparent, blockchainType: .zcash)
+        #expect(throws: ThorChainSwapMemo.ValidationError.destinationMismatch) {
+            try ThorChainSwapMemo.validate("=:z:\(transparent.lowercased()):65336282/1/0:uws:100", expectedDestination: transparent, blockchainType: .zcash)
+        }
+    }
+
+    @Test func rejectsUnifiedMemoWhenTransparentRequested() {
+        let transparent = "t1RBzFrCTWSZe3FJbDewtveUMRX2og4kKph"
+        let unified = "u1pg2aaph7jp8rpf6yhsza25722sg5fcn3vaca6ze27hqjw7jvvhhuxkpcg0ge9xh6drsgdkda8qjq5chpehkcpxf87rnjryjqwymdheptpvnljqqrjqzjwkc2ma6hcq666kgwfytxwac8eyex6ndgr6ezte66706e3vaqrd25dzvzkc69kw0jgywtd0cmq52q5lkw6uh7hyvzjse8ksx"
+        #expect(throws: ThorChainSwapMemo.ValidationError.destinationMismatch) {
+            try ThorChainSwapMemo.validate("=:z:\(unified):65336282/1/0:uws:100", expectedDestination: transparent, blockchainType: .zcash)
+        }
+        #expect(throws: ThorChainSwapMemo.ValidationError.destinationMismatch) {
+            try ThorChainSwapMemo.validate("=:z:\(transparent):65336282/1/0:uws:100", expectedDestination: unified, blockchainType: .zcash)
+        }
+    }
+
     @Test func acceptsCashAddressPrefixAndCase() throws {
         let payload = "qpm2qsznhks23z7629mms6s4cwef74vcwvy22gdx6a"
         try ThorChainSwapMemo.validate("=:BCH.BCH:\(payload.uppercased())/refund:123", expectedDestination: "bitcoincash:\(payload)", blockchainType: .bitcoinCash)

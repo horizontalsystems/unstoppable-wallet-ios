@@ -106,10 +106,11 @@ extension MultiSwapSendHandler: ISendHandler {
                 }
 
                 // Only vault-settled providers (per their /v3/providers executionType) deliver ZEC to
-                // shielded/unified receivers — every other provider needs a transparent recipient
-                // (CEX routes reject shielded ones at order creation), matching the restriction on
-                // the pre-confirmation recipient page.
-                let deliversShielded = Core.shared.swapProviderManager.deliversShieldedZcash(providerId: provider.id)
+                // shielded/unified receivers, and only when the sell chain's memo can name one (an
+                // OP_RETURN cannot) — every other route needs a transparent recipient (CEX routes
+                // reject shielded ones at order creation), matching the restriction on the
+                // pre-confirmation recipient page.
+                let deliversShielded = Core.shared.swapProviderManager.deliversShieldedZcash(providerId: provider.id, tokenIn: tokenIn)
                 let parserFilter: AddressParserFactory.ParserFilter? = tokenOut.blockchainType == .zcash && !deliversShielded ? .zCashTransparentOnly : nil
 
                 Coordinator.shared.present { _ in

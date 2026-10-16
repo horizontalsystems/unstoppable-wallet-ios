@@ -788,6 +788,8 @@
 "swap.price_impact.info" = "Ожидаемое отклонение цены от отображаемой. Обычно увеличивается с ростом суммы обмена.";
 "swap.high_price_impact" = "Высокое отклонение цены";
 "swap.recipient" = "Получатель";
+"swap.recipient.error.transparent_zcash_required" = "Выбранный провайдер может доставить только на прозрачный (t-) адрес Zcash";
+"swap.recipient.error.shielded_zcash_required" = "Здесь можно использовать только защищённый (u- или zs-) адрес Zcash";
 "swap.external_recipient.description" = "Кошелёк, который получит обменянные средства.";
 "swap.slippage" = "Отклонение от курса";
 "swap.swapped_time" = "Время свопа";

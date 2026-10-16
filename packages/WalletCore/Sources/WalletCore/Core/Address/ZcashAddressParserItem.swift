@@ -11,7 +11,12 @@ class ZcashAddressParserItem {
         self.addressType = addressType
     }
 
-    private func validate(address: String, checkSendToSelf: Bool) -> Single<Address> {
+    // `applyAddressType`: the type filter is a reason to refuse a well-formed address, reported by
+    // `handle` with its own error (as on Android ZcashAddressValidator); `isValid` only asks whether the
+    // text is a Zcash address at all, so the chain hands it here and the reason reaches the form
+    private func validate(address: String, checkSendToSelf: Bool, applyAddressType: Bool) -> Single<Address> {
+        let addressType = applyAddressType ? addressType : nil
+
         do {
             switch parserType {
             case let .adapter(adapter):
@@ -46,11 +51,11 @@ extension ZcashAddressParserItem: IAddressParserItem {
     var blockchainType: BlockchainType { .zcash }
 
     func handle(address: String) -> Single<Address> {
-        validate(address: address, checkSendToSelf: true)
+        validate(address: address, checkSendToSelf: true, applyAddressType: true)
     }
 
     func isValid(address: String) -> Single<Bool> {
-        validate(address: address, checkSendToSelf: false)
+        validate(address: address, checkSendToSelf: false, applyAddressType: false)
             .map { _ in true }
             .catchErrorJustReturn(false)
     }
@@ -62,8 +67,15 @@ extension ZcashAddressParserItem {
         case validator(ZcashAddressValidator)
     }
 
-    enum ParseError: Error {
+    enum ParseError: Error, LocalizedError {
         case onlyTransparent
         case onlyShielded
+
+        var errorDescription: String? {
+            switch self {
+            case .onlyTransparent: return "swap.recipient.error.transparent_zcash_required".localized
+            case .onlyShielded: return "swap.recipient.error.shielded_zcash_required".localized
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@ import Alamofire
 import Foundation
 import HsExtensions
 import HsToolKit
+import MarketKit
 import ObjectMapper
 
 class MultiSwapProviderManager {
@@ -120,11 +121,21 @@ class MultiSwapProviderManager {
         return true
     }
 
-    /// Whether a provider can pay a ZEC output to a shielded / unified receiver. Vault-settled
-    /// (thorchain_deposit) providers deliver from their own ZEC client, which addresses unified
-    /// receivers; transfer venues reject shielded recipients at order creation. Read from
-    /// /v3/providers so the server, not the app, decides per provider. Safe to call off-main.
-    func deliversShieldedZcash(providerId: String) -> Bool {
+    /// Whether a swap selling `tokenIn` through this provider can pay its ZEC output to a shielded /
+    /// unified receiver: the provider must settle through a vault, and the sell chain must carry the
+    /// route memo that names a unified address, which an OP_RETURN output cannot — the UTXO chains fall
+    /// back to the transparent address. Safe to call off-main.
+    func deliversShieldedZcash(providerId: String, tokenIn: Token) -> Bool {
+        isVaultSettled(providerId: providerId) && !tokenIn.blockchainType.memoRidesOpReturn
+    }
+
+    /// Whether a provider settles through a vault (thorchain_deposit) and so pays a ZEC output from its
+    /// own ZEC client, which addresses unified receivers; transfer venues reject shielded recipients at
+    /// order creation. Inferred from the executionType /v3/providers publishes, so the server decides per
+    /// provider. Known false for THORChain, which accepts only transparent ZEC and lists no ZEC today; a
+    /// per-provider flag is requested from the backend. Never the whole answer: the sell chain's memo
+    /// must fit a unified address too, see `deliversShieldedZcash(providerId:tokenIn:)`.
+    private func isVaultSettled(providerId: String) -> Bool {
         executionTypesLock.withLock { _executionTypes[providerId] } == Self.vaultExecutionType
     }
 

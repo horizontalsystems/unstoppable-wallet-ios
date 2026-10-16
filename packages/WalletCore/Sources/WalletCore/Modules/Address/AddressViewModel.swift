@@ -68,8 +68,8 @@ public class AddressViewModel: ObservableObject {
         case .loading:
             state = .checking
             securityCheckViewModel.check(address: nil)
-        case .invalid:
-            state = .invalid(nil)
+        case let .invalid(failure):
+            state = .invalid(Self.caution(failure: failure))
             securityCheckViewModel.check(address: nil)
         case let .valid(success):
             if case let .send(fromAddress) = destination, fromAddress == success.address.raw, !token.sendToSelfAllowed {
@@ -83,6 +83,18 @@ public class AddressViewModel: ObservableObject {
                 securityCheckViewModel.check(address: success.address)
             }
         }
+    }
+
+    // A parser's own reason for refusing a well-formed address (a swap route that pays only one address
+    // type, a send to self) is shown under the title; the chain's generic validation failure carries none.
+    private static func caution(failure: AddressInput.Failure) -> CautionNew? {
+        guard case let AddressParserChain.ParserError.fetchError(error) = failure.error,
+              let description = (error as? LocalizedError)?.errorDescription
+        else {
+            return nil
+        }
+
+        return CautionNew(title: "send.address.invalid_address".localized, text: description, type: .error)
     }
 
     private func syncFromCheckState(_ checkState: AddressSecurityCheckViewModel.State) {

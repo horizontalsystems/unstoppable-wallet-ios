@@ -788,6 +788,8 @@
 "swap.price_impact.info" = "Gösterilen fiyattan beklenen fiyat sapması, genellikle takas miktarıyla artar.";
 "swap.high_price_impact" = "Yüksek Fiyat Etkisi";
 "swap.recipient" = "Alıcı";
+"swap.recipient.error.transparent_zcash_required" = "Seçilen sağlayıcı yalnızca şeffaf (t-) Zcash adresine teslim edebilir";
+"swap.recipient.error.shielded_zcash_required" = "Burada yalnızca korumalı (u- veya zs-) Zcash adresi kullanılabilir";
 "swap.external_recipient.description" = "Takas edilen fonları alacak cüzdan.";
 "swap.slippage" = "Kayma";
 "swap.swapped_time" = "Swap Süresi";

@@ -788,6 +788,8 @@
 "swap.price_impact.info" = "L'écart de prix attendu par rapport à un prix affiché, augmente généralement avec le montant de l\'échange.";
 "swap.high_price_impact" = "Impact de prix élevé";
 "swap.recipient" = "Destinataire";
+"swap.recipient.error.transparent_zcash_required" = "Le fournisseur sélectionné ne peut livrer que vers une adresse Zcash transparente (t-)";
+"swap.recipient.error.shielded_zcash_required" = "Seule une adresse Zcash protégée (u- ou zs-) peut être utilisée ici";
 "swap.external_recipient.description" = "Le portefeuille qui recevra les fonds échangés.";
 "swap.slippage" = "Glissement";
 "swap.swapped_time" = "Temps de Swap";
