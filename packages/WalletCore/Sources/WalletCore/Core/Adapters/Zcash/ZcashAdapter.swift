@@ -509,15 +509,21 @@ extension ZcashAdapter {
         }
 
         do {
-            switch try Recipient(address, network: network.networkType) {
-            case .transparent:
-                return .transparent
-            case .sapling, .unified, .tex: // I'm keeping changes to the minimum. Unified Address should be treated as a different address type which will include some shielded pool and possibly others as well.
-                return .shielded
-            }
+            return try Self.addressType(recipient: Recipient(address, network: network.networkType))
         } catch {
             // FIXME: Should this be handled another way? logged? how?
             throw AppError.addressInvalid
+        }
+    }
+
+    // A TEX address (ZIP 320) is a transparent P2PKH address in Bech32m: the output is transparent and carries no memo,
+    // as in Recipient.isTransparent and on Android
+    static func addressType(recipient: Recipient) -> AddressType {
+        switch recipient {
+        case .transparent, .tex:
+            return .transparent
+        case .sapling, .unified: // I'm keeping changes to the minimum. Unified Address should be treated as a different address type which will include some shielded pool and possibly others as well.
+            return .shielded
         }
     }
 
