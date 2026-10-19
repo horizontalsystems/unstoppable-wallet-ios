@@ -87,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/Checkpoints",
       "state" : {
-        "revision" : "f97a50e2fbcc4341fdc66045cf1524d6f5db8443",
-        "version" : "1.0.32"
+        "revision" : "f882c7b3d2a095fe197c2dede8eea919d9ec2aa5",
+        "version" : "1.0.33"
       }
     },
     {
@@ -276,8 +276,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/MarketKit.Swift",
       "state" : {
-        "revision" : "aeee63c7975ce11f3ecde2c54e5aec9c815b202a",
-        "version" : "3.6.21"
+        "revision" : "866bfa19d6eb3b675e068efafa163d2892b70eeb",
+        "version" : "3.6.22"
       }
     },
     {
