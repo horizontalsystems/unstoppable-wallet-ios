@@ -79,6 +79,7 @@ public extension SendHandlerFactory {
         ZanoSendHandler.self,
         MultiSwapSendHandler.self,
         SplitSwapSendHandler.self,
+        MultiRouteSwapSendHandler.self,
         TonConnectSendHandler.self,
     ]
 

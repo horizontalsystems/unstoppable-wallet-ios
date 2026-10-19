@@ -36,6 +36,10 @@ public enum SendData {
     case swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, multiSwapQuote: MultiSwapQuote, recipientHolder: SwapExternalRecipientHolder)
     // Private (split) swap: tokenIn swapped into one tokenOut delivered to several recipients
     case splitSwap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: ISplitSwapProvider, recipients: [SplitRecipient])
+    // Large swap divided into parts, each executed as its own swap through its own provider (own order, own tx).
+    // `singleExpectedAmountOut` is what the single route offered when the split was accepted.
+    // `sentRoutes` is the plan's shared record of the routes already broadcast.
+    case multiRouteSwap(tokenIn: Token, tokenOut: Token, routes: [MultiRouteSwapPlan.Route], singleExpectedAmountOut: Decimal, recipientHolder: SwapExternalRecipientHolder, sentRoutes: MultiRouteSentRoutesHolder)
     indirect case walletConnect(inner: SendData?, request: WCRequest)
     case tonConnect(request: TonConnectSendTransactionRequest)
     case monero(token: Token, amount: MoneroSendAmount, address: String, memo: String?, selectedKeyImages: [String]?)

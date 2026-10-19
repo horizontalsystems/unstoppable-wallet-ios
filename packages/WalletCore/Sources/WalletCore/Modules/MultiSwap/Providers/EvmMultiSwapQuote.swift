@@ -13,6 +13,10 @@ class EvmMultiSwapQuote: MultiSwapQuote {
         super.customButtonState ?? allowanceState.customButtonState
     }
 
+    override var approveRequired: Bool {
+        allowanceState.approveRequired
+    }
+
     override func cautions() -> [CautionNew] {
         allowanceState.cautions()
     }

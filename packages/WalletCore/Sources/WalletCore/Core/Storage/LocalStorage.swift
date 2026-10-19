@@ -39,6 +39,7 @@ public class LocalStorage {
     private let keyAppStateLastSyncTimestamp = "app-state-last-sync-timestamp"
     private let keyForceEnableSwap = "force-enable-swap"
     private let keyEmulateEvmSwapSend = "emulate-evm-swap-send"
+    private let keyMultiRouteSwapTestThreshold = "multi-route-swap-test-threshold"
     private let keyEmulateZcashMigration = "emulate-zcash-migration"
     private let keySimulateFailSwap = "simulate-fail-swap"
 
@@ -255,6 +256,11 @@ extension LocalStorage {
     var emulateEvmSwapSend: Bool {
         get { userDefaultsStorage.value(for: keyEmulateEvmSwapSend) ?? false }
         set { userDefaultsStorage.set(value: newValue, for: keyEmulateEvmSwapSend) }
+    }
+
+    var multiRouteSwapTestThreshold: Bool {
+        get { userDefaultsStorage.value(for: keyMultiRouteSwapTestThreshold) ?? false }
+        set { userDefaultsStorage.set(value: newValue, for: keyMultiRouteSwapTestThreshold) }
     }
 
     var emulateZcashMigration: Bool {

@@ -13,7 +13,6 @@ class MultiSwapSendHandler: SendHandler {
     private let accountManager = Core.shared.accountManager
     private let walletManager = Core.shared.walletManager
     private let restoreSettingsManager = Core.shared.restoreSettingsManager
-    private let swapHistoryManager = Core.shared.swapHistoryManager
     private let mevProtectionHelper = MevProtectionHelper()
 
     let baseToken: Token
@@ -199,7 +198,7 @@ extension MultiSwapSendHandler: ISendHandler {
             throw error
         }
 
-        saveSwap(commitment: commitment, txHash: result.txHash, trackingHandle: result.trackingHandle)
+        Self.saveSwap(provider: provider, tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, commitment: commitment, txHash: result.txHash, trackingHandle: result.trackingHandle)
 
         // Best-effort and off the critical path: funds have moved, so the screen must not wait on
         // the report. The track call carries the hash as a fallback.
@@ -227,8 +226,8 @@ extension MultiSwapSendHandler: ISendHandler {
 
     /// Persist the pending swap record after a successful broadcast, keyed by the submitted
     /// transaction hash and/or the broadcaster's tracking handle. No-op without an active account.
-    private func saveSwap(commitment: SwapCommitment, txHash: String?, trackingHandle: String?) {
-        guard let account = accountManager.activeAccount else {
+    static func saveSwap(provider: IMultiSwapProvider, tokenIn: Token, tokenOut: Token, amountIn: Decimal, commitment: SwapCommitment, txHash: String?, trackingHandle: String?) {
+        guard let account = Core.shared.accountManager.activeAccount else {
             return
         }
 
@@ -258,7 +257,7 @@ extension MultiSwapSendHandler: ISendHandler {
             pauseReason: nil
         )
 
-        swapHistoryManager.save(swap: swap)
+        Core.shared.swapHistoryManager.save(swap: swap)
     }
 
     // What the toast says when the order could not be created: the server's discriminator when it
@@ -309,83 +308,26 @@ extension MultiSwapSendHandler {
             nil
         }
 
-        func cautions(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [CautionNew] {
-            quote.cautions(baseToken: baseToken) + priceImpactCautions(baseToken: baseToken, currency: currency, rates: rates)
+        func cautions(baseToken: Token, currency _: Currency, rates: [String: Decimal]) -> [CautionNew] {
+            quote.cautions(baseToken: baseToken) + MultiSwapSendHandler.priceImpactCautions(priceImpact: priceImpact(rates: rates))
         }
 
-        private func priceImpact(baseToken _: Token, currency _: Currency, rates: [String: Decimal]) -> Decimal? {
-            let fiatAmountIn = rates[tokenIn.coin.uid].map { amountIn * $0 }
-            let fiatAmountOut = rates[tokenOut.coin.uid].map { quote.amountOut * $0 }
-
-            if let fiatAmountIn, let fiatAmountOut, fiatAmountIn != 0, fiatAmountIn > fiatAmountOut {
-                let priceImpact = (fiatAmountOut * 100 / fiatAmountIn) - 100
-                return priceImpact
-            }
-
-            return nil
-        }
-
-        private func priceImpactCautions(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [CautionNew] {
-            var cautions = [CautionNew]()
-
-            if let priceImpact = priceImpact(baseToken: baseToken, currency: currency, rates: rates) {
-                let level = MultiSwapViewModel.PriceImpactLevel(priceImpact: abs(priceImpact))
-
-                switch level {
-                case .warning: cautions.append(.init(title: "swap.price_impact".localized, text: "swap.confirmation.impact_high".localized(PriceImpact.display(value: priceImpact)), type: .warning))
-                case .forbidden: cautions.append(.init(title: "swap.price_impact".localized, text: "swap.confirmation.impact_too_high".localized(PriceImpact.display(value: priceImpact)), type: .error))
-                default: ()
-                }
-            }
-
-            return cautions
+        private func priceImpact(rates: [String: Decimal]) -> Decimal? {
+            MultiSwapSendHandler.priceImpact(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, amountOut: quote.amountOut, rates: rates)
         }
 
         func flowSection(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> SendDataSection {
-            .init([
-                .amount(
-                    token: tokenIn,
-                    appValueType: .regular(appValue: AppValue(token: tokenIn, value: amountIn)),
-                    currencyValue: rates[tokenIn.coin.uid].map { CurrencyValue(currency: currency, value: amountIn * $0) },
-                ),
-                .amount(
-                    token: tokenOut,
-                    appValueType: .regular(appValue: AppValue(token: tokenOut, value: quote.amountOut)),
-                    currencyValue: rates[tokenOut.coin.uid].map { CurrencyValue(currency: currency, value: quote.amountOut * $0) },
-                ),
-            ], isFlow: true)
+            MultiSwapSendHandler.flowSection(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, amountOut: quote.amountOut, currency: currency, rates: rates)
         }
 
         func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
-            var fields: [SendField] = []
-
-            fields.append(
-                .price(
-                    title: "swap.price".localized,
-                    tokenA: tokenIn,
-                    tokenB: tokenOut,
-                    amountA: amountIn,
-                    amountB: quote.amountOut
-                )
+            var fields = MultiSwapSendHandler.priceFields(
+                tokenIn: tokenIn,
+                tokenOut: tokenOut,
+                amountIn: amountIn,
+                amountOut: quote.amountOut,
+                priceImpact: priceImpact(rates: rates)
             )
-
-            if let priceImpact = priceImpact(baseToken: baseToken, currency: currency, rates: rates) {
-                let level = MultiSwapViewModel.PriceImpactLevel(priceImpact: abs(priceImpact))
-
-                switch level {
-                case .normal, .warning, .forbidden:
-                    fields.append(
-                        .simpleValue(
-                            title: ComponentInformedTitle("swap.price_impact".localized, info: InfoDescription(
-                                title: "swap.price_impact".localized,
-                                description: "swap.price_impact.info".localized
-                            )),
-                            value: ComponentText(text: PriceImpact.display(value: priceImpact), colorStyle: level.valueLevel.colorStyle)
-                        )
-                    )
-                default: ()
-                }
-            }
 
             fields.append(contentsOf: quote.fields(
                 tokenIn: tokenIn,
@@ -404,6 +346,80 @@ extension MultiSwapSendHandler {
                 .init(fields, isMain: false),
             ] + otherSections
         }
+    }
+
+    // Confirmation building blocks shared by the single and the multi-route swap
+
+    // Negative percent when the output is worth less than the input, nil otherwise
+    static func priceImpact(tokenIn: Token, tokenOut: Token, amountIn: Decimal, amountOut: Decimal, rates: [String: Decimal]) -> Decimal? {
+        let fiatAmountIn = rates[tokenIn.coin.uid].map { amountIn * $0 }
+        let fiatAmountOut = rates[tokenOut.coin.uid].map { amountOut * $0 }
+
+        if let fiatAmountIn, let fiatAmountOut, fiatAmountIn != 0, fiatAmountIn > fiatAmountOut {
+            return (fiatAmountOut * 100 / fiatAmountIn) - 100
+        }
+
+        return nil
+    }
+
+    static func priceImpactCautions(priceImpact: Decimal?) -> [CautionNew] {
+        guard let priceImpact else {
+            return []
+        }
+
+        switch MultiSwapViewModel.PriceImpactLevel(priceImpact: abs(priceImpact)) {
+        case .warning: return [.init(title: "swap.price_impact".localized, text: "swap.confirmation.impact_high".localized(PriceImpact.display(value: priceImpact)), type: .warning)]
+        case .forbidden: return [.init(title: "swap.price_impact".localized, text: "swap.confirmation.impact_too_high".localized(PriceImpact.display(value: priceImpact)), type: .error)]
+        default: return []
+        }
+    }
+
+    // The price row, then the price impact row when there is a notable one
+    static func priceFields(tokenIn: Token, tokenOut: Token, amountIn: Decimal, amountOut: Decimal, priceImpact: Decimal?) -> [SendField] {
+        var fields: [SendField] = [
+            .price(
+                title: "swap.price".localized,
+                tokenA: tokenIn,
+                tokenB: tokenOut,
+                amountA: amountIn,
+                amountB: amountOut
+            ),
+        ]
+
+        if let priceImpact {
+            let level = MultiSwapViewModel.PriceImpactLevel(priceImpact: abs(priceImpact))
+
+            switch level {
+            case .normal, .warning, .forbidden:
+                fields.append(
+                    .simpleValue(
+                        title: ComponentInformedTitle("swap.price_impact".localized, info: InfoDescription(
+                            title: "swap.price_impact".localized,
+                            description: "swap.price_impact.info".localized
+                        )),
+                        value: ComponentText(text: PriceImpact.display(value: priceImpact), colorStyle: level.valueLevel.colorStyle)
+                    )
+                )
+            default: ()
+            }
+        }
+
+        return fields
+    }
+
+    static func flowSection(tokenIn: Token, tokenOut: Token, amountIn: Decimal, amountOut: Decimal, currency: Currency, rates: [String: Decimal]) -> SendDataSection {
+        .init([
+            .amount(
+                token: tokenIn,
+                appValueType: .regular(appValue: AppValue(token: tokenIn, value: amountIn)),
+                currencyValue: rates[tokenIn.coin.uid].map { CurrencyValue(currency: currency, value: amountIn * $0) },
+            ),
+            .amount(
+                token: tokenOut,
+                appValueType: .regular(appValue: AppValue(token: tokenOut, value: amountOut)),
+                currencyValue: rates[tokenOut.coin.uid].map { CurrencyValue(currency: currency, value: amountOut * $0) },
+            ),
+        ], isFlow: true)
     }
 
     // The order could not be created; the handler already toasted the reason and re-previewed.

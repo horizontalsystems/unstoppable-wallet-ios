@@ -768,6 +768,18 @@
 "swap.provider.score" = "路由评分";
 "swap.provider.swap_time" = "兑换时间";
 
+"swap.multi_route.title" = "让这笔兑换获得更多";
+"swap.multi_route.description" = "使用拆分，自动将您的兑换分配到 %d 条路径，获得更优的整体汇率。";
+"swap.multi_route.you_receive" = "您将收到";
+"swap.multi_route.use_split" = "使用拆分";
+"swap.multi_route.keep_single" = "保持单一路径";
+"swap.multi_route.recipient_mismatch" = "此拆分的各路径将发送到不同的地址。请返回后重试。";
+"swap.multi_route.worse_than_single" = "拆分路径现在的收益低于单一路径。建议返回并不使用拆分进行兑换。";
+"swap.multi_route.balance_unavailable" = "无法同时检查所有路径所需的余额。请稍后重试。";
+"swap.multi_route.allowance_not_enough" = "多个路径经过同一交易所，其授权额度不足以覆盖它们的合计金额。请返回并不使用拆分进行兑换。";
+"swap.multi_route.error.amount_mismatch" = "某一路径的交易与其在兑换金额中的份额不符。未发送任何内容。";
+"swap.multi_route.error.unsupported_route" = "某一路径的交易无法按原样发送。未发送任何内容。";
+
 
 "swap.allowance" = "补贴";
 "swap.allowance.description" = "当执行令牌交换时，交易所可以代表用户花费的金额。 在进行实际互换交易之前，需要先确定足够的备抵。";
@@ -875,6 +887,9 @@
 "swap.confirmation.minimum_received" = "保证到账";
 "swap.confirmation.minimum_received.info" = "兑换完成后您将收到的最小金额。该金额由服务提供方保证，不受处理过程中价格波动的影响。";
 "swap.confirmation.maximum_sent" = "最大支出";
+"swap.confirmation.split_across" = "拆分为";
+"swap.confirmation.split_across.value" = "%d 条路径";
+"swap.confirmation.split_across.info" = "您的兑换被拆分为相等的几部分。每一部分通过各自的路径作为单独的交易执行，大额兑换可获得更优的整体汇率。兑换时间显示最长的路径；保证金额和手续费为所有路径的总和。";
 
 "swap.dex_info.header_allowance" = "补贴";
 "swap.dex_info.content_allowance" = "当执行令牌交换时，交易所可以代表用户花费的金额。 在进行实际互换交易之前，需要先确定足够的备抵。";

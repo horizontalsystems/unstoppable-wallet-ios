@@ -768,6 +768,18 @@
 "swap.provider.score" = "Puntuación de ruta";
 "swap.provider.swap_time" = "Tiempo de swap";
 
+"swap.multi_route.title" = "Obtén más de este intercambio";
+"swap.multi_route.description" = "Usa Dividir para repartir automáticamente tu intercambio en %d rutas y obtener una mejor tasa total.";
+"swap.multi_route.you_receive" = "Recibes";
+"swap.multi_route.use_split" = "Usar división";
+"swap.multi_route.keep_single" = "Mantener una sola ruta";
+"swap.multi_route.recipient_mismatch" = "Las rutas de esta división entregarían a direcciones diferentes. Vuelve atrás e inténtalo de nuevo.";
+"swap.multi_route.worse_than_single" = "Las rutas divididas ahora devuelven menos que una sola ruta. Considera volver atrás e intercambiar sin dividir.";
+"swap.multi_route.balance_unavailable" = "No se pudo comprobar tu saldo para todas las rutas juntas. Inténtalo de nuevo en un momento.";
+"swap.multi_route.allowance_not_enough" = "Varias rutas pasan por el mismo exchange y su asignación no cubre el importe combinado. Vuelve atrás e intercambia sin dividir.";
+"swap.multi_route.error.amount_mismatch" = "La transacción de una ruta no coincide con su parte del importe del intercambio. No se envió nada.";
+"swap.multi_route.error.unsupported_route" = "La transacción de una ruta no se puede enviar tal como está. No se envió nada.";
+
 
 "swap.allowance" = "Permiso de acceso";
 "swap.allowance.description" = "La cantidad que un intercambio puede gastar en nombre de un usuario al ejecutar intercambios de tokens. Se requiere una transacción previa que establezca una autorización suficiente antes de que pueda tener lugar una transacción de intercambio real.";
@@ -875,6 +887,9 @@
 "swap.confirmation.minimum_received" = "Garantizado";
 "swap.confirmation.minimum_received.info" = "La cantidad mínima que recibirás una vez completado el swap. Esta cantidad está garantizada por el proveedor y no se ve afectada por cambios de precio durante el procesamiento.";
 "swap.confirmation.maximum_sent" = "Gasto máximo";
+"swap.confirmation.split_across" = "Dividido en";
+"swap.confirmation.split_across.value" = "%d rutas";
+"swap.confirmation.split_across.info" = "Tu intercambio se divide en partes iguales. Cada parte se ejecuta como una transacción independiente a través de su propia ruta, lo que ofrece una mejor tasa total para montos grandes. El tiempo de intercambio muestra la ruta más larga; Garantizado y Comisión son totales de todas las rutas.";
 
 "swap.dex_info.header_allowance" = "Permiso de acceso";
 "swap.dex_info.content_allowance" = "La cantidad que un intercambio puede gastar en nombre de un usuario al ejecutar intercambios de tokens. Se requiere una transacción previa que establezca una autorización suficiente antes de que pueda tener lugar una transacción de intercambio real.";

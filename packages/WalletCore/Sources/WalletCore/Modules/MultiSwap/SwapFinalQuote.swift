@@ -76,6 +76,11 @@ public class SwapFinalQuote {
         nil
     }
 
+    // The network fee in fee token units, as the fee row shows it; used to add up the fees of several routes
+    func networkFee(feeToken _: Token) -> Decimal? {
+        nil
+    }
+
     public var canSwap: Bool {
         transactionError == nil
     }
@@ -130,14 +135,20 @@ public class SwapFinalQuote {
             fields.append(.hex(title: "swap.deposit_memo".localized, value: depositMemo))
         }
 
-        // Single route on the confirm screen: no baseline, absolute threshold only.
-        if let timeState = MultiSwapViewModel.timeState(for: estimatedTime, precise: preciseEstimateTime, baseline: nil) {
-            fields.append(.simpleValue(
-                title: ComponentInformedTitle("swap.swapped_time".localized, info: .swapTime),
-                value: ComponentText(text: MultiSwapQuotesView.string(time: timeState.value), colorStyle: timeState.colorStyle)
-            ))
+        if let swapTimeField = Self.swapTimeField(estimatedTime: estimatedTime, precise: preciseEstimateTime) {
+            fields.append(swapTimeField)
         }
 
         return fields
+    }
+
+    // On the confirm screen: no baseline, absolute threshold only. Shared with the multi-route confirmation.
+    static func swapTimeField(estimatedTime: TimeInterval?, precise: Bool) -> SendField? {
+        MultiSwapViewModel.timeState(for: estimatedTime, precise: precise, baseline: nil).map { timeState in
+            .simpleValue(
+                title: ComponentInformedTitle("swap.swapped_time".localized, info: .swapTime),
+                value: ComponentText(text: MultiSwapQuotesView.string(time: timeState.value), colorStyle: timeState.colorStyle)
+            )
+        }
     }
 }

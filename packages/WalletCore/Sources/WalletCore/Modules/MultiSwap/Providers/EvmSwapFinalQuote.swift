@@ -48,6 +48,14 @@ public class EvmSwapFinalQuote: SwapFinalQuote {
         evmFeeData.map { .evm(evmFeeData: $0) }
     }
 
+    override func networkFee(feeToken: Token) -> Decimal? {
+        guard let evmFeeData, let gasPrice else {
+            return nil
+        }
+
+        return evmFeeData.totalAmount(gasPrice: gasPrice, feeToken: feeToken)
+    }
+
     override public var canSwap: Bool {
         super.canSwap && gasPrice != nil && evmFeeData != nil && transactionData != nil
     }

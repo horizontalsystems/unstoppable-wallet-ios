@@ -57,6 +57,7 @@ struct MultiSwapView: View {
             }
         }
         .onDisappear {
+            viewModel.cancelMultiRouteQuoting()
             viewModel.stopAutoQuoting()
             splitViewModel.stopAutoQuoting()
         }
@@ -104,6 +105,7 @@ struct MultiSwapView: View {
 
     private func onChange(tab: MultiSwapTab) {
         focusedField = nil
+        viewModel.cancelMultiRouteQuoting()
 
         switch tab {
         case .standard:
@@ -161,6 +163,8 @@ struct MultiSwapView: View {
 
     private func validatePreSwapSteps(_ preSwapStep: MultiSwapPreSwapStep?, vm: MultiSwapViewModel) {
         vm.stopAutoQuoting()
+        // a split is chosen anew on every Next tap
+        vm.multiRoutePlan = nil
 
         if let preSwapStep {
             if let currentQuote = vm.currentQuote,
@@ -185,9 +189,60 @@ struct MultiSwapView: View {
             }
         } else {
             vm.validateAndProceed(
-                onSuccess: { showSwap(vm: vm) },
+                onSuccess: { checkMultiRoute(vm: vm) },
                 onRiskDetected: { result in showRiskBottomSheet(result, vm: vm) }
             )
+        }
+    }
+
+    // A large swap may get more when divided across several routes: offer it before the confirmation.
+    // Only for quotes that spend without an ERC-20 allowance (see `multiRouteParts`), and only when
+    // this Next tap needed no other pre-swap step.
+    private func checkMultiRoute(vm: MultiSwapViewModel) {
+        guard vm.currentQuote?.quote.customButtonState?.preSwapStep == nil, let parts = vm.multiRouteParts() else {
+            showSwap(vm: vm)
+            return
+        }
+
+        vm.fetchMultiRoutePlan(parts: parts) { plan in
+            if let plan {
+                presentMultiRouteSheet(plan: plan, vm: vm)
+            } else {
+                showSwap(vm: vm)
+            }
+        }
+    }
+
+    private func presentMultiRouteSheet(plan: MultiRouteSwapPlan, vm: MultiSwapViewModel) {
+        guard let tokenOut = vm.tokenOut else {
+            showSwap(vm: vm)
+            return
+        }
+
+        // filled by the sheet's buttons and read once the sheet is gone; nil means it was swiped away
+        let choice = MultiRouteSheetChoice()
+
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            MultiRouteSwapBottomSheetView(
+                plan: plan,
+                tokenOut: tokenOut,
+                isPresented: isPresented,
+                onUseSplit: { choice.decision = .useSplit(plan) },
+                onKeepSingle: { choice.decision = .keepSingle }
+            )
+        } onDismiss: {
+            // runs after the dismissal, so the next screen is presented from a settled stack
+            switch choice.decision {
+            case let .useSplit(plan):
+                vm.multiRoutePlan = plan
+                showSwap(vm: vm)
+            case .keepSingle:
+                vm.multiRoutePlan = nil
+                showSwap(vm: vm)
+            case nil:
+                // swiped away: stay on the swap screen
+                activeViewModel.autoQuoteIfRequired()
+            }
         }
     }
 
@@ -340,10 +395,10 @@ struct MultiSwapView: View {
     private func onTapResult(_ result: MultiSwapViewModel.AmlRiskResult, vm: MultiSwapViewModel) {
         switch result {
         case .dirty: showSelectProvider()
-        case .unprocessed: showSwap(vm: vm)
+        case .unprocessed: checkMultiRoute(vm: vm)
         case .networkError:
             vm.validateAndProceed(
-                onSuccess: { showSwap(vm: vm) },
+                onSuccess: { checkMultiRoute(vm: vm) },
                 onRiskDetected: { result in showRiskBottomSheet(result, vm: vm) }
             )
         }
@@ -373,7 +428,7 @@ struct MultiSwapView: View {
         var progress: Double?
         var preSwapStep: MultiSwapPreSwapStep?
 
-        if vm.validatingProvider {
+        if vm.validatingProvider || vm.multiRouteQuoting {
             title = "swap.proceed_button".localized
             showProgress = true
         } else if vm.tokenInWalletState == .notEnabled, let tokenIn = vm.tokenIn {
@@ -456,6 +511,16 @@ enum MultiSwapTab: CaseIterable {
     }
 }
 
+// The user's choice on the split bottom sheet, shared by reference between its buttons and its onDismiss
+private final class MultiRouteSheetChoice {
+    enum Decision {
+        case useSplit(MultiRouteSwapPlan)
+        case keepSingle
+    }
+
+    var decision: Decision?
+}
+
 struct MultiSwapSendDestinationView: View {
     @ObservedObject var viewModel: MultiSwapViewModel
     let onFinish: () -> Void
@@ -466,15 +531,33 @@ struct MultiSwapSendDestinationView: View {
            let amountIn = viewModel.amountIn,
            let currentQuote = viewModel.currentQuote
         {
+            // one call site for both shapes: the send view keeps the data it was first built with
             MultiSwapSendView(
-                tokenIn: tokenIn,
-                tokenOut: tokenOut,
-                amountIn: amountIn,
-                provider: currentQuote.provider,
-                multiSwapQuote: currentQuote.quote,
-                recipientHolder: viewModel.externalRecipientHolder,
+                sendData: sendData(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, currentQuote: currentQuote),
                 onFinish: onFinish
             )
         }
+    }
+
+    private func sendData(tokenIn: Token, tokenOut: Token, amountIn: Decimal, currentQuote: MultiSwapViewModel.Quote) -> SendData {
+        if let plan = viewModel.multiRoutePlan {
+            return .multiRouteSwap(
+                tokenIn: tokenIn,
+                tokenOut: tokenOut,
+                routes: plan.routes,
+                singleExpectedAmountOut: plan.singleQuote.quote.expectedBuyAmount,
+                recipientHolder: viewModel.externalRecipientHolder,
+                sentRoutes: plan.sentRoutes
+            )
+        }
+
+        return .swap(
+            tokenIn: tokenIn,
+            tokenOut: tokenOut,
+            amountIn: amountIn,
+            provider: currentQuote.provider,
+            multiSwapQuote: currentQuote.quote,
+            recipientHolder: viewModel.externalRecipientHolder
+        )
     }
 }

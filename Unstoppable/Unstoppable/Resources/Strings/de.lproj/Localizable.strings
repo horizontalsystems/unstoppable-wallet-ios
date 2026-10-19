@@ -768,6 +768,18 @@
 "swap.provider.score" = "Routenbewertung";
 "swap.provider.swap_time" = "Swap-Zeit";
 
+"swap.multi_route.title" = "Mehr aus diesem Swap herausholen";
+"swap.multi_route.description" = "Mit „Aufteilen“ wird dein Swap automatisch auf %d Routen verteilt und du erhältst insgesamt einen besseren Kurs.";
+"swap.multi_route.you_receive" = "Du erhältst";
+"swap.multi_route.use_split" = "Aufteilen";
+"swap.multi_route.keep_single" = "Einzelne Route behalten";
+"swap.multi_route.recipient_mismatch" = "Die Routen dieser Aufteilung würden an unterschiedliche Adressen liefern. Geh zurück und versuche es erneut.";
+"swap.multi_route.worse_than_single" = "Die aufgeteilten Routen bringen jetzt weniger als eine einzelne Route. Geh am besten zurück und swappe ohne Aufteilen.";
+"swap.multi_route.balance_unavailable" = "Dein Guthaben konnte nicht für alle Routen zusammen geprüft werden. Versuche es gleich noch einmal.";
+"swap.multi_route.allowance_not_enough" = "Mehrere Routen laufen über dieselbe Börse, deren Freigabe ihren Gesamtbetrag nicht abdeckt. Geh zurück und swappe ohne Aufteilen.";
+"swap.multi_route.error.amount_mismatch" = "Die Transaktion einer Route passt nicht zu ihrem Anteil am Swap-Betrag. Es wurde nichts gesendet.";
+"swap.multi_route.error.unsupported_route" = "Die Transaktion einer Route kann so nicht gesendet werden. Es wurde nichts gesendet.";
+
 
 "swap.allowance" = "Vergütung";
 "swap.allowance.description" = "Die Menge, die eine Börse im Namen eines Benutzers für Token-Austausche ausgeben kann. Eine vorhergehende Transaktion, die eine ausreichende Zulage festlegt, ist erforderlich, bevor eine tatsächliche Austauschtransaktion stattfinden kann.";
@@ -875,6 +887,9 @@
 "swap.confirmation.minimum_received" = "Garantiert";
 "swap.confirmation.minimum_received.info" = "Der Mindestbetrag, den du nach Abschluss des Swaps erhältst. Dieser Betrag wird vom Provider garantiert und ist während der Verarbeitung nicht von Preisänderungen betroffen.";
 "swap.confirmation.maximum_sent" = "Maximale Ausgaben";
+"swap.confirmation.split_across" = "Aufgeteilt auf";
+"swap.confirmation.split_across.value" = "%d Routen";
+"swap.confirmation.split_across.info" = "Dein Swap wird in gleiche Teile aufgeteilt. Jeder Teil wird als separate Transaktion über eine eigene Route ausgeführt, was bei großen Beträgen insgesamt einen besseren Kurs ergibt. Die Swap-Dauer zeigt die längste Route; Garantiert und Gebühr sind Summen über alle Routen.";
 
 "swap.dex_info.header_allowance" = "Vergütung";
 "swap.dex_info.content_allowance" = "Die Menge, die eine Börse im Namen eines Benutzers für Token-Austausche ausgeben kann. Eine vorhergehende Transaktion, die eine ausreichende Zulage festlegt, ist erforderlich, bevor eine tatsächliche Austauschtransaktion stattfinden kann.";

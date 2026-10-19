@@ -89,6 +89,15 @@ public enum SwapProviderType: String, CaseIterable, Identifiable {
         }
     }
 
+    // higher is better; SwapProviderType has no other ordering
+    var rank: Int {
+        switch self {
+        case .excellent: return 2
+        case .good: return 1
+        case .fair: return 0
+        }
+    }
+
     public var colorStyle: ColorStyle {
         switch self {
         case .excellent: return .green

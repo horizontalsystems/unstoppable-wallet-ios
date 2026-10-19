@@ -16,6 +16,11 @@ public class MultiSwapQuote {
         activationAsset.map { StellarActivationHelper.buttonState(asset: $0) }
     }
 
+    // Whether the route spends through an ERC-20 allowance (granted or not)
+    var approveRequired: Bool {
+        false
+    }
+
     func cautions() -> [CautionNew] {
         []
     }

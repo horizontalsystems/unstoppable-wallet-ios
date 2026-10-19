@@ -15,7 +15,14 @@ class EvmTransactionService: TransactionService {
             return EvmTransactionService(blockchainType: blockchainType, evmKit: evmKit, initialTransactionSettings: initialTransactionSettings, previousTransaction: transaction)
         }
 
-        return EvmTransactionService(blockchainType: baseToken.blockchainType, evmKit: evmKit, initialTransactionSettings: initialTransactionSettings)
+        // A split swap sends several transactions with consecutive nonces picked at send time:
+        // a single nonce chosen by the user can't apply to all of them, so the setting is not offered
+        var nonceLocked = false
+        if case .multiRouteSwap = sendData {
+            nonceLocked = true
+        }
+
+        return EvmTransactionService(blockchainType: baseToken.blockchainType, evmKit: evmKit, initialTransactionSettings: initialTransactionSettings, nonceLocked: nonceLocked)
     }
 
     private static let tipsSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))
@@ -26,6 +33,7 @@ class EvmTransactionService: TransactionService {
     private let chain: Chain
     private let rpcSource: RpcSource
     private let previousTransaction: EvmKit.Transaction?
+    private let nonceLocked: Bool
     private let networkManager = Core.shared.networkManager
 //    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
 
@@ -55,7 +63,7 @@ class EvmTransactionService: TransactionService {
     private var gasPriceWarnings: [GasDataWarning] = []
     private var nonceErrors: [NonceError] = []
 
-    init?(blockchainType: BlockchainType, evmKit: EvmKit.Kit, initialTransactionSettings: InitialTransactionSettings?, previousTransaction: EvmKit.Transaction? = nil) {
+    init?(blockchainType: BlockchainType, evmKit: EvmKit.Kit, initialTransactionSettings: InitialTransactionSettings?, previousTransaction: EvmKit.Transaction? = nil, nonceLocked: Bool = false) {
         guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType),
               let rpcSource = Core.shared.evmSyncSourceManager.httpSyncSource(blockchainType: blockchainType)?.rpcSource
         else {
@@ -67,6 +75,7 @@ class EvmTransactionService: TransactionService {
         self.evmKit = evmKit
         self.rpcSource = rpcSource
         self.previousTransaction = previousTransaction
+        self.nonceLocked = nonceLocked
         nonce = previousTransaction?.nonce
 
         if case let .evm(gasPrice, nonce) = initialTransactionSettings {
@@ -74,7 +83,7 @@ class EvmTransactionService: TransactionService {
                 self.gasPrice = gasPrice
             }
 
-            if let nonce, previousTransaction == nil {
+            if let nonce, previousTransaction == nil, !nonceLocked {
                 self.nonce = nonce
             }
         }
@@ -154,7 +163,7 @@ extension EvmTransactionService {
     }
 
     var nonceEditable: Bool {
-        previousTransaction == nil
+        previousTransaction == nil && !nonceLocked
     }
 
     var currentNonce: Int? {

@@ -768,6 +768,18 @@
 "swap.provider.score" = "Pontuação da rota";
 "swap.provider.swap_time" = "Tempo de swap";
 
+"swap.multi_route.title" = "Ganhe mais com esta troca";
+"swap.multi_route.description" = "Use Dividir para distribuir automaticamente sua troca em %d rotas e obter uma taxa geral melhor.";
+"swap.multi_route.you_receive" = "Você recebe";
+"swap.multi_route.use_split" = "Usar divisão";
+"swap.multi_route.keep_single" = "Manter rota única";
+"swap.multi_route.recipient_mismatch" = "As rotas desta divisão entregariam em endereços diferentes. Volte e tente novamente.";
+"swap.multi_route.worse_than_single" = "As rotas divididas agora rendem menos do que uma única rota. Considere voltar e fazer o swap sem divisão.";
+"swap.multi_route.balance_unavailable" = "Não foi possível verificar seu saldo para todas as rotas juntas. Tente novamente em instantes.";
+"swap.multi_route.allowance_not_enough" = "Várias rotas passam pela mesma exchange, e a permissão dela não cobre o valor combinado. Volte e faça o swap sem divisão.";
+"swap.multi_route.error.amount_mismatch" = "A transação de uma rota não corresponde à sua parte do valor do swap. Nada foi enviado.";
+"swap.multi_route.error.unsupported_route" = "A transação de uma rota não pode ser enviada como está. Nada foi enviado.";
+
 
 "swap.allowance" = "Preço";
 "swap.allowance.description" = "O montante que uma exchange pode gastar em nome do usuário na execução de trocas simbólicas. É necessária uma margem suficiente para que uma transação de troca efetiva possa ocorrer.";
@@ -875,6 +887,9 @@
 "swap.confirmation.minimum_received" = "Garantido";
 "swap.confirmation.minimum_received.info" = "O valor mínimo que você receberá após a conclusão do swap. Esse valor é garantido pelo provedor e não é afetado por variações de preço durante o processamento.";
 "swap.confirmation.maximum_sent" = "Gastos máximos";
+"swap.confirmation.split_across" = "Dividido em";
+"swap.confirmation.split_across.value" = "%d rotas";
+"swap.confirmation.split_across.info" = "Sua troca é dividida em partes iguais. Cada parte é executada como uma transação separada por sua própria rota, o que dá uma taxa geral melhor para valores altos. O tempo de troca mostra a rota mais longa; Garantido e Taxa são totais de todas as rotas.";
 
 "swap.dex_info.header_allowance" = "Preço";
 "swap.dex_info.content_allowance" = "O montante que uma exchange pode gastar em nome do usuário na execução de trocas simbólicas. É necessária uma margem suficiente para que uma transação de troca efetiva possa ocorrer.";

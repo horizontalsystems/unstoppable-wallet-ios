@@ -18,18 +18,22 @@ public struct EvmFeeData {
         BigUInt(surchargedGasLimit * gasPrice.max) + (l1Fee ?? 0)
     }
 
-    func totalAmountData(gasPrice: GasPrice?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
-        guard let gasPrice else {
-            return nil
-        }
-
+    func totalAmount(gasPrice: GasPrice, feeToken: Token) -> Decimal {
         var amount = Decimal(gasLimit) * Decimal(gasPrice.max) / pow(10, feeToken.decimals)
 
         if let l1FeeValue = l1FeeValue(feeToken: feeToken) {
             amount += l1FeeValue
         }
 
-        return amountData(amount: amount, feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
+        return amount
+    }
+
+    func totalAmountData(gasPrice: GasPrice?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
+        guard let gasPrice else {
+            return nil
+        }
+
+        return amountData(amount: totalAmount(gasPrice: gasPrice, feeToken: feeToken), feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
     }
 
     func l1AmountData(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {

@@ -48,6 +48,12 @@ class MainSettingsViewModel: ObservableObject {
         }
     }
 
+    @Published var multiRouteSwapTestThreshold: Bool {
+        didSet {
+            localStorage.multiRouteSwapTestThreshold = multiRouteSwapTestThreshold
+        }
+    }
+
     @Published var simulateFailSwap: SimulateFailSwapMode {
         didSet {
             localStorage.simulateFailSwap = simulateFailSwap
@@ -92,6 +98,8 @@ class MainSettingsViewModel: ObservableObject {
         showDevTools = AppConfig.showDevTools
         forceEnableSwap = localStorage.forceEnableSwap
         emulateEvmSwapSend = localStorage.emulateEvmSwapSend
+        // the stored flag only counts with dev tools, as in `MultiSwapViewModel.multiRouteParts`
+        multiRouteSwapTestThreshold = AppConfig.showDevTools ? localStorage.multiRouteSwapTestThreshold : false
         simulateFailSwap = localStorage.simulateFailSwap
         emulatePurchase = localStorage.emulatePurchase
         testNetEnabled = testNetManager.testNetEnabled

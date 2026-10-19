@@ -84,6 +84,15 @@ extension MultiSwapAllowanceHelper {
         case allowed
         case unknown
 
+        // Whether the spender needs an ERC-20 allowance at all; an already granted one still counts
+        var approveRequired: Bool {
+            if case .notRequired = self {
+                return false
+            }
+
+            return true
+        }
+
         var customButtonState: MultiSwapButtonState? {
             switch self {
             case let .notEnough(_, spenderAddress, revokeRequired): return .init(title: revokeRequired ? "swap.revoke".localized : "swap.approve".localized, preSwapStep: UnlockStep(spenderAddress: spenderAddress, isRevoke: revokeRequired))

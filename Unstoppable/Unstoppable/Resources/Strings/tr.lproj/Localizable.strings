@@ -768,6 +768,18 @@
 "swap.provider.score" = "Rota Puanı";
 "swap.provider.swap_time" = "Swap süresi";
 
+"swap.multi_route.title" = "Bu takastan daha fazlasını alın";
+"swap.multi_route.description" = "Böl seçeneğiyle takasınız otomatik olarak %d rotaya bölünür ve genel olarak daha iyi bir kur elde edersiniz.";
+"swap.multi_route.you_receive" = "Alacağınız";
+"swap.multi_route.use_split" = "Böl";
+"swap.multi_route.keep_single" = "Tek Rotayı Koru";
+"swap.multi_route.recipient_mismatch" = "Bu bölmenin rotaları farklı adreslere teslim edecek. Geri dönüp tekrar deneyin.";
+"swap.multi_route.worse_than_single" = "Bölünmüş rotalar artık tek bir rotadan daha az getiriyor. Geri dönüp bölmeden takas yapmayı düşünün.";
+"swap.multi_route.balance_unavailable" = "Bakiyeniz tüm rotalar için birlikte kontrol edilemedi. Biraz sonra tekrar deneyin.";
+"swap.multi_route.allowance_not_enough" = "Birden fazla rota aynı borsadan geçiyor ve onun izni toplam tutarı karşılamıyor. Geri dönüp bölmeden takas yapın.";
+"swap.multi_route.error.amount_mismatch" = "Bir rotanın işlemi, takas tutarındaki payıyla eşleşmiyor. Hiçbir şey gönderilmedi.";
+"swap.multi_route.error.unsupported_route" = "Bir rotanın işlemi bu haliyle gönderilemiyor. Hiçbir şey gönderilmedi.";
+
 
 "swap.allowance" = "Ödenek";
 "swap.allowance.description" = "İzin, borsanın takas işlemleri için sizin adınıza kullanmasına izin verdiğiniz miktardır. Takas yapmadan önce, öncelikle bir izin işlemini onaylamanız gerekir.";
@@ -875,6 +887,9 @@
 "swap.confirmation.minimum_received" = "Garantili";
 "swap.confirmation.minimum_received.info" = "Swap tamamlandıktan sonra alacağınız minimum tutar. Bu tutar sağlayıcı tarafından garanti edilir ve işlem sırasında fiyat değişikliklerinden etkilenmez.";
 "swap.confirmation.maximum_sent" = "Maksimum Harcama";
+"swap.confirmation.split_across" = "Bölünen Rota";
+"swap.confirmation.split_across.value" = "%d rota";
+"swap.confirmation.split_across.info" = "Takasınız eşit parçalara bölünür. Her parça kendi rotası üzerinden ayrı bir işlem olarak gerçekleştirilir; bu, yüksek tutarlarda genel olarak daha iyi bir kur sağlar. Takas Süresi en uzun rotayı gösterir; Garanti ve Ücret tüm rotaların toplamıdır.";
 
 "swap.dex_info.header_allowance" = "Ödenek";
 "swap.dex_info.content_allowance" = "Bir takas işlemi gerçekleştirirken bir borsanın bir kullanıcı adına harcayabileceği miktar. Gerçek bir takas işlemi gerçekleşmeden önce yeterli izin belirleyen bir önceki işlem gereklidir.";

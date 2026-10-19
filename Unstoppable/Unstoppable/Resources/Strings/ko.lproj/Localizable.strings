@@ -768,6 +768,18 @@
 "swap.provider.score" = "경로 점수";
 "swap.provider.swap_time" = "스왑 시간";
 
+"swap.multi_route.title" = "이 스왑에서 더 많이 받으세요";
+"swap.multi_route.description" = "분할을 사용하면 스왑이 자동으로 %d개의 경로로 나뉘어 전체적으로 더 나은 환율을 받을 수 있습니다.";
+"swap.multi_route.you_receive" = "받는 금액";
+"swap.multi_route.use_split" = "분할 사용";
+"swap.multi_route.keep_single" = "단일 경로 유지";
+"swap.multi_route.recipient_mismatch" = "이 분할의 경로들이 서로 다른 주소로 전달됩니다. 돌아가서 다시 시도하세요.";
+"swap.multi_route.worse_than_single" = "분할 경로가 이제 단일 경로보다 적게 받습니다. 돌아가서 분할 없이 스왑하는 것을 고려하세요.";
+"swap.multi_route.balance_unavailable" = "모든 경로에 대한 잔액을 함께 확인할 수 없습니다. 잠시 후 다시 시도하세요.";
+"swap.multi_route.allowance_not_enough" = "여러 경로가 같은 거래소를 거치지만 그 허용량이 합계 금액을 충족하지 않습니다. 돌아가서 분할 없이 스왑하세요.";
+"swap.multi_route.error.amount_mismatch" = "한 경로의 트랜잭션이 스왑 금액 중 해당 부분과 일치하지 않습니다. 아무것도 전송되지 않았습니다.";
+"swap.multi_route.error.unsupported_route" = "한 경로의 트랜잭션을 그대로 전송할 수 없습니다. 아무것도 전송되지 않았습니다.";
+
 
 "swap.allowance" = "허용량";
 "swap.allowance.description" = "토큰 스왑을 실행할 때 거래소가 사용자 대신 소비할 수 있는 금액입니다. 실제 스왑 거래가 발생하기 전에 충분한 할당을 설정하는 이전 거래가 필요합니다.";
@@ -875,6 +887,9 @@
 "swap.confirmation.minimum_received" = "보장 수량";
 "swap.confirmation.minimum_received.info" = "스왑이 완료된 후 수령하게 되는 최소 금액입니다. 이 금액은 제공업체에 의해 보장되며, 처리 중 발생하는 가격 변동의 영향을 받지 않습니다.";
 "swap.confirmation.maximum_sent" = "최대 속도";
+"swap.confirmation.split_across" = "분할 경로";
+"swap.confirmation.split_across.value" = "%d개 경로";
+"swap.confirmation.split_across.info" = "스왑이 동일한 부분으로 나뉩니다. 각 부분은 자체 경로를 통해 별도의 트랜잭션으로 실행되며, 큰 금액에서 전체적으로 더 나은 환율을 제공합니다. 스왑 시간은 가장 긴 경로를 표시하며, 보장 금액과 수수료는 모든 경로의 합계입니다.";
 
 "swap.dex_info.header_allowance" = "허용량";
 "swap.dex_info.content_allowance" = "토큰 스왑을 실행할 때 거래소가 사용자 대신 소비할 수 있는 금액입니다. 실제 스왑 거래가 발생하기 전에 충분한 할당을 설정하는 이전 거래가 필요합니다.";

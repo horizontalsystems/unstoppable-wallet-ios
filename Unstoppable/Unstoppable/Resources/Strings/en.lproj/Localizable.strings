@@ -768,6 +768,18 @@
 "swap.provider.score" = "Route Score";
 "swap.provider.swap_time" = "Swap time";
 
+"swap.multi_route.title" = "Get more from this swap";
+"swap.multi_route.description" = "Use Split to automatically divide your swap across %d routes and get a better overall rate.";
+"swap.multi_route.you_receive" = "You receive";
+"swap.multi_route.use_split" = "Use Split";
+"swap.multi_route.keep_single" = "Keep Single Route";
+"swap.multi_route.recipient_mismatch" = "The routes of this split would deliver to different addresses. Go back and try again.";
+"swap.multi_route.worse_than_single" = "Split routes now return less than a single route would. Consider going back and swapping without Split.";
+"swap.multi_route.balance_unavailable" = "Your balance could not be checked for all routes together. Try again in a moment.";
+"swap.multi_route.allowance_not_enough" = "Some routes go through the same exchange, and its allowance does not cover their combined amount. Go back and swap without Split.";
+"swap.multi_route.error.amount_mismatch" = "A route's transaction does not match its part of the swap amount. Nothing was sent.";
+"swap.multi_route.error.unsupported_route" = "A route's transaction can't be sent as is. Nothing was sent.";
+
 
 "swap.allowance" = "Allowance";
 "swap.allowance.description" = "Allowance is the amount you let the exchange use on your behalf for swaps. Before making a swap, you first need to approve an allowance transaction.";
@@ -875,6 +887,9 @@
 "swap.confirmation.minimum_received" = "Guaranteed";
 "swap.confirmation.minimum_received.info" = "The minimum amount you will receive after the swap is completed. This amount is guaranteed by the provider and is not affected by price changes during processing.";
 "swap.confirmation.maximum_sent" = "Maximum Sent";
+"swap.confirmation.split_across" = "Split Across";
+"swap.confirmation.split_across.value" = "%d routes";
+"swap.confirmation.split_across.info" = "Your swap is divided into equal parts. Each part is executed as a separate transaction through its own route, which gives a better overall rate for large amounts. Swap Time shows the longest route; Guaranteed and Fee are totals across all routes.";
 
 "swap.dex_info.header_allowance" = "Allowance";
 "swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";

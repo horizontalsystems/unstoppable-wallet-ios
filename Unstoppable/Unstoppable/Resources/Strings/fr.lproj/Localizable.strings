@@ -768,6 +768,18 @@
 "swap.provider.score" = "Score de route";
 "swap.provider.swap_time" = "Temps de swap";
 
+"swap.multi_route.title" = "Obtenez plus de cet échange";
+"swap.multi_route.description" = "Utilisez la division pour répartir automatiquement votre échange sur %d routes et obtenir un meilleur taux global.";
+"swap.multi_route.you_receive" = "Vous recevez";
+"swap.multi_route.use_split" = "Diviser";
+"swap.multi_route.keep_single" = "Garder une seule route";
+"swap.multi_route.recipient_mismatch" = "Les routes de cette division livreraient à des adresses différentes. Revenez en arrière et réessayez.";
+"swap.multi_route.worse_than_single" = "Les routes divisées rapportent désormais moins qu'une seule route. Envisagez de revenir en arrière et d'échanger sans diviser.";
+"swap.multi_route.balance_unavailable" = "Votre solde n'a pas pu être vérifié pour toutes les routes ensemble. Réessayez dans un instant.";
+"swap.multi_route.allowance_not_enough" = "Plusieurs routes passent par la même plateforme, dont l'autorisation ne couvre pas leur montant total. Revenez en arrière et échangez sans diviser.";
+"swap.multi_route.error.amount_mismatch" = "La transaction d'une route ne correspond pas à sa part du montant de l'échange. Rien n'a été envoyé.";
+"swap.multi_route.error.unsupported_route" = "La transaction d'une route ne peut pas être envoyée en l'état. Rien n'a été envoyé.";
+
 
 "swap.allowance" = "Allocation";
 "swap.allowance.description" = "La somme qu'une bourse peut dépenser au nom d'un utilisateur lors de l'exécution d'échanges de jetons. Une transaction de procédure établissant une autorisation suffisante est nécessaire avant qu'une transaction d'échange réelle puisse avoir lieu.";
@@ -875,6 +887,9 @@
 "swap.confirmation.minimum_received" = "Garanti";
 "swap.confirmation.minimum_received.info" = "Le montant minimum que vous recevrez une fois le swap terminé. Ce montant est garanti par le fournisseur et n’est pas affecté par les variations de prix pendant le traitement.";
 "swap.confirmation.maximum_sent" = "Dépense maximale";
+"swap.confirmation.split_across" = "Réparti sur";
+"swap.confirmation.split_across.value" = "%d routes";
+"swap.confirmation.split_across.info" = "Votre échange est divisé en parts égales. Chaque part est exécutée comme une transaction distincte via sa propre route, ce qui donne un meilleur taux global pour les gros montants. La durée de l’échange indique la route la plus longue ; Garanti et Frais sont les totaux de toutes les routes.";
 
 "swap.dex_info.header_allowance" = "Allocation";
 "swap.dex_info.content_allowance" = "La somme qu'une bourse peut dépenser au nom d'un utilisateur lors de l'exécution d'échanges de jetons. Une transaction de procédure établissant une autorisation suffisante est nécessaire avant qu'une transaction d'échange réelle puisse avoir lieu.";

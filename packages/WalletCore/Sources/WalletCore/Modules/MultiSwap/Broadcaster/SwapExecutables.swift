@@ -22,6 +22,21 @@ public struct EvmExecutable: ISwapExecutable {
     public let approval: SwapApproval?
 }
 
+extension EvmExecutable {
+    // the same transaction pinned to an explicit nonce, for swaps sent back to back
+    func with(nonce: Int) -> EvmExecutable {
+        EvmExecutable(
+            token: token,
+            transactionData: transactionData,
+            gasPrice: gasPrice,
+            gasLimit: gasLimit,
+            nonce: nonce,
+            mevProtectionAllowed: mevProtectionAllowed,
+            approval: approval
+        )
+    }
+}
+
 // router-approve intent, exact amount; how it turns into on-chain approve call(s)
 // is the consuming broadcaster's decision, not encoded here
 public struct SwapApproval {

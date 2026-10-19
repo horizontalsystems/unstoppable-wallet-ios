@@ -148,6 +148,7 @@ public class MultiSwapViewModel: ObservableObject {
             priceFlipped = false
             internalUserSelectedProviderId = nil
 
+            cancelMultiRouteQuoting()
             syncQuotes()
         }
     }
@@ -208,6 +209,7 @@ public class MultiSwapViewModel: ObservableObject {
             priceFlipped = false
             internalUserSelectedProviderId = nil
 
+            cancelMultiRouteQuoting()
             syncQuotes()
         }
     }
@@ -242,6 +244,8 @@ public class MultiSwapViewModel: ObservableObject {
     public var amountIn: Decimal? {
         didSet {
             internalUserSelectedProviderId = nil
+
+            cancelMultiRouteQuoting()
 
             syncQuotes()
             syncFiatAmountIn()
@@ -333,6 +337,9 @@ public class MultiSwapViewModel: ObservableObject {
 
     @Published var quotes: [Quote] = [] {
         didSet {
+            // a plan accepted for the previous quotes must not be used with the new ones
+            multiRoutePlan = nil
+
             bestQuote = quotes.max { $0.quote.expectedBuyAmount < $1.quote.expectedBuyAmount }
 
             syncCurrentQuote()
@@ -366,6 +373,12 @@ public class MultiSwapViewModel: ObservableObject {
 
     @Published public var quoting = false
     @Published public var validatingProvider = false
+
+    // Large swap: the routes are being quoted after Next was tapped
+    @Published private(set) var multiRouteQuoting = false
+    // The split the user accepted on the bottom sheet; read by the confirmation destination
+    @Published var multiRoutePlan: MultiRouteSwapPlan?
+    private var multiRouteTask: Task<Void, Never>?
     private var nextQuoteTime: Double?
 
     @Published var priceImpact: Decimal?
@@ -844,29 +857,15 @@ public class MultiSwapViewModel: ObservableObject {
                 for provider in validProviders {
                     group.addTask {
                         do {
-                            let quoteTask = Task {
-                                try await fetchQuote(provider, internalTokenIn, internalTokenOut, amountIn)
-                            }
+                            let quote = try await Self.quoteWithTimeout(
+                                provider: provider,
+                                tokenIn: internalTokenIn,
+                                tokenOut: internalTokenOut,
+                                amountIn: amountIn,
+                                fetchQuote: fetchQuote
+                            )
 
-                            // Per-provider quote timeout. Must exceed uswap-server's own budget
-                            // (12s per provider / 15s overall) or slow-but-valid cross-chain
-                            // aggregators — LI.FI, Jupiter — get cancelled mid-quote and surface as
-                            // `explicitlyCancelled` (e.g. an ETH→Tron TRC-20 route that legitimately
-                            // takes several seconds). 5s was cutting those off.
-                            let timeoutTask = Task {
-                                try await Task.sleep(seconds: 15)
-                                quoteTask.cancel()
-                            }
-
-                            return try await withTaskCancellationHandler {
-                                let quote = try await quoteTask.value
-                                timeoutTask.cancel()
-
-                                return Quote(provider: provider, quote: quote)
-                            } onCancel: {
-                                quoteTask.cancel()
-                                timeoutTask.cancel()
-                            }
+                            return Quote(provider: provider, quote: quote)
                         } catch {
                             print("QUOTE ERROR: \(provider.id): \(error)")
                             return nil
@@ -906,6 +905,43 @@ public class MultiSwapViewModel: ObservableObject {
             }
         }
         .erased()
+    }
+
+    // Per-provider quote timeout. Must exceed uswap-server's own budget
+    // (12s per provider / 15s overall) or slow-but-valid cross-chain
+    // aggregators — LI.FI, Jupiter — get cancelled mid-quote and surface as
+    // `explicitlyCancelled` (e.g. an ETH→Tron TRC-20 route that legitimately
+    // takes several seconds). 5s was cutting those off.
+    static let quoteTimeout: TimeInterval = 15
+
+    // One provider's quote, cancelled after `quoteTimeout` or when the calling task is cancelled.
+    // Shared by the quote round and the multi-route quoter; runs off the main thread.
+    // `fetchQuote` defaults to the provider's own quote (subclasses pass their hook).
+    static func quoteWithTimeout(
+        provider: IMultiSwapProvider,
+        tokenIn: Token,
+        tokenOut: Token,
+        amountIn: Decimal,
+        fetchQuote: @escaping QuoteFetcher = { try await $0.quote(tokenIn: $1, tokenOut: $2, amountIn: $3) }
+    ) async throws -> MultiSwapQuote {
+        let quoteTask = Task {
+            try await fetchQuote(provider, tokenIn, tokenOut, amountIn)
+        }
+
+        let timeoutTask = Task {
+            try await Task.sleep(seconds: quoteTimeout)
+            quoteTask.cancel()
+        }
+
+        return try await withTaskCancellationHandler {
+            let quote = try await quoteTask.value
+            timeoutTask.cancel()
+
+            return quote
+        } onCancel: {
+            quoteTask.cancel()
+            timeoutTask.cancel()
+        }
     }
 
     // MARK: Subclass hooks (SplitSwapViewModel)
@@ -965,7 +1001,10 @@ public extension MultiSwapViewModel {
             return false
         }
 
-        return currentQuote.provider.requireTerms && !localStorage.swapTermsAccepted
+        // a split shows the terms once if any of its providers requires them
+        let requireTerms = multiRoutePlan?.requireTerms ?? currentQuote.provider.requireTerms
+
+        return requireTerms && !localStorage.swapTermsAccepted
     }
 
     internal func onAcceptTerms() {
@@ -1057,6 +1096,73 @@ public extension MultiSwapViewModel {
             timer = Timer.scheduledTimer(withTimeInterval: nextQuoteTime - now, repeats: false) { [weak self] _ in
                 self?.syncQuotes(silent: true)
             }
+        }
+    }
+
+    // The number of parts a large swap may be divided into; nil when it is not offered
+    internal func multiRouteParts() -> Int? {
+        // only for swaps that spend without an ERC-20 allowance: a split never goes through an approve
+        guard !(self is SplitSwapViewModel),
+              let internalTokenIn, internalTokenIn.blockchainType.isEvm,
+              let fiatAmountIn,
+              let currentQuote, !currentQuote.quote.approveRequired
+        else {
+            return nil
+        }
+
+        return MultiRouteSwapConfig.routeCount(
+            fiatAmount: fiatAmountIn,
+            currencyCode: currency.code,
+            testMode: AppConfig.showDevTools && localStorage.multiRouteSwapTestThreshold
+        )
+    }
+
+    // Quotes the routes of a split in the background. `onResult` is called on the main thread with
+    // the plan, or nil when the split is not better; it is not called when the fetch is cancelled.
+    @MainActor internal func fetchMultiRoutePlan(parts: Int, onResult: @escaping (MultiRouteSwapPlan?) -> Void) {
+        cancelMultiRouteQuoting()
+        multiRoutePlan = nil
+
+        guard let internalTokenIn, let internalTokenOut, let amountIn, let currentQuote else {
+            onResult(nil)
+            return
+        }
+
+        multiRouteQuoting = true
+
+        // Inherits the main actor: the quoter itself is nonisolated async and runs off the main thread,
+        // and the code after it resumes on the main thread
+        multiRouteTask = Task { [weak self, validProviders] in
+            let plan = await MultiRouteSwapQuoter.plan(
+                providers: validProviders,
+                tokenIn: internalTokenIn,
+                tokenOut: internalTokenOut,
+                amountIn: amountIn,
+                singleQuote: currentQuote,
+                parts: parts
+            )
+
+            guard let self, !Task.isCancelled else {
+                return
+            }
+
+            multiRouteTask = nil
+            multiRouteQuoting = false
+            onResult(plan)
+        }
+    }
+
+    // Also called from the token and amount didSets, which are not main-actor isolated in this class,
+    // so the main thread is asserted at run time instead of with `@MainActor`
+    internal func cancelMultiRouteQuoting() {
+        dispatchPrecondition(condition: .onQueue(.main))
+
+        multiRouteTask?.cancel()
+        multiRouteTask = nil
+
+        // avoids a redundant publish (and a view update) when nothing was running
+        if multiRouteQuoting {
+            multiRouteQuoting = false
         }
     }
 
