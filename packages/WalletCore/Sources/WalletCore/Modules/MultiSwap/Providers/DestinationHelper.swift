@@ -27,8 +27,14 @@ public enum DestinationHelper {
             throw SwapError.noDestinationAddress
         }
 
-        shieldedUnifiedLock.withLock { shieldedUnifiedAddresses[account.id] = address }
-        return address
+        // two previews may miss the cache together: the first stored address wins, so one operation names one address
+        return shieldedUnifiedLock.withLock {
+            if let existing = shieldedUnifiedAddresses[account.id] {
+                return existing
+            }
+            shieldedUnifiedAddresses[account.id] = address
+            return address
+        }
     }
 
     static func forgetShieldedUnifiedAddress() {
