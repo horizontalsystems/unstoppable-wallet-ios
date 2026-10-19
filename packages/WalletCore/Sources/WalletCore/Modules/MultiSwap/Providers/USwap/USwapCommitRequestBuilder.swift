@@ -119,21 +119,32 @@ public final class USwapCommitRequestBuilder {
             return nil
         }
 
-        return try await Self.ownAddress(token: token)
-    }
-
-    func refundAddress(token: Token) async throws -> String? {
-        try await Self.ownAddress(token: token)
-    }
-
-    // The wallet's own address on the sell chain. For Zcash it is the unified address: it lets a
-    // provider read a long memo from the source and refund to the shielded pool.
-    private static func ownAddress(token: Token) async throws -> String {
+        // A ZEC sell names its source only to a provider that takes a unified refund, and then the source IS the
+        // refund address (the same cached shielded-only address): mayanode sizes the route memo from `from_address`
+        // and the server marks the spend as shielded by it, while StealthEX / Exolix refuse a source that differs
+        // from the refund address and a transfer venue builds nothing from it in v3.
         if token.blockchainType == .zcash {
-            return try await DestinationHelper.resolveDestinationUnified(token: token).address
+            guard acceptsUnifiedZcashRefund else {
+                return nil
+            }
+            return try await refundAddress(token: token)
         }
 
         return try await DestinationHelper.resolveDestination(token: token).address
+    }
+
+    func refundAddress(token: Token) async throws -> String? {
+        // Transparent unless the provider is declared to take a unified refund (USwapProviderInfo); then the
+        // shielded-only unified address, so the refund lands in the shielded pool and the memo names no t-address.
+        if token.blockchainType == .zcash, acceptsUnifiedZcashRefund {
+            return try await DestinationHelper.shieldedUnifiedAddress(token: token)
+        }
+
+        return try await DestinationHelper.resolveDestination(token: token).address
+    }
+
+    private var acceptsUnifiedZcashRefund: Bool {
+        SwapProviderFactory.providerInfo(id: providerId)?.acceptsUnifiedZcashRefund ?? false
     }
 
     func chainId(token: Token) -> String? {

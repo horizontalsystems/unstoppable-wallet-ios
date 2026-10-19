@@ -1,3 +1,4 @@
+import Foundation
 import MarketKit
 import RxSwift
 import Testing

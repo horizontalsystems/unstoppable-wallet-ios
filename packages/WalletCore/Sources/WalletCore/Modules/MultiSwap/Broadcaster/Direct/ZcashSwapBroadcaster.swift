@@ -24,6 +24,8 @@ class ZcashSwapBroadcaster: ISwapBroadcaster {
         }
 
         let hash = try await adapter.send(proposal: proposal)
+        // the next sell names a new shielded-only address
+        DestinationHelper.forgetShieldedUnifiedAddress()
 
         return BroadcastResult(txHash: hash, trackingHandle: nil)
     }

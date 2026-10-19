@@ -181,6 +181,8 @@ extension ZcashSendHandler: ISendHandlerRefCapturing {
         }
 
         let txId = try await adapter.send(proposal: proposal, zip317MarginalFee: data.zip317MarginalFee)
+        // a CrossPay / Private Send deposit: the next one names a new shielded-only address
+        DestinationHelper.forgetShieldedUnifiedAddress()
         return txId ?? ""
     }
 }

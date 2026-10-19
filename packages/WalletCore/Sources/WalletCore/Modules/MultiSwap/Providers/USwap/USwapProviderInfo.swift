@@ -8,8 +8,12 @@ public struct USwapProviderInfo: Equatable {
     // Routes through a confidential rail. Such providers are excluded from the ordinary swap
     // fan-out; availability itself is decided by ConfidentialProviderRegistry, not by this flag.
     public let confidential: Bool
+    // Takes a unified ZEC address as the refund target. Not published by /v3/providers, so declared here:
+    // transfer venues validate a ZEC refund as transparent (QuickEx and StealthEX reject `u1`), Maya refunds to
+    // the memo's address (Sapling receiver), 1Click to an Orchard one.
+    public let acceptsUnifiedZcashRefund: Bool
 
-    public init(id: String, name: String, icon: String, type: SwapProviderType, preciseEstimateTime: Bool = true, requireTerms: Bool, confidential: Bool = false) {
+    public init(id: String, name: String, icon: String, type: SwapProviderType, preciseEstimateTime: Bool = true, requireTerms: Bool, confidential: Bool = false, acceptsUnifiedZcashRefund: Bool = false) {
         self.id = id
         self.name = name
         self.icon = icon
@@ -17,6 +21,7 @@ public struct USwapProviderInfo: Equatable {
         self.preciseEstimateTime = preciseEstimateTime
         self.requireTerms = requireTerms
         self.confidential = confidential
+        self.acceptsUnifiedZcashRefund = acceptsUnifiedZcashRefund
     }
 }
 
@@ -26,7 +31,8 @@ public extension USwapProviderInfo {
         name: "Near",
         icon: "swap_provider_near",
         type: .fair,
-        requireTerms: true
+        requireTerms: true,
+        acceptsUnifiedZcashRefund: true
     )
 
     // Registered so SwapProviderFactory.provider(id:) resolves the provider for tracking and
@@ -197,7 +203,8 @@ public extension USwapProviderInfo {
         name: "Maya Protocol",
         icon: "swap_provider_maya",
         type: .excellent,
-        requireTerms: true
+        requireTerms: true,
+        acceptsUnifiedZcashRefund: true
     )
 
     static let axelarIts = USwapProviderInfo(

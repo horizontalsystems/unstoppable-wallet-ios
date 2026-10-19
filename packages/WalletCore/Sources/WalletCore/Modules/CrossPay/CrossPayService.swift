@@ -99,16 +99,11 @@ public final class CrossPayService {
             throw CrossPayError.tokenUnsupported
         }
 
-        // The buffer refund lands on the success path too, so a missing address fails the preview.
-        // ZEC → unified (CrossPay-only, Android parity): a transparent refund links shielded and
-        // transparent activity.
+        // The buffer refund lands on the success path too, so a missing address fails the preview. For ZEC the
+        // builder names the shielded-only unified address (NEAR takes a unified refund).
         let refundAddress: String?
         do {
-            if request.tokenIn.blockchainType == .zcash {
-                refundAddress = try await DestinationHelper.resolveDestinationUnified(token: request.tokenIn).address
-            } else {
-                refundAddress = try await commitRequestBuilder.refundAddress(token: request.tokenIn)
-            }
+            refundAddress = try await commitRequestBuilder.refundAddress(token: request.tokenIn)
         } catch {
             throw CrossPayError.commitFailed
         }
