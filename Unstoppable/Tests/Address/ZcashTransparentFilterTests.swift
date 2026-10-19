@@ -9,14 +9,25 @@ import ZcashLightClientKit
 // Zcash addresses and refused with the filter's own reason, which the form shows under "Invalid Address"
 struct ZcashTransparentFilterTests {
     private static let transparent = "t1RBzFrCTWSZe3FJbDewtveUMRX2og4kKph"
+    // ZIP 320 example: the TEX form of t1VmmGiyjVNeCjxDZzg7vZmd99WyzVby9yC
+    private static let tex = "tex1s2rt77ggv6q989lr49rkgzmh5slsksa9khdgte"
     private static let unified = "u1pg2aaph7jp8rpf6yhsza25722sg5fcn3vaca6ze27hqjw7jvvhhuxkpcg0ge9xh6drsgdkda8qjq5chpehkcpxf87rnjryjqwymdheptpvnljqqrjqzjwkc2ma6hcq666kgwfytxwac8eyex6ndgr6ezte66706e3vaqrd25dzvzkc69kw0jgywtd0cmq52q5lkw6uh7hyvzjse8ksx"
 
-    @Test func transparentOnlyAcceptsTransparent() async throws {
+    @Test(arguments: [transparent, tex])
+    func transparentOnlyAcceptsTransparent(address: String) async throws {
         let item = parserItem(addressType: .transparent)
-        let valid = try await isValid(item, Self.transparent)
-        let handled = try await handle(item, Self.transparent)
+        let valid = try await isValid(item, address)
+        let handled = try await handle(item, address)
         #expect(valid)
-        #expect(handled.raw == Self.transparent)
+        #expect(handled.raw == address)
+    }
+
+    // a TEX address is a transparent receiver (ZIP 320), so neither the filter nor the memo field may
+    // treat it as shielded (#7295)
+    @Test func texIsTransparent() throws {
+        let recipient = try Recipient(Self.tex, network: .mainnet)
+        #expect(recipient.isTransparent)
+        #expect(!(try Recipient(Self.unified, network: .mainnet)).isTransparent)
     }
 
     @Test(arguments: [unified, AddressUriFixtures.zecShielded])

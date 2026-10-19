@@ -187,7 +187,7 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
         case let .success(payAmount):
             switch spendStep {
             case let .required(title):
-                return PreSendButtonState(title: title, disabled: false, showProgress: false)
+                return PreSendButtonState(title: title, disabled: false, showProgress: false, style: .gray)
             case let .pending(title, progress):
                 return PreSendButtonState(title: title, disabled: true, showProgress: progress == nil, progress: progress)
             case nil:

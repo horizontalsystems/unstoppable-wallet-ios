@@ -217,7 +217,7 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
             }
         }
         .disabled(state.disabled)
-        .buttonStyle(PrimaryButtonStyle(style: .yellow))
+        .buttonStyle(PrimaryButtonStyle(style: state.style))
     }
 
     private func presentAddressPicker() {

@@ -509,10 +509,12 @@ extension ZcashAdapter {
         }
 
         do {
+            // A TEX address (ZIP 320) re-encodes a transparent P2PKH receiver, so its output is
+            // transparent and carries no memo, as `Recipient.isTransparent` and Android already say.
             switch try Recipient(address, network: network.networkType) {
-            case .transparent:
+            case .transparent, .tex:
                 return .transparent
-            case .sapling, .unified, .tex: // I'm keeping changes to the minimum. Unified Address should be treated as a different address type which will include some shielded pool and possibly others as well.
+            case .sapling, .unified: // I'm keeping changes to the minimum. Unified Address should be treated as a different address type which will include some shielded pool and possibly others as well.
                 return .shielded
             }
         } catch {
