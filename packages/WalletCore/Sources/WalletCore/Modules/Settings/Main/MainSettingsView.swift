@@ -277,9 +277,8 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func contacts() -> some View {
         ClickableRow(spacing: .margin8) {
-            Coordinator.shared.present { _ in
-                ContactBookView(mode: .edit, presented: true)
-                    .ignoresSafeArea()
+            Coordinator.shared.present { isPresented in
+                ContactBookView(mode: .edit, isPresented: isPresented)
                     .onFirstAppear {
                         stat(page: .settings, event: .open(page: .contacts))
                     }

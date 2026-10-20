@@ -4,15 +4,12 @@ import Foundation
 import HsToolKit
 import MarketKit
 import ObjectMapper
-import RxRelay
-import RxSwift
 
 public class ContactBookManager {
     private static let batchingInterval: TimeInterval = 1
     static let filename = "Contacts.json"
 
     static let localUrl = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-    private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "\(AppConfig.label).contact_manager")
 
     private let ubiquityContainerIdentifier: String?
 
@@ -22,7 +19,6 @@ public class ContactBookManager {
     private let helper: ContactBookHelper
     private let logger: Logger?
 
-    private let remoteSyncRelay = PublishRelay<Bool>()
     var remoteSync: Bool {
         get {
             localStorage.remoteContactsSync
@@ -30,7 +26,6 @@ public class ContactBookManager {
         set {
             if localStorage.remoteContactsSync != newValue {
                 localStorage.remoteContactsSync = newValue
-                remoteSyncRelay.accept(remoteSync)
                 updateRemoteStorage()
             }
         }
@@ -38,18 +33,18 @@ public class ContactBookManager {
 
     private var metadataMonitor: MetadataMonitor?
 
-    private let iCloudErrorRelay = BehaviorRelay<Error?>(value: nil)
+    private let iCloudErrorSubject = CurrentValueSubject<Error?, Never>(nil)
     private(set) var iCloudError: Error? {
         didSet {
-            iCloudErrorRelay.accept(iCloudError)
+            iCloudErrorSubject.send(iCloudError)
         }
     }
 
-    private let addressesAddedRelay = PublishRelay<[String]>()
-    private let stateRelay = PublishRelay<DataStatus<ContactBook>>()
+    private let addressesAddedSubject = PassthroughSubject<[String], Never>()
+    private let stateSubject = PassthroughSubject<DataStatus<ContactBook>, Never>()
     private(set) var state: DataStatus<ContactBook> = .loading {
         didSet {
-            stateRelay.accept(state)
+            stateSubject.send(state)
         }
     }
 
@@ -333,7 +328,7 @@ public class ContactBookManager {
             try fileStorage.write(directoryUrl: url, filename: Self.filename, data: jsonData)
             state = .completed(book)
             if url == localUrl, !addedAddresses.isEmpty {
-                addressesAddedRelay.accept(addedAddresses)
+                addressesAddedSubject.send(addedAddresses)
             }
         } catch {
             state = .failed(error)
@@ -342,16 +337,16 @@ public class ContactBookManager {
 }
 
 extension ContactBookManager {
-    var addressesAddedObservable: Observable<[String]> {
-        addressesAddedRelay.asObservable()
+    var addressesAddedPublisher: AnyPublisher<[String], Never> {
+        addressesAddedSubject.eraseToAnyPublisher()
     }
 
-    var stateObservable: Observable<DataStatus<ContactBook>> {
-        stateRelay.asObservable()
+    var statePublisher: AnyPublisher<DataStatus<ContactBook>, Never> {
+        stateSubject.eraseToAnyPublisher()
     }
 
-    var iCloudErrorObservable: Observable<Error?> {
-        iCloudErrorRelay.asObservable()
+    var iCloudErrorPublisher: AnyPublisher<Error?, Never> {
+        iCloudErrorSubject.eraseToAnyPublisher()
     }
 
     var all: [Contact]? {

@@ -1,146 +1,199 @@
+import Combine
 import Foundation
-import RxCocoa
-import RxRelay
-import RxSwift
+import MarketKit
 
-class ContactBookContactViewModel {
-    private let disposeBag = DisposeBag()
+class ContactBookContactViewModel: ObservableObject {
+    private let contactManager = Core.shared.contactManager
+    private let marketKit = Core.shared.marketKit
 
-    private let service: ContactBookContactService
+    private let oldContact: Contact?
 
-    private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
-    private var viewItem: ViewItem? {
+    let title: String
+    let isExisting: Bool
+    let contactUid: String?
+
+    @Published var name: String {
         didSet {
-            viewItemRelay.accept(viewItem)
+            sync()
         }
     }
 
-    private let addressViewItemsRelay = BehaviorRelay<[AddressViewItem]>(value: [])
-    private var addressViewItems: [AddressViewItem] = [] {
+    @Published private(set) var addresses: [ContactAddress] {
         didSet {
-            addressViewItemsRelay.accept(addressViewItems)
+            syncAddressItems()
+            sync()
+            syncAllUsed()
         }
     }
 
-    private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
-    private let nameAlreadyExistErrorRelay = BehaviorRelay<Bool>(value: false)
+    @Published private(set) var addressItems: [AddressItem] = []
+    @Published private(set) var state: State = .idle
+    @Published private(set) var allBlockchainsUsed = false
 
-    init(service: ContactBookContactService) {
-        self.service = service
+    init(mode: Mode) {
+        let newAddresses: [ContactAddress]
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
-        subscribe(disposeBag, service.addressItemsObservable) { [weak self] in self?.sync(addressItems: $0) }
-    }
-
-    private func sync(state: ContactBookContactService.State) {
-        var doneEnabled = false
-        var nameAlreadyExist = false
-        switch state {
-        case .idle: ()
-        case .updated:
-            doneEnabled = true
-        case .error:
-            nameAlreadyExist = true
+        switch mode {
+        case .new:
+            oldContact = nil
+            newAddresses = []
+        case let .exist(uid, addresses):
+            oldContact = Core.shared.contactManager.all?.first { $0.uid == uid }
+            newAddresses = addresses
+        case let .add(address):
+            oldContact = nil
+            newAddresses = [address]
         }
 
-        saveEnabledRelay.accept(doneEnabled)
-        nameAlreadyExistErrorRelay.accept(nameAlreadyExist)
-    }
+        title = oldContact?.name ?? "contacts.contact.new.title".localized
+        isExisting = oldContact != nil
+        contactUid = oldContact?.uid
+        name = oldContact?.name ?? ""
+        addresses = oldContact?.addresses ?? []
 
-    private func sync(addressItems: [ContactBookContactService.AddressItem]) {
-        addressViewItems = addressItems.sorted { item, item2 in
-            if item.edited != item2.edited {
-                return item.edited
+        if newAddresses.isEmpty {
+            syncAddressItems()
+            sync()
+            syncAllUsed()
+        } else {
+            for address in newAddresses {
+                set(address: address)
             }
-            return item.blockchain.type.order < item2.blockchain.type.order
         }
-        .map { viewItem(item: $0) }
     }
 
-    private func viewItem(item: ContactBookContactService.AddressItem) -> AddressViewItem {
-        AddressViewItem(
-            blockchainUid: item.blockchain.uid,
-            blockchainImageUrl: item.blockchain.type.imageUrl,
-            blockchainName: item.blockchain.name,
-            address: item.address,
-            edited: item.edited
-        )
+    private func blockchain(address: ContactAddress) -> Blockchain? {
+        try? marketKit.blockchain(uid: address.blockchainUid)
+    }
+
+    private func sync() {
+        state = Self.state(name: name, addresses: addresses, oldContact: oldContact, allContacts: contactManager.all ?? [])
+    }
+
+    private func syncAddressItems() {
+        addressItems = addresses
+            .compactMap { address -> AddressItem? in
+                var edited = true
+
+                if let oldAddress = oldContact?.addresses.first(where: { $0.blockchainUid == address.blockchainUid }) {
+                    edited = oldAddress.address != address.address
+                }
+
+                return blockchain(address: address).map { AddressItem(blockchain: $0, address: address.address, edited: edited) }
+            }
+            .sorted { lhs, rhs in
+                if lhs.edited != rhs.edited {
+                    return lhs.edited
+                }
+
+                return lhs.blockchain.type.order < rhs.blockchain.type.order
+            }
+    }
+
+    private func syncAllUsed() {
+        let usedBlockchainTypes = addresses.compactMap { blockchain(address: $0)?.type }
+
+        allBlockchainsUsed = !usedBlockchainTypes.isEmpty && BlockchainType.supported.allSatisfy { usedBlockchainTypes.contains($0) }
     }
 }
 
 extension ContactBookContactViewModel {
-    var existAddresses: [ContactAddress] {
-        service.addresses
+    var saveEnabled: Bool {
+        state == .updated
     }
 
-    var editExisting: Bool {
-        service.oldContact != nil
+    var hasChanges: Bool {
+        name != (oldContact?.name ?? "") || addresses != (oldContact?.addresses ?? [])
     }
 
-    var title: String {
-        service.oldContact?.name ?? "contacts.contact.new.title".localized
+    var firstUnusedBlockchain: Blockchain? {
+        let blockchainUids = BlockchainType.supported
+            .map(\.uid)
+            .filter { uid in !addresses.contains { $0.blockchainUid == uid } }
+
+        return ((try? marketKit.blockchains(uids: blockchainUids)) ?? [])
+            .sorted { $0.type.order < $1.type.order }
+            .first
     }
 
-    var contactUid: String? {
-        service.oldContact?.uid
+    func set(address: ContactAddress) {
+        if let index = addresses.firstIndex(where: { $0.blockchainUid == address.blockchainUid }) {
+            addresses[index] = address
+        } else {
+            addresses.append(address)
+        }
     }
 
-    var initialName: String? {
-        service.oldContact?.name
-    }
-
-    var viewItemDriver: Driver<ViewItem?> {
-        viewItemRelay.asDriver()
-    }
-
-    var addressViewItemsDriver: Driver<[AddressViewItem]> {
-        addressViewItemsRelay.asDriver()
-    }
-
-    var saveEnabledDriver: Driver<Bool> {
-        saveEnabledRelay.asDriver()
-    }
-
-    var nameAlreadyExistErrorDriver: Driver<Bool> {
-        nameAlreadyExistErrorRelay.asDriver()
-    }
-
-    var hideAddAddressDriver: Driver<Bool> {
-        service.allAddressesUsedObservable.asDriver(onErrorJustReturn: false)
-    }
-
-    func onChange(name: String?) {
-        service.contactName = name ?? ""
-    }
-
-    func updateContact(address: ContactAddress) {
-        service.updateContact(address: address)
-    }
-
-    func removeContact(address: ContactAddress?) {
-        service.removeContact(address: address)
+    func remove(address: ContactAddress) {
+        if let index = addresses.firstIndex(where: { $0.blockchainUid == address.blockchainUid }) {
+            addresses.remove(at: index)
+        }
     }
 
     func save() throws {
-        try service.save()
+        guard state == .updated else {
+            return
+        }
+
+        let contact = Contact(
+            uid: oldContact?.uid ?? UUID().uuidString,
+            modifiedAt: Date().timeIntervalSince1970,
+            name: name,
+            addresses: addresses
+        )
+
+        try contactManager.update(contact: contact)
     }
 
     func delete() throws {
-        try service.delete()
+        guard let uid = oldContact?.uid else {
+            return
+        }
+
+        try contactManager.delete(uid)
+    }
+
+    static func state(name: String, addresses: [ContactAddress], oldContact: Contact?, allContacts: [Contact]) -> State {
+        let otherContactNames = allContacts
+            .filter { (oldContact?.name ?? "") != $0.name }
+            .map { $0.name.lowercased() }
+
+        if otherContactNames.contains(name.lowercased()) {
+            return .nameExists
+        }
+
+        if name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || addresses.isEmpty {
+            return .idle
+        }
+
+        if let oldContact, name == oldContact.name, addresses == oldContact.addresses {
+            return .idle
+        }
+
+        return .updated
     }
 }
 
 extension ContactBookContactViewModel {
-    struct AddressViewItem {
-        let blockchainUid: String
-        let blockchainImageUrl: String
-        let blockchainName: String
-        let address: String
-        let edited: Bool
+    enum Mode {
+        case new
+        case exist(uid: String, newAddresses: [ContactAddress])
+        case add(ContactAddress)
     }
 
-    struct ViewItem {
-        let name: String
-        let addresses: [AddressViewItem]
+    struct AddressItem: Identifiable {
+        let blockchain: Blockchain
+        let address: String
+        let edited: Bool
+
+        var id: String {
+            blockchain.uid
+        }
+    }
+
+    enum State: Equatable {
+        case idle
+        case updated
+        case nameExists
     }
 }

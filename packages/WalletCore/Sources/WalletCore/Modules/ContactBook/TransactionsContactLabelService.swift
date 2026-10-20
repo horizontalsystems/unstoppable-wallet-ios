@@ -1,16 +1,15 @@
+import Combine
 import Foundation
 import MarketKit
-import RxRelay
-import RxSwift
 
 class TransactionsContactLabelService {
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     private let contactManager: ContactBookManager?
 
-    private let stateRelay = BehaviorRelay<State>(value: .idle)
+    private let stateSubject = CurrentValueSubject<State, Never>(.idle)
     private(set) var state: State = .idle {
         didSet {
-            stateRelay.accept(state)
+            stateSubject.send(state)
         }
     }
 
@@ -18,7 +17,10 @@ class TransactionsContactLabelService {
         self.contactManager = contactManager
 
         if let contactManager {
-            subscribe(disposeBag, contactManager.stateObservable) { [weak self] _ in self?.sync() }
+            contactManager.statePublisher
+                .receive(on: DispatchQueue.global(qos: .userInitiated))
+                .sink { [weak self] _ in self?.sync() }
+                .store(in: &cancellables)
         }
     }
 
@@ -32,8 +34,8 @@ class TransactionsContactLabelService {
 }
 
 extension TransactionsContactLabelService {
-    var stateObservable: Observable<State> {
-        stateRelay.asObservable()
+    var statePublisher: AnyPublisher<State, Never> {
+        stateSubject.eraseToAnyPublisher()
     }
 
     func contactData(for address: String, blockchainType: BlockchainType) -> ContactData {

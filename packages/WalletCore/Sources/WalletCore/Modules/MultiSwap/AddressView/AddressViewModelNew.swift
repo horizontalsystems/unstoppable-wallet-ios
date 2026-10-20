@@ -143,9 +143,8 @@ extension AddressViewModelNew {
         switch updatedIndex {
         case -1:
             if let blockchainType {
-                Coordinator.shared.present { _ in
-                    ContactBookView(mode: .select(blockchainType, self), presented: true)
-                        .ignoresSafeArea()
+                Coordinator.shared.present { isPresented in
+                    ContactBookView(mode: .select(blockchainType, onSelect: { [weak self] in self?.text = $0 }), isPresented: isPresented)
                 }
             }
         case 0:
@@ -169,12 +168,6 @@ extension AddressViewModelNew {
 
     func didFetch(qrText: String) {
         text = qrText
-    }
-}
-
-extension AddressViewModelNew: ContactBookSelectorDelegate {
-    func onFetch(address: String) {
-        text = address
     }
 }
 

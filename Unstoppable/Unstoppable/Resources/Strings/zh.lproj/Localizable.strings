@@ -1921,6 +1921,7 @@
 "contacts.restore.restore_error" = "无法恢复联系人";
 "contacts.restore.overwrite_alert.description" = "此操作将覆盖您的本地付款联系人以及它的 iCloud 副本（如有）。";
 "contacts.restore.overwrite_alert.replace" = "替换";
+"contacts.restore.storage_error" = "无法创建备份文件";
 
 "contacts.add_address.title" = "添加地址";
 "contacts.add_address.create_new" = "创建新联系人";

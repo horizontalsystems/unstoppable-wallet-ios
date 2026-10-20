@@ -1,120 +1,108 @@
+import Combine
 import Foundation
 import MarketKit
-import RxCocoa
-import RxRelay
-import RxSwift
 
-class ContactBookViewModel {
-    private let service: ContactBookService
-    private let disposeBag = DisposeBag()
+class ContactBookViewModel: ObservableObject {
+    private let contactManager = Core.shared.contactManager
+    private let marketKit = Core.shared.marketKit
+    private let blockchainType: BlockchainType?
+    private var cancellables = Set<AnyCancellable>()
 
-    private let emptyListRelay = BehaviorRelay<ViewItemListType?>(value: nil)
-
-    private let viewItemsRelay = BehaviorRelay<[ViewItem]>(value: [])
-    private var viewItems: [ViewItem] = [] {
+    @Published var filter: String = "" {
         didSet {
-            viewItemsRelay.accept(viewItems)
+            sync()
         }
     }
 
-    init(service: ContactBookService) {
-        self.service = service
+    @Published private(set) var items: [Item] = []
+    @Published private(set) var emptyState: EmptyState?
+    @Published private(set) var showSettingsBadge = false
 
-        subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
-        sync(items: service.items)
+    init(blockchainType: BlockchainType?) {
+        self.blockchainType = blockchainType
+
+        subscribe(&cancellables, contactManager.statePublisher) { [weak self] _ in self?.sync() }
+        subscribe(&cancellables, contactManager.iCloudErrorPublisher) { [weak self] _ in self?.syncBadge() }
+
+        sync()
+        syncBadge()
     }
 
-    private func sync(items: [ContactBookService.Item]) {
-        viewItems = items.map { item in
-            switch item {
-            case let item as ContactBookService.ReadOnlyItem:
-                return SelectorViewItem(
-                    uid: item.uid,
-                    title: item.name,
-                    subtitle: item.blockchainAddress.shortened,
-                    showDisclosure: false,
-                    address: item.blockchainAddress
-                )
-            case let item as ContactBookService.EditableItem:
-                return ViewItem(
-                    uid: item.uid,
-                    title: item.name,
-                    subtitle: "contacts.list.addresses_count".localized(item.addressCount),
-                    showDisclosure: false
-                )
-            default:
-                return ViewItem(uid: item.uid, title: item.name, subtitle: "", showDisclosure: true)
-            }
-        }
+    private func sync() {
+        let contacts = contactManager.all ?? []
+        let items = Self.items(contacts: contacts, filter: filter, blockchainType: blockchainType)
 
-        if viewItems.isEmpty {
-            emptyListRelay.accept(service.emptyBook ? .emptyBook : .emptySearch)
+        if items.isEmpty {
+            emptyState = contacts.isEmpty ? .emptyBook : .emptySearch
         } else {
-            emptyListRelay.accept(nil)
+            emptyState = nil
         }
+
+        self.items = items
+    }
+
+    private func syncBadge() {
+        showSettingsBadge = contactManager.iCloudError != nil && contactManager.remoteSync
     }
 }
 
 extension ContactBookViewModel {
-    var viewItemsDriver: Driver<[ViewItem]> {
-        viewItemsRelay.asDriver()
-    }
-
-    var showBadgeDriver: Driver<Bool> {
-        service.iCloudAvailableErrorObservable.asDriver(onErrorJustReturn: true)
-    }
-
-    var emptyListDriver: Driver<ViewItemListType?> {
-        emptyListRelay.asDriver()
-    }
-
     func contactAddress(contactUid: String, blockchainUid: String) -> ContactAddress? {
-        service.contactAddress(contactUid: contactUid, blockchainUid: blockchainUid)
-    }
-
-    func removeContact(contactUid: String?) throws {
-        if let contactUid {
-            try service.delete(contactUid: contactUid)
-        }
-    }
-
-    func onUpdate(filter: String?) {
-        service.set(filter: filter ?? "")
+        contactManager.all?
+            .first { $0.uid == contactUid }?
+            .address(blockchainUid: blockchainUid)
     }
 
     func blockchainName(blockchainUid: String) -> String? {
-        service.blockchainName(blockchainUid: blockchainUid)
+        try? marketKit.blockchain(uid: blockchainUid)?.name
+    }
+
+    func delete(contactUid: String) {
+        do {
+            try contactManager.delete(contactUid)
+        } catch {
+            HudHelper.instance.show(banner: .error(string: error.localizedDescription))
+        }
+    }
+
+    static func items(contacts: [Contact], filter: String, blockchainType: BlockchainType?) -> [Item] {
+        let filtered: [Contact]
+
+        if filter.isEmpty {
+            filtered = contacts
+        } else {
+            filtered = contacts.filter { $0.name.lowercased().contains(filter.lowercased()) }
+        }
+
+        let items: [Item]
+
+        if let blockchainType {
+            items = filtered.compactMap { contact in
+                guard let address = contact.addresses.first(where: { $0.blockchainUid == blockchainType.uid }) else {
+                    return nil
+                }
+
+                return Item(id: contact.uid, name: contact.name, subtitle: address.address.shortened, address: address.address)
+            }
+        } else {
+            items = filtered.map { contact in
+                Item(id: contact.uid, name: contact.name, subtitle: "contacts.list.addresses_count".localized(contact.addresses.count), address: nil)
+            }
+        }
+
+        return items.sorted { $0.name < $1.name }
     }
 }
 
 extension ContactBookViewModel {
-    class ViewItem {
-        let uid: String
-        let title: String
+    struct Item: Identifiable, Hashable {
+        let id: String
+        let name: String
         let subtitle: String
-        let showDisclosure: Bool
-
-        init(uid: String, title: String, subtitle: String, showDisclosure: Bool) {
-            self.uid = uid
-            self.title = title
-            self.subtitle = subtitle
-            self.showDisclosure = showDisclosure
-        }
-
-        var description: String {
-            uid + title + subtitle + showDisclosure.description
-        }
+        let address: String?
     }
 
-    class SelectorViewItem: ViewItem {
-        let address: String
-        init(uid: String, title: String, subtitle: String, showDisclosure: Bool, address: String) {
-            self.address = address
-            super.init(uid: uid, title: title, subtitle: subtitle, showDisclosure: showDisclosure)
-        }
-    }
-
-    enum ViewItemListType {
+    enum EmptyState {
         case emptyBook
         case emptySearch
     }

@@ -103,7 +103,7 @@ class MainSettingsViewModel: ObservableObject {
             subscribe(&cancellables, walletConnect.sessionCountPublisher) { [weak self] _ in self?.syncWalletConnectSessionCount() }
             subscribe(&cancellables, walletConnect.pendingRequestCountPublisher) { [weak self] _ in self?.syncWalletConnectPendingRequestCount() }
         }
-        subscribe(MainScheduler.instance, disposeBag, contactManager.iCloudErrorObservable) { [weak self] error in
+        subscribe(&cancellables, contactManager.iCloudErrorPublisher) { [weak self] error in
             if error != nil, self?.contactManager.remoteSync ?? false {
                 self?.iCloudUnavailable = true
             } else {

@@ -1,121 +1,132 @@
+import Combine
 import Foundation
 import MarketKit
-import RxCocoa
-import RxRelay
-import RxSwift
 
-class ContactBookAddressViewModel {
-    private let disposeBag = DisposeBag()
+class ContactBookAddressViewModel: ObservableObject {
+    private let contactManager = Core.shared.contactManager
+    private let marketKit = Core.shared.marketKit
+    private let contactUid: String?
 
-    private let service: ContactBookAddressService
+    let title: String
+    let isEdit: Bool
+    let initialAddress: ContactAddress?
+    let blockchains: [Blockchain]
 
-    private let viewItemRelay = BehaviorRelay<String?>(value: nil)
-    private var viewItem: String? {
+    @Published var selectedBlockchain: Blockchain {
         didSet {
-            viewItemRelay.accept(viewItem)
+            addressResult = .idle
+            sync()
         }
     }
 
-    private let blockchainNameRelay = BehaviorRelay<String>(value: "")
-    private let addressCautionRelay = BehaviorRelay<Caution?>(value: nil)
-    private let saveEnabledRelay = BehaviorRelay<Bool>(value: false)
+    @Published var text: String
 
-    init(service: ContactBookAddressService) {
-        self.service = service
-
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
-        subscribe(disposeBag, service.selectedBlockchainObservable) { [weak self] in self?.sync(blockchain: $0) }
-        sync(blockchain: service.selectedBlockchain)
+    @Published var addressResult: AddressInput.Result = .idle {
+        didSet {
+            sync()
+        }
     }
 
-    private func sync(state: ContactBookAddressService.State) {
-        var saveEnabled = false
+    @Published private(set) var state: State = .idle
 
-        switch state {
-        case .idle, .loading: ()
-        case let .valid(item):
-            saveEnabled = true
-            viewItem = viewItem(item: item)
-        case .invalid:
-            addressCautionRelay.accept(Caution(text: "contacts.contact.add_address.already_in_use", type: .error))
+    init(contactUid: String?, mode: Mode, blockchain: Blockchain) {
+        self.contactUid = contactUid
+
+        switch mode {
+        case let .create(existingAddresses):
+            let blockchainUids = BlockchainType.supported
+                .map(\.uid)
+                .filter { uid in !existingAddresses.contains { $0.blockchainUid == uid } }
+
+            title = "contacts.contact.add_address".localized
+            isEdit = false
+            initialAddress = nil
+            blockchains = ((try? marketKit.blockchains(uids: blockchainUids)) ?? [])
+                .sorted { $0.type.order < $1.type.order }
+        case let .edit(address):
+            title = blockchain.name
+            isEdit = true
+            initialAddress = address
+            blockchains = [blockchain]
         }
 
-        saveEnabledRelay.accept(saveEnabled)
+        selectedBlockchain = blockchain
+        text = initialAddress?.address ?? ""
     }
 
-    private func sync(blockchain: Blockchain) {
-        blockchainNameRelay.accept(blockchain.name)
+    private func sync() {
+        switch addressResult {
+        case .idle:
+            state = .idle
+        case .loading:
+            state = .loading
+        case let .invalid(failure):
+            state = .invalid(caution(failure: failure))
+        case let .valid(success):
+            if let initialAddress, success.address.raw == initialAddress.address {
+                state = .idle
+                return
+            }
+
+            let address = ContactAddress(blockchainUid: selectedBlockchain.uid, address: success.address.raw)
+
+            if let contact = Self.duplicate(address: address, contacts: contactManager.all ?? [], currentContactUid: contactUid) {
+                state = .invalid(CautionNew(text: "contacts.add_address.exist_address".localized(contact.name), type: .error))
+            } else {
+                state = .valid(address)
+            }
+        }
     }
 
-    private func viewItem(item: ContactAddress) -> String {
-        item.address
+    private func caution(failure: AddressInput.Failure) -> CautionNew {
+        if case let AddressParserChain.ParserError.fetchError(error) = failure.error,
+           let description = (error as? LocalizedError)?.errorDescription
+        {
+            return CautionNew(title: "send.address.invalid_address".localized, text: description, type: .error)
+        }
+
+        return CautionNew(
+            title: "send.address.invalid_address".localized,
+            text: AddressService.AddressError.invalidAddress(blockchainName: selectedBlockchain.name).localizedDescription,
+            type: .error
+        )
     }
 }
 
 extension ContactBookAddressViewModel {
-    var existAddress: Bool {
-        switch service.mode {
-        case .edit: return true
-        case .create: return false
-        }
+    var saveEnabled: Bool {
+        contactAddress != nil
     }
 
-    var title: String {
-        switch service.mode {
-        case .edit: return service.selectedBlockchain.name
-        case .create: return "contacts.contact.add_address".localized
-        }
-    }
-
-    var initialAddress: String? {
-        service.initialAddress?.address
+    var hasChanges: Bool {
+        text != (initialAddress?.address ?? "")
     }
 
     var contactAddress: ContactAddress? {
-        if case let .valid(item) = service.state {
-            return ContactAddress(blockchainUid: item.blockchainUid, address: item.address)
+        if case let .valid(address) = state {
+            return address
         }
+
         return nil
     }
 
-    var blockchainViewItems: [SelectorModule.ViewItem] {
-        service.unusedBlockchains.map { blockchain in
-            SelectorModule.ViewItem(
-                image: .url(blockchain.type.imageUrl, placeholder: "placeholder_rectangle_32"),
-                title: blockchain.name,
-                selected: service.selectedBlockchain == blockchain
-            )
-        }
-    }
-
-    var viewItemDriver: Driver<String?> {
-        viewItemRelay.asDriver()
-    }
-
-    var blockchainNameDriver: Driver<String> {
-        blockchainNameRelay.asDriver()
-    }
-
-    var addressCautionDriver: Driver<Caution?> {
-        addressCautionRelay.asDriver()
-    }
-
-    var saveEnabledDriver: Driver<Bool> {
-        saveEnabledRelay.asDriver()
-    }
-
-    func setBlockchain(index: Int) {
-        if let blockchain = service.unusedBlockchains.at(index: index) {
-            service.selectedBlockchain = blockchain
-        }
+    static func duplicate(address: ContactAddress, contacts: [Contact], currentContactUid: String?) -> Contact? {
+        contacts
+            .filter { $0.uid != currentContactUid }
+            .first { $0.addresses.contains(address) }
     }
 }
 
-extension ContactBookAddressService.ValidationError: LocalizedError {
-    var errorDescription: String? {
-        switch self {
-        case let .duplicate(contact): return "contacts.add_address.exist_address".localized(contact.name)
-        case .invalidAddress: return nil
-        }
+extension ContactBookAddressViewModel {
+    enum Mode {
+        case create(existingAddresses: [ContactAddress])
+        case edit(ContactAddress)
+    }
+
+    enum State {
+        case idle
+        case loading
+        case valid(ContactAddress)
+        case invalid(CautionNew?)
     }
 }

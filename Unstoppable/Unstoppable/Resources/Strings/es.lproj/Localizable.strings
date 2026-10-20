@@ -1921,6 +1921,7 @@
 "contacts.restore.restore_error" = "Error al restaurar contactos";
 "contacts.restore.overwrite_alert.description" = "Esta acción sobrescribirá sus contactos de pago locales, así como su copia de iCloud (si hay una).";
 "contacts.restore.overwrite_alert.replace" = "Reemplazar";
+"contacts.restore.storage_error" = "Error al crear el archivo de copia de seguridad";
 
 "contacts.add_address.title" = "Añadir dirección";
 "contacts.add_address.create_new" = "Crear nuevo contacto";

@@ -1,9 +1,9 @@
+import Combine
 import Foundation
 import MarketKit
-import RxSwift
 
 class RecipientRowsViewModel: ObservableObject {
-    let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     let evmLabelManager = Core.shared.evmLabelManager
     let manager = Core.shared.contactManager
 
@@ -17,7 +17,7 @@ class RecipientRowsViewModel: ObservableObject {
         self.blockchainType = blockchainType
         item = RecipientRowsViewModel.item(address: address, blockchainType: blockchainType)
 
-        subscribe(disposeBag, Core.shared.contactManager.stateObservable) { [weak self] _ in self?.sync() }
+        subscribe(&cancellables, Core.shared.contactManager.statePublisher) { [weak self] _ in self?.sync() }
     }
 
     private func sync() {
@@ -71,8 +71,4 @@ extension RecipientRowsViewModel {
             }
         }
     }
-}
-
-extension RecipientRowsViewModel: ContactBookSelectorDelegate {
-    func onFetch(address _: String) {}
 }

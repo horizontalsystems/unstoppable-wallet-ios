@@ -226,8 +226,8 @@ class TransactionInfoViewController: ThemeViewController {
     private func fromRow(rowInfo: RowInfo, value: String, valueTitle: String?, contactAddress: ContactAddress?) -> RowProtocol {
         var onAddToContact: (() -> Void)? = nil
         if let contactAddress {
-            onAddToContact = { [weak self] in
-                ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self, statPage: .transactionInfo, statSection: .addressFrom)
+            onAddToContact = {
+                ContactBookModule.showAddition(contactAddress: contactAddress, statPage: .transactionInfo, statSection: .addressFrom)
             }
         }
         return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.from_hash".localized, value: value, valueTitle: valueTitle, statPage: .transactionInfo, statSection: .addressFrom, onAddToContact: onAddToContact)
@@ -236,8 +236,8 @@ class TransactionInfoViewController: ThemeViewController {
     private func toRow(rowInfo: RowInfo, value: String, valueTitle: String?, contactAddress: ContactAddress?) -> RowProtocol {
         var onAddToContact: (() -> Void)? = nil
         if let contactAddress {
-            onAddToContact = { [weak self] in
-                ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self, statPage: .transactionInfo, statSection: .addressTo)
+            onAddToContact = {
+                ContactBookModule.showAddition(contactAddress: contactAddress, statPage: .transactionInfo, statSection: .addressTo)
             }
         }
         return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.to_hash".localized, value: value, valueTitle: valueTitle, statPage: .transactionInfo, statSection: .addressTo, onAddToContact: onAddToContact)
@@ -246,8 +246,8 @@ class TransactionInfoViewController: ThemeViewController {
     private func spenderRow(rowInfo: RowInfo, value: String, valueTitle: String?, contactAddress: ContactAddress?) -> RowProtocol {
         var onAddToContact: (() -> Void)? = nil
         if let contactAddress {
-            onAddToContact = { [weak self] in
-                ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self, statPage: .transactionInfo, statSection: .addressSpender)
+            onAddToContact = {
+                ContactBookModule.showAddition(contactAddress: contactAddress, statPage: .transactionInfo, statSection: .addressSpender)
             }
         }
         return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.spender".localized, value: value, valueTitle: valueTitle, statPage: .transactionInfo, statSection: .addressSpender, onAddToContact: onAddToContact)
@@ -256,8 +256,8 @@ class TransactionInfoViewController: ThemeViewController {
     private func recipientRow(rowInfo: RowInfo, value: String, valueTitle: String?, contactAddress: ContactAddress?) -> RowProtocol {
         var onAddToContact: (() -> Void)? = nil
         if let contactAddress {
-            onAddToContact = { [weak self] in
-                ContactBookModule.showAddition(contactAddress: contactAddress, parentViewController: self, statPage: .transactionInfo, statSection: .addressRecipient)
+            onAddToContact = {
+                ContactBookModule.showAddition(contactAddress: contactAddress, statPage: .transactionInfo, statSection: .addressRecipient)
             }
         }
         return CellComponent.fromToRow(tableView: tableView, rowInfo: rowInfo, title: "tx_info.recipient_hash".localized, value: value, valueTitle: valueTitle, statPage: .transactionInfo, statSection: .addressRecipient, onAddToContact: onAddToContact)
