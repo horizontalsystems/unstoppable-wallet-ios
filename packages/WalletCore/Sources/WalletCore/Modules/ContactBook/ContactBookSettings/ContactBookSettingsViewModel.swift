@@ -1,107 +1,154 @@
+import Combine
 import Foundation
-import RxCocoa
-import RxRelay
-import RxSwift
+import ObjectMapper
 
-class ContactBookSettingsViewModel {
-    private let disposeBag = DisposeBag()
-    private let service: ContactBookSettingsService
+class ContactBookSettingsViewModel: ObservableObject {
+    private let contactManager = Core.shared.contactManager
+    private var cancellables = Set<AnyCancellable>()
 
-    private let featureEnabledRelay = BehaviorRelay<Bool>(value: false)
+    @Published private(set) var syncEnabled: Bool
+    @Published private(set) var lostSynchronization = false
+    @Published private(set) var awaitingMergeConfirmation = false
+    @Published private(set) var hasContacts = false
+    @Published var pendingRestore: [BackupContact]?
 
-    private let showConfirmationRelay = PublishRelay<Void>()
-    private let showSyncErrorRelay = BehaviorRelay<Bool>(value: false)
+    let mergeConfirmationSubject = PassthroughSubject<Void, Never>()
+    let restoredSubject = PassthroughSubject<Void, Never>()
+    let errorSubject = PassthroughSubject<String, Never>()
 
-    private let showRestoreAlertRelay = PublishRelay<[BackupContact]>()
-    private let showParsingErrorRelay = PublishRelay<Void>()
-    private let showSuccessfulRestoreRelay = PublishRelay<Void>()
-    private let showRestoreErrorRelay = PublishRelay<Void>()
+    init() {
+        syncEnabled = contactManager.remoteSync
 
-    init(service: ContactBookSettingsService) {
-        self.service = service
+        subscribe(&cancellables, contactManager.iCloudErrorPublisher) { [weak self] error in
+            self?.syncLostSynchronization(error: error)
+        }
+        subscribe(&cancellables, contactManager.statePublisher) { [weak self] _ in
+            self?.syncHasContacts()
+        }
 
-        subscribe(disposeBag, service.activatedChangedObservable) { [weak self] in self?.sync(featureEnabled: $0) }
-        subscribe(disposeBag, service.cloudErrorObservable) { [weak self] in self?.sync(error: $0) }
-        subscribe(disposeBag, service.confirmationObservable) { [weak self] in self?.showConfirmationRelay.accept(()) }
+        syncLostSynchronization(error: contactManager.iCloudError)
+        syncHasContacts()
     }
 
-    private func sync(featureEnabled: Bool) {
-        featureEnabledRelay.accept(featureEnabled)
+    private var needToMerge: Bool {
+        !(contactManager.remoteSync || (contactManager.all?.isEmpty ?? true))
     }
 
-    private func sync(error: Error?) {
+    private func syncHasContacts() {
+        hasContacts = !(contactManager.state.data?.contacts.isEmpty ?? true)
+    }
+
+    private func syncLostSynchronization(error: Error?) {
         if case .cloudUrlNotAvailable = error as? ContactBookManager.StorageError {
-            showSyncErrorRelay.accept(true)
+            lostSynchronization = true
         } else {
-            showSyncErrorRelay.accept(false)
+            lostSynchronization = false
         }
     }
 }
 
 extension ContactBookSettingsViewModel {
-    var showRestoreAlertSignal: Signal<[BackupContact]> {
-        showRestoreAlertRelay.asSignal()
-    }
-
-    var showParsingErrorSignal: Signal<Void> {
-        showParsingErrorRelay.asSignal()
-    }
-
-    var showSuccessfulRestoreSignal: Signal<Void> {
-        showSuccessfulRestoreRelay.asSignal()
-    }
-
-    var showRestoreErrorSignal: Signal<Void> {
-        showRestoreErrorRelay.asSignal()
-    }
-
-    var hasContacts: Bool {
-        service.hasContacts
-    }
-
-    var featureEnabled: Bool {
-        service.activated
-    }
-
-    var featureEnabledDriver: Driver<Bool> {
-        featureEnabledRelay.asDriver()
-    }
-
-    var showConfirmationSignal: Signal<Void> {
-        showConfirmationRelay.asSignal()
-    }
-
-    var showSyncErrorDriver: Driver<Bool> {
-        showSyncErrorRelay.asDriver()
+    var toggleOn: Bool {
+        syncEnabled || awaitingMergeConfirmation
     }
 
     func onToggle(isOn: Bool) {
-        service.toggle(isOn: isOn)
-    }
+        defer {
+            syncEnabled = contactManager.remoteSync
+        }
 
-    func onConfirm() {
-        service.confirm()
-    }
+        guard isOn else {
+            contactManager.remoteSync = false
+            return
+        }
 
-    func didPick(url: URL) {
-        do {
-            let backupContacts = try service.backupContacts(from: url)
-            showRestoreAlertRelay.accept(backupContacts)
-        } catch {
-            showParsingErrorRelay.accept(())
+        if let error = contactManager.iCloudError {
+            syncLostSynchronization(error: error)
+            return
+        }
+
+        if needToMerge {
+            awaitingMergeConfirmation = true
+            mergeConfirmationSubject.send()
+        } else {
+            contactManager.remoteSync = true
         }
     }
 
-    func replace(contacts: [BackupContact]) {
-        do {
-            try service.replace(contacts: contacts)
-            showSuccessfulRestoreRelay.accept(())
-        } catch {
-            showRestoreErrorRelay.accept(())
+    func confirmMerge() {
+        awaitingMergeConfirmation = false
+        contactManager.remoteSync = true
+        syncEnabled = contactManager.remoteSync
+    }
+
+    func cancelMerge() {
+        awaitingMergeConfirmation = false
+        syncEnabled = contactManager.remoteSync
+    }
+
+    func didPick(result: Result<[URL], Error>) {
+        switch result {
+        case let .success(urls):
+            guard let url = urls.first else {
+                return
+            }
+
+            let accessing = url.startAccessingSecurityScopedResource()
+            defer {
+                if accessing {
+                    url.stopAccessingSecurityScopedResource()
+                }
+            }
+
+            do {
+                let contacts = try contactManager.backupContacts(from: url)
+                pendingRestore = contacts
+            } catch {
+                errorSubject.send("contacts.restore.parsing_error".localized)
+            }
+        case let .failure(error):
+            if case CocoaError.userCancelled = error {
+                return
+            }
+
+            errorSubject.send("contacts.restore.parsing_error".localized)
         }
     }
 
-    func createBackupFile() throws -> URL {
-        try service.createBackupFile()
+    func restore(contacts: [BackupContact]) {
+        do {
+            try contactManager.restore(contacts: contacts, mergePolitics: .replace)
+            restoredSubject.send()
+        } catch {
+            errorSubject.send("contacts.restore.restore_error".localized)
+        }
+    }
+
+    func createBackupFile() -> URL? {
+        do {
+            guard let backupBook = contactManager.backupContactBook else {
+                throw CreateBackupFileError.noBackupContactBook
+            }
+
+            let jsonData = try JSONSerialization.data(withJSONObject: backupBook.contacts.toJSON())
+
+            guard let temporaryFileUrl = ContactBookManager.localUrl?.appendingPathComponent("ContactBook.json") else {
+                throw CreateBackupFileError.noTempFileUrl
+            }
+
+            try jsonData.write(to: temporaryFileUrl)
+
+            return temporaryFileUrl
+        } catch {
+            errorSubject.send("contacts.restore.storage_error".localized)
+            return nil
+        }
+    }
+}
+
+extension ContactBookSettingsViewModel {
+    enum CreateBackupFileError: Error {
+        case noBackupContactBook
+        case noTempFileUrl
     }
 }

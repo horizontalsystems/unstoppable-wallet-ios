@@ -1,6 +1,6 @@
+import Combine
 import HsToolKit
 import MarketKit
-import RxSwift
 
 public class SpamWrapper {
     /// Total score >= 7: definite spam (.spam decision)
@@ -26,7 +26,7 @@ public class SpamWrapper {
     private let contactBookManager: ContactBookManager
     private let accountManager: AccountManager
     private let logger: Logger?
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     public init(storage: ScannedTransactionStorage, contactBookManager: ContactBookManager, accountManager: AccountManager, localStorage: LocalStorage, logger _: Logger? = nil) {
         self.storage = storage
@@ -35,9 +35,11 @@ public class SpamWrapper {
         logger = Logger(minLogLevel: .debug)
 
         // Update saved verdicts before contact changes trigger a history reload.
-        subscribeSerial(disposeBag, contactBookManager.addressesAddedObservable) { [weak self] addresses in
-            try? self?.storage.markNotSpam(addresses: addresses)
-        }
+        contactBookManager.addressesAddedPublisher
+            .sink { [weak self] addresses in
+                try? self?.storage.markNotSpam(addresses: addresses)
+            }
+            .store(in: &cancellables)
 
         // Contacts saved before this cleanup existed are cleared once; later additions arrive as events
         if !localStorage.contactsSpamCleared, let contacts = contactBookManager.all,

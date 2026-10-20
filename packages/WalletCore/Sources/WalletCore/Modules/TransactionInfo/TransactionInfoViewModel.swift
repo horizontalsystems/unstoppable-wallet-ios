@@ -20,7 +20,10 @@ class TransactionInfoViewModel {
         self.contactLabelService = contactLabelService
 
         subscribe(disposeBag, service.transactionItemUpdatedObserver) { [weak self] in self?.updateTransactionItem(item: $0) }
-        subscribe(disposeBag, contactLabelService.stateObservable) { [weak self] _ in self?.reSyncServiceItem() }
+        contactLabelService.statePublisher
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
+            .sink { [weak self] _ in self?.reSyncServiceItem() }
+            .store(in: &cancellables)
         subscribe(disposeBag, service.balanceHiddenObservable) { [weak self] _ in self?.reSyncServiceItem() }
 
         factory.updatedPublisher

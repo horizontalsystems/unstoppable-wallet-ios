@@ -1,6 +1,5 @@
 import Combine
 import MarketKit
-import RxSwift
 
 class TransactionContactSelectViewModel: ObservableObject {
     static let allowedBlockchainUids = EvmBlockchainManager.blockchainTypes.map(\.uid) + [
@@ -11,7 +10,7 @@ class TransactionContactSelectViewModel: ObservableObject {
         BlockchainType.near.uid,
         BlockchainType.zcash.uid,
     ]
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let transactionFilterViewModel: TransactionFilterViewModel
 
@@ -20,7 +19,7 @@ class TransactionContactSelectViewModel: ObservableObject {
     init(transactionFilterViewModel: TransactionFilterViewModel) {
         self.transactionFilterViewModel = transactionFilterViewModel
 
-        subscribe(disposeBag, Core.shared.contactManager.stateObservable) { [weak self] _ in self?.sync() }
+        subscribe(&cancellables, Core.shared.contactManager.statePublisher) { [weak self] _ in self?.sync() }
         sync()
     }
 

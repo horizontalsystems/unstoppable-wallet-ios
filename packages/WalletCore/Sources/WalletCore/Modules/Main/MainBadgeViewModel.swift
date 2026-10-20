@@ -40,13 +40,9 @@ class MainBadgeViewModel: ObservableObject {
             .sink { [weak self] _ in self?.syncSettingsBadge() }
             .store(in: &cancellables)
 
-        contactManager.iCloudErrorObservable
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .subscribe(onNext: { [weak self] _ in
-                self?.syncSettingsBadge()
-            })
-            .disposed(by: disposeBag)
+        contactManager.iCloudErrorPublisher
+            .sink { [weak self] _ in self?.syncSettingsBadge() }
+            .store(in: &cancellables)
 
         badge = resolvedBadge
     }

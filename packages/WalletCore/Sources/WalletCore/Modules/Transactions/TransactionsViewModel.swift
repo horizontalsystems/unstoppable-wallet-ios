@@ -104,8 +104,14 @@ class TransactionsViewModel: ObservableObject {
         subscribe(disposeBag, rateService.ratesChangedObservable) { [weak self] in self?.handleRatesChanged() }
         subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
         subscribe(disposeBag, nftMetadataService.assetsBriefMetadataObservable) { [weak self] in self?.handle(assetsBriefMetadata: $0) }
-        subscribe(disposeBag, contactLabelService.stateObservable) { [weak self] _ in self?.reportItemData() }
-        subscribe(disposeBag, contactBookManager.addressesAddedObservable) { [weak self] _ in self?.syncPoolGroup() }
+        contactLabelService.statePublisher
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
+            .sink { [weak self] _ in self?.reportItemData() }
+            .store(in: &cancellables)
+        contactBookManager.addressesAddedPublisher
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
+            .sink { [weak self] _ in self?.syncPoolGroup() }
+            .store(in: &cancellables)
         subscribe(disposeBag, balanceHiddenManager.balanceHiddenObservable) { [weak self] _ in self?.reportItemData() }
 
         amountRoundingManager
