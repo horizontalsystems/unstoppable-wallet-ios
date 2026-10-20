@@ -59,13 +59,13 @@ public class SwapProviderFactory {
         "quickswap": "QuickSwap",
     ]
 
-    // The ordinary swap screen must never offer a confidential or retired provider. Not automatic:
-    // a registered entry resolves through `provider(id:)` (which tracking needs) and
-    // DefaultUSwapSubProvider.rate sends an explicit `providers` list, which overrides the
-    // server-side privacy filter.
+    // The ordinary swap screen must never offer a retired provider. Not automatic: a registered
+    // entry resolves through `provider(id:)` (which tracking needs). Confidential providers are
+    // offered alongside the others while the Private swap tab is hidden; `confidential` stays on
+    // the info so the exclusion can be restored here.
     public static func swappableProviders(ids: [String]) -> [IMultiSwapProvider] {
         ids
-            .filter { !retiredProviderIds.contains($0) && providerInfo(id: $0)?.confidential != true }
+            .filter { !retiredProviderIds.contains($0) }
             .compactMap { provider(id: $0) }
     }
 
@@ -93,10 +93,8 @@ public enum SwapProviderResolver: ISwapProviderResolver {
     private static let entries: [String: Entry] = Dictionary(
         uniqueKeysWithValues: [
             defaultUSwapEntry(info: .near),
-            // Registered so SwapProviderFactory.provider(id:) resolves it for tracking — without
-            // this, SwapHistoryManager._sync() skips the row and a private send never leaves
-            // pending. It is kept off the ordinary swap screen by the confidential filter in
-            // swappableProviders(ids:) above, which MultiSwapViewModel is the only caller of.
+            // Also resolves private send rows for tracking — without this entry
+            // SwapHistoryManager._sync() skips the row and a private send never leaves pending.
             defaultUSwapEntry(info: .nearConfidential),
             quickExUSwapEntry(info: .quickEx),
             defaultUSwapEntry(info: .letsExchange),

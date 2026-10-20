@@ -5,8 +5,9 @@ public struct USwapProviderInfo: Equatable {
     public let type: SwapProviderType
     public let preciseEstimateTime: Bool
     public let requireTerms: Bool
-    // Routes through a confidential rail. Such providers are excluded from the ordinary swap
-    // fan-out; availability itself is decided by ConfidentialProviderRegistry, not by this flag.
+    // Routes through a confidential rail. Availability in the private send flow is decided by
+    // ConfidentialProviderRegistry, not by this flag; the ordinary swap screen offers such
+    // providers alongside the others while the Private swap tab is hidden.
     public let confidential: Bool
     // Takes a unified ZEC address as the refund target. Not published by /v3/providers, so declared here:
     // transfer venues validate a ZEC refund as transparent (QuickEx and StealthEX reject `u1`), Maya refunds to
@@ -35,8 +36,8 @@ public extension USwapProviderInfo {
         acceptsUnifiedZcashRefund: true
     )
 
-    // Registered so SwapProviderFactory.provider(id:) resolves the provider for tracking and
-    // history rendering. It is never offered on the ordinary swap screen.
+    // Quoted on the ordinary swap screen like the others and also used by the private send flow,
+    // which resolves it through ConfidentialProviderRegistry.
     static let nearConfidential = USwapProviderInfo(
         id: "NEAR_CONFIDENTIAL",
         name: "Near Confidential",
