@@ -10,6 +10,9 @@ struct MultiSwapView: View {
     @Binding var splitRecipientsPresented: Bool
     var autoFocus = false
 
+    // Private Swap is temporarily hidden: the tab header is not shown and only the Standard tab is used
+    static let privateSwapEnabled = false
+
     @FocusState var focusedField: FocusField?
     @State var currentTab: MultiSwapTab = .standard
 
@@ -24,8 +27,10 @@ struct MultiSwapView: View {
     var body: some View {
         ThemeView(style: .list) {
             VStack(spacing: 0) {
-                FolderTabHeaderView(items: MultiSwapTab.allCases, currentItem: $currentTab) {
-                    FolderTabHeaderView.Tab(title: $0.title, icon: $0.icon)
+                if Self.privateSwapEnabled {
+                    FolderTabHeaderView(items: MultiSwapTab.allCases, currentItem: $currentTab) {
+                        FolderTabHeaderView.Tab(title: $0.title, icon: $0.icon)
+                    }
                 }
 
                 Group {
