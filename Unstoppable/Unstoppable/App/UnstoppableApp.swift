@@ -66,7 +66,7 @@ struct UnstoppableApp: App {
         let uSwapApi = SwapProviderResolver.uSwapApi(networkManager: Core.shared.networkManager)
 
         // The token manager's source of confidential provider ids, built as a single instance: a
-        // second registry would double the GET /v2/providers traffic and could disagree about which
+        // second registry would double the GET /v3/providers traffic and could disagree about which
         // providers are confidential.
         let confidentialProviderRegistry = ConfidentialProviderRegistry(
             api: uSwapApi,

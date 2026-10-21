@@ -26,6 +26,10 @@ class MultiSwapProviderManager {
     /// access goes through `executionTypesLock`.
     private var _executionTypes = [String: String]()
     private let executionTypesLock = NSLock()
+    /// `amlPolicy` per provider id, as published by `/v3/providers`. Read by the swap views through
+    /// `USwapMultiSwapProvider.type`; guarded like `_executionTypes` because reads are not confined to main.
+    private var _amlPolicies = [String: SwapProviderType]()
+    private let amlPoliciesLock = NSLock()
     /// Ids of the providers flagged `split` by the backend: the only ones quoted on the Private
     /// (split) swap tab. Assigned before `providers`, which is the signal subscribers react to.
     @PostPublished private(set) var splitProviders: [String] = []
@@ -46,13 +50,15 @@ class MultiSwapProviderManager {
 
         let hadSuspensions = restoreSuspensions()
         let hadExecutionTypes = restoreExecutionTypes()
+        let hadAmlPolicies = restoreAmlPolicies()
 
-        // Force a fetch when suspensions, execution types or the split list have never been stored,
-        // even if the provider list is still within its TTL. Upgrading from a build that predates them
-        // leaves a FRESH `swap-providers-last-sync-timestamp` beside an empty cache, so the ordinary TTL
+        // Force a fetch when suspensions, execution types, AML policies or the split list have never been
+        // stored, even if the provider list is still within its TTL. Upgrading from a build that predates
+        // them leaves a FRESH `swap-providers-last-sync-timestamp` beside an empty cache, so the ordinary TTL
         // check would skip the sync and leave the first hour after the update unenforced (suspensions),
-        // without shielded ZEC delivery (execution types) or without Private swap providers (split).
-        sync(force: !hadSuspensions || !hadExecutionTypes || cachedSplitProviders == nil)
+        // without shielded ZEC delivery (execution types), without a provider score (AML policies) or
+        // without Private swap providers (split).
+        sync(force: !hadSuspensions || !hadExecutionTypes || !hadAmlPolicies || cachedSplitProviders == nil)
     }
 
     private func syncProviders(uSwapProviders: [String]) {
@@ -119,6 +125,42 @@ class MultiSwapProviderManager {
 
         executionTypesLock.withLock { _executionTypes = json }
         return true
+    }
+
+    private func syncAmlPolicies(responses: [ProviderResponse]) {
+        var byProvider = [String: SwapProviderType]()
+
+        for response in responses {
+            // An absent or unknown value (e.g. a future level) leaves the provider unrated; never defaulted.
+            if let amlPolicy = response.amlPolicy, let type = SwapProviderType(rawValue: amlPolicy.lowercased()) {
+                byProvider[response.provider] = type
+            }
+        }
+
+        amlPoliciesLock.withLock { _amlPolicies = byProvider }
+
+        if let data = try? JSONSerialization.data(withJSONObject: byProvider.mapValues(\.rawValue)) {
+            localStorage.uSwapAmlPolicies = String(data: data, encoding: .utf8)
+        }
+    }
+
+    /// Returns whether a stored cache was found; an empty map still round-trips as `{}`.
+    private func restoreAmlPolicies() -> Bool {
+        guard let raw = localStorage.uSwapAmlPolicies, let data = raw.data(using: .utf8),
+              let json = (try? JSONSerialization.jsonObject(with: data)) as? [String: String]
+        else {
+            return false
+        }
+
+        let byProvider = json.compactMapValues { SwapProviderType(rawValue: $0.lowercased()) }
+        amlPoliciesLock.withLock { _amlPolicies = byProvider }
+        return true
+    }
+
+    /// The provider's AML policy as published by the backend; nil when the server has not rated it
+    /// (or no sync has ever succeeded). Safe to call off-main.
+    func amlPolicy(providerId: String) -> SwapProviderType? {
+        amlPoliciesLock.withLock { _amlPolicies[providerId] }
     }
 
     /// Whether a swap selling `tokenIn` through this provider can pay its ZEC output to a shielded /
@@ -197,6 +239,7 @@ class MultiSwapProviderManager {
 
         syncSuspensions(responses: responses)
         syncExecutionTypes(responses: responses)
+        syncAmlPolicies(responses: responses)
         splitProviders = splitIds
         syncProviders(uSwapProviders: ids)
 
@@ -214,6 +257,8 @@ extension MultiSwapProviderManager {
         let suspensions: [SwapSuspension]
         /// How the provider settles (`thorchain_deposit`, `signed_transaction`, ...).
         let executionType: String?
+        /// `excellent` | `good` | `fair`; mapped to `SwapProviderType` in `syncAmlPolicies(responses:)`.
+        let amlPolicy: String?
         /// Whether the provider serves the `/v3/split/*` endpoints (one deposit delivered to several
         /// addresses), i.e. can be quoted on the Private swap tab.
         let split: Bool
@@ -223,6 +268,7 @@ extension MultiSwapProviderManager {
             suspended = (try? map.value("suspended")) ?? false
             suspensions = (try? map.value("suspensions")) ?? []
             executionType = try? map.value("executionType")
+            amlPolicy = try? map.value("amlPolicy")
             split = (try? map.value("splitSwaps")) ?? false
         }
     }

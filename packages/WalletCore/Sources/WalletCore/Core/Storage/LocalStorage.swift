@@ -34,6 +34,7 @@ public class LocalStorage {
     private let keyUSwapProviders = "uswap-providers"
     private let keyUSwapSuspensions = "uswap-suspensions"
     private let keyUSwapExecutionTypes = "uswap-execution-types"
+    private let keyUSwapAmlPolicies = "uswap-aml-policies"
     private let keyUSwapSplitProviders = "uswap-split-providers"
     private let keySwapEnabled = "swap_enabled"
     private let keyAppStateLastSyncTimestamp = "app-state-last-sync-timestamp"
@@ -229,6 +230,13 @@ extension LocalStorage {
     var uSwapExecutionTypes: String? {
         get { userDefaultsStorage.value(for: keyUSwapExecutionTypes) }
         set { userDefaultsStorage.set(value: newValue, for: keyUSwapExecutionTypes) }
+    }
+
+    // Per-provider amlPolicy (JSON, provider id -> "excellent" | "good" | "fair"). Cached alongside the
+    // provider list so a cold launch shows the provider score until the next sync.
+    var uSwapAmlPolicies: String? {
+        get { userDefaultsStorage.value(for: keyUSwapAmlPolicies) }
+        set { userDefaultsStorage.set(value: newValue, for: keyUSwapAmlPolicies) }
     }
 
     // Ids of the providers able to quote a split (Private) swap, comma-joined like uSwapProviders

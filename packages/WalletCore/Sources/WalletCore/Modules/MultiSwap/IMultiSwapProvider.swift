@@ -6,7 +6,8 @@ import SwiftUI
 public protocol IMultiSwapProvider {
     var id: String { get }
     var name: String { get }
-    var type: SwapProviderType { get }
+    // The AML policy published by the backend; nil when it has not rated the provider.
+    var type: SwapProviderType? { get }
     var requireTerms: Bool { get }
     var preciseEstimateTime: Bool { get }
     var icon: String { get }
@@ -72,6 +73,7 @@ public struct SwapCommitment {
     }
 }
 
+// Raw values are the backend's `amlPolicy` strings (/v3/providers); do not rename them.
 public enum SwapProviderType: String, CaseIterable, Identifiable {
     case excellent
     case good

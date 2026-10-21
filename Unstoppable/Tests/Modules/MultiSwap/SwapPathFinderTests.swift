@@ -318,7 +318,7 @@ extension SwapPathFinderTests {
         let log: CallLog?
 
         var name: String { id }
-        var type: SwapProviderType { .good }
+        var type: SwapProviderType? { .good }
         var icon: String { "stub" }
 
         func supports(tokenIn: Token, tokenOut: Token) -> Bool {

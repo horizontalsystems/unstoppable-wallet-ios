@@ -20,7 +20,7 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
 
     public var id: String { subProvider.info.id }
     public var name: String { subProvider.info.name }
-    public var type: SwapProviderType { subProvider.info.type }
+    public var type: SwapProviderType? { Core.shared.swapProviderManager.amlPolicy(providerId: subProvider.info.id) }
     public var requireTerms: Bool { subProvider.info.requireTerms }
     public var preciseEstimateTime: Bool { subProvider.info.preciseEstimateTime }
     public var icon: String { subProvider.info.icon }

@@ -2,23 +2,20 @@ public struct USwapProviderInfo: Equatable {
     public let id: String
     public let name: String
     public let icon: String
-    public let type: SwapProviderType
     public let preciseEstimateTime: Bool
     public let requireTerms: Bool
-    // Routes through a confidential rail. Availability in the private send flow is decided by
-    // ConfidentialProviderRegistry, not by this flag; the ordinary swap screen offers such
-    // providers alongside the others while the Private swap tab is hidden.
+    // Routes through a confidential rail. The private send flow offers a provider only when both the server
+    // (ConfidentialProviderRegistry) and this flag mark it confidential; the swap screen lists it like any other.
     public let confidential: Bool
     // Takes a unified ZEC address as the refund target. Not published by /v3/providers, so declared here:
     // transfer venues validate a ZEC refund as transparent (QuickEx and StealthEX reject `u1`), Maya refunds to
     // the memo's address (Sapling receiver), 1Click to an Orchard one.
     public let acceptsUnifiedZcashRefund: Bool
 
-    public init(id: String, name: String, icon: String, type: SwapProviderType, preciseEstimateTime: Bool = true, requireTerms: Bool, confidential: Bool = false, acceptsUnifiedZcashRefund: Bool = false) {
+    public init(id: String, name: String, icon: String, preciseEstimateTime: Bool = true, requireTerms: Bool, confidential: Bool = false, acceptsUnifiedZcashRefund: Bool = false) {
         self.id = id
         self.name = name
         self.icon = icon
-        self.type = type
         self.preciseEstimateTime = preciseEstimateTime
         self.requireTerms = requireTerms
         self.confidential = confidential
@@ -31,7 +28,6 @@ public extension USwapProviderInfo {
         id: "NEAR",
         name: "Near",
         icon: "swap_provider_near",
-        type: .fair,
         requireTerms: true,
         acceptsUnifiedZcashRefund: true
     )
@@ -42,7 +38,6 @@ public extension USwapProviderInfo {
         id: "NEAR_CONFIDENTIAL",
         name: "Near Confidential",
         icon: "swap_provider_near",
-        type: .fair,
         requireTerms: true,
         confidential: true
     )
@@ -51,7 +46,6 @@ public extension USwapProviderInfo {
         id: "QUICKEX",
         name: "QuickEx",
         icon: "swap_provider_quickex",
-        type: .good,
         preciseEstimateTime: false,
         requireTerms: true
     )
@@ -60,7 +54,6 @@ public extension USwapProviderInfo {
         id: "LETSEXCHANGE",
         name: "LetsExchange",
         icon: "swap_provider_letsexchange",
-        type: .good,
         preciseEstimateTime: false,
         requireTerms: true
     )
@@ -69,7 +62,6 @@ public extension USwapProviderInfo {
         id: "STEALTHEX",
         name: "StealthEX",
         icon: "swap_provider_stealthex",
-        type: .fair,
         preciseEstimateTime: false,
         requireTerms: true
     )
@@ -78,7 +70,6 @@ public extension USwapProviderInfo {
         id: "SWAPUZ",
         name: "Swapuz",
         icon: "swap_provider_swapuz",
-        type: .good,
         preciseEstimateTime: false,
         requireTerms: true
     )
@@ -87,7 +78,6 @@ public extension USwapProviderInfo {
         id: "EXOLIX",
         name: "Exolix",
         icon: "swap_provider_exolix",
-        type: .good,
         preciseEstimateTime: false,
         requireTerms: true
     )
@@ -96,7 +86,6 @@ public extension USwapProviderInfo {
         id: "CCE",
         name: "CCE Cash",
         icon: "swap_provider_cce",
-        type: .good,
         preciseEstimateTime: false,
         requireTerms: true
     )
@@ -105,7 +94,6 @@ public extension USwapProviderInfo {
         id: "BARTER",
         name: "Barter",
         icon: "swap_provider_barter",
-        type: .excellent,
         requireTerms: true
     )
 
@@ -113,7 +101,6 @@ public extension USwapProviderInfo {
         id: "SOROSWAP",
         name: "Soroswap",
         icon: "stellar_stellar_32",
-        type: .excellent,
         requireTerms: true
     )
 
@@ -121,7 +108,6 @@ public extension USwapProviderInfo {
         id: "AQUARIUS",
         name: "Aquarius",
         icon: "stellar_stellar_32",
-        type: .excellent,
         requireTerms: true
     )
 
@@ -129,7 +115,6 @@ public extension USwapProviderInfo {
         id: "STELLAR_DEX",
         name: "Stellar DEX",
         icon: "stellar_stellar_32",
-        type: .excellent,
         requireTerms: true
     )
 
@@ -138,7 +123,6 @@ public extension USwapProviderInfo {
         id: "STELLARBROKER",
         name: "StellarBroker",
         icon: "stellar_stellar_32",
-        type: .excellent,
         requireTerms: true
     )
 
@@ -146,7 +130,6 @@ public extension USwapProviderInfo {
         id: "PEGASUS",
         name: "PegasusSwap",
         icon: "swap_provider_pegasus",
-        type: .good,
         preciseEstimateTime: false,
         requireTerms: true
     )
@@ -155,7 +138,6 @@ public extension USwapProviderInfo {
         id: "CIRCLE",
         name: "Circle CCTP",
         icon: "swap_provider_circle",
-        type: .excellent,
         requireTerms: true
     )
 
@@ -163,7 +145,6 @@ public extension USwapProviderInfo {
         id: "JUPITER",
         name: "Jupiter",
         icon: "swap_provider_jupiter",
-        type: .excellent,
         requireTerms: true
     )
 
@@ -171,7 +152,6 @@ public extension USwapProviderInfo {
         id: "LIFI",
         name: "LI.FI",
         icon: "swap_provider_lifi",
-        type: .excellent,
         requireTerms: true
     )
 
@@ -179,7 +159,6 @@ public extension USwapProviderInfo {
         id: "ONEINCH",
         name: "1inch",
         icon: "swap_provider_1inch",
-        type: .excellent,
         requireTerms: true
     )
 
@@ -187,7 +166,6 @@ public extension USwapProviderInfo {
         id: "UNISWAP",
         name: "Uniswap",
         icon: "swap_provider_uniswap",
-        type: .excellent,
         requireTerms: true
     )
 
@@ -195,7 +173,6 @@ public extension USwapProviderInfo {
         id: "THORCHAIN",
         name: "THORChain",
         icon: "swap_provider_thorchain",
-        type: .excellent,
         requireTerms: true
     )
 
@@ -203,7 +180,6 @@ public extension USwapProviderInfo {
         id: "MAYACHAIN",
         name: "Maya Protocol",
         icon: "swap_provider_maya",
-        type: .excellent,
         requireTerms: true,
         acceptsUnifiedZcashRefund: true
     )
@@ -212,7 +188,6 @@ public extension USwapProviderInfo {
         id: "AXELAR_ITS",
         name: "Axelar ITS",
         icon: "swap_provider_axelar",
-        type: .excellent,
         requireTerms: true
     )
 
@@ -220,7 +195,6 @@ public extension USwapProviderInfo {
         id: "LIZEX",
         name: "Lizex",
         icon: "swap_provider_lizex",
-        type: .good,
         preciseEstimateTime: false,
         requireTerms: true
     )
@@ -229,7 +203,6 @@ public extension USwapProviderInfo {
         id: "BITANIA",
         name: "Bitania",
         icon: "swap_provider_bitania",
-        type: .good,
         preciseEstimateTime: false,
         requireTerms: true
     )
@@ -238,7 +211,6 @@ public extension USwapProviderInfo {
         id: "XSWAP",
         name: "XSwap",
         icon: "swap_provider_xswap",
-        type: .good,
         preciseEstimateTime: false,
         requireTerms: true
     )

@@ -52,6 +52,7 @@ struct USwapZcashShieldedDeliveryTests {
         let json = try! JSONSerialization.data(withJSONObject: executionTypes)
         localStorage.uSwapExecutionTypes = String(data: json, encoding: .utf8)
         localStorage.uSwapSuspensions = "{}"
+        localStorage.uSwapAmlPolicies = "{}"
         localStorage.uSwapSplitProviders = ""
         localStorage.uSwapProviders = "\(Self.vault),\(Self.transfer)"
         localStorage.swapProvidersLastSyncTimestamp = Date().timeIntervalSince1970

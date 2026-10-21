@@ -225,20 +225,22 @@ struct MultiSwapView: View {
                 }
             )
 
-            Cell(
-                style: .secondary,
-                middle: {
-                    HStack(spacing: 8) {
-                        ThemeText("swap.provider.score".localized, style: .subhead, colorStyle: .secondary)
-                        Image("information").icon(size: 20, colorStyle: .secondary)
+            if let type = quote.provider.type {
+                Cell(
+                    style: .secondary,
+                    middle: {
+                        HStack(spacing: 8) {
+                            ThemeText("swap.provider.score".localized, style: .subhead, colorStyle: .secondary)
+                            Image("information").icon(size: 20, colorStyle: .secondary)
+                        }
+                    }, right: {
+                        MultiSwapQuotesView.view(type: type)
+                    },
+                    action: {
+                        onTapProviderInfo()
                     }
-                }, right: {
-                    MultiSwapQuotesView.view(type: quote.provider.type)
-                },
-                action: {
-                    onTapProviderInfo()
-                }
-            )
+                )
+            }
 
             // On the swap screen the time is shown only when it needs attention
             if let timeState = quote.timeState, case .attention = timeState {

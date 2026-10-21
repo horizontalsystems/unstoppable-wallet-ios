@@ -64,13 +64,14 @@ public final class USwapMultiSwapApi {
         return response.passedAmlCheck
     }
 
+    // GET /v3/providers answers with a top-level array, one entry per provider.
     public func providers() async throws -> [ProviderDescriptor] {
-        let response: ProvidersResponse = try await networkManager.fetch(
+        let responses: [ProviderDescriptorResponse] = try await networkManager.fetch(
             url: endpoint("providers"),
             headers: headers
         )
 
-        return response.providers.map(\.descriptor)
+        return responses.map(\.descriptor)
     }
 
     public func rate(_ request: RateRequest) async throws -> RateResult {
@@ -529,14 +530,17 @@ public extension USwapMultiSwapApi {
     struct ProviderDescriptor {
         public let id: String
         public let executionType: String
+        // "none" | "basic" | "split"
+        public let privacy: String
         public let confidential: Bool
         public let suspended: Bool
         public let amlPolicy: String?
         public let supportedChainIds: [String]
 
-        public init(id: String, executionType: String, confidential: Bool, suspended: Bool, amlPolicy: String?, supportedChainIds: [String]) {
+        public init(id: String, executionType: String, privacy: String, confidential: Bool, suspended: Bool, amlPolicy: String?, supportedChainIds: [String]) {
             self.id = id
             self.executionType = executionType
+            self.privacy = privacy
             self.confidential = confidential
             self.suspended = suspended
             self.amlPolicy = amlPolicy
@@ -1029,26 +1033,23 @@ extension USwapMultiSwapApi {
         }
     }
 
-    struct ProvidersResponse: ImmutableMappable {
-        let providers: [ProviderDescriptorResponse]
-
-        init(map: Map) throws {
-            providers = (try? map.value("providers")) ?? []
-        }
-    }
-
     struct ProviderDescriptorResponse: ImmutableMappable {
+        private static let confidentialPrivacyValues: Set<String> = ["basic", "split"]
+
         let id: String
         let executionType: String
+        let privacy: String
         let confidential: Bool
         let suspended: Bool
         let amlPolicy: String?
         let supportedChainIds: [String]
 
         init(map: Map) throws {
-            id = try map.value("id")
+            id = try map.value("provider")
+            // Absent on `quotes: false` entries (ALLBRIDGE, PANCAKESWAP)
             executionType = (try? map.value("executionType")) ?? ""
-            confidential = (try? map.value("privacy.confidential")) ?? false
+            privacy = (try? map.value("privacy")) ?? "none"
+            confidential = Self.confidentialPrivacyValues.contains(privacy)
             suspended = (try? map.value("suspended")) ?? false
             amlPolicy = try? map.value("amlPolicy")
             supportedChainIds = (try? map.value("supportedChainIds")) ?? []
@@ -1058,6 +1059,7 @@ extension USwapMultiSwapApi {
             ProviderDescriptor(
                 id: id,
                 executionType: executionType,
+                privacy: privacy,
                 confidential: confidential,
                 suspended: suspended,
                 amlPolicy: amlPolicy,

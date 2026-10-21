@@ -1,8 +1,11 @@
 import Combine
 import Foundation
 
-// The list of USwap providers that route through a confidential rail. Kept apart from the static
-// USwapProviderInfo table so the server, not a release, decides which providers are available.
+// The list of USwap providers that route through a confidential rail. The server decides which
+// providers are confidential (`privacy` on GET /v3/providers); the app only offers those that are both
+// registered locally (history tracking resolves swap rows through the same table) AND marked
+// `confidential: true` on their USwapProviderInfo, so a server flipping `privacy` on a public provider
+// cannot pull it into private send. `fallbackIds` only covers first launch and offline.
 public final class ConfidentialProviderRegistry {
     private static let expiration: TimeInterval = 6 * 60 * 60
 
@@ -14,14 +17,21 @@ public final class ConfidentialProviderRegistry {
     private let api: USwapMultiSwapApi
     private let storage: ConfidentialProviderStorage
     private let fallbackIds: [String]
+    private let isUsableProvider: (String) -> Bool
     private let syncSubject = PassthroughSubject<Void, Never>()
     private let stateLock = NSLock()
     private var state: State
 
-    public init(api: USwapMultiSwapApi, storage: ConfidentialProviderStorage, fallbackIds: [String] = ["NEAR_CONFIDENTIAL"]) {
+    public init(
+        api: USwapMultiSwapApi,
+        storage: ConfidentialProviderStorage,
+        fallbackIds: [String] = ["NEAR_CONFIDENTIAL"],
+        isUsableProvider: @escaping (String) -> Bool = { SwapProviderFactory.providerInfo(id: $0)?.confidential == true }
+    ) {
         self.api = api
         self.storage = storage
         self.fallbackIds = fallbackIds
+        self.isUsableProvider = isUsableProvider
 
         let storedIds = (try? storage.providerIds()) ?? []
         let lastSyncTimestamp = try? storage.lastSyncTimestamp()
@@ -46,8 +56,10 @@ public final class ConfidentialProviderRegistry {
         refreshTask?.cancel()
     }
 
+    // Filtered on read, not on sync: the server's full confidential list is persisted, so a release that
+    // registers a provider the server already lists offers it at once instead of waiting out the TTL.
     public var providerIds: [String] {
-        withState { $0.providerIds }
+        withState { $0.providerIds }.filter(isUsableProvider)
     }
 
     public var syncPublisher: AnyPublisher<Void, Never> {

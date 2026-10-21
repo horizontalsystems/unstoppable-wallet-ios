@@ -105,13 +105,13 @@ struct MultiSwapQuotesView: View {
     }
 
     @ViewBuilder private func providerDescriptionView(quote: MultiSwapViewModel.Quote) -> some View {
-        let type = quote.provider.type
-
         VStack(alignment: .trailing, spacing: 1) {
-            Button(action: onTapProviderInfo) {
-                Self.view(type: type, style: .subheadSB, iconFirst: false)
+            if let type = quote.provider.type {
+                Button(action: onTapProviderInfo) {
+                    Self.view(type: type, style: .subheadSB, iconFirst: false)
+                }
+                .buttonStyle(.plain)
             }
-            .buttonStyle(.plain)
             if let timeState = quote.timeState {
                 Self.view(time: timeState.value, colorStyle: timeState.colorStyle, style: .subheadSB, showIcon: false)
             }
