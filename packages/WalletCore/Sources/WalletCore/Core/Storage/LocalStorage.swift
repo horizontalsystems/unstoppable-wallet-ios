@@ -29,13 +29,7 @@ public class LocalStorage {
     private let keySpamFilterEnabled = "spam-filter"
     private let keyContactsSpamCleared = "contacts-spam-cleared"
     private let keySwapTermsAccepted = "swap-terms-accepted"
-    private let keySwapProvidersLastSyncTimestamp = "swap-providers-last-sync-timestamp"
     private let keySwapRecentTokenQueryIds = "swap-recent-token-query-ids"
-    private let keyUSwapProviders = "uswap-providers"
-    private let keyUSwapSuspensions = "uswap-suspensions"
-    private let keyUSwapExecutionTypes = "uswap-execution-types"
-    private let keyUSwapAmlPolicies = "uswap-aml-policies"
-    private let keyUSwapSplitProviders = "uswap-split-providers"
     private let keySwapEnabled = "swap_enabled"
     private let keyAppStateLastSyncTimestamp = "app-state-last-sync-timestamp"
     private let keyForceEnableSwap = "force-enable-swap"
@@ -203,46 +197,9 @@ extension LocalStorage {
         set { userDefaultsStorage.set(value: newValue, for: keySwapTermsAccepted) }
     }
 
-    var swapProvidersLastSyncTimestamp: TimeInterval? {
-        get { userDefaultsStorage.value(for: keySwapProvidersLastSyncTimestamp) }
-        set { userDefaultsStorage.set(value: newValue, for: keySwapProvidersLastSyncTimestamp) }
-    }
-
     var swapRecentTokenQueryIds: [String] {
         get { userDefaultsStorage.value(for: keySwapRecentTokenQueryIds) ?? [] }
         set { userDefaultsStorage.set(value: newValue, for: keySwapRecentTokenQueryIds) }
-    }
-
-    var uSwapProviders: String? {
-        get { userDefaultsStorage.value(for: keyUSwapProviders) }
-        set { userDefaultsStorage.set(value: newValue, for: keyUSwapProviders) }
-    }
-
-    // Scoped provider suspensions (JSON, provider id -> rules). Cached alongside the provider list
-    // so a cold launch keeps honouring them until the next sync.
-    var uSwapSuspensions: String? {
-        get { userDefaultsStorage.value(for: keyUSwapSuspensions) }
-        set { userDefaultsStorage.set(value: newValue, for: keyUSwapSuspensions) }
-    }
-
-    // Per-provider executionType (JSON, provider id -> string). Cached alongside the provider list
-    // so a cold launch keeps shielded ZEC delivery decisions until the next sync.
-    var uSwapExecutionTypes: String? {
-        get { userDefaultsStorage.value(for: keyUSwapExecutionTypes) }
-        set { userDefaultsStorage.set(value: newValue, for: keyUSwapExecutionTypes) }
-    }
-
-    // Per-provider amlPolicy (JSON, provider id -> "excellent" | "good" | "fair"). Cached alongside the
-    // provider list so a cold launch shows the provider score until the next sync.
-    var uSwapAmlPolicies: String? {
-        get { userDefaultsStorage.value(for: keyUSwapAmlPolicies) }
-        set { userDefaultsStorage.set(value: newValue, for: keyUSwapAmlPolicies) }
-    }
-
-    // Ids of the providers able to quote a split (Private) swap, comma-joined like uSwapProviders
-    var uSwapSplitProviders: String? {
-        get { userDefaultsStorage.value(for: keyUSwapSplitProviders) }
-        set { userDefaultsStorage.set(value: newValue, for: keyUSwapSplitProviders) }
     }
 
     var swapEnabled: Bool {

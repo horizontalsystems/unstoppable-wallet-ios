@@ -561,7 +561,7 @@ public class Core {
 
         swapAssetStorage = SwapAssetStorage(dbPool: dbPool)
         confidentialProviderStorage = ConfidentialProviderStorage(dbPool: dbPool)
-        swapProviderManager = MultiSwapProviderManager(localStorage: localStorage, networkManager: networkManager, apiKey: AppConfig.uswapApiKey)
+        swapProviderManager = MultiSwapProviderManager(storage: SwapProviderStorage(dbPool: dbPool), networkManager: networkManager, apiKey: AppConfig.uswapApiKey)
         swapProviderInfoManager = SwapProviderInfoManager(networkManager: networkManager, apiKey: AppConfig.uswapApiKey)
 
         createPasskeyAccountService = CreatePasskeyAccountService(

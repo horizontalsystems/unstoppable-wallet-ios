@@ -990,6 +990,18 @@ public enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Create SwapProviderRecord") { db in
+            try db.create(table: SwapProviderRecord.databaseTableName) { t in
+                t.column(SwapProviderRecord.Columns.providerId.name, .text).notNull().primaryKey(onConflict: .replace)
+                t.column(SwapProviderRecord.Columns.position.name, .integer).notNull()
+                t.column(SwapProviderRecord.Columns.executionType.name, .text)
+                t.column(SwapProviderRecord.Columns.amlPolicy.name, .text)
+                t.column(SwapProviderRecord.Columns.split.name, .boolean).notNull()
+                t.column(SwapProviderRecord.Columns.suspensions.name, .text)
+                t.column(SwapProviderRecord.Columns.lastSyncTimestamp.name, .double).notNull()
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 
