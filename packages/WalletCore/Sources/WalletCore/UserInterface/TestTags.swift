@@ -43,4 +43,10 @@ enum TestTags {
 
     static func quizPosition(_ index: Int) -> String { "quiz_position_\(index)" }
     static func quizOption(_ word: String) -> String { "quiz_option_\(word)" }
+
+    static func pinKey(_ digit: Int) -> String { "pin_key_\(digit)" }
+    static let pinKeyDelete = "pin_key_delete"
+    static let pinTitle = "pin_title"
+    static let pinError = "pin_error"
+    static let pinAttemptsLeft = "pin_attempts_left"
 }

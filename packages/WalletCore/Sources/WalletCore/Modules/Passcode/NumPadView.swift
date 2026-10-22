@@ -38,6 +38,7 @@ struct NumPadView: View {
             }
             .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
             .disabled(disabled)
+            .accessibilityIdentifier(TestTags.pinKeyDelete)
         }
         .frame(width: 280)
     }
@@ -56,6 +57,7 @@ struct NumPadView: View {
                     .frame(width: 72, height: 72)
             }
             .buttonStyle(NumPadButtonStyle())
+            .accessibilityIdentifier(TestTags.pinKey(digit))
             .disabled(disabled)
             .animation(.easeOut(duration: 0.2), value: digit)
         }
