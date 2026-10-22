@@ -14,11 +14,10 @@ Update `MarketKit.Swift` package in order to sync the latest state of backend.
 
 ### 2. Transfer Code to Production Branch
 
-Merge `version` branch into `master` branch. After this `Github Actions` will build release version and upload it to `TestFlight`.
+Merge `develop` branch into `master` branch. After this `Github Actions` will build release version and upload it to `TestFlight`.
 
 ### 3. Prepare New Development Branch
 
-* Create new `version` branch
 * Increase app version in project
 * Update all packages to latest versions and apply any changes if required
 

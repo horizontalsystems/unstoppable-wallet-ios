@@ -2,7 +2,7 @@ name: Notify PR to Telegram
 
 on:
   pull_request:
-    branches: [ version/* ]
+    branches: [ develop ]
 
 permissions: {}
 
