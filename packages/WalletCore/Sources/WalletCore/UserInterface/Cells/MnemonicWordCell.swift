@@ -41,6 +41,7 @@ class MnemonicWordCell: UICollectionViewCell {
     func bind(index: Int, word: String) {
         indexText.text = "\(index)"
         wordText.text = word
+        wordText.accessibilityIdentifier = TestTags.backupWord(index)
     }
 }
 

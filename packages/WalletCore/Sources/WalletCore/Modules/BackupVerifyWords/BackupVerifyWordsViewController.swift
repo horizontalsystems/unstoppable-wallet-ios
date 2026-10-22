@@ -110,6 +110,7 @@ extension BackupVerifyWordsViewController: SectionsDataSource {
                     component.font = .body
                     component.textColor = .themeLeah
                     component.text = viewItem.text
+                    component.accessibilityIdentifier = TestTags.quizPosition(index)
                 },
                 tableView: tableView,
                 id: "input-\(index)",

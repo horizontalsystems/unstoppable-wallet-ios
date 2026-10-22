@@ -32,6 +32,7 @@ class BackupMnemonicWordCell: UICollectionViewCell {
     func bind(viewItem: BackupVerifyWordsViewModel.WordViewItem, onTap: @escaping () -> Void) {
         button.setTitle(viewItem.text, for: .normal)
         button.isEnabled = viewItem.enabled
+        button.accessibilityIdentifier = TestTags.quizOption(viewItem.text)
 
         self.onTap = onTap
     }

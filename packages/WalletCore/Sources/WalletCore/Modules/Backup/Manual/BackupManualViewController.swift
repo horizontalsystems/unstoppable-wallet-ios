@@ -55,6 +55,7 @@ class BackupManualViewController: ThemeViewController {
         verifyButton.set(style: .yellow)
         verifyButton.setTitle("backup.verify".localized, for: .normal)
         verifyButton.addTarget(self, action: #selector(onTapVerify), for: .touchUpInside)
+        verifyButton.accessibilityIdentifier = TestTags.backupVerify
 
         tableView.buildSections()
     }

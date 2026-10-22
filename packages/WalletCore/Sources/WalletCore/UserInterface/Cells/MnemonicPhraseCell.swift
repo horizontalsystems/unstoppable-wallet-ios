@@ -20,6 +20,7 @@ class MnemonicPhraseCell: BaseThemeCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         set(backgroundStyle: Self.backgroundStyle, cornerRadius: .cornerRadius24, isFirst: true, isLast: true)
+        accessibilityIdentifier = TestTags.backupReveal
 
         wrapperView.addSubview(collectionView)
         collectionView.snp.makeConstraints { maker in

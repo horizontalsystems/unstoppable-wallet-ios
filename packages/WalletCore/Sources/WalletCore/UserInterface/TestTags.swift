@@ -36,4 +36,11 @@ enum TestTags {
 
     static func watchChain(_ blockchainUid: String) -> String { "watch_chain_\(blockchainUid)" }
     static let watchChainsDone = "watch_chains_done"
+
+    static let backupReveal = "backup_reveal"
+    static func backupWord(_ number: Int) -> String { "backup_word_\(number)" }
+    static let backupVerify = "backup_verify"
+
+    static func quizPosition(_ index: Int) -> String { "quiz_position_\(index)" }
+    static func quizOption(_ word: String) -> String { "quiz_option_\(word)" }
 }
