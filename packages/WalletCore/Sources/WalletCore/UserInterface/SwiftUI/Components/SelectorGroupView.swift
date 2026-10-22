@@ -46,7 +46,7 @@ struct SelectorGroupView: View {
                 MultiText(title: item.text, subtitle: item.description)
             },
             right: {
-                Toggle(
+                let toggle = Toggle(
                     isOn: Binding(
                         get: { isSelected },
                         set: { _ in
@@ -56,6 +56,12 @@ struct SelectorGroupView: View {
                 ) {}
                     .labelsHidden()
                     .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+
+                if let identifier = item.identifier {
+                    toggle.accessibilityIdentifier(identifier)
+                } else {
+                    toggle
+                }
             }
         )
     }

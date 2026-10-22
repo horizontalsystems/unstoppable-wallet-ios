@@ -160,6 +160,7 @@ class WelcomeScreenViewController: ThemeViewController {
         startButton.set(style: .yellow)
         startButton.setTitle("button.next".localized, for: .normal)
         startButton.addTarget(self, action: #selector(onTapStart), for: .touchUpInside)
+        startButton.accessibilityIdentifier = TestTags.introNext
 
         view.addSubview(logoWrapperView)
         logoWrapperView.snp.makeConstraints { maker in

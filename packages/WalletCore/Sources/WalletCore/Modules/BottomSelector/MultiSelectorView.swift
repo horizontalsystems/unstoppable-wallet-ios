@@ -79,7 +79,8 @@ struct BottomMultiSelectorView: View {
                 GroupSelectorItem(
                     id: "\(index)",
                     text: viewItem.title,
-                    description: viewItem.subtitle
+                    description: viewItem.subtitle,
+                    identifier: TestTags.selectorSwitch(index)
                 )
             },
             type: .multi,
@@ -99,6 +100,7 @@ struct BottomMultiSelectorView: View {
                     id: Controls.apply,
                     style: .yellow,
                     title: "button.done".localized,
+                    identifier: TestTags.selectorDone,
                     action: handleApply
                 ),
             ],

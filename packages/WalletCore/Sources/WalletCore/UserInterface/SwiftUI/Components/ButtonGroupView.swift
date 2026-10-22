@@ -41,10 +41,10 @@ struct ButtonGroupView: View {
         }
     }
 
+    @ViewBuilder
     private func buttonView(for button: ButtonGroupViewModel.ButtonItem) -> some View {
         let isDisabled = viewModel.isDisabled(button.id)
-
-        return Button(
+        let view = Button(
             action: {
                 if !isDisabled {
                     button.action()
@@ -62,5 +62,11 @@ struct ButtonGroupView: View {
         )
         .buttonStyle(PrimaryButtonStyle(style: button.style))
         .disabled(isDisabled)
+
+        if let identifier = button.identifier {
+            view.accessibilityIdentifier(identifier)
+        } else {
+            view
+        }
     }
 }

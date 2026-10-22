@@ -48,6 +48,7 @@ struct RestoreMnemonicView: View {
                     viewModel.onTapProceed()
                 }
                 .disabled(!viewModel.buttonEnabled)
+                .accessibilityIdentifier(TestTags.restoreNext)
             } keyboardContent: {
                 if isEnteringMnemonic {
                     mnemonicHintRow
@@ -122,6 +123,7 @@ struct RestoreMnemonicView: View {
                     .themeCaption(color: viewModel.mnemonicCaution.color)
                     .padding(.top, 12)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .accessibilityIdentifier(TestTags.restoreError)
             }
         }
     }

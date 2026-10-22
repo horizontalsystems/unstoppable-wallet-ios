@@ -70,6 +70,7 @@ struct RestoreTypeView: View {
                 handleSelect(restoreType: restoreType)
             }
         )
+        .accessibilityIdentifier(restoreType.accessibilityIdentifier)
     }
 
     private func handleSelect(restoreType: RestoreType) {
@@ -139,6 +140,15 @@ extension RestoreTypeView {
             case .privateKey: return "key_24"
             case .passkey: return "face_id"
             case .backup: return "cloud"
+            }
+        }
+
+        var accessibilityIdentifier: String {
+            switch self {
+            case .recoveryPhrase: return TestTags.importRecoveryPhrase
+            case .privateKey: return TestTags.importPrivateKey
+            case .passkey: return TestTags.importPasskey
+            case .backup: return TestTags.importBackupFile
             }
         }
     }

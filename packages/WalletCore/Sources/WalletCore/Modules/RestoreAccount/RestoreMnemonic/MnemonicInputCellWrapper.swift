@@ -25,6 +25,7 @@ struct MnemonicInputCellWrapper: UIViewRepresentable {
         let cell = MnemonicInputCell(statPage: statPage, statEntity: .recoveryPhrase)
         cell.contentView.backgroundColor = .clear
         cell.set(placeholderText: placeholder)
+        cell.textView.accessibilityIdentifier = TestTags.restorePhraseInput
 
         cell.onChangeMnemonicText = { text, cursorOffset in
             DispatchQueue.main.async {

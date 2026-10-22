@@ -40,6 +40,7 @@ struct WatchSelectView: View {
                                 )) {}
                                     .labelsHidden()
                                     .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+                                    .accessibilityIdentifier(TestTags.watchChain(uid))
                             }
                         )
                     }
@@ -82,6 +83,7 @@ struct WatchSelectView: View {
                     onSelect(Array(enabledUids))
                 }
                 .disabled(enabledUids.isEmpty)
+                .accessibilityIdentifier(TestTags.watchChainsDone)
             }
         }
         .navigationTitle(items.title)

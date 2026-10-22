@@ -31,6 +31,7 @@ struct TermsView: View {
                         }
                         .buttonStyle(PrimaryButtonStyle(style: .yellow))
                         .disabled(checkedIds.count < viewModel.terms.count)
+                        .accessibilityIdentifier(TestTags.termsNext)
                     }
                 }
             }
@@ -54,7 +55,7 @@ struct TermsView: View {
         ScrollView {
             VStack(spacing: .margin24) {
                 ListSection {
-                    ForEach(viewModel.terms) { term in
+                    ForEach(Array(viewModel.terms.enumerated()), id: \.element.id) { index, term in
                         if readOnly {
                             ListRow {
                                 rowContent(term: term, checked: true)
@@ -65,6 +66,7 @@ struct TermsView: View {
                             }) {
                                 rowContent(term: term, checked: checkedIds.contains(term.id))
                             }
+                            .accessibilityIdentifier(TestTags.termsCheck(index))
                         }
                     }
                 }
