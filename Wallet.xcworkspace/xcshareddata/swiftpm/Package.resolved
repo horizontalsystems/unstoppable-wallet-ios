@@ -609,8 +609,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/ThorChainKit.Swift",
       "state" : {
-        "revision" : "4abfb3c4c73ef5e6ae1ac974a1dbf2461117c0df",
-        "version" : "1.2.1"
+        "revision" : "64db60004004b5b3552916ca3d6d3e483214e07b",
+        "version" : "1.2.2"
       }
     },
     {
