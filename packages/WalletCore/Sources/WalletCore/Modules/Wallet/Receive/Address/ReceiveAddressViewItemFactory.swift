@@ -13,7 +13,8 @@ class ReceiveAddressViewItemFactory {
         let qrItem = ReceiveAddressModule.QrItem(
             address: item.address.address,
             uri: uri,
-            networkName: networkName(item: item)
+            networkName: networkName(item: item),
+            networkIdentifier: networkIdentifier(item: item)
         )
 
         var amountString: String?
@@ -58,6 +59,14 @@ class ReceiveAddressViewItemFactory {
         }
 
         return networkName
+    }
+
+    func networkIdentifier(item: BaseReceiveAddressService.AssetReceiveAddress) -> String {
+        if item.token.type.derivation != nil || item.token.type.bitcoinCashCoinType != nil {
+            return TestTags.receiveFormat
+        }
+
+        return TestTags.receiveNetwork
     }
 
     func uri(item: BaseReceiveAddressService.AssetReceiveAddress, amount: Decimal?) -> String {

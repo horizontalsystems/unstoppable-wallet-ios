@@ -39,7 +39,7 @@ class TronWalletTokenViewModel: ObservableObject {
                         .title(icon: ThemeImage.warning, title: "deposit.not_active.title".localized),
                         .text(text: "deposit.not_active.tron_description".localized),
                         .buttonGroup(.init(buttons: [
-                            .init(style: .gray, title: "deposit.not_active.view_address".localized, action: { [weak self] in
+                            .init(style: .gray, title: "deposit.not_active.view_address".localized, identifier: TestTags.tokenTronViewAddress, action: { [weak self] in
                                 isPresented.wrappedValue = false
                                 self?.showAddressView()
                             }),

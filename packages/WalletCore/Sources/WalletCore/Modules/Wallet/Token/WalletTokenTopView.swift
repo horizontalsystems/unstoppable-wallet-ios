@@ -32,6 +32,8 @@ struct WalletTokenTopView<Content: View, Status: View>: View {
                     status()
                 }
             }
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier(TestTags.tokenBalance)
             .padding(.horizontal, 16)
 
             VStack(spacing: 0) {
@@ -73,8 +75,18 @@ struct WalletTokenTopView<Content: View, Status: View>: View {
         .listRowSeparator(.hidden)
     }
 
+    private func identifier(button: WalletButton) -> String? {
+        switch button {
+        case .chart: return TestTags.tokenChart
+        case .receive: return TestTags.tokenReceive
+        case .send: return TestTags.tokenSend
+        case .swap: return TestTags.tokenSwap
+        case .scan: return nil
+        }
+    }
+
     @ViewBuilder private func buttonView(button: WalletButton) -> some View {
-        WalletButtonView(icon: button.icon, title: button.title, accent: button.accent) {
+        WalletButtonView(icon: button.icon, title: button.title, accent: button.accent, identifier: identifier(button: button)) {
             switch button {
             case .send:
                 Coordinator.shared.present { isPresented in

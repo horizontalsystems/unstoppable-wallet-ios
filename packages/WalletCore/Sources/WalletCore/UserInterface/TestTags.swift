@@ -67,4 +67,19 @@ enum TestTags {
     static func balanceItem(_ coinCode: String) -> String { "balance_item_\(coinCode)" }
     static func balanceItemAmount(_ coinCode: String) -> String { "balance_item_\(coinCode)_amount" }
     static func balanceItemSync(_ coinCode: String, _ state: String) -> String { "balance_item_\(coinCode)_\(state)" }
+
+    static let tokenBalance = "token_balance"
+    static let tokenChart = "token_chart"
+    static let tokenReceive = "token_receive"
+    static let tokenSend = "token_send"
+    static let tokenSwap = "token_swap"
+    static let tokenTronViewAddress = "token_tron_view_address"
+
+    static let receiveAddress = "receive_address"
+    static let receiveNetwork = "receive_network"
+    static let receiveFormat = "receive_format"
+    static let receiveAddressType = "receive_address_type"
+    static let receiveSetAmount = "receive_set_amount"
+    static let receiveShare = "receive_share"
+    static let receiveCopy = "receive_copy"
 }

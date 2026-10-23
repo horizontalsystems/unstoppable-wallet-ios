@@ -19,6 +19,14 @@ enum ReceiveAddressModule {
         let address: String
         let uri: String?
         let networkName: String?
+        let networkIdentifier: String?
+
+        init(address: String, uri: String?, networkName: String?, networkIdentifier: String? = nil) {
+            self.address = address
+            self.uri = uri
+            self.networkName = networkName
+            self.networkIdentifier = networkIdentifier
+        }
     }
 
     struct DescriptionItem {
@@ -65,6 +73,14 @@ enum ReceiveAddressModule {
             case .amount: return "edit_24"
             case .share: return "share_1_24"
             case .copy: return "copy_24"
+            }
+        }
+
+        var identifier: String {
+            switch self {
+            case .amount: return TestTags.receiveSetAmount
+            case .share: return TestTags.receiveShare
+            case .copy: return TestTags.receiveCopy
             }
         }
     }
