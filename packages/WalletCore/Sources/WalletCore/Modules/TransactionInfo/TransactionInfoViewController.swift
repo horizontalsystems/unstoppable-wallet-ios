@@ -121,6 +121,7 @@ class TransactionInfoViewController: ThemeViewController {
 
     private func statusRow(rowInfo: RowInfo, status: TransactionStatus, notProcessed: Bool) -> RowProtocol {
         let hash: String
+        let stateName: String
         var value: String
         var icon: UIImage?
         var spinnerProgress: Double?
@@ -128,18 +129,22 @@ class TransactionInfoViewController: ThemeViewController {
         switch status {
         case .pending:
             hash = "pending"
+            stateName = "pending"
             value = "transactions.pending".localized
             spinnerProgress = 0.2
         case let .processing(progress):
             hash = "processing-\(progress)"
+            stateName = "processing"
             value = "transactions.processing".localized
             spinnerProgress = progress * 0.8 + 0.2
         case .completed:
             hash = "completed"
+            stateName = "completed"
             value = "transactions.completed".localized
             icon = UIImage(named: "check_1_20")?.withTintColor(.themeRemus)
         case .failed:
             hash = notProcessed ? "not-processed" : "failed"
+            stateName = notProcessed ? "not_processed" : "failed"
             value = notProcessed ? "transactions.not_processed".localized : "transactions.failed".localized
             icon = UIImage(named: "warning_2_20")?.withTintColor(notProcessed ? .themeGray : .themeLucian)
         }
@@ -171,6 +176,7 @@ class TransactionInfoViewController: ThemeViewController {
             height: .heightCell48,
             bind: { cell in
                 cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+                cell.accessibilityIdentifier = TestTags.txInfoStatus(stateName)
             }
         )
     }
@@ -291,6 +297,7 @@ class TransactionInfoViewController: ThemeViewController {
             height: .heightCell48,
             bind: { cell in
                 cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+                cell.accessibilityIdentifier = TestTags.txInfoHash(value)
             }
         )
     }

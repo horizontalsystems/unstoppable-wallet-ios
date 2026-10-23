@@ -22,6 +22,8 @@ struct MainTransactionsView: View {
 
                     if transactionsViewModel.sections.isEmpty {
                         PlaceholderViewNew(icon: "warning_filled", subtitle: "transactions.empty_text".localized)
+                            .accessibilityElement(children: .combine)
+                            .accessibilityIdentifier(TestTags.txEmpty)
                     } else {
                         ThemeList(bottomSpacing: .margin16) {
                             TransactionsView(viewModel: transactionsViewModel, statPage: .transactions)
@@ -50,6 +52,7 @@ struct MainTransactionsView: View {
                         Image("manage_2_24")
                             .modifier(ToolbarBadgeModifier(visible: transactionsViewModel.filterChanged))
                     }
+                    .accessibilityIdentifier(TestTags.txFilter)
                 }
             }
         }

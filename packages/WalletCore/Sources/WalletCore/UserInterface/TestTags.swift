@@ -98,4 +98,10 @@ enum TestTags {
     static let confirmRecipient = "confirm_recipient"
     static let confirmNetworkFee = "confirm_network_fee"
     static let confirmSend = "confirm_send"
+
+    static let txEmpty = "tx_empty"
+    static let txFilter = "tx_filter"
+    static func txItem(_ uid: String) -> String { "tx_item_\(uid.prefix(8))" }
+    static func txInfoStatus(_ state: String) -> String { "tx_info_status_\(state)" }
+    static func txInfoHash(_ hash: String) -> String { "tx_info_hash_\(hash.prefix(8))" }
 }

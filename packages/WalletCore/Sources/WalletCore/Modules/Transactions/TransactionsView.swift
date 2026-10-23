@@ -88,6 +88,7 @@ struct TransactionsView: View {
                 }
                 .opacity(viewItem.spam ? 0.25 : 1)
             }
+            .accessibilityIdentifier(TestTags.txItem(viewItem.id))
         }
 
         @ViewBuilder private func iconView(viewItem: TransactionsViewModel.ViewItem) -> some View {
