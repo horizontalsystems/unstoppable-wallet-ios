@@ -2,12 +2,12 @@ import Foundation
 import MarketKit
 import RxSwift
 
-/// Resolves Zcash Names (`alice.zcash`, `alice.zec`) into unified addresses through the ZNS indexer (Android
+/// Resolves Zcash Names (`alice.zcash`, `alice.zec`) into unified addresses through the ZNS Resolver (Android
 /// `AddressHandlerZns`). The resolved address then goes through the regular Zcash parser, the way an ENS name goes
 /// through its chain's parser.
 class ZnsAddressParserItem: IAddressParserItem {
-    // On-chain name rules (zcashme/ZNS memo.rs): 1 to 62 lowercase ASCII letters and digits
-    private static let nameRegex = try! NSRegularExpression(pattern: "\\A[a-z0-9]{1,62}\\z")
+    // Name rules (zcashnames.com/docs/protocol/name-validation): 1 to 63 lowercase ASCII letters and digits
+    private static let nameRegex = try! NSRegularExpression(pattern: "\\A[a-z0-9]{1,63}\\z")
     private static let suffixes = [".zcash", ".zec"]
 
     private let resolver: ZnsResolver
