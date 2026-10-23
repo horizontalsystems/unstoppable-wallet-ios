@@ -104,4 +104,14 @@ enum TestTags {
     static func txItem(_ uid: String) -> String { "tx_item_\(uid.prefix(8))" }
     static func txInfoStatus(_ state: String) -> String { "tx_info_status_\(state)" }
     static func txInfoHash(_ hash: String) -> String { "tx_info_hash_\(hash.prefix(8))" }
+
+    static let swapTokenIn = "swap_token_in"
+    static let swapTokenOut = "swap_token_out"
+    static let swapAmountIn = "swap_amount_in"
+    static let swapAmountOut = "swap_amount_out"
+    static let swapSwitch = "swap_switch"
+    static let swapNext = "swap_next"
+    static let swapError = "swap_error"
+    static let swapProvider = "swap_provider"
+    static func swapCoin(_ coinCode: String, _ blockchainUid: String) -> String { "swap_coin_\(coinCode)_\(blockchainUid)" }
 }
