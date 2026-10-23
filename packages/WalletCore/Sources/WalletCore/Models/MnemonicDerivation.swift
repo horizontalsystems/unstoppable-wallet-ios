@@ -10,7 +10,12 @@ enum MnemonicDerivation: String, CaseIterable {
     case bip86
 
     var title: String {
-        rawValue.uppercased()
+        switch self {
+        case .bip44: return "BIP 44"
+        case .bip49: return "BIP 49"
+        case .bip84: return "BIP 84"
+        case .bip86: return "BIP 86"
+        }
     }
 
     var addressType: String {
