@@ -27,6 +27,20 @@ struct BalanceCoinIconView: View {
                 }
             }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier(TestTags.balanceItemSync(token.coin.code, syncName))
+    }
+
+    private var syncName: String {
+        if isReachable, state.isNotSynced {
+            return "failed"
+        }
+
+        if state.syncing {
+            return "syncing"
+        }
+
+        return "synced"
     }
 
     @ViewBuilder

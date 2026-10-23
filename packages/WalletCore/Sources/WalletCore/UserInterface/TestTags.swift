@@ -49,4 +49,22 @@ enum TestTags {
     static let pinTitle = "pin_title"
     static let pinError = "pin_error"
     static let pinAttemptsLeft = "pin_attempts_left"
+
+    static func tab(_ name: String) -> String { "tab_\(name.lowercased())" }
+
+    static let balanceTotal = "balance_total"
+
+    static let balanceScan = "balance_scan"
+    static let balanceReceive = "balance_receive"
+    static let balanceSend = "balance_send"
+    static let balanceSwap = "balance_swap"
+
+    static let balanceTransactions = "balance_transactions"
+    static let balanceManageAccounts = "balance_manage_accounts"
+    static let balanceManageCoins = "balance_manage_coins"
+    static let balanceSyncIndicator = "balance_sync_indicator"
+
+    static func balanceItem(_ coinCode: String) -> String { "balance_item_\(coinCode)" }
+    static func balanceItemAmount(_ coinCode: String) -> String { "balance_item_\(coinCode)_amount" }
+    static func balanceItemSync(_ coinCode: String, _ state: String) -> String { "balance_item_\(coinCode)_\(state)" }
 }

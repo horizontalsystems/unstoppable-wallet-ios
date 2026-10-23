@@ -30,9 +30,13 @@ struct WalletListItemView: View, Equatable {
                     title: primaryValue,
                     subtitle: secondary
                 )
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier(TestTags.balanceItemAmount(item.wallet.coin.code))
             },
             action: action
         )
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier(TestTags.balanceItem(item.wallet.coin.code))
     }
 
     private var subtitle: CustomStringConvertible {

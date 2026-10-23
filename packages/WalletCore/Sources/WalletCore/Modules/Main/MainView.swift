@@ -22,13 +22,13 @@ struct MainView: View {
                 TabView(selection: $viewModel.selectedTab) {
                     if viewModel.showMarket {
                         MarketView()
-                            .tabItem { Label("", image: "market_filled") }
+                            .tabItem { Label("", image: "market_filled").accessibilityIdentifier(TestTags.tab("Market")) }
                             .tag(MainViewModel.Tab.markets)
                             .tint(.themeLeah)
                     }
 
                     WalletView(viewModel: walletViewModel, selectedWallet: $selectedWallet)
-                        .tabItem { Label("", image: "wallet_filled") }
+                        .tabItem { Label("", image: "wallet_filled").accessibilityIdentifier(TestTags.tab("Balance")) }
                         .tag(MainViewModel.Tab.wallet)
                         .tint(.themeLeah)
 
@@ -39,13 +39,13 @@ struct MainView: View {
                             sendPresented: $swapSendPresented,
                             splitRecipientsPresented: $splitRecipientsPresented
                         )
-                        .tabItem { Label("", image: "swap_filled") }
+                        .tabItem { Label("", image: "swap_filled").accessibilityIdentifier(TestTags.tab("Swap")) }
                         .tag(MainViewModel.Tab.swap)
                         .tint(.themeLeah)
                     }
 
                     MainSettingsView(walletConnectPresented: $walletConnectPresented)
-                        .tabItem { Label("", image: "settings_filled") }
+                        .tabItem { Label("", image: "settings_filled").accessibilityIdentifier(TestTags.tab("Settings")) }
                         .tag(MainViewModel.Tab.settings)
                         .badge(badgeViewModel.badge.map { _ in "1" })
                         .tint(.themeLeah)
@@ -117,6 +117,7 @@ struct MainView: View {
                     Button(action: onTapHistory) {
                         Image("clock")
                     }
+                    .accessibilityIdentifier(TestTags.balanceTransactions)
 
                     Button(action: {
                         Coordinator.shared.present { isPresented in
@@ -126,6 +127,7 @@ struct MainView: View {
                     }) {
                         Image("wallet_change")
                     }
+                    .accessibilityIdentifier(TestTags.balanceManageAccounts)
                 }
             }
         case .swap:
