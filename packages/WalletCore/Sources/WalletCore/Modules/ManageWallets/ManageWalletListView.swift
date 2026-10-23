@@ -38,6 +38,7 @@ struct ManageWalletListView: View {
                     }, set: { isEnabled in
                         viewModel.toggle(item: item, enabled: isEnabled)
                     }).animation(), style: .yellow)
+                        .accessibilityIdentifier(TestTags.manageCoin(item.token.coin.code, item.token.blockchainType.uid))
                 }
             }
         )

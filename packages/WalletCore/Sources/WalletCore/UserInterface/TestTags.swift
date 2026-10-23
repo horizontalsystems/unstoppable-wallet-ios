@@ -82,4 +82,6 @@ enum TestTags {
     static let receiveSetAmount = "receive_set_amount"
     static let receiveShare = "receive_share"
     static let receiveCopy = "receive_copy"
+
+    static func manageCoin(_ coinCode: String, _ blockchainUid: String) -> String { "manage_coin_\(coinCode)_\(blockchainUid)" }
 }
