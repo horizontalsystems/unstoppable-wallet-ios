@@ -48,10 +48,12 @@ public struct EvmDecoration {
                 token: token,
                 appValueType: .regular(appValue: appValue),
                 currencyValue: currencyValue,
+                identifier: TestTags.confirmAmount,
             ),
             .address(
                 value: to.eip55,
-                blockchainType: token.blockchainType
+                blockchainType: token.blockchainType,
+                identifier: TestTags.confirmRecipient
             ),
         ], isFlow: true)
     }

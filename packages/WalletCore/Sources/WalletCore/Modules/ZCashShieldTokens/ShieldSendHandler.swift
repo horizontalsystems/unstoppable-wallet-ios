@@ -129,10 +129,11 @@ extension ShieldSendHandler {
                 token: token,
                 appValueType: .regular(appValue: AppValue(token: token, value: amount)),
                 currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
+                identifier: TestTags.confirmAmount,
             ))
             if let recipient {
                 flowFields.append(
-                    .selfAddress(value: recipient.stringEncoded, title: "send.confirmation.send_to_shielded".localized)
+                    .selfAddress(value: recipient.stringEncoded, title: "send.confirmation.send_to_shielded".localized, identifier: TestTags.confirmRecipient)
                 )
             }
 
@@ -151,7 +152,8 @@ extension ShieldSendHandler {
                 .init(fields + [
                     .fee(
                         title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
-                        amountData: .init(appValue: appValue, currencyValue: currencyValue)
+                        amountData: .init(appValue: appValue, currencyValue: currencyValue),
+                        identifier: TestTags.confirmNetworkFee
                     ),
                 ], isMain: false),
             ]

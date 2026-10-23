@@ -53,15 +53,17 @@ public struct AmountField: SendFieldContent {
     public let token: Token
     public let appValueType: SendField.AppValueType
     public let currencyValue: CurrencyValue?
+    public let identifier: String?
 
-    public init(token: Token, appValueType: SendField.AppValueType, currencyValue: CurrencyValue?) {
+    public init(token: Token, appValueType: SendField.AppValueType, currencyValue: CurrencyValue?, identifier: String? = nil) {
         self.token = token
         self.appValueType = appValueType
         self.currencyValue = currencyValue
+        self.identifier = identifier
     }
 
     @ViewBuilder @MainActor public func listRow() -> some View {
-        Cell(
+        let row = Cell(
             left: {
                 CoinIconView(token: token)
             },
@@ -78,6 +80,14 @@ public struct AmountField: SendFieldContent {
                 )
             }
         )
+
+        if let identifier {
+            row
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier(identifier)
+        } else {
+            row
+        }
     }
 }
 
@@ -271,16 +281,27 @@ public struct SimpleValueField: SendFieldContent {
 public struct AddressField: SendFieldContent {
     public let value: String
     public let blockchainType: BlockchainType
+    public let identifier: String?
 
-    public init(value: String, blockchainType: BlockchainType) {
+    public init(value: String, blockchainType: BlockchainType, identifier: String? = nil) {
         self.value = value
         self.blockchainType = blockchainType
+        self.identifier = identifier
     }
 
     @ViewBuilder @MainActor public func listRow() -> some View {
         // the row's view model is built from the address once per identity, so a new address needs a new identity
-        AddressRowsView(value: value, blockchainType: blockchainType)
-            .id([blockchainType.uid, value])
+        let row = AddressRowsView(value: value, blockchainType: blockchainType)
+
+        if let identifier {
+            row
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier(identifier)
+                .id([blockchainType.uid, value])
+        } else {
+            row
+                .id([blockchainType.uid, value])
+        }
     }
 }
 
@@ -307,14 +328,16 @@ public struct RecipientField: SendFieldContent {
 public struct SelfAddressField: SendFieldContent {
     public let value: String
     public let title: String?
+    public let identifier: String?
 
-    public init(value: String, title: String? = nil) {
+    public init(value: String, title: String? = nil, identifier: String? = nil) {
         self.value = value
         self.title = title
+        self.identifier = identifier
     }
 
     @ViewBuilder @MainActor public func listRow() -> some View {
-        Cell(
+        let row = Cell(
             left: {
                 ThemeImage("wallet_filled", size: .iconSize24)
             },
@@ -322,6 +345,14 @@ public struct SelfAddressField: SendFieldContent {
                 MultiText(subtitle: ComponentText(text: title ?? "send.confirmation.send_to_own".localized, colorStyle: .primary), description: value)
             }
         )
+
+        if let identifier {
+            row
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier(identifier)
+        } else {
+            row
+        }
     }
 }
 
@@ -350,16 +381,26 @@ public struct FeeField: SendFieldContent {
     public let initialFlipped: Bool
     public let title: CustomStringConvertible
     public let amountData: AmountData?
+    public let identifier: String?
 
-    public init(title: CustomStringConvertible, amountData: AmountData?, initialFlipped: Bool = false) {
+    public init(title: CustomStringConvertible, amountData: AmountData?, initialFlipped: Bool = false, identifier: String? = nil) {
         self.initialFlipped = initialFlipped
         self.title = title
         self.amountData = amountData
+        self.identifier = identifier
     }
 
     @ViewBuilder @MainActor public func listRow() -> some View {
         let feeData = FlipRow.TokenFeeData(amountData: amountData)
-        FlipRow(title: title, flipData: feeData, initialFlipped: initialFlipped)
+        let row = FlipRow(title: title, flipData: feeData, initialFlipped: initialFlipped)
+
+        if let identifier {
+            row
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier(identifier)
+        } else {
+            row
+        }
     }
 }
 
@@ -473,8 +514,8 @@ extension SendField {
 }
 
 public extension SendField {
-    static func amount(token: Token, appValueType: AppValueType, currencyValue: CurrencyValue?) -> SendField {
-        SendField(AmountField(token: token, appValueType: appValueType, currencyValue: currencyValue))
+    static func amount(token: Token, appValueType: AppValueType, currencyValue: CurrencyValue?, identifier: String? = nil) -> SendField {
+        SendField(AmountField(token: token, appValueType: appValueType, currencyValue: currencyValue, identifier: identifier))
     }
 
     static func splitOutput(token: Token, percent: Int, appValueType: AppValueType, currencyValue: CurrencyValue?) -> SendField {
@@ -501,24 +542,24 @@ public extension SendField {
         SendField(SimpleValueField(icon: icon, title: title, value: value))
     }
 
-    static func address(value: String, blockchainType: BlockchainType) -> SendField {
-        SendField(AddressField(value: value, blockchainType: blockchainType))
+    static func address(value: String, blockchainType: BlockchainType, identifier: String? = nil) -> SendField {
+        SendField(AddressField(value: value, blockchainType: blockchainType, identifier: identifier))
     }
 
     static func recipient(title: String, value: String, copyable: Bool, blockchainType: BlockchainType) -> SendField {
         SendField(RecipientField(title: title, value: value, copyable: copyable, blockchainType: blockchainType))
     }
 
-    static func selfAddress(value: String, title: String? = nil) -> SendField {
-        SendField(SelfAddressField(value: value, title: title))
+    static func selfAddress(value: String, title: String? = nil, identifier: String? = nil) -> SendField {
+        SendField(SelfAddressField(value: value, title: title, identifier: identifier))
     }
 
     static func price(title: String, tokenA: Token, tokenB: Token, amountA: Decimal, amountB: Decimal) -> SendField {
         SendField(PriceField(title: title, tokenA: tokenA, tokenB: tokenB, amountA: amountA, amountB: amountB))
     }
 
-    static func fee(title: CustomStringConvertible, amountData: AmountData?) -> SendField {
-        SendField(FeeField(title: title, amountData: amountData))
+    static func fee(title: CustomStringConvertible, amountData: AmountData?, identifier: String? = nil) -> SendField {
+        SendField(FeeField(title: title, amountData: amountData, identifier: identifier))
     }
 
     static func hex(title: String, value: String) -> SendField {

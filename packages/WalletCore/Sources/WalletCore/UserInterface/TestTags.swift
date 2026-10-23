@@ -93,4 +93,9 @@ enum TestTags {
     static let enterAddressInput = "enter_address_input"
     static let enterAddressSubmit = "enter_address_submit"
     static let enterAddressError = "enter_address_error"
+
+    static let confirmAmount = "confirm_amount"
+    static let confirmRecipient = "confirm_recipient"
+    static let confirmNetworkFee = "confirm_network_fee"
+    static let confirmSend = "confirm_send"
 }

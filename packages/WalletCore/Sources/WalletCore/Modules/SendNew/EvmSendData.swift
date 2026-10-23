@@ -57,7 +57,7 @@ class EvmSendData: ISendData {
     }
 
     func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
-        EvmSendHelper.feeFields(evmFeeData: evmFeeData, gasPrice: gasPrice, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid])
+        EvmSendHelper.feeFields(evmFeeData: evmFeeData, gasPrice: gasPrice, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid], identifier: TestTags.confirmNetworkFee)
     }
 
     func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {

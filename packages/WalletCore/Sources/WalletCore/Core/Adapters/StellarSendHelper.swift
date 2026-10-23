@@ -160,7 +160,8 @@ extension StellarSendHelper {
         fee: Decimal?,
         feeToken: Token,
         currency: Currency,
-        feeTokenRate: Decimal?
+        feeTokenRate: Decimal?,
+        identifier: String? = nil
     ) -> [SendField] {
         var viewItems = [SendField]()
 
@@ -171,7 +172,8 @@ extension StellarSendHelper {
             viewItems.append(
                 .fee(
                     title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
-                    amountData: .init(appValue: appValue, currencyValue: currencyValue)
+                    amountData: .init(appValue: appValue, currencyValue: currencyValue),
+                    identifier: identifier
                 )
             )
         }

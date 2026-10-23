@@ -42,11 +42,12 @@ final class ThorChainSendData: ISendData {
             .amount(
                 token: token,
                 appValueType: .regular(appValue: amountValue),
-                currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) }
+                currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
+                identifier: TestTags.confirmAmount
             ),
         ]
         if let recipient = quote.recipient {
-            flowFields.append(.address(value: recipient.raw, blockchainType: token.blockchainType))
+            flowFields.append(.address(value: recipient.raw, blockchainType: token.blockchainType, identifier: TestTags.confirmRecipient))
         }
 
         var detailsFields = [SendField]()
@@ -59,7 +60,8 @@ final class ThorChainSendData: ISendData {
                 amountData: AmountData(
                     appValue: feeValue,
                     currencyValue: rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: $0 * fee) }
-                )
+                ),
+                identifier: TestTags.confirmNetworkFee
             )
         )
 

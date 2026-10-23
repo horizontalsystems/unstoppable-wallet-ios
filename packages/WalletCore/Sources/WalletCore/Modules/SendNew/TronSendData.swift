@@ -85,11 +85,13 @@ class TronSendData: ISendData {
                 .amount(
                     token: token,
                     appValueType: appValue.isMaxValue ? .infinity(code: appValue.code) : .regular(appValue: appValue),
-                    currencyValue: appValue.isMaxValue ? nil : rate.map { CurrencyValue(currency: currency, value: $0 * value) }
+                    currencyValue: appValue.isMaxValue ? nil : rate.map { CurrencyValue(currency: currency, value: $0 * value) },
+                    identifier: TestTags.confirmAmount
                 ),
                 .address(
                     value: to.base58,
-                    blockchainType: token.blockchainType
+                    blockchainType: token.blockchainType,
+                    identifier: TestTags.confirmRecipient
                 ),
             ],
             isFlow: true
@@ -153,7 +155,7 @@ class TronSendData: ISendData {
     }
 
     func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
-        TronSendHelper.feeFields(baseToken: self.baseToken, totalFees: totalFees, fees: fees, currency: currency, feeTokenRate: rates[baseToken.coin.uid])
+        TronSendHelper.feeFields(baseToken: self.baseToken, totalFees: totalFees, fees: fees, currency: currency, feeTokenRate: rates[baseToken.coin.uid], identifier: TestTags.confirmNetworkFee)
     }
 
     func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {

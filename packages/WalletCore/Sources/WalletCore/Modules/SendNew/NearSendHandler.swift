@@ -150,11 +150,13 @@ extension NearSendHandler {
                 .amount(
                     token: token,
                     appValueType: .regular(appValue: AppValue(token: token, value: amount)),
-                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) }
+                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
+                    identifier: TestTags.confirmAmount
                 ),
                 .address(
                     value: address,
-                    blockchainType: .near
+                    blockchainType: .near,
+                    identifier: TestTags.confirmRecipient
                 ),
             ], isFlow: true)
         }
@@ -170,7 +172,7 @@ extension NearSendHandler {
         }
 
         func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
-            NearSendHelper.feeFields(fee: fee, storageDeposit: estimate?.storageDeposit, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid])
+            NearSendHelper.feeFields(fee: fee, storageDeposit: estimate?.storageDeposit, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid], identifier: TestTags.confirmNetworkFee)
         }
 
         func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {

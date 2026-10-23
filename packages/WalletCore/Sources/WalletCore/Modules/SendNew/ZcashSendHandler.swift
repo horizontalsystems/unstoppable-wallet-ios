@@ -111,7 +111,8 @@ extension ZcashSendHandler {
                 fee: proposal?.totalFeeRequired().decimalValue.decimalValue,
                 feeToken: baseToken,
                 currency: currency,
-                feeTokenRate: rates[baseToken.coin.uid]
+                feeTokenRate: rates[baseToken.coin.uid],
+                identifier: TestTags.confirmNetworkFee
             )
         }
 
@@ -133,11 +134,13 @@ extension ZcashSendHandler {
                 token: baseToken,
                 appValueType: .regular(appValue: appValue),
                 currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * amount) },
+                identifier: TestTags.confirmAmount,
             )
 
             let to = SendField.address(
                 value: recipient.stringEncoded,
-                blockchainType: .zcash
+                blockchainType: .zcash,
+                identifier: TestTags.confirmRecipient
             )
 
             return .init([from, to], isFlow: true)
@@ -159,7 +162,8 @@ extension ZcashSendHandler {
                 feeFields.append(
                     .fee(
                         title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
-                        amountData: .init(appValue: appValue, currencyValue: currencyValue)
+                        amountData: .init(appValue: appValue, currencyValue: currencyValue),
+                        identifier: TestTags.confirmNetworkFee
                     )
                 )
             }
