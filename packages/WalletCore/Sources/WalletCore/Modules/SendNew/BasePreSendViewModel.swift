@@ -239,6 +239,7 @@ public class BasePreSendViewModel: ObservableObject {
         var disabled = true
         var showProgress = false
         var progress: Double?
+        var identifier = TestTags.sendNext
 
         if !isReachable {
             title = "alert.no_internet".localized
@@ -258,10 +259,12 @@ public class BasePreSendViewModel: ObservableObject {
                 title = stepTitle
                 style = .gray
                 disabled = false
+                identifier = TestTags.sendAction
             case let .pending(stepTitle, stepProgress):
                 title = stepTitle
                 showProgress = stepProgress == nil
                 progress = stepProgress
+                identifier = TestTags.sendAction
             }
         } else if let availableBalance, let amount, amount > availableBalance {
             title = "send.insufficient_balance".localized
@@ -274,7 +277,7 @@ public class BasePreSendViewModel: ObservableObject {
             disabled = sendData == nil
         }
 
-        return PreSendButtonState(title: title, disabled: disabled, showProgress: showProgress, progress: progress, style: style)
+        return PreSendButtonState(title: title, disabled: disabled, showProgress: showProgress, progress: progress, style: style, identifier: identifier)
     }
 
     func subscribeCoinPrice(token: Token?) {
@@ -382,4 +385,5 @@ struct PreSendButtonState {
     var progress: Double?
     // the wallet's own step (shield ZEC) is secondary like "Enable coin", not the yellow Next
     var style: PrimaryButtonStyle.Style = .yellow
+    var identifier: String = TestTags.sendNext
 }

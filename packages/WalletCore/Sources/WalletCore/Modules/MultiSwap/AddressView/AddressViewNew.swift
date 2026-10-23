@@ -11,16 +11,18 @@ struct AddressViewNew: View {
     @Binding var result: AddressInput.Result
     @Binding var borderColor: Color
     @Binding var foregroundColor: Color
+    private let identifier: String?
 
     @State private var fieldText = ""
 
-    init(initial: AddressInput.Initial, text: Binding<String>, result: Binding<AddressInput.Result>, parserFilter: AddressParserFactory.ParserFilter?, borderColor: Binding<Color>, foregroundColor: Binding<Color> = .constant(.themeLeah)) {
+    init(initial: AddressInput.Initial, text: Binding<String>, result: Binding<AddressInput.Result>, parserFilter: AddressParserFactory.ParserFilter?, borderColor: Binding<Color>, foregroundColor: Binding<Color> = .constant(.themeLeah), identifier: String? = nil) {
         _viewModel = StateObject(wrappedValue: AddressViewModelNew(initial: initial, parserFilter: parserFilter))
 
         _text = text
         _result = result
         _borderColor = borderColor
         _foregroundColor = foregroundColor
+        self.identifier = identifier
     }
 
     var body: some View {
@@ -81,6 +83,16 @@ struct AddressViewNew: View {
     }
 
     @ViewBuilder func textField(placeholder: String, text: Binding<String>) -> some View {
+        let field = baseTextField(placeholder: placeholder, text: text)
+
+        if let identifier {
+            field.accessibilityIdentifier(identifier)
+        } else {
+            field
+        }
+    }
+
+    @ViewBuilder private func baseTextField(placeholder: String, text: Binding<String>) -> some View {
         if #available(iOS 16, *) {
             TextField(
                 placeholder,

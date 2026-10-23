@@ -84,4 +84,13 @@ enum TestTags {
     static let receiveCopy = "receive_copy"
 
     static func manageCoin(_ coinCode: String, _ blockchainUid: String) -> String { "manage_coin_\(coinCode)_\(blockchainUid)" }
+
+    static let sendAmountInput = "send_amount_input"
+    static let sendRecipientRow = "send_recipient_row"
+    static let sendNext = "send_next"
+    static let sendAction = "send_action"
+
+    static let enterAddressInput = "enter_address_input"
+    static let enterAddressSubmit = "enter_address_submit"
+    static let enterAddressError = "enter_address_error"
 }

@@ -72,6 +72,7 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
                                     .padding(.horizontal, 16)
                                     .frame(height: 89)
                             }
+                            .accessibilityIdentifier(TestTags.sendRecipientRow)
                         }
 
                         Color.themeBlade.frame(height: .heightOnePixel)
@@ -107,6 +108,7 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
             focusedField: $focusField,
             amountField: .amount,
             fiatField: .fiatAmount,
+            amountIdentifier: TestTags.sendAmountInput,
             onSelectToken: onSelectToken
         )
     }
@@ -218,6 +220,7 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
         }
         .disabled(state.disabled)
         .buttonStyle(PrimaryButtonStyle(style: state.style))
+        .accessibilityIdentifier(state.identifier)
     }
 
     private func presentAddressPicker() {
