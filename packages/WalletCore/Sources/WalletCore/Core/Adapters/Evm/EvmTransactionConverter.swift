@@ -3,7 +3,6 @@ import Eip20Kit
 import EvmKit
 import Foundation
 import MarketKit
-import NftKit
 import OneInchKit
 import UniswapKit
 
@@ -117,62 +116,6 @@ public class EvmTransactionConverter {
             TransferEvent(
                 address: transfer.to.eip55,
                 value: eip20Value(baseToken: baseToken, coinManager: coinManager, tokenAddress: transfer.contractAddress, value: transfer.value, sign: .minus, tokenInfo: transfer.tokenInfo)
-            )
-        }
-    }
-
-    private func transferEvents(incomingEip721Transfers: [Eip721TransferEventInstance]) -> [TransferEvent] {
-        incomingEip721Transfers.map { transfer in
-            TransferEvent(
-                address: transfer.from.eip55,
-                value: AppValue(
-                    nftUid: .evm(blockchainType: source.blockchainType, contractAddress: transfer.contractAddress.hex, tokenId: transfer.tokenId.description),
-                    tokenName: transfer.tokenInfo?.tokenName,
-                    tokenSymbol: transfer.tokenInfo?.tokenSymbol,
-                    value: 1
-                )
-            )
-        }
-    }
-
-    private func transferEvents(outgoingEip721Transfers: [Eip721TransferEventInstance]) -> [TransferEvent] {
-        outgoingEip721Transfers.map { transfer in
-            TransferEvent(
-                address: transfer.to.eip55,
-                value: AppValue(
-                    nftUid: .evm(blockchainType: source.blockchainType, contractAddress: transfer.contractAddress.hex, tokenId: transfer.tokenId.description),
-                    tokenName: transfer.tokenInfo?.tokenName,
-                    tokenSymbol: transfer.tokenInfo?.tokenSymbol,
-                    value: -1
-                )
-            )
-        }
-    }
-
-    private func transferEvents(incomingEip1155Transfers: [Eip1155TransferEventInstance]) -> [TransferEvent] {
-        incomingEip1155Transfers.map { transfer in
-            TransferEvent(
-                address: transfer.from.eip55,
-                value: AppValue(
-                    nftUid: .evm(blockchainType: source.blockchainType, contractAddress: transfer.contractAddress.hex, tokenId: transfer.tokenId.description),
-                    tokenName: transfer.tokenInfo?.tokenName,
-                    tokenSymbol: transfer.tokenInfo?.tokenSymbol,
-                    value: Self.convertAmount(amount: transfer.value, decimals: 0, sign: .plus)
-                )
-            )
-        }
-    }
-
-    private func transferEvents(outgoingEip1155Transfers: [Eip1155TransferEventInstance]) -> [TransferEvent] {
-        outgoingEip1155Transfers.map { transfer in
-            TransferEvent(
-                address: transfer.to.eip55,
-                value: AppValue(
-                    nftUid: .evm(blockchainType: source.blockchainType, contractAddress: transfer.contractAddress.hex, tokenId: transfer.tokenId.description),
-                    tokenName: transfer.tokenInfo?.tokenName,
-                    tokenSymbol: transfer.tokenInfo?.tokenSymbol,
-                    value: Self.convertAmount(amount: transfer.value, decimals: 0, sign: .minus)
-                )
             )
         }
     }
@@ -312,38 +255,6 @@ public extension EvmTransactionConverter {
                 protected: protected
             )
 
-        case let decoration as Eip721SafeTransferFromDecoration:
-            return EvmOutgoingTransactionRecord(
-                source: source,
-                transaction: transaction,
-                baseToken: baseToken,
-                to: decoration.to.eip55,
-                value: AppValue(
-                    nftUid: .evm(blockchainType: source.blockchainType, contractAddress: decoration.contractAddress.hex, tokenId: decoration.tokenId.description),
-                    tokenName: decoration.tokenInfo?.tokenName,
-                    tokenSymbol: decoration.tokenInfo?.tokenSymbol,
-                    value: Self.convertAmount(amount: 1, decimals: 0, sign: .minus)
-                ),
-                sentToSelf: decoration.sentToSelf,
-                protected: protected
-            )
-
-        case let decoration as Eip1155SafeTransferFromDecoration:
-            return EvmOutgoingTransactionRecord(
-                source: source,
-                transaction: transaction,
-                baseToken: baseToken,
-                to: decoration.to.eip55,
-                value: AppValue(
-                    nftUid: .evm(blockchainType: source.blockchainType, contractAddress: decoration.contractAddress.hex, tokenId: decoration.tokenId.description),
-                    tokenName: decoration.tokenInfo?.tokenName,
-                    tokenSymbol: decoration.tokenInfo?.tokenSymbol,
-                    value: Self.convertAmount(amount: decoration.value, decimals: 0, sign: .minus)
-                ),
-                sentToSelf: decoration.sentToSelf,
-                protected: protected
-            )
-
         case let decoration as UnknownTransactionDecoration:
             let internalTransactions = decoration.internalTransactions.filter { $0.to == userAddress }
 
@@ -354,16 +265,8 @@ public extension EvmTransactionConverter {
             let incomingEip20Transfers = eip20Transfers.filter { $0.to == userAddress && $0.from != userAddress }
             let outgoingEip20Transfers = eip20Transfers.filter { $0.from == userAddress }
 
-            let eip721Transfers = decoration.eventInstances.compactMap { $0 as? Eip721TransferEventInstance }
-            let incomingEip721Transfers = eip721Transfers.filter { $0.to == userAddress && $0.from != userAddress }
-            let outgoingEip721Transfers = eip721Transfers.filter { $0.from == userAddress }
-
-            let eip1155Transfers = decoration.eventInstances.compactMap { $0 as? Eip1155TransferEventInstance }
-            let incomingEip1155Transfers = eip1155Transfers.filter { $0.to == userAddress && $0.from != userAddress }
-            let outgoingEip1155Transfers = eip1155Transfers.filter { $0.from == userAddress }
-
-            let incomingEvents = Self.transferEvents(baseToken: baseToken, internalTransactions: internalTransactions) + Self.transferEvents(baseToken: baseToken, coinManager: coinManager, incomingEip20Transfers: incomingEip20Transfers) + transferEvents(incomingEip721Transfers: incomingEip721Transfers) + transferEvents(incomingEip1155Transfers: incomingEip1155Transfers)
-            let outgoingEvents = Self.transferEvents(baseToken: baseToken, coinManager: coinManager, outgoingEip20Transfers: outgoingEip20Transfers) + transferEvents(outgoingEip721Transfers: outgoingEip721Transfers) + transferEvents(outgoingEip1155Transfers: outgoingEip1155Transfers)
+            let incomingEvents = Self.transferEvents(baseToken: baseToken, internalTransactions: internalTransactions) + Self.transferEvents(baseToken: baseToken, coinManager: coinManager, incomingEip20Transfers: incomingEip20Transfers)
+            let outgoingEvents = Self.transferEvents(baseToken: baseToken, coinManager: coinManager, outgoingEip20Transfers: outgoingEip20Transfers)
 
             if transaction.from == userAddress, let contractAddress = transaction.to, let value = transaction.value {
                 return ContractCallTransactionRecord(

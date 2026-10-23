@@ -103,13 +103,6 @@ public struct AppValue {
         return decimals.map { value.isMaxValue(decimals: $0) } ?? false
     }
 
-    var nftUid: NftUid? {
-        switch kind {
-        case let .nft(nftUid, _, _): return nftUid
-        default: return nil
-        }
-    }
-
     public var zeroValue: Bool {
         value == 0
     }

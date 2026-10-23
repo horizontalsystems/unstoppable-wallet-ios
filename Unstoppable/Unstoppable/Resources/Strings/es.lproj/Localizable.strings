@@ -1005,7 +1005,6 @@
 "market.top.lowest_volume" = "Menor Volumen";
 "market.top.top_gainers" = "Máximos Ganadores";
 "market.top.top_losers" = "Máximos Perdedores";
-"market.top.top_collections" = "Mejores colecciones NFT";
 "market.top.floor_price" = "Piso:";
 "market.top.top_market_pairs" = "Mejores pares de mercado";
 "market.top.top_platforms" = "Plataformas superiores";
@@ -2512,65 +2511,6 @@
 "watch_address.birthday_height.placeholder" = "Altura de restauración (0000000)";
 "watch_address.birthday_height.error.invalid" = "Altura de restauración no válida";
 "watch_address.monero_warning.description" = "Una wallet de solo visualización de Monero muestra únicamente las transacciones entrantes. El saldo mostrado puede ser inexacto.";
-
-// Nft Collections
-
-"nft_collections.title" = "NFTS";
-"nft_collections.price_mode" = "Modo precio";
-"nft_collections.last_sale" = "Última venta";
-"nft_collections.average_7d" = "Promedio 7D";
-"nft_collections.average_30d" = "Promedio 30D";
-"nft_collections.on_sale" = "En venta";
-"nft_collections.empty" = "No tiene un NFT en su cartera";
-
-// Nft Asset
-
-"nft_asset.tab.overview" = "Información General";
-"nft_asset.tab.activity" = "Actividad";
-
-"nft_asset.last_sale" = "Última venta";
-"nft_asset.average_7d" = "Promedio de 7 días";
-"nft_asset.average_30d" = "Promedio de 30 días";
-"nft_asset.floor_price" = "Precio mínimo";
-"nft_asset.on_sale" = "En venta";
-"nft_asset.on_auction" = "En subasta";
-"nft_asset.until_date" = "hasta %@";
-"nft_asset.buy_now" = "Comprar ahora";
-"nft_asset.minimum_bid" = "Licitación Mínima";
-"nft_asset.best_offer" = "Mejor oferta";
-"nft_asset.properties" = "Propiedades";
-"nft_asset.description" = "Descripción";
-"nft_asset.details" = "Detalles";
-"nft_asset.details.contract_address" = "Dirección del contrato";
-"nft_asset.details.token_id" = "ID del token";
-"nft_asset.details.token_standard" = "Token estándar";
-"nft_asset.details.blockchain" = "Blockchain";
-"nft_asset.links" = "Enlaces";
-"nft_asset.links.website" = "Website";
-
-// Nft Collection
-
-"nft_collection.tab.overview" = "Información General";
-"nft_collection.tab.assets" = "Elementos";
-"nft_collection.tab.activity" = "Actividad";
-
-"nft_collection.overview.description" = "Descripción";
-"nft_collection.overview.contracts" = "Contratos";
-"nft_collection.overview.links" = "Enlaces";
-"nft_collection.overview.links.website" = "Website";
-
-"nft_collection.overview.owners" = "Propietarios";
-"nft_collection.overview.items" = "Elementos";
-"nft_collection.overview.24h_volume" = "Volumen de 24 horas";
-"nft_collection.overview.today_sellers" = "Súbditos de hoy";
-"nft_collection.overview.floor_price" = "Precio mínimo";
-"nft_collection.overview.royalty" = "Royalty";
-"nft_collection.overview.inception_date" = "Fecha de inicio";
-
-"nft.activity.contracts" = "Contratos";
-"nft.activity.empty_list" = "Aún no hay actividad de artículo";
-"nft.activity.event_types" = "Tipos de Evento";
-"nft.activity.event_type.all" = "Todos los eventos";
 
 // Subscription Info
 

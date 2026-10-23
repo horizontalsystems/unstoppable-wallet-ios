@@ -1002,6 +1002,14 @@ public enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Drop NFT tables") { db in
+            for table in ["nftCollectionRecord", "nftAssetRecord", "nftMetadataSyncRecord", "nftAssetBriefMetadata"] {
+                if try db.tableExists(table) {
+                    try db.drop(table: table)
+                }
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

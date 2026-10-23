@@ -8,30 +8,25 @@ class TransactionInfoService {
     private let adapter: ITransactionsAdapter
     private let currencyManager: CurrencyManager
     private let rateService: HistoricalRateService
-    private let nftMetadataService: NftMetadataService
     private let balanceHiddenManager: BalanceHiddenManager
 
     private var transactionRecord: TransactionRecord
     private var rates = [RateKey: CurrencyValue]()
-    private var nftMetadata = [NftUid: NftAssetBriefMetadata]()
 
     private let transactionInfoItemSubject = PublishSubject<Item>()
 
-    init(transactionRecord: TransactionRecord, adapter: ITransactionsAdapter, currencyManager: CurrencyManager, rateService: HistoricalRateService, nftMetadataService: NftMetadataService, balanceHiddenManager: BalanceHiddenManager) {
+    init(transactionRecord: TransactionRecord, adapter: ITransactionsAdapter, currencyManager: CurrencyManager, rateService: HistoricalRateService, balanceHiddenManager: BalanceHiddenManager) {
         self.transactionRecord = transactionRecord
         self.adapter = adapter
         self.currencyManager = currencyManager
         self.rateService = rateService
-        self.nftMetadataService = nftMetadataService
         self.balanceHiddenManager = balanceHiddenManager
 
         subscribe(disposeBag, adapter.transactionsObservable(token: nil, filter: .all, address: nil)) { [weak self] in self?.sync(transactionRecords: $0) }
         subscribe(disposeBag, adapter.lastBlockUpdatedObservable) { [weak self] in self?.syncItem() }
         subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
-        subscribe(disposeBag, nftMetadataService.assetsBriefMetadataObservable) { [weak self] in self?.handle(assetsBriefMetadata: $0) }
 
         fetchRates()
-        fetchNftMetadata()
     }
 
     private var tokenForRates: [Token] {
@@ -146,24 +141,8 @@ class TransactionInfoService {
         syncItem()
     }
 
-    private func fetchNftMetadata() {
-        let nftUids = transactionRecord.nftUids
-        let assetsBriefMetadata = nftMetadataService.assetsBriefMetadata(nftUids: nftUids)
-
-        nftMetadata = assetsBriefMetadata
-
-        if !nftUids.subtracting(Set(assetsBriefMetadata.keys)).isEmpty {
-            nftMetadataService.fetch(nftUids: nftUids)
-        }
-    }
-
     private func handle(rate: (RateKey, CurrencyValue)) {
         rates[rate.0] = rate.1
-        syncItem()
-    }
-
-    private func handle(assetsBriefMetadata: [NftUid: NftAssetBriefMetadata]) {
-        nftMetadata = assetsBriefMetadata
         syncItem()
     }
 
@@ -195,7 +174,6 @@ extension TransactionInfoService {
             record: transactionRecord,
             lastBlockInfo: adapter.lastBlockInfo,
             rates: Dictionary(uniqueKeysWithValues: rates.map { key, value in (key.token.coin, value) }),
-            nftMetadata: nftMetadata,
             explorerTitle: adapter.explorerTitle,
             explorerUrl: adapter.explorerUrl(transactionHash: transactionRecord.transactionHash)
         )
@@ -215,7 +193,6 @@ extension TransactionInfoService {
         let record: TransactionRecord
         let lastBlockInfo: LastBlockInfo?
         let rates: [Coin: CurrencyValue]
-        let nftMetadata: [NftUid: NftAssetBriefMetadata]
         let explorerTitle: String
         let explorerUrl: String?
     }

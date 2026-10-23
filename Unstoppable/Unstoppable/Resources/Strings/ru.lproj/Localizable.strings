@@ -1005,7 +1005,6 @@
 "market.top.lowest_volume" = "Наименьший объем";
 "market.top.top_gainers" = "Показывают рост";
 "market.top.top_losers" = "Теряют в цене";
-"market.top.top_collections" = "Топ NFT коллекции";
 "market.top.floor_price" = "Цена";
 "market.top.top_market_pairs" = "Лучшие рыночные пары";
 "market.top.top_platforms" = "Топ платформы";
@@ -2512,65 +2511,6 @@
 "watch_address.birthday_height.placeholder" = "Высота восстановления (0000000)";
 "watch_address.birthday_height.error.invalid" = "Недействительная высота восстановления";
 "watch_address.monero_warning.description" = "Кошелёк Monero в режиме «только для просмотра» отображает только входящие транзакции. Отображаемый баланс может быть неточным.";
-
-// Nft Collections
-
-"nft_collections.title" = "NFT";
-"nft_collections.price_mode" = "Режим цены";
-"nft_collections.last_sale" = "Последняя продажа";
-"nft_collections.average_7d" = "Средн. 7Д";
-"nft_collections.average_30d" = "Средн. 30Д";
-"nft_collections.on_sale" = "В продаже";
-"nft_collections.empty" = "В вашем кошельке нет NFT";
-
-// Nft Asset
-
-"nft_asset.tab.overview" = "Обзор";
-"nft_asset.tab.activity" = "Активность";
-
-"nft_asset.last_sale" = "Последняя продажа";
-"nft_asset.average_7d" = "Среднее за 7 дней";
-"nft_asset.average_30d" = "Среднее за 30 дней";
-"nft_asset.floor_price" = "Минимальная цена";
-"nft_asset.on_sale" = "В продаже";
-"nft_asset.on_auction" = "На аукционе";
-"nft_asset.until_date" = "до %@";
-"nft_asset.buy_now" = "Купить сейчас";
-"nft_asset.minimum_bid" = "Мин. cтавка";
-"nft_asset.best_offer" = "Лучшее предложение";
-"nft_asset.properties" = "Параметры";
-"nft_asset.description" = "Описание";
-"nft_asset.details" = "Подробности";
-"nft_asset.details.contract_address" = "Адрес контракта";
-"nft_asset.details.token_id" = "ID токена";
-"nft_asset.details.token_standard" = "Стандарт Токена";
-"nft_asset.details.blockchain" = "Блокчейн";
-"nft_asset.links" = "Ссылки";
-"nft_asset.links.website" = "Веб-сайт";
-
-// Nft Collection
-
-"nft_collection.tab.overview" = "Обзор";
-"nft_collection.tab.assets" = "Элементы";
-"nft_collection.tab.activity" = "Активность";
-
-"nft_collection.overview.description" = "Описание";
-"nft_collection.overview.contracts" = "Контракты";
-"nft_collection.overview.links" = "Ссылки";
-"nft_collection.overview.links.website" = "Веб-сайт";
-
-"nft_collection.overview.owners" = "Владельцы";
-"nft_collection.overview.items" = "Элементы";
-"nft_collection.overview.24h_volume" = "Объем торгов (24ч)";
-"nft_collection.overview.today_sellers" = "Продавцы сегодня";
-"nft_collection.overview.floor_price" = "Минимальная цена";
-"nft_collection.overview.royalty" = "Вознаграждение";
-"nft_collection.overview.inception_date" = "Дата старта";
-
-"nft.activity.contracts" = "Контракты";
-"nft.activity.empty_list" = "Нет активности";
-"nft.activity.event_types" = "Типы событий";
-"nft.activity.event_type.all" = "Все события";
 
 // Subscription Info
 

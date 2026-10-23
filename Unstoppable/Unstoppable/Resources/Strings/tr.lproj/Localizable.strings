@@ -1005,7 +1005,6 @@
 "market.top.lowest_volume" = "En Düşük Hacim";
 "market.top.top_gainers" = "En Kazançlılar";
 "market.top.top_losers" = "Çok Kaybedenler";
-"market.top.top_collections" = "En İyi NFT Koleksiyonlar";
 "market.top.floor_price" = "Taban:";
 "market.top.top_market_pairs" = "En İyi Piyasa Çiftleri";
 "market.top.top_platforms" = "En İyi Platformlar";
@@ -2512,65 +2511,6 @@
 "watch_address.birthday_height.placeholder" = "Kurtarma Blok Yüksekliği (0000000)";
 "watch_address.birthday_height.error.invalid" = "Geçersiz Kurtarma Blok Yüksekliği";
 "watch_address.monero_warning.description" = "Monero yalnızca-izleme cüzdanı yalnızca gelen işlemleri gösterir. Görüntülenen bakiye doğru olmayabilir.";
-
-// Nft Collections
-
-"nft_collections.title" = "NFT'ler";
-"nft_collections.price_mode" = "Fiyat Modu";
-"nft_collections.last_sale" = "Son İndirim";
-"nft_collections.average_7d" = "Ortalama 7G";
-"nft_collections.average_30d" = "Ortalama 30G";
-"nft_collections.on_sale" = "İndirimde";
-"nft_collections.empty" = "Cüzdanınızda hiç NFT yok";
-
-// Nft Asset
-
-"nft_asset.tab.overview" = "İzleme";
-"nft_asset.tab.activity" = "Aktivite";
-
-"nft_asset.last_sale" = "Son İndirim";
-"nft_asset.average_7d" = "7 Günlük Ortalama";
-"nft_asset.average_30d" = "30 Günlük Ortalama";
-"nft_asset.floor_price" = "Taban Fiyatı";
-"nft_asset.on_sale" = "İndirimde";
-"nft_asset.on_auction" = "Müzayedede";
-"nft_asset.until_date" = "%@ kadar";
-"nft_asset.buy_now" = "Şimdi Al";
-"nft_asset.minimum_bid" = "Minimum Teklif";
-"nft_asset.best_offer" = "En İyi Teklif";
-"nft_asset.properties" = "Özellikler";
-"nft_asset.description" = "Açıklama";
-"nft_asset.details" = "Ayrıntılar";
-"nft_asset.details.contract_address" = "Sözleşme Adresi";
-"nft_asset.details.token_id" = "Token Kimliği";
-"nft_asset.details.token_standard" = "Token Standardı";
-"nft_asset.details.blockchain" = "Blockchain";
-"nft_asset.links" = "Bağlantılar";
-"nft_asset.links.website" = "Website";
-
-// Nft Collection
-
-"nft_collection.tab.overview" = "İzleme";
-"nft_collection.tab.assets" = "Ögeler";
-"nft_collection.tab.activity" = "Aktivite";
-
-"nft_collection.overview.description" = "Açıklama";
-"nft_collection.overview.contracts" = "Kişiler";
-"nft_collection.overview.links" = "Bağlantılar";
-"nft_collection.overview.links.website" = "Website";
-
-"nft_collection.overview.owners" = "Sahip";
-"nft_collection.overview.items" = "Ögeler";
-"nft_collection.overview.24h_volume" = "24 saat hacim";
-"nft_collection.overview.today_sellers" = "Bugünün Satıcıları";
-"nft_collection.overview.floor_price" = "Taban Fiyatı";
-"nft_collection.overview.royalty" = "Royalty";
-"nft_collection.overview.inception_date" = "Başlangıç ​​tarihi";
-
-"nft.activity.contracts" = "Kişiler";
-"nft.activity.empty_list" = "Henüz öğe etkinliği yok";
-"nft.activity.event_types" = "Etkinlik Türleri";
-"nft.activity.event_type.all" = "Tüm Etkinlikler";
 
 // Subscription Info
 

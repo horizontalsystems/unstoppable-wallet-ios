@@ -206,10 +206,6 @@ enum AppConfig {
         Bundle.main.object(forInfoDictionaryKey: "PrivateCloudContainerId") as? String
     }
 
-    static var openSeaApiKey: String {
-        (Bundle.main.object(forInfoDictionaryKey: "OpenSeaApiKey") as? String) ?? ""
-    }
-
     static var chainalysisApiKey: String {
         (Bundle.main.object(forInfoDictionaryKey: "ChainalysisApiKey") as? String) ?? ""
     }

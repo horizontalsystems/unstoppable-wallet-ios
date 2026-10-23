@@ -8,9 +8,8 @@ enum TransactionInfoModule {
             return nil
         }
         let rateService = HistoricalRateService(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager)
-        let nftMetadataService = NftMetadataService(nftMetadataManager: Core.shared.nftMetadataManager)
 
-        let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, currencyManager: Core.shared.currencyManager, rateService: rateService, nftMetadataService: nftMetadataService, balanceHiddenManager: Core.shared.balanceHiddenManager)
+        let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, currencyManager: Core.shared.currencyManager, rateService: rateService, balanceHiddenManager: Core.shared.balanceHiddenManager)
         let contactLabelService = ContactLabelService(contactManager: Core.shared.contactManager, blockchainType: transactionRecord.source.blockchainType)
         // speed up and cancel replace a pending transaction, which a watch account cannot sign
         let watchAccount = Core.shared.accountManager.activeAccount?.watchAccount ?? false
@@ -32,7 +31,6 @@ extension TransactionInfoModule {
     enum ViewItem {
         case actionTitle(iconName: String?, iconDimmed: Bool, title: String, subTitle: String?)
         case amount(title: String, subtitle: String?, iconUrl: String?, iconAlternativeUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType, coin: Coin?)
-        case nftAmount(iconUrl: String?, iconPlaceholderImageName: String, nftAmount: String, type: AmountType, providerCollectionUid: String?, nftUid: NftUid?)
         /// notProcessed: failed without reaching the chain, which is not an error to show as one.
         case status(status: TransactionStatus, notProcessed: Bool = false)
         case option(option: Option)

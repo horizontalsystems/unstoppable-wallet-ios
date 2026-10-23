@@ -1,6 +1,5 @@
 import EvmKit
 import MarketKit
-import NftKit
 import SwiftUI
 import UIKit
 
@@ -111,14 +110,6 @@ extension BlockchainType {
         case .bitcoin, .bitcoinCash, .dash, .litecoin, .ecash: return .satoshi
         case .avalanche: return .nAvax
         default: return .gwei
-        }
-    }
-
-    // used for EVM blockchains only
-    var supportedNftTypes: [NftType] {
-        switch self {
-        // case .ethereum: return [.eip721, .eip1155]
-        default: return []
         }
     }
 

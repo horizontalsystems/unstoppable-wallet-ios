@@ -1,5 +1,5 @@
 {
-  "originHash" : "bc6c2701a6360663d0ff8013e68a7496ade308ceeb8d386f93510937fb94b307",
+  "originHash" : "863d94aa00ce5e32932ab245a4cb4dd9348ff2e716a874fb9e6acb13478e13af",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -299,18 +299,9 @@
       }
     },
     {
-      "identity" : "nftkit.swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/horizontalsystems/NftKit.Swift",
-      "state" : {
-        "revision" : "dd2946f9048c739fb7536ad6c045658271b438f1",
-        "version" : "2.0.2"
-      }
-    },
-    {
       "identity" : "objectmapper",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tristanhimmelman/ObjectMapper",
+      "location" : "https://github.com/tristanhimmelman/ObjectMapper/",
       "state" : {
         "revision" : "0b96a734de3ea1c87374ae677064f86adb0716ec",
         "version" : "4.2.0"
