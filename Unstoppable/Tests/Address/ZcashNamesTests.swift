@@ -1,4 +1,3 @@
-import CryptoKit
 import Foundation
 import HsToolKit
 import MarketKit
@@ -7,7 +6,7 @@ import Testing
 @testable import WalletCore
 import ZcashLightClientKit
 
-// Zcash Names: the cases of Android ZnsTest on the same live mainnet vectors, plus the edges of the Swift port.
+// Zcash Names on the Name Notes protocol, with live mainnet Resolver responses as vectors.
 struct ZcashNamesTests {
     // MARK: - Name normalization
 
@@ -18,8 +17,9 @@ struct ZcashNamesTests {
         #expect(name("aLice.Zec") == "alice")
         #expect(name("  alice.zcash \n") == "alice")
         #expect(name("bob42.zec") == "bob42")
+        #expect(name("123.zec") == "123")
         #expect(name("a.zcash") == "a")
-        #expect(name(String(repeating: "a", count: 62) + ".zcash") == String(repeating: "a", count: 62))
+        #expect(name(String(repeating: "a", count: 63) + ".zcash") == String(repeating: "a", count: 63))
     }
 
     @Test func normalizeKeepsTheTypedSuffix() {
@@ -30,8 +30,8 @@ struct ZcashNamesTests {
     // the suffix is required: a bare word is indistinguishable from a partly typed address
     @Test func normalizeRejectsBareNamesAndAddresses() {
         #expect(name("alice") == nil)
-        #expect(name("childish") == nil)
-        #expect(name("u1jlu75mjtmhdekpq0nx5kakkgdnss8ta6xqzwu8p278axz0zt3pmep8hs4u0ws0nhlz") == nil)
+        #expect(name("thebackupkid") == nil)
+        #expect(name(Self.thebackupkidAddress) == nil)
         #expect(name("t1RBzFrCTWSZe3FJbDewtveUMRX2og4kKph") == nil)
         #expect(name("zs1abc") == nil)
     }
@@ -39,13 +39,15 @@ struct ZcashNamesTests {
     @Test func normalizeRejectsInvalidNames() {
         #expect(name("") == nil)
         #expect(name(".zcash") == nil)
+        #expect(name(".zec") == nil)
         #expect(name("my-name.zcash") == nil)
         #expect(name("my_name.zec") == nil)
         #expect(name("has space.zcash") == nil)
         #expect(name("café.zcash") == nil)
+        #expect(name("\u{130}lice.zec") == nil)
         #expect(name("alice.zcash.zcash") == nil)
         #expect(name("alice.eth") == nil)
-        #expect(name(String(repeating: "a", count: 63) + ".zcash") == nil)
+        #expect(name(String(repeating: "a", count: 64) + ".zcash") == nil)
         // `$` in a regex also matches before a final line break; the name must end at the suffix
         #expect(name("alice\n.zcash") == nil)
     }
@@ -55,213 +57,240 @@ struct ZcashNamesTests {
         #expect(name("\u{212A}im.zcash") == "kim")
     }
 
+    // MARK: - Registry check
+
+    @Test func pinnedViewingKeyIsThePublishedMainnetKey() {
+        #expect(ZnsResolver.mainnetViewingKey == Self.publishedMainnetViewingKey)
+    }
+
+    @Test func liveMainnetStatusIsAccepted() throws {
+        try ZnsResolver.verifyRegistry(json: json(Self.statusBody))
+    }
+
+    @Test(arguments: [
+        Self.testnetViewingKey,
+        String(Self.publishedMainnetViewingKey.dropLast()),
+        Self.publishedMainnetViewingKey + "q",
+        Self.publishedMainnetViewingKey.uppercased(),
+    ])
+    func anotherRegistryIsUnknown(viewingKey: String) throws {
+        let body = #"{"jsonrpc":"2.0","id":1,"result":{"synced_height":1,"synced":true,"viewing_key":"\#(viewingKey)"}}"#
+
+        let error = #expect(throws: ZnsResolver.ResolveError.self) { try ZnsResolver.verifyRegistry(json: json(body)) }
+
+        #expect(error.map(kind) == "unknownRegistry")
+    }
+
+    @Test(arguments: [
+        #"{"jsonrpc":"2.0","id":1,"result":{"synced":true}}"#,
+        #"{"jsonrpc":"2.0","id":1,"result":{"viewing_key":5}}"#,
+        #"{"jsonrpc":"2.0","id":1,"result":null}"#,
+        #"{"jsonrpc":"2.0","id":1,"result":[]}"#,
+        #"{"jsonrpc":"2.0","id":1}"#,
+    ])
+    func malformedStatusIsRejected(body: String) throws {
+        let error = #expect(throws: ZnsResolver.ResolveError.self) { try ZnsResolver.verifyRegistry(json: json(body)) }
+
+        #expect(error.map(kind) == "malformedResponse")
+    }
+
+    @Test func statusRpcErrorIsSurfaced() throws {
+        let body = #"{"jsonrpc":"2.0","id":1,"error":{"code":-32603,"message":"Internal error"}}"#
+
+        let error = #expect(throws: ZnsResolver.ResolveError.self) { try ZnsResolver.verifyRegistry(json: json(body)) }
+
+        expectRpcError(error, code: -32603, message: "Internal error")
+    }
+
     // MARK: - Response parsing
 
-    @Test func parseFoundRegistration() throws {
-        let registration = try #require(try ZnsResolver.registration(json: json(Self.childishBody)))
+    @Test func parsePermanentRegistration() throws {
+        let registration = try #require(registration(Self.thebackupkidBody))
 
-        #expect(registration.name == "childish")
-        #expect(registration.address == Self.childishAddress)
-        #expect(registration.nonce == 0)
-        #expect(registration.lastAction == "BUY")
-        #expect(registration.signature == Self.childishSignature)
-        #expect(registration.pubkey == nil)
+        #expect(registration.name == "thebackupkid")
+        #expect(registration.address == Self.thebackupkidAddress)
+    }
+
+    @Test func parseFixedTermRegistration() throws {
+        let registration = try #require(registration(Self.zechariahBody))
+
+        #expect(registration.name == "zechariah")
+        #expect(registration.address == Self.zechariahAddress)
     }
 
     @Test func parseNotRegistered() throws {
-        #expect(try ZnsResolver.registration(json: json(#"{"jsonrpc":"2.0","id":1,"result":null}"#)) == nil)
+        let registration = try registration(#"{"jsonrpc":"2.0","id":1,"result":null}"#)
+
+        #expect(registration == nil)
     }
 
-    @Test func parseRpcError() throws {
+    @Test func parseRpcErrorIsSurfaced() throws {
         let body = #"{"jsonrpc":"2.0","id":1,"error":{"code":-32602,"message":"Invalid params"}}"#
 
-        #expect(throws: ZnsResolver.ResolveError.self) { try ZnsResolver.registration(json: json(body)) }
+        let error = #expect(throws: ZnsResolver.ResolveError.self) { try registration(body) }
+
+        expectRpcError(error, code: -32602, message: "Invalid params")
     }
 
-    // the indexer answers an address query with an array; a name query never should
-    @Test func parseRejectsArrayResult() throws {
-        #expect(throws: ZnsResolver.ResolveError.self) { try ZnsResolver.registration(json: json(#"{"jsonrpc":"2.0","id":1,"result":[]}"#)) }
+    @Test(arguments: [
+        // the Resolver answers an address query with an array; a name query never should
+        #"{"jsonrpc":"2.0","id":1,"result":[]}"#,
+        #"{"jsonrpc":"2.0","id":1,"result":{"address":"u1example"}}"#,
+        #"{"jsonrpc":"2.0","id":1,"result":{"name":"alice"}}"#,
+        #"{"jsonrpc":"2.0","id":1,"result":{"name":"alice","address":5}}"#,
+        #"{"jsonrpc":"2.0","id":1}"#,
+        #""not an object""#,
+    ])
+    func parseRejectsMalformedBodies(body: String) throws {
+        let error = #expect(throws: ZnsResolver.ResolveError.self) { try registration(body) }
+
+        #expect(error.map(kind) == "malformedResponse")
     }
 
-    @Test func parseRejectsMissingFields() throws {
-        #expect(throws: ZnsResolver.ResolveError.self) { try ZnsResolver.registration(json: json(#"{"jsonrpc":"2.0","id":1,"result":{"name":"alice"}}"#)) }
-        #expect(throws: ZnsResolver.ResolveError.self) { try ZnsResolver.registration(json: json(#"{"jsonrpc":"2.0","id":1}"#)) }
-    }
+    // the expiry is the Resolver's business: a lapsed name resolves until its release lands on chain
+    @Test(arguments: [#""none""#, #""1""#, #""1824002006""#, #""garbage""#, "null"])
+    func parseIgnoresExpiry(expiresAt: String) throws {
+        let body = #"{"jsonrpc":"2.0","id":1,"result":{"name":"alice","address":"u1example","last_action":"claim","expires_at":\#(expiresAt)}}"#
 
-    @Test func parseRejectsMalformedBodies() {
-        #expect(throws: ZnsResolver.ResolveError.self) { try ZnsResolver.registration(json: [Any]()) }
-        #expect(throws: ZnsResolver.ResolveError.self) { try ZnsResolver.registration(json: "not json") }
-    }
+        let registration = try #require(registration(body))
 
-    // the indexer controls the nonce; anything but a whole non-negative number is refused, never trapped on
-    @Test func parseRejectsNoncesThatAreNotWholeNonNegativeNumbers() throws {
-        for nonce in ["-1", "1.5", "true", "\"2\"", "-9223372036854775808"] {
-            #expect(throws: ZnsResolver.ResolveError.self, "nonce \(nonce)") { try ZnsResolver.registration(json: json(registrationBody(nonce: nonce))) }
-        }
-
-        #expect(try ZnsResolver.registration(json: json(registrationBody(nonce: "9223372036854775807")))?.nonce == Int64.max)
-    }
-
-    // MARK: - Pre-image
-
-    @Test func preImageFollowsLastAction() {
-        let base = registration(name: "alice", address: "u1example", nonce: 2, lastAction: "CLAIM")
-
-        #expect(ZnsResolver.preImage(registration: base, nonce: 2) == "CLAIM:alice:u1example")
-        #expect(ZnsResolver.preImage(registration: with(base, lastAction: "BUY"), nonce: 2) == "BUY:alice:u1example")
-        #expect(ZnsResolver.preImage(registration: with(base, lastAction: "UPDATE"), nonce: 2) == "UPDATE:alice:u1example:2")
-        // DELIST:{name}:{nonce} does not cover the address, so it cannot authenticate one
-        #expect(ZnsResolver.preImage(registration: with(base, lastAction: "DELIST"), nonce: 2) == nil)
-        #expect(ZnsResolver.preImage(registration: with(base, lastAction: "LIST"), nonce: 2) == nil)
-        #expect(ZnsResolver.preImage(registration: with(base, lastAction: "RELEASE"), nonce: 2) == nil)
+        #expect(registration.address == "u1example")
     }
 
     // MARK: - Validation
 
-    @Test func validateReturnsAddressOfMatchingVerifiedRegistration() throws {
-        let registration = try childish()
+    @Test func validateReturnsAddressOfMatchingRegistration() throws {
+        let registration = try #require(registration(Self.thebackupkidBody))
 
-        #expect(try ZnsResolver.validate(name: "childish", registration: registration) == Self.childishAddress)
+        let address = try ZnsResolver.validate(name: "thebackupkid", registration: registration)
+
+        #expect(address == Self.thebackupkidAddress)
     }
 
-    // a replayed registration of another name is validly signed but must not answer this query
-    @Test func validateRejectsRegistrationOfAnotherName() throws {
-        let registration = try childish()
+    // a record of another name must not answer this query, and names match bytes, not canonical equivalence
+    @Test(arguments: [
+        ("alice", "thebackupkid"),
+        ("thebackupkid.zec", "thebackupkid"),
+        ("TheBackupKid", "thebackupkid"),
+        ("cafe\u{301}", "caf\u{e9}"),
+    ])
+    func validateRejectsRegistrationOfAnotherName(recordName: String, query: String) throws {
+        let registration = ZnsResolver.Registration(name: recordName, address: Self.thebackupkidAddress)
 
-        #expect(throws: ZnsResolver.ResolveError.self) { try ZnsResolver.validate(name: "alice", registration: registration) }
-    }
+        let error = #expect(throws: ZnsResolver.ResolveError.self) { try ZnsResolver.validate(name: query, registration: registration) }
 
-    @Test func validateRejectsInvalidSignature() throws {
-        let registration = try with(childish(), nonce: 5, lastAction: "UPDATE")
-
-        #expect(throws: ZnsResolver.ResolveError.self) { try ZnsResolver.validate(name: "childish", registration: registration) }
-    }
-
-    // MARK: - Signature verification (live mainnet vectors)
-
-    @Test func pinnedRegistrarKeyIsValid() {
-        #expect(ZnsResolver.adminKey.rawRepresentation.count == 32)
-    }
-
-    @Test func verifiesBuyRegistration() throws {
-        #expect(try ZnsResolver.verify(registration: childish()))
-    }
-
-    @Test func verifiesClaimRegistrations() {
-        let gaurang = registration(
-            name: "gaurang",
-            address: "u1h743e3e4kstgsddvw6ngu8kpntj34keprem8jm3x5tjh47d4g6kg78x4chy444l5mj2xetpnacml6xv4alsm6vwlsvqlrmkjfqza04lxjzm7ctnr6mzh2kmeqqel235mc660uy3a7cjx85vv5l43gl365xhlywe2zeptkppdkk8kqlhpdlaa09d54jgphqugxledqp9syfu9g7qx8ta",
-            nonce: 0,
-            lastAction: "CLAIM",
-            signature: "VL7SIbtmGGCCKPBNV4XnYMAvV6I6qwvXvKV+KY5VIY65JlSVb1+95mrjuUeiIEyWcu2TPGmUj6m+bvNOkI6zDA=="
-        )
-        let tom = registration(
-            name: "tom",
-            address: "u166d7d9zxr0r47n3wd8s9g3w62l7t0yd7vt6kgagacz5gjewrd97x7hcr8vsln4f6qs8tu5a9srtyl2cf2uc4rf5p6qkkrlmtferggcmr9wrf9nd3hjsamsrr9dh4qu7vnrlkd9wgxmgnv45mwmsfu5gj3c0vy0304utrhdl6rkx9c8f5mh49hg8lwl6clcavy9xk74nuq8zh5pq86se",
-            nonce: 0,
-            lastAction: "CLAIM",
-            signature: "qNmxD19MDWiCBIL8aOTTrKmCb4alZ4H+jzu7dK105szAURJdCji9MyVPnFoKuoWwtupBxYG0iKnMF4XRxZyxAQ=="
-        )
-
-        #expect(ZnsResolver.verify(registration: gaurang))
-        #expect(ZnsResolver.verify(registration: tom))
-    }
-
-    // zechariah: CLAIM (nonce 0), UPDATE signed with nonce 1, then a LIST raised the registry nonce to 2 without
-    // touching last_action or signature. The reported nonce does not verify; the walk finds the signed one.
-    @Test func verifiesUpdateSignedWithEarlierNonce() {
-        let zechariah = registration(
-            name: "zechariah",
-            address: "u14lms6q2sg984hhng068lqesatnak86mlg297x0qkqsvkqgk2m7dyj5x2grlku3adg2tq6trl5ue3vce7c3jnu5808kw9lsr890kfetrg524q4pgcn4zcnp84na85453pz67cjfy4sx7y6z6zc9t7666utasw5mehe9r2dwwcrgzp94ah",
-            nonce: 2,
-            lastAction: "UPDATE",
-            signature: "0yNPmGqCQGIMYXOXLmpXRSrOo1B1FWDgpvU1jHrqzvFYz9ZLitNeKB93ANVwpmkU/KD/R6OHK0x9MWIpBDB1BQ=="
-        )
-
-        #expect(ZnsResolver.verify(registration: zechariah))
-        #expect(ZnsResolver.verify(registration: with(zechariah, nonce: 1)))
-        // the walk only goes down, so a reported nonce below the signed one fails
-        #expect(!ZnsResolver.verify(registration: with(zechariah, nonce: 0)))
-        // CLAIM and BUY do not use the nonce, so there is no walk for them
-        #expect(!ZnsResolver.verify(registration: with(zechariah, lastAction: "CLAIM")))
-    }
-
-    @Test func nonceWalkStopsAtSearchDepth() throws {
-        let key = Curve25519.Signing.PrivateKey()
-        let reported: Int64 = 100
-
-        #expect(try ZnsResolver.verify(registration: signedUpdate(key: key, signedNonce: reported - ZnsResolver.nonceSearchDepth, reportedNonce: reported), adminKey: key.publicKey))
-        #expect(try !ZnsResolver.verify(registration: signedUpdate(key: key, signedNonce: reported - ZnsResolver.nonceSearchDepth - 1, reportedNonce: reported), adminKey: key.publicKey))
-    }
-
-    @Test func extremeNoncesNeverTrap() throws {
-        let key = Curve25519.Signing.PrivateKey()
-
-        #expect(try !ZnsResolver.verify(registration: signedUpdate(key: key, signedNonce: 0, reportedNonce: Int64.max), adminKey: key.publicKey))
-        #expect(try !ZnsResolver.verify(registration: signedUpdate(key: key, signedNonce: 0, reportedNonce: Int64.min), adminKey: key.publicKey))
-        #expect(try !ZnsResolver.verify(registration: signedUpdate(key: key, signedNonce: 0, reportedNonce: -1), adminKey: key.publicKey))
-    }
-
-    @Test func rejectsTamperedAddress() throws {
-        let registration = try childish()
-
-        #expect(!ZnsResolver.verify(registration: with(registration, address: String(registration.address.dropLast()) + "h")))
-    }
-
-    @Test func rejectsTamperedSignatureAndWrongKey() throws {
-        let registration = try childish()
-
-        #expect(!ZnsResolver.verify(registration: with(registration, signature: "A" + Self.childishSignature.dropFirst())))
-        #expect(!ZnsResolver.verify(registration: registration, adminKey: Curve25519.Signing.PrivateKey().publicKey))
-    }
-
-    @Test func rejectsMissingSignatureAndActionsThatDoNotCoverTheAddress() throws {
-        let registration = try childish()
-
-        #expect(!ZnsResolver.verify(registration: with(registration, signature: .some(nil))))
-        #expect(!ZnsResolver.verify(registration: with(registration, signature: "")))
-        #expect(!ZnsResolver.verify(registration: with(registration, signature: "not base64!")))
-        #expect(!ZnsResolver.verify(registration: with(registration, signature: String(Self.childishSignature.dropLast(4)))))
-        #expect(!ZnsResolver.verify(registration: with(registration, lastAction: "DELIST")))
-        #expect(!ZnsResolver.verify(registration: with(registration, lastAction: "RELEASE")))
-    }
-
-    // the attached key comes from the same response, so a registration carrying one is never accepted
-    @Test func rejectsSovereignRegistrations() throws {
-        let registration = try childish()
-        let adminKey = ZnsResolver.adminKey.rawRepresentation.base64EncodedString()
-
-        #expect(!ZnsResolver.verify(registration: with(registration, pubkey: adminKey)))
-        #expect(!ZnsResolver.verify(registration: with(registration, pubkey: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")))
+        #expect(error.map(kind) == "nameMismatch")
     }
 
     // MARK: - Parser item
 
-    @Test func parserItemTakesOnlyNames() async throws {
-        let item = parserItem(url: "http://127.0.0.1:1")
+    @Test func liveAddressesPassTheZcashValidator() async throws {
+        for address in [Self.thebackupkidAddress, Self.zechariahAddress] {
+            let parsed = try await handle(zcashParserItem(), address)
 
-        let name = try await isValid(item, "alice.zcash")
-        let bareWord = try await isValid(item, "alice")
-        let address = try await isValid(item, "u1jlu75mjtmhdekpq0nx5kakkgdnss8ta6xqzwu8p278axz0zt3pmep8hs4u0ws0nhlz")
+            #expect(parsed.raw == address)
+        }
+    }
+
+    @Test func parserItemTakesOnlyNames() async throws {
+        let item = ZnsAddressParserItem(resolver: StubZnsResolver(address: nil), rawAddressParserItem: zcashParserItem())
+
+        let name = try await isValid(item, "thebackupkid.zec")
+        let bareWord = try await isValid(item, "thebackupkid")
+        let address = try await isValid(item, Self.thebackupkidAddress)
 
         #expect(name)
         #expect(!bareWord)
         #expect(!address)
     }
 
-    @Test func unreachableResolverIsAnInvalidAddress() async {
-        let item = parserItem(url: "http://127.0.0.1:1")
+    @Test func handleQueriesTheNormalizedNameAndKeepsTheTypedSuffix() async throws {
+        let resolver = StubZnsResolver(address: Self.thebackupkidAddress)
+        let item = ZnsAddressParserItem(resolver: resolver, rawAddressParserItem: zcashParserItem())
 
-        await #expect(throws: AddressService.AddressError.self) { try await handle(item, "alice.zcash") }
+        let address = try await handle(item, " TheBackupKid.ZEC ")
+
+        #expect(resolver.queries == ["thebackupkid"])
+        #expect(address.raw == Self.thebackupkidAddress)
+        #expect(address.domain == "thebackupkid.zec")
+        #expect(address.blockchainType == .zcash)
+    }
+
+    @Test(arguments: ["thebackupkid", Self.thebackupkidAddress, "my-name.zec"])
+    func handleNeverQueriesForNonNames(input: String) async {
+        let resolver = StubZnsResolver(address: Self.thebackupkidAddress)
+        let item = ZnsAddressParserItem(resolver: resolver, rawAddressParserItem: zcashParserItem())
+
+        await #expect(throws: AddressService.AddressError.self) { try await handle(item, input) }
+        #expect(resolver.queries.isEmpty)
+    }
+
+    @Test func unregisteredNameIsAnInvalidAddress() async {
+        let item = ZnsAddressParserItem(resolver: StubZnsResolver(address: nil), rawAddressParserItem: zcashParserItem())
+
+        await #expect(throws: AddressService.AddressError.self) { try await handle(item, "definitelynotregistered.zcash") }
+    }
+
+    @Test func failedLookupIsAnInvalidAddress() async {
+        let item = ZnsAddressParserItem(resolver: StubZnsResolver(error: ZnsResolver.ResolveError.unknownRegistry), rawAddressParserItem: zcashParserItem())
+
+        await #expect(throws: AddressService.AddressError.self) { try await handle(item, "thebackupkid.zec") }
+    }
+
+    @Test func unreachableResolverIsAnInvalidAddress() async {
+        let item = ZnsAddressParserItem(resolver: ZnsResolver(networkManager: NetworkManager(), url: "http://127.0.0.1:1"), rawAddressParserItem: zcashParserItem())
+
+        await #expect(throws: AddressService.AddressError.self) { try await handle(item, "thebackupkid.zec") }
+    }
+
+    // a resolved address still has to be a Zcash address; the regular parser refuses it
+    @Test func garbageResolvedAddressIsRefused() async {
+        let item = ZnsAddressParserItem(resolver: StubZnsResolver(address: "u1garbage"), rawAddressParserItem: zcashParserItem())
+
+        await #expect(throws: (any Error).self) { try await handle(item, "thebackupkid.zec") }
     }
 }
 
 extension ZcashNamesTests {
-    private static let childishAddress = "u1jlu75mjtmhdekpq0nx5kakkgdnss8ta6xqzwu8p278axz0zt3pmep8hs4u0ws0nhlz40925lq770cqw8thnzyp2upm6vwxsc6rrfr3zuvrnjtkrayf9lm09fv3v2erhnu7jme34w2c5x47eafzkks2mwfegphd6aa0dsp0qtxy382nrg"
-    private static let childishSignature = "9ChHKUP7I+j2KKB4WARAayqWY4ZA6pX7cDwKuuGJOVBypAPxXOlUITrC7+B0gekJfN8Zv2Na1Aa+Og/W3qb0AQ=="
+    private final class StubZnsResolver: ZnsResolver {
+        private let address: String?
+        private let error: Error?
+        private(set) var queries = [String]()
 
-    // verbatim mainnet response for resolve {"query":"childish"}
-    private static let childishBody = #"{"jsonrpc":"2.0","id":1,"result":{"address":"\#(childishAddress)","height":3476168,"last_action":"BUY","listing":null,"name":"childish","nonce":0,"signature":"\#(childishSignature)","txid":"8eecefa29c32c9adbc2a0d72d59c7163dd6c744f43c7178caa77d2788dce6e8f"}}"#
+        init(address: String?) {
+            self.address = address
+            error = nil
+            super.init(networkManager: NetworkManager())
+        }
+
+        init(error: Error) {
+            address = nil
+            self.error = error
+            super.init(networkManager: NetworkManager())
+        }
+
+        override func resolve(name: String) async throws -> String? {
+            queries.append(name)
+
+            if let error {
+                throw error
+            }
+
+            return address
+        }
+    }
+
+    private static let thebackupkidAddress = "u19qfnukkpz06w60e7wmgfqv4l0xeyyaprtz59fulemxk0527xnuyewp8gqck3f2kljq29hw7dz8f595pyt5yns5lz6cvyczn2ky7uwplfdkl4m2kgr5ljuam4m3l6mpvdklcut3640txl6z0xduk0lnsqv2zagatlc4extw8j2zyx8829enfkd72xu2r3kt4qrapfty0cttrzyc52ak9"
+    private static let zechariahAddress = "u14lms6q2sg984hhng068lqesatnak86mlg297x0qkqsvkqgk2m7dyj5x2grlku3adg2tq6trl5ue3vce7c3jnu5808kw9lsr890kfetrg524q4pgcn4zcnp84na85453pz67cjfy4sx7y6z6zc9t7666utasw5mehe9r2dwwcrgzp94ah"
+
+    // zcashnames.com/docs/resolver/verifying-state, 2026-10-23
+    private static let publishedMainnetViewingKey = "uview1209ld9y4fr2sel9q87kfjg7xm2sy53e3qf7dvcw3w8jwhhjpldl8z0vk0a6hveg4jk7xcn0rc9mr8yg77djfpc0uxrm5pqzt8q7ul4w0nvs3x5q9vmk9nm2crywtqaealek4mp47ur7ywu7g4g4xcdlwv6gnqzvu5panv5je2ps6rxmx4856unlt5wde8fpz8uhrqchmwhn2j252h3cyx5phad877xezerm6ex8l5kcfjw02ll7m0nspfufamh3ae9ea48395elptspnv6vvc70j2gcjrdze9syt8kpr2kc67flvg8687thdkpha7lpt9r4p9wjty90q2v2yjanqsr2zrecrqs7lfx9cpkmshf7jyh2vvwfqnyzwtpuy7p72hm2mjhperdafvm9u5rwa6s6urcy0uw30f687e3jnmas45qfqtwyz39kf6kxklfrdn7t4hkz56jegmlr8s8hwmt9wa8vz8zlmm76lrmzyj82nzpeqfu572njq"
+    private static let testnetViewingKey = "uviewtest1gkq78nsemsvs4qekadrv6qlqdmvcv2cct8k3c8cwycedpk90p8rtkx24qe8q73gg2ark8crqmmaavrerf7cxu0sp50an54crmeaalfxl72aetxnr89ksad4lvxzmnkyejhhwn65euzamt9wsukgfemeayhcesreasarmq600lfeju3qenh05e5e5cz6nhhsw3cfdcd3d08d0nxswxmkkxl2fq0hzv6t5dm3ftnz4y76236a49v3us4uq2tlsewf86tjtfwm6kue348me04rm7dw6uawv8myw7t5tyx2t453clhjz5f55lvh7hnvr8g8zt8lf4sy5rzq23ntp7g5ly6kyz2nkwfek06llhjtuz2fft9rg6cuuwg4n7299vajnmq6swg3sf563r0jjzuwuvfpjhmfmydar9dcu3fkuawt6u8qu08vhg5mthrcggrjuhht6f0perh0tqmdfrtgzvhjymay7h9ymvfxgd4r56uz6zrsf5gnvw5jy"
+
+    // verbatim mainnet responses, 2026-10-23
+    private static let thebackupkidBody = #"{"jsonrpc":"2.0","id":1,"result":{"name":"thebackupkid","address":"\#(thebackupkidAddress)","txid":"fedc19a5dd139eb3eaea275163c5671abd13c709e696f2be2a8ff2dd8f73025c","height":3520312,"last_action":"claim","expires_at":"none"}}"#
+    private static let zechariahBody = #"{"jsonrpc":"2.0","id":1,"result":{"name":"zechariah","address":"\#(zechariahAddress)","txid":"ed98bed2e92ac46f16b27db5c55597539abc714fb259f1bc2b2fa5dfb586e266","height":3523662,"last_action":"claim","expires_at":"1824002006"}}"#
+    private static let statusBody = #"{"jsonrpc":"2.0","id":1,"result":{"synced_height":3527534,"synced":true,"viewing_key":"\#(publishedMainnetViewingKey)","treasury_address":"u1f68wxdxsrswjl04kcc397a9ljedg88rl8dgazrk8l9v8jx6t3gqsktvqyvmc3ypgf4pum03q4ftvy5s0fe803nrxm8kw6dgzlvnv83nv"}}"#
 
     private func name(_ input: String) -> String? {
         ZnsAddressParserItem.normalize(input)?.name
@@ -271,54 +300,42 @@ extension ZcashNamesTests {
         try JSONSerialization.jsonObject(with: Data(body.utf8), options: [.fragmentsAllowed])
     }
 
-    private func registrationBody(nonce: String) -> String {
-        #"{"jsonrpc":"2.0","id":1,"result":{"address":"u1example","last_action":"UPDATE","name":"alice","nonce":\#(nonce),"signature":null}}"#
+    private func registration(_ body: String) throws -> ZnsResolver.Registration? {
+        let json = try json(body)
+        return try ZnsResolver.registration(json: json)
     }
 
-    private func childish() throws -> ZnsResolver.Registration {
-        try #require(try ZnsResolver.registration(json: json(Self.childishBody)))
+    private func kind(_ error: ZnsResolver.ResolveError) -> String {
+        switch error {
+        case .rpcError: return "rpcError"
+        case .malformedResponse: return "malformedResponse"
+        case .unknownRegistry: return "unknownRegistry"
+        case .nameMismatch: return "nameMismatch"
+        }
     }
 
-    private func registration(name: String, address: String, nonce: Int64, lastAction: String, signature: String? = "AQID", pubkey: String? = nil) -> ZnsResolver.Registration {
-        ZnsResolver.Registration(name: name, address: address, nonce: nonce, lastAction: lastAction, signature: signature, pubkey: pubkey)
+    private func expectRpcError(_ error: ZnsResolver.ResolveError?, code: Int, message: String) {
+        guard case let .rpcError(actualCode, actualMessage)? = error else {
+            Issue.record("expected rpcError, got \(String(describing: error))")
+            return
+        }
+
+        #expect(actualCode == code)
+        #expect(actualMessage == message)
     }
 
-    private func with(
-        _ registration: ZnsResolver.Registration,
-        address: String? = nil,
-        nonce: Int64? = nil,
-        lastAction: String? = nil,
-        signature: String?? = nil,
-        pubkey: String?? = nil
-    ) -> ZnsResolver.Registration {
-        ZnsResolver.Registration(
-            name: registration.name,
-            address: address ?? registration.address,
-            nonce: nonce ?? registration.nonce,
-            lastAction: lastAction ?? registration.lastAction,
-            signature: signature ?? registration.signature,
-            pubkey: pubkey ?? registration.pubkey
-        )
-    }
-
-    private func signedUpdate(key: Curve25519.Signing.PrivateKey, signedNonce: Int64, reportedNonce: Int64) throws -> ZnsResolver.Registration {
-        let signature = try key.signature(for: Data("UPDATE:alice:u1example:\(signedNonce)".utf8))
-        return registration(name: "alice", address: "u1example", nonce: reportedNonce, lastAction: "UPDATE", signature: signature.base64EncodedString())
-    }
-
-    private func parserItem(url: String) -> ZnsAddressParserItem {
+    private func zcashParserItem() -> ZcashAddressParserItem {
         let validator = ZcashAddressValidator(network: ZcashNetworkBuilder.network(for: .mainnet))
-        let zcashParserItem = ZcashAddressParserItem(parserType: .validator(validator), addressType: nil)
-        return ZnsAddressParserItem(resolver: ZnsResolver(networkManager: NetworkManager(), url: url), rawAddressParserItem: zcashParserItem)
+        return ZcashAddressParserItem(parserType: .validator(validator), addressType: nil)
     }
 
-    private func isValid(_ item: ZnsAddressParserItem, _ address: String) async throws -> Bool {
+    private func isValid(_ item: IAddressParserItem, _ address: String) async throws -> Bool {
         try await withCheckedThrowingContinuation { continuation in
             _ = item.isValid(address: address).subscribe(onSuccess: { continuation.resume(returning: $0) }, onError: { continuation.resume(throwing: $0) })
         }
     }
 
-    private func handle(_ item: ZnsAddressParserItem, _ address: String) async throws -> Address {
+    private func handle(_ item: IAddressParserItem, _ address: String) async throws -> Address {
         try await withCheckedThrowingContinuation { continuation in
             _ = item.handle(address: address).subscribe(onSuccess: { continuation.resume(returning: $0) }, onError: { continuation.resume(throwing: $0) })
         }
