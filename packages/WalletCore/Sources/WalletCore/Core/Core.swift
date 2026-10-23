@@ -135,10 +135,6 @@ public class Core {
     let feeCoinProvider: FeeCoinProvider
     let feeRateProviderFactory: FeeRateProviderFactory
 
-    let nftMetadataManager: NftMetadataManager
-    let nftAdapterManager: NftAdapterManager
-    let nftMetadataSyncer: NftMetadataSyncer
-
     let walletConnect: WCManager?
 
     public let adapterManager: AdapterManager
@@ -341,15 +337,6 @@ public class Core {
         feeCoinProvider = FeeCoinProvider(marketKit: marketKit)
         feeRateProviderFactory = FeeRateProviderFactory()
 
-        let nftDatabaseStorage = try NftDatabaseStorage(dbPool: dbPool)
-        let nftStorage = NftStorage(marketKit: marketKit, storage: nftDatabaseStorage)
-        nftMetadataManager = NftMetadataManager(networkManager: networkManager, marketKit: marketKit, storage: nftStorage)
-        nftAdapterManager = NftAdapterManager(
-            walletManager: walletManager,
-            evmBlockchainManager: evmBlockchainManager
-        )
-        nftMetadataSyncer = NftMetadataSyncer(nftAdapterManager: nftAdapterManager, nftMetadataManager: nftMetadataManager, nftStorage: nftStorage)
-
         let scannedTransactionStorage = try ScannedTransactionStorage(dbPool: dbPool)
         spamWrapper = SpamWrapper(
             storage: scannedTransactionStorage,
@@ -516,7 +503,6 @@ public class Core {
             evmLabelManager: evmLabelManager,
             balanceHiddenManager: balanceHiddenManager,
             statManager: statManager,
-            nftMetadataSyncer: nftMetadataSyncer,
             tonKitManager: tonKitManager,
             stellarKitManager: stellarKitManager,
             solanaKitManager: solanaKitManager,

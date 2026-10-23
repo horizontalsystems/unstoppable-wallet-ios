@@ -90,33 +90,6 @@ enum CellComponent {
         )
     }
 
-    static func nftAmountRow(tableView: SectionsTableView, rowInfo: RowInfo, iconUrl: String?, iconPlaceholderImageName: String, nftAmount: String, type: AmountType, onTapOpenNft: (() -> Void)?) -> RowProtocol {
-        CellBuilderNew.row(
-            rootElement: .hStack([
-                .image32 { component in
-                    component.imageView.setImage(url: iconUrl, placeholder: UIImage(named: iconPlaceholderImageName))
-                    component.imageView.cornerRadius = .cornerRadius4
-                    component.imageView.contentMode = .scaleAspectFill
-                },
-                .text { component in
-                    component.font = type.textFont
-                    component.textColor = type.textColor
-                    component.lineBreakMode = .byTruncatingMiddle
-                    component.text = nftAmount
-                },
-            ]),
-            tableView: tableView,
-            id: "nft-amount-\(rowInfo.index)",
-            hash: "\(nftAmount)",
-            height: .heightCell48,
-            autoDeselect: true,
-            bind: { cell in
-                cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
-            },
-            action: onTapOpenNft
-        )
-    }
-
     static func doubleAmountRow(tableView: SectionsTableView, rowInfo: RowInfo, title: String, coinValue: String, currencyValue: String?) -> RowProtocol {
         CellBuilderNew.row(
             rootElement: .hStack([

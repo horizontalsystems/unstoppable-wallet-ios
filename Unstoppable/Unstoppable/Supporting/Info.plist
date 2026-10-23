@@ -168,8 +168,6 @@
 	<string>We use Face ID to unlock wallet.</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>We need access to local network to discover blockchain nodes</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>We need access to photo library to save NFT images</string>
 	<key>NSUbiquitousContainers</key>
 	<dict>
 		<key>iCloud.io.horizontalsystems.bank-wallet.shared</key>
@@ -196,8 +194,6 @@
 		<string>CoinPriceListIntent</string>
 		<string>SingleCoinPriceIntent</string>
 	</array>
-	<key>OpenSeaApiKey</key>
-	<string>${OPEN_SEA_API_KEY}</string>
 	<key>OptimismEtherscanApiKeys</key>
 	<string>${OPTIMISM_ETHERSCAN_API_KEYS}</string>
 	<key>PimlicoApiKey</key>

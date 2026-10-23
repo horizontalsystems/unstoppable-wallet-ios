@@ -1005,7 +1005,6 @@
 "market.top.lowest_volume" = "成交量由低到高";
 "market.top.top_gainers" = "涨幅榜";
 "market.top.top_losers" = "跌幅榜";
-"market.top.top_collections" = "前列 NFT 收藏";
 "market.top.floor_price" = "底部：";
 "market.top.top_market_pairs" = "热门市场交易对";
 "market.top.top_platforms" = "前列平台";
@@ -2512,65 +2511,6 @@
 "watch_address.birthday_height.placeholder" = "恢复高度 (0000000)";
 "watch_address.birthday_height.error.invalid" = "恢复高度无效";
 "watch_address.monero_warning.description" = "Monero 观察钱包仅显示接收的交易，显示的余额可能不准确。";
-
-// Nft Collections
-
-"nft_collections.title" = "NFT";
-"nft_collections.price_mode" = "价格模式";
-"nft_collections.last_sale" = "收盘价";
-"nft_collections.average_7d" = "平均7天";
-"nft_collections.average_30d" = "平均30天";
-"nft_collections.on_sale" = "在售";
-"nft_collections.empty" = "您的钱包中没有任何NFT";
-
-// Nft Asset
-
-"nft_asset.tab.overview" = "行情";
-"nft_asset.tab.activity" = "活动";
-
-"nft_asset.last_sale" = "收盘价";
-"nft_asset.average_7d" = "7天平均";
-"nft_asset.average_30d" = "30天平均";
-"nft_asset.floor_price" = "底价";
-"nft_asset.on_sale" = "在售";
-"nft_asset.on_auction" = "在拍卖时";
-"nft_asset.until_date" = "直到 %@";
-"nft_asset.buy_now" = "立即购买";
-"nft_asset.minimum_bid" = "最低出价";
-"nft_asset.best_offer" = "最佳报价";
-"nft_asset.properties" = "属性";
-"nft_asset.description" = "描述";
-"nft_asset.details" = "详细信息";
-"nft_asset.details.contract_address" = "智能合约地址";
-"nft_asset.details.token_id" = "代币 ID";
-"nft_asset.details.token_standard" = "代币标准";
-"nft_asset.details.blockchain" = "Blockchain";
-"nft_asset.links" = "链接";
-"nft_asset.links.website" = "网站";
-
-// Nft Collection
-
-"nft_collection.tab.overview" = "行情";
-"nft_collection.tab.assets" = "条目";
-"nft_collection.tab.activity" = "活动";
-
-"nft_collection.overview.description" = "描述";
-"nft_collection.overview.contracts" = "合约";
-"nft_collection.overview.links" = "链接";
-"nft_collection.overview.links.website" = "网站";
-
-"nft_collection.overview.owners" = "所有者";
-"nft_collection.overview.items" = "条目";
-"nft_collection.overview.24h_volume" = "24h成交量";
-"nft_collection.overview.today_sellers" = "今天的卖家";
-"nft_collection.overview.floor_price" = "底价";
-"nft_collection.overview.royalty" = "荣耀";
-"nft_collection.overview.inception_date" = "起始日期";
-
-"nft.activity.contracts" = "合约";
-"nft.activity.empty_list" = "还没有项目活动";
-"nft.activity.event_types" = "事件类型";
-"nft.activity.event_type.all" = "全部事件";
 
 // Subscription Info
 

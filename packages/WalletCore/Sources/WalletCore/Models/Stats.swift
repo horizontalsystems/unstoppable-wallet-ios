@@ -144,7 +144,6 @@ enum StatPage: String {
     case tokenPage = "token_page"
     case topCoins = "top_coins"
     case topMarketPairs = "top_market_pairs"
-    case topNftCollections = "top_nft_collections"
     case topPlatform = "top_platform"
     case topPlatforms = "top_platforms"
     case transactionFilter = "transaction_filter"

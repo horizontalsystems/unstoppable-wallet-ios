@@ -1005,7 +1005,6 @@
 "market.top.lowest_volume" = "가장 낮은 거래량";
 "market.top.top_gainers" = "최고 승자";
 "market.top.top_losers" = "최고 패자";
-"market.top.top_collections" = "주요 NFT 컬렉션";
 "market.top.floor_price" = "바닥:";
 "market.top.top_market_pairs" = "상위 시장 페어";
 "market.top.top_platforms" = "주요 플랫폼";
@@ -2512,65 +2511,6 @@
 "watch_address.birthday_height.placeholder" = "복원 블록 높이 (0000000)";
 "watch_address.birthday_height.error.invalid" = "잘못된 복원 블록 높이";
 "watch_address.monero_warning.description" = "Monero 조회 전용 지갑은 입금 내역만 표시합니다. 표시되는 잔액은 정확하지 않을 수 있습니다.";
-
-// Nft Collections
-
-"nft_collections.title" = "NFT";
-"nft_collections.price_mode" = "가격 모드";
-"nft_collections.last_sale" = "마지막 판매";
-"nft_collections.average_7d" = "평균 7일";
-"nft_collections.average_30d" = "평균 30일";
-"nft_collections.on_sale" = "판매 중";
-"nft_collections.empty" = "지갑에 NFT가 없습니다.";
-
-// Nft Asset
-
-"nft_asset.tab.overview" = "개요";
-"nft_asset.tab.activity" = "활동";
-
-"nft_asset.last_sale" = "마지막 판매";
-"nft_asset.average_7d" = "7일 평균";
-"nft_asset.average_30d" = "30일 평균";
-"nft_asset.floor_price" = "바닥 가격";
-"nft_asset.on_sale" = "판매 중";
-"nft_asset.on_auction" = "판매중";
-"nft_asset.until_date" = "%@ 까지";
-"nft_asset.buy_now" = "지금 구매";
-"nft_asset.minimum_bid" = "최저 매수가";
-"nft_asset.best_offer" = "최고 제안";
-"nft_asset.properties" = "속성";
-"nft_asset.description" = "설명";
-"nft_asset.details" = "상세 정보";
-"nft_asset.details.contract_address" = "계약 주소";
-"nft_asset.details.token_id" = "토큰 ID";
-"nft_asset.details.token_standard" = "토큰 표준";
-"nft_asset.details.blockchain" = "블록체인";
-"nft_asset.links" = "링크";
-"nft_asset.links.website" = "웹사이트";
-
-// Nft Collection
-
-"nft_collection.tab.overview" = "개요";
-"nft_collection.tab.assets" = "항목";
-"nft_collection.tab.activity" = "활동";
-
-"nft_collection.overview.description" = "설명";
-"nft_collection.overview.contracts" = "계약";
-"nft_collection.overview.links" = "링크";
-"nft_collection.overview.links.website" = "웹사이트";
-
-"nft_collection.overview.owners" = "소유자";
-"nft_collection.overview.items" = "항목";
-"nft_collection.overview.24h_volume" = "24시간 거래량";
-"nft_collection.overview.today_sellers" = "오늘의 판매자";
-"nft_collection.overview.floor_price" = "바닥 가격";
-"nft_collection.overview.royalty" = "고귀함";
-"nft_collection.overview.inception_date" = "창립일";
-
-"nft.activity.contracts" = "계약";
-"nft.activity.empty_list" = "아직 항목 활동이 없습니다";
-"nft.activity.event_types" = "이벤트 유형";
-"nft.activity.event_type.all" = "모든 이벤트";
 
 // Subscription Info
 

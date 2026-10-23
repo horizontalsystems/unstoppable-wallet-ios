@@ -286,32 +286,6 @@ extension LegacyGasPriceProvider {
     }
 }
 
-extension Eip1155Provider {
-    struct DisposedError: Error {}
-
-    public func getBalanceOf(contractAddress: EvmKit.Address, tokenId: BigUInt, address: EvmKit.Address) -> Single<BigUInt> {
-        Single<BigUInt>.create { [weak self] observer in
-            guard let strongSelf = self else {
-                observer(.error(DisposedError()))
-                return Disposables.create()
-            }
-
-            let task = Task {
-                do {
-                    let result = try await strongSelf.balanceOf(contractAddress: contractAddress, tokenId: tokenId, address: address)
-                    observer(.success(result))
-                } catch {
-                    observer(.error(error))
-                }
-            }
-
-            return Disposables.create {
-                task.cancel()
-            }
-        }
-    }
-}
-
 public extension EIP1559GasPriceProvider {
     internal struct DisposedError: Error {}
 
