@@ -1,152 +1,68 @@
-import Foundation
-import RxCocoa
-import RxRelay
-import RxSwift
+struct PrivateKeysViewModel {
+    let account: Account
+    let showEvmPrivateKey: Bool
+    let showTronPrivateKey: Bool
+    let showStellarSecretKey: Bool
+    let showBip32RootKey: Bool
+    let showAccountExtendedPrivateKey: Bool
+    let showMoneroPrivateKey: Bool
 
-class PrivateKeysViewModel {
-    private let service: PrivateKeysService
+    init(account: Account) {
+        self.account = account
 
-    private let openUnlockRelay = PublishRelay<Void>()
-    private let openEvmPrivateKeyRelay = PublishRelay<AccountType>()
-    private let openStellarSecretKeyRelay = PublishRelay<AccountType>()
-    private let openBip32RootKeyRelay = PublishRelay<AccountType>()
-    private let openAccountExtendedPrivateKeyRelay = PublishRelay<AccountType>()
-    private let openTronPrivateKeyRelay = PublishRelay<AccountType>()
-    private let openMoneroPrivateKeyRelay = PublishRelay<AccountType>()
+        switch account.type {
+        case .mnemonic, .evmPrivateKey: showEvmPrivateKey = true
+        default: showEvmPrivateKey = false
+        }
 
-    private var unlockRequest: UnlockRequest = .evmPrivateKey
+        switch account.type {
+        case .mnemonic, .trcPrivateKey: showTronPrivateKey = true
+        default: showTronPrivateKey = false
+        }
 
-    init(service: PrivateKeysService) {
-        self.service = service
-    }
-}
+        switch account.type {
+        case .mnemonic, .stellarSecretKey: showStellarSecretKey = true
+        default: showStellarSecretKey = false
+        }
 
-extension PrivateKeysViewModel {
-    var openUnlockSignal: Signal<Void> {
-        openUnlockRelay.asSignal()
-    }
+        showBip32RootKey = Self.showBip32RootKey(accountType: account.type)
+        showAccountExtendedPrivateKey = Self.showAccountExtendedPrivateKey(accountType: account.type)
 
-    var openEvmPrivateKeySignal: Signal<AccountType> {
-        openEvmPrivateKeyRelay.asSignal()
-    }
-
-    var openStellarSecretKeySignal: Signal<AccountType> {
-        openStellarSecretKeyRelay.asSignal()
-    }
-
-    var openBip32RootKeySignal: Signal<AccountType> {
-        openBip32RootKeyRelay.asSignal()
-    }
-
-    var openAccountExtendedPrivateKeySignal: Signal<AccountType> {
-        openAccountExtendedPrivateKeyRelay.asSignal()
-    }
-
-    var openTronPrivateKeySignal: Signal<AccountType> {
-        openTronPrivateKeyRelay.asSignal()
-    }
-
-    var openMoneroPrivateKeySignal: Signal<AccountType> {
-        openMoneroPrivateKeyRelay.asSignal()
-    }
-
-    var showEvmPrivateKey: Bool {
-        service.evmPrivateKeySupported
-    }
-
-    var showTronPrivateKey: Bool {
-        service.trcPrivateKeySupported
-    }
-
-    var showStellarSecretKey: Bool {
-        service.stellarSecretKeySupported
-    }
-
-    var showBip32RootKey: Bool {
-        service.bip32RootKeySupported
-    }
-
-    var showAccountExtendedPrivateKey: Bool {
-        service.accountExtendedPrivateKeySupported
-    }
-
-    var showMoneroPrivateKey: Bool {
-        service.moneroPrivateKeySupported
-    }
-
-    func onUnlock() {
-        switch unlockRequest {
-        case .evmPrivateKey: openEvmPrivateKeyRelay.accept(service.accountType)
-        case .trcPrivateKey: openTronPrivateKeyRelay.accept(service.accountType)
-        case .stellarSecretKey: openStellarSecretKeyRelay.accept(service.accountType)
-        case .bip32RootKey: openBip32RootKeyRelay.accept(service.accountType)
-        case .accountExtendedPrivateKey: openAccountExtendedPrivateKeyRelay.accept(service.accountType)
-        case .moneroPrivateKey: openMoneroPrivateKeyRelay.accept(service.accountType)
+        switch account.type {
+        case .mnemonic: showMoneroPrivateKey = true
+        default: showMoneroPrivateKey = false
         }
     }
 
-    func onTapEvmPrivateKey() {
-        if service.isPasscodeSet {
-            unlockRequest = .evmPrivateKey
-            openUnlockRelay.accept(())
-        } else {
-            openEvmPrivateKeyRelay.accept(service.accountType)
+    var accountType: AccountType {
+        account.type
+    }
+
+    private static func showBip32RootKey(accountType: AccountType) -> Bool {
+        switch accountType {
+        case .mnemonic: return true
+        case let .hdExtendedKey(key):
+            switch key {
+            case .private:
+                switch key.derivedType {
+                case .master: return true
+                default: return false
+                }
+            default: return false
+            }
+        default: return false
         }
     }
 
-    func onTapTronPrivateKey() {
-        if service.isPasscodeSet {
-            unlockRequest = .trcPrivateKey
-            openUnlockRelay.accept(())
-        } else {
-            openTronPrivateKeyRelay.accept(service.accountType)
+    private static func showAccountExtendedPrivateKey(accountType: AccountType) -> Bool {
+        switch accountType {
+        case .mnemonic: return true
+        case let .hdExtendedKey(key):
+            switch key {
+            case .private: return true
+            default: return false
+            }
+        default: return false
         }
-    }
-
-    func onTapStellarSecretKey() {
-        if service.isPasscodeSet {
-            unlockRequest = .stellarSecretKey
-            openUnlockRelay.accept(())
-        } else {
-            openStellarSecretKeyRelay.accept(service.accountType)
-        }
-    }
-
-    func onTapBip32RootKey() {
-        if service.isPasscodeSet {
-            unlockRequest = .bip32RootKey
-            openUnlockRelay.accept(())
-        } else {
-            openBip32RootKeyRelay.accept(service.accountType)
-        }
-    }
-
-    func onTapAccountExtendedPrivateKey() {
-        if service.isPasscodeSet {
-            unlockRequest = .accountExtendedPrivateKey
-            openUnlockRelay.accept(())
-        } else {
-            openAccountExtendedPrivateKeyRelay.accept(service.accountType)
-        }
-    }
-
-    func onTapMoneroPrivateKey() {
-        if service.isPasscodeSet {
-            unlockRequest = .moneroPrivateKey
-            openUnlockRelay.accept(())
-        } else {
-            openMoneroPrivateKeyRelay.accept(service.accountType)
-        }
-    }
-}
-
-extension PrivateKeysViewModel {
-    enum UnlockRequest {
-        case evmPrivateKey
-        case trcPrivateKey
-        case stellarSecretKey
-        case bip32RootKey
-        case accountExtendedPrivateKey
-        case moneroPrivateKey
     }
 }

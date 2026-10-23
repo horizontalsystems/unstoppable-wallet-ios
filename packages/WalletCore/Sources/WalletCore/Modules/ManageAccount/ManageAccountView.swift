@@ -7,6 +7,7 @@ struct ManageAccountView: View {
     @Binding var isPresented: Bool
 
     @State private var recoveryPhrasePresented = false
+    @State private var privateKeysPresented = false
     @FocusState private var isNameFocused: Bool
 
     init(account: Account, isPresented: Binding<Bool>) {
@@ -50,13 +51,10 @@ struct ManageAccountView: View {
                             }
 
                             if viewModel.privateKeysVisible {
-                                NavigationRow(destination: {
-                                    PrivateKeysView(account: viewModel.account)
-                                        .navigationTitle("private_keys.title".localized)
-                                        .ignoresSafeArea()
-                                        .onFirstAppear {
-                                            stat(page: .manageWallet, event: .open(page: .privateKeys))
-                                        }
+                                ClickableRow(action: {
+                                    Coordinator.shared.performAfterUnlock {
+                                        privateKeysPresented = true
+                                    }
                                 }) {
                                     Image("key_24").themeIcon()
                                     Text("manage_account.private_keys".localized).themeBody()
@@ -67,8 +65,6 @@ struct ManageAccountView: View {
                             if viewModel.publicKeysVisible {
                                 NavigationRow(destination: {
                                     PublicKeysView(account: viewModel.account)
-                                        .navigationTitle("public_keys.title".localized)
-                                        .ignoresSafeArea()
                                         .onFirstAppear {
                                             stat(page: .manageWallet, event: .open(page: .publicKeys))
                                         }
@@ -158,10 +154,14 @@ struct ManageAccountView: View {
             }
             .navigationDestination(isPresented: $recoveryPhrasePresented) {
                 RecoveryPhraseView(account: viewModel.account)
-                    .navigationTitle("recovery_phrase.title".localized)
-                    .ignoresSafeArea()
                     .onFirstAppear {
                         stat(page: .manageWallet, event: .open(page: .recoveryPhrase))
+                    }
+            }
+            .navigationDestination(isPresented: $privateKeysPresented) {
+                PrivateKeysView(account: viewModel.account)
+                    .onFirstAppear {
+                        stat(page: .manageWallet, event: .open(page: .privateKeys))
                     }
             }
             .navigationTitle(viewModel.account.name)

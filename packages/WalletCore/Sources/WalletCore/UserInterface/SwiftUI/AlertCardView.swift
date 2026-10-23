@@ -49,7 +49,7 @@ struct AlertCardView: View {
     }
 
     func textView() -> some View {
-        HStack(alignment: .top, spacing: 8) {
+        HStack(alignment: .center, spacing: 12) {
             if style == .inline {
                 Image(iconName).icon(size: .iconSize20, colorStyle: type.colorStyle)
             }

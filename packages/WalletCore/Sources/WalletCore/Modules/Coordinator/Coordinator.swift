@@ -227,6 +227,12 @@ extension Coordinator {
         }
     }
 
+    func presentCopyConfirmation(value: String, onCopy: (() -> Void)? = nil) {
+        present(type: .bottomSheet) { isPresented in
+            CopyConfirmationWrapperView(value: value, onCopy: onCopy, isPresented: isPresented)
+        }
+    }
+
     func present(info: InfoDescription) {
         present(type: .bottomSheet) { isPresented in
             BottomSheetView(

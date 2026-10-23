@@ -1,35 +1,36 @@
-import Foundation
+struct PublicKeysViewModel {
+    let account: Account
+    let showEvmAddress: Bool
+    let showTronAddress: Bool
+    let showAccountExtendedPublicKey: Bool
+    let showMoneroPublicKey: Bool
 
-class PublicKeysViewModel {
-    private let service: PublicKeysService
+    init(account: Account) {
+        self.account = account
 
-    init(service: PublicKeysService) {
-        self.service = service
-    }
-}
+        switch account.type {
+        case .mnemonic, .passkeyOwned, .evmPrivateKey, .evmAddress: showEvmAddress = true
+        default: showEvmAddress = false
+        }
 
-extension PublicKeysViewModel {
-    var account: Account {
-        service.currentAccount
+        // mirrors the AccountAddress Tron providers (AccountAddressProvider.tronAddress); must stay in sync
+        switch account.type {
+        case .mnemonic, .trcPrivateKey, .tronAddress: showTronAddress = true
+        default: showTronAddress = false
+        }
+
+        switch account.type {
+        case .mnemonic, .hdExtendedKey: showAccountExtendedPublicKey = true
+        default: showAccountExtendedPublicKey = false
+        }
+
+        switch account.type {
+        case .mnemonic: showMoneroPublicKey = true
+        default: showMoneroPublicKey = false
+        }
     }
 
     var accountType: AccountType {
-        service.accountType
-    }
-
-    var showEvmAddress: Bool {
-        service.evmAddressSupported
-    }
-
-    var showTronAddress: Bool {
-        service.tronAddressSupported
-    }
-
-    var showAccountExtendedPublicKey: Bool {
-        service.accountExtendedPublicKeySupported
-    }
-
-    var showMoneroPublicKey: Bool {
-        service.moneroPublicKeySupported
+        account.type
     }
 }
