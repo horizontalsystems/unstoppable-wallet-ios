@@ -1,108 +1,55 @@
 import Chart
 import Combine
-import Foundation
+import SwiftUI
 
-class ChartIndicatorSettingsViewModel {
-    private let dataSource: IIndicatorDataSource
+@MainActor
+final class ChartIndicatorSettingsViewModel: ObservableObject {
+    @Published private(set) var form: ChartIndicatorSettingsForm
 
-    private var cancellables = Set<AnyCancellable>()
-
-    private let itemsUpdatedSubject = PassthroughSubject<[ChartIndicatorSettingsModule.ValueItem], Never>()
-    private let resetToInitialSubject = PassthroughSubject<[ChartIndicatorSettingsModule.ValueItem], Never>()
-    private let resetEnabledSubject = CurrentValueSubject<Bool, Never>(false)
-    private let buttonEnabledSubject = CurrentValueSubject<Bool, Never>(false)
-    private let cautionSubject = PassthroughSubject<[IndicatorDataSource.Caution], Never>()
-    private let updateIndicatorSubject = PassthroughSubject<ChartIndicator, Never>()
-
-    init(dataSource: IIndicatorDataSource) {
-        self.dataSource = dataSource
-
-        dataSource.stateUpdatedPublisher
-            .sink { [weak self] in self?.sync() }
-            .store(in: &cancellables)
-
-        dataSource.itemsUpdatedPublisher
-            .sink { [weak self] in self?.syncItems() }
-            .store(in: &cancellables)
-
-        sync()
+    init(form: ChartIndicatorSettingsForm) {
+        self.form = form
     }
 
-    private func syncItems() {
-        itemsUpdatedSubject.send(dataSource.currentItems)
-    }
-
-    private func sync() {
-        resetEnabledSubject.send(!dataSource.isDefault)
-        var applyEnabled = false
-        var newCautions = [IndicatorDataSource.Caution]()
-        switch dataSource.state {
-        case .notChanged: ()
-        case .success: applyEnabled = true
-        case let .failed(cautions): newCautions = cautions
-        }
-        buttonEnabledSubject.send(applyEnabled)
-        cautionSubject.send(newCautions)
-    }
-}
-
-extension ChartIndicatorSettingsViewModel {
     var title: String {
-        let indicator = dataSource.chartIndicator
-        switch indicator.abstractType {
-        case .ma: return indicator.id + " \(indicator.index + 1)"
-        case .rsi: return "chart_indicators.settings.rsi.title".localized
-        case .macd: return "chart_indicators.settings.macd.title".localized
-        default: return "Custom"
+        form.title
+    }
+
+    var resetEnabled: Bool {
+        !form.isDefault
+    }
+
+    var applyEnabled: Bool {
+        form.result != nil
+    }
+
+    func binding(for field: ChartIndicatorSettingsForm.Field) -> Binding<String> {
+        Binding(
+            get: { [weak self] in self?.form.text(for: field) ?? "" },
+            set: { [weak self] in self?.form.set(text: $0, for: field) }
+        )
+    }
+
+    var visibleCautions: [ChartIndicatorSettingsForm.Field: String] {
+        form.isEdited ? form.cautions : [:]
+    }
+
+    func cautionState(for field: ChartIndicatorSettingsForm.Field) -> CautionState {
+        guard let text = visibleCautions[field] else {
+            return .none
         }
+
+        return .caution(Caution(text: text, type: .error))
     }
 
-    var fields: [ChartIndicatorSettingsModule.Field] {
-        dataSource.fields
-    }
-
-    var itemsUpdatedPublisher: AnyPublisher<[ChartIndicatorSettingsModule.ValueItem], Never> {
-        itemsUpdatedSubject.eraseToAnyPublisher()
-    }
-
-    var resetToInitialPublisher: AnyPublisher<[ChartIndicatorSettingsModule.ValueItem], Never> {
-        resetToInitialSubject.eraseToAnyPublisher()
-    }
-
-    var resetEnabledPublisher: AnyPublisher<Bool, Never> {
-        resetEnabledSubject.eraseToAnyPublisher()
-    }
-
-    var buttonEnabledPublisher: AnyPublisher<Bool, Never> {
-        buttonEnabledSubject.eraseToAnyPublisher()
-    }
-
-    var cautionPublisher: AnyPublisher<[IndicatorDataSource.Caution], Never> {
-        cautionSubject.eraseToAnyPublisher()
-    }
-
-    var updateIndicatorPublisher: AnyPublisher<ChartIndicator, Never> {
-        updateIndicatorSubject.eraseToAnyPublisher()
-    }
-
-    func onChangeText(id: String, value: String?) {
-        dataSource.set(id: id, value: value)
+    func select(maType: MaIndicator.MaType) {
+        form.set(maType: maType)
     }
 
     func reset() {
-        dataSource.reset()
-        resetToInitialSubject.send(dataSource.initialItems)
+        form.reset()
     }
 
-    func onSelectList(id: String, selected: ChartIndicatorSettingsModule.ListElement) {
-        dataSource.set(id: id, value: selected.value)
-    }
-
-    func didTapApply() {
-        guard case let .success(indicator) = dataSource.state else {
-            return
-        }
-
-        updateIndicatorSubject.send(indicator)
+    func apply() -> ChartIndicator? {
+        form.result
     }
 }

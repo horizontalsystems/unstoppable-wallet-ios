@@ -1,97 +1,108 @@
 import Chart
 import Combine
-import MarketKit
-import UIKit
+import SwiftUI
 
-class ChartIndicatorsViewModel {
-    private let service: ChartIndicatorsService
-    private var cancellables = Set<AnyCancellable>()
+@MainActor
+final class ChartIndicatorsViewModel: ObservableObject {
+    private let repository: IChartIndicatorsRepository
+    private var indicators: [ChartIndicator]
 
-    @Published public var viewItems = [ViewItem]()
+    @Published private(set) var sections: [IndicatorSection] = []
 
-    private let openSettingsSubject = PassthroughSubject<ChartIndicator, Never>()
+    init(repository: IChartIndicatorsRepository) {
+        self.repository = repository
+        indicators = repository.indicators
 
-    init(service: ChartIndicatorsService) {
-        self.service = service
-
-        service.$items
-            .sink { [weak self] in self?.sync(items: $0) }
-            .store(in: &cancellables)
-
-        sync(items: service.items)
+        syncSections()
     }
 
-    private func sync(items: [ChartIndicatorsService.IndicatorItem]) {
-        // 1. make sections use all categories for indicators
-        viewItems = ChartIndicator.Category.allCases.map { category in
-            // 1a get only for each category
-            let items = items.filter { $0.indicator.category == category }
-            // 1b make array with all indicator names with insufficient data
-            let insufficientData = items.compactMap { item in
-                if item.insufficientData {
-                    return [item.indicator.id, item.indicator.index.description].joined(separator: " ").uppercased()
-                }
-                return nil
-            }
-
-            // 1c calculate viewItems for display
-            let indicatorViewItems = items.map {
-                IndicatorViewItem(
-                    id: $0.indicator.id,
-                    index: $0.indicator.index,
-                    name: category.name(id: $0.indicator.id, index: $0.indicator.index),
-                    image: category.image(index: $0.indicator.index),
-                    enabled: $0.indicator.enabled
-                )
-            }
-
-            return ViewItem(
-                category: category.title,
-                indicators: indicatorViewItems,
-                insufficientData: insufficientData
+    private func syncSections() {
+        sections = ChartIndicator.Category.allCases.map { category in
+            IndicatorSection(
+                id: category,
+                title: category.title,
+                items: indicators
+                    .filter { $0.category == category }
+                    .map { indicator in
+                        Item(
+                            indicatorId: indicator.id,
+                            index: indicator.index,
+                            name: category.name(id: indicator.id, index: indicator.index),
+                            color: category.color(index: indicator.index),
+                            enabled: indicator.enabled
+                        )
+                    }
             )
         }
     }
+
+    private func indicator(id: String, index: Int) -> ChartIndicator? {
+        indicators.first { $0.id == id && $0.index == index }
+    }
+
+    private static func applyToggle(enabled: Bool, id: String, index: Int, to indicators: [ChartIndicator]) {
+        guard let toggled = indicators.first(where: { $0.id == id && $0.index == index }) else {
+            return
+        }
+
+        toggled.enabled = enabled
+
+        // enabling a single-view indicator disables every other single-view indicator in the same area
+        if enabled {
+            for indicator in indicators where indicator !== toggled {
+                if indicator.onChart == toggled.onChart, indicator.single {
+                    indicator.enabled = false
+                }
+            }
+        }
+    }
 }
 
 extension ChartIndicatorsViewModel {
-    var openSettingsPublisher: AnyPublisher<ChartIndicator, Never> {
-        openSettingsSubject.eraseToAnyPublisher()
+    func set(enabled: Bool, id: String, index: Int) {
+        Self.applyToggle(enabled: enabled, id: id, index: index, to: indicators)
+        syncSections()
+    }
+
+    func form(id: String, index: Int) -> ChartIndicatorSettingsForm? {
+        guard let indicator = indicator(id: id, index: index) else {
+            return nil
+        }
+
+        return ChartIndicatorSettingsForm(indicator: indicator)
     }
 
     func update(indicator: ChartIndicator) {
-        service.update(indicator: indicator)
-    }
-
-    func saveIndicators() {
-        service.saveIndicators()
-    }
-
-    func onEdit(viewItem: ChartIndicatorsViewModel.IndicatorViewItem) {
-        guard let indicator = service.indicator(id: viewItem.id, index: viewItem.index) else {
+        guard let index = indicators.firstIndex(where: { $0.id == indicator.id && $0.index == indicator.index }) else {
             return
         }
-        openSettingsSubject.send(indicator)
+
+        indicators[index] = indicator
+        syncSections()
     }
 
-    func onToggle(viewItem: ChartIndicatorsViewModel.IndicatorViewItem, _ isOn: Bool) {
-        service.set(enabled: isOn, id: viewItem.id, index: viewItem.index)
+    func save() {
+        repository.set(indicators: indicators)
     }
 }
 
 extension ChartIndicatorsViewModel {
-    struct IndicatorViewItem {
-        let id: String
-        let index: Int
-        let name: String
-        let image: UIImage?
-        let enabled: Bool
+    struct IndicatorSection: Identifiable {
+        let id: ChartIndicator.Category
+        let title: String
+        let items: [Item]
     }
 
-    struct ViewItem {
-        let category: String
-        let indicators: [IndicatorViewItem]
-        let insufficientData: [String]
+    struct Item: Identifiable {
+        var id: String {
+            "\(indicatorId)-\(index)"
+        }
+
+        let indicatorId: String
+        let index: Int
+        let name: String
+        let color: Color?
+        let enabled: Bool
     }
 }
 
@@ -103,11 +114,10 @@ extension ChartIndicator.Category {
         }
     }
 
-    func image(index: Int) -> UIImage? {
+    func color(index: Int) -> Color? {
         switch self {
         case .movingAverage:
-            let color = ChartIndicatorFactory.maColors[index % ChartIndicatorFactory.maColors.count]
-            return UIImage(named: "chart_type_2_24")?.withTintColor(color)
+            return Color(ChartIndicatorFactory.maColors[index % ChartIndicatorFactory.maColors.count])
         case .oscillator: return nil
         }
     }

@@ -114,9 +114,8 @@ struct CoinOverviewView: View {
                 .buttonStyle(SecondaryButtonStyle(style: .default))
 
                 Button(action: {
-                    Coordinator.shared.present { _ in
-                        ChartIndicatorsModule.view(repository: chartViewModel.service.indicatorRepository, fetcher: chartViewModel.service)
-                            .ignoresSafeArea()
+                    Coordinator.shared.present { isPresented in
+                        ChartIndicatorsView(repository: chartViewModel.service.indicatorRepository, isPresented: isPresented)
                     }
 
                     stat(page: .coinOverview, event: .open(page: .indicators))

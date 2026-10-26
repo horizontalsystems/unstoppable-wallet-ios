@@ -3,7 +3,6 @@ import UIExtensions
 import UIKit
 
 enum ChartIndicatorFactory {
-    static let precalculatedColor = [UIColor.themeYellowD]
     static let maColors = [UIColor(hex: 0xF54900), UIColor(hex: 0xBF5AF2), UIColor(hex: 0x09C1AB)]
     static let maPeriods = [9, 25, 50]
     static let rsiPeriod = 12
@@ -64,14 +63,5 @@ enum ChartIndicatorFactory {
         ])
 
         return indicators
-    }
-}
-
-extension ChartIndicatorFactory {
-    struct MacdColor {
-        let fast: UIColor
-        let slow: UIColor
-        let positive: UIColor
-        let negative: UIColor
     }
 }
