@@ -62,9 +62,8 @@ struct ZanoNetworkView: View {
                                         ThemeText("zano_network.add_new".localized, style: .body, colorStyle: .yellow)
                                     },
                                     action: {
-                                        Coordinator.shared.present { _ in
-                                            AddZanoNodeSheetView(blockchainType: viewModel.blockchain.type)
-                                                .ignoresSafeArea()
+                                        Coordinator.shared.present { isPresented in
+                                            AddZanoNodeView(blockchainType: viewModel.blockchain.type, isPresented: isPresented)
                                         }
                                         stat(page: .blockchainSettingsZano, event: .openBlockchainSettingsZanoAdd(chainUid: viewModel.blockchain.type.uid))
                                     }

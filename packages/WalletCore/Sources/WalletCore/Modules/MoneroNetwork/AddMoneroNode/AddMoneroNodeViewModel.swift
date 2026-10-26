@@ -1,52 +1,69 @@
-import RxCocoa
-import RxRelay
-import RxSwift
+import Combine
+import Foundation
+import MarketKit
 
-class AddMoneroNodeViewModel {
-    private let service: AddMoneroNodeService
-    private let disposeBag = DisposeBag()
+final class AddMoneroNodeViewModel: ObservableObject {
+    private let blockchainType: BlockchainType
+    private let moneroNodeManager: MoneroNodeManager
 
-    private let urlCautionRelay = BehaviorRelay<Caution?>(value: nil)
-    private let finishRelay = PublishRelay<Void>()
-
-    init(service: AddMoneroNodeService) {
-        self.service = service
-    }
-}
-
-extension AddMoneroNodeViewModel {
-    var urlCautionDriver: Driver<Caution?> {
-        urlCautionRelay.asDriver()
+    @Published var url: String = "" {
+        didSet {
+            if oldValue != url {
+                urlCautionState = .none
+            }
+        }
     }
 
-    var finishSignal: Signal<Void> {
-        finishRelay.asSignal()
+    @Published var login: String = ""
+    @Published var password: String = ""
+    @Published var urlCautionState: CautionState = .none
+
+    private let finishSubject = PassthroughSubject<Void, Never>()
+
+    init(blockchainType: BlockchainType, moneroNodeManager: MoneroNodeManager = Core.shared.moneroNodeManager) {
+        self.blockchainType = blockchainType
+        self.moneroNodeManager = moneroNodeManager
     }
 
-    func onChange(url: String?) {
-        service.set(urlString: url ?? "")
-        urlCautionRelay.accept(nil)
-    }
-
-    func onChange(login: String?) {
-        service.set(login: login ?? "")
-    }
-
-    func onChange(password: String?) {
-        service.set(password: password ?? "")
+    var finishPublisher: AnyPublisher<Void, Never> {
+        finishSubject.eraseToAnyPublisher()
     }
 
     func onTapAdd() {
+        let parsedUrl: URL
+
         do {
-            try service.save()
-            stat(page: .blockchainSettingsMoneroAdd, event: .addMoneroNode(chainUid: service.blockchainType.uid))
-            finishRelay.accept(())
-        } catch AddMoneroNodeService.UrlError.alreadyExists {
-            urlCautionRelay.accept(Caution(text: "add_monero_node.warning.url_exists".localized, type: .warning))
-        } catch AddMoneroNodeService.UrlError.invalid {
-            urlCautionRelay.accept(Caution(text: "add_monero_node.error.invalid_url".localized, type: .error))
-        } catch AddMoneroNodeService.UrlError.portRequired {
-            urlCautionRelay.accept(Caution(text: "add_monero_node.error.port_required".localized, type: .error))
-        } catch {}
+            parsedUrl = try MoneroNodeUrlValidator.validate(urlString: url)
+        } catch MoneroNodeUrlValidator.ValidationError.portRequired {
+            urlCautionState = .caution(Caution(text: "add_monero_node.error.port_required".localized, type: .error))
+            return
+        } catch {
+            urlCautionState = .caution(Caution(text: "add_monero_node.error.invalid_url".localized, type: .error))
+            return
+        }
+
+        guard let newCanonical = MoneroNodeUrlValidator.canonical(url: parsedUrl) else {
+            urlCautionState = .caution(Caution(text: "add_monero_node.error.invalid_url".localized, type: .error))
+            return
+        }
+
+        guard !moneroNodeManager.allNodes(blockchainType: blockchainType).contains(where: { MoneroNodeUrlValidator.canonical(url: $0.node.url) == newCanonical }) else {
+            urlCautionState = .caution(Caution(text: "add_monero_node.warning.url_exists".localized, type: .warning))
+            return
+        }
+
+        let trimmedLogin = login.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        moneroNodeManager.addNew(
+            blockchainType: blockchainType,
+            url: parsedUrl,
+            isTrusted: true,
+            login: trimmedLogin.isEmpty ? nil : trimmedLogin,
+            password: trimmedPassword.isEmpty ? nil : trimmedPassword
+        )
+
+        stat(page: .blockchainSettingsMoneroAdd, event: .addMoneroNode(chainUid: blockchainType.uid))
+        finishSubject.send()
     }
 }

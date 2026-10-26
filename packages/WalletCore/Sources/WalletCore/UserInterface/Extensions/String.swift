@@ -1,3 +1,5 @@
+import Foundation
+
 extension String {
     func stripping(prefix: String?) -> String {
         if let prefix, hasPrefix(prefix) {
@@ -24,6 +26,10 @@ extension String {
         }
 
         return String(prefix(extraPrefix + 4)) + "..." + String(suffix(4))
+    }
+
+    var pastedSingleLine: String {
+        replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     static let placeholder = "----"

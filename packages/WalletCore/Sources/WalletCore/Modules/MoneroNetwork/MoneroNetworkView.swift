@@ -69,9 +69,8 @@ struct MoneroNetworkView: View {
                                         ThemeText("monero_network.add_new".localized, style: .body, colorStyle: .yellow)
                                     },
                                     action: {
-                                        Coordinator.shared.present { _ in
-                                            AddMoneroNodeSheetView(blockchainType: viewModel.blockchain.type)
-                                                .ignoresSafeArea()
+                                        Coordinator.shared.present { isPresented in
+                                            AddMoneroNodeView(blockchainType: viewModel.blockchain.type, isPresented: isPresented)
                                         }
                                         stat(page: .blockchainSettingsMonero, event: .openBlockchainSettingsMoneroAdd(chainUid: viewModel.blockchain.type.uid))
                                     }

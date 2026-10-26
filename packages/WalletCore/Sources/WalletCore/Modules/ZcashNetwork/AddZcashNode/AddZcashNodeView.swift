@@ -63,12 +63,9 @@ struct AddZcashNodeView: View {
                     }
                     .onTapGesture { focused = false }
                 } bottomContent: {
-                    Button(action: {
+                    ThemeButton(text: "button.add".localized) {
                         viewModel.onTapAdd()
-                    }) {
-                        Text("button.add".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 }
             }
             .navigationTitle("add_zcash_node.title".localized)

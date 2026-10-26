@@ -1,41 +1,50 @@
-import RxCocoa
-import RxRelay
-import RxSwift
+import Combine
+import Foundation
+import MarketKit
 
-class AddZanoNodeViewModel {
-    private let service: AddZanoNodeService
-    private let disposeBag = DisposeBag()
+final class AddZanoNodeViewModel: ObservableObject {
+    private let blockchainType: BlockchainType
+    private let zanoNodeManager: ZanoNodeManager
 
-    private let urlCautionRelay = BehaviorRelay<Caution?>(value: nil)
-    private let finishRelay = PublishRelay<Void>()
-
-    init(service: AddZanoNodeService) {
-        self.service = service
-    }
-}
-
-extension AddZanoNodeViewModel {
-    var urlCautionDriver: Driver<Caution?> {
-        urlCautionRelay.asDriver()
+    @Published var url: String = "" {
+        didSet {
+            if oldValue != url {
+                cautionState = .none
+            }
+        }
     }
 
-    var finishSignal: Signal<Void> {
-        finishRelay.asSignal()
+    @Published var cautionState: CautionState = .none
+
+    private let finishSubject = PassthroughSubject<Void, Never>()
+
+    init(blockchainType: BlockchainType, zanoNodeManager: ZanoNodeManager = Core.shared.zanoNodeManager) {
+        self.blockchainType = blockchainType
+        self.zanoNodeManager = zanoNodeManager
     }
 
-    func onChange(url: String?) {
-        service.set(urlString: url ?? "")
-        urlCautionRelay.accept(nil)
+    var finishPublisher: AnyPublisher<Void, Never> {
+        finishSubject.eraseToAnyPublisher()
     }
 
     func onTapAdd() {
+        let parsedUrl: URL
+
         do {
-            try service.save()
-            finishRelay.accept(())
-        } catch AddZanoNodeService.UrlError.alreadyExists {
-            urlCautionRelay.accept(Caution(text: "add_zano_node.warning.url_exists".localized, type: .warning))
-        } catch AddZanoNodeService.UrlError.invalid {
-            urlCautionRelay.accept(Caution(text: "add_zano_node.error.invalid_url".localized, type: .error))
-        } catch {}
+            parsedUrl = try ZanoNodeUrlValidator.validate(urlString: url)
+        } catch {
+            cautionState = .caution(Caution(text: "add_zano_node.error.invalid_url".localized, type: .error))
+            return
+        }
+
+        guard !zanoNodeManager.allNodes(blockchainType: blockchainType).contains(where: { $0.url == parsedUrl }) else {
+            cautionState = .caution(Caution(text: "add_zano_node.warning.url_exists".localized, type: .warning))
+            return
+        }
+
+        zanoNodeManager.addNew(blockchainType: blockchainType, url: parsedUrl)
+
+        stat(page: .blockchainSettingsZanoAdd, event: .addZanoNode(chainUid: blockchainType.uid))
+        finishSubject.send()
     }
 }

@@ -58,9 +58,8 @@ struct EvmNetworkView: View {
                                         ThemeText("evm_network.add_new".localized, style: .body, colorStyle: .yellow)
                                     },
                                     action: {
-                                        Coordinator.shared.present { _ in
-                                            AddEvmSyncSourceSheetView(blockchainType: viewModel.blockchain.type)
-                                                .ignoresSafeArea()
+                                        Coordinator.shared.present { isPresented in
+                                            AddEvmSyncSourceView(blockchainType: viewModel.blockchain.type, isPresented: isPresented)
                                         }
                                         stat(page: .blockchainSettingsEvm, event: .openBlockchainSettingsEvmAdd(chainUid: viewModel.blockchain.type.uid))
                                     }

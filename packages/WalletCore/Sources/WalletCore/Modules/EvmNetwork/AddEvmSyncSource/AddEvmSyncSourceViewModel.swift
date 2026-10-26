@@ -1,46 +1,52 @@
-import RxCocoa
-import RxRelay
-import RxSwift
+import Combine
+import Foundation
+import MarketKit
 
-class AddEvmSyncSourceViewModel {
-    private let service: AddEvmSyncSourceService
-    private let disposeBag = DisposeBag()
+final class AddEvmSyncSourceViewModel: ObservableObject {
+    private let blockchainType: BlockchainType
+    private let evmSyncSourceManager: EvmSyncSourceManager
 
-    private let urlCautionRelay = BehaviorRelay<Caution?>(value: nil)
-    private let finishRelay = PublishRelay<Void>()
-
-    init(service: AddEvmSyncSourceService) {
-        self.service = service
-    }
-}
-
-extension AddEvmSyncSourceViewModel {
-    var urlCautionDriver: Driver<Caution?> {
-        urlCautionRelay.asDriver()
+    @Published var url: String = "" {
+        didSet {
+            if oldValue != url {
+                urlCautionState = .none
+            }
+        }
     }
 
-    var finishSignal: Signal<Void> {
-        finishRelay.asSignal()
+    @Published var basicAuth: String = ""
+    @Published var urlCautionState: CautionState = .none
+
+    private let finishSubject = PassthroughSubject<Void, Never>()
+
+    init(blockchainType: BlockchainType, evmSyncSourceManager: EvmSyncSourceManager = Core.shared.evmSyncSourceManager) {
+        self.blockchainType = blockchainType
+        self.evmSyncSourceManager = evmSyncSourceManager
     }
 
-    func onChange(url: String?) {
-        service.set(urlString: url ?? "")
-        urlCautionRelay.accept(nil)
-    }
-
-    func onChange(basicAuth: String?) {
-        service.set(basicAuth: basicAuth ?? "")
+    var finishPublisher: AnyPublisher<Void, Never> {
+        finishSubject.eraseToAnyPublisher()
     }
 
     func onTapAdd() {
+        let parsedUrl: URL
+
         do {
-            try service.save()
-            stat(page: .blockchainSettingsEvmAdd, event: .addEvmSource(chainUid: service.blockchainType.uid))
-            finishRelay.accept(())
-        } catch AddEvmSyncSourceService.UrlError.alreadyExists {
-            urlCautionRelay.accept(Caution(text: "add_evm_sync_source.warning.url_exists".localized, type: .warning))
-        } catch AddEvmSyncSourceService.UrlError.invalid {
-            urlCautionRelay.accept(Caution(text: "add_evm_sync_source.error.invalid_url".localized, type: .error))
-        } catch {}
+            parsedUrl = try EvmSyncSourceUrlValidator.validate(urlString: url, blockchainType: blockchainType)
+        } catch {
+            urlCautionState = .caution(Caution(text: "add_evm_sync_source.error.invalid_url".localized, type: .error))
+            return
+        }
+
+        guard !evmSyncSourceManager.allSyncSources(blockchainType: blockchainType).contains(where: { $0.rpcSource.url == parsedUrl }) else {
+            urlCautionState = .caution(Caution(text: "add_evm_sync_source.warning.url_exists".localized, type: .warning))
+            return
+        }
+
+        let auth = basicAuth.trimmingCharacters(in: .whitespacesAndNewlines)
+        evmSyncSourceManager.saveSyncSource(blockchainType: blockchainType, url: parsedUrl, auth: auth.isEmpty ? nil : auth)
+
+        stat(page: .blockchainSettingsEvmAdd, event: .addEvmSource(chainUid: blockchainType.uid))
+        finishSubject.send()
     }
 }
