@@ -1,57 +1,113 @@
+import Combine
 import Foundation
-import RxCocoa
-import RxSwift
+import HsExtensions
+import HsToolKit
 
-class FaqViewModel {
-    private let disposeBag = DisposeBag()
+@MainActor
+final class FaqViewModel: ObservableObject {
+    private let networkManager = Core.shared.networkManager
+    private let reachabilityManager = Core.shared.reachabilityManager
+    private let languageManager = LanguageManager.shared
+    private var tasks = Set<AnyTask>()
+    private var cancellables = Set<AnyCancellable>()
 
-    private let service: FaqService
+    @Published private(set) var state: State = .loading
 
-    private var sectionItemsRelay = BehaviorRelay<[FaqService.SectionItem]>(value: [])
-    private var loadingRelay = BehaviorRelay<Bool>(value: true)
-    private var errorRelay = BehaviorRelay<Error?>(value: nil)
+    init() {
+        sync()
 
-    init(service: FaqService) {
-        self.service = service
+        reachabilityManager.$isReachable
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] reachable in
+                MainActor.assumeIsolated {
+                    guard reachable, let self, case .failed = self.state else {
+                        return
+                    }
 
-        service.faqObservable
-            .subscribe(onNext: { [weak self] dataStatus in
-                self?.handle(dataStatus: dataStatus)
-            })
-            .disposed(by: disposeBag)
+                    self.sync()
+                }
+            }
+            .store(in: &cancellables)
     }
 
-    private func handle(dataStatus: DataStatus<[FaqService.SectionItem]>) {
-        if case .loading = dataStatus {
-            loadingRelay.accept(true)
-        } else {
-            loadingRelay.accept(false)
+    private func sync() {
+        tasks = Set()
+
+        state = .loading
+
+        let language = languageManager.currentLanguage
+        let fallbackLanguage = LanguageManager.fallbackLanguage
+
+        Task { [weak self, networkManager] in
+            do {
+                let sections = try await Self.loadSections(
+                    networkManager: networkManager,
+                    language: language,
+                    fallbackLanguage: fallbackLanguage
+                )
+
+                guard !Task.isCancelled else {
+                    return
+                }
+
+                self?.state = .loaded(sections: sections)
+            } catch {
+                guard !Task.isCancelled else {
+                    return
+                }
+
+                self?.state = .failed(error: error)
+            }
+        }
+        .store(in: &tasks)
+    }
+
+    // Runs off the main actor: network fetch, JSON decoding and section building
+    private nonisolated static func loadSections(networkManager: NetworkManager, language: String, fallbackLanguage: String) async throws -> [Section] {
+        let faqSections: [FaqSection] = try await networkManager.fetch(url: AppConfig.faqIndexUrl)
+
+        try Task.checkCancellation()
+
+        return faqSections.compactMap { section(faqSection: $0, language: language, fallbackLanguage: fallbackLanguage) }
+    }
+
+    private nonisolated static func section(faqSection: FaqSection, language: String, fallbackLanguage: String) -> Section? {
+        guard let title = faqSection.titles[language] ?? faqSection.titles[fallbackLanguage] else {
+            return nil
         }
 
-        if case let .completed(items) = dataStatus {
-            sectionItemsRelay.accept(items)
-        } else {
-            sectionItemsRelay.accept([])
+        let items = faqSection.items.compactMap { item -> Item? in
+            guard let faq = item[language] ?? item[fallbackLanguage] else {
+                return nil
+            }
+
+            return Item(text: faq.text, url: URL(string: faq.fileUrl, relativeTo: AppConfig.faqIndexUrl))
         }
 
-        if case let .failed(error) = dataStatus {
-            errorRelay.accept(error.convertedError)
-        } else {
-            errorRelay.accept(nil)
-        }
+        return Section(title: title, items: items)
     }
 }
 
 extension FaqViewModel {
-    var sectionItemsDriver: Driver<[FaqService.SectionItem]> {
-        sectionItemsRelay.asDriver()
+    func onRetry() {
+        sync()
+    }
+}
+
+extension FaqViewModel {
+    enum State {
+        case loading
+        case loaded(sections: [Section])
+        case failed(error: Error)
     }
 
-    var loadingDriver: Driver<Bool> {
-        loadingRelay.asDriver()
+    struct Section: Hashable {
+        let title: String
+        let items: [Item]
     }
 
-    var errorDriver: Driver<Error?> {
-        errorRelay.asDriver()
+    struct Item: Hashable {
+        let text: String
+        let url: URL?
     }
 }

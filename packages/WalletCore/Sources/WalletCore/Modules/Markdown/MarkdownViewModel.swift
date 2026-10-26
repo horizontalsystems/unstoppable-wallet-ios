@@ -1,59 +1,124 @@
+import Combine
 import Down
 import Foundation
-import RxCocoa
-import RxRelay
-import RxSwift
+import HsExtensions
+import HsToolKit
 
-class MarkdownViewModel {
-    private let service: MarkdownService
-    private let parser: MarkdownParser
-    private let parserConfig: DownStylerConfiguration
-    private let disposeBag = DisposeBag()
+@MainActor
+final class MarkdownViewModel: ObservableObject {
+    private let url: URL
+    private let mode: Mode
+    private let handleRelativeUrl: Bool
+    private let networkManager: NetworkManager
+    private var tasks = Set<AnyTask>()
 
-    private let loadingRelay = BehaviorRelay<Bool>(value: false)
-    private let viewItemsRelay = BehaviorRelay<[MarkdownBlockViewItem]?>(value: nil)
-    private let openUrlRelay = PublishRelay<URL>()
+    @Published private(set) var state: State = .loading
 
-    init(service: MarkdownService, parser: MarkdownParser, parserConfig: DownStylerConfiguration) {
-        self.service = service
-        self.parser = parser
-        self.parserConfig = parserConfig
+    init(url: URL, mode: Mode, handleRelativeUrl: Bool, networkManager: NetworkManager = Core.shared.networkManager) {
+        self.url = url
+        self.mode = mode
+        self.handleRelativeUrl = handleRelativeUrl
+        self.networkManager = networkManager
 
-        sync(content: service.content)
-
-        service.contentObservable
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe(onNext: { [weak self] content in
-                self?.sync(content: content)
-            })
-            .disposed(by: disposeBag)
+        sync()
     }
 
-    private func sync(content: String?) {
-        loadingRelay.accept(content == nil)
+    private var markdownUrl: URL? {
+        Self.markdownUrl(url: url, mode: mode)
+    }
 
-        viewItemsRelay.accept(content.map { parser.viewItems(content: $0, url: service.markdownUrl, configuration: parserConfig) })
+    private func sync() {
+        tasks = Set()
+
+        state = .loading
+
+        Task { [weak self, url, mode, networkManager] in
+            do {
+                let viewItems = try await Self.loadViewItems(url: url, mode: mode, networkManager: networkManager)
+
+                guard !Task.isCancelled else {
+                    return
+                }
+
+                self?.state = .loaded(viewItems: viewItems)
+            } catch {
+                guard !Task.isCancelled else {
+                    return
+                }
+
+                self?.state = .failed(error: error)
+            }
+        }
+        .store(in: &tasks)
+    }
+
+    private nonisolated static func markdownUrl(url: URL, mode: Mode) -> URL? {
+        switch mode {
+        case .article: return url
+        case .gitRelease: return nil
+        }
+    }
+
+    // Runs off the main actor: network fetch, Down parsing and attributed string building
+    private nonisolated static func loadViewItems(url: URL, mode: Mode, networkManager: NetworkManager) async throws -> [MarkdownBlockViewItem] {
+        let content: String
+
+        switch mode {
+        case .article:
+            let data = try await networkManager.fetchData(url: url)
+            content = String(decoding: data, as: UTF8.self)
+        case .gitRelease:
+            let release: GitHubRelease = try await networkManager.fetch(url: url)
+            content = release.body
+        }
+
+        try Task.checkCancellation()
+
+        return MarkdownParser.viewItems(content: content, url: markdownUrl(url: url, mode: mode), configuration: mode.config)
     }
 }
 
 extension MarkdownViewModel {
-    var loadingDriver: Driver<Bool> {
-        loadingRelay.asDriver()
+    func onRetry() {
+        sync()
     }
 
-    var viewItemsDriver: Driver<[MarkdownBlockViewItem]?> {
-        viewItemsRelay.asDriver()
-    }
-
-    var openUrlSignal: Signal<URL> {
-        openUrlRelay.asSignal()
-    }
-
-    func onTap(url: URL) {
-        guard let resolvedUrl = URL(string: url.absoluteString, relativeTo: service.markdownUrl) else {
-            return
+    func linkAction(url: URL) -> LinkAction {
+        guard handleRelativeUrl, url.pathExtension == "md" else {
+            return .external(url: url)
         }
 
-        openUrlRelay.accept(resolvedUrl)
+        let resolvedUrl = URL(string: url.absoluteString, relativeTo: markdownUrl)?.absoluteURL
+
+        return .pushMarkdown(url: resolvedUrl ?? url)
+    }
+}
+
+extension MarkdownViewModel {
+    enum Mode {
+        case article
+        case gitRelease
+
+        var config: DownStylerConfiguration {
+            switch self {
+            case .article: return AcademyMarkdownConfig.config
+            case .gitRelease: return ReleaseNotesMarkdownConfig.config
+            }
+        }
+    }
+
+    enum State {
+        case loading
+        case loaded(viewItems: [MarkdownBlockViewItem])
+        case failed(error: Error)
+    }
+
+    enum LinkAction: Equatable {
+        case pushMarkdown(url: URL)
+        case external(url: URL)
+    }
+
+    private struct GitHubRelease: Decodable {
+        let body: String
     }
 }

@@ -49,8 +49,8 @@ struct KeyScreenScaffold<Content: View>: View {
                 return
             }
 
-            Coordinator.shared.present { _ in
-                MarkdownView(url: url, handleRelativeUrl: false, navigation: true).ignoresSafeArea()
+            Coordinator.shared.present { isPresented in
+                MarkdownView(url: url, handleRelativeUrl: false, isPresented: isPresented)
             }
             stat(page: statPage, event: .open(page: .info))
         } label: {

@@ -79,13 +79,10 @@ extension EducationView {
                                         let item = section.items[index]
 
                                         NavigationRow {
-                                            ThemeNavigationStack {
-                                                MarkdownView(url: item.url).ignoresSafeArea()
-                                            }
-                                            .ignoresSafeArea()
-                                            .onFirstAppear {
-                                                stat(page: .education, event: .openArticle(relativeUrl: item.url.relativePath))
-                                            }
+                                            MarkdownView(url: item.url)
+                                                .onFirstAppear {
+                                                    stat(page: .education, event: .openArticle(relativeUrl: item.url.relativePath))
+                                                }
                                         } content: {
                                             Text(item.title).themeBody()
                                         }

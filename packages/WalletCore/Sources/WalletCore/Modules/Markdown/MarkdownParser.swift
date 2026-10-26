@@ -1,8 +1,8 @@
 import Down
 import UIKit
 
-class MarkdownParser {
-    func viewItems(content: String, url: URL?, configuration: DownStylerConfiguration) -> [MarkdownBlockViewItem] {
+enum MarkdownParser {
+    static func viewItems(content: String, url: URL?, configuration: DownStylerConfiguration) -> [MarkdownBlockViewItem] {
         let down = Down(markdownString: content)
 
         let styler = DownStyler(configuration: configuration)
@@ -18,9 +18,6 @@ class MarkdownParser {
             let visitor = MarkdownVisitor(attributedStringVisitor: attributedStringVisitor, styler: styler)
             let block = document.accept(visitor)
 
-//            print(block)
-//            print(document.accept(DebugVisitor()))
-
             guard let documentBlock = block as? MarkdownVisitor.DocumentBlock else {
                 return []
             }
@@ -29,11 +26,11 @@ class MarkdownParser {
 
             for (blockIndex, block) in documentBlock.blocks.enumerated() {
                 if let headingBlock = block as? MarkdownVisitor.HeadingBlock {
-                    viewItems.append(.header(attributedString: headingBlock.attributedString, level: headingBlock.level))
+                    viewItems.append(.header(attributedString: convert(headingBlock.attributedString), level: headingBlock.level))
                 }
 
                 if let paragraphBlock = block as? MarkdownVisitor.ParagraphBlock {
-                    viewItems.append(.text(attributedString: paragraphBlock.attributedString))
+                    viewItems.append(.text(attributedString: convert(paragraphBlock.attributedString)))
                 }
 
                 if let listBlock = block as? MarkdownVisitor.ListBlock {
@@ -41,11 +38,16 @@ class MarkdownParser {
 
                     for (itemIndex, itemBlock) in listBlock.itemBlocks.enumerated() {
                         let prefix = order.map { "\($0)." } ?? "•"
+                        let prefixAttributedString = MarkdownAttributedStringConverter.attributedString(
+                            string: prefix,
+                            font: configuration.fonts.body,
+                            color: configuration.colors.body
+                        )
 
                         for (paragraphIndex, paragraphBlock) in itemBlock.paragraphBlocks.enumerated() {
                             viewItems.append(.listItem(
-                                attributedString: paragraphBlock.attributedString,
-                                prefix: paragraphIndex == 0 ? prefix : nil,
+                                attributedString: convert(paragraphBlock.attributedString),
+                                prefix: paragraphIndex == 0 ? prefixAttributedString : nil,
                                 tightTop: listBlock.tight && itemIndex != 0,
                                 tightBottom: listBlock.tight && itemIndex != listBlock.itemBlocks.count - 1
                             ))
@@ -58,17 +60,17 @@ class MarkdownParser {
                 if let blockQuoteBlock = block as? MarkdownVisitor.BlockQuoteBlock {
                     for (paragraphIndex, paragraphBlock) in blockQuoteBlock.paragraphBlocks.enumerated() {
                         viewItems.append(.blockQuote(
-                            attributedString: paragraphBlock.attributedString,
+                            attributedString: convert(paragraphBlock.attributedString),
                             tightTop: paragraphIndex != 0,
                             tightBottom: paragraphIndex != blockQuoteBlock.paragraphBlocks.count - 1
                         ))
                     }
                 }
 
-                if let imageBlock = block as? MarkdownVisitor.ImageBlock, let urlString = imageBlock.url, let url = URL(string: urlString, relativeTo: url) {
+                if let imageBlock = block as? MarkdownVisitor.ImageBlock, let urlString = imageBlock.url, let imageUrl = URL(string: urlString, relativeTo: url) {
                     var type: MarkdownImageType = .square
 
-                    if let letter = url.deletingPathExtension().lastPathComponent.split(separator: "-").last {
+                    if let letter = imageUrl.deletingPathExtension().lastPathComponent.split(separator: "-").last {
                         if letter == "l" {
                             type = .landscape
                         } else if letter == "p" {
@@ -76,7 +78,7 @@ class MarkdownParser {
                         }
                     }
 
-                    viewItems.append(.image(url: url, type: type, tight: blockIndex == 0))
+                    viewItems.append(.image(url: imageUrl, type: type, tight: blockIndex == 0))
 
                     if let title = imageBlock.title {
                         viewItems.append(.imageTitle(text: title))
@@ -88,5 +90,9 @@ class MarkdownParser {
         } catch {
             return []
         }
+    }
+
+    private static func convert(_ nsAttributedString: NSAttributedString) -> AttributedString {
+        MarkdownAttributedStringConverter.attributedString(from: nsAttributedString)
     }
 }

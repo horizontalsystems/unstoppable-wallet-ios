@@ -329,12 +329,10 @@ struct CoinOverviewView: View {
         ListSection {
             if let guideUrl {
                 NavigationRow {
-                    ThemeNavigationStack {
-                        MarkdownView(url: guideUrl).ignoresSafeArea()
-                    }
-                    .onFirstAppear {
-                        stat(page: .coinOverview, event: .open(page: .guide))
-                    }
+                    MarkdownView(url: guideUrl)
+                        .onFirstAppear {
+                            stat(page: .coinOverview, event: .open(page: .guide))
+                        }
                 } content: {
                     linkRowContent(image: Image("academy_1_24"), title: "coin_overview.guide".localized)
                 }

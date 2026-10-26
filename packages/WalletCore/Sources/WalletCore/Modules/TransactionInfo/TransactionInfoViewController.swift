@@ -76,7 +76,7 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func openStatusInfo() {
-        present(InfoModule.transactionStatusInfo, animated: true)
+        InfoModule.present(viewItems: InfoModule.transactionStatusInfo)
 
         stat(page: .transactionInfo, section: .status, event: .open(page: .info))
     }
@@ -398,8 +398,8 @@ class TransactionInfoViewController: ThemeViewController {
         let formattedDate = DateHelper.instance.formatFullTime(from: lockState.date)
 
         if lockState.locked {
-            return warningRow(rowInfo: rowInfo, id: id, image: image, text: "tx_info.locked_until".localized(formattedDate)) { [weak self] in
-                self?.present(InfoModule.timeLockInfo, animated: true)
+            return warningRow(rowInfo: rowInfo, id: id, image: image, text: "tx_info.locked_until".localized(formattedDate)) {
+                InfoModule.present(viewItems: InfoModule.timeLockInfo)
 
                 stat(page: .transactionInfo, section: .timeLock, event: .open(page: .info))
             }

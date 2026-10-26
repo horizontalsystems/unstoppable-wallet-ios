@@ -408,8 +408,6 @@ struct MainSettingsView: View {
     @ViewBuilder private func faq() -> some View {
         NavigationRow(destination: {
             FaqView()
-                .navigationTitle("faq.title".localized)
-                .ignoresSafeArea()
                 .onFirstAppear {
                     stat(page: .settings, event: .open(page: .faq))
                 }

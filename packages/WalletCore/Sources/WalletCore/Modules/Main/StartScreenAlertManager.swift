@@ -49,8 +49,8 @@ class StartScreenAlertManager {
         }
 
         if let releaseNotesUrl = releaseNotesService.releaseNotesUrl {
-            Coordinator.shared.present { _ in
-                MarkdownModule.gitReleaseNotesMarkdownView(url: releaseNotesUrl, presented: true).ignoresSafeArea()
+            Coordinator.shared.present { isPresented in
+                ReleaseNotesView(url: releaseNotesUrl, isPresented: isPresented)
             } onDismiss: { [weak self] in
                 self?.handleNextAlert()
             }

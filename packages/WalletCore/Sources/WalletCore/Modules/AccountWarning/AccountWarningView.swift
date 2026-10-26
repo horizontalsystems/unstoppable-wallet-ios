@@ -7,8 +7,8 @@ struct AccountWarningView: View {
         if let item = viewModel.item {
             Button(action: {
                 if let url = item.url {
-                    Coordinator.shared.present { _ in
-                        MarkdownView(url: url, navigation: true).ignoresSafeArea()
+                    Coordinator.shared.present { isPresented in
+                        MarkdownView(url: url, isPresented: isPresented)
                     }
                 }
             }) {

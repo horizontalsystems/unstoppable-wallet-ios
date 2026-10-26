@@ -9,9 +9,8 @@ struct AboutView: View {
                 if let releaseNotesUrl = viewModel.releaseNotesUrl {
                     ListSection {
                         NavigationRow(spacing: .margin8, destination: {
-                            MarkdownModule.gitReleaseNotesMarkdownView(url: releaseNotesUrl, presented: false)
+                            ReleaseNotesView(url: releaseNotesUrl)
                                 .onFirstAppear { stat(page: .aboutApp, event: .open(page: .whatsNews)) }
-                                .ignoresSafeArea()
                         }) {
                             HStack(spacing: .margin16) {
                                 Image("circle_information_24").themeIcon()

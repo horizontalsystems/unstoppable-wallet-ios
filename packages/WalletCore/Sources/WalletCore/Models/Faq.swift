@@ -1,22 +1,21 @@
 import Foundation
-import ObjectMapper
 
-struct Faq: ImmutableMappable {
+struct Faq: Decodable {
     let text: String
     let fileUrl: String
 
-    init(text: String, fileUrl: String) {
-        self.text = text
-        self.fileUrl = fileUrl
-    }
-
-    init(map: Map) throws {
-        text = try map.value("title")
-        fileUrl = try map.value("markdown")
+    enum CodingKeys: String, CodingKey {
+        case text = "title"
+        case fileUrl = "markdown"
     }
 }
 
-struct FaqSection {
+struct FaqSection: Decodable {
     let titles: [String: String]
     let items: [[String: Faq]]
+
+    enum CodingKeys: String, CodingKey {
+        case titles = "section"
+        case items
+    }
 }
