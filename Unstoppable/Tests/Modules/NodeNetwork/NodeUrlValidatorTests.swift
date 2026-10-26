@@ -81,4 +81,19 @@ struct NodeUrlValidatorTests {
         #expect(MoneroNodeUrlValidator.canonical(url: legacy) == "node.io:18081")
         #expect(MoneroNodeUrlValidator.canonical(url: legacy) == MoneroNodeUrlValidator.canonical(url: https))
     }
+
+    // MARK: ZanoNodeUrlValidator
+
+    @Test(arguments: ["https://node.zano.org:443", "http://37.27.100.59:10500"])
+    func zanoAcceptsHttpAndHttps(urlString: String) throws {
+        let url = try ZanoNodeUrlValidator.validate(urlString: urlString)
+        #expect(url == URL(string: urlString))
+    }
+
+    @Test(arguments: ["wss://node.zano.org", "ftp://node.zano.org"])
+    func zanoRejectsOtherSchemes(urlString: String) {
+        #expect(throws: ZanoNodeUrlValidator.ValidationError.invalid) {
+            try ZanoNodeUrlValidator.validate(urlString: urlString)
+        }
+    }
 }

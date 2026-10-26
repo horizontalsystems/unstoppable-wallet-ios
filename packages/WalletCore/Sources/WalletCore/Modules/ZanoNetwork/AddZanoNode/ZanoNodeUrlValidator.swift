@@ -5,10 +5,16 @@ enum ZanoNodeUrlValidator {
         case invalid
     }
 
+    static let validSchemes = ["http", "https"]
+
     static func validate(urlString: String) throws -> URL {
         let trimmed = urlString.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        guard let url = URL(string: trimmed), url.scheme != nil, url.host != nil else {
+        guard let url = URL(string: trimmed), let scheme = url.scheme, url.host != nil else {
+            throw ValidationError.invalid
+        }
+
+        guard validSchemes.contains(scheme) else {
             throw ValidationError.invalid
         }
 
