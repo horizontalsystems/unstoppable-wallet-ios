@@ -186,6 +186,8 @@ public class WalletListViewModel: ObservableObject {
         __items.firstIndex { $0.wallet == wallet }
     }
 
+    // Account transitions bypass the report interval so the previous account's rows
+    // never stay visible after the account has changed.
     private func _syncWalletService() {
         walletService?.delegate = nil
 
@@ -194,15 +196,16 @@ public class WalletListViewModel: ObservableObject {
             walletService.delegate = self
             self.walletService = walletService
 
-            _sync(wallets: walletService.wallets, walletService: walletService)
+            _sync(wallets: walletService.wallets, walletService: walletService, immediately: true)
         } else {
             walletService = nil
             __items = []
-            _reportItems()
+            _syncTotalItem()
+            _reportItems(immediately: true)
         }
     }
 
-    private func _sync(wallets: [Wallet], walletService: WalletService) {
+    private func _sync(wallets: [Wallet], walletService: WalletService, immediately: Bool = false) {
         let cacheContainer = account.map { cacheManager.cacheContainer(accountId: $0.id) }
         let priceItemMap = coinPriceService.itemMap(coinUids: wallets.compactMap(\.priceCoinUid))
 
@@ -223,9 +226,8 @@ public class WalletListViewModel: ObservableObject {
         }
 
         _sortItems()
-        _reportItems()
-
         _syncTotalItem()
+        _reportItems(immediately: immediately)
 
         coinPriceService.set(
             coinUids: Set(wallets.compactMap(\.priceCoinUid)),
