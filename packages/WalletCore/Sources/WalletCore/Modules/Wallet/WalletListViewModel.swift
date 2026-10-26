@@ -43,6 +43,10 @@ public class WalletListViewModel: ObservableObject {
     var __items: [Item] = []
     let queue = DispatchQueue(label: "\(AppConfig.label).wallet-list-view-model", qos: .userInitiated)
 
+    private let reportInterval: TimeInterval = 0.2
+    private var reportWorkItem: DispatchWorkItem?
+    private var lastReportUptime: TimeInterval?
+
     public init() {
         if let rawValue: String = userDefaultsStorage.value(for: keySortType), let sortType = WalletSorter.SortType(rawValue: rawValue) {
             self.sortType = sortType
@@ -114,7 +118,7 @@ public class WalletListViewModel: ObservableObject {
     private func handleUpdateSortType() {
         queue.async {
             self._sortItems()
-            self._reportItems()
+            self._reportItems(immediately: true)
         }
     }
 
@@ -122,20 +126,60 @@ public class WalletListViewModel: ObservableObject {
         __items = sorter.sort(items: __items, sortType: sortType)
     }
 
-    private func _reportItems() {
-        _syncNoTokens()
+    // Coalesces item, noTokens and subclass publications into a single main-thread hop,
+    // at most once per reportInterval while updates stream. The latest state is always flushed.
+    func _reportItems(immediately: Bool = false) {
+        if immediately {
+            reportWorkItem?.cancel()
+            reportWorkItem = nil
+            _flushReport()
+            return
+        }
 
-        DispatchQueue.main.async { [__items] in
-            self.items = __items
+        guard reportWorkItem == nil else {
+            return
+        }
+
+        var delay: TimeInterval = 0
+
+        if let lastReportUptime {
+            let elapsed = ProcessInfo.processInfo.systemUptime - lastReportUptime
+            delay = max(0, reportInterval - elapsed)
+        }
+
+        let workItem = DispatchWorkItem { [weak self] in
+            self?.reportWorkItem = nil
+            self?._flushReport()
+        }
+
+        reportWorkItem = workItem
+        queue.asyncAfter(deadline: .now() + delay, execute: workItem)
+    }
+
+    private func _flushReport() {
+        lastReportUptime = ProcessInfo.processInfo.systemUptime
+
+        let items = __items
+        let noTokens = account.map { walletManager.activeWalletData.account?.id == $0.id && items.isEmpty } ?? false
+        let publishPending = _pendingPublication()
+
+        DispatchQueue.main.async {
+            if self.items != items {
+                self.items = items
+            }
+
+            if self.noTokens != noTokens {
+                self.noTokens = noTokens
+            }
+
+            publishPending?()
         }
     }
 
-    private func _syncNoTokens() {
-        let value = account.map { walletManager.activeWalletData.account?.id == $0.id && __items.isEmpty } ?? false
-
-        DispatchQueue.main.async {
-            self.noTokens = value
-        }
+    // Called on queue right before a flush. Subclasses return a closure that publishes
+    // their own pending state on the main thread within the same hop.
+    func _pendingPublication() -> (() -> Void)? {
+        nil
     }
 
     private func _itemIndex(wallet: Wallet) -> Int? {

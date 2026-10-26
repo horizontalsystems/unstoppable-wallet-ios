@@ -15,6 +15,8 @@ public class WalletViewModel: WalletListViewModel {
     @Published private(set) var buttonHidden: Bool
     @Published public private(set) var totalItem: TotalItem
 
+    private var pendingTotalItem: TotalItem?
+
     override public init() {
         buttonHidden = walletButtonHiddenManager.buttonHidden
         totalItem = .init(currencyValue: .init(currency: .init(code: "", symbol: "", decimal: 0), value: 0), state: .synced, convertedValue: nil, convertedValueExpired: false)
@@ -89,15 +91,25 @@ public class WalletViewModel: WalletListViewModel {
             state = .synced
         }
 
-        let totalItem = TotalItem(
+        pendingTotalItem = TotalItem(
             currencyValue: CurrencyValue(currency: coinPriceService.currency, value: total),
             state: state,
             convertedValue: convertedValue,
             convertedValueExpired: expired || convertedValueExpired
         )
 
-        DispatchQueue.main.async {
-            self.totalItem = totalItem
+        _reportItems()
+    }
+
+    override func _pendingPublication() -> (() -> Void)? {
+        guard let totalItem = pendingTotalItem else {
+            return nil
+        }
+
+        pendingTotalItem = nil
+
+        return { [weak self] in
+            self?.totalItem = totalItem
         }
     }
 }
