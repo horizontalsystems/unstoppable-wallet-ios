@@ -61,7 +61,6 @@ enum StatPage: String {
     case donate
     case donateAddressList = "donate_address_list"
     case doubleSpend = "double_spend"
-    case education
     case evmAddress = "evm_address"
     case evmPrivateKey = "evm_private_key"
     case tronPrivateKey = "tron_private_key"

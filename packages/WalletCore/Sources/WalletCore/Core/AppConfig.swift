@@ -25,7 +25,6 @@ enum AppConfig {
     static let mempoolSpaceUrl = "https://mempool.space"
     static let guidesIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/blockchain-crypto-guides/v1.2/index.json")!
     static let faqIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/unstoppable.money/refs/heads/main/faq.json")!
-    static let eduIndexUrl = URL(string: "https://raw.githubusercontent.com/horizontalsystems/unstoppable.money/refs/heads/main/edu.json")!
     static let donationAddresses: [BlockchainType: String] = [
         .bitcoin: "bc1qxt5u5swx3sk6y2923whr4tvjreza43g37czv67",
         .bitcoinCash: "bitcoincash:qz6sy9fq66yvfl5mvpfv3v2nqw5pervvkc425nj9g0\n",

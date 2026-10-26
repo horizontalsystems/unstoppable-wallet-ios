@@ -61,7 +61,6 @@ struct MainSettingsView: View {
                         rateUs()
                         tellFriend()
                         faq()
-                        academy()
                     }
 
                     Spacer().frame(height: .margin24)
@@ -414,18 +413,6 @@ struct MainSettingsView: View {
         }) {
             ThemeImage("message", size: .iconSize24)
             Text("settings.faq".localized).themeBody()
-            Image.disclosureIcon
-        }
-    }
-
-    @ViewBuilder private func academy() -> some View {
-        NavigationRow(destination: {
-            EducationView().onFirstAppear {
-                stat(page: .settings, event: .open(page: .education))
-            }
-        }) {
-            ThemeImage("book", size: .iconSize24)
-            Text("education.title".localized).themeBody()
             Image.disclosureIcon
         }
     }

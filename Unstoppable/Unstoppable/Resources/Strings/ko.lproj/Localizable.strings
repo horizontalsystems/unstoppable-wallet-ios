@@ -2049,11 +2049,6 @@
 "intro.stay_private.title" = "개인 정보 유지";
 "intro.stay_private.description" = "개인 및 금융 데이터를 세상에 유출하지 마십시오.";
 
-// Education
-
-"education.title" = "Education";
-"quiz.title" = "암호화폐 퀴즈";
-
 // Add Token
 
 "add_token.title" = "토큰 추가";

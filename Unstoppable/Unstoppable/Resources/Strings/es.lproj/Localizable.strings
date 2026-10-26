@@ -2049,11 +2049,6 @@
 "intro.stay_private.title" = "Manténgase en Privado";
 "intro.stay_private.description" = "No filtre sus datos privados y financieros al resto del mundo";
 
-// Education
-
-"education.title" = "Education";
-"quiz.title" = "Cuestionario de Cripto";
-
 // Add Token
 
 "add_token.title" = "Añadir Token";

@@ -2049,11 +2049,6 @@
 "intro.stay_private.title" = "Сохраняйте приватность";
 "intro.stay_private.description" = "Ваши данные остаются под вашим контролем.";
 
-// Education
-
-"education.title" = "Знания";
-"quiz.title" = "Криптотест";
-
 // Add Token
 
 "add_token.title" = "Добавить токен";

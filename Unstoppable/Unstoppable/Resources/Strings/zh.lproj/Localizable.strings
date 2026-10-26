@@ -2049,11 +2049,6 @@
 "intro.stay_private.title" = "保持私密";
 "intro.stay_private.description" = "不要向外界泄漏您的私密和财务数据";
 
-// Education
-
-"education.title" = "Education";
-"quiz.title" = "加密问答";
-
 // Add Token
 
 "add_token.title" = "添加代币";

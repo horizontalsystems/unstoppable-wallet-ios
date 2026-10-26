@@ -2049,11 +2049,6 @@
 "intro.stay_private.title" = "Gizliliğinizi Koruyun";
 "intro.stay_private.description" = "Özel ve finansal bilgilerinizi dünyaya açmayın";
 
-// Education
-
-"education.title" = "Eğitim";
-"quiz.title" = "Crypto Quiz";
-
 // Add Token
 
 "add_token.title" = "Token Ekle";
