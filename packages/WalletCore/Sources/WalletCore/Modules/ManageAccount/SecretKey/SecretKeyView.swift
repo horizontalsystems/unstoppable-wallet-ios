@@ -11,8 +11,8 @@ struct SecretKeyView: View {
         KeyScreenScaffold(
             title: viewModel.kind.title,
             statPage: viewModel.kind.statPage,
-            copyDisabled: viewModel.key.isEmpty,
-            onCopy: { viewModel.copy() }
+            buttonDisabled: viewModel.key.isEmpty,
+            onButtonTap: { viewModel.copy() }
         ) {
             VStack(spacing: .margin12) {
                 AlertCardView(.init(text: "recovery_phrase.warning".localized(AppConfig.appName), type: .caution, style: .inline))

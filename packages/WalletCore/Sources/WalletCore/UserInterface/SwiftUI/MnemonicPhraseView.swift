@@ -31,7 +31,7 @@ struct MnemonicPhraseView: View {
                 ThemeText(hint, style: .subheadR)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
-                    .padding(.horizontal, .margin8) // card padding 16 + 8 = 24, as in MnemonicPhraseCell
+                    .padding(.horizontal, .margin8) // card padding 16 + 8 = 24
             }
         }
         .padding(.vertical, .margin24)

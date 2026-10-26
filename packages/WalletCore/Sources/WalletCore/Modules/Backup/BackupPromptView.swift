@@ -26,8 +26,8 @@ struct BackupPromptView: View {
                                 isPresented = false
 
                                 Coordinator.shared.performAfterUnlock {
-                                    Coordinator.shared.present { _ in
-                                        BackupManualView(account: account).ignoresSafeArea()
+                                    Coordinator.shared.present { isPresented in
+                                        BackupManualView(account: account, isPresented: isPresented)
                                     }
                                     stat(page: .backupRequired, event: .open(page: .manualBackup))
                                 }

@@ -1,89 +1,89 @@
-import RxCocoa
-import RxRelay
-import RxSwift
+import Combine
+import Foundation
 
-class BackupVerifyWordsViewModel {
-    private let service: BackupVerifyWordsService
-    private let disposeBag = DisposeBag()
+class BackupVerifyWordsViewModel: ObservableObject {
+    private let account: Account
+    private let accountManager: AccountManager
+    private var session: BackupVerifyWordsSession
+    private var cancellables = Set<AnyCancellable>()
+    private let successSubject = PassthroughSubject<Void, Never>()
 
-    private let viewItemRelay = BehaviorRelay<ViewItem>(value: ViewItem(inputViewItems: [], wordViewItems: []))
-    private let errorRelay = PublishRelay<String>()
-    private let openPassphraseRelay = PublishRelay<Account>()
-    private let successRelay = PublishRelay<Void>()
+    @Published private(set) var inputViewItems: [InputViewItem] = []
+    @Published private(set) var wordViewItems: [WordViewItem] = []
 
-    init(service: BackupVerifyWordsService) {
-        self.service = service
+    init(account: Account, accountManager: AccountManager = Core.shared.accountManager, appManager: AppManager = Core.shared.appManager) {
+        self.account = account
+        self.accountManager = accountManager
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
+        let words: [String]
 
-        sync(state: service.state)
+        switch account.type {
+        case let .mnemonic(accountWords, _, _): words = accountWords
+        case let .moneroMnemonic(accountWords, _): words = accountWords
+        default: words = []
+        }
+
+        session = BackupVerifyWordsSession(words: words)
+
+        appManager.didBecomeActivePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.reset() }
+            .store(in: &cancellables)
+
+        sync()
     }
 
-    private func sync(state: BackupVerifyWordsService.State) {
-        let viewItem = ViewItem(
-            inputViewItems: state.inputItems.map { item in
-                InputViewItem(
-                    text: "\(item.index)." + (item.text.map { " \($0)" } ?? ""),
-                    selected: item.current
-                )
-            },
-            wordViewItems: state.wordItems.map { item in
-                WordViewItem(
-                    text: item.text,
-                    enabled: item.enabled
-                )
-            }
-        )
+    private func sync() {
+        inputViewItems = session.inputItems.map { item in
+            InputViewItem(
+                id: item.index,
+                text: "\(item.index)." + (item.text.map { " \($0)" } ?? ""),
+                selected: item.current
+            )
+        }
 
-        viewItemRelay.accept(viewItem)
-    }
-}
-
-extension BackupVerifyWordsViewModel {
-    var viewItemDriver: Driver<ViewItem> {
-        viewItemRelay.asDriver()
-    }
-
-    var errorSignal: Signal<String> {
-        errorRelay.asSignal()
-    }
-
-    var openPassphraseSignal: Signal<Account> {
-        openPassphraseRelay.asSignal()
-    }
-
-    var successSignal: Signal<Void> {
-        successRelay.asSignal()
-    }
-
-    func onViewAppear() {
-        service.reset()
-    }
-
-    func onSelectWord(index: Int) {
-        let result = service.handleSelectedWord(index: index)
-
-        switch result {
-        case .correct: ()
-        case .incorrect: errorRelay.accept("backup_verify_words.incorrect_word".localized)
-        case .showPassphrase: openPassphraseRelay.accept(service.account)
-        case .backedUp: successRelay.accept(())
+        wordViewItems = session.wordItems.enumerated().map { index, item in
+            WordViewItem(id: index, text: item.text, enabled: item.enabled)
         }
     }
 }
 
 extension BackupVerifyWordsViewModel {
-    struct ViewItem {
-        let inputViewItems: [InputViewItem]
-        let wordViewItems: [WordViewItem]
+    var successPublisher: AnyPublisher<Void, Never> {
+        successSubject.eraseToAnyPublisher()
     }
 
-    struct InputViewItem {
+    func onSelectWord(index: Int) {
+        switch session.select(suggestionIndex: index) {
+        case .correct:
+            sync()
+        case .incorrect:
+            sync()
+            HudHelper.instance.show(banner: .error(string: "backup_verify_words.incorrect_word".localized))
+        case .completed:
+            sync()
+            account.backedUp = true
+            accountManager.update(account: account)
+            HudHelper.instance.show(banner: .success(string: "backup.verified".localized))
+            successSubject.send()
+        }
+    }
+
+    func reset() {
+        session.reset()
+        sync()
+    }
+}
+
+extension BackupVerifyWordsViewModel {
+    struct InputViewItem: Identifiable {
+        let id: Int
         let text: String
         let selected: Bool
     }
 
-    struct WordViewItem {
+    struct WordViewItem: Identifiable {
+        let id: Int
         let text: String
         let enabled: Bool
     }

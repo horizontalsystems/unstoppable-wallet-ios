@@ -1,5 +1,5 @@
 {
-  "originHash" : "863d94aa00ce5e32932ab245a4cb4dd9348ff2e716a874fb9e6acb13478e13af",
+  "originHash" : "363f61a81db59dd7ee568dd917d93724be2970811f3444e54f32ba6e0ea6b152",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -8,15 +8,6 @@
       "state" : {
         "revision" : "3f99050e75bbc6fe71fc323adabb039756680016",
         "version" : "5.11.1"
-      }
-    },
-    {
-      "identity" : "alignedcollectionviewflowlayout",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mischa-hildebrand/AlignedCollectionViewFlowLayout",
-      "state" : {
-        "branch" : "master",
-        "revision" : "236094ac389234d528cc782c140bcb20724b86bf"
       }
     },
     {
@@ -89,15 +80,6 @@
       "state" : {
         "revision" : "f882c7b3d2a095fe197c2dede8eea919d9ec2aa5",
         "version" : "1.0.33"
-      }
-    },
-    {
-      "identity" : "collectionviewcenteredflowlayout",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Coeur/CollectionViewCenteredFlowLayout",
-      "state" : {
-        "revision" : "fe9008e2fda06bc0af2fe8ec9d78a5d0dcac2b8f",
-        "version" : "1.0.5"
       }
     },
     {

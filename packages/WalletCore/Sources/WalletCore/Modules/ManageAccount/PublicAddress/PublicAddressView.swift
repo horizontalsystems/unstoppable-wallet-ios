@@ -12,8 +12,8 @@ struct PublicAddressView: View {
             title: viewModel.kind.title,
             statPage: viewModel.kind.statPage,
             showsInfoButton: false,
-            copyDisabled: viewModel.address.isEmpty,
-            onCopy: { viewModel.copy() }
+            buttonDisabled: viewModel.address.isEmpty,
+            onButtonTap: { viewModel.copy() }
         ) {
             KeyCardView(text: viewModel.address)
         }

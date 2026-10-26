@@ -243,14 +243,13 @@ struct ManageAccountView: View {
     }
 
     private func presentBackup(reason: BackupReason) {
-        Coordinator.shared.present { _ in
-            BackupManualView(account: viewModel.account) {
+        Coordinator.shared.present { isPresented in
+            BackupManualView(account: viewModel.account, isPresented: isPresented) {
                 switch reason {
                 case .deleteCloudBackup: deleteCloudBackup()
                 default: ()
                 }
             }
-            .ignoresSafeArea()
         }
         stat(page: .manageWallet, event: .open(page: .manualBackup))
     }

@@ -11,8 +11,8 @@ struct MoneroKeyView: View {
         KeyScreenScaffold(
             title: viewModel.title,
             statPage: viewModel.statPage,
-            copyDisabled: viewModel.key.isEmpty,
-            onCopy: { viewModel.copy() }
+            buttonDisabled: viewModel.key.isEmpty,
+            onButtonTap: { viewModel.copy() }
         ) {
             VStack(spacing: .margin24) {
                 ListSection {

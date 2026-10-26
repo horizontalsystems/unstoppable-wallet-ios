@@ -11,8 +11,8 @@ struct RecoveryPhraseView: View {
         KeyScreenScaffold(
             title: "recovery_phrase.title".localized,
             statPage: .recoveryPhrase,
-            copyDisabled: viewModel.words.isEmpty,
-            onCopy: { viewModel.copy() }
+            buttonDisabled: viewModel.words.isEmpty,
+            onButtonTap: { viewModel.copy() }
         ) {
             VStack(spacing: .margin12) {
                 AlertCardView(.init(text: "recovery_phrase.warning".localized(AppConfig.appName), type: .caution, style: .inline))

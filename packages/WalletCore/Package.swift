@@ -11,13 +11,11 @@ let package = Package(
         .library(name: "WalletCore", targets: ["WalletCore"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/mischa-hildebrand/AlignedCollectionViewFlowLayout", branch: "master"),
         .package(url: "https://github.com/horizontalsystems/BitcoinCashKit.Swift", exact: "3.0.1"),
         .package(url: "https://github.com/horizontalsystems/BitcoinCore.Swift", exact: "3.2.0"),
         .package(url: "https://github.com/horizontalsystems/BitcoinKit.Swift", exact: "3.0.1"),
         .package(url: "https://github.com/horizontalsystems/Chart.Swift", exact: "3.0.2"),
         .package(url: "https://github.com/horizontalsystems/Checkpoints", exact: "1.0.33"),
-        .package(url: "https://github.com/Coeur/CollectionViewCenteredFlowLayout", from: "1.0.4"),
         .package(url: "https://github.com/krzyzanowskim/CryptoSwift", from: "1.9.0"),
         .package(url: "https://github.com/horizontalsystems/DashKit.Swift", exact: "3.1.0"),
         .package(url: "https://github.com/johnxnguyen/Down", from: "0.11.0"),
@@ -60,13 +58,11 @@ let package = Package(
         .target(
             name: "WalletCore",
             dependencies: [
-                .product(name: "AlignedCollectionViewFlowLayout", package: "AlignedCollectionViewFlowLayout"),
                 .product(name: "BitcoinCashKit", package: "BitcoinCashKit.Swift"),
                 .product(name: "BitcoinCore", package: "BitcoinCore.Swift"),
                 .product(name: "BitcoinKit", package: "BitcoinKit.Swift"),
                 .product(name: "Chart", package: "Chart.Swift"),
                 .product(name: "Checkpoints", package: "Checkpoints"),
-                .product(name: "CollectionViewCenteredFlowLayout", package: "CollectionViewCenteredFlowLayout"),
                 .product(name: "CryptoSwift", package: "CryptoSwift"),
                 .product(name: "DashKit", package: "DashKit.Swift"),
                 .product(name: "Down", package: "Down"),

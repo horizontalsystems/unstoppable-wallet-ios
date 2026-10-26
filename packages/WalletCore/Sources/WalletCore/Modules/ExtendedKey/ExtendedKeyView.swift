@@ -13,8 +13,8 @@ struct ExtendedKeyView: View {
         KeyScreenScaffold(
             title: viewModel.title,
             statPage: viewModel.statPage,
-            copyDisabled: viewItem.key.isEmpty,
-            onCopy: { viewModel.copy() }
+            buttonDisabled: viewItem.key.isEmpty,
+            onButtonTap: { viewModel.copy() }
         ) {
             VStack(spacing: 0) {
                 if viewItem.keyIsPrivate {
