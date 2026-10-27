@@ -66,7 +66,7 @@ struct WCSessionsView: View {
         }
 
         Coordinator.shared.present { isPresented in
-            ScanQrViewNew(reportAfterDismiss: true, isPresented: isPresented) { uri in
+            ScanQrView(reportAfterDismiss: true, isPresented: isPresented) { uri in
                 viewModel.pair(uri: uri)
             }
             .ignoresSafeArea()

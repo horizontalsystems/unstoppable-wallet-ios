@@ -1,6 +1,6 @@
 import SwiftUI
 
-public enum ScanQrModuleNew {
+public enum ScanQrModule {
     public struct Options: OptionSet {
         public init(rawValue: Int) {
             self.rawValue = rawValue

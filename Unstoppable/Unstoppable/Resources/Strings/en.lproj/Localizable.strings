@@ -138,6 +138,7 @@
 "access_camera.message" = "Access to your camera for this app was denied, you can go to settings and allow access";
 "access_camera.not_supported" = "Your device does not support scanning a code from an item. Please use a device with a camera.";
 "access_camera.settings" = "Go To Settings";
+"scan_qr.gallery.no_qr" = "No QR code found in the selected image";
 
 // Restore
 

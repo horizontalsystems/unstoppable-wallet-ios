@@ -138,6 +138,7 @@
 "access_camera.message" = "Der Zugriff dieser App auf Ihre Kamera wurde verweigert. Sie können ihn in den Einstellungen erlauben.";
 "access_camera.not_supported" = "Ihr Gerät unterstützt das Scannen eines Codes von einem Artikel nicht. Verwenden Sie bitte ein Gerät mit einer Kamera.";
 "access_camera.settings" = "Einstellungen";
+"scan_qr.gallery.no_qr" = "No QR code found in the selected image";
 
 // Restore
 

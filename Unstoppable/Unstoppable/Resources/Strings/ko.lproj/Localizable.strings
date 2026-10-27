@@ -138,6 +138,7 @@
 "access_camera.message" = "이 앱의 카메라 접근이 거부되었습니다. 설정에서 접근을 허용할 수 있습니다.";
 "access_camera.not_supported" = "귀하의 기기는 항목에서 코드를 스캔하는 것을 지원하지 않습니다. 카메라가 있는 기기를 사용하십시오.";
 "access_camera.settings" = "설정";
+"scan_qr.gallery.no_qr" = "No QR code found in the selected image";
 
 // Restore
 

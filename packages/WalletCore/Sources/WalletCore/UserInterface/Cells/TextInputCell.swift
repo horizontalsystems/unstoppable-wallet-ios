@@ -1,6 +1,5 @@
-
 import SnapKit
-
+import SwiftUI
 import UIKit
 
 class TextInputCell: UITableViewCell {
@@ -23,7 +22,6 @@ class TextInputCell: UITableViewCell {
     var onChangeHeight: (() -> Void)?
     var onChangeText: ((String) -> Void)?
     var onChangeTextViewCaret: ((UITextView) -> Void)?
-    var onOpenViewController: ((UIViewController) -> Void)?
 
     private(set) var textForHeight: String = "" {
         didSet {
@@ -128,12 +126,12 @@ class TextInputCell: UITableViewCell {
     }
 
     @objc private func onTapQr() {
-        let scanQrViewController = ScanQrViewController()
-        scanQrViewController.didFetch = { [weak self] in
-            self?.onScanQr(text: $0)
+        Coordinator.shared.present { [weak self] isPresented in
+            ScanQrView(options: [.picker], isPresented: isPresented) { text in
+                self?.onScanQr(text: text)
+            }
+            .ignoresSafeArea()
         }
-
-        onOpenViewController?(scanQrViewController)
     }
 
     @objc private func onTapPaste() {

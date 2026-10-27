@@ -166,7 +166,7 @@ enum WCPresenter {
 
     private static func presentScanner() {
         Coordinator.shared.present { isPresented in
-            ScanQrViewNew(reportAfterDismiss: true, isPresented: isPresented) { uri in
+            ScanQrView(reportAfterDismiss: true, isPresented: isPresented) { uri in
                 pair(uri: uri)
             }
             .ignoresSafeArea()

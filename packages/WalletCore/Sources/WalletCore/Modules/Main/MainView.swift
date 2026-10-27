@@ -166,7 +166,7 @@ struct MainView: View {
 
     private func onTapScan() {
         Coordinator.shared.present { isPresented in
-            ScanQrViewNew(reportAfterDismiss: true, isPresented: isPresented) { text in
+            ScanQrView(reportAfterDismiss: true, isPresented: isPresented) { text in
                 walletViewModel.process(scanned: text)
             }
             .ignoresSafeArea()

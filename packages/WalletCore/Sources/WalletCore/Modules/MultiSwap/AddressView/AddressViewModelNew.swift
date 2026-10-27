@@ -149,7 +149,7 @@ extension AddressViewModelNew {
             }
         case 0:
             Coordinator.shared.present { isPresented in
-                ScanQrViewNew(isPresented: isPresented) { [weak self] in
+                ScanQrView(isPresented: isPresented) { [weak self] in
                     self?.didFetch(qrText: $0)
                 }
                 .ignoresSafeArea()

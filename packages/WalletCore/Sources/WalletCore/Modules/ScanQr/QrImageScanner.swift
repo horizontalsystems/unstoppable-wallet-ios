@@ -1,7 +1,7 @@
 import CoreImage
 import UIKit
 
-enum QrImageScannerNew {
+enum QrImageScanner {
     static func scan(image: UIImage) -> String? {
         guard let ciImage = CIImage(image: image) else { return nil }
 

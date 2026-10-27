@@ -38,7 +38,7 @@ struct AddMoneroNodeView: View {
                                             switch index {
                                             case 0:
                                                 Coordinator.shared.present { isScanPresented in
-                                                    ScanQrViewNew(isPresented: isScanPresented) { text in
+                                                    ScanQrView(isPresented: isScanPresented) { text in
                                                         viewModel.url = text.trimmingCharacters(in: .whitespacesAndNewlines)
                                                     }
                                                     .ignoresSafeArea()

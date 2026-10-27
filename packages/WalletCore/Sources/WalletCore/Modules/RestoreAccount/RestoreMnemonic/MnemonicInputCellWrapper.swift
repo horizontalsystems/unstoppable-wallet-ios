@@ -40,9 +40,6 @@ struct MnemonicInputCellWrapper: UIViewRepresentable {
                 binding.wrappedValue.toggle()
             }
         }
-        cell.onOpenViewController = { [weak cell] vc in
-            cell?.parentViewController?.present(vc, animated: true)
-        }
 
         coordinator.cancellable = replaceWordPublisher.sink { [weak cell] range, word in
             DispatchQueue.main.async {
@@ -87,16 +84,5 @@ struct MnemonicInputCellWrapper: UIViewRepresentable {
         var cancellable: AnyCancellable?
         var didFirstFocus = false
         var lastIsFocused = false
-    }
-}
-
-extension UIView {
-    var parentViewController: UIViewController? {
-        var responder: UIResponder? = self
-        while let r = responder {
-            if let vc = r as? UIViewController { return vc }
-            responder = r.next
-        }
-        return nil
     }
 }

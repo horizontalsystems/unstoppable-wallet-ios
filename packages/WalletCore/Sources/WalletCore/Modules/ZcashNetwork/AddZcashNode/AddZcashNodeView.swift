@@ -38,7 +38,7 @@ struct AddZcashNodeView: View {
                                             switch index {
                                             case 0:
                                                 Coordinator.shared.present { isPresented in
-                                                    ScanQrViewNew(isPresented: isPresented) { text in
+                                                    ScanQrView(isPresented: isPresented) { text in
                                                         viewModel.address = text.trimmingCharacters(in: .whitespacesAndNewlines)
                                                     }
                                                     .ignoresSafeArea()

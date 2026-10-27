@@ -25,7 +25,7 @@ struct LargeTextField: View {
                 if text.isEmpty {
                     IconButton(icon: "scan", style: .secondary, size: .small) {
                         Coordinator.shared.present { isPresented in
-                            ScanQrViewNew(options: [.picker], isPresented: isPresented) { text in
+                            ScanQrView(options: [.picker], isPresented: isPresented) { text in
                                 self.text = text
                                 onButtonTap?()
                                 stat(page: statPage, event: .scanQr(entity: statEntity))

@@ -297,7 +297,7 @@ struct WalletView: View {
                 stat(page: .balance, event: .open(page: .swap))
             case .scan:
                 Coordinator.shared.present { isPresented in
-                    ScanQrViewNew(reportAfterDismiss: true, isPresented: isPresented) { text in
+                    ScanQrView(reportAfterDismiss: true, isPresented: isPresented) { text in
                         viewModel.process(scanned: text)
                     }
                     .ignoresSafeArea()

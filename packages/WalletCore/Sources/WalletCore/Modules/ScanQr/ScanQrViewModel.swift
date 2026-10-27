@@ -2,13 +2,15 @@ import Combine
 import PhotosUI
 import SwiftUI
 
-public class ScanQrViewModelNew: ObservableObject {
-    private let cameraManager = QrCameraManagerNew()
+public final class ScanQrViewModel: ObservableObject {
+    private let cameraManager = QrCameraManager()
     public private(set) var didFetch: ((String) -> Void)?
     private let resultSubject = PassthroughSubject<String, Never>()
     private var cancellables = Set<AnyCancellable>()
+    private var isActive = false // main thread only
 
     @Published public var cameraPermissionDenied = false
+    @Published public var cameraUnsupported = false
     @Published public var pickerItem: PhotosPickerItem?
 
     public var session: AVCaptureSession {
@@ -31,8 +33,15 @@ public class ScanQrViewModelNew: ObservableObject {
 
         cameraManager.errorPublisher
             .receive(on: DispatchQueue.main)
-            .sink { error in
-                HudHelper.instance.show(banner: .error(string: error.smartDescription))
+            .sink { [weak self] _ in
+                self?.cameraUnsupported = true
+            }
+            .store(in: &cancellables)
+
+        cameraManager.configuredPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.cameraUnsupported = false
             }
             .store(in: &cancellables)
 
@@ -45,23 +54,24 @@ public class ScanQrViewModelNew: ObservableObject {
     }
 
     public func requestCameraAccess() {
+        isActive = true
+
         PermissionsHelper.performWithCameraPermission { [weak self] granted in
-            if granted {
-                self?.cameraManager.configure()
-                self?.cameraManager.start()
-            } else {
-                DispatchQueue.main.async {
-                    self?.cameraPermissionDenied = true
+            DispatchQueue.main.async { [weak self] in
+                guard let self, isActive else { return }
+
+                if granted {
+                    cameraManager.configure()
+                    cameraManager.start()
+                } else {
+                    cameraPermissionDenied = true
                 }
             }
         }
     }
 
-    func startSession() {
-        cameraManager.start()
-    }
-
     public func stopSession() {
+        isActive = false
         cameraManager.stop()
     }
 
@@ -70,6 +80,7 @@ public class ScanQrViewModelNew: ObservableObject {
     }
 
     private func handleResult(_ string: String) {
+        isActive = false
         cameraManager.stop()
         resultSubject.send(string)
     }
@@ -78,7 +89,7 @@ public class ScanQrViewModelNew: ObservableObject {
         Task { @MainActor [weak self] in
             guard let data = try? await item.loadTransferable(type: Data.self),
                   let image = UIImage(data: data),
-                  let result = QrImageScannerNew.scan(image: image)
+                  let result = QrImageScanner.scan(image: image)
             else {
                 self?.pickerItem = nil
                 HudHelper.instance.show(banner: .error(string: "scan_qr.gallery.no_qr".localized))

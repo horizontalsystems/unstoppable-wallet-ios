@@ -138,6 +138,7 @@
 "access_camera.message" = "Bu uygulamanın kameranıza erişimi reddedildi. Erişime Ayarlar'dan izin verebilirsiniz.";
 "access_camera.not_supported" = "Cihazınız bir öğeden kod tarımını desteklemiyor. Bir kameraya sahip bir cihaz kullanın lütfen.";
 "access_camera.settings" = "Ayarlar";
+"scan_qr.gallery.no_qr" = "No QR code found in the selected image";
 
 // Restore
 

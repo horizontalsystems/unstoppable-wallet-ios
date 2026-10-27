@@ -1,7 +1,7 @@
 import AVFoundation
 import SwiftUI
 
-public struct QrCameraPreviewNew: UIViewRepresentable {
+public struct QrCameraPreview: UIViewRepresentable {
     private let session: AVCaptureSession
 
     public init(session: AVCaptureSession) {

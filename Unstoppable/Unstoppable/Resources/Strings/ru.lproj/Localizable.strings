@@ -138,6 +138,7 @@
 "access_camera.message" = "Доступ приложения к камере запрещён. Разрешить его можно в настройках.";
 "access_camera.not_supported" = "Ваше устройство не поддерживает сканирование кода с предмета. Пожалуйста, используйте устройство с камерой.";
 "access_camera.settings" = "Настройки";
+"scan_qr.gallery.no_qr" = "No QR code found in the selected image";
 
 // Restore
 

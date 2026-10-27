@@ -1,7 +1,6 @@
 import Foundation
 import HsToolKit
 import MarketKit
-import RxSwift
 import SolanaKit
 
 class AddSplTokenBlockchainService {
@@ -29,35 +28,6 @@ extension AddSplTokenBlockchainService: IAddTokenBlockchainService {
 
     func tokenQuery(reference: String) -> TokenQuery {
         TokenQuery(blockchainType: .solana, tokenType: .spl(address: reference))
-    }
-
-    func tokenSingle(reference: String) -> Single<Token> {
-        let tokenQuery = tokenQuery(reference: reference)
-
-        return Single.create { [blockchain, networkManager] observer in
-            Task { [blockchain, networkManager] in
-                do {
-                    let info = try await SolanaKit.Kit.tokenInfo(
-                        networkManager: networkManager,
-                        apiKey: AppConfig.jupiterApiKey,
-                        mintAddress: reference
-                    )
-
-                    let token = Token(
-                        coin: Coin(uid: tokenQuery.customCoinUid, name: info.name, code: info.symbol),
-                        blockchain: blockchain,
-                        type: tokenQuery.tokenType,
-                        decimals: info.decimals
-                    )
-
-                    observer(.success(token))
-                } catch {
-                    observer(.error(TokenError.notFound(blockchainName: blockchain.name)))
-                }
-            }
-
-            return Disposables.create()
-        }
     }
 
     func token(reference: String) async throws -> MarketKit.Token {

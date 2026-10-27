@@ -1,31 +1,33 @@
 import PhotosUI
 import SwiftUI
 
-public struct ScanQrViewNew: View {
-    @StateObject private var viewModel: ScanQrViewModelNew
+public struct ScanQrView: View {
+    @StateObject private var viewModel: ScanQrViewModel
     @Binding private var isPresented: Bool
 
     private let reportAfterDismiss: Bool
-    private let options: ScanQrModuleNew.Options
+    private let options: ScanQrModule.Options
 
-    public init(reportAfterDismiss: Bool = false, options: ScanQrModuleNew.Options = [.paste, .picker], isPresented: Binding<Bool>, didFetch: ((String) -> Void)?) {
+    public init(reportAfterDismiss: Bool = false, options: ScanQrModule.Options = [.paste, .picker], isPresented: Binding<Bool>, didFetch: ((String) -> Void)?) {
         self.reportAfterDismiss = reportAfterDismiss
         self.options = options
         _isPresented = isPresented
-        _viewModel = StateObject(wrappedValue: ScanQrViewModelNew(didFetch: didFetch))
+        _viewModel = StateObject(wrappedValue: ScanQrViewModel(didFetch: didFetch))
     }
 
     public var body: some View {
         ThemeNavigationStack {
             ZStack {
-                QrCameraPreviewNew(session: viewModel.session)
+                QrCameraPreview(session: viewModel.session)
                     .ignoresSafeArea()
 
-                QrScannerOverlayViewNew(sideMargin: .margin24)
+                QrScannerOverlayView(sideMargin: .margin24)
                     .ignoresSafeArea()
 
                 if viewModel.cameraPermissionDenied {
                     permissionDeniedView
+                } else if viewModel.cameraUnsupported {
+                    unsupportedView
                 }
 
                 VStack {
@@ -111,5 +113,11 @@ public struct ScanQrViewNew: View {
             .buttonStyle(PrimaryButtonStyle(style: .transparent))
         }
         .padding(.horizontal, .margin32)
+    }
+
+    @ViewBuilder private var unsupportedView: some View {
+        ThemeText("access_camera.not_supported".localized, style: .subheadR, colorStyle: .secondary)
+            .multilineTextAlignment(.center)
+            .padding(.horizontal, .margin32)
     }
 }

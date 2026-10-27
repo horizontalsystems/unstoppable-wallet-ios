@@ -44,7 +44,7 @@ struct TonConnectListView: View {
             } bottomContent: {
                 Button(action: {
                     Coordinator.shared.present { isPresented in
-                        ScanQrViewNew(reportAfterDismiss: true, isPresented: isPresented) { deeplink in
+                        ScanQrView(reportAfterDismiss: true, isPresented: isPresented) { deeplink in
                             viewModel.handle(deeplink: deeplink)
                         }
                         .ignoresSafeArea()

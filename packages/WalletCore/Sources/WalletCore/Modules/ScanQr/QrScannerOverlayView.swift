@@ -1,7 +1,7 @@
 import SwiftUI
 import UIExtensions
 
-public struct QrScannerOverlayViewNew: View {
+public struct QrScannerOverlayView: View {
     private let sideMargin: CGFloat
     private let cornerRadius: CGFloat
 

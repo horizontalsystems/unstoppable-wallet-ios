@@ -138,6 +138,7 @@
 "access_camera.message" = "Se denegó el acceso de esta aplicación a tu cámara. Puedes permitirlo en Ajustes.";
 "access_camera.not_supported" = "Su dispositivo no es compatible con el escaneo de un código de un artículo. Por favor, use un dispositivo con cámara.";
 "access_camera.settings" = "Ajustes";
+"scan_qr.gallery.no_qr" = "No QR code found in the selected image";
 
 // Restore
 

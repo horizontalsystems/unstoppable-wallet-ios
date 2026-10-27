@@ -81,13 +81,6 @@ enum AddTokenModule {
 
         return items
     }
-
-    // static func viewController() -> UIViewController? {
-    //     guard let (account, items) = items() else { return nil }
-    //     let viewModel = AddTokenViewModel(account: account, items: items, coinManager: Core.shared.coinManager, walletManager: Core.shared.walletManager)
-    //     let viewController = AddTokenViewController(viewModel: viewModel)
-    //     return ThemeNavigationController(rootViewController: viewController)
-    // }
 }
 
 extension AddTokenModule {

@@ -22,11 +22,12 @@ struct AddTokenBlockchainSelectView: View {
                             isPresented = false
                         }) {
                             BlockchainIcon(blockchain: blockchain)
+                            ThemeText(blockchain.name, style: .body)
 
-                            Text(blockchain.name).themeBody()
+                            Spacer()
 
                             if viewModel.currentBlockchainItem.blockchain == blockchain {
-                                Image.checkIcon
+                                ThemeImage("check", size: .iconSize20, colorStyle: .yellow)
                             }
                         }
                     }

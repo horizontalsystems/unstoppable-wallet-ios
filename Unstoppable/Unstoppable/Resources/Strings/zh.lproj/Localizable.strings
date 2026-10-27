@@ -138,6 +138,7 @@
 "access_camera.message" = "此应用访问相机的权限已被拒绝，您可以前往设置允许访问。";
 "access_camera.not_supported" = "您的设备不支持扫描物品上的代码。请使用带有摄像头的设备。";
 "access_camera.settings" = "设置";
+"scan_qr.gallery.no_qr" = "No QR code found in the selected image";
 
 // Restore
 

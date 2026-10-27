@@ -1,11 +1,12 @@
 import AVFoundation
 import Combine
 
-class QrCameraManagerNew: NSObject {
+final class QrCameraManager: NSObject {
     private let captureSession = AVCaptureSession()
-    private let scanQueue = DispatchQueue(label: "io.horizontalsystems.unstoppable.qr_camera_new", qos: .default)
+    private let scanQueue = DispatchQueue(label: "io.horizontalsystems.unstoppable.qr_camera", qos: .default)
     private let scannedSubject = PassthroughSubject<String, Never>()
     private let errorSubject = PassthroughSubject<Error, Never>()
+    private let configuredSubject = PassthroughSubject<Void, Never>()
     private var isConfigured = false
 
     var scannedPublisher: AnyPublisher<String, Never> {
@@ -16,6 +17,10 @@ class QrCameraManagerNew: NSObject {
         errorSubject.eraseToAnyPublisher()
     }
 
+    var configuredPublisher: AnyPublisher<Void, Never> {
+        configuredSubject.eraseToAnyPublisher()
+    }
+
     var session: AVCaptureSession {
         captureSession
     }
@@ -24,22 +29,38 @@ class QrCameraManagerNew: NSObject {
         scanQueue.async { [weak self] in
             guard let self, !isConfigured else { return }
 
+            var addedInput: AVCaptureInput?
+            var addedOutput: AVCaptureOutput?
+
+            captureSession.beginConfiguration()
+
             do {
                 let device = try Self.backCamera()
                 let input = try AVCaptureDeviceInput(device: device)
 
-                guard captureSession.canAddInput(input) else { return }
+                guard captureSession.canAddInput(input) else { throw CameraError.cannotAddInput }
                 captureSession.addInput(input)
+                addedInput = input
 
                 let metadataOutput = AVCaptureMetadataOutput()
-                guard captureSession.canAddOutput(metadataOutput) else { return }
+                guard captureSession.canAddOutput(metadataOutput) else { throw CameraError.cannotAddOutput }
                 captureSession.addOutput(metadataOutput)
+                addedOutput = metadataOutput
 
                 metadataOutput.setMetadataObjectsDelegate(self, queue: .main)
                 metadataOutput.metadataObjectTypes = [.qr]
 
+                captureSession.commitConfiguration()
                 isConfigured = true
+                configuredSubject.send()
             } catch {
+                if let addedOutput {
+                    captureSession.removeOutput(addedOutput)
+                }
+                if let addedInput {
+                    captureSession.removeInput(addedInput)
+                }
+                captureSession.commitConfiguration()
                 errorSubject.send(error)
             }
         }
@@ -47,15 +68,15 @@ class QrCameraManagerNew: NSObject {
 
     func start() {
         scanQueue.async { [weak self] in
-            guard let self, !captureSession.isRunning else { return }
+            guard let self, isConfigured, !captureSession.isRunning else { return }
             captureSession.startRunning()
         }
     }
 
     func stop() {
-        scanQueue.async { [weak self] in
-            guard let self, captureSession.isRunning else { return }
-            captureSession.stopRunning()
+        scanQueue.async {
+            guard self.captureSession.isRunning else { return }
+            self.captureSession.stopRunning()
         }
     }
 
@@ -74,10 +95,12 @@ class QrCameraManagerNew: NSObject {
 
     enum CameraError: Error {
         case noBackCamera
+        case cannotAddInput
+        case cannotAddOutput
     }
 }
 
-extension QrCameraManagerNew: AVCaptureMetadataOutputObjectsDelegate {
+extension QrCameraManager: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from _: AVCaptureConnection) {
         if let readable = metadataObjects.first as? AVMetadataMachineReadableCodeObject,
            let value = readable.stringValue

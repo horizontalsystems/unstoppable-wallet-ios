@@ -52,7 +52,7 @@ struct AddTokenView: View {
         ListSection {
             Cell(
                 left: {
-                    Image("blocks_24").themeIcon()
+                    ThemeImage("blocks", size: .iconSize24)
                 },
                 middle: {
                     MultiText(title: "add_token.blockchain".localized)
@@ -103,14 +103,14 @@ struct AddTokenView: View {
         switch index {
         case 0:
             Coordinator.shared.present { isPresented in
-                ScanQrViewNew(options: [.picker], isPresented: isPresented) { text in
+                ScanQrView(options: [.picker], isPresented: isPresented) { text in
                     viewModel.reference = text
                     stat(page: .addToken, event: .scanQr(entity: .token))
                 }
                 .ignoresSafeArea()
             }
         default:
-            if let string = UIPasteboard.general.string?.replacingOccurrences(of: "\n", with: " ") {
+            if let string = UIPasteboard.general.string?.pastedSingleLine {
                 viewModel.reference = string
                 stat(page: .addToken, event: .paste(entity: .token))
             }
