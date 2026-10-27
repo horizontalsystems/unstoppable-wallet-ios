@@ -131,7 +131,8 @@ extension SplitSwapSendHandler: ISendHandler {
 
         saveSwap(commitment: commitment, txHash: result.txHash, trackingHandle: result.trackingHandle)
 
-        // Best-effort and off the critical path: funds have moved, so the screen must not wait on the report
+        // Best-effort and off the critical path: funds have moved, so the screen must not wait on the report.
+        // The answer (the aggregate `{ splitUuid, status, hash }`) is ignored; tracking reads the status.
         if let txHash = result.txHash {
             Task { [provider] in
                 do {
@@ -154,14 +155,25 @@ extension SplitSwapSendHandler: ISendHandler {
         }
     }
 
-    // One record for the whole split, tracked by its `splitUuid`. The addresses live with the provider
-    // order, so the record names no single recipient.
+    // One record for the whole split, tracked by its `splitUuid`. The record names no single recipient;
+    // `outputs` is seeded with every recipient and its deposit share, so the info screen lists them
+    // before the first track, and tracking merges its per-output state into these entries by index.
     private func saveSwap(commitment: SplitSwapCommitment, txHash: String?, trackingHandle: String?) {
         guard let account = accountManager.activeAccount else {
             return
         }
 
         let quote = commitment.quote
+        let outputs = recipients.enumerated().map { index, recipient in
+            Swap.Output(
+                index: index,
+                status: .notStarted,
+                toAddress: recipient.address,
+                fromAmount: amountIn * Decimal(recipient.percent) / 100,
+                toAmount: nil,
+                legs: []
+            )
+        }
         let swap = Swap(
             uid: UUID().uuidString,
             txHash: txHash,
@@ -181,7 +193,8 @@ extension SplitSwapSendHandler: ISendHandler {
             sourceAddress: nil,
             refundAddress: quote.refundAddress,
             estimatedTime: quote.estimatedTime,
-            date: Date()
+            date: Date(),
+            outputs: outputs
         )
 
         swapHistoryManager.save(swap: swap)

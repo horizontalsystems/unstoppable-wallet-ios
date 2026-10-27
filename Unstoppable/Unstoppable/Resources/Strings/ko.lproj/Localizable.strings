@@ -911,6 +911,9 @@
 "swap_info.copy_details" = "세부 정보 복사";
 "swap_info.swap_stopped_by_provider" = "경로에 의해 스왑 중단됨";
 "swap_info.swap_stopped_by_provider.description" = "입금이 수신되었지만 경로에서 스왑을 완료할 수 없었습니다. 아래에서 환불을 요청하여 자금을 돌려받으세요.";
+"swap_info.split.swap_stopped_by_provider.description" = "경로에서 검토를 위해 이 스왑을 일시 중지했습니다. 이미 지급된 수신자는 자금을 유지합니다. 나머지는 아래에서 경로에 문의하세요.";
+"swap_info.split.failed.title" = "경로에 의해 스왑 종료됨";
+"swap_info.split.failed.description" = "경로에서 이 주문을 종료했습니다. 이미 지급된 수신자는 자금을 유지하며, 나머지 수신자에게는 지급이나 환불이 이루어지지 않습니다. 경로의 지원팀에 문의하세요.";
 
 "swap_info.status.not_started" = "시작되지 않음";
 "swap_info.status.pending" = "대기 중";

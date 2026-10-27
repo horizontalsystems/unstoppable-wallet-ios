@@ -1,19 +1,35 @@
 import Alamofire
 import Foundation
+import HsToolKit
 import ObjectMapper
 
 // Split swap (/v3/split/*): one deposit of the sell asset delivered as several outputs. The calls
 // mirror the simple v3 flow with the buy side pluralised; the deposit side (sell amount, fee, the
 // transfer, the preview token) keeps its meaning.
 extension USwapMultiSwapApi {
+    // A route-less split rate answers 404 with `{ providerErrors }`, read here as a result with no routes.
+    // `amountTooSmall` carries no `minimumAmount` on split (the limit applies to one output's portion and
+    // is named in the message only), which `ProviderErrorResponse` already tolerates.
     func splitRate(_ request: SplitRequest) async throws -> SplitRateResult {
-        let response: SplitRateResponseMapping = try await networkManager.fetch(
-            url: endpoint("split/rate"),
-            method: .post,
-            parameters: request.parameters,
-            encoding: JSONEncoding.default,
-            headers: headers
-        )
+        let response: SplitRateResponseMapping
+
+        do {
+            response = try await networkManager.fetch(
+                url: endpoint("split/rate"),
+                method: .post,
+                parameters: request.parameters,
+                encoding: JSONEncoding.default,
+                headers: headers
+            )
+        } catch let error as NetworkManager.ResponseError {
+            let providerErrors = Self.rateProviderErrors(json: error.json)
+
+            guard !providerErrors.isEmpty else {
+                throw error
+            }
+
+            return SplitRateResult(routes: [], providerErrors: providerErrors)
+        }
 
         return SplitRateResult(
             routes: response.routes.map(\.route),
@@ -55,21 +71,27 @@ extension USwapMultiSwapApi {
         return commit
     }
 
-    // Reports the inbound tx hash for every output of the split
-    func splitSigned(splitUuid: String, inboundTxHash: String) async throws {
-        let _: SplitSignedResponseMapping = try await networkManager.fetch(
+    // Reports the inbound tx hash for every output of the split. Answers the `/v3/signed` body with
+    // `splitUuid` for `uuid` and the aggregate status
+    @discardableResult
+    func splitSigned(splitUuid: String, inboundTxHash: String) async throws -> SplitSignedResponse {
+        let response: SplitSignedResponseMapping = try await networkManager.fetch(
             url: endpoint("split/signed"),
             method: .post,
             parameters: ["splitUuid": splitUuid, "inboundTxHash": inboundTxHash],
             encoding: JSONEncoding.default,
             headers: headers
         )
+
+        return response.response
     }
 }
 
 extension USwapMultiSwapApi {
     // Body of /v3/split/rate (`providerIds`) and /v3/split/preview (`providerId`, addresses, fee).
-    // Outputs are percent shares of the deposit, in request order.
+    // Outputs are percent shares of the deposit, in request order. `floating` is intentionally never
+    // sent: split rates are floating only and `floating: false` is a 400. `refundAddress` is required
+    // by /v3/split/preview (the sub-provider refuses to preview without one); rate does not take it.
     struct SplitRequest {
         let sellAsset: String
         let sellAmount: Decimal
@@ -265,11 +287,23 @@ extension USwapMultiSwapApi {
         }
     }
 
-    struct SplitSignedResponseMapping: ImmutableMappable {
+    // The aggregate `{ splitUuid, status, hash }`. Only `splitUuid` is required: the report succeeded
+    // whether or not the server echoes the status and hash.
+    struct SplitSignedResponse {
         let splitUuid: String
+        let status: String?
+        let hash: String?
+    }
+
+    struct SplitSignedResponseMapping: ImmutableMappable {
+        let response: SplitSignedResponse
 
         init(map: Map) throws {
-            splitUuid = try map.value("splitUuid")
+            response = try SplitSignedResponse(
+                splitUuid: map.value("splitUuid"),
+                status: try? map.value("status"),
+                hash: try? map.value("hash")
+            )
         }
     }
 }

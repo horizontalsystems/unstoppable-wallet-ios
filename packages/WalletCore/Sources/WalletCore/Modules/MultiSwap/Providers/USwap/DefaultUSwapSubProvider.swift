@@ -153,7 +153,10 @@ public class DefaultUSwapSubProvider: USwapSubProvider {
             throw SwapError.unsupportedTokenOut
         }
 
-        let refundAddress = try await commitRequestBuilder.refundAddress(token: input.tokenIn)
+        // /v3/split/preview refuses a body without a refund address (400); fail with a typed error instead
+        guard let refundAddress = try await commitRequestBuilder.refundAddress(token: input.tokenIn) else {
+            throw SwapError.noRefundAddress
+        }
 
         var request = USwapMultiSwapApi.SplitRequest(
             sellAsset: assetIn,
@@ -209,5 +212,6 @@ extension DefaultUSwapSubProvider {
         case unsupportedTokenIn
         case unsupportedTokenOut
         case noRoutes
+        case noRefundAddress
     }
 }

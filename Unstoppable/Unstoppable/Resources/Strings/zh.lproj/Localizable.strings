@@ -911,6 +911,9 @@
 "swap_info.copy_details" = "复制详情";
 "swap_info.swap_stopped_by_provider" = "兑换被路由中止";
 "swap_info.swap_stopped_by_provider.description" = "您的存款已收到，但路由无法完成兑换。请在下方申请退款以取回您的资金。";
+"swap_info.split.swap_stopped_by_provider.description" = "路由已暂停此兑换以进行审核。已收到付款的收款人保留其资金；其余部分请通过下方联系路由。";
+"swap_info.split.failed.title" = "兑换被路由关闭";
+"swap_info.split.failed.description" = "路由已关闭此订单。已收到付款的收款人保留其资金；其他收款人将不会收到付款或退款。请联系路由的支持团队。";
 
 "swap_info.status.not_started" = "未开始";
 "swap_info.status.pending" = "待处理";

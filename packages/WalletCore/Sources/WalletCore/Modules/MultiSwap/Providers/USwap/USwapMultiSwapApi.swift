@@ -920,7 +920,9 @@ public extension USwapMultiSwapApi {
         public let pauseReason: String?
         // The inbound tx hash the server holds (reported through `signed`), when any
         public let hash: String?
-        // /v3/split/track only: every recipient's own track body, in recipient order
+        // /v3/split/track only: one entry per output observed on this poll, derived from the payout
+        // legs tagged `meta.outputIndex`, sorted by index; `[]` before any output is observable. nil for
+        // a single swap.
         public let outputs: [Output]?
 
         public init(
@@ -970,6 +972,12 @@ public extension USwapMultiSwapApi {
             public let txHash: String
             public let fromAsset: String
             public let toAsset: String
+            public let toAddress: String?
+            public let toAmount: Decimal?
+            // /v3/split/track only: the output this leg belongs to (`meta.outputIndex`); nil for the deposit leg
+            public let outputIndex: Int?
+            // /v3/split/track only: a refund leg for its output (`meta.refund`)
+            public let refund: Bool
 
             public init(
                 status: String,
@@ -977,7 +985,11 @@ public extension USwapMultiSwapApi {
                 chainId: String,
                 txHash: String,
                 fromAsset: String,
-                toAsset: String
+                toAsset: String,
+                toAddress: String? = nil,
+                toAmount: Decimal? = nil,
+                outputIndex: Int? = nil,
+                refund: Bool = false
             ) {
                 self.status = status
                 self.type = type
@@ -985,6 +997,10 @@ public extension USwapMultiSwapApi {
                 self.txHash = txHash
                 self.fromAsset = fromAsset
                 self.toAsset = toAsset
+                self.toAddress = toAddress
+                self.toAmount = toAmount
+                self.outputIndex = outputIndex
+                self.refund = refund
             }
         }
     }
@@ -1264,67 +1280,92 @@ extension USwapMultiSwapApi {
         let provider: String?
         let pauseReason: String?
         let hash: String?
-        let index: Int?
-        let toAddress: String?
-        let fromAmount: Decimal?
-        let outputs: [TrackResponseMapping]?
+        // /v3/split/track answers the /v3/track body with `splitUuid` standing in for `uuid`
+        let isSplit: Bool
 
         init(map: Map) throws {
+            // Before the deposit is observed the track body is `{ uuid | splitUuid, status, providers, hash?, legs: [] }`
+            // with no assets, so only `status` is required. A split sends `""` for the buy side
+            // (`toAsset`, `toAmount`) while its outputs differ or are incomplete, read as nil here.
             status = try map.value("status")
-            index = try? map.value("index")
-            toAddress = try? map.value("toAddress")
-            fromAmount = try? map.value("fromAmount", using: USwapMultiSwapApi.decimalTransform)
-
-            // /v3/split/track: the top-level status is the aggregate (least-finished output); the
-            // split reads as one swap whose amount out is the sum of the outputs and whose legs are theirs
-            if map.JSON["splitUuid"] != nil, map.JSON["outputs"] != nil {
-                let outputs: [TrackResponseMapping] = try map.value("outputs")
-                let toAmounts = outputs.compactMap(\.toAmount)
-
-                fromAsset = outputs.first?.fromAsset
-                toAsset = outputs.first?.toAsset
-                toAmount = !outputs.isEmpty && toAmounts.count == outputs.count ? toAmounts.reduce(0, +) : nil
-                legs = outputs.flatMap(\.legs)
-                provider = (try? map.value("providers") as [String])?.first
-                pauseReason = outputs.first(where: { $0.status == "action_required" })?.pauseReason
-                hash = try? map.value("hash")
-                self.outputs = outputs
-                return
-            }
-
-            // Before the deposit is observed /v3/track answers `{ uuid, status, providers, hash?, legs: [] }`
-            // with no assets, so only `status` is required.
-            fromAsset = try? map.value("fromAsset")
-            toAsset = try? map.value("toAsset")
+            fromAsset = Self.nonEmpty(try? map.value("fromAsset"))
+            toAsset = Self.nonEmpty(try? map.value("toAsset"))
             toAmount = try? map.value("toAmount", using: USwapMultiSwapApi.decimalTransform)
             legs = (try? map.value("legs")) ?? []
             provider = (try? map.value("providers") as [String])?.first
             pauseReason = try? map.value("meta.pauseReason")
-            hash = try? map.value("hash")
-            outputs = nil
+            hash = Self.nonEmpty(try? map.value("hash"))
+            isSplit = map.JSON["splitUuid"] != nil
         }
 
         var response: TrackResponse {
-            TrackResponse(
+            let legs = legs.map(\.leg)
+            let outputs = isSplit ? Self.outputs(fromLegs: legs) : nil
+
+            return TrackResponse(
                 status: status,
                 fromAsset: fromAsset,
                 toAsset: toAsset,
                 toAmount: toAmount,
-                legs: legs.map(\.leg),
+                legs: legs,
                 provider: provider,
                 pauseReason: pauseReason,
                 hash: hash,
-                outputs: outputs?.enumerated().map { position, output in
-                    TrackResponse.Output(
-                        index: output.index ?? position,
-                        status: output.status,
-                        toAddress: output.toAddress,
-                        fromAmount: output.fromAmount,
-                        toAmount: output.toAmount,
-                        legs: output.legs.map(\.leg)
-                    )
-                }
+                outputs: outputs
             )
+        }
+
+        /// Groups a split's legs into outputs by `meta.outputIndex` (never by address: several outputs may
+        /// share one), sorted by index. The deposit leg carries no index and belongs to no output. An
+        /// output's status is its payout leg's; refund legs stay in the output's legs without driving it.
+        /// Its `toAmount` is taken only from a completed payout: before that the provider reports its quote there.
+        static func outputs(fromLegs legs: [TrackResponse.Leg]) -> [TrackResponse.Output] {
+            var groups = [Int: [TrackResponse.Leg]]()
+            for leg in legs {
+                if let index = leg.outputIndex {
+                    groups[index, default: []].append(leg)
+                }
+            }
+
+            return groups.keys.sorted().map { index in
+                let group = groups[index] ?? []
+                let payoutLeg = payoutLeg(legs: group)
+
+                return TrackResponse.Output(
+                    index: index,
+                    status: payoutLeg?.status ?? Swap.Status.notStarted.rawValue,
+                    toAddress: payoutLeg?.toAddress,
+                    fromAmount: nil,
+                    toAmount: payoutLeg?.status == Swap.Status.completed.rawValue ? payoutLeg?.toAmount : nil,
+                    legs: group
+                )
+            }
+        }
+
+        /// The leg that decides an output's status. Several non-refund legs for one output are not
+        /// expected; when they occur the least favourable one wins (the later one on a tie), so a failed
+        /// or still pending payout is never hidden behind a completed one.
+        private static func payoutLeg(legs: [TrackResponse.Leg]) -> TrackResponse.Leg? {
+            legs.filter { !$0.refund }.reduce(nil as TrackResponse.Leg?) { worst, leg in
+                guard let worst else { return leg }
+                return severity(status: leg.status) >= severity(status: worst.status) ? leg : worst
+            }
+        }
+
+        private static func severity(status: String) -> Int {
+            switch Swap.Status(rawValue: status) {
+            case .completed: 0
+            case .failed, .expired, .refunded, .actionRequired: 2
+            default: 1
+            }
+        }
+
+        private static func nonEmpty(_ value: String?) -> String? {
+            guard let value, !value.isEmpty else {
+                return nil
+            }
+
+            return value
         }
 
         struct LegMapping: ImmutableMappable {
@@ -1334,6 +1375,10 @@ extension USwapMultiSwapApi {
             let txHash: String
             let fromAsset: String
             let toAsset: String
+            let toAddress: String?
+            let toAmount: Decimal?
+            let outputIndex: Int?
+            let refund: Bool
 
             init(map: Map) throws {
                 status = try map.value("status")
@@ -1342,6 +1387,12 @@ extension USwapMultiSwapApi {
                 txHash = (try? map.value("hash")) ?? ""
                 fromAsset = try map.value("fromAsset")
                 toAsset = try map.value("toAsset")
+                toAddress = TrackResponseMapping.nonEmpty(try? map.value("toAddress"))
+                // A zero amount is a payout not made yet, not a payout of nothing
+                let toAmount: Decimal? = try? map.value("toAmount", using: USwapMultiSwapApi.decimalTransform)
+                self.toAmount = toAmount.flatMap { $0 > 0 ? $0 : nil }
+                outputIndex = try? map.value("meta.outputIndex")
+                refund = (try? map.value("meta.refund")) ?? false
             }
 
             var leg: TrackResponse.Leg {
@@ -1351,7 +1402,11 @@ extension USwapMultiSwapApi {
                     chainId: chainId,
                     txHash: txHash,
                     fromAsset: fromAsset,
-                    toAsset: toAsset
+                    toAsset: toAsset,
+                    toAddress: toAddress,
+                    toAmount: toAmount,
+                    outputIndex: outputIndex,
+                    refund: refund
                 )
             }
         }

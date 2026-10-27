@@ -111,7 +111,11 @@ class SwapStorage {
             chainId: leg.chainId,
             txHash: leg.txHash,
             fromAsset: leg.fromAsset,
-            toAsset: leg.toAsset
+            toAsset: leg.toAsset,
+            toAddress: leg.toAddress,
+            toAmount: leg.toAmount.flatMap { Decimal(string: $0) },
+            outputIndex: leg.outputIndex,
+            refund: leg.refund ?? false
         )
     }
 
@@ -122,7 +126,11 @@ class SwapStorage {
             chainId: leg.chainId,
             txHash: leg.txHash,
             fromAsset: leg.fromAsset,
-            toAsset: leg.toAsset
+            toAsset: leg.toAsset,
+            toAddress: leg.toAddress,
+            toAmount: leg.toAmount?.description,
+            outputIndex: leg.outputIndex,
+            refund: leg.refund
         )
     }
 }

@@ -25,6 +25,10 @@ final class SplitSwapViewModel: MultiSwapViewModel {
     // Set at once on a split change, before the debounced requote starts, so the button switches immediately
     @Published private(set) var pendingSplitRequote = false
 
+    // At least one split-capable provider is registered; drives the tab header's visibility. A stored
+    // default, so it is in place before `super.init`, which already calls `resolveProviders()`
+    @Published private(set) var splitAvailable = false
+
     // A split change whose debounced requote has not started yet: quotes arriving meanwhile belong to
     // an older round and must not clear `pendingSplitRequote`
     private var splitRequoteScheduled = false
@@ -55,7 +59,9 @@ final class SplitSwapViewModel: MultiSwapViewModel {
     }
 
     override func resolveProviders() -> [IMultiSwapProvider] {
-        SwapProviderFactory.swappableProviders(ids: swapProviderManager.splitProviders).filter { $0 is ISplitSwapProvider }
+        let resolved = SwapProviderFactory.swappableProviders(ids: swapProviderManager.splitProviders).filter { $0 is ISplitSwapProvider }
+        splitAvailable = !resolved.isEmpty
+        return resolved
     }
 
     override func quoteFetcher() -> QuoteFetcher {

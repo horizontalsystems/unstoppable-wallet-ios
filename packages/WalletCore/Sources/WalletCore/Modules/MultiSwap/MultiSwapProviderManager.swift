@@ -16,6 +16,8 @@ class MultiSwapProviderManager {
     private let baseUrl = "\(AppConfig.swapApiUrl)/v3"
     private var headers: HTTPHeaders?
 
+    /// Ids of the providers quotable on the Standard tab (`quotes: true`). Split-only entries such as
+    /// `SWAPUZ_SPLIT` are left out so they are never sent to `/v3/rate`.
     @PostPublished private(set) var providers: [String] = []
     /// Scoped asset/chain/pair suspensions, indexed by provider id. Applied by `MultiSwapViewModel`
     /// when it decides which providers can serve the current pair.
@@ -141,8 +143,18 @@ class MultiSwapProviderManager {
         executionTypesLock.withLock { _executionTypes = executionTypes }
         amlPoliciesLock.withLock { _amlPolicies = amlPolicies }
         suspensions = SwapSuspensionIndex(byProvider: suspensionsByProvider)
-        splitProviders = records.filter(\.split).map(\.providerId)
-        providers = records.map(\.providerId)
+        splitProviders = Self.splitProviderIds(records: records)
+        providers = Self.quotableProviderIds(records: records)
+    }
+
+    /// Ids quoted on the Standard tab: every provider that serves `/v3/rate`, in the server's order.
+    static func quotableProviderIds(records: [SwapProviderRecord]) -> [String] {
+        records.filter(\.quotes).map(\.providerId)
+    }
+
+    /// Ids quoted on the Private (split) tab: every provider that serves `/v3/split/*`, in the server's order.
+    static func splitProviderIds(records: [SwapProviderRecord]) -> [String] {
+        records.filter(\.split).map(\.providerId)
     }
 
     private static func record(response: ProviderResponse, position: Int, timestamp: TimeInterval) -> SwapProviderRecord {
@@ -152,6 +164,7 @@ class MultiSwapProviderManager {
             executionType: response.executionType,
             amlPolicy: response.amlPolicy,
             split: response.split,
+            quotes: response.quotes,
             suspensions: encode(suspensions: response.suspensions),
             lastSyncTimestamp: timestamp
         )
@@ -198,6 +211,9 @@ extension MultiSwapProviderManager {
         /// Whether the provider serves the `/v3/split/*` endpoints (one deposit delivered to several
         /// addresses), i.e. can be quoted on the Private swap tab.
         let split: Bool
+        /// Whether the provider serves single-output `/v3/rate` quotes. False for split-only entries
+        /// (`SWAPUZ_SPLIT`); an entry without the flag is an ordinary quotable provider.
+        let quotes: Bool
 
         init(map: Map) throws {
             provider = try map.value("provider")
@@ -206,6 +222,7 @@ extension MultiSwapProviderManager {
             executionType = try? map.value("executionType")
             amlPolicy = try? map.value("amlPolicy")
             split = (try? map.value("splitSwaps")) ?? false
+            quotes = (try? map.value("quotes")) ?? true
         }
     }
 }

@@ -911,6 +911,9 @@
 "swap_info.copy_details" = "Ayrıntıları Kopyala";
 "swap_info.swap_stopped_by_provider" = "Takas Rota Tarafından Durduruldu";
 "swap_info.swap_stopped_by_provider.description" = "Yatırmanız alındı ancak rota takası tamamlayamadı. Fonlarınızı geri almak için aşağıdan iade talep edin.";
+"swap_info.split.swap_stopped_by_provider.description" = "Rota bu takası inceleme için durdurdu. Ödemesi yapılmış alıcılar fonlarını korur; geri kalanı için aşağıdan rotayla iletişime geçin.";
+"swap_info.split.failed.title" = "Takas Rota Tarafından Kapatıldı";
+"swap_info.split.failed.description" = "Rota bu emri kapattı. Ödemesi yapılmış alıcılar fonlarını korur; diğerleri için ödeme veya iade yapılmayacak. Rotanın destek ekibiyle iletişime geçin.";
 
 "swap_info.status.not_started" = "Başlamadı";
 "swap_info.status.pending" = "Beklemede";

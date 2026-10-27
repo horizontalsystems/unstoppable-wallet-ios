@@ -911,6 +911,9 @@
 "swap_info.copy_details" = "Details kopieren";
 "swap_info.swap_stopped_by_provider" = "Swap von Route gestoppt";
 "swap_info.swap_stopped_by_provider.description" = "Ihre Einzahlung wurde empfangen, aber die Route konnte den Swap nicht abschließen. Fordern Sie unten eine Rückerstattung an, um Ihre Mittel zurückzuerhalten.";
+"swap_info.split.swap_stopped_by_provider.description" = "Die Route hat diesen Swap zur Prüfung angehalten. Bereits ausgezahlte Empfänger behalten ihre Mittel; wenden Sie sich wegen des Rests unten an die Route.";
+"swap_info.split.failed.title" = "Swap von Route geschlossen";
+"swap_info.split.failed.description" = "Die Route hat diesen Auftrag geschlossen. Bereits ausgezahlte Empfänger behalten ihre Mittel; für die übrigen folgt keine Auszahlung und keine Rückerstattung. Wenden Sie sich an den Support der Route.";
 
 "swap_info.status.not_started" = "Nicht gestartet";
 "swap_info.status.pending" = "Ausstehend";

@@ -13,16 +13,20 @@ class SwapProviderRecord: Codable {
     let amlPolicy: String?
     /// Whether the provider serves the `/v3/split/*` endpoints, i.e. can be quoted on the Private swap tab.
     let split: Bool
+    /// Whether the provider serves single-output `/v3/rate` quotes; `false` for split-only entries such as
+    /// `SWAPUZ_SPLIT`, which must not be quoted on the Standard tab.
+    let quotes: Bool
     /// The provider's scoped suspensions as a JSON array of rules, nil when it has none.
     let suspensions: String?
     let lastSyncTimestamp: TimeInterval
 
-    init(providerId: String, position: Int, executionType: String?, amlPolicy: String?, split: Bool, suspensions: String?, lastSyncTimestamp: TimeInterval) {
+    init(providerId: String, position: Int, executionType: String?, amlPolicy: String?, split: Bool, quotes: Bool, suspensions: String?, lastSyncTimestamp: TimeInterval) {
         self.providerId = providerId
         self.position = position
         self.executionType = executionType
         self.amlPolicy = amlPolicy
         self.split = split
+        self.quotes = quotes
         self.suspensions = suspensions
         self.lastSyncTimestamp = lastSyncTimestamp
     }
@@ -39,6 +43,7 @@ extension SwapProviderRecord: FetchableRecord, PersistableRecord {
         static let executionType = Column(CodingKeys.executionType)
         static let amlPolicy = Column(CodingKeys.amlPolicy)
         static let split = Column(CodingKeys.split)
+        static let quotes = Column(CodingKeys.quotes)
         static let suspensions = Column(CodingKeys.suspensions)
         static let lastSyncTimestamp = Column(CodingKeys.lastSyncTimestamp)
     }

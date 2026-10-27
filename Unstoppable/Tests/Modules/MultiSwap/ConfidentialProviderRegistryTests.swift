@@ -1,6 +1,7 @@
 import Foundation
 import GRDB
 import HsToolKit
+import ObjectMapper
 import Testing
 @testable import WalletCore
 
@@ -83,5 +84,29 @@ extension SwapProviderFactoryTests {
         )
 
         #expect(registry.providerIds == ["NEAR_CONFIDENTIAL"])
+    }
+}
+
+extension SwapProviderFactoryTests {
+    // SWAPUZ_SPLIT reports `privacy: "split"`, which marks the descriptor confidential (NEAR_CONFIDENTIAL_ADVANCED
+    // needs that), so the sync stores it; the default check drops it on read because its local info is not confidential
+    @Test func splitSwapProviderIsNotOfferedForPrivateSend() throws {
+        SwapProviderFactory.register([SwapProviderResolver.self])
+        defer { SwapProviderFactory.reset() }
+
+        let descriptors = try [
+            ["provider": "NEAR_CONFIDENTIAL", "executionType": "transfer", "privacy": "basic", "suspended": false],
+            ["provider": "SWAPUZ_SPLIT", "executionType": "transfer", "privacy": "split", "suspended": false],
+        ].map { try Mapper<USwapMultiSwapApi.ProviderDescriptorResponse>().map(JSON: $0).descriptor }
+
+        // the filter the registry's sync applies before storing the list
+        let synced = descriptors.filter { $0.confidential && !$0.suspended && $0.executionType == "transfer" }.map(\.id)
+        #expect(synced == ["NEAR_CONFIDENTIAL", "SWAPUZ_SPLIT"])
+
+        let storage = try ConfidentialProviderRegistryTests.storage(providerIds: synced)
+        let registry = ConfidentialProviderRegistryTests.registry(storage: storage)
+
+        #expect(registry.providerIds.contains("NEAR_CONFIDENTIAL"))
+        #expect(!registry.providerIds.contains("SWAPUZ_SPLIT"))
     }
 }

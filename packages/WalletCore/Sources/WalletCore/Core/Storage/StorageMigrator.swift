@@ -1010,6 +1010,16 @@ public enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Add quotes to SwapProviderRecord") { db in
+            try db.alter(table: SwapProviderRecord.databaseTableName) { t in
+                t.add(column: SwapProviderRecord.Columns.quotes.name, .boolean).notNull().defaults(to: true)
+            }
+
+            // A new column empties the table so stale rows are not trusted until the next sync (see
+            // MultiSwapProviderManager.init): an empty table has no sync timestamp, so it syncs at once.
+            try SwapProviderRecord.deleteAll(db)
+        }
+
         try migrator.migrate(dbPool)
     }
 

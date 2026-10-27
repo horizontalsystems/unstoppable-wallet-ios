@@ -139,6 +139,37 @@ public extension Swap {
         public let txHash: String
         public let fromAsset: String
         public let toAsset: String
+        // Split swaps only: the payout's destination and the amount it delivered
+        public let toAddress: String?
+        public let toAmount: Decimal?
+        // Split swaps only: the output (recipient) this leg belongs to; nil for the shared deposit leg
+        public let outputIndex: Int?
+        // Split swaps only: a refund leg the provider reported for an output (`meta.refund`)
+        public let refund: Bool
+
+        public init(
+            status: Status,
+            type: String,
+            chainId: String,
+            txHash: String,
+            fromAsset: String,
+            toAsset: String,
+            toAddress: String? = nil,
+            toAmount: Decimal? = nil,
+            outputIndex: Int? = nil,
+            refund: Bool = false
+        ) {
+            self.status = status
+            self.type = type
+            self.chainId = chainId
+            self.txHash = txHash
+            self.fromAsset = fromAsset
+            self.toAsset = toAsset
+            self.toAddress = toAddress
+            self.toAmount = toAmount
+            self.outputIndex = outputIndex
+            self.refund = refund
+        }
     }
 
     struct Output: Hashable {
@@ -186,6 +217,11 @@ extension SwapRecord {
         let txHash: String
         let fromAsset: String
         let toAsset: String
+        // Optional so rows written before split payout legs existed still decode (missing key -> nil)
+        let toAddress: String?
+        let toAmount: String?
+        let outputIndex: Int?
+        let refund: Bool?
     }
 
     struct Output: Codable {

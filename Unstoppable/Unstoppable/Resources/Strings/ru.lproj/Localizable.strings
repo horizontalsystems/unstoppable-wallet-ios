@@ -911,6 +911,9 @@
 "swap_info.copy_details" = "Скопировать данные";
 "swap_info.swap_stopped_by_provider" = "Своп остановлен маршрутом";
 "swap_info.swap_stopped_by_provider.description" = "Ваш депозит получен, но маршрут не смог завершить своп. Запросите возврат средств ниже.";
+"swap_info.split.swap_stopped_by_provider.description" = "Маршрут приостановил этот своп для проверки. Получатели, которым уже выплачено, сохраняют свои средства; по остальным свяжитесь с маршрутом ниже.";
+"swap_info.split.failed.title" = "Своп закрыт маршрутом";
+"swap_info.split.failed.description" = "Маршрут закрыл этот ордер. Получатели, которым уже выплачено, сохраняют свои средства; остальным не будет ни выплаты, ни возврата. Обратитесь в поддержку маршрута.";
 
 "swap_info.status.not_started" = "Не начат";
 "swap_info.status.pending" = "В ожидании";

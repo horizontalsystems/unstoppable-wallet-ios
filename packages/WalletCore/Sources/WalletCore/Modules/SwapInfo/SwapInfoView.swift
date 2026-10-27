@@ -9,7 +9,7 @@ struct SwapInfoView: View {
 
     var body: some View {
         ThemeView {
-            if viewModel.swap.status == .actionRequired {
+            if showsContactsButton {
                 BottomGradientWrapper {
                     content
                 } bottomContent: {
@@ -22,6 +22,15 @@ struct SwapInfoView: View {
         .navigationTitle(viewModel.swap.operation.title)
     }
 
+    private var isSplitSwap: Bool {
+        viewModel.swap.operation == .splitSwap
+    }
+
+    // A split the provider closed leaves its unpaid recipients to the provider's support, as a stopped swap does
+    private var showsContactsButton: Bool {
+        viewModel.swap.status == .actionRequired || (isSplitSwap && viewModel.swap.status == .failed)
+    }
+
     private var content: some View {
         ScrollView {
             VStack(spacing: 16) {
@@ -32,9 +41,19 @@ struct SwapInfoView: View {
                 }
 
                 if viewModel.swap.status == .actionRequired {
+                    // some recipients may already be paid: the single-swap copy would promise a refund of everything
                     AlertCardView(.init(
                         title: "swap_info.swap_stopped_by_provider".localized,
-                        text: "swap_info.swap_stopped_by_provider.description".localized,
+                        text: isSplitSwap
+                            ? "swap_info.split.swap_stopped_by_provider.description".localized
+                            : "swap_info.swap_stopped_by_provider.description".localized,
+                        type: .critical,
+                        style: .structured
+                    ))
+                } else if isSplitSwap, viewModel.swap.status == .failed {
+                    AlertCardView(.init(
+                        title: "swap_info.split.failed.title".localized,
+                        text: "swap_info.split.failed.description".localized,
                         type: .critical,
                         style: .structured
                     ))

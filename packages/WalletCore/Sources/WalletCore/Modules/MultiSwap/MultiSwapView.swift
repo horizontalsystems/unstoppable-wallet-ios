@@ -10,9 +10,6 @@ struct MultiSwapView: View {
     @Binding var splitRecipientsPresented: Bool
     var autoFocus = false
 
-    // Private Swap is temporarily hidden: the tab header is not shown and only the Standard tab is used
-    static let privateSwapEnabled = false
-
     @FocusState var focusedField: FocusField?
     @State var currentTab: MultiSwapTab = .standard
 
@@ -27,7 +24,7 @@ struct MultiSwapView: View {
     var body: some View {
         ThemeView(style: .list) {
             VStack(spacing: 0) {
-                if Self.privateSwapEnabled {
+                if splitViewModel.splitAvailable {
                     FolderTabHeaderView(items: MultiSwapTab.allCases, currentItem: $currentTab) {
                         FolderTabHeaderView.Tab(title: $0.title, icon: $0.icon)
                     }
@@ -43,6 +40,12 @@ struct MultiSwapView: View {
         }
         .onChange(of: currentTab) { _, tab in
             onChange(tab: tab)
+        }
+        .onChange(of: splitViewModel.splitAvailable) { _, available in
+            // the provider list lost its split provider mid-session: fall back to Standard, which stops split quoting
+            if !available, currentTab == .privateSwap {
+                currentTab = .standard
+            }
         }
         .onAppear {
             // the hidden tab's view model starts with auto quoting enabled: stop it, so provider

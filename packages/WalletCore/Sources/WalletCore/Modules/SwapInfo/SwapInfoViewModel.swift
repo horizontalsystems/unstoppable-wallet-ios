@@ -122,9 +122,14 @@ class SwapInfoViewModel: ObservableObject {
 
         let flowSection: SendDataSection
 
-        // the split layout needs every recipient's amount; until the track reports them it reads as one swap
-        if swap.operation == .splitSwap, let outputs = swap.outputs, !outputs.isEmpty, outputs.allSatisfy({ $0.toAmount != nil }) {
-            flowSection = splitFlowSection(amountIn: amountIn, outputs: outputs, rate: rates[rateKeyOut])
+        // the split layout needs every recipient's amount; until the track reports them it reads as one
+        // swap followed by the recipients' addresses, which are known from the start
+        if swap.operation == .splitSwap, let outputs = swap.outputs, !outputs.isEmpty {
+            if outputs.allSatisfy({ $0.toAmount != nil }) {
+                flowSection = splitFlowSection(amountIn: amountIn, outputs: outputs, rate: rates[rateKeyOut])
+            } else {
+                flowSection = splitRecipientsFlowSection(amountIn: amountIn, amountOut: amountOut, outputs: outputs)
+            }
         } else {
             // Private send mirrors its confirmation: what the recipient gets, then the recipient
             let flowFields: [SendField] = switch swap.operation {
@@ -181,6 +186,31 @@ class SwapInfoViewModel: ObservableObject {
         return .init(fields, isFlow: true, flowDividers: dividers)
     }
 
+    // Input and the total output, then every recipient's address: the split before its payouts are known
+    private func splitRecipientsFlowSection(amountIn: SendField, amountOut: SendField, outputs: [Swap.Output]) -> SendDataSection {
+        var fields = [amountIn, amountOut]
+        // dividers[i] sits after fields[i]
+        var dividers: [SendDataSection.FlowDivider] = [.arrow]
+
+        for output in outputs {
+            guard let toAddress = output.toAddress else {
+                continue
+            }
+
+            dividers.append(.line)
+            fields.append(
+                .recipient(
+                    title: "swap.private.address".localized(output.index + 1),
+                    value: toAddress,
+                    copyable: true,
+                    blockchainType: swap.tokenOut.blockchainType
+                )
+            )
+        }
+
+        return .init(fields, isFlow: true, flowDividers: dividers)
+    }
+
     // Each output's share of the deposit; the last one takes the rounding remainder so they add up to 100
     static func percents(outputs: [Swap.Output]) -> [Int] {
         // One unit for every output: the deposit shares (tokenIn) when all are known, else the payouts (tokenOut)
@@ -201,17 +231,18 @@ class SwapInfoViewModel: ObservableObject {
     }
 
     private func syncLegs() {
+        // A split shows its recipients from the first poll on, before the track reports any asset or leg
+        if swap.operation == .splitSwap, let outputs = swap.outputs, !outputs.isEmpty {
+            legs = splitLegs(outputs: outputs)
+            return
+        }
+
         guard let fromAsset = swap.fromAsset, let toAsset = swap.toAsset, let swapLegs = swap.legs else {
             if swap.status == .actionRequired {
                 legs = actionRequiredLegs(existingLegs: [])
             } else {
                 legs = []
             }
-            return
-        }
-
-        if swap.operation == .splitSwap, let outputs = swap.outputs, !outputs.isEmpty {
-            legs = splitLegs(outputs: outputs, fromAsset: fromAsset, toAsset: toAsset)
             return
         }
 
@@ -223,13 +254,19 @@ class SwapInfoViewModel: ObservableObject {
         legs = swapLegs.map { leg(leg: $0, fromAsset: fromAsset, toAsset: toAsset) }
     }
 
-    // Every output reports its share of the one deposit tx as its own deposit leg: those collapse into a
-    // single shared step on top, followed by each recipient's own steps, numbered by recipient
-    private func splitLegs(outputs: [Swap.Output], fromAsset: String, toAsset: String) -> [Leg] {
-        let isDeposit: (Swap.Leg) -> Bool = { $0.type == USwapMultiSwapProvider.legTypeNativeSend && $0.fromAsset == fromAsset }
+    // One shared deposit step on top, from the split's top-level deposit leg, followed by each recipient's
+    // own steps, numbered by recipient. Rows stored by the former track shape carry a deposit leg per
+    // output, all flattened into `swap.legs`: they share the deposit hash and collapse into one step, and
+    // are left out of the outputs' own steps.
+    private func splitLegs(outputs: [Swap.Output]) -> [Leg] {
+        let fromAsset = swap.fromAsset
+        let toAsset = swap.toAsset
+        let isDeposit: (Swap.Leg) -> Bool = {
+            $0.type == USwapMultiSwapProvider.legTypeNativeSend && $0.outputIndex == nil && fromAsset != nil && $0.fromAsset == fromAsset
+        }
 
         var depositGroups = [(txHash: String, legs: [Swap.Leg])]()
-        for depositLeg in outputs.flatMap(\.legs).filter(isDeposit) {
+        for depositLeg in (swap.legs ?? []).filter(isDeposit) {
             if let index = depositGroups.firstIndex(where: { $0.txHash == depositLeg.txHash }) {
                 depositGroups[index].legs.append(depositLeg)
             } else {
@@ -237,7 +274,7 @@ class SwapInfoViewModel: ObservableObject {
             }
         }
 
-        let depositLegs = depositGroups.compactMap { group -> Leg? in
+        var depositLegs = depositGroups.compactMap { group -> Leg? in
             guard let first = group.legs.first else {
                 return nil
             }
@@ -249,20 +286,54 @@ class SwapInfoViewModel: ObservableObject {
             )
         }
 
-        let outputLegs = outputs.flatMap { output in
-            output.legs.filter { !isDeposit($0) }.map { leg(leg: $0, fromAsset: fromAsset, toAsset: toAsset, recipientNumber: output.index + 1) }
+        // Not observed yet: the deposit is on its way, or never arrived for a split that already ended
+        if depositLegs.isEmpty {
+            let status: Swap.Status = switch swap.status {
+            case .notStarted, .completed, .failed, .refunded, .expired: swap.status
+            case .signed, .pending, .swapping, .actionRequired, .unknown: .pending
+            }
+
+            depositLegs = [
+                Leg(
+                    title: "swap_info.deposit".localized(swap.tokenIn.coin.code),
+                    status: status,
+                    url: swap.txHash.flatMap { explorerUrl(blockchainType: swap.tokenIn.blockchainType, hash: $0) }
+                ),
+            ]
+        }
+
+        let outputLegs = outputs.flatMap { output -> [Leg] in
+            let recipientNumber = output.index + 1
+            let trackedLegs = output.legs.filter { !isDeposit($0) }
+
+            // Every recipient shows a row from the first poll on, at its output's status until its payout is reported
+            guard !trackedLegs.isEmpty else {
+                return [
+                    Leg(
+                        title: "swap_info.receive".localized("\(swap.tokenOut.coin.code) \(recipientNumber)"),
+                        status: output.status,
+                        url: nil
+                    ),
+                ]
+            }
+
+            return trackedLegs.map { leg(leg: $0, fromAsset: fromAsset, toAsset: toAsset, recipientNumber: recipientNumber) }
         }
 
         return depositLegs + outputLegs
     }
 
-    private func leg(leg: Swap.Leg, fromAsset: String, toAsset: String, recipientNumber: Int? = nil) -> Leg {
+    private func leg(leg: Swap.Leg, fromAsset: String?, toAsset: String?, recipientNumber: Int? = nil) -> Leg {
         var title = "swap_info.unknown".localized
 
-        if leg.type == USwapMultiSwapProvider.legTypeNativeSend {
-            if leg.fromAsset == fromAsset {
+        if leg.refund {
+            let code = recipientNumber.map { "\(swap.tokenIn.coin.code) \($0)" } ?? swap.tokenIn.coin.code
+            title = "swap_info.refund".localized(code)
+        } else if leg.type == USwapMultiSwapProvider.legTypeNativeSend {
+            if leg.outputIndex == nil, leg.fromAsset == fromAsset {
                 title = "swap_info.deposit".localized(swap.tokenIn.coin.code)
-            } else if leg.toAsset == toAsset {
+            } else if leg.outputIndex != nil || leg.toAsset == toAsset {
+                // a split's payout leg is a receive even while the track leaves the shared `toAsset` empty
                 let code = recipientNumber.map { "\(swap.tokenOut.coin.code) \($0)" } ?? swap.tokenOut.coin.code
                 title = "swap_info.receive".localized(code)
             }
@@ -320,6 +391,10 @@ class SwapInfoViewModel: ObservableObject {
             return nil
         }
 
+        return explorerUrl(blockchainType: blockchainType, hash: hash)
+    }
+
+    private func explorerUrl(blockchainType: BlockchainType, hash: String) -> String? {
         if blockchainType.isEvm {
             return Core.shared.evmSyncSourceManager.syncSource(blockchainType: blockchainType).transactionSource.transactionUrl(hash: hash)
         }

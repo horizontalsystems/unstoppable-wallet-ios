@@ -911,6 +911,9 @@
 "swap_info.copy_details" = "Copier les détails";
 "swap_info.swap_stopped_by_provider" = "Swap arrêté par la route";
 "swap_info.swap_stopped_by_provider.description" = "Votre dépôt a été reçu, mais la route n'a pas pu finaliser le swap. Demandez un remboursement ci-dessous pour récupérer vos fonds.";
+"swap_info.split.swap_stopped_by_provider.description" = "La route a suspendu ce swap pour vérification. Les destinataires déjà payés conservent leurs fonds ; contactez la route ci-dessous pour le reste.";
+"swap_info.split.failed.title" = "Swap clôturé par la route";
+"swap_info.split.failed.description" = "La route a clôturé cet ordre. Les destinataires déjà payés conservent leurs fonds ; les autres ne recevront ni paiement ni remboursement. Contactez le support de la route.";
 
 "swap_info.status.not_started" = "Non démarré";
 "swap_info.status.pending" = "En attente";

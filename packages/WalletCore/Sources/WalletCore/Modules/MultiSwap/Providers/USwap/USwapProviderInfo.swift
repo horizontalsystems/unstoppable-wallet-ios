@@ -74,6 +74,18 @@ public extension USwapProviderInfo {
         requireTerms: true
     )
 
+    // Swapuz's split orders under their own provider name: `splitSwaps: true`, `quotes: false`, so it is
+    // offered on the Private tab only and never sent to /v3/rate. Not confidential: the server reports
+    // `privacy: "split"` for it, and ConfidentialProviderRegistry drops it because this flag is false, so it
+    // is never offered for Private Send.
+    static let swapuzSplit = USwapProviderInfo(
+        id: "SWAPUZ_SPLIT",
+        name: "Swapuz",
+        icon: "swap_provider_swapuz",
+        preciseEstimateTime: false,
+        requireTerms: true
+    )
+
     static let exolix = USwapProviderInfo(
         id: "EXOLIX",
         name: "Exolix",

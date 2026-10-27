@@ -60,9 +60,9 @@ public class SwapProviderFactory {
     ]
 
     // The ordinary swap screen must never offer a retired provider. Not automatic: a registered
-    // entry resolves through `provider(id:)` (which tracking needs). Confidential providers are
-    // offered alongside the others while the Private swap tab is hidden; `confidential` stays on
-    // the info so the exclusion can be restored here.
+    // entry resolves through `provider(id:)` (which tracking needs). Split-only providers that do
+    // not serve /v3/rate (`quotes: false`, e.g. SWAPUZ_SPLIT) are kept off the Standard tab by
+    // `MultiSwapProviderManager.providers`, not here.
     public static func swappableProviders(ids: [String]) -> [IMultiSwapProvider] {
         ids
             .filter { !retiredProviderIds.contains($0) }
@@ -100,6 +100,7 @@ public enum SwapProviderResolver: ISwapProviderResolver {
             defaultUSwapEntry(info: .letsExchange),
             defaultUSwapEntry(info: .stealthex),
             defaultUSwapEntry(info: .swapuz),
+            defaultUSwapEntry(info: .swapuzSplit),
             exolixUSwapEntry(info: .exolix),
             defaultUSwapEntry(info: .cce),
             barterUSwapEntry(info: .barter),
