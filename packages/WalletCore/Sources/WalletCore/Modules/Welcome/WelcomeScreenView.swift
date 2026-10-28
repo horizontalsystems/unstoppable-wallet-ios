@@ -149,6 +149,7 @@ struct WelcomeScreenView: View {
         }
         .ignoresSafeArea()
         .opacity(splashOpacity)
+        .allowsHitTesting(splashOpacity > 0)
     }
 
     private func onTapNext() {
