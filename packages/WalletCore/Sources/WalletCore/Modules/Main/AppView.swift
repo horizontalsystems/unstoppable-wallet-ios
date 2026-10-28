@@ -17,7 +17,6 @@ public struct AppView: View {
                         WelcomeScreenView {
                             viewModel.handleIntroFinish()
                         }
-                        .ignoresSafeArea()
                     }
                 }
             case .passcodeNotSet:
