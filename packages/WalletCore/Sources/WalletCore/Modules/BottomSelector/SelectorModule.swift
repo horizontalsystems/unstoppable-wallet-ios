@@ -4,7 +4,6 @@ enum SelectorModule {}
 
 extension SelectorModule {
     struct MultiConfig {
-        let image: BottomSheetTitleView.Image
         let title: String
         let description: String?
         let allowEmpty: Bool

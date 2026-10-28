@@ -4,16 +4,6 @@ import SectionsTableView
 import UIKit
 
 extension SectionsTableView {
-    func sectionHeader(text: String, height: CGFloat? = nil, backgroundColor: UIColor = .clear) -> ViewState<SubtitleHeaderFooterView> {
-        registerHeaderFooter(forClass: SubtitleHeaderFooterView.self)
-
-        return .cellType(
-            hash: text,
-            binder: { $0.bind(text: text, backgroundColor: backgroundColor) },
-            dynamicHeight: { _ in height ?? SubtitleHeaderFooterView.height }
-        )
-    }
-
     func sectionFooter(text: String, textColor: UIColor = .themeGray, topMargin: CGFloat = .margin12, bottomMargin: CGFloat = .margin32) -> ViewState<BottomDescriptionHeaderFooterView> {
         registerHeaderFooter(forClass: BottomDescriptionHeaderFooterView.self)
 
@@ -41,96 +31,6 @@ extension SectionsTableView {
                     cell.set(verticalMargin: topVerticalMargin)
                 }
             }
-        )
-    }
-
-    func headerInfoRow(id: String, title: String, topSeparator: Bool = true, infoAction: (() -> Void)? = nil) -> RowProtocol {
-        var elements: [CellBuilderNew.CellElement] = [
-            .textElement(text: .body(title)),
-        ]
-
-        if let infoAction {
-            elements.append(
-                .secondaryCircleButton { component in
-                    component.button.set(image: UIImage(named: "circle_information_20"), style: .transparent)
-                    component.onTap = infoAction
-                }
-            )
-        }
-
-        return CellBuilderNew.row(
-            rootElement: .hStack(elements),
-            tableView: self,
-            id: id,
-            height: .heightCell48,
-            bind: { cell in
-                cell.set(backgroundStyle: .transparent, isFirst: !topSeparator)
-            }
-        )
-    }
-
-    func descriptionRow(id: String, text: String, font: UIFont? = nil, textColor: UIColor? = nil, ignoreBottomMargin: Bool = false) -> RowProtocol {
-        registerCell(forClass: DescriptionCell.self)
-
-        return Row<DescriptionCell>(
-            id: id,
-            dynamicHeight: { containerWidth in
-                DescriptionCell.height(containerWidth: containerWidth, text: text, font: font, ignoreBottomMargin: ignoreBottomMargin)
-            },
-            bind: { cell, _ in
-                cell.label.text = text
-                if let font {
-                    cell.label.font = font
-                }
-                if let textColor {
-                    cell.label.textColor = textColor
-                }
-            }
-        )
-    }
-
-    func subtitleRow(text: String) -> RowProtocol {
-        CellBuilderNew.row(
-            rootElement: .hStack([
-                .text { (component: TextComponent) in
-                    component.font = .body
-                    component.textColor = .themeLeah
-                    component.text = text
-                },
-            ]),
-            tableView: self,
-            id: "subtitle_\(text)",
-            hash: text,
-            height: .heightCell48,
-            bind: { cell in
-                cell.set(backgroundStyle: .transparent)
-                cell.selectionStyle = .none
-            }
-        )
-    }
-
-    func subtitleWithInfoButtonRow(text: String, uppercase: Bool = true, action: @escaping () -> Void) -> RowProtocol {
-        CellBuilderNew.row(
-            rootElement: .hStack([
-                .text { (component: TextComponent) in
-                    component.font = .subhead1
-                    component.textColor = .themeGray
-                    component.text = uppercase ? text.uppercased() : text
-                },
-                .image20 { (component: ImageComponent) in
-                    component.imageView.image = UIImage(named: "circle_information_20")?.withTintColor(.themeGray)
-                },
-            ]),
-            layoutMargins: UIEdgeInsets(top: 0, left: .margin32, bottom: 0, right: .margin32),
-            tableView: self,
-            id: "subtitle-\(text)",
-            height: .margin32,
-            autoDeselect: true,
-            bind: { cell in
-                cell.set(backgroundStyle: .transparent, isFirst: true)
-                cell.selectionStyle = .none
-            },
-            action: action
         )
     }
 }
@@ -186,24 +86,6 @@ extension SectionsTableView {
             id: id,
             hash: hash,
             height: .heightCell48,
-            autoDeselect: autoDeselect,
-            bind: { cell in
-                cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)
-            },
-            action: action
-        )
-    }
-
-    // universal cell with image32, text, value and accessory for 56 height
-    func universalRow56(id: String, image: CellBuilderNew.CellElement.Image? = nil, title: CellBuilderNew.CellElement.Text? = nil, value: CellBuilderNew.CellElement.Text? = nil, accessoryType: CellBuilderNew.CellElement.AccessoryType = .none, hash: String? = nil, backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence, autoDeselect: Bool = false, isFirst: Bool = false, isLast: Bool = false, action: (() -> Void)? = nil) -> RowProtocol {
-        let elements = universalImage32Elements(image: image, title: title, value: value, accessoryType: accessoryType)
-
-        return CellBuilderNew.row(
-            rootElement: .hStack(elements),
-            tableView: self,
-            id: id,
-            hash: hash,
-            height: .heightCell56,
             autoDeselect: autoDeselect,
             bind: { cell in
                 cell.set(backgroundStyle: backgroundStyle, isFirst: isFirst, isLast: isLast)

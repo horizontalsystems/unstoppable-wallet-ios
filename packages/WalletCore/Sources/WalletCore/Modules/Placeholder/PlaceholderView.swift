@@ -1,15 +1,9 @@
 
-import RxSwift
 import SnapKit
 
 import UIKit
 
 class PlaceholderView: UIView {
-    private let disposeBag = DisposeBag()
-
-    private let reachabilityViewModel: ReachabilityViewModel?
-    private var retryAction: (() -> Void)?
-
     private let stackView = UIStackView()
     private let topSpacer = UIView()
     private let bottomSpacer = UIView()
@@ -18,9 +12,7 @@ class PlaceholderView: UIView {
     private let imageView = UIImageView()
     private let label = UILabel()
 
-    init(layoutType: LayoutType = .upperMiddle, reachabilityViewModel: ReachabilityViewModel? = nil) {
-        self.reachabilityViewModel = reachabilityViewModel
-
+    init(layoutType: LayoutType = .upperMiddle) {
         super.init(frame: .zero)
 
         addSubview(stackView)
@@ -85,56 +77,6 @@ class PlaceholderView: UIView {
         set {
             label.text = newValue
             label.isHidden = newValue == nil
-        }
-    }
-
-    @discardableResult func addPrimaryButton(style: PrimaryButton.Style, title: String, target: Any, action: Selector) -> UIButton {
-        let button = PrimaryButton()
-
-        button.set(style: style)
-        button.setTitle(title, for: .normal)
-        button.addTarget(target, action: action, for: .touchUpInside)
-
-        stackView.addArrangedSubview(button)
-        stackView.setCustomSpacing(.margin16, after: button)
-
-        return button
-    }
-
-    func configureSyncError(title: String = "sync_error".localized, action: (() -> Void)? = nil) {
-        retryAction = action
-
-        if let driver = reachabilityViewModel?.retryDriver {
-            subscribe(disposeBag, driver) {
-                action?()
-            }
-        }
-
-        image = UIImage(named: "sync_error_48")
-        text = title
-
-        addPrimaryButton(
-            style: .yellow,
-            title: "button.retry".localized,
-            target: self,
-            action: #selector(retry)
-        )
-    }
-
-    func removeAllButtons() {
-        for view in stackView.arrangedSubviews {
-            if view is UIButton {
-                stackView.removeArrangedSubview(view)
-            }
-        }
-        stackView.setNeedsLayout()
-    }
-
-    @objc private func retry() {
-        if reachabilityViewModel?.isReachable ?? false {
-            retryAction?()
-        } else {
-            HudHelper.instance.show(banner: .noInternet)
         }
     }
 }

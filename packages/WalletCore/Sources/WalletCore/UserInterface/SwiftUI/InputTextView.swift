@@ -88,7 +88,7 @@ struct ColoredBorder: ViewModifier {
     let cornerRadius: CGFloat
     let color: Color
 
-    init(cornerRadius: CGFloat = InputView.cornerRadius, color: Color = .themeJacob) {
+    init(cornerRadius: CGFloat = .cornerRadius12, color: Color = .themeJacob) {
         self.cornerRadius = cornerRadius
         self.color = color
     }
@@ -124,7 +124,7 @@ struct FieldCautionBorder: ViewModifier {
     let cornerRadius: CGFloat
     @Binding var cautionState: FieldCautionState
 
-    init(cornerRadius: CGFloat = InputView.cornerRadius, cautionState: Binding<FieldCautionState>) {
+    init(cornerRadius: CGFloat = .cornerRadius12, cautionState: Binding<FieldCautionState>) {
         self.cornerRadius = cornerRadius
         _cautionState = cautionState
     }

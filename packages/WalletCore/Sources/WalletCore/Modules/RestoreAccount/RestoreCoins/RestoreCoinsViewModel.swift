@@ -179,7 +179,6 @@ extension RestoreCoinsViewModel {
         )
 
         let config = SelectorModule.MultiConfig(
-            image: .remote(url: blockchain.type.imageUrl, placeholder: "placeholder_rectangle_32"),
             title: blockchain.name,
             description: "blockchain_settings.description".localized,
             allowEmpty: allowEmpty,
