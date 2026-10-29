@@ -1,3 +1,4 @@
+"NSBluetoothAlwaysUsageDescription" = "Bluetooth yalnızca Ledger donanım cüzdanını bağlamak için kullanılır.";
 "NSCameraUsageDescription" = "QR kodlarını taramak için uygulamanın kameraya erişmesi gerekiyor.";
 "NSFaceIDUsageDescription" = "FaceID, cüzdanın kilidini açmak için kullanılacaktır.";
 "NSPhotoLibraryAddUsageDescription" = "NFT resimlerini kaydetmek için fotoğraf kitaplığına erişmemiz gerekiyor";

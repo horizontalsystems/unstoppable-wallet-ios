@@ -162,6 +162,8 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Bluetooth is used only to connect a Ledger hardware wallet.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to camera to scan QR codes.</string>
 	<key>NSFaceIDUsageDescription</key>

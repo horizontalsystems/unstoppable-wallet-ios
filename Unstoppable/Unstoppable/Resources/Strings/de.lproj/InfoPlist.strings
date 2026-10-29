@@ -1,3 +1,4 @@
+"NSBluetoothAlwaysUsageDescription" = "Bluetooth wird nur zum Verbinden einer Ledger-Hardware-Wallet verwendet.";
 "NSCameraUsageDescription" = "Die App benötigt Zugriff auf die Kamera, um QR-Codes zu scannen.";
 "NSFaceIDUsageDescription" = "FaceID wird zum Entsperren des Wallets verwendet.";
 "NSPhotoLibraryAddUsageDescription" = "Wir benötigen Zugang zur Fotobibliothek, um NFT-Bilder zu speichern";
