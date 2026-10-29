@@ -10,9 +10,7 @@ struct TransactionsView: View {
                 ListForEach(section.viewItems) { viewItem in
                     ItemView(viewItem: viewItem) {
                         if let record = viewModel.record(id: viewItem.id) {
-                            Coordinator.shared.present { _ in
-                                TransactionInfoView(transactionRecord: record).ignoresSafeArea()
-                            }
+                            TransactionInfoModule.present(transactionRecord: record)
                             stat(page: statPage, event: .open(page: .transactionInfo))
                         }
                     }

@@ -1,9 +1,18 @@
 import MarketKit
 import SwiftUI
-import UIKit
 
 enum TransactionInfoModule {
-    static func instance(transactionRecord: TransactionRecord) -> UIViewController? {
+    static func present(transactionRecord: TransactionRecord) {
+        guard let viewModel = viewModel(transactionRecord: transactionRecord) else {
+            return
+        }
+
+        Coordinator.shared.present { isPresented in
+            TransactionInfoView(viewModel: viewModel, isPresented: isPresented)
+        }
+    }
+
+    private static func viewModel(transactionRecord: TransactionRecord) -> TransactionInfoViewModel? {
         guard let adapter = Core.shared.transactionAdapterManager.adapter(for: transactionRecord.source) else {
             return nil
         }
@@ -15,10 +24,8 @@ enum TransactionInfoModule {
         let watchAccount = Core.shared.accountManager.activeAccount?.watchAccount ?? false
         let actionEnabled = transactionRecord.source.blockchainType.resendable && !watchAccount
         let factory = TransactionInfoViewItemFactory(evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService, actionEnabled: actionEnabled, extraProviderFactory: Core.shared.transactionInfoExtraFactory)
-        let viewModel = TransactionInfoViewModel(service: service, factory: factory, contactLabelService: contactLabelService)
-        let viewController = TransactionInfoViewController(adapter: adapter, viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))
 
-        return viewController
+        return TransactionInfoViewModel(service: service, factory: factory, contactLabelService: contactLabelService, adapter: adapter)
     }
 }
 
@@ -26,6 +33,35 @@ extension TransactionInfoModule {
     enum Option {
         case resend(type: ResendTransactionType)
         case zcashResend
+    }
+
+    enum AmountType {
+        case incoming
+        case outgoing
+        case neutral
+        case secondary
+
+        var signType: ValueFormatter.SignType {
+            switch self {
+            case .incoming, .outgoing, .secondary: return .always
+            case .neutral: return .never
+            }
+        }
+
+        var sign: FloatingPointSign {
+            switch self {
+            case .incoming, .neutral, .secondary: return .plus
+            case .outgoing: return .minus
+            }
+        }
+
+        var colorStyle: ColorStyle {
+            switch self {
+            case .incoming: return .green
+            case .outgoing, .neutral: return .primary
+            case .secondary: return .secondary
+            }
+        }
     }
 
     enum ViewItem {
@@ -65,20 +101,4 @@ extension TransactionInfoModule {
             self.footer = footer
         }
     }
-}
-
-struct TransactionInfoView: UIViewControllerRepresentable {
-    typealias UIViewControllerType = UIViewController
-
-    private let transactionRecord: TransactionRecord
-
-    init(transactionRecord: TransactionRecord) {
-        self.transactionRecord = transactionRecord
-    }
-
-    func makeUIViewController(context _: Context) -> UIViewController {
-        ThemeNavigationController(rootViewController: TransactionInfoModule.instance(transactionRecord: transactionRecord) ?? UIViewController())
-    }
-
-    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

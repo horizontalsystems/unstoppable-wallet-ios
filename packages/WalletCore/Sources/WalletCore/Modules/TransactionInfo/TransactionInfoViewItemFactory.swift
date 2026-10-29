@@ -24,7 +24,7 @@ class TransactionInfoViewItemFactory {
         extraProviderFactory.updatedPublisher
     }
 
-    private func amount(title: String, subtitle: String?, appValue: AppValue, rate: CurrencyValue?, type: AmountType, balanceHidden: Bool) -> TransactionInfoModule.ViewItem {
+    private func amount(title: String, subtitle: String?, appValue: AppValue, rate: CurrencyValue?, type: TransactionInfoModule.AmountType, balanceHidden: Bool) -> TransactionInfoModule.ViewItem {
         let iconUrl = appValue.coin?.imageUrl
         let iconAlternativeUrl = appValue.coin?.image
         let iconPlaceholderImageName = "placeholder_circle"
@@ -64,7 +64,7 @@ class TransactionInfoViewItemFactory {
         }
     }
 
-    private func nftAmount(title: String, appValue: AppValue, type: AmountType, balanceHidden: Bool) -> TransactionInfoModule.ViewItem {
+    private func nftAmount(title: String, appValue: AppValue, type: TransactionInfoModule.AmountType, balanceHidden: Bool) -> TransactionInfoModule.ViewItem {
         .amount(
             title: title,
             subtitle: appValue.name,
@@ -201,7 +201,7 @@ class TransactionInfoViewItemFactory {
         return viewItems
     }
 
-    private func type(appValue: AppValue, condition: Bool = true, _ trueType: AmountType, _ falseType: AmountType? = nil) -> AmountType {
+    private func type(appValue: AppValue, condition: Bool = true, _ trueType: TransactionInfoModule.AmountType, _ falseType: TransactionInfoModule.AmountType? = nil) -> TransactionInfoModule.AmountType {
         guard !appValue.zeroValue else {
             return .neutral
         }
