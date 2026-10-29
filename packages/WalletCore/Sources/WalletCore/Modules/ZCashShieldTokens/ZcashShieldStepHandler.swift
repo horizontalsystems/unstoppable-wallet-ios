@@ -3,7 +3,7 @@ import Foundation
 import MarketKit
 import RxSwift
 import SwiftUI
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 /// Shields the transparent balance so a send or swap can spend it (Android `ActionShield`), and waits out a
 /// shielding or confirming private funds. The step lasts until the shielded funds are spendable, not just until

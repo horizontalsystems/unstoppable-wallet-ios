@@ -2,7 +2,7 @@ import Combine
 import Foundation
 import MarketKit
 import RxSwift
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 public class AdapterManager {
     private enum ZcashEndpointValidationError: Error {

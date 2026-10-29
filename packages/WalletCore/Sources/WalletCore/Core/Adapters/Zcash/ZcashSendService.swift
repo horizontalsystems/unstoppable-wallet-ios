@@ -1,7 +1,7 @@
 import Foundation
 import HsToolKit
 import RxSwift
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 class ZcashSendService {
     // Custom fee (zip317 marginal fee) and tx expiry are kept wired end-to-end but the SDK has no
@@ -17,6 +17,13 @@ class ZcashSendService {
     // zcashd RPC_VERIFY_ERROR: the node has terminally rejected the tx (e.g. duplicate
     // nullifier / spent inputs); resubmitting the same bytes can never succeed.
     static let terminalNodeRejectionCode = -25
+
+    // Local SDK refusals, reported as .rejected: the tx is built for a stale consensus branch or has
+    // expired at the server's height — the wallet is behind, and the same bytes can never be mined.
+    static let localRefusalCodes: Set<Int> = [
+        TransactionSubmissionRefusal.wrongConsensusBranch.code,
+        TransactionSubmissionRefusal.expired.code,
+    ]
 
     private let synchronizer: Synchronizer
     private let migrator: ZcashMigrator
@@ -265,7 +272,10 @@ class ZcashSendService {
             case .accepted:
                 successCount += 1
             case let .rejected(code, description):
-                submitFailure = submitFailure ?? AppError.invalidResponse(reason: "Zcash node rejected transaction (code \(code)): \(description)")
+                let error = localRefusalCodes.contains(code)
+                    ? AppError.zcash(reason: .syncRequired)
+                    : AppError.invalidResponse(reason: "Zcash node rejected transaction (code \(code)): \(description)")
+                submitFailure = submitFailure ?? error
             case .unreachable, .timedOut, .notAttempted, .cancelled:
                 resubmitable = true
             }
@@ -288,7 +298,7 @@ class ZcashSendService {
     // Runs on foreground start (deferred until the first sync state with a non-zero height):
     // the SDK sync-loop resubmission only runs once the sync state machine reaches it, so a
     // short "check the app" session would never deliver without this.
-    // Same-bytes resubmit is safe: an already-delivered transaction comes back as .rejected.
+    // Same-bytes resubmit is safe: an already-delivered transaction comes back as .accepted.
     func resubmitPendingTransactions() async {
         guard let endpointService else {
             return
@@ -356,7 +366,7 @@ class ZcashSendService {
             if Self.isTerminalRejection(outcome) {
                 // marker first, then redacted diagnostics: no raw tx / node message is persisted
                 terminalStore.markNodeRejected(txId: txId, expiryHeight: overview.expiryHeight ?? 0)
-                logger?.log(level: .error, message: "Resubmit terminal node rejection (code \(Self.terminalNodeRejectionCode)): \(txId)")
+                logger?.log(level: .error, message: "Resubmit terminal rejection: \(txId) | \(outcome)")
             } else if case .accepted = outcome {
                 logger?.log(level: .debug, message: "Resubmit accepted: \(txId)")
             } else {
@@ -379,7 +389,7 @@ class ZcashSendService {
 
     static func isTerminalRejection(_ outcome: TransactionSubmissionOutcome) -> Bool {
         if case let .rejected(code, _) = outcome {
-            return code == terminalNodeRejectionCode
+            return code == terminalNodeRejectionCode || localRefusalCodes.contains(code)
         }
         return false
     }

@@ -1,7 +1,7 @@
 
 import MarketKit
 import SwiftUI
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 struct ShieldSendView: View {
     private let sendData: SendData

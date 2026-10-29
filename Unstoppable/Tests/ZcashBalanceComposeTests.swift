@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 @testable import WalletCore
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 struct ZcashBalanceComposeTests {
     private func inputs(shieldedTotal: Int64, spendable: Int64, unshielded: Int64 = 0, awaiting: Int64 = 0, orchard: Int64 = 0) -> ZcashBalanceService.Inputs {

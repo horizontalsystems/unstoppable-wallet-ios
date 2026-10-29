@@ -4,7 +4,7 @@ import MarketKit
 import RxSwift
 import Testing
 @testable import WalletCore
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 // Zcash Names on the Name Notes protocol, with live mainnet Resolver responses as vectors.
 struct ZcashNamesTests {
@@ -105,14 +105,14 @@ struct ZcashNamesTests {
     // MARK: - Response parsing
 
     @Test func parsePermanentRegistration() throws {
-        let registration = try #require(registration(Self.thebackupkidBody))
+        let registration = try #require(try registration(Self.thebackupkidBody))
 
         #expect(registration.name == "thebackupkid")
         #expect(registration.address == Self.thebackupkidAddress)
     }
 
     @Test func parseFixedTermRegistration() throws {
-        let registration = try #require(registration(Self.zechariahBody))
+        let registration = try #require(try registration(Self.zechariahBody))
 
         #expect(registration.name == "zechariah")
         #expect(registration.address == Self.zechariahAddress)
@@ -152,7 +152,7 @@ struct ZcashNamesTests {
     func parseIgnoresExpiry(expiresAt: String) throws {
         let body = #"{"jsonrpc":"2.0","id":1,"result":{"name":"alice","address":"u1example","last_action":"claim","expires_at":\#(expiresAt)}}"#
 
-        let registration = try #require(registration(body))
+        let registration = try #require(try registration(body))
 
         #expect(registration.address == "u1example")
     }
@@ -160,7 +160,7 @@ struct ZcashNamesTests {
     // MARK: - Validation
 
     @Test func validateReturnsAddressOfMatchingRegistration() throws {
-        let registration = try #require(registration(Self.thebackupkidBody))
+        let registration = try #require(try registration(Self.thebackupkidBody))
 
         let address = try ZnsResolver.validate(name: "thebackupkid", registration: registration)
 

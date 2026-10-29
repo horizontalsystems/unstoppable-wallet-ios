@@ -3,7 +3,7 @@ import MarketKit
 import RxSwift
 import Testing
 @testable import WalletCore
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 // The transparent-only parser filter behind a ZEC swap recipient on a route that cannot pay a shielded
 // receiver (spec 2026-10-16): transparent addresses pass; shielded and unified ones are recognised as

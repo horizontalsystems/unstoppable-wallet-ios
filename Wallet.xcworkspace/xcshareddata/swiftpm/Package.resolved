@@ -1,5 +1,5 @@
 {
-  "originHash" : "bc6c2701a6360663d0ff8013e68a7496ade308ceeb8d386f93510937fb94b307",
+  "originHash" : "bf604704d3d43ec90788a524fed97c24d781d3316b76cdda433966a3ebdfb8b5",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -393,8 +393,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/stephencelis/SQLite.swift.git",
       "state" : {
-        "revision" : "964c300fb0736699ce945c9edb56ecd62eba27a3",
-        "version" : "0.16.0"
+        "revision" : "4114679379eeb4538638f49ec14e1854dd9cf73c",
+        "version" : "0.17.0"
       }
     },
     {
@@ -483,8 +483,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log.git",
       "state" : {
-        "revision" : "9c6fb14227f55d8f711ce3847dc2f419fb0ecacb",
-        "version" : "1.15.1"
+        "revision" : "c9c6bb9d275ec0d95c3ad16391f3f045dc623104",
+        "version" : "1.16.2"
       }
     },
     {
@@ -717,8 +717,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/zodl-swift-wallet-sdk",
       "state" : {
-        "revision" : "0be84a911c262d50d49d396711ee62e0ec26c24b",
-        "version" : "5.0.0-hs.1"
+        "revision" : "0dc7e58aada76f0d43a19f39df585c81499303b1",
+        "version" : "7.0.0-hs.2"
       }
     }
   ],

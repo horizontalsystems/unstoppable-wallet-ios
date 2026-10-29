@@ -1,6 +1,6 @@
 import HsToolKit
 import MarketKit
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 final class USwapZcashFinalQuoteBuilder: USwapFinalQuoteBuilder {
     private let adapterManager: AdapterManager

@@ -1,6 +1,6 @@
 import Foundation
 import HsExtensions
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 class ZcashTransactionWrapper {
     let raw: Data?

@@ -1,6 +1,6 @@
 import Foundation
 import HsToolKit
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 // Endpoint selection and switching. #7163 (server autoselect/failover) lands here:
 // evaluateBestOf over the ZcashNodeManager pool without touching the adapter contract.

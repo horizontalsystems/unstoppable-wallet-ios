@@ -1,6 +1,6 @@
 import BigInt
 import EvmKit
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 public enum InitialTransactionSettings {
     case evm(gasPrice: GasPrice?, nonce: Int?)

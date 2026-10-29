@@ -1,5 +1,5 @@
 import Foundation
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 enum ZcashResendModule {
     static func present(adapter: ITransactionsAdapter, transactionRecord: TransactionRecord, onSuccess: @escaping () -> Void) throws {

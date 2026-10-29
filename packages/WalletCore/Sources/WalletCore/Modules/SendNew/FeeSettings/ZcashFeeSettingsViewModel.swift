@@ -1,5 +1,5 @@
 import SwiftUI
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 @MainActor
 class ZcashFeeSettingsViewModel: ObservableObject {

@@ -3,7 +3,7 @@ import MarketKit
 import MoneroKit
 import NearKit
 import ZanoKit
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 public class RestoreSettingsManager {
     private let storage: RestoreSettingsStorage

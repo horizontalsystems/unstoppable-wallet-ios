@@ -1,5 +1,5 @@
 import Foundation
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 enum ZcashFileStore {
     // Sapling parameters are identical across all wallets, so they live in a single shared

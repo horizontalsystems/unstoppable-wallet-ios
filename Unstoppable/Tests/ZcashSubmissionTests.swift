@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 @testable import WalletCore
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 struct ZcashSubmissionTests {
     private let txA = Data([1, 2, 3])
@@ -19,6 +19,22 @@ struct ZcashSubmissionTests {
         #expect(result.successCount == 1)
         #expect(result.submitFailure != nil)
         #expect(result.txIds.count == 2)
+    }
+
+    @Test func localRefusalIsSyncRequired() {
+        let result = ZcashSendService.submitOutcomes([(txA, .rejected(code: TransactionSubmissionRefusal.wrongConsensusBranch.code, message: "wrong branch"))])
+        guard case .zcash(reason: .syncRequired) = result.submitFailure as? AppError else {
+            Issue.record("expected syncRequired, got \(String(describing: result.submitFailure))")
+            return
+        }
+    }
+
+    @Test func nodeRejectionKeepsNodeError() {
+        let result = ZcashSendService.submitOutcomes([(txA, .rejected(code: -25, message: "dup"))])
+        guard case .invalidResponse = result.submitFailure as? AppError else {
+            Issue.record("expected invalidResponse, got \(String(describing: result.submitFailure))")
+            return
+        }
     }
 
     @Test func unreachableIsResubmitableGrpcFailure() {

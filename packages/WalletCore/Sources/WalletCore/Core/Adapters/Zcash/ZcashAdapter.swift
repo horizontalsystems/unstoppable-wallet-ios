@@ -8,7 +8,7 @@ import MarketKit
 import RxRelay
 import RxSwift
 import UIKit
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 class ZcashAdapter {
     static let minimalThreshold: Decimal = 0.0004 // minimal transparent balance to shielding
@@ -577,7 +577,7 @@ extension ZcashAdapter {
         try await sendService.performMigration()
     }
 
-    func recipient(from stringEncodedAddress: String) -> ZcashLightClientKit.Recipient? {
+    func recipient(from stringEncodedAddress: String) -> ZODLSwiftWalletSDK.Recipient? {
         try? Recipient(stringEncodedAddress, network: network.networkType)
     }
 
