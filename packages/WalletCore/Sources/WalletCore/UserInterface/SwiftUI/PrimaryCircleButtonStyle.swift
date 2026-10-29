@@ -21,15 +21,6 @@ struct PrimaryCircleButtonStyle: ButtonStyle {
         case gray
         case transparent
 
-        init(style: PrimaryButton.Style) {
-            switch style {
-            case .yellow: self = .yellow
-            case .red: self = .red
-            case .gray: self = .gray
-            case .transparent: self = .transparent
-            }
-        }
-
         func foregroundColor(isEnabled: Bool, isPressed: Bool) -> Color {
             switch self {
             case .yellow: return isEnabled ? .themeDark : .themeAndy

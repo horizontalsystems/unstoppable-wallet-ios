@@ -25,16 +25,6 @@ struct HighlightedTextView: View {
         self.onClose = onClose
     }
 
-    init(title: String? = nil, text: String, style: HighlightedDescriptionBaseView.Style) {
-        self.title = title
-        self.text = text
-
-        switch style {
-        case .yellow: self.style = .warning
-        case .red: self.style = .alert
-        }
-    }
-
     var body: some View {
         VStack(spacing: .margin12) {
             if let title {

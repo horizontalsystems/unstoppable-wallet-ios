@@ -71,7 +71,7 @@ enum ReceiveAddressModule {
 
     struct HighlightedDescription {
         let text: String
-        let style: HighlightedDescriptionBaseView.Style
+        let type: AlertCardView.CardType
     }
 
     struct ViewItem {

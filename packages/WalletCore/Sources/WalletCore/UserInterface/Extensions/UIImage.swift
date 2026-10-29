@@ -1,8 +1,7 @@
-import MarketKit
 import UIKit
 
-extension UIImage {
-    public static func qrCodeImage(qrCodeString: String, size: CGFloat) -> UIImage? {
+public extension UIImage {
+    static func qrCodeImage(qrCodeString: String, size: CGFloat) -> UIImage? {
         let data = qrCodeString.data(using: .utf8)
 
         let filter = CIFilter(name: "CIQRCodeGenerator")!
@@ -25,17 +24,5 @@ extension UIImage {
 
             image.draw(in: CGRect(origin: .zero, size: outputSize))
         }
-    }
-
-    static func circleImage(size: CGFloat, color: UIColor) -> UIImage? {
-        let size = CGSize(width: size, height: size)
-
-        UIGraphicsBeginImageContextWithOptions(size, false, 0)
-        let path = UIBezierPath(roundedRect: CGRect(origin: .zero, size: size), cornerRadius: size.width / 2)
-        color.setFill()
-        path.fill()
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image
     }
 }

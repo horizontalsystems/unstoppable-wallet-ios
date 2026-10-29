@@ -34,7 +34,7 @@ class ReceiveAddressViewItemFactory {
         if item.watchAccount {
             return .init(
                 text: "deposit.warning.watch_account".localized,
-                style: .yellow
+                type: .caution
             )
         }
 

@@ -22,7 +22,7 @@ struct ReceiveAddressBodyView<Content: View>: View {
             case let .completed(viewItem):
                 VStack(spacing: .margin16) {
                     if let description = viewItem.highlightedDescription {
-                        AlertCardView(.init(text: description.text, type: description.style == .yellow ? .caution : .critical, style: .inline))
+                        AlertCardView(.init(text: description.text, type: description.type, style: .inline))
                     }
 
                     ListSection {

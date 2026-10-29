@@ -1,5 +1,5 @@
 {
-  "originHash" : "363f61a81db59dd7ee568dd917d93724be2970811f3444e54f32ba6e0ea6b152",
+  "originHash" : "ca743e3e2b1f2ff36e765388106a1073dee9ccd8815a8406aa8d814fae89d969",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -332,15 +332,6 @@
       "state" : {
         "revision" : "48fb20fce4ca3aad89180448a127d5bc16f0e44c",
         "version" : "0.10.0"
-      }
-    },
-    {
-      "identity" : "sectionstableview.swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/horizontalsystems/SectionsTableView.Swift",
-      "state" : {
-        "revision" : "2ce8bc4cabd2c558b853196962de96d1c06b914d",
-        "version" : "1.0.0"
       }
     },
     {

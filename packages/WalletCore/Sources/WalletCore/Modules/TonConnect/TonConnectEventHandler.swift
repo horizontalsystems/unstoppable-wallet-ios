@@ -1,12 +1,10 @@
 import Combine
-import UIKit
+import Foundation
 
 class TonConnectEventHandler {
     private let tonConnectManager: TonConnectManager
     private var cancellables = Set<AnyCancellable>()
     private var signalSubject = PassthroughSubject<EventHandlerSignal, Never>()
-
-    private weak var parentViewController: UIViewController?
 
     init(tonConnectManager: TonConnectManager) {
         self.tonConnectManager = tonConnectManager
@@ -21,16 +19,6 @@ class TonConnectEventHandler {
             .sink { [weak self] in self?.signalSubject.send(.tonConnectRequestFailed($0)) }
             .store(in: &cancellables)
     }
-
-//    private func handle(sendTransactionRequest: TonConnectSendTransactionRequest) {
-//        let view = TonConnectSendView(request: sendTransactionRequest)
-//        parentViewController?.visibleController.present(view.toViewController(), animated: true)
-//    }
-//
-//    private func handle(sendTransactionRequestError: TonConnectSendTransactionRequestError) {
-//        let view = TonConnectErrorView(requestError: sendTransactionRequestError)
-//        parentViewController?.visibleController.present(view.toViewController(), animated: true)
-//    }
 }
 
 extension TonConnectEventHandler: IEventHandler {
