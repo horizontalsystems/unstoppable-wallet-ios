@@ -1,10 +1,8 @@
-import Kingfisher
-import MessageUI
 import SwiftUI
 
 struct MainSettingsView: View {
-    @StateObject var viewModel = MainSettingsViewModel()
-    @Environment(\.openURL) var openURL
+    @StateObject private var viewModel = MainSettingsViewModel()
+    @Environment(\.openURL) private var openURL
 
     @Binding var walletConnectPresented: Bool
 
@@ -145,186 +143,273 @@ struct MainSettingsView: View {
     }
 
     @ViewBuilder private func manageWallets() -> some View {
-        NavigationRow(spacing: .margin8, destination: {
+        NavigationLink(destination: {
             ManageAccountsView(parentPresented: nil)
                 .onFirstAppear {
                     stat(page: .settings, event: .open(page: .manageWallets))
                 }
         }) {
-            HStack(spacing: .margin16) {
-                ThemeImage("wallet", size: .iconSize24)
-                Text("settings.manage_accounts".localized).textBody()
-            }
-
-            Spacer()
-
-            if viewModel.manageWalletsAlert {
-                Image.warningIcon
-            }
-
-            Image.disclosureIcon
+            Cell(
+                left: { ThemeImage("wallet", size: .iconSize24) },
+                middle: { ThemeText("settings.manage_accounts".localized, style: .headline2) },
+                right: { disclosure(alert: viewModel.manageWalletsAlert) }
+            )
         }
+        .buttonStyle(CellButtonStyle())
     }
 
     @ViewBuilder private func blockchainSettings() -> some View {
-        NavigationRow(destination: {
+        NavigationLink(destination: {
             BlockchainSettingsModule.view()
                 .onFirstAppear {
                     stat(page: .settings, event: .open(page: .blockchainSettings))
                 }
         }) {
-            ThemeImage("box", size: .iconSize24)
-            Text("settings.blockchain_settings".localized).themeBody()
-            Image.disclosureIcon
+            Cell(
+                left: { ThemeImage("box", size: .iconSize24) },
+                middle: { ThemeText("settings.blockchain_settings".localized, style: .headline2) },
+                right: { Image.disclosureIcon }
+            )
         }
+        .buttonStyle(CellButtonStyle())
     }
 
     @ViewBuilder private func security() -> some View {
-        NavigationRow(spacing: .margin8, destination: {
+        NavigationLink(destination: {
             SecuritySettingsView()
                 .onFirstAppear {
                     stat(page: .settings, event: .open(page: .security))
                 }
         }) {
-            HStack(spacing: .margin16) {
-                ThemeImage("shield", size: .iconSize24)
-                Text("settings.security".localized).textBody()
-            }
-
-            Spacer()
-
-            if viewModel.securityAlert {
-                Image.warningIcon
-            }
-
-            Image.disclosureIcon
+            Cell(
+                left: { ThemeImage("shield", size: .iconSize24) },
+                middle: { ThemeText("settings.security".localized, style: .headline2) },
+                right: { disclosure(alert: viewModel.securityAlert) }
+            )
         }
+        .buttonStyle(CellButtonStyle())
     }
 
     @ViewBuilder private func privacy() -> some View {
-        NavigationRow(destination: {
+        NavigationLink(destination: {
             PrivacyPolicyView(config: .privacy)
                 .onFirstAppear {
                     stat(page: .settings, event: .open(page: .privacy))
                 }
         }) {
-            ThemeImage("lock", size: .iconSize24)
-            Text("settings.privacy".localized).themeBody()
-            Image.disclosureIcon
+            Cell(
+                left: { ThemeImage("lock", size: .iconSize24) },
+                middle: { ThemeText("settings.privacy".localized, style: .headline2) },
+                right: { Image.disclosureIcon }
+            )
         }
+        .buttonStyle(CellButtonStyle())
     }
 
     @ViewBuilder private func dAppConnection() -> some View {
-        ClickableRow(spacing: .margin8) {
-            walletConnectPresented = true
-        } content: {
-            HStack(spacing: .margin16) {
-                ThemeImage("link", size: .iconSize24)
-                Text("settings.dapp_connection".localized).textBody()
+        Cell(
+            left: { ThemeImage("link", size: .iconSize24) },
+            middle: { ThemeText("settings.dapp_connection".localized, style: .headline2) },
+            right: {
+                HStack(spacing: .margin8) {
+                    if viewModel.walletConnectPendingRequestCount > 0 {
+                        BadgeViewNew("\(viewModel.walletConnectPendingRequestCount)", mode: .solidWith(colorStyle: .red), colorStyle: .bright)
+                    } else if viewModel.walletConnectSessionCount > 0 {
+                        ThemeText("\(viewModel.walletConnectSessionCount)", style: .subheadSB, colorStyle: .secondary)
+                    }
+
+                    Image.disclosureIcon
+                }
+            },
+            action: {
+                walletConnectPresented = true
             }
-
-            Spacer()
-
-            if viewModel.walletConnectPendingRequestCount > 0 {
-                BadgeViewNew("\(viewModel.walletConnectPendingRequestCount)", mode: .solidWith(colorStyle: .red), colorStyle: .bright)
-            } else if viewModel.walletConnectSessionCount > 0 {
-                Text("\(viewModel.walletConnectSessionCount)").textSubhead1()
-            }
-
-            Image.disclosureIcon
-        }
+        )
     }
 
     @ViewBuilder private func tonConnect() -> some View {
-        NavigationRow(destination: {
+        NavigationLink(destination: {
             TonConnectListView()
         }) {
-            HStack(spacing: .margin16) {
-                Image("ton_connect_24").themeIcon()
-                Text("TON Connect").textBody()
-            }
-            Spacer()
-            Image.disclosureIcon
+            Cell(
+                left: { Image("ton_connect_24").themeIcon() },
+                middle: { ThemeText("TON Connect", style: .headline2) },
+                right: { Image.disclosureIcon }
+            )
         }
+        .buttonStyle(CellButtonStyle())
     }
 
     @ViewBuilder private func appSettings() -> some View {
-        NavigationRow(destination: {
+        NavigationLink(destination: {
             AppearanceView()
                 .onFirstAppear {
                     stat(page: .settings, event: .open(page: .appearance))
                 }
         }) {
-            ThemeImage("uw_logo", size: .iconSize24)
-            Text("settings.appearance".localized).themeBody()
-            Image.disclosureIcon
+            Cell(
+                left: { ThemeImage("uw_logo", size: .iconSize24) },
+                middle: { ThemeText("settings.appearance".localized, style: .headline2) },
+                right: { Image.disclosureIcon }
+            )
         }
+        .buttonStyle(CellButtonStyle())
     }
 
     @ViewBuilder private func subscription() -> some View {
-        NavigationRow(destination: {
+        NavigationLink(destination: {
             PurchaseListView()
                 .onFirstAppear {
                     stat(page: .settings, event: .open(page: .subscription))
                 }
         }) {
-            ThemeImage("premium", size: .iconSize24)
-            Text("subscription.title".localized).themeBody()
-            Image.disclosureIcon
+            Cell(
+                left: { ThemeImage("premium", size: .iconSize24) },
+                middle: { ThemeText("subscription.title".localized, style: .headline2) },
+                right: { Image.disclosureIcon }
+            )
         }
+        .buttonStyle(CellButtonStyle())
     }
 
     @ViewBuilder private func contacts() -> some View {
-        ClickableRow(spacing: .margin8) {
-            Coordinator.shared.present { isPresented in
-                ContactBookView(mode: .edit, isPresented: isPresented)
-                    .onFirstAppear {
-                        stat(page: .settings, event: .open(page: .contacts))
-                    }
+        Cell(
+            left: { ThemeImage("user", size: .iconSize24) },
+            middle: { ThemeText("contacts.title".localized, style: .headline2) },
+            right: { disclosure(alert: viewModel.iCloudUnavailable) },
+            action: {
+                Coordinator.shared.present { isPresented in
+                    ContactBookView(mode: .edit, isPresented: isPresented)
+                        .onFirstAppear {
+                            stat(page: .settings, event: .open(page: .contacts))
+                        }
+                }
             }
-        } content: {
-            HStack(spacing: .margin16) {
-                ThemeImage("user", size: .iconSize24)
-                Text("contacts.title".localized).textBody()
-            }
-
-            Spacer()
-
-            if viewModel.iCloudUnavailable {
-                Image.warningIcon
-            }
-
-            Image.disclosureIcon
-        }
+        )
     }
 
     @ViewBuilder private func backupManager() -> some View {
-        NavigationRow(destination: {
+        NavigationLink(destination: {
             BackupManagerView()
                 .onFirstAppear {
                     stat(page: .settings, event: .open(page: .backupManager))
                 }
         }) {
-            ThemeImage("cloud", size: .iconSize24)
-            Text("settings.backup_manager".localized).themeBody()
-            Image.disclosureIcon
+            Cell(
+                left: { ThemeImage("cloud", size: .iconSize24) },
+                middle: { ThemeText("settings.backup_manager".localized, style: .headline2) },
+                right: { Image.disclosureIcon }
+            )
         }
-    }
-
-    @ViewBuilder private func premiumHeader() -> some View {
-        HStack(spacing: 6) {
-            Image("star_filled_16").themeIcon(color: .themeJacob)
-            Text("subscription.premium.label".localized).themeSubhead1(color: .themeJacob)
-        }
-        .padding(.horizontal, .margin16)
-        .frame(height: .margin32)
+        .buttonStyle(CellButtonStyle())
     }
 
     @ViewBuilder private func vipSupport() -> some View {
-        ClickableRow(action: {
-            Coordinator.shared.performAfterPurchase(premiumFeature: .prioritySupport, page: .settings, trigger: .vipSupport) {
-                let appUrl = URL(string: "tg://message?slug=\(AppConfig.appTelegramSupportSlug)")!
-                let webUrl = URL(string: "https://t.me/m/\(AppConfig.appTelegramSupportSlug)")!
+        Cell(
+            left: { ThemeImage("support", size: .iconSize24, colorStyle: .yellow) },
+            middle: { ThemeText("purchases.priority_support".localized, style: .headline2) },
+            right: { Image.disclosureIcon },
+            action: {
+                Coordinator.shared.performAfterPurchase(premiumFeature: .prioritySupport, page: .settings, trigger: .vipSupport) {
+                    let appUrl = URL(string: "tg://message?slug=\(AppConfig.appTelegramSupportSlug)")!
+                    let webUrl = URL(string: "https://t.me/m/\(AppConfig.appTelegramSupportSlug)")!
+
+                    if UIApplication.shared.canOpenURL(appUrl) {
+                        openURL(appUrl)
+                    } else {
+                        Coordinator.shared.present(url: webUrl)
+                    }
+
+                    stat(page: .settings, event: .open(page: .vipSupport))
+                }
+            }
+        )
+    }
+
+    @ViewBuilder private func addressChecker() -> some View {
+        Cell(
+            left: { ThemeImage("radar", size: .iconSize24, colorStyle: .yellow) },
+            middle: { ThemeText("address_checker.title".localized, style: .headline2) },
+            right: { Image.disclosureIcon },
+            action: {
+                Coordinator.shared.performAfterPurchase(premiumFeature: .scamProtection, page: .settings, trigger: .vipSupport) {
+                    Coordinator.shared.present { isPresented in
+                        CheckAddressView(isPresented: isPresented)
+                            .onFirstAppear {
+                                stat(page: .settings, event: .open(page: .addressChecker))
+                            }
+                    }
+                }
+            }
+        )
+    }
+
+    @ViewBuilder private func aboutApp() -> some View {
+        NavigationLink(destination: {
+            AboutModule.view()
+                .onFirstAppear {
+                    stat(page: .settings, event: .open(page: .aboutApp))
+                }
+        }) {
+            Cell(
+                left: { ThemeImage("information", size: .iconSize24) },
+                middle: { ThemeText("settings.about_app.title".localized, style: .headline2) },
+                right: { disclosure(alert: viewModel.aboutAlert) }
+            )
+        }
+        .buttonStyle(CellButtonStyle())
+    }
+
+    @ViewBuilder private func rateUs() -> some View {
+        Cell(
+            left: { ThemeImage("star", size: .iconSize24) },
+            middle: { ThemeText("settings.rate_us".localized, style: .headline2) },
+            right: { Image.disclosureIcon },
+            action: {
+                viewModel.rateApp()
+                stat(page: .settings, event: .open(page: .rateUs))
+            }
+        )
+    }
+
+    @ViewBuilder private func tellFriend() -> some View {
+        Cell(
+            left: { ThemeImage("arrow_out", size: .iconSize24) },
+            middle: { ThemeText("settings.tell_friends".localized, style: .headline2) },
+            right: { Image.disclosureIcon },
+            action: {
+                Coordinator.shared.present { _ in
+                    ActivityView(activityItems: ["settings_tell_friends.text".localized + "\n" + AppConfig.appWebPageLink])
+                }
+                stat(page: .settings, event: .open(page: .tellFriends))
+            }
+        )
+    }
+
+    @ViewBuilder private func faq() -> some View {
+        NavigationLink(destination: {
+            FaqView()
+                .onFirstAppear {
+                    stat(page: .settings, event: .open(page: .faq))
+                }
+        }) {
+            Cell(
+                left: { ThemeImage("message", size: .iconSize24) },
+                middle: { ThemeText("settings.faq".localized, style: .headline2) },
+                right: { Image.disclosureIcon }
+            )
+        }
+        .buttonStyle(CellButtonStyle())
+    }
+
+    @ViewBuilder private func telegram() -> some View {
+        Cell(
+            left: { ThemeImage("telegram_logo", size: .iconSize24) },
+            middle: { ThemeText("Telegram", style: .headline2) },
+            right: { Image.disclosureIcon },
+            action: {
+                let appUrl = URL(string: "tg://resolve?domain=\(AppConfig.appTelegramAccount)")!
+                let webUrl = URL(string: "https://t.me/\(AppConfig.appTelegramAccount)")!
 
                 if UIApplication.shared.canOpenURL(appUrl) {
                     openURL(appUrl)
@@ -332,139 +417,42 @@ struct MainSettingsView: View {
                     Coordinator.shared.present(url: webUrl)
                 }
 
-                stat(page: .settings, event: .open(page: .vipSupport))
+                stat(page: .settings, event: .open(page: .externalTelegram))
             }
-        }) {
-            ThemeImage("support", size: .iconSize24, colorStyle: .yellow)
-            Text("purchases.priority_support".localized).themeBody()
-            Image.disclosureIcon
-        }
-    }
-
-    @ViewBuilder private func addressChecker() -> some View {
-        ClickableRow(action: {
-            Coordinator.shared.performAfterPurchase(premiumFeature: .scamProtection, page: .settings, trigger: .vipSupport) {
-                Coordinator.shared.present { isPresented in
-                    CheckAddressView(isPresented: isPresented)
-                        .onFirstAppear {
-                            stat(page: .settings, event: .open(page: .addressChecker))
-                        }
-                }
-            }
-        }) {
-            ThemeImage("radar", size: .iconSize24, colorStyle: .yellow)
-            Text("address_checker.title".localized).themeBody()
-            Image.disclosureIcon
-        }
-    }
-
-    @ViewBuilder private func aboutApp() -> some View {
-        NavigationRow(spacing: .margin8, destination: {
-            AboutModule.view()
-                .onFirstAppear {
-                    stat(page: .settings, event: .open(page: .aboutApp))
-                }
-        }) {
-            HStack(spacing: .margin16) {
-                ThemeImage("information", size: .iconSize24)
-                Text("settings.about_app.title".localized).textBody()
-            }
-
-            Spacer()
-
-            if viewModel.aboutAlert {
-                Image.warningIcon
-            }
-
-            Image.disclosureIcon
-        }
-    }
-
-    @ViewBuilder private func rateUs() -> some View {
-        ClickableRow(action: {
-            viewModel.rateApp()
-            stat(page: .settings, event: .open(page: .rateUs))
-        }) {
-            ThemeImage("star", size: .iconSize24)
-            Text("settings.rate_us".localized).themeBody()
-            Image.disclosureIcon
-        }
-    }
-
-    @ViewBuilder private func tellFriend() -> some View {
-        ClickableRow(action: {
-            Coordinator.shared.present { _ in
-                ActivityView(activityItems: ["settings_tell_friends.text".localized + "\n" + AppConfig.appWebPageLink])
-            }
-            stat(page: .settings, event: .open(page: .tellFriends))
-        }) {
-            ThemeImage("arrow_out", size: .iconSize24)
-            Text("settings.tell_friends".localized).themeBody()
-            Image.disclosureIcon
-        }
-    }
-
-    @ViewBuilder private func faq() -> some View {
-        NavigationRow(destination: {
-            FaqView()
-                .onFirstAppear {
-                    stat(page: .settings, event: .open(page: .faq))
-                }
-        }) {
-            ThemeImage("message", size: .iconSize24)
-            Text("settings.faq".localized).themeBody()
-            Image.disclosureIcon
-        }
-    }
-
-    @ViewBuilder private func telegram() -> some View {
-        ClickableRow(action: {
-            let appUrl = URL(string: "tg://resolve?domain=\(AppConfig.appTelegramAccount)")!
-            let webUrl = URL(string: "https://t.me/\(AppConfig.appTelegramAccount)")!
-
-            if UIApplication.shared.canOpenURL(appUrl) {
-                openURL(appUrl)
-            } else {
-                Coordinator.shared.present(url: webUrl)
-            }
-
-            stat(page: .settings, event: .open(page: .externalTelegram))
-        }) {
-            ThemeImage("telegram_logo", size: .iconSize24)
-            Text("Telegram").themeBody()
-            Image.disclosureIcon
-        }
+        )
     }
 
     @ViewBuilder private func twitter() -> some View {
-        ClickableRow(action: {
-            let account = AppConfig.appTwitterAccount
+        Cell(
+            left: { ThemeImage("x_logo", size: .iconSize24) },
+            middle: { ThemeText("Twitter", style: .headline2) },
+            right: { Image.disclosureIcon },
+            action: {
+                let account = AppConfig.appTwitterAccount
 
-            if let appUrl = URL(string: "twitter://user?screen_name=\(account)"), UIApplication.shared.canOpenURL(appUrl) {
-                UIApplication.shared.open(appUrl)
-            } else {
-                Coordinator.shared.present(url: "https://twitter.com/\(account)")
+                if let appUrl = URL(string: "twitter://user?screen_name=\(account)"), UIApplication.shared.canOpenURL(appUrl) {
+                    UIApplication.shared.open(appUrl)
+                } else {
+                    Coordinator.shared.present(url: "https://twitter.com/\(account)")
+                }
+
+                stat(page: .settings, event: .open(page: .externalTwitter))
             }
-
-            stat(page: .settings, event: .open(page: .externalTwitter))
-        }) {
-            ThemeImage("x_logo", size: .iconSize24)
-            Text("Twitter").themeBody()
-            Image.disclosureIcon
-        }
+        )
     }
 
     @ViewBuilder private func donate() -> some View {
-        ClickableRow(action: {
-            Coordinator.shared.present { isPresented in
-                DonateTokenListView(isPresented: isPresented)
+        Cell(
+            left: { Image("heart_24").themeIcon() },
+            middle: { ThemeText("settings.donate.title".localized, style: .headline2) },
+            right: { Image.disclosureIcon },
+            action: {
+                Coordinator.shared.present { isPresented in
+                    DonateTokenListView(isPresented: isPresented)
+                }
+                stat(page: .settings, event: .open(page: .donate))
             }
-            stat(page: .settings, event: .open(page: .donate))
-        }) {
-            Image("heart_24").themeIcon()
-            Text("settings.donate.title".localized).themeBody()
-            Image.disclosureIcon
-        }
+        )
     }
 
     @ViewBuilder private func footer() -> some View {
@@ -492,19 +480,15 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func testSwitchersSection() -> some View {
         ListSection {
-            ListRow {
-                Toggle(isOn: $viewModel.forceEnableSwap) {
-                    Text("Force Enable Swap").themeBody()
-                }
-                .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-            }
+            Cell(
+                middle: { ThemeText("Force Enable Swap", style: .headline2) },
+                right: { ThemeToggle(isOn: $viewModel.forceEnableSwap) }
+            )
 
-            ListRow {
-                Toggle(isOn: $viewModel.emulateEvmSwapSend) {
-                    Text("Emulate EVM Swap Send").themeBody()
-                }
-                .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-            }
+            Cell(
+                middle: { ThemeText("Emulate EVM Swap Send", style: .headline2) },
+                right: { ThemeToggle(isOn: $viewModel.emulateEvmSwapSend) }
+            )
 
             row(
                 title: "Simulate Fail Swap",
@@ -526,30 +510,24 @@ struct MainSettingsView: View {
                 }
             )
 
-            ListRow {
-                Toggle(isOn: $viewModel.emulatePurchase) {
-                    Text("Emulate Purchase").themeBody()
-                }
-                .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-            }
+            Cell(
+                middle: { ThemeText("Emulate Purchase", style: .headline2) },
+                right: { ThemeToggle(isOn: $viewModel.emulatePurchase) }
+            )
 
-            ListRow {
-                Toggle(isOn: $viewModel.testNetEnabled) {
-                    Text("TestNet Enabled").themeBody()
-                }
-                .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-            }
+            Cell(
+                middle: { ThemeText("TestNet Enabled", style: .headline2) },
+                right: { ThemeToggle(isOn: $viewModel.testNetEnabled) }
+            )
 
-            ListRow {
-                Toggle(isOn: $viewModel.emulateZcashMigration) {
-                    Text("Emulate ZEC Migration").themeBody()
-                }
-                .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-            }
+            Cell(
+                middle: { ThemeText("Emulate ZEC Migration", style: .headline2) },
+                right: { ThemeToggle(isOn: $viewModel.emulateZcashMigration) }
+            )
 
             row(
                 title: "AML checking result".localized,
-                subtitle: "Oerride checking result from serer".localized,
+                subtitle: "Override checking result from server".localized,
                 value: viewModel.debuggingAmlResult?.rawValue ?? "clear",
                 action: {
                     Coordinator.shared.present(type: .alert) { isPresented in
@@ -570,6 +548,16 @@ struct MainSettingsView: View {
                     }
                 }
             )
+        }
+    }
+
+    @ViewBuilder private func disclosure(alert: Bool) -> some View {
+        HStack(spacing: .margin8) {
+            if alert {
+                ThemeImage("warning", size: .iconSize20, colorStyle: .red)
+            }
+
+            Image.disclosureIcon
         }
     }
 
