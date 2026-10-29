@@ -29,17 +29,7 @@ struct ContactBookAddressView: View {
                     ScrollView {
                         VStack(spacing: .margin24) {
                             ListSection {
-                                if viewModel.isEdit {
-                                    ListRow {
-                                        blockchainRowContent(showDropdown: false)
-                                    }
-                                } else {
-                                    ClickableRow(action: {
-                                        presentBlockchainSelect()
-                                    }) {
-                                        blockchainRowContent(showDropdown: true)
-                                    }
-                                }
+                                blockchainRow(editable: !viewModel.isEdit)
                             }
 
                             VStack(spacing: .margin12) {
@@ -59,12 +49,13 @@ struct ContactBookAddressView: View {
 
                             if viewModel.isEdit {
                                 ListSection {
-                                    ClickableRow(action: {
-                                        confirmDelete()
-                                    }) {
-                                        ThemeImage("trash", size: .iconSize24, colorStyle: .red)
-                                        Text("contacts.contact.address.delete_address".localized).themeBody(color: .themeLucian)
-                                    }
+                                    Cell(
+                                        left: { ThemeImage("trash", size: .iconSize24, colorStyle: .red) },
+                                        middle: { ThemeText("contacts.contact.address.delete_address".localized, style: .headline2, colorStyle: .red) },
+                                        action: {
+                                            confirmDelete()
+                                        }
+                                    )
                                 }
                             }
                         }
@@ -104,16 +95,20 @@ struct ContactBookAddressView: View {
         .interactiveDismissDisabled(viewModel.hasChanges)
     }
 
-    @ViewBuilder private func blockchainRowContent(showDropdown: Bool) -> some View {
-        Text("contacts.contact.address.blockchain".localized).textSubhead2()
+    @ViewBuilder private func blockchainRow(editable: Bool) -> some View {
+        Cell(
+            middle: { ThemeText("contacts.contact.address.blockchain".localized, style: .headline2) },
+            right: {
+                let value = ThemeText(viewModel.selectedBlockchain.name, style: .subheadSB, colorStyle: editable ? .primary : .secondary)
 
-        Spacer()
-
-        Text(viewModel.selectedBlockchain.name).textSubhead1(color: .themeLeah)
-
-        if showDropdown {
-            ThemeImage("arrow_s_down", size: .iconSize20)
-        }
+                if editable {
+                    value.arrow(style: .dropdown)
+                } else {
+                    value
+                }
+            },
+            action: editable ? { presentBlockchainSelect() } : nil
+        )
     }
 
     private var borderColor: Color {

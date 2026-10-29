@@ -28,85 +28,72 @@ struct PurchaseListView: View {
     }
 
     @ViewBuilder private func row(value: String, action: @escaping () -> Void) -> some View {
-        ClickableRow(action: action) {
-            HStack(spacing: .margin8) {
-                HStack {
-                    Text("subscription.plan".localized).textBody()
-                    Spacer()
-                    Text(value).textSubhead1(color: .themeJacob)
-                }
-
-                Image.disclosureIcon
-            }
-        }
+        Cell(
+            middle: { ThemeText("subscription.plan".localized, style: .headline2) },
+            right: {
+                ThemeText(value, style: .subheadSB, colorStyle: .yellow)
+                    .arrow(style: .disclosure)
+            },
+            action: action
+        )
     }
 
     @ViewBuilder private func noPurchaseView() -> some View {
         ListSection {
-            ClickableRow {
-                Coordinator.shared.presentPurchase(page: .purchaseList, trigger: .getPremium)
-            } content: {
-                HStack(spacing: .margin8) {
-                    Text("subscription.get".localized).textBody()
-                    Spacer()
-                    Image.disclosureIcon
+            Cell(
+                middle: { ThemeText("subscription.get".localized, style: .headline2) },
+                right: { Image.disclosureIcon },
+                action: {
+                    Coordinator.shared.presentPurchase(page: .purchaseList, trigger: .getPremium)
                 }
-            }
+            )
 
-            ClickableRow {
-                viewModel.restorePurchases()
-            } content: {
-                Text("subscription.restore".localized).themeBody(color: .themeJacob)
-            }
+            Cell(
+                middle: { ThemeText("subscription.restore".localized, style: .headline2, colorStyle: .yellow) },
+                action: {
+                    viewModel.restorePurchases()
+                }
+            )
         }
     }
 
     @ViewBuilder private func status(purchase: PurchaseManager.PurchaseData) -> some View {
         ListSection {
             ForEach(viewModel.viewItems(purchase: purchase)) { viewItem in
-                ListRow {
-                    HStack(spacing: .margin8) {
-                        Text(viewItem.title).textSubhead2()
-                        Spacer()
-                        Text(viewItem.value).textSubhead1(color: .themeLeah)
-                    }
-                }
+                Cell(
+                    middle: { ThemeText(viewItem.title, style: .subhead) },
+                    right: { ThemeText(viewItem.value, style: .subheadSB) }
+                )
             }
         }
     }
 
     @ViewBuilder private func manageSubscriptionView() -> some View {
         ListSection {
-            ClickableRow {
-                viewModel.onManageSubscriptions()
-            } content: {
-                HStack(spacing: .margin8) {
-                    Text("subscription.manage".localized).textBody()
-                    Spacer()
-                    Image.disclosureIcon
+            Cell(
+                middle: { ThemeText("subscription.manage".localized, style: .headline2) },
+                right: { Image.disclosureIcon },
+                action: {
+                    viewModel.onManageSubscriptions()
                 }
-            }
+            )
         }
     }
 
     @ViewBuilder private func debugActionsSubscriptionView() -> some View {
         ListSection {
-            ClickableRow {
-                viewModel.debugCancelSubscription()
-            } content: {
-                HStack(spacing: .margin8) {
-                    Text("Cancel Subscription").textBody()
-                    Spacer()
+            Cell(
+                middle: { ThemeText("Cancel Subscription", style: .headline2) },
+                action: {
+                    viewModel.debugCancelSubscription()
                 }
-            }
-            ClickableRow {
-                viewModel.debugClearSubsctiption()
-            } content: {
-                HStack(spacing: .margin8) {
-                    Text("Clear Subscriptions".localized).textBody()
-                    Spacer()
+            )
+            Cell(
+                middle: { ThemeText("Clear Subscriptions".localized, style: .headline2) },
+                action: {
+                    viewModel.debugClearSubsctiption()
                 }
-            }
+            )
         }
     }
 }

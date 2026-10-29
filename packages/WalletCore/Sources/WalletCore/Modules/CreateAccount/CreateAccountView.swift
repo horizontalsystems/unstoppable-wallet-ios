@@ -49,12 +49,10 @@ struct CreateAccountView: View {
                         switch viewModel.walletType {
                         case .regular:
                             ListSection {
-                                ListRow {
-                                    Toggle(isOn: $viewModel.advanced) {
-                                        Text("create_wallet.advanced_options".localized).themeBody()
-                                    }
-                                    .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-                                }
+                                Cell(
+                                    middle: { ThemeText("create_wallet.advanced_options".localized, style: .headline2) },
+                                    right: { ThemeToggle(isOn: $viewModel.advanced) }
+                                )
                             }
 
                             if viewModel.advanced {

@@ -27,34 +27,38 @@ struct UsedAddressesView: View {
                 ListSection {
                     if let key = HDReceiveAddressViewModel.AddressChain(rawValue: currentTabIndex), let addresses = usedAddresses[key] {
                         ForEach(addresses, id: \.self) { address in
-                            ListRow {
-                                HStack(spacing: .margin16) {
-                                    Text("\(address.index)")
-                                        .textSubhead2()
+                            Cell(
+                                left: {
+                                    ThemeText("\(address.index)", style: .subhead)
                                         .frame(width: width(index: addresses.last?.index ?? 0 + 1), alignment: .leading)
+                                },
+                                middle: {
                                     VStack(alignment: .leading, spacing: .margin4) {
-                                        Text(address.address).textSubhead2(color: .themeLeah)
+                                        ThemeText(address.address, style: .subhead, colorStyle: .primary)
 
                                         if let transactionsCount = address.transactionsCount {
-                                            Text("deposit.subaddresses.transactions_count".localized("\(transactionsCount)")).textCaptionSB(color: .themeGray)
+                                            ThemeText("deposit.subaddresses.transactions_count".localized("\(transactionsCount)"), style: .captionSB)
                                         }
                                     }
-                                    Spacer()
-                                    if let explorerUrl = address.explorerUrl {
-                                        Button(action: {
-                                            Coordinator.shared.present(url: explorerUrl)
-                                        }) {
-                                            Image("globe_20").renderingMode(.template)
+                                },
+                                right: {
+                                    HStack(spacing: .margin8) {
+                                        if let explorerUrl = address.explorerUrl {
+                                            Button(action: {
+                                                Coordinator.shared.present(url: explorerUrl)
+                                            }) {
+                                                Image("globe").buttonIcon(size: .iconSize20)
+                                            }
+                                            .buttonStyle(SecondaryCircleButtonStyle(style: .default))
+                                        }
+
+                                        Button(action: { CopyHelper.copyAndNotify(value: address.address) }) {
+                                            Image("copy").buttonIcon(size: .iconSize20)
                                         }
                                         .buttonStyle(SecondaryCircleButtonStyle(style: .default))
                                     }
-
-                                    Button(action: { CopyHelper.copyAndNotify(value: address.address) }) {
-                                        Image("copy_20").renderingMode(.template)
-                                    }
-                                    .buttonStyle(SecondaryCircleButtonStyle(style: .default))
                                 }
-                            }
+                            )
                         }
                     }
                 }
@@ -80,6 +84,6 @@ struct UsedAddressesView: View {
     private func width(index: Int) -> CGFloat {
         let count = index.description.count
         let maxValue = String(repeating: "9", count: count)
-        return maxValue.size(containerWidth: .greatestFiniteMagnitude, font: .subhead2).width
+        return maxValue.size(containerWidth: .greatestFiniteMagnitude, font: .subhead1).width
     }
 }

@@ -54,20 +54,17 @@ struct DuressModeSelectView: View {
         @Binding var selectedAccountIds: Set<String>
 
         var body: some View {
-            ClickableRow(action: {
-                if selectedAccountIds.contains(account.id) {
-                    selectedAccountIds.remove(account.id)
-                } else {
-                    selectedAccountIds.insert(account.id)
+            Cell(
+                middle: { MultiText(title: account.name, subtitle: account.type.detailedDescription) },
+                right: { CheckBoxUiView(checked: .init(get: { selectedAccountIds.contains(account.id) }, set: { _ in })) },
+                action: {
+                    if selectedAccountIds.contains(account.id) {
+                        selectedAccountIds.remove(account.id)
+                    } else {
+                        selectedAccountIds.insert(account.id)
+                    }
                 }
-            }) {
-                VStack(spacing: 1) {
-                    Text(account.name).themeBody()
-                    Text(account.type.detailedDescription).themeSubhead2()
-                }
-
-                CheckBoxUiView(checked: .init(get: { selectedAccountIds.contains(account.id) }, set: { _ in }))
-            }
+            )
         }
     }
 }

@@ -23,17 +23,14 @@ struct MultiSwapApproveView: View {
                 ScrollView {
                     VStack(spacing: .margin12) {
                         ListSection {
-                            ClickableRow(action: {
+                            let appValue = AppValue(token: viewModel.token, value: viewModel.amount)
+                            let amountString = appValue.formattedFull() ?? ""
+
+                            row(text: amountString, selected: !viewModel.unlimitedAmount) {
                                 viewModel.set(unlimitedAmount: false)
-                            }) {
-                                let appValue = AppValue(token: viewModel.token, value: viewModel.amount)
-                                let amountString = appValue.formattedFull() ?? ""
-                                row(text: amountString, selected: !viewModel.unlimitedAmount)
                             }
-                            ClickableRow(action: {
+                            row(text: "swap.unlock.unlimited".localized, selected: viewModel.unlimitedAmount) {
                                 viewModel.set(unlimitedAmount: true)
-                            }) {
-                                row(text: "swap.unlock.unlimited".localized, selected: viewModel.unlimitedAmount)
                             }
                         }
 
@@ -74,11 +71,11 @@ struct MultiSwapApproveView: View {
         }
     }
 
-    @ViewBuilder func row(text: String, selected: Bool) -> some View {
-        HStack(spacing: .margin16) {
-            CheckBoxUiView(checked: .init(get: { selected }, set: { _ in }))
-
-            Text(text).themeSubhead2(color: .themeLeah)
-        }
+    @ViewBuilder private func row(text: String, selected: Bool, action: @escaping () -> Void) -> some View {
+        Cell(
+            left: { CheckBoxUiView(checked: .init(get: { selected }, set: { _ in })) },
+            middle: { ThemeText(text, style: .subhead, colorStyle: .primary) },
+            action: action
+        )
     }
 }

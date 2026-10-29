@@ -16,7 +16,7 @@ struct RestoreBackupListView: View {
             if viewModel.viewItems.isEmpty {
                 ThemeView(style: .list) {
                     PlaceholderViewNew(
-                        icon: "no_internet_48", subtitle: "restore.cloud.empty".localized
+                        icon: "cloud_off", subtitle: "restore.cloud.empty".localized
                     )
                 }
             } else {

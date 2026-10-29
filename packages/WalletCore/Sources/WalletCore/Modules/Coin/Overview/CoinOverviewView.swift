@@ -100,30 +100,31 @@ struct CoinOverviewView: View {
 
     @ViewBuilder private func indicators() -> some View {
         ListSection {
-            ListRow(spacing: .margin8) {
-                Text("coin_overview.indicators".localized).textSubhead2()
+            Cell(
+                middle: { ThemeText("coin_overview.indicators".localized, style: .subhead) },
+                right: {
+                    HStack(spacing: .margin8) {
+                        Button(action: {
+                            chartViewModel.onToggleIndicators()
+                        }) {
+                            Text(chartViewModel.indicatorsShown ? "coin_overview.indicators.hide".localized : "coin_overview.indicators.show".localized)
+                                .animation(.none)
+                        }
+                        .buttonStyle(SecondaryButtonStyle(style: .default))
 
-                Spacer()
+                        Button(action: {
+                            Coordinator.shared.present { isPresented in
+                                ChartIndicatorsView(repository: chartViewModel.service.indicatorRepository, isPresented: isPresented)
+                            }
 
-                Button(action: {
-                    chartViewModel.onToggleIndicators()
-                }) {
-                    Text(chartViewModel.indicatorsShown ? "coin_overview.indicators.hide".localized : "coin_overview.indicators.show".localized)
-                        .animation(.none)
-                }
-                .buttonStyle(SecondaryButtonStyle(style: .default))
-
-                Button(action: {
-                    Coordinator.shared.present { isPresented in
-                        ChartIndicatorsView(repository: chartViewModel.service.indicatorRepository, isPresented: isPresented)
+                            stat(page: .coinOverview, event: .open(page: .indicators))
+                        }) {
+                            Image("gear").buttonIcon(size: .iconSize20)
+                        }
+                        .buttonStyle(SecondaryCircleButtonStyle(style: .default))
                     }
-
-                    stat(page: .coinOverview, event: .open(page: .indicators))
-                }) {
-                    Image("setting_20").renderingMode(.template)
                 }
-                .buttonStyle(SecondaryCircleButtonStyle(style: .default))
-            }
+            )
         }
     }
 
@@ -158,17 +159,18 @@ struct CoinOverviewView: View {
     }
 
     @ViewBuilder private func marketInfoRow(title: String, badge: String? = nil, value: String) -> some View {
-        ListRow(spacing: .margin8) {
-            Text(title).textSubhead2()
+        Cell(
+            middle: {
+                HStack(spacing: .margin8) {
+                    ThemeText(title, style: .subhead)
 
-            if let badge {
-                BadgeViewNew(badge)
-            }
-
-            Spacer()
-
-            Text(value).textSubhead1(color: .themeLeah)
-        }
+                    if let badge {
+                        BadgeViewNew(badge)
+                    }
+                }
+            },
+            right: { ThemeText(value, style: .subheadSB) }
+        )
     }
 
     @ViewBuilder private func performance(rows: [PerformanceRow]) -> some View {
@@ -219,19 +221,16 @@ struct CoinOverviewView: View {
 
                 HorizontalDivider()
 
-                ClickableRow(action: {
-                    Coordinator.shared.present { isPresented in
-                        PerformanceDataSelectView(isPresented: isPresented).ignoresSafeArea()
+                Cell(
+                    middle: { ThemeText("coin_overview.performance.select_coins.title".localized, style: .subhead, colorStyle: .primary) },
+                    right: { Image.disclosureIcon },
+                    action: {
+                        Coordinator.shared.present { isPresented in
+                            PerformanceDataSelectView(isPresented: isPresented).ignoresSafeArea()
+                        }
+                        stat(page: .coinOverview, event: .open(page: .performance))
                     }
-                    stat(page: .coinOverview, event: .open(page: .performance))
-                }) {
-                    HStack(spacing: .margin8) {
-                        Text("coin_overview.performance.select_coins.title".localized).textSubhead2(color: .themeLeah)
-                        Spacer()
-
-                        Image.disclosureIcon
-                    }
-                }
+                )
             }
         }
     }
@@ -245,72 +244,73 @@ struct CoinOverviewView: View {
         ListSection {
             ForEach(trimmedTokens, id: \.self) { token in
                 if let reference = reference(token: token) {
-                    ClickableRow {
+                    tokenRow(token: token, walletTokens: walletTokens) {
                         CopyHelper.copyAndNotify(value: reference)
                         stat(page: .coinOverview, event: .copy(entity: .contractAddress))
-                    } content: {
-                        tokenRowContent(token: token, walletTokens: walletTokens)
                     }
                 } else {
-                    ListRow {
-                        tokenRowContent(token: token, walletTokens: walletTokens)
-                    }
+                    tokenRow(token: token, walletTokens: walletTokens, action: nil)
                 }
             }
 
             if shouldTrim {
-                ClickableRow {
-                    withAnimation {
-                        tokensExpanded.toggle()
+                Cell(
+                    middle: {
+                        ThemeText(tokensExpanded ? "coin_overview.show_less".localized : "coin_overview.show_more".localized, style: .headline2)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    },
+                    action: {
+                        withAnimation {
+                            tokensExpanded.toggle()
+                        }
                     }
-                } content: {
-                    Text(tokensExpanded ? "coin_overview.show_less".localized : "coin_overview.show_more".localized).themeBody(alignment: .center)
-                }
+                )
             }
         }
     }
 
-    @ViewBuilder private func tokenRowContent(token: Token, walletTokens: [Token]) -> some View {
-        KFImage.url(URL(string: token.blockchainType.imageUrl))
-            .resizable()
-            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
-            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
-            .frame(width: .iconSize32, height: .iconSize32)
+    @ViewBuilder private func tokenRow(token: Token, walletTokens: [Token], action: (() -> Void)?) -> some View {
+        Cell(
+            left: {
+                KFImage.url(URL(string: token.blockchainType.imageUrl))
+                    .resizable()
+                    .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
+                    .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
+                    .frame(width: .iconSize32, height: .iconSize32)
+            },
+            middle: { MultiText(title: title(token: token), subtitle: subtitle(token: token)) },
+            right: {
+                HStack(spacing: .margin8) {
+                    if let account = viewModel.walletData.account, !account.watchAccount, account.type.supports(token: token) {
+                        if walletTokens.contains(token) {
+                            Button {
+                                viewModel.removeFromWallet(token: token)
+                            } label: {
+                                Image("wallet").buttonIcon(size: .iconSize20)
+                            }
+                            .buttonStyle(SecondaryCircleButtonStyle(isActive: true))
+                        } else {
+                            Button {
+                                viewModel.addToWallet(token: token)
+                            } label: {
+                                Image("wallet_add").buttonIcon(size: .iconSize20)
+                            }
+                            .buttonStyle(SecondaryCircleButtonStyle())
+                        }
+                    }
 
-        VStack(spacing: 1) {
-            Text(title(token: token)).themeBody()
-
-            if let subtitle = subtitle(token: token) {
-                Text(subtitle).themeSubhead2()
-            }
-        }
-
-        if let account = viewModel.walletData.account, !account.watchAccount, account.type.supports(token: token) {
-            if walletTokens.contains(token) {
-                Button {
-                    viewModel.removeFromWallet(token: token)
-                } label: {
-                    Image("wallet_20").renderingMode(.template)
+                    if let explorerUrl = explorerUrl(token: token) {
+                        Button {
+                            open(url: explorerUrl, statPage: .externalBlockExplorer)
+                        } label: {
+                            Image("globe").buttonIcon(size: .iconSize20)
+                        }
+                        .buttonStyle(SecondaryCircleButtonStyle())
+                    }
                 }
-                .buttonStyle(SecondaryCircleButtonStyle(isActive: true))
-            } else {
-                Button {
-                    viewModel.addToWallet(token: token)
-                } label: {
-                    Image("add_to_wallet_2_20").renderingMode(.template)
-                }
-                .buttonStyle(SecondaryCircleButtonStyle())
-            }
-        }
-
-        if let explorerUrl = explorerUrl(token: token) {
-            Button {
-                open(url: explorerUrl, statPage: .externalBlockExplorer)
-            } label: {
-                Image("globe_20").renderingMode(.template)
-            }
-            .buttonStyle(SecondaryCircleButtonStyle())
-        }
+            },
+            action: action
+        )
     }
 
     @ViewBuilder private func description(attributedString: NSAttributedString) -> some View {
@@ -327,70 +327,62 @@ struct CoinOverviewView: View {
     @ViewBuilder private func links(guideUrl: URL?, links: [LinkType: String]) -> some View {
         ListSection {
             if let guideUrl {
-                NavigationRow {
+                NavigationLink(destination: {
                     MarkdownView(url: guideUrl)
                         .onFirstAppear {
                             stat(page: .coinOverview, event: .open(page: .guide))
                         }
-                } content: {
-                    linkRowContent(image: Image("academy_1_24"), title: "coin_overview.guide".localized)
+                }) {
+                    linkCell(icon: "book", title: "coin_overview.guide".localized)
                 }
+                .buttonStyle(CellButtonStyle())
             }
 
             if let url = links[.website], !url.isEmpty {
-                ClickableRow {
+                linkCell(icon: "globe", title: websiteTitle(url: url)) {
                     open(url: url, statPage: .externalWebsite)
-                } content: {
-                    linkRowContent(image: Image("globe_24"), title: websiteTitle(url: url))
                 }
             }
 
             if let url = links[.whitepaper], !url.isEmpty {
-                ClickableRow {
+                linkCell(icon: "paper_contract", title: "coin_overview.whitepaper".localized) {
                     open(url: url, statPage: .externalCoinWhitePaper)
-                } content: {
-                    linkRowContent(image: Image("clipboard_24"), title: "coin_overview.whitepaper".localized)
                 }
             }
 
             if let url = links[.reddit], !url.isEmpty {
-                ClickableRow {
+                linkCell(icon: "reddit", title: "Reddit") {
                     open(url: url, statPage: .externalReddit)
-                } content: {
-                    linkRowContent(image: Image("reddit_24"), title: "Reddit")
                 }
             }
 
             if let url = links[.twitter], !url.isEmpty {
-                ClickableRow {
+                linkCell(icon: "x_logo", title: url.stripping(prefix: "https://twitter.com/")) {
                     open(url: url.hasPrefix("https://") ? url : "https://twitter.com/\(url)", statPage: .externalTwitter)
-                } content: {
-                    linkRowContent(image: Image("twitter_24"), title: url.stripping(prefix: "https://twitter.com/"))
                 }
             }
 
             if let url = links[.telegram], !url.isEmpty {
-                ClickableRow {
+                linkCell(icon: "telegram_logo", title: "Telegram") {
                     open(url: url.hasPrefix("https://") ? url : "https://t.me/\(url)", statPage: .externalTelegram)
-                } content: {
-                    linkRowContent(image: Image("telegram_24"), title: "Telegram")
                 }
             }
 
             if let url = links[.github], !url.isEmpty {
-                ClickableRow {
+                linkCell(icon: "github", title: "Github") {
                     open(url: url, statPage: .externalGithub)
-                } content: {
-                    linkRowContent(image: Image("github_24"), title: "Github")
                 }
             }
         }
     }
 
-    @ViewBuilder private func linkRowContent(image: Image, title: String) -> some View {
-        image.themeIcon()
-        Text(title).themeBody()
-        Image.disclosureIcon
+    @ViewBuilder private func linkCell(icon: String, title: String, action: (() -> Void)? = nil) -> some View {
+        Cell(
+            left: { ThemeImage(icon, size: .iconSize24) },
+            middle: { ThemeText(title, style: .headline2) },
+            right: { Image.disclosureIcon },
+            action: action
+        )
     }
 
     @ViewBuilder private func header(text: String) -> some View {

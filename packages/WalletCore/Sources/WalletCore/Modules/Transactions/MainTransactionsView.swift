@@ -6,7 +6,7 @@ struct MainTransactionsView: View {
 
     var body: some View {
         ThemeNavigationStack {
-            ThemeView {
+            ThemeView(style: .list) {
                 VStack(spacing: 0) {
                     ScrollableTabHeaderView(
                         tabs: TransactionTypeFilter.allCases.map(\.title),

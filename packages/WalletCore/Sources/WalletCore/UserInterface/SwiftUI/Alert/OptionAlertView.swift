@@ -50,35 +50,28 @@ public struct OptionAlertView: View {
                 .padding(.vertical, .margin12)
 
             ForEach(Array(viewItems.enumerated()), id: \.offset) { index, viewItem in
-                ListRow {
-                    Button(action: {
+                Cell(
+                    middle: {
+                        VStack(spacing: 1) {
+                            ThemeText(viewItem.text, style: .body, colorStyle: viewItem.selected ? .yellow : .primary, dimmed: viewItem.disabled)
+
+                            if let description = viewItem.description {
+                                ThemeText(description, style: .subhead, dimmed: viewItem.disabled)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                    },
+                    action: {
                         animate(isShown: false) {
                             onSelect(index)
                         }
-                    }, label: {
-                        view(viewItem: viewItem)
-                            .frame(maxWidth: .infinity)
-                    })
-                    .disabled(viewItem.disabled)
-                }
+                    }
+                )
+                .disabled(viewItem.disabled)
             }
         }
         .background(Color.themeLawrence)
         .cornerRadius(.cornerRadius16)
-    }
-
-    private func view(viewItem: AlertViewItem) -> some View {
-        HStack {
-            VStack(spacing: 1) {
-                Text(viewItem.text)
-                    .textBody(color: viewItem.selected ? .themeJacob : .themeLeah)
-
-                if let description = viewItem.description {
-                    Text(description)
-                        .textSubhead1()
-                }
-            }
-        }
     }
 
     private var dimView: some View {

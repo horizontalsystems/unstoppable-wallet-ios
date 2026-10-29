@@ -25,7 +25,7 @@ struct HDReceiveAddressView: View {
                let usedAddresses = usedAddressesData,
                !usedAddresses.isEmpty
             {
-                NavigationRow(destination: {
+                NavigationLink(destination: {
                     UsedAddressesView(
                         coinName: viewModel.coinName,
                         title: "deposit.used_addresses.title".localized,
@@ -35,9 +35,12 @@ struct HDReceiveAddressView: View {
                         onDismiss: onDismiss ?? { presentationMode.wrappedValue.dismiss() }
                     )
                 }) {
-                    Text("deposit.used_addresses.title".localized).themeSubhead2()
-                    Image.disclosureIcon
+                    Cell(
+                        middle: { ThemeText("deposit.used_addresses.title".localized, style: .subhead) },
+                        right: { Image.disclosureIcon }
+                    )
                 }
+                .buttonStyle(CellButtonStyle())
             }
         }, onDismiss: onDismiss)
     }

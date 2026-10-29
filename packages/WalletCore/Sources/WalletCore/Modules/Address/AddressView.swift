@@ -121,18 +121,18 @@ struct AddressView: View {
     }
 
     @ViewBuilder private func row(contact: AddressViewModel.Contact) -> some View {
-        ClickableRow {
-            viewModel.address = contact.address
-        } content: {
-            if let name = contact.name {
-                VStack(spacing: 1) {
-                    Text(name).themeBody()
-                    Text(contact.address.shortened).themeSubhead2()
+        Cell(
+            middle: {
+                if let name = contact.name {
+                    MultiText(title: name, subtitle: contact.address.shortened)
+                } else {
+                    ThemeText(contact.address, style: .headline2)
                 }
-            } else {
-                Text(contact.address).themeBody()
+            },
+            action: {
+                viewModel.address = contact.address
             }
-        }
+        )
     }
 
     private func buttonState() -> (String, Bool, Bool) {

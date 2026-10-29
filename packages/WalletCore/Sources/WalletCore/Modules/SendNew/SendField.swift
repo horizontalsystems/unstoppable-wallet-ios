@@ -166,30 +166,28 @@ public struct DoubleValueField: SendFieldContent {
 
     @ViewBuilder @MainActor public func listRow() -> some View {
         let infoDescription = description
-        ListRow(padding: EdgeInsets(top: .margin12, leading: infoDescription == nil ? .margin16 : 0, bottom: .margin12, trailing: .margin16)) {
-            if let infoDescription {
-                Text(title)
-                    .textSubhead2()
-                    .modifier(Informed(infoDescription: infoDescription))
-            } else {
-                Text(title)
-                    .textSubhead2()
-            }
-
-            Spacer()
-
-            VStack(alignment: .trailing, spacing: 1) {
-                Text(value1)
-                    .textSubhead1(color: .themeLeah)
-                    .multilineTextAlignment(.trailing)
-
-                if let value2 {
-                    Text(value2)
-                        .textSubhead1(color: .themeLeah)
+        Cell(
+            style: .secondary,
+            middle: {
+                if let infoDescription {
+                    MiddleTextIcon(text: title)
+                        .modifier(Informed(infoDescription: infoDescription, horizontalPadding: 0))
+                } else {
+                    MiddleTextIcon(text: title)
+                }
+            },
+            right: {
+                VStack(alignment: .trailing, spacing: 1) {
+                    ThemeText(value1, style: .subheadSB)
                         .multilineTextAlignment(.trailing)
+
+                    if let value2 {
+                        ThemeText(value2, style: .subheadSB)
+                            .multilineTextAlignment(.trailing)
+                    }
                 }
             }
-        }
+        )
     }
 }
 
@@ -227,13 +225,15 @@ public struct NoteField: SendFieldContent {
     }
 
     @ViewBuilder @MainActor public func listRow() -> some View {
-        ListRow {
-            if let iconName {
-                Image(iconName)
-            }
-            Text(title).textSubhead2()
-            Spacer()
-        }
+        Cell(
+            style: .secondary,
+            left: {
+                if let iconName {
+                    Image(iconName)
+                }
+            },
+            middle: { ThemeText(title, style: .subhead) }
+        )
     }
 }
 

@@ -152,7 +152,7 @@ struct MainSettingsView: View {
             Cell(
                 left: { ThemeImage("wallet", size: .iconSize24) },
                 middle: { ThemeText("settings.manage_accounts".localized, style: .headline2) },
-                right: { disclosure(alert: viewModel.manageWalletsAlert) }
+                right: { Image.disclosure(alert: viewModel.manageWalletsAlert) }
             )
         }
         .buttonStyle(CellButtonStyle())
@@ -184,7 +184,7 @@ struct MainSettingsView: View {
             Cell(
                 left: { ThemeImage("shield", size: .iconSize24) },
                 middle: { ThemeText("settings.security".localized, style: .headline2) },
-                right: { disclosure(alert: viewModel.securityAlert) }
+                right: { Image.disclosure(alert: viewModel.securityAlert) }
             )
         }
         .buttonStyle(CellButtonStyle())
@@ -215,7 +215,7 @@ struct MainSettingsView: View {
                     if viewModel.walletConnectPendingRequestCount > 0 {
                         BadgeViewNew("\(viewModel.walletConnectPendingRequestCount)", mode: .solidWith(colorStyle: .red), colorStyle: .bright)
                     } else if viewModel.walletConnectSessionCount > 0 {
-                        ThemeText("\(viewModel.walletConnectSessionCount)", style: .subheadSB, colorStyle: .secondary)
+                        ThemeText("\(viewModel.walletConnectSessionCount)", style: .subheadSB)
                     }
 
                     Image.disclosureIcon
@@ -276,7 +276,7 @@ struct MainSettingsView: View {
         Cell(
             left: { ThemeImage("user", size: .iconSize24) },
             middle: { ThemeText("contacts.title".localized, style: .headline2) },
-            right: { disclosure(alert: viewModel.iCloudUnavailable) },
+            right: { Image.disclosure(alert: viewModel.iCloudUnavailable) },
             action: {
                 Coordinator.shared.present { isPresented in
                     ContactBookView(mode: .edit, isPresented: isPresented)
@@ -354,7 +354,7 @@ struct MainSettingsView: View {
             Cell(
                 left: { ThemeImage("information", size: .iconSize24) },
                 middle: { ThemeText("settings.about_app.title".localized, style: .headline2) },
-                right: { disclosure(alert: viewModel.aboutAlert) }
+                right: { Image.disclosure(alert: viewModel.aboutAlert) }
             )
         }
         .buttonStyle(CellButtonStyle())
@@ -548,16 +548,6 @@ struct MainSettingsView: View {
                     }
                 }
             )
-        }
-    }
-
-    @ViewBuilder private func disclosure(alert: Bool) -> some View {
-        HStack(spacing: .margin8) {
-            if alert {
-                ThemeImage("warning", size: .iconSize20, colorStyle: .red)
-            }
-
-            Image.disclosureIcon
         }
     }
 

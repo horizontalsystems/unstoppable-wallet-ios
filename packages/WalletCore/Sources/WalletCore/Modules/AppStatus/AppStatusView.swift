@@ -56,18 +56,19 @@ struct AppStatusView: View {
                             ForEach(section.blocks, id: \.self) { fields in
                                 ListSection {
                                     ForEach(fields, id: \.self) { field in
-                                        ListRow {
-                                            switch field {
-                                            case let .info(title, value):
-                                                Text(title).themeSubhead2()
-                                                Text(value)
-                                                    .themeSubhead1(color: .themeLeah, alignment: .trailing)
-                                                    .multilineTextAlignment(.trailing)
-                                            case let .title(value):
-                                                Text(value).themeSubhead1(color: .themeLeah)
-                                            case let .raw(text):
-                                                Text(text).themeCaption()
-                                            }
+                                        switch field {
+                                        case let .info(title, value):
+                                            Cell(
+                                                middle: { ThemeText(title, style: .subhead) },
+                                                right: {
+                                                    ThemeText(value, style: .subheadSB)
+                                                        .multilineTextAlignment(.trailing)
+                                                }
+                                            )
+                                        case let .title(value):
+                                            Cell(middle: { ThemeText(value, style: .subhead, colorStyle: .primary) })
+                                        case let .raw(text):
+                                            Cell(middle: { ThemeText(text, style: .caption) })
                                         }
                                     }
                                 }

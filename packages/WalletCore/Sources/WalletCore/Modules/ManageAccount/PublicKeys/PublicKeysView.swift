@@ -47,11 +47,13 @@ struct PublicKeysView: View {
 
     private func option(title: String, description: String, @ViewBuilder destination: () -> some View) -> some View {
         ListSection(footer: description) {
-            NavigationRow(destination: destination) {
-                ThemeText(title, style: .body)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                ThemeImage("arrow_b_right", size: .iconSize20)
+            NavigationLink(destination: destination) {
+                Cell(
+                    middle: { ThemeText(title, style: .headline2) },
+                    right: { Image.disclosureIcon }
+                )
             }
+            .buttonStyle(CellButtonStyle())
         }
     }
 }

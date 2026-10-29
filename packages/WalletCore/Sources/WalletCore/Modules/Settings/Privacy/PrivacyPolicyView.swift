@@ -14,9 +14,7 @@ struct PrivacyPolicyView: View {
 
                 VStack(spacing: 0) {
                     ListSection {
-                        ListRow {
-                            statsRow()
-                        }
+                        statsRow()
                     }
                     ListSectionFooter(text: "settings.privacy.allow.description".localized)
                 }
@@ -48,12 +46,10 @@ struct PrivacyPolicyView: View {
     }
 
     @ViewBuilder private func statsRow() -> some View {
-        Toggle(isOn: Binding(get: { viewModel.statsEnabled }, set: { viewModel.set(allowed: $0) })) {
-            HStack(spacing: .margin16) {
-                Image("share_1_24").themeIcon(color: .themeGray)
-                Text("settings.privacy.allow".localized).themeBody()
-            }
-        }
-        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+        Cell(
+            left: { ThemeImage("share", size: .iconSize24) },
+            middle: { ThemeText("settings.privacy.allow".localized, style: .headline2) },
+            right: { ThemeToggle(isOn: Binding(get: { viewModel.statsEnabled }, set: { viewModel.set(allowed: $0) })) }
+        )
     }
 }

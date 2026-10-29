@@ -37,17 +37,16 @@ struct BackupManualView: View {
 
                     if let passphrase = viewModel.passphrase {
                         ListSection {
-                            ListRow {
-                                ThemeImage("key", size: 20, colorStyle: .secondary)
-                                ThemeText("backup.passphrase".localized, style: .subhead)
-
-                                Spacer()
-
-                                ThemeButton(text: viewModel.hidden ? BalanceHiddenManager.placeholder : passphrase, style: .secondary, size: .small) {
-                                    viewModel.copyPassphrase()
+                            Cell(
+                                left: { ThemeImage("key", size: .iconSize20) },
+                                middle: { ThemeText("backup.passphrase".localized, style: .subhead) },
+                                right: {
+                                    ThemeButton(text: viewModel.hidden ? BalanceHiddenManager.placeholder : passphrase, style: .secondary, size: .small) {
+                                        viewModel.copyPassphrase()
+                                    }
+                                    .accessibilityLabel(viewModel.hidden ? "backup.passphrase".localized : passphrase)
                                 }
-                                .accessibilityLabel(viewModel.hidden ? "backup.passphrase".localized : passphrase)
-                            }
+                            )
                         }
                         .padding(.top, .margin24)
                     }

@@ -71,20 +71,6 @@ struct ThemeListStyleModifier: ViewModifier {
     }
 }
 
-struct ThemeListStyleButtonModifier: ViewModifier {
-    let themeListStyle: ThemeListStyle
-    let isPressed: Bool
-
-    func body(content: Content) -> some View {
-        switch themeListStyle {
-        case .lawrence, .borderedLawrence, .borderedPremium: content.background(isPressed ? Color.themeLawrence.pressed : Color.themeLawrence)
-        case .bordered, .borderedPlain: content.background(isPressed ? Color.themeLawrence.pressed : Color.clear)
-        case .transparent, .transparentInline: content.background(isPressed ? Color.themeLawrence.pressed : Color.themeTyler)
-        case .blur, .steel10WithCorners: content
-        }
-    }
-}
-
 struct ThemeListStyleKey: EnvironmentKey {
     static let defaultValue = ThemeListStyle.lawrence
 }

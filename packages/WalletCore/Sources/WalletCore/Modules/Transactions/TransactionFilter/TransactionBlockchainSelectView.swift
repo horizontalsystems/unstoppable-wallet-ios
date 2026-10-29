@@ -13,31 +13,34 @@ struct TransactionBlockchainSelectView: View {
     var body: some View {
         ScrollableThemeView {
             ListSection {
-                ClickableRow(action: {
-                    viewModel.set(currentBlockchain: nil)
-                    isPresented = false
-                }) {
-                    Image("blocks_24").themeIcon()
-                    Text("transaction_filter.all_blockchains").themeBody()
-
-                    if viewModel.currentBlockchain == nil {
-                        Image.checkIcon
-                    }
-                }
-
-                ForEach(viewModel.blockchains, id: \.uid) { blockchain in
-                    ClickableRow(action: {
-                        viewModel.set(currentBlockchain: blockchain)
-                        isPresented = false
-                    }) {
-                        BlockchainIcon(blockchain: blockchain)
-
-                        Text(blockchain.name).themeBody()
-
-                        if viewModel.currentBlockchain == blockchain {
+                Cell(
+                    left: { ThemeImage("blocks", size: .iconSize24) },
+                    middle: { ThemeText("transaction_filter.all_blockchains".localized, style: .headline2) },
+                    right: {
+                        if viewModel.currentBlockchain == nil {
                             Image.checkIcon
                         }
+                    },
+                    action: {
+                        viewModel.set(currentBlockchain: nil)
+                        isPresented = false
                     }
+                )
+
+                ForEach(viewModel.blockchains, id: \.uid) { blockchain in
+                    Cell(
+                        left: { BlockchainIcon(blockchain: blockchain) },
+                        middle: { ThemeText(blockchain.name, style: .headline2) },
+                        right: {
+                            if viewModel.currentBlockchain == blockchain {
+                                Image.checkIcon
+                            }
+                        },
+                        action: {
+                            viewModel.set(currentBlockchain: blockchain)
+                            isPresented = false
+                        }
+                    )
                 }
             }
             .themeListStyle(.transparent)

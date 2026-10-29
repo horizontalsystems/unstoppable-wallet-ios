@@ -56,15 +56,18 @@ struct TermsView: View {
                 ListSection {
                     ForEach(viewModel.terms) { term in
                         if readOnly {
-                            ListRow {
-                                rowContent(term: term, checked: true)
-                            }
+                            Cell(
+                                left: { Image.checkbox(active: true) },
+                                middle: { rowTitle(term: term) }
+                            )
                         } else {
-                            ClickableRow(action: {
-                                toggleTerm(term)
-                            }) {
-                                rowContent(term: term, checked: checkedIds.contains(term.id))
-                            }
+                            Cell(
+                                left: { Image.checkbox(active: checkedIds.contains(term.id)) },
+                                middle: { rowTitle(term: term) },
+                                action: {
+                                    toggleTerm(term)
+                                }
+                            )
                         }
                     }
                 }
@@ -73,10 +76,8 @@ struct TermsView: View {
         }
     }
 
-    @ViewBuilder private func rowContent(term: TermsManager.Term, checked: Bool) -> some View {
-        Image.checkbox(active: checked)
-        Text(term.localizedKey.localized)
-            .themeSubhead2(color: .themeLeah)
+    @ViewBuilder private func rowTitle(term: TermsManager.Term) -> some View {
+        ThemeText(term.localizedKey.localized, style: .subhead, colorStyle: .primary)
     }
 
     private func toggleTerm(_ term: TermsManager.Term) {

@@ -103,18 +103,22 @@ struct ReceiveAddressBodyView<Content: View>: View {
     }
 
     @ViewBuilder func view(amount: String) -> some View {
-        ListRow {
-            Text("deposit.amount".localized).textSubhead2()
-            Spacer()
-            Text(amount).textSubhead1(color: .themeLeah)
-            Button(action: {
-                viewModel.set(amount: "")
-                stat(page: .receive, event: .removeAmount)
-            }, label: {
-                Image("trash_20").renderingMode(.template)
-            })
-            .buttonStyle(SecondaryCircleButtonStyle(style: .default))
-        }
+        Cell(
+            middle: { ThemeText("deposit.amount".localized, style: .subhead) },
+            right: {
+                HStack(spacing: .margin8) {
+                    ThemeText(amount, style: .subheadSB)
+
+                    Button(action: {
+                        viewModel.set(amount: "")
+                        stat(page: .receive, event: .removeAmount)
+                    }, label: {
+                        Image("trash").buttonIcon(size: .iconSize20)
+                    })
+                    .buttonStyle(SecondaryCircleButtonStyle(style: .default))
+                }
+            }
+        )
     }
 
     @ViewBuilder private func actionView(type: ReceiveAddressModule.ActionType) -> some View {

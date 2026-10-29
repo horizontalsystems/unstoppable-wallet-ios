@@ -15,30 +15,31 @@ struct WCSessionsView: View {
                             ForEach(viewModel.items) { item in
                                 ListSection {
                                     // an approved session is never opened as a screen (parity with Android): the row only lists it
-                                    ListRow {
-                                        KFImage.url(item.iconUrl)
-                                            .resizable()
-                                            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
-                                            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
-                                            .frame(width: .iconSize32, height: .iconSize32)
-
-                                        VStack(spacing: 1) {
-                                            Text(item.session.dAppName).themeBody()
-                                            Text(item.host).themeSubhead2()
+                                    Cell(
+                                        left: {
+                                            KFImage.url(item.iconUrl)
+                                                .resizable()
+                                                .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
+                                                .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
+                                                .frame(width: .iconSize32, height: .iconSize32)
+                                        },
+                                        middle: { MultiText(title: item.session.dAppName, subtitle: item.host) },
+                                        right: {
+                                            Button(action: { disconnect(item: item) }) {
+                                                ThemeImage("trash", size: .iconSize20)
+                                            }
                                         }
-
-                                        Button(action: { disconnect(item: item) }) {
-                                            Image("trash_20").themeIcon()
-                                        }
-                                    }
+                                    )
 
                                     ForEach(item.requests) { request in
-                                        ClickableRow(action: { viewModel.open(request: request) }) {
-                                            Text("wallet_connect.list.requests".localized).textSubhead2()
-                                            Spacer()
-                                            Text(request.label).textSubhead1(color: .themeLeah)
-                                            Image.disclosureIcon
-                                        }
+                                        Cell(
+                                            middle: { ThemeText("wallet_connect.list.requests".localized, style: .subhead) },
+                                            right: {
+                                                ThemeText(request.label, style: .subheadSB)
+                                                    .arrow(style: .disclosure)
+                                            },
+                                            action: { viewModel.open(request: request) }
+                                        )
                                     }
                                 }
                             }

@@ -33,20 +33,14 @@ struct ContactBookContactView: View {
                     if !viewModel.addressItems.isEmpty {
                         ListSection {
                             ForEach(viewModel.addressItems) { item in
-                                ClickableRow(action: {
-                                    openAddress(item: item)
-                                }) {
-                                    BlockchainIcon(blockchain: item.blockchain)
-
-                                    VStack(alignment: .leading, spacing: 1) {
-                                        Text(item.blockchain.name).themeSubhead1(color: .themeLeah)
-                                        Text(item.address).themeSubhead2()
+                                Cell(
+                                    left: { BlockchainIcon(blockchain: item.blockchain) },
+                                    middle: { MultiText(title: item.blockchain.name, subtitle: item.address) },
+                                    right: { ThemeImage("pen", size: .iconSize20, colorStyle: item.edited ? .yellow : .secondary) },
+                                    action: {
+                                        openAddress(item: item)
                                     }
-
-                                    Spacer()
-
-                                    ThemeImage("pen", size: .iconSize20, colorStyle: item.edited ? .yellow : .secondary)
-                                }
+                                )
                             }
                         }
                     }
@@ -54,21 +48,23 @@ struct ContactBookContactView: View {
                     if !viewModel.allBlockchainsUsed || viewModel.isExisting {
                         ListSection {
                             if !viewModel.allBlockchainsUsed {
-                                ClickableRow(action: {
-                                    openAddress(item: nil)
-                                }) {
-                                    ThemeImage("plus", size: .iconSize24, colorStyle: .yellow)
-                                    Text("contacts.contact.add_address".localized).themeBody(color: .themeJacob)
-                                }
+                                Cell(
+                                    left: { ThemeImage("plus", size: .iconSize24, colorStyle: .yellow) },
+                                    middle: { ThemeText("contacts.contact.add_address".localized, style: .headline2, colorStyle: .yellow) },
+                                    action: {
+                                        openAddress(item: nil)
+                                    }
+                                )
                             }
 
                             if viewModel.isExisting {
-                                ClickableRow(action: {
-                                    confirmDelete()
-                                }) {
-                                    ThemeImage("trash", size: .iconSize24, colorStyle: .red)
-                                    Text("contacts.contact.delete".localized).themeBody(color: .themeLucian)
-                                }
+                                Cell(
+                                    left: { ThemeImage("trash", size: .iconSize24, colorStyle: .red) },
+                                    middle: { ThemeText("contacts.contact.delete".localized, style: .headline2, colorStyle: .red) },
+                                    action: {
+                                        confirmDelete()
+                                    }
+                                )
                             }
                         }
                     }

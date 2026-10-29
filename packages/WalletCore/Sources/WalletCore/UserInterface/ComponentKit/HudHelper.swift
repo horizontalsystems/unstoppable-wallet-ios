@@ -67,7 +67,7 @@ extension HudHelper {
             case .imported: image = UIImage(named: "add_to_wallet_2_24")
             case .walletAdded: image = UIImage(named: "binocule_24")
             case .deleted: image = UIImage(named: "trash_24")
-            case .noInternet: image = UIImage(named: "no_internet_24")
+            case .noInternet: image = UIImage(named: "cloud_off")
             case .waitingForSession: image = UIImage(named: "disconnecting_2_24")
             case .disconnectingWalletConnect, .disconnectedWalletConnect: image = UIImage(named: "disconnecting_2_24")
             case .connectedWalletConnect: image = UIImage(named: "circle_check_24")

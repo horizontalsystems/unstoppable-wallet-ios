@@ -16,35 +16,38 @@ struct ContactBookSettingsView: View {
             ScrollableThemeView {
                 VStack(spacing: .margin24) {
                     ListSection {
-                        ClickableRow(action: {
-                            restorePickerPresented = true
-                        }) {
-                            ThemeImage("arrow_in", size: .iconSize24, colorStyle: .yellow)
-                            Text("contacts.settings.restore_contacts".localized).themeBody(color: .themeJacob)
-                        }
+                        Cell(
+                            left: { ThemeImage("arrow_in", size: .iconSize24, colorStyle: .yellow) },
+                            middle: { ThemeText("contacts.settings.restore_contacts".localized, style: .headline2, colorStyle: .yellow) },
+                            action: {
+                                restorePickerPresented = true
+                            }
+                        )
 
                         if viewModel.hasContacts {
-                            ClickableRow(action: {
-                                backup()
-                            }) {
-                                ThemeImage("cloud", size: .iconSize24, colorStyle: .yellow)
-                                Text("contacts.settings.backup_contacts".localized).themeBody(color: .themeJacob)
-                            }
+                            Cell(
+                                left: { ThemeImage("cloud", size: .iconSize24, colorStyle: .yellow) },
+                                middle: { ThemeText("contacts.settings.backup_contacts".localized, style: .headline2, colorStyle: .yellow) },
+                                action: {
+                                    backup()
+                                }
+                            )
                         }
                     }
 
                     ListSection(footer: "contacts.settings.description".localized) {
-                        ListRow {
-                            Text("contacts.settings.icloud_sync".localized).themeBody()
+                        Cell(
+                            middle: { ThemeText("contacts.settings.icloud_sync".localized, style: .headline2) },
+                            right: {
+                                HStack(spacing: .margin8) {
+                                    if viewModel.syncEnabled, viewModel.lostSynchronization {
+                                        ThemeImage("warning", size: .iconSize20, colorStyle: .red)
+                                    }
 
-                            Spacer()
-
-                            if viewModel.syncEnabled, viewModel.lostSynchronization {
-                                ThemeImage("warning", size: .iconSize20, colorStyle: .red)
+                                    ThemeToggle(isOn: viewModel.toggleOn, onToggle: viewModel.onToggle)
+                                }
                             }
-
-                            ThemeToggle(isOn: viewModel.toggleOn, onToggle: viewModel.onToggle)
-                        }
+                        )
                     }
 
                     if viewModel.lostSynchronization {

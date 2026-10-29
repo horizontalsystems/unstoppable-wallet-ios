@@ -38,66 +38,61 @@ struct BlockchainSettingsView: View {
         let item: BlockchainSettingsViewModel.Item
 
         var body: some View {
-            ClickableRow(action: {
-                switch item.type {
-                case .evm:
-                    Coordinator.shared.present { isPresented in
-                        EvmNetworkView(blockchain: item.blockchain, isPresented: isPresented)
-                    }
+            Cell(
+                left: { BlockchainIcon(blockchain: item.blockchain) },
+                middle: { MultiText(title: item.blockchain.name, subtitle: item.title) },
+                right: { Image.disclosureIcon },
+                action: {
+                    switch item.type {
+                    case .evm:
+                        Coordinator.shared.present { isPresented in
+                            EvmNetworkView(blockchain: item.blockchain, isPresented: isPresented)
+                        }
 
-                    stat(page: .blockchainSettings, event: .openBlockchainSettingsEvm(chainUid: item.blockchain.uid))
-                case .btc:
-                    Coordinator.shared.present { isPresented in
-                        BtcBlockchainSettingsView(blockchain: item.blockchain, isPresented: isPresented)
-                    }
+                        stat(page: .blockchainSettings, event: .openBlockchainSettingsEvm(chainUid: item.blockchain.uid))
+                    case .btc:
+                        Coordinator.shared.present { isPresented in
+                            BtcBlockchainSettingsView(blockchain: item.blockchain, isPresented: isPresented)
+                        }
 
-                    stat(page: .blockchainSettings, event: .openBlockchainSettingsBtc(chainUid: item.blockchain.uid))
-                case .monero:
-                    Coordinator.shared.present { isPresented in
-                        MoneroNetworkView(blockchain: item.blockchain, isPresented: isPresented)
-                    }
+                        stat(page: .blockchainSettings, event: .openBlockchainSettingsBtc(chainUid: item.blockchain.uid))
+                    case .monero:
+                        Coordinator.shared.present { isPresented in
+                            MoneroNetworkView(blockchain: item.blockchain, isPresented: isPresented)
+                        }
 
-                    stat(page: .blockchainSettings, event: .openBlockchainSettingsMonero)
-                case .zano:
-                    Coordinator.shared.present { isPresented in
-                        ZanoNetworkView(blockchain: item.blockchain, isPresented: isPresented)
-                    }
+                        stat(page: .blockchainSettings, event: .openBlockchainSettingsMonero)
+                    case .zano:
+                        Coordinator.shared.present { isPresented in
+                            ZanoNetworkView(blockchain: item.blockchain, isPresented: isPresented)
+                        }
 
-                    stat(page: .blockchainSettings, event: .openBlockchainSettingsZano)
-                case .zcash:
-                    Coordinator.shared.present { isPresented in
-                        NodeNetworkView(blockchain: item.blockchain, isPresented: isPresented)
-                    }
+                        stat(page: .blockchainSettings, event: .openBlockchainSettingsZano)
+                    case .zcash:
+                        Coordinator.shared.present { isPresented in
+                            NodeNetworkView(blockchain: item.blockchain, isPresented: isPresented)
+                        }
 
-                    stat(page: .blockchainSettings, event: .openBlockchainSettingsZcash)
-                case .xrp:
-                    Coordinator.shared.present { isPresented in
-                        NodeNetworkView(blockchain: item.blockchain, isPresented: isPresented)
-                    }
+                        stat(page: .blockchainSettings, event: .openBlockchainSettingsZcash)
+                    case .xrp:
+                        Coordinator.shared.present { isPresented in
+                            NodeNetworkView(blockchain: item.blockchain, isPresented: isPresented)
+                        }
 
-                    stat(page: .blockchainSettings, event: .openBlockchainSettingsXrp)
-                case .near:
-                    Coordinator.shared.present { isPresented in
-                        NodeNetworkView(blockchain: item.blockchain, isPresented: isPresented)
-                    }
+                        stat(page: .blockchainSettings, event: .openBlockchainSettingsXrp)
+                    case .near:
+                        Coordinator.shared.present { isPresented in
+                            NodeNetworkView(blockchain: item.blockchain, isPresented: isPresented)
+                        }
 
-                    stat(page: .blockchainSettings, event: .openBlockchainSettingsNear)
-                case .thorChain:
-                    Coordinator.shared.present { isPresented in
-                        ThorChainNetworkView(blockchain: item.blockchain, isPresented: isPresented)
+                        stat(page: .blockchainSettings, event: .openBlockchainSettingsNear)
+                    case .thorChain:
+                        Coordinator.shared.present { isPresented in
+                            ThorChainNetworkView(blockchain: item.blockchain, isPresented: isPresented)
+                        }
                     }
                 }
-
-            }) {
-                BlockchainIcon(blockchain: item.blockchain)
-
-                VStack(spacing: 1) {
-                    Text(item.blockchain.name).themeBody()
-                    Text(item.title).themeSubhead2()
-                }
-
-                Image.disclosureIcon
-            }
+            )
         }
     }
 }

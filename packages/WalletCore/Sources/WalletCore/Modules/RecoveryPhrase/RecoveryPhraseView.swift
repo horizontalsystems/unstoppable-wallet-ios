@@ -27,17 +27,16 @@ struct RecoveryPhraseView: View {
 
                 if let passphrase = viewModel.passphrase {
                     ListSection {
-                        ListRow {
-                            ThemeImage("key", size: 20, colorStyle: .secondary)
-                            ThemeText("recovery_phrase.passphrase".localized, style: .subhead)
-
-                            Spacer()
-
-                            ThemeButton(text: viewModel.hidden ? BalanceHiddenManager.placeholder : passphrase, style: .secondary, size: .small) {
-                                viewModel.copyPassphrase()
+                        Cell(
+                            left: { ThemeImage("key", size: .iconSize24) },
+                            middle: { ThemeText("recovery_phrase.passphrase".localized, style: .headline2) },
+                            right: {
+                                ThemeButton(text: viewModel.hidden ? BalanceHiddenManager.placeholder : passphrase, style: .secondary, size: .small) {
+                                    viewModel.copyPassphrase()
+                                }
+                                .accessibilityLabel(viewModel.hidden ? "recovery_phrase.passphrase".localized : passphrase)
                             }
-                            .accessibilityLabel(viewModel.hidden ? "recovery_phrase.passphrase".localized : passphrase)
-                        }
+                        )
                     }
                     .padding(.top, .margin12)
                 }

@@ -13,9 +13,7 @@ struct DonateAddressesView: View {
                         ListSectionHeader(text: item.name)
 
                         ListSection {
-                            ListRow {
-                                content(blockchainType: item.type, address: item.address)
-                            }
+                            content(blockchainType: item.type, address: item.address)
                         }
                     }
                 }
@@ -28,21 +26,23 @@ struct DonateAddressesView: View {
     }
 
     @ViewBuilder func content(blockchainType: BlockchainType, address: String) -> some View {
-        HStack(spacing: .margin16) {
-            KFImage.url(URL(string: blockchainType.imageUrl))
-                .resizable()
-                .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
-                .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
-                .frame(width: .iconSize32, height: .iconSize32)
-
-            Text(address).textSubhead2(color: .themeLeah)
-
-            Button {
-                CopyHelper.copyAndNotify(value: address)
-            } label: {
-                Image("copy_20").renderingMode(.template)
+        Cell(
+            left: {
+                KFImage.url(URL(string: blockchainType.imageUrl))
+                    .resizable()
+                    .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
+                    .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
+                    .frame(width: .iconSize32, height: .iconSize32)
+            },
+            middle: { ThemeText(address, style: .subhead, colorStyle: .primary) },
+            right: {
+                Button {
+                    CopyHelper.copyAndNotify(value: address)
+                } label: {
+                    Image("copy").buttonIcon(size: .iconSize20)
+                }
+                .buttonStyle(SecondaryCircleButtonStyle())
             }
-            .buttonStyle(SecondaryCircleButtonStyle())
-        }
+        )
     }
 }

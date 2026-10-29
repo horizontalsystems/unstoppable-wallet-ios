@@ -52,20 +52,18 @@ struct SwitchAccountView: View {
     }
 
     @ViewBuilder private func row(viewItem: SwitchAccountViewModel.ViewItem, watch: Bool) -> some View {
-        ClickableRow(action: {
-            viewModel.onSelect(accountId: viewItem.accountId)
-            presentationMode.wrappedValue.dismiss()
-        }) {
-            Image(viewItem.selected ? "circle_radioon_24" : "circle_radiooff_24")
-
-            VStack(spacing: 1) {
-                Text(viewItem.title).themeBody()
-                Text(viewItem.subtitle).themeSubhead2()
+        Cell(
+            left: { Image.checkbox(active: viewItem.selected) },
+            middle: { MultiText(title: viewItem.title, subtitle: viewItem.subtitle) },
+            right: {
+                if watch {
+                    ThemeImage("binocular", size: .iconSize20)
+                }
+            },
+            action: {
+                viewModel.onSelect(accountId: viewItem.accountId)
+                presentationMode.wrappedValue.dismiss()
             }
-
-            if watch {
-                Image("binocule_20").themeIcon(color: .themeGray)
-            }
-        }
+        )
     }
 }

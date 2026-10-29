@@ -38,21 +38,36 @@ struct MarketAdvancedSearchView: View {
 
                         VStack(spacing: 0) {
                             ListSection {
-                                premiumRow(outperformedBtcRow(), statPremiumKey: .outperformedBtc)
-                                premiumRow(outperformedEthRow(), statPremiumKey: .outperformedEth)
-                                premiumRow(outperformedBnbRow(), statPremiumKey: .outperformedBnb)
-                                premiumRow(outperformedSp500Row(), statPremiumKey: .outperformedSp500)
-                                premiumRow(outperformedGoldRow(), statPremiumKey: .outperformedGold)
+                                premiumRow(title: "market.advanced_search.outperformed_btc".localized, isOn: $viewModel.outperformedBtc, statPremiumKey: .outperformedBtc)
+                                premiumRow(title: "market.advanced_search.outperformed_eth".localized, isOn: $viewModel.outperformedEth, statPremiumKey: .outperformedEth)
+                                premiumRow(title: "market.advanced_search.outperformed_bnb".localized, isOn: $viewModel.outperformedBnb, statPremiumKey: .outperformedBnb)
+                                premiumRow(title: "market.advanced_search.outperformed_sp500".localized, isOn: $viewModel.outperformedSp500, statPremiumKey: .outperformedSp500)
+                                premiumRow(title: "market.advanced_search.outperformed_gold".localized, isOn: $viewModel.outperformedGold, statPremiumKey: .outperformedGold)
                             }
                             .modifier(ColoredBorder())
                         }
 
                         VStack(spacing: 0) {
                             ListSection {
-                                premiumRow(goodCexVolumeRow(), statPremiumKey: .goodCexVolume)
-                                premiumRow(goodDexVolumeRow(), statPremiumKey: .goodDexVolume)
-                                premiumRow(goodDistributionRow(), statPremiumKey: .goodDistribution)
-                                premiumRow(listedOnTopExchangesRow(), statPremiumKey: .listedOnTopExchanges)
+                                premiumRow(
+                                    title: "market.advanced_search.good_cex_volume".localized,
+                                    subtitle: "market.advanced_search.overall_score_is_good_or_excellent".localized,
+                                    isOn: $viewModel.goodCexVolume,
+                                    statPremiumKey: .goodCexVolume
+                                )
+                                premiumRow(
+                                    title: "market.advanced_search.good_dex_volume".localized,
+                                    subtitle: "market.advanced_search.overall_score_is_good_or_excellent".localized,
+                                    isOn: $viewModel.goodDexVolume,
+                                    statPremiumKey: .goodDexVolume
+                                )
+                                premiumRow(
+                                    title: "market.advanced_search.good_distribution".localized,
+                                    subtitle: "market.advanced_search.overall_score_is_good_or_excellent".localized,
+                                    isOn: $viewModel.goodDistribution,
+                                    statPremiumKey: .goodDistribution
+                                )
+                                premiumRow(title: "market.advanced_search.listed_on_top_exchanges".localized, isOn: $viewModel.listedOnTopExchanges, statPremiumKey: .listedOnTopExchanges)
                             }
                             .modifier(ColoredBorder())
                         }
@@ -102,179 +117,105 @@ struct MarketAdvancedSearchView: View {
     }
 
     @ViewBuilder private func topRow() -> some View {
-        ClickableRow(spacing: .margin8) {
+        dropdownRow(title: "market.advanced_search.choose_set".localized, value: viewModel.top.title) {
             Coordinator.shared.present(type: .bottomSheet) { isPresented in
                 ListSection {
                     ForEach(viewModel.tops) { top in
-                        ClickableRow {
-                            viewModel.top = top
-                            isPresented.wrappedValue = false
-                        } content: {
-                            VStack(spacing: 1) {
-                                Text(top.title).themeBody()
-                                Text(top.description).themeSubhead2()
+                        Cell(
+                            middle: { MultiText(title: top.title, subtitle: top.description) },
+                            right: {
+                                if viewModel.top == top {
+                                    Image.checkIcon
+                                }
+                            },
+                            action: {
+                                viewModel.top = top
+                                isPresented.wrappedValue = false
                             }
-
-                            if viewModel.top == top {
-                                Image("check_1_20").themeIcon(color: .themeJacob)
-                            }
-                        }
+                        )
                     }
                 }
                 .themeListStyle(.bordered)
                 .modifier(AdvancedSearchHeaderModifier(imageName: "circle_coin_24", title: "market.advanced_search.choose_set", isPresented: isPresented))
             }
-        } content: {
-            Text("market.advanced_search.choose_set".localized).textBody()
-            Spacer()
-            Text(viewModel.top.title).textSubhead1(color: .themeLeah)
-            Image("arrow_small_down_20").themeIcon()
         }
     }
 
     @ViewBuilder private func volumeRow() -> some View {
-        ClickableRow(spacing: .margin8) {
+        dropdownRow(title: "market.advanced_search.volume".localized, value: viewModel.volume.title, colorStyle: colorStyle(valueFilter: viewModel.volume)) {
             Coordinator.shared.present(type: .bottomSheet) { isPresented in
                 ListSection {
                     ForEach(viewModel.valueFilters) { filter in
-                        ClickableRow {
+                        optionRow(title: filter.title, colorStyle: colorStyle(valueFilter: filter), selected: viewModel.volume == filter) {
                             viewModel.volume = filter
                             isPresented.wrappedValue = false
-                        } content: {
-                            Text(filter.title).themeBody(color: color(valueFilter: filter))
-
-                            if viewModel.volume == filter {
-                                Image("check_1_20").themeIcon(color: .themeJacob)
-                            }
                         }
                     }
                 }
                 .themeListStyle(.bordered)
                 .modifier(AdvancedSearchHeaderModifier(imageName: "chart_2_24", title: "market.advanced_search.volume", isPresented: isPresented))
             }
-        } content: {
-            Text("market.advanced_search.volume".localized).textBody()
-            Spacer()
-            Text(viewModel.volume.title).textSubhead1(color: color(valueFilter: viewModel.volume))
-            Image("arrow_small_down_20").themeIcon()
         }
     }
 
     @ViewBuilder private func categoriesRow() -> some View {
-        ClickableRow(spacing: .margin8) {
+        dropdownRow(title: "market.advanced_search.categories".localized, value: viewModel.categories.title, colorStyle: colorStyle(categoriesFilter: viewModel.categories)) {
             Coordinator.shared.presentAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .sectors) { isPresented in
                 MarketAdvancedSearchCategoriesView(viewModel: viewModel, isPresented: isPresented)
             }
-        } content: {
-            Text("market.advanced_search.categories".localized).textBody()
-            Spacer()
-            Text(viewModel.categories.title).textSubhead1(color: color(categoriesFilter: viewModel.categories))
-            Image("arrow_small_down_20").themeIcon()
         }
     }
 
-    @ViewBuilder private func premiumRow(_ view: some View, statPremiumKey: StatPremiumTrigger) -> some View {
-        if viewModel.advancedSearchEnabled {
-            ListRow {
-                view
-            }
-        } else {
-            ClickableRow {
+    @ViewBuilder private func premiumRow(title: String, subtitle: String? = nil, isOn: Binding<Bool>, statPremiumKey: StatPremiumTrigger) -> some View {
+        let enabled = viewModel.advancedSearchEnabled
+
+        Cell(
+            middle: { MultiText(title: title, subtitle: subtitle) },
+            right: { ThemeToggle(isOn: isOn).disabled(!enabled) },
+            action: enabled ? nil : {
                 Coordinator.shared.presentPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: statPremiumKey)
-            } content: {
-                view
             }
-        }
-    }
-
-    @ViewBuilder private func listedOnTopExchangesRow() -> some View {
-        Toggle(isOn: $viewModel.listedOnTopExchanges) {
-            Text("market.advanced_search.listed_on_top_exchanges".localized).themeBody()
-        }
-        .disabled(!viewModel.advancedSearchEnabled)
-        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-    }
-
-    @ViewBuilder private func goodCexVolumeRow() -> some View {
-        Toggle(isOn: $viewModel.goodCexVolume) {
-            VStack(spacing: 1) {
-                Text("market.advanced_search.good_cex_volume".localized).themeBody()
-                Text("market.advanced_search.overall_score_is_good_or_excellent".localized).themeSubhead2()
-            }
-        }
-        .disabled(!viewModel.advancedSearchEnabled)
-        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-    }
-
-    @ViewBuilder private func goodDexVolumeRow() -> some View {
-        Toggle(isOn: $viewModel.goodDexVolume) {
-            VStack(spacing: 1) {
-                Text("market.advanced_search.good_dex_volume".localized).themeBody()
-                Text("market.advanced_search.overall_score_is_good_or_excellent".localized).themeSubhead2()
-            }
-        }
-        .disabled(!viewModel.advancedSearchEnabled)
-        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-    }
-
-    @ViewBuilder private func goodDistributionRow() -> some View {
-        Toggle(isOn: $viewModel.goodDistribution) {
-            VStack(spacing: 1) {
-                Text("market.advanced_search.good_distribution".localized).themeBody()
-                Text("market.advanced_search.overall_score_is_good_or_excellent".localized).themeSubhead2()
-            }
-        }
-        .disabled(!viewModel.advancedSearchEnabled)
-        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+        )
     }
 
     @ViewBuilder private func blockchainsRow() -> some View {
-        ClickableRow(spacing: .margin8) {
+        let value = blockchainsValue
+
+        dropdownRow(title: "market.advanced_search.blockchains".localized, value: value.text, colorStyle: value.colorStyle) {
             Coordinator.shared.present { isPresented in
                 MarketAdvancedSearchBlockchainsView(viewModel: viewModel, isPresented: isPresented)
             }
-        } content: {
-            Text("market.advanced_search.blockchains".localized).textBody()
-            Spacer()
+        }
+    }
 
-            if viewModel.blockchains.isEmpty {
-                Text("selector.any".localized).textSubhead1()
-            } else if viewModel.blockchains.count == 1, let blockchain = viewModel.blockchains.first {
-                Text(blockchain.name).textSubhead1(color: .themeLeah)
-            } else {
-                Text("\(viewModel.blockchains.count)").textSubhead1(color: .themeLeah)
-            }
-
-            Image("arrow_small_down_20").themeIcon()
+    private var blockchainsValue: (text: String, colorStyle: ColorStyle) {
+        if viewModel.blockchains.isEmpty {
+            return ("selector.any".localized, .secondary)
+        } else if viewModel.blockchains.count == 1, let blockchain = viewModel.blockchains.first {
+            return (blockchain.name, .primary)
+        } else {
+            return ("\(viewModel.blockchains.count)", .primary)
         }
     }
 
     @ViewBuilder private func signalRow() -> some View {
-        ClickableRow(spacing: .margin8) {
+        dropdownRow(
+            title: "market.advanced_search.signal".localized,
+            value: viewModel.signal?.title ?? "selector.any".localized,
+            colorStyle: viewModel.signal == nil ? .secondary : .primary
+        ) {
             Coordinator.shared.performAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .tradingSignal) {
                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
                     ListSection {
-                        ClickableRow {
+                        optionRow(title: "selector.any".localized, colorStyle: .secondary, selected: viewModel.signal == nil) {
                             viewModel.signal = nil
                             isPresented.wrappedValue = false
-                        } content: {
-                            Text("selector.any".localized).themeBody(color: .themeGray)
-
-                            if viewModel.signal == nil {
-                                Image("check_1_20").themeIcon(color: .themeJacob)
-                            }
                         }
 
                         ForEach(viewModel.signals) { signal in
-                            ClickableRow {
+                            optionRow(title: signal.title, selected: viewModel.signal == signal) {
                                 viewModel.signal = signal
                                 isPresented.wrappedValue = false
-                            } content: {
-                                Text(signal.title).themeBody()
-
-                                if viewModel.signal == signal {
-                                    Image("check_1_20").themeIcon(color: .themeJacob)
-                                }
                             }
                         }
                     }
@@ -282,35 +223,18 @@ struct MarketAdvancedSearchView: View {
                     .modifier(AdvancedSearchHeaderModifier(imageName: "bell_ring_24", title: "market.advanced_search.signal", isPresented: isPresented))
                 }
             }
-        } content: {
-            Text("market.advanced_search.signal".localized).textBody()
-            Spacer()
-
-            if let signal = viewModel.signal {
-                Text(signal.title).textSubhead1(color: .themeLeah)
-            } else {
-                Text("selector.any".localized).textSubhead1()
-            }
-
-            Image("arrow_small_down_20").themeIcon()
         }
     }
 
     @ViewBuilder private func priceChangeRow() -> some View {
-        ClickableRow(spacing: .margin8) {
+        dropdownRow(title: "market.advanced_search.price_change".localized, value: viewModel.priceChange.title, colorStyle: colorStyle(priceChangeFilter: viewModel.priceChange)) {
             Coordinator.shared.performAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .priceChange) {
                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
                     ListSection {
                         ForEach(MarketAdvancedSearchViewModel.PriceChangeFilter.allCases) { filter in
-                            ClickableRow {
+                            optionRow(title: filter.title, colorStyle: colorStyle(priceChangeFilter: filter), selected: viewModel.priceChange == filter) {
                                 viewModel.priceChange = filter
                                 isPresented.wrappedValue = false
-                            } content: {
-                                Text(filter.title).themeBody(color: color(priceChangeFilter: filter))
-
-                                if viewModel.priceChange == filter {
-                                    Image("check_1_20").themeIcon(color: .themeJacob)
-                                }
                             }
                         }
                     }
@@ -318,29 +242,18 @@ struct MarketAdvancedSearchView: View {
                     .modifier(AdvancedSearchHeaderModifier(imageName: "markets_24", title: "market.advanced_search.price_change", isPresented: isPresented))
                 }
             }
-        } content: {
-            Text("market.advanced_search.price_change".localized).textBody()
-            Spacer()
-            Text(viewModel.priceChange.title).textSubhead1(color: color(priceChangeFilter: viewModel.priceChange))
-            Image("arrow_small_down_20").themeIcon()
         }
     }
 
     @ViewBuilder private func pricePeriodRow() -> some View {
-        ClickableRow(spacing: .margin8) {
+        dropdownRow(title: "market.advanced_search.price_period".localized, value: viewModel.priceChangePeriod.title) {
             Coordinator.shared.performAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .pricePeriod) {
                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
                     ListSection {
                         ForEach(viewModel.priceChangePeriods) { period in
-                            ClickableRow {
+                            optionRow(title: period.title, selected: viewModel.priceChangePeriod == period) {
                                 viewModel.priceChangePeriod = period
                                 isPresented.wrappedValue = false
-                            } content: {
-                                Text(period.title).themeBody()
-
-                                if viewModel.priceChangePeriod == period {
-                                    Image("check_1_20").themeIcon(color: .themeJacob)
-                                }
                             }
                         }
                     }
@@ -348,69 +261,18 @@ struct MarketAdvancedSearchView: View {
                     .modifier(AdvancedSearchHeaderModifier(imageName: "circle_clock_24", title: "market.advanced_search.price_period", isPresented: isPresented))
                 }
             }
-        } content: {
-            Text("market.advanced_search.price_period".localized).textBody()
-            Spacer()
-            Text(viewModel.priceChangePeriod.title).textSubhead1(color: .themeLeah)
-            Image("arrow_small_down_20").themeIcon()
         }
-    }
-
-    @ViewBuilder private func outperformedBtcRow() -> some View {
-        Toggle(isOn: $viewModel.outperformedBtc) {
-            Text("market.advanced_search.outperformed_btc".localized).themeBody()
-        }
-        .disabled(!viewModel.advancedSearchEnabled)
-        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-    }
-
-    @ViewBuilder private func outperformedEthRow() -> some View {
-        Toggle(isOn: $viewModel.outperformedEth) {
-            Text("market.advanced_search.outperformed_eth".localized).themeBody()
-        }
-        .disabled(!viewModel.advancedSearchEnabled)
-        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-    }
-
-    @ViewBuilder private func outperformedBnbRow() -> some View {
-        Toggle(isOn: $viewModel.outperformedBnb) {
-            Text("market.advanced_search.outperformed_bnb".localized).themeBody()
-        }
-        .disabled(!viewModel.advancedSearchEnabled)
-        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-    }
-
-    @ViewBuilder private func outperformedSp500Row() -> some View {
-        Toggle(isOn: $viewModel.outperformedSp500) {
-            Text("market.advanced_search.outperformed_sp500".localized).themeBody()
-        }
-        .disabled(!viewModel.advancedSearchEnabled)
-        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-    }
-
-    @ViewBuilder private func outperformedGoldRow() -> some View {
-        Toggle(isOn: $viewModel.outperformedGold) {
-            Text("market.advanced_search.outperformed_gold".localized).themeBody()
-        }
-        .disabled(!viewModel.advancedSearchEnabled)
-        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
     }
 
     @ViewBuilder private func priceCloseToRow() -> some View {
-        ClickableRow(spacing: .margin8) {
+        dropdownRow(title: "market.advanced_search.price_close_to".localized, value: viewModel.priceCloseTo.title, colorStyle: colorStyle(closeToFilter: viewModel.priceCloseTo)) {
             Coordinator.shared.performAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .priceCloseTo) {
                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
                     ListSection {
                         ForEach(MarketAdvancedSearchViewModel.PriceCloseToFilter.allCases) { closeTo in
-                            ClickableRow {
+                            optionRow(title: closeTo.title, colorStyle: colorStyle(closeToFilter: closeTo), selected: viewModel.priceCloseTo == closeTo) {
                                 viewModel.priceCloseTo = closeTo
                                 isPresented.wrappedValue = false
-                            } content: {
-                                Text(closeTo.title).themeBody(color: color(closeToFilter: closeTo))
-
-                                if viewModel.priceCloseTo == closeTo {
-                                    Image("check_1_20").themeIcon(color: .themeJacob)
-                                }
                             }
                         }
                     }
@@ -418,40 +280,58 @@ struct MarketAdvancedSearchView: View {
                     .modifier(AdvancedSearchHeaderModifier(imageName: "arrow_swap_24", title: "market.advanced_search.price_close_to", isPresented: isPresented))
                 }
             }
-        } content: {
-            Text("market.advanced_search.price_close_to".localized).textBody()
-            Spacer()
-            Text(viewModel.priceCloseTo.title).textSubhead1(color: color(closeToFilter: viewModel.priceCloseTo))
-            Image("arrow_small_down_20").themeIcon()
         }
     }
 
-    private func color(valueFilter: MarketAdvancedSearchViewModel.ValueFilter) -> Color {
+    @ViewBuilder private func dropdownRow(title: String, value: String, colorStyle: ColorStyle = .primary, action: @escaping () -> Void) -> some View {
+        Cell(
+            middle: { ThemeText(title, style: .headline2) },
+            right: {
+                ThemeText(value, style: .subheadSB, colorStyle: colorStyle)
+                    .arrow(style: .dropdown)
+            },
+            action: action
+        )
+    }
+
+    @ViewBuilder private func optionRow(title: String, colorStyle: ColorStyle = .primary, selected: Bool, action: @escaping () -> Void) -> some View {
+        Cell(
+            middle: { ThemeText(title, style: .headline2, colorStyle: colorStyle) },
+            right: {
+                if selected {
+                    Image.checkIcon
+                }
+            },
+            action: action
+        )
+    }
+
+    private func colorStyle(valueFilter: MarketAdvancedSearchViewModel.ValueFilter) -> ColorStyle {
         switch valueFilter {
-        case .none: return .themeGray
-        default: return .themeLeah
+        case .none: return .secondary
+        default: return .primary
         }
     }
 
-    private func color(categoriesFilter: MarketAdvancedSearchViewModel.CategoryFilter) -> Color {
+    private func colorStyle(categoriesFilter: MarketAdvancedSearchViewModel.CategoryFilter) -> ColorStyle {
         switch categoriesFilter {
-        case .any: return .themeGray
-        default: return .themeLeah
+        case .any: return .secondary
+        default: return .primary
         }
     }
 
-    private func color(closeToFilter: MarketAdvancedSearchViewModel.PriceCloseToFilter) -> Color {
+    private func colorStyle(closeToFilter: MarketAdvancedSearchViewModel.PriceCloseToFilter) -> ColorStyle {
         switch closeToFilter {
-        case .none: return .themeGray
-        default: return .themeLeah
+        case .none: return .secondary
+        default: return .primary
         }
     }
 
-    private func color(priceChangeFilter: MarketAdvancedSearchViewModel.PriceChangeFilter) -> Color {
+    private func colorStyle(priceChangeFilter: MarketAdvancedSearchViewModel.PriceChangeFilter) -> ColorStyle {
         switch priceChangeFilter {
-        case .none: return .themeGray
-        case .plus10, .plus25, .plus50, .plus100: return .themeRemus
-        case .minus10, .minus25, .minus50, .minus75: return .themeLucian
+        case .none: return .secondary
+        case .plus10, .plus25, .plus50, .plus100: return .green
+        case .minus10, .minus25, .minus50, .minus75: return .red
         }
     }
 }

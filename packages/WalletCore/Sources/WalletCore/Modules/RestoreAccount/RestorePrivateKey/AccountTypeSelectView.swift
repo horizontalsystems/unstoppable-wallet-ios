@@ -27,16 +27,13 @@ struct AccountTypeSelectView: View {
             VStack(spacing: 0) {
                 ListSection {
                     ForEach(items, id: \.title) { item in
-                        ClickableRow(action: {
-                            onTap(item: item)
-                        }) {
-                            VStack(alignment: .leading, spacing: 1) {
-                                Text(item.title).themeBody()
-                                Text(item.description).themeSubhead2()
+                        Cell(
+                            middle: { MultiText(title: item.title, subtitle: item.description) },
+                            right: { Image.disclosureIcon },
+                            action: {
+                                onTap(item: item)
                             }
-                            Spacer()
-                            Image.disclosureIcon
-                        }
+                        )
                     }
                 }
             }

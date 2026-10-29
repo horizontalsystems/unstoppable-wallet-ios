@@ -26,38 +26,36 @@ struct TonConnectConnectView: View {
                             }
 
                             ListSection {
-                                ListRow {
-                                    Text("ton_connect.connect.url".localized).textSubhead2()
-                                    Spacer()
-                                    Text(viewModel.manifest.host).textSubhead1(color: .themeLeah)
-                                }
+                                Cell(
+                                    middle: { ThemeText("ton_connect.connect.url".localized, style: .subhead) },
+                                    right: { ThemeText(viewModel.manifest.host, style: .subheadSB) }
+                                )
 
                                 if let account = viewModel.account {
-                                    ClickableRow {
-                                        Coordinator.shared.present(type: .alert) { isPresented in
-                                            OptionAlertView(
-                                                title: "ton_connect.connect.wallet".localized,
-                                                viewItems: viewModel.eligibleAccounts.map { .init(text: $0.name, selected: viewModel.account == $0) },
-                                                onSelect: { index in
-                                                    viewModel.account = viewModel.eligibleAccounts[index]
-                                                },
-                                                isPresented: isPresented
-                                            )
+                                    Cell(
+                                        middle: { ThemeText("ton_connect.connect.wallet".localized, style: .subhead) },
+                                        right: {
+                                            ThemeText(account.name, style: .subheadSB)
+                                                .arrow(style: .dropdown)
+                                        },
+                                        action: {
+                                            Coordinator.shared.present(type: .alert) { isPresented in
+                                                OptionAlertView(
+                                                    title: "ton_connect.connect.wallet".localized,
+                                                    viewItems: viewModel.eligibleAccounts.map { .init(text: $0.name, selected: viewModel.account == $0) },
+                                                    onSelect: { index in
+                                                        viewModel.account = viewModel.eligibleAccounts[index]
+                                                    },
+                                                    isPresented: isPresented
+                                                )
+                                            }
                                         }
-                                    } content: {
-                                        Text("ton_connect.connect.wallet".localized).textSubhead2()
-                                        Spacer()
-                                        HStack(spacing: .margin8) {
-                                            Text(account.name).textSubhead1(color: .themeLeah)
-                                            Image("arrow_small_down_20").themeIcon()
-                                        }
-                                    }
+                                    )
                                 } else {
-                                    ListRow {
-                                        Text("ton_connect.connect.wallet".localized).textSubhead2()
-                                        Spacer()
-                                        Text("ton_connect.connect.no_eligible_wallets".localized).textSubhead2()
-                                    }
+                                    Cell(
+                                        middle: { ThemeText("ton_connect.connect.wallet".localized, style: .subhead) },
+                                        right: { ThemeText("ton_connect.connect.no_eligible_wallets".localized, style: .subhead) }
+                                    )
                                 }
                             }
 

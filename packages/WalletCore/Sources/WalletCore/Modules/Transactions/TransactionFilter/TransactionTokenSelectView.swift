@@ -16,42 +16,34 @@ struct TransactionTokenSelectView: View {
     var body: some View {
         ScrollableThemeView {
             ListSection {
-                ClickableRow(action: {
-                    viewModel.set(currentToken: nil)
-                    isPresented = false
-                }) {
-                    Image("circle_coin_24").themeIcon()
-                    Text("transaction_filter.all_coins").themeBody()
-
-                    if viewModel.currentToken == nil {
-                        Image.checkIcon
-                    }
-                }
-
-                ForEach(searchResults, id: \.self) { token in
-                    ClickableRow(action: {
-                        viewModel.set(currentToken: token)
-                        isPresented = false
-                    }) {
-                        CoinIconView(token: token)
-
-                        VStack(spacing: 1) {
-                            HStack(spacing: .margin8) {
-                                Text(token.coin.code).textBody()
-
-                                if let badge = token.badge {
-                                    BadgeViewNew(badge)
-                                }
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-
-                            Text(token.coin.name).themeSubhead2()
-                        }
-
-                        if viewModel.currentToken == token {
+                Cell(
+                    left: { ThemeImage("circle_coin", size: .iconSize24) },
+                    middle: { ThemeText("transaction_filter.all_coins".localized, style: .headline2) },
+                    right: {
+                        if viewModel.currentToken == nil {
                             Image.checkIcon
                         }
+                    },
+                    action: {
+                        viewModel.set(currentToken: nil)
+                        isPresented = false
                     }
+                )
+
+                ForEach(searchResults, id: \.self) { token in
+                    Cell(
+                        left: { CoinIconView(token: token) },
+                        middle: { MultiText(title: token.coin.code, badge: token.badge, subtitle: token.coin.name) },
+                        right: {
+                            if viewModel.currentToken == token {
+                                Image.checkIcon
+                            }
+                        },
+                        action: {
+                            viewModel.set(currentToken: token)
+                            isPresented = false
+                        }
+                    )
                 }
             }
             .themeListStyle(.transparent)

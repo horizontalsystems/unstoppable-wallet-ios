@@ -71,14 +71,10 @@ struct DuressModeIntroView: View {
         let description: String
 
         var body: some View {
-            ListRow {
-                icon.themeIcon(color: .themeJacob)
-
-                VStack(spacing: .margin4) {
-                    Text(title).themeBody()
-                    Text(description).themeSubhead2()
-                }
-            }
+            Cell(
+                left: { icon.themeIcon(color: .themeJacob) },
+                middle: { MultiText(title: title, subtitle: description) }
+            )
         }
     }
 }

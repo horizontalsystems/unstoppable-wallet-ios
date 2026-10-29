@@ -39,40 +39,45 @@ struct ManageAccountView: View {
                     if viewModel.account.backedUp || viewModel.isCloudBackedUp {
                         ListSection {
                             if viewModel.recoveryPhraseVisible {
-                                ClickableRow(action: {
-                                    Coordinator.shared.performAfterUnlock {
-                                        recoveryPhrasePresented = true
+                                Cell(
+                                    left: { ThemeImage("paper_contract", size: .iconSize24) },
+                                    middle: { ThemeText("manage_account.recovery_phrase".localized, style: .headline2) },
+                                    right: { Image.disclosureIcon },
+                                    action: {
+                                        Coordinator.shared.performAfterUnlock {
+                                            recoveryPhrasePresented = true
+                                        }
                                     }
-                                }) {
-                                    Image("paper_contract_24").themeIcon()
-                                    Text("manage_account.recovery_phrase".localized).themeBody()
-                                    Image.disclosureIcon
-                                }
+                                )
                             }
 
                             if viewModel.privateKeysVisible {
-                                ClickableRow(action: {
-                                    Coordinator.shared.performAfterUnlock {
-                                        privateKeysPresented = true
+                                Cell(
+                                    left: { ThemeImage("key", size: .iconSize24) },
+                                    middle: { ThemeText("manage_account.private_keys".localized, style: .headline2) },
+                                    right: { Image.disclosureIcon },
+                                    action: {
+                                        Coordinator.shared.performAfterUnlock {
+                                            privateKeysPresented = true
+                                        }
                                     }
-                                }) {
-                                    Image("key_24").themeIcon()
-                                    Text("manage_account.private_keys".localized).themeBody()
-                                    Image.disclosureIcon
-                                }
+                                )
                             }
 
                             if viewModel.publicKeysVisible {
-                                NavigationRow(destination: {
+                                NavigationLink(destination: {
                                     PublicKeysView(account: viewModel.account)
                                         .onFirstAppear {
                                             stat(page: .manageWallet, event: .open(page: .publicKeys))
                                         }
                                 }) {
-                                    Image("binocule_24").themeIcon()
-                                    Text("manage_account.public_keys".localized).themeBody()
-                                    Image.disclosureIcon
+                                    Cell(
+                                        left: { ThemeImage("binocular", size: .iconSize24) },
+                                        middle: { ThemeText("manage_account.public_keys".localized, style: .headline2) },
+                                        right: { Image.disclosureIcon }
+                                    )
                                 }
+                                .buttonStyle(CellButtonStyle())
                             }
                         }
                     }
@@ -81,70 +86,76 @@ struct ManageAccountView: View {
                         footer: viewModel.account.backedUp || viewModel.isCloudBackedUp ? "manage_account.backup.has_backup_description".localized : "manage_account.backup.no_backup_yet_description".localized
                     ) {
                         if viewModel.account.canBeBackedUp {
-                            ClickableRow {
-                                Coordinator.shared.performAfterUnlock {
-                                    presentBackup(reason: .manual)
+                            Cell(
+                                left: { ThemeImage("pen", size: .iconSize24, colorStyle: .yellow) },
+                                middle: { ThemeText("manage_account.backup_recovery_phrase".localized, style: .headline2, colorStyle: .yellow) },
+                                right: {
+                                    if viewModel.account.backedUp {
+                                        ThemeImage("check", size: .iconSize20, colorStyle: .green)
+                                    } else {
+                                        ThemeImage("warning", size: .iconSize20, colorStyle: .red)
+                                    }
+                                },
+                                action: {
+                                    Coordinator.shared.performAfterUnlock {
+                                        presentBackup(reason: .manual)
+                                    }
                                 }
-                            } content: {
-                                Image("edit_24").themeIcon(color: .themeJacob)
-                                Text("manage_account.backup_recovery_phrase".localized).themeBody(color: .themeJacob)
-
-                                if viewModel.account.backedUp {
-                                    Image("check_1_20").themeIcon(color: .themeRemus)
-                                } else {
-                                    Image("warning_2_24").themeIcon(color: .themeLucian)
-                                }
-                            }
+                            )
                         }
 
                         if !viewModel.account.watchAccount {
                             if viewModel.isCloudBackedUp {
-                                ClickableRow {
-                                    if viewModel.account.backedUp {
-                                        Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                                            confirmDeleteCloudBackupView(isPresented: isPresented)
-                                        }
-                                    } else {
-                                        Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                                            confirmDeleteCloudBackupAfterManualBackupView(isPresented: isPresented)
+                                Cell(
+                                    left: { ThemeImage("cloud_off", size: .iconSize24, colorStyle: .red) },
+                                    middle: { ThemeText("manage_account.cloud_delete_backup_recovery_phrase".localized, style: .headline2, colorStyle: .red) },
+                                    action: {
+                                        if viewModel.account.backedUp {
+                                            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                                                confirmDeleteCloudBackupView(isPresented: isPresented)
+                                            }
+                                        } else {
+                                            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                                                confirmDeleteCloudBackupAfterManualBackupView(isPresented: isPresented)
+                                            }
                                         }
                                     }
-                                } content: {
-                                    Image("no_internet_24").themeIcon(color: .themeLucian)
-                                    Text("manage_account.cloud_delete_backup_recovery_phrase".localized).themeBody(color: .themeLucian)
-                                }
+                                )
                             } else {
-                                ClickableRow {
-                                    Coordinator.shared.presentWalletBackup(account: viewModel.account, statPage: .manageWallet)
-                                } content: {
-                                    Image("icloud_24").themeIcon(color: .themeJacob)
-                                    Text("manage_account.cloud_backup_recovery_phrase".localized).themeBody(color: .themeJacob)
-
-                                    if !viewModel.account.backedUp {
-                                        Image("warning_2_24").themeIcon(color: .themeLucian)
+                                Cell(
+                                    left: { ThemeImage("cloud", size: .iconSize24, colorStyle: .yellow) },
+                                    middle: { ThemeText("manage_account.cloud_backup_recovery_phrase".localized, style: .headline2, colorStyle: .yellow) },
+                                    right: {
+                                        if !viewModel.account.backedUp {
+                                            ThemeImage("warning", size: .iconSize20, colorStyle: .red)
+                                        }
+                                    },
+                                    action: {
+                                        Coordinator.shared.presentWalletBackup(account: viewModel.account, statPage: .manageWallet)
                                     }
-                                }
+                                )
                             }
                         }
                     }
 
                     ListSection {
-                        ClickableRow(action: {
-                            if viewModel.account.watchAccount {
-                                Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                                    confirmUnlinkWatchView(isPresented: isPresented)
-                                }
-                            } else {
-                                Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                                    UnlinkBottomSheetView(isPresented: isPresented) {
-                                        unlink()
+                        Cell(
+                            left: { ThemeImage("trash", size: .iconSize24, colorStyle: .red) },
+                            middle: { ThemeText("manage_account.unlink".localized, style: .headline2, colorStyle: .red) },
+                            action: {
+                                if viewModel.account.watchAccount {
+                                    Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                                        confirmUnlinkWatchView(isPresented: isPresented)
+                                    }
+                                } else {
+                                    Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                                        UnlinkBottomSheetView(isPresented: isPresented) {
+                                            unlink()
+                                        }
                                     }
                                 }
                             }
-                        }) {
-                            Image("trash_24").themeIcon(color: .themeLucian)
-                            Text("manage_account.unlink".localized).themeBody(color: .themeLucian)
-                        }
+                        )
                     }
                 }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))

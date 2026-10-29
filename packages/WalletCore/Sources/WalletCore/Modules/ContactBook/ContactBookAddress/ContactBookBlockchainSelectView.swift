@@ -20,18 +20,19 @@ struct ContactBookBlockchainSelectView: View {
             ScrollableThemeView {
                 ListSection {
                     ForEach(blockchains, id: \.uid) { blockchain in
-                        ClickableRow(action: {
-                            onSelect(blockchain)
-                            isPresented = false
-                        }) {
-                            BlockchainIcon(blockchain: blockchain)
-
-                            Text(blockchain.name).themeBody()
-
-                            if blockchain == selected {
-                                Image.checkIcon
+                        Cell(
+                            left: { BlockchainIcon(blockchain: blockchain) },
+                            middle: { ThemeText(blockchain.name, style: .headline2) },
+                            right: {
+                                if blockchain == selected {
+                                    Image.checkIcon
+                                }
+                            },
+                            action: {
+                                onSelect(blockchain)
+                                isPresented = false
                             }
-                        }
+                        )
                     }
                 }
                 .themeListStyle(.transparent)

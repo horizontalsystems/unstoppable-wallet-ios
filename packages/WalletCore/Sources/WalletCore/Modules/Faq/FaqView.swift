@@ -48,22 +48,28 @@ extension FaqView {
                         let item = indexedItem.element
 
                         if let url = item.url {
-                            NavigationRow(destination: {
+                            NavigationLink(destination: {
                                 MarkdownView(url: url, handleRelativeUrl: false)
                                     .onFirstAppear {
                                         stat(page: .faq, event: .openArticle(relativeUrl: url.relativePath))
                                     }
                             }) {
-                                ThemeText(item.text, style: .subhead, colorStyle: .primary)
-                                    .multilineTextAlignment(.leading)
-                                Spacer()
-                                Image.disclosureIcon
+                                Cell(
+                                    middle: {
+                                        ThemeText(item.text, style: .subhead, colorStyle: .primary)
+                                            .multilineTextAlignment(.leading)
+                                    },
+                                    right: { Image.disclosureIcon }
+                                )
                             }
+                            .buttonStyle(CellButtonStyle())
                         } else {
-                            ListRow {
-                                ThemeText(item.text, style: .subhead, colorStyle: .primary)
-                                    .multilineTextAlignment(.leading)
-                            }
+                            Cell(
+                                middle: {
+                                    ThemeText(item.text, style: .subhead, colorStyle: .primary)
+                                        .multilineTextAlignment(.leading)
+                                }
+                            )
                         }
                     }
                 }

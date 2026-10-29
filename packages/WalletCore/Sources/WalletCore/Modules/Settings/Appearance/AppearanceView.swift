@@ -40,7 +40,7 @@ struct AppearanceView: View {
                         right: {
                             HStack(spacing: .margin8) {
                                 if let language = LanguageManager.shared.currentLanguageDisplayName {
-                                    ThemeText(language, style: .subheadSB, colorStyle: .secondary)
+                                    ThemeText(language, style: .subheadSB)
                                 }
 
                                 Image.disclosureIcon
@@ -64,7 +64,7 @@ struct AppearanceView: View {
                                 ThemeText("settings.base_currency".localized, style: .headline2)
                             },
                             right: {
-                                ThemeText(viewModel.baseCurrencyCode, style: .subheadSB, colorStyle: .secondary).arrow(style: .disclosure)
+                                ThemeText(viewModel.baseCurrencyCode, style: .subheadSB).arrow(style: .disclosure)
                             }
                         )
                     }

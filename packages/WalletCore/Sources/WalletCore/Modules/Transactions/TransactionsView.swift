@@ -29,22 +29,19 @@ struct TransactionsView: View {
         let action: () -> Void
 
         var body: some View {
-            ClickableRow(padding: EdgeInsets(top: .margin12, leading: 10, bottom: .margin12, trailing: .margin16), action: action) {
-                HStack(spacing: 10) {
-                    iconView(viewItem: viewItem)
-
+            Cell(
+                left: { iconView(viewItem: viewItem).opacity(viewItem.spam ? 0.25 : 1) },
+                middle: {
                     VStack(spacing: 1) {
                         HStack(spacing: .margin8) {
-                            Text(viewItem.title)
-                                .textBody()
+                            ThemeText(viewItem.title, style: .headline2)
                                 .lineLimit(1)
                                 .truncationMode(.middle)
 
                             Spacer()
 
                             if let primaryValue = viewItem.primaryValue, !primaryValue.text.isEmpty {
-                                Text(primaryValue.text)
-                                    .textBody(color: color(valueType: primaryValue.type))
+                                ThemeText(primaryValue.text, style: .headline2, colorStyle: colorStyle(valueType: primaryValue.type))
                                     .lineLimit(1)
                                     .truncationMode(.middle)
                             }
@@ -52,15 +49,14 @@ struct TransactionsView: View {
                             if viewItem.doubleSpend || viewItem.sentToSelf || viewItem.locked != nil {
                                 HStack(spacing: .margin6) {
                                     if viewItem.doubleSpend {
-                                        Image("double_send_20").themeIcon()
+                                        ThemeImage("double_send", size: .iconSize20)
                                     }
 
                                     if viewItem.sentToSelf {
-                                        Image("arrow_return_20").themeIcon()
+                                        ThemeImage("arrow_return", size: .iconSize20)
                                     }
 
                                     if let locked = viewItem.locked {
-                                        ThemeImage(locked ? "lock_filled" : "unlock_filled", size: .iconSize20)
                                         Image.lock(unlocked: !locked, size: .iconSize20)
                                     }
                                 }
@@ -68,24 +64,24 @@ struct TransactionsView: View {
                         }
 
                         HStack(spacing: .margin8) {
-                            Text(viewItem.subTitle)
-                                .textSubhead2()
+                            ThemeText(viewItem.subTitle, style: .subhead)
                                 .lineLimit(1)
                                 .truncationMode(.middle)
 
                             Spacer()
 
                             if let secondaryValue = viewItem.secondaryValue, !secondaryValue.text.isEmpty {
-                                Text(secondaryValue.text)
-                                    .textSubhead2(color: color(valueType: secondaryValue.type))
+                                ThemeText(secondaryValue.text, style: .subhead, colorStyle: colorStyle(valueType: secondaryValue.type))
                                     .lineLimit(1)
                                     .truncationMode(.middle)
                             }
                         }
                     }
-                }
-                .opacity(viewItem.spam ? 0.25 : 1)
-            }
+                    .frame(maxWidth: .infinity)
+                    .opacity(viewItem.spam ? 0.25 : 1)
+                },
+                action: action
+            )
         }
 
         @ViewBuilder private func iconView(viewItem: TransactionsViewModel.ViewItem) -> some View {
@@ -134,17 +130,17 @@ struct TransactionsView: View {
                     }
                     .frame(width: .iconSize32, height: 36)
                 case .failedIcon:
-                    Image("warning_2_20").themeIcon(color: .themeLucian)
+                    ThemeImage("warning", size: .iconSize20, colorStyle: .red)
                 }
             }
             .frame(width: 44, height: 44)
         }
 
-        private func color(valueType: TransactionsViewModel.ValueType) -> Color {
+        private func colorStyle(valueType: TransactionsViewModel.ValueType) -> ColorStyle {
             switch valueType {
-            case .incoming: return .themeRemus
-            case .outgoing, .neutral: return .themeLeah
-            case .secondary: return .themeGray
+            case .incoming: return .green
+            case .outgoing, .neutral: return .primary
+            case .secondary: return .secondary
             }
         }
 

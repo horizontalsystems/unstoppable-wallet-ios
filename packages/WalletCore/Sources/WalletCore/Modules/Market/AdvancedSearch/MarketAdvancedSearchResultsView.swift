@@ -14,7 +14,7 @@ struct MarketAdvancedSearchResultsView: View {
     }
 
     var body: some View {
-        ThemeView {
+        ThemeView(style: .list) {
             VStack(spacing: 0) {
                 header()
 
@@ -22,18 +22,15 @@ struct MarketAdvancedSearchResultsView: View {
                     ThemeList(viewModel.marketInfos, bottomSpacing: .margin16) { marketInfo in
                         let coin = marketInfo.fullCoin.coin
 
-                        ClickableRow(action: {
-                            Coordinator.shared.presentCoinPage(coin: coin, page: .advancedSearchResults)
-                        }) {
-                            itemContent(
-                                coin: coin,
-                                indicatorResult: marketInfo.indicatorsResult,
-                                marketCap: marketInfo.marketCap,
-                                price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
-                                rank: marketInfo.marketCapRank,
-                                diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod)
-                            )
-                        }
+                        cell(
+                            coin: coin,
+                            indicatorResult: marketInfo.indicatorsResult,
+                            marketCap: marketInfo.marketCap,
+                            price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
+                            rank: marketInfo.marketCapRank,
+                            diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod)
+                        )
+                        .frame(maxWidth: .infinity)
                     }
                     .onChange(of: viewModel.sortBy) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
                 }
@@ -107,39 +104,32 @@ struct MarketAdvancedSearchResultsView: View {
         }
     }
 
-    @ViewBuilder private func itemContent(coin: Coin?, indicatorResult: TechnicalAdvice.Advice?, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?) -> some View {
-        CoinIconView(coin: coin)
+    @ViewBuilder private func cell(coin: Coin, indicatorResult: TechnicalAdvice.Advice?, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?) -> some View {
+        Cell(
+            left: {
+                CoinIconView(coin: coin)
+            },
+            middle: {
+                MultiText(
+                    title: coin.code,
+                    badge: viewModel.showSignals ? indicatorResult.map { ComponentBadge(text: $0.title, mode: .transparent, colorStyle: $0.colorStyle) } : nil,
+                    subtitleBadge: rank.map { "\($0)" },
+                    subtitle: marketCap.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) }
+                )
+            },
+            right: {
+                HStack(spacing: 8) {
+                    RightMultiText(
+                        title: price,
+                        subtitle: Diff.text(diff: diff)
+                    )
 
-        HStack(spacing: .margin16) {
-            VStack(spacing: 1) {
-                HStack(spacing: .margin8) {
-                    Text(coin?.code ?? "CODE").textBody()
-
-                    if viewModel.showSignals, let signal = indicatorResult {
-                        BadgeViewNew(signal.title, mode: .transparent, colorStyle: signal.colorStyle)
-                    }
-
-                    Spacer()
-                    Text(price).textBody()
+                    WatchlistView.watchButton(viewModel: watchlistViewModel, coinUid: coin.uid)
                 }
-
-                HStack(spacing: .margin8) {
-                    HStack(spacing: .margin4) {
-                        if let rank {
-                            BadgeViewNew("\(rank)")
-                        }
-
-                        if let marketCap, let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: marketCap) {
-                            Text(formatted).textSubhead2()
-                        }
-                    }
-                    Spacer()
-                    DiffText(diff)
-                }
+            },
+            action: {
+                Coordinator.shared.presentCoinPage(coin: coin, page: .advancedSearchResults)
             }
-            if let coin {
-                WatchlistView.watchButton(viewModel: watchlistViewModel, coinUid: coin.uid)
-            }
-        }
+        )
     }
 }

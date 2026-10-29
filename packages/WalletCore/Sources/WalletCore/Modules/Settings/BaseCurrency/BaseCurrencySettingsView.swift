@@ -29,29 +29,27 @@ struct BaseCurrencySettingsView: View {
     }
 
     @ViewBuilder private func row(currency: Currency, showConfirmation: Bool) -> some View {
-        ClickableRow(action: {
-            if viewModel.baseCurrency == currency {
-                presentationMode.wrappedValue.dismiss()
-            } else if showConfirmation {
-                Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                    confirmView(currency: currency, isPresented: isPresented)
+        Cell(
+            left: { Image(currency.code) },
+            middle: { MultiText(title: currency.code, subtitle: currency.symbol) },
+            right: {
+                if viewModel.baseCurrency == currency {
+                    Image.checkIcon
                 }
-            } else {
-                viewModel.baseCurrency = currency
-                presentationMode.wrappedValue.dismiss()
+            },
+            action: {
+                if viewModel.baseCurrency == currency {
+                    presentationMode.wrappedValue.dismiss()
+                } else if showConfirmation {
+                    Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                        confirmView(currency: currency, isPresented: isPresented)
+                    }
+                } else {
+                    viewModel.baseCurrency = currency
+                    presentationMode.wrappedValue.dismiss()
+                }
             }
-        }) {
-            Image(currency.code)
-
-            VStack(spacing: 1) {
-                Text(currency.code).themeBody()
-                Text(currency.symbol).themeSubhead2()
-            }
-
-            if viewModel.baseCurrency == currency {
-                Image.checkIcon
-            }
-        }
+        )
     }
 
     @ViewBuilder private func confirmView(currency: Currency, isPresented: Binding<Bool>) -> some View {

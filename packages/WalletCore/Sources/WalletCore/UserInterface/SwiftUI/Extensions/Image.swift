@@ -26,6 +26,16 @@ extension Image {
         Image("arrow_b_right").icon(size: CGFloat.iconSize20)
     }
 
+    @ViewBuilder static func disclosure(alert: Bool) -> some View {
+        HStack(spacing: .margin8) {
+            if alert {
+                Image.warningIcon
+            }
+
+            Image.disclosureIcon
+        }
+    }
+
     static func disclosure(colorStyle: ColorStyle) -> some View {
         Image("arrow_b_right").icon(size: .iconSize20, colorStyle: colorStyle)
     }
@@ -35,7 +45,7 @@ extension Image {
     }
 
     static var checkIcon: some View {
-        Image("check_1_20").themeIcon(color: .themeJacob)
+        ThemeImage("check", size: .iconSize20, colorStyle: .yellow)
     }
 
     static var lockIcon: some View {
@@ -43,7 +53,7 @@ extension Image {
     }
 
     static var warningIcon: some View {
-        Image("warning_2_20").themeIcon(color: .themeLucian)
+        ThemeImage("warning", size: .iconSize20, colorStyle: .red)
     }
 
     static func checkbox(active: Bool, size: CGFloat = .iconSize24, colorStyle: ColorStyle = .yellow) -> some View {

@@ -17,19 +17,19 @@ struct AddTokenBlockchainSelectView: View {
             ScrollableThemeView {
                 ListSection {
                     ForEach(viewModel.blockchains, id: \.uid) { blockchain in
-                        ClickableRow(action: {
-                            viewModel.set(blockchain: blockchain)
-                            isPresented = false
-                        }) {
-                            BlockchainIcon(blockchain: blockchain)
-                            ThemeText(blockchain.name, style: .body)
-
-                            Spacer()
-
-                            if viewModel.currentBlockchainItem.blockchain == blockchain {
-                                ThemeImage("check", size: .iconSize20, colorStyle: .yellow)
+                        Cell(
+                            left: { BlockchainIcon(blockchain: blockchain) },
+                            middle: { ThemeText(blockchain.name, style: .headline2) },
+                            right: {
+                                if viewModel.currentBlockchainItem.blockchain == blockchain {
+                                    Image.checkIcon
+                                }
+                            },
+                            action: {
+                                viewModel.set(blockchain: blockchain)
+                                isPresented = false
                             }
-                        }
+                        )
                     }
                 }
                 .themeListStyle(.transparent)

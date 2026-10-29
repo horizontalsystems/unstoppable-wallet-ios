@@ -25,7 +25,7 @@ struct MoneroReceiveAddressView: View {
                let subAddresses = subAddressesData,
                !subAddresses.isEmpty
             {
-                NavigationRow(destination: {
+                NavigationLink(destination: {
                     UsedAddressesView(
                         coinName: viewModel.coinName,
                         title: "deposit.subaddresses.title".localized,
@@ -35,9 +35,12 @@ struct MoneroReceiveAddressView: View {
                         onDismiss: onDismiss ?? { presentationMode.wrappedValue.dismiss() }
                     )
                 }) {
-                    Text("deposit.subaddresses.title".localized).themeSubhead2()
-                    Image.disclosureIcon
+                    Cell(
+                        middle: { ThemeText("deposit.subaddresses.title".localized, style: .subhead) },
+                        right: { Image.disclosureIcon }
+                    )
                 }
+                .buttonStyle(CellButtonStyle())
             }
         }, onDismiss: onDismiss)
     }

@@ -25,32 +25,34 @@ struct TransactionContactSelectView: View {
                 if !viewModel.contacts.isEmpty {
                     ScrollableThemeView {
                         ListSection {
-                            ClickableRow(action: {
-                                viewModel.set(currentContact: nil)
-                                isPresented = false
-                            }) {
-                                Image("paper_contract_24").themeIcon()
-                                Text("transaction_filter.all_contacts").themeBody()
-
-                                if viewModel.currentContact == nil {
-                                    Image.checkIcon
-                                }
-                            }
-
-                            ForEach(searchResults, id: \.self) { contact in
-                                ClickableRow(action: {
-                                    viewModel.set(currentContact: contact)
-                                    isPresented = false
-                                }) {
-                                    Image("user_24").themeIcon()
-
-                                    Text(contact.name).textBody()
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                                    if viewModel.currentContact == contact {
+                            Cell(
+                                left: { ThemeImage("paper_contract", size: .iconSize24) },
+                                middle: { ThemeText("transaction_filter.all_contacts".localized, style: .headline2) },
+                                right: {
+                                    if viewModel.currentContact == nil {
                                         Image.checkIcon
                                     }
+                                },
+                                action: {
+                                    viewModel.set(currentContact: nil)
+                                    isPresented = false
                                 }
+                            )
+
+                            ForEach(searchResults, id: \.self) { contact in
+                                Cell(
+                                    left: { ThemeImage("user", size: .iconSize24) },
+                                    middle: { ThemeText(contact.name, style: .headline2) },
+                                    right: {
+                                        if viewModel.currentContact == contact {
+                                            Image.checkIcon
+                                        }
+                                    },
+                                    action: {
+                                        viewModel.set(currentContact: contact)
+                                        isPresented = false
+                                    }
+                                )
                             }
                         }
                         .themeListStyle(.transparent)

@@ -41,32 +41,28 @@ struct CheckAddressView: View {
 
                     VStack(spacing: .margin24) {
                         ListSection {
-                            ClickableRow(spacing: .margin8, action: {
-                                Coordinator.shared.present(info: .init(title: "Chainalysis.com", description: "check_address.chainalysis.description".localized))
-                            }) {
-                                HStack(spacing: .margin16) {
-                                    Image("chainalysis_32")
-                                    Text("Chainalysis.com").textSubhead1()
+                            Cell(
+                                left: { Image("chainalysis_32") },
+                                middle: { ThemeText("Chainalysis.com", style: .subhead) },
+                                right: { ThemeImage("information", size: .iconSize20) },
+                                action: {
+                                    Coordinator.shared.present(info: .init(title: "Chainalysis.com", description: "check_address.chainalysis.description".localized))
                                 }
-                                Spacer()
-                                Image("circle_information_20").themeIcon()
-                            }
+                            )
 
                             checkView(title: "check_address.sanctions_check".localized, state: viewModel.checkStates[.chainalysis] ?? .idle)
                         }
                         .themeListStyle(.bordered)
 
                         ListSection {
-                            ClickableRow(spacing: .margin8, action: {
-                                Coordinator.shared.present(info: .init(title: "Hashdit.io", description: "check_address.hashdit.description".localized))
-                            }) {
-                                HStack(spacing: .margin16) {
-                                    Image("hashdit_32")
-                                    Text("Hashdit.io").textSubhead1()
+                            Cell(
+                                left: { Image("hashdit_32") },
+                                middle: { ThemeText("Hashdit.io", style: .subhead) },
+                                right: { ThemeImage("information", size: .iconSize20) },
+                                action: {
+                                    Coordinator.shared.present(info: .init(title: "Hashdit.io", description: "check_address.hashdit.description".localized))
                                 }
-                                Spacer()
-                                Image("circle_information_20").themeIcon()
-                            }
+                            )
 
                             VStack(spacing: 0) {
                                 ForEach(viewModel.hashDitBlockchains) { blockchain in
@@ -78,19 +74,17 @@ struct CheckAddressView: View {
 
                         ForEach(viewModel.contractFullCoins) { fullCoin in
                             ListSection {
-                                ClickableRow(spacing: .margin8, action: {
-                                    Coordinator.shared.present(info: .init(
-                                        title: "check_address.coin_blacklist_check".localized(fullCoin.coin.code),
-                                        description: "check_address.coin_blacklist.description".localized(fullCoin.coin.name, fullCoin.coin.code, fullCoin.coin.code)
-                                    ))
-                                }) {
-                                    HStack(spacing: .margin16) {
-                                        CoinIconView(coin: fullCoin.coin)
-                                        Text("check_address.coin_blacklist_check".localized(fullCoin.coin.code)).textSubhead1()
+                                Cell(
+                                    left: { CoinIconView(coin: fullCoin.coin) },
+                                    middle: { ThemeText("check_address.coin_blacklist_check".localized(fullCoin.coin.code), style: .subhead) },
+                                    right: { ThemeImage("information", size: .iconSize20) },
+                                    action: {
+                                        Coordinator.shared.present(info: .init(
+                                            title: "check_address.coin_blacklist_check".localized(fullCoin.coin.code),
+                                            description: "check_address.coin_blacklist.description".localized(fullCoin.coin.name, fullCoin.coin.code, fullCoin.coin.code)
+                                        ))
                                     }
-                                    Spacer()
-                                    Image("circle_information_20").themeIcon()
-                                }
+                                )
 
                                 VStack(spacing: 0) {
                                     ForEach(fullCoin.tokens, id: \.blockchain.uid) { token in

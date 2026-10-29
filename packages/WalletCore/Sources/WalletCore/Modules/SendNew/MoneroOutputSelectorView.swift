@@ -15,22 +15,12 @@ struct MoneroOutputSelectorView: View {
         ThemeView {
             VStack {
                 ListSection {
-                    ListRow(minHeight: .heightDoubleLineCell) {
-                        HStack(spacing: .margin8) {
-                            VStack(spacing: 1) {
-                                Text("send.available_balance".localized).themeSubhead2(color: .themeGray)
-                            }
-
-                            Spacer()
-
-                            VStack(spacing: 1) {
-                                Text(viewModel.availableBalanceCoinValue).themeSubhead1(color: .themeLeah, alignment: .trailing)
-                                if let subtitle = viewModel.availableBalanceFiatValue {
-                                    Text(subtitle).themeSubhead2(alignment: .trailing)
-                                }
-                            }
+                    Cell(
+                        middle: { ThemeText("send.available_balance".localized, style: .subhead) },
+                        right: {
+                            RightMultiText(subtitleSB: viewModel.availableBalanceCoinValue, subtitle: viewModel.availableBalanceFiatValue)
                         }
-                    }
+                    )
                 }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
 
@@ -68,26 +58,14 @@ struct MoneroOutputSelectorView: View {
     }
 
     @ViewBuilder func output(viewItem: MoneroOutputSelectorViewModel.OutputViewItem) -> some View {
-        ClickableRow(action: {
-            viewModel.toggle(viewItem: viewItem)
-        }) {
-            HStack(spacing: .margin16) {
-                CheckBoxUiView(checked: .init(get: { viewModel.selectedSet.contains(viewItem.id) }, set: { _ in }))
-
-                VStack(spacing: 1) {
-                    Text(viewItem.date).themeBody()
-                    Text(viewItem.address).themeSubhead2()
-                }
-                Spacer()
-
-                VStack(spacing: 1) {
-                    Text(viewItem.coinValue).themeBody(alignment: .trailing)
-                    if let subtitle = viewItem.fiatValue {
-                        Text(subtitle).themeSubhead2(alignment: .trailing)
-                    }
-                }
+        Cell(
+            left: { CheckBoxUiView(checked: .init(get: { viewModel.selectedSet.contains(viewItem.id) }, set: { _ in })) },
+            middle: { MultiText(title: viewItem.date, subtitle: viewItem.address) },
+            right: { RightMultiText(title: viewItem.coinValue, subtitle: viewItem.fiatValue) },
+            action: {
+                viewModel.toggle(viewItem: viewItem)
             }
-        }
+        )
     }
 }
 

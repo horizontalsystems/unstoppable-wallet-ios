@@ -19,7 +19,7 @@ struct MultiSwapTokenSelectView: View {
 
     var body: some View {
         ThemeNavigationStack {
-            ThemeView {
+            ThemeView(style: .list) {
                 ContentView(viewModel: viewModel) { token in
                     viewModel.handleSelection(token: token)
                     currentToken = token
@@ -168,42 +168,14 @@ struct MultiSwapTokenSelectView: View {
         }
 
         @ViewBuilder private func row(_ item: MultiSwapTokenSelectViewModel.Item) -> some View {
-            ClickableRow(action: {
-                select(item.token)
-            }) {
-                CoinIconView(token: item.token)
-
-                VStack(spacing: 1) {
-                    HStack(spacing: .margin8) {
-                        Text(item.token.coin.code).textBody()
-
-                        if let badge = item.token.badge {
-                            BadgeViewNew(badge)
-                        }
-
-                        if let balance = item.balance {
-                            Spacer()
-
-                            Text(balance)
-                                .textBody()
-                                .multilineTextAlignment(.trailing)
-                        }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                    HStack(spacing: .margin8) {
-                        Text(item.token.coin.name).themeSubhead2()
-
-                        if let fiatBalance = item.fiatBalance {
-                            Spacer()
-
-                            Text(fiatBalance)
-                                .textSubhead2()
-                                .multilineTextAlignment(.trailing)
-                        }
-                    }
+            Cell(
+                left: { CoinIconView(token: item.token) },
+                middle: { MultiText(title: item.token.coin.code, badge: item.token.badge, subtitle: item.token.coin.name) },
+                right: { RightMultiText(title: item.balance, subtitle: item.fiatBalance) },
+                action: {
+                    select(item.token)
                 }
-            }
+            )
         }
     }
 }

@@ -13,30 +13,34 @@ struct MarketAdvancedSearchBlockchainsView: View {
                     ScrollView {
                         VStack(spacing: .margin24) {
                             ListSection {
-                                ClickableRow {
-                                    viewModel.blockchains = Set()
-                                } content: {
-                                    Text("selector.any".localized).themeBody(color: .themeGray)
-
-                                    if viewModel.blockchains.isEmpty {
-                                        Image("check_1_20").themeIcon(color: .themeJacob)
+                                Cell(
+                                    middle: { ThemeText("selector.any".localized, style: .headline2, colorStyle: .secondary) },
+                                    right: {
+                                        if viewModel.blockchains.isEmpty {
+                                            Image.checkIcon
+                                        }
+                                    },
+                                    action: {
+                                        viewModel.blockchains = Set()
                                     }
-                                }
+                                )
 
                                 ForEach(viewModel.allBlockchains) { blockchain in
-                                    ClickableRow {
-                                        if viewModel.blockchains.contains(blockchain) {
-                                            viewModel.blockchains.remove(blockchain)
-                                        } else {
-                                            viewModel.blockchains.insert(blockchain)
+                                    Cell(
+                                        middle: { ThemeText(blockchain.name, style: .headline2) },
+                                        right: {
+                                            if viewModel.blockchains.contains(blockchain) {
+                                                Image.checkIcon
+                                            }
+                                        },
+                                        action: {
+                                            if viewModel.blockchains.contains(blockchain) {
+                                                viewModel.blockchains.remove(blockchain)
+                                            } else {
+                                                viewModel.blockchains.insert(blockchain)
+                                            }
                                         }
-                                    } content: {
-                                        Text(blockchain.name).themeBody()
-
-                                        if viewModel.blockchains.contains(blockchain) {
-                                            Image("check_1_20").themeIcon(color: .themeJacob)
-                                        }
-                                    }
+                                    )
                                 }
                             }
                         }

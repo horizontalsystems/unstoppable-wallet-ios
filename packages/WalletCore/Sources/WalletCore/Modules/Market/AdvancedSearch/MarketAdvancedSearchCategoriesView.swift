@@ -16,40 +16,44 @@ struct MarketAdvancedSearchCategoriesView: View {
                                 case .loading: EmptyView()
                                 case .failed: EmptyView()
                                 case let .loaded(categories):
-                                    ClickableRow {
-                                        viewModel.categories = .any
-                                    } content: {
-                                        Text("selector.any".localized).themeBody(color: .themeGray)
-
-                                        if viewModel.categories == .any {
-                                            Image("check_1_20").themeIcon(color: .themeJacob)
+                                    Cell(
+                                        middle: { ThemeText("selector.any".localized, style: .headline2, colorStyle: .secondary) },
+                                        right: {
+                                            if viewModel.categories == .any {
+                                                Image.checkIcon
+                                            }
+                                        },
+                                        action: {
+                                            viewModel.categories = .any
                                         }
-                                    }
+                                    )
 
                                     ForEach(categories) { category in
-                                        ClickableRow {
-                                            guard let id = category.id else {
-                                                return
-                                            }
-
-                                            switch viewModel.categories {
-                                            case .any:
-                                                viewModel.categories = .list([id])
-                                            case var .list(array):
-                                                if let index = array.firstIndex(of: id) {
-                                                    array.remove(at: index)
-                                                } else {
-                                                    array.append(id)
+                                        Cell(
+                                            middle: { ThemeText(category.name, style: .headline2) },
+                                            right: {
+                                                if let id = category.id, viewModel.categories.include(id: id) {
+                                                    Image.checkIcon
                                                 }
-                                                viewModel.categories = array.isEmpty ? .any : .list(array)
-                                            }
-                                        } content: {
-                                            Text(category.name).themeBody()
+                                            },
+                                            action: {
+                                                guard let id = category.id else {
+                                                    return
+                                                }
 
-                                            if let id = category.id, viewModel.categories.include(id: id) {
-                                                Image("check_1_20").themeIcon(color: .themeJacob)
+                                                switch viewModel.categories {
+                                                case .any:
+                                                    viewModel.categories = .list([id])
+                                                case var .list(array):
+                                                    if let index = array.firstIndex(of: id) {
+                                                        array.remove(at: index)
+                                                    } else {
+                                                        array.append(id)
+                                                    }
+                                                    viewModel.categories = array.isEmpty ? .any : .list(array)
+                                                }
                                             }
-                                        }
+                                        )
                                     }
                                 }
                             }

@@ -17,22 +17,20 @@ struct TonConnectListView: View {
                                     ListSectionHeader(text: item.account.name)
                                     ListSection {
                                         ForEach(item.apps) { app in
-                                            ClickableRow(action: {
-                                                onClick(app: app)
-                                            }) {
-                                                KFImage.url(app.manifest.iconUrl)
-                                                    .resizable()
-                                                    .placeholder { RoundedRectangle(cornerRadius: .cornerRadius4).fill(Color.themeBlade) }
-                                                    .clipShape(RoundedRectangle(cornerRadius: .cornerRadius4))
-                                                    .frame(width: .iconSize32, height: .iconSize32)
-
-                                                VStack(spacing: 1) {
-                                                    Text(app.manifest.name).themeBody()
-                                                    Text(app.manifest.host).themeSubhead2()
+                                            Cell(
+                                                left: {
+                                                    KFImage.url(app.manifest.iconUrl)
+                                                        .resizable()
+                                                        .placeholder { RoundedRectangle(cornerRadius: .cornerRadius4).fill(Color.themeBlade) }
+                                                        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius4))
+                                                        .frame(width: .iconSize32, height: .iconSize32)
+                                                },
+                                                middle: { MultiText(title: app.manifest.name, subtitle: app.manifest.host) },
+                                                right: { Image.disclosureIcon },
+                                                action: {
+                                                    onClick(app: app)
                                                 }
-
-                                                Image.disclosureIcon
-                                            }
+                                            )
                                         }
                                     }
                                 }
