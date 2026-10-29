@@ -1,6 +1,6 @@
 import Foundation
 import MarketKit
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 // Thin Zcash conformer for the auto-select seam: node list and persistence come from
 // ZcashNodeManager, switching goes through the live adapter (switchTo, no rebuild).

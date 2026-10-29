@@ -2,7 +2,7 @@ import Foundation
 import GRDB
 import Testing
 @testable import WalletCore
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 struct ZcashResubmissionTests {
     private func makeStorage() throws -> ZcashAdapterStorage {
@@ -52,6 +52,13 @@ struct ZcashResubmissionTests {
     @Test func classifierMarksCode25Terminal() {
         let terminal = ZcashSendService.isTerminalRejection(.rejected(code: -25, message: "tx unpaid action limit exceeded"))
         #expect(terminal == true)
+    }
+
+    @Test func classifierMarksLocalRefusalsTerminal() {
+        let wrongBranch = ZcashSendService.isTerminalRejection(.rejected(code: TransactionSubmissionRefusal.wrongConsensusBranch.code, message: "wrong branch"))
+        let expired = ZcashSendService.isTerminalRejection(.rejected(code: TransactionSubmissionRefusal.expired.code, message: "expired"))
+        #expect(wrongBranch == true)
+        #expect(expired == true)
     }
 
     @Test func classifierKeepsOtherNodeErrorsRetryable() {

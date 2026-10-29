@@ -5,7 +5,7 @@ import DashKit
 import ECashKit
 import LitecoinKit
 import MarketKit
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 enum AddressParserFactory {
     static func parser(blockchainType: BlockchainType?, tokenType: TokenType?) -> AddressUriParser {

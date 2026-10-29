@@ -49,9 +49,9 @@ let package = Package(
         .package(url: "https://github.com/horizontalsystems/UIExtensions.Swift", exact: "1.0.2"),
         .package(url: "https://github.com/horizontalsystems/UniswapKit.Swift", exact: "3.3.0"),
         .package(url: "https://github.com/horizontalsystems/XrpKit.Swift", exact: "1.0.1"),
-        // Upstream zodl 5.0.0 + HS static birthday estimation and lightwalletd ping APIs;
-        // binary FFI from the upstream 5.0.0 release
-        .package(url: "https://github.com/horizontalsystems/zodl-swift-wallet-sdk", exact: "5.0.0-hs.1"),
+        // Upstream zodl 7.0.0 + HS static birthday estimation and lightwalletd ping APIs;
+        // binary FFI from the upstream 7.0.0 release
+        .package(url: "https://github.com/horizontalsystems/zodl-swift-wallet-sdk", exact: "7.0.0-hs.2"),
     ],
     targets: [
         .target(
@@ -98,7 +98,7 @@ let package = Package(
                 .product(name: "UIExtensions", package: "UIExtensions.Swift"),
                 .product(name: "UniswapKit", package: "UniswapKit.Swift"),
                 .product(name: "XrpKit", package: "XrpKit.Swift"),
-                .product(name: "ZcashLightClientKit", package: "zodl-swift-wallet-sdk"),
+                .product(name: "ZODLSwiftWalletSDK", package: "zodl-swift-wallet-sdk"),
             ],
             resources: [
                 .process("Resources/Localizable.xcstrings"),

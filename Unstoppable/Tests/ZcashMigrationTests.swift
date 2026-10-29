@@ -3,7 +3,7 @@ import Foundation
 import GRDB
 import Testing
 @testable import WalletCore
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 struct ZcashMigrationTests {
     private static let fee = Zatoshi(15000)

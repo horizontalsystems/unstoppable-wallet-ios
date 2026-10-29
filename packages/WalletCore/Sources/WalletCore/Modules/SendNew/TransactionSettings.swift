@@ -1,7 +1,7 @@
 import BigInt
 import EvmKit
 import MoneroKit
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 public enum TransactionSettings {
     case evm(gasPriceData: GasPriceData, nonce: Int?)

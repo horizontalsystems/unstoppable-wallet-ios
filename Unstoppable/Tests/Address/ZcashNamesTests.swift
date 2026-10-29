@@ -4,7 +4,7 @@ import MarketKit
 import RxSwift
 import Testing
 @testable import WalletCore
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 // Zcash Names on the Name Notes protocol, with live mainnet Resolver responses as vectors.
 struct ZcashNamesTests {

@@ -1,2 +1,3 @@
+"NSBluetoothAlwaysUsageDescription" = "Bluetooth используется только для подключения аппаратного кошелька Ledger.";
 "NSCameraUsageDescription" = "Необходим доступ к вашей камере для сканирования QR-код.";
 "NSFaceIDUsageDescription" = "FaceID будет использован для разблокировки кошелька.";

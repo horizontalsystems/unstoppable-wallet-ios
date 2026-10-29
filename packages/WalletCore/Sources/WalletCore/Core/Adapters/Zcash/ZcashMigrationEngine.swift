@@ -1,5 +1,5 @@
 import Foundation
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 protocol IZcashMigrationEngine: AnyObject {
     // Propose a send-max sweep of the account's spendable Orchard funds to its own Unified Address;

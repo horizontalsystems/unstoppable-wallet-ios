@@ -15,7 +15,7 @@ import TronKit
 import UIKit
 import UniswapKit
 import XrpKit
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 public protocol IWidgetRefresher {
     func refreshAll()

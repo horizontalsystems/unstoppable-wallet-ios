@@ -1,7 +1,7 @@
 import BitcoinCore
 import Foundation
 import MarketKit
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 class ZcashSwapFinalQuote: SwapFinalQuote {
     let proposal: Proposal?

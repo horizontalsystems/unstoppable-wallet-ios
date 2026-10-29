@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 @testable import WalletCore
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 struct ZcashSyncStateTests {
     private func snap(_ status: SyncStatus, masked: Bool = false, recovering: Bool = false, height: Int = 1000) -> ZcashSyncService.Snapshot {

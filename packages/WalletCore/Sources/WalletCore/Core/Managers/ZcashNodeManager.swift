@@ -1,7 +1,7 @@
 import Combine
 import Foundation
 import MarketKit
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 public class ZcashNodeManager {
     private let testNetManager: TestNetManager
@@ -128,9 +128,10 @@ extension ZcashNodeManager {
 }
 
 extension ZcashNodeManager {
-    // Self-reported estimate this far above served blocks = still catching up; Android-parity,
-    // same getInfo sample. SDK's evaluateBestOf uses 288 — raise if probes filter everyone out.
-    private static let syncedThresholdBlocks = 10
+    // Self-reported estimate this far above served blocks = still catching up; Android-parity
+    // 10 blocks at 75s, kept in seconds since NU7 shortens blocks to 25s. SDK's evaluateBestOf
+    // allows 6h — raise if probes filter everyone out.
+    private static let syncedThresholdSeconds: TimeInterval = 750
 
     var autoSelectEnabled: Bool {
         get { blockchainSettingsStorage.endpointAutoSelectEnabled(blockchainType: .zcash) }
@@ -163,13 +164,17 @@ extension ZcashNodeManager {
         let network = ZcashNetworkBuilder.network(for: testNetManager.testNetEnabled ? .testnet : .mainnet)
         let expectedChainName = network.networkType == .mainnet ? "main" : "test"
         let expectedSaplingActivation = network.constants.saplingActivationHeight
+        let spacing = TargetBlockSpacing(network: network)
 
         let results = await SDKSynchronizer.pingEndpoints(nodes.map { ZcashAdapter.endpoint(url: $0.url) })
 
         return results.compactMap { result in
             guard result.chainName == expectedChainName else { return nil }
             guard result.saplingActivationHeight == expectedSaplingActivation else { return nil }
-            guard result.estimatedHeight - result.blockHeight < Self.syncedThresholdBlocks else { return nil }
+            guard let remoteBranchID = ConsensusBranchID.fromString(result.consensusBranchID),
+                  remoteBranchID == SDKSynchronizer.consensusBranchID(at: result.blockHeight, networkType: network.networkType)
+            else { return nil }
+            guard spacing.seconds(from: result.blockHeight, to: result.estimatedHeight) < Self.syncedThresholdSeconds else { return nil }
             guard let node = nodes.first(where: { node in
                 node.url.host == result.endpoint.host && (node.url.port ?? 443) == result.endpoint.port
             }) else { return nil }

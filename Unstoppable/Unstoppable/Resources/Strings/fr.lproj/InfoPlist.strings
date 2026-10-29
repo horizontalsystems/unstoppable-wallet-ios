@@ -1,2 +1,3 @@
+"NSBluetoothAlwaysUsageDescription" = "Le Bluetooth sert uniquement à connecter un portefeuille matériel Ledger.";
 "NSCameraUsageDescription" = "L'application doit accéder à la caméra afin de scanner les codes QR.";
 "NSFaceIDUsageDescription" = "FaceID sera utilisé pour déverrouiller le portefeuille.";

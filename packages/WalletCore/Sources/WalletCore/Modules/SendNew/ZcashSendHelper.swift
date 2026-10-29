@@ -1,10 +1,10 @@
 import BitcoinCore
 import Foundation
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 class ZcashSendHelper {
     static func converted(_ error: Error) -> Error {
-        switch error as? ZcashLightClientKit.ZcashError {
+        switch error as? ZODLSwiftWalletSDK.ZcashError {
         case .rustProposalInsufficientFunds:
             return BitcoinCoreErrors.SendValueErrors.notEnough
         case .rustProposalScanRequired:

@@ -2,7 +2,7 @@ import Foundation
 import HsExtensions
 import HsToolKit
 import RxSwift
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 class ZcashBalanceService {
     private let uniqueId: String

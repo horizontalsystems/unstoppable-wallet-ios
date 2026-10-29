@@ -1,4 +1,4 @@
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 class ZCashReceiveAddressService: BaseReceiveAddressService {
     var zcashAdapter: ZcashAdapter? { super.adapter as? ZcashAdapter }

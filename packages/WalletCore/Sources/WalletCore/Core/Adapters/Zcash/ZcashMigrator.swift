@@ -1,6 +1,6 @@
 import Foundation
 import HsToolKit
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 class ZcashMigrator {
     // Orchard → Ironwood migration is live in production so users can migrate their Orchard funds.

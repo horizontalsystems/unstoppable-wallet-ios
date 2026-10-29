@@ -9,7 +9,7 @@ import ThorChainKit
 import TonSwift
 import TronKit
 import XrpKit
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 public enum SendData {
     case evm(blockchainType: BlockchainType, transactionData: TransactionData, token: Token)

@@ -2,7 +2,7 @@ import Foundation
 import MarketKit
 import MoneroKit
 import ZanoKit
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 protocol IBirthdayInputProvider {
     var lastBlockHeight: Int { get }

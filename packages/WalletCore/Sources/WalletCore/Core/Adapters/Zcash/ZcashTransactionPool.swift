@@ -1,6 +1,6 @@
 import Foundation
 import RxSwift
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 class ZcashTransactionPool {
     // internal lock: pool is mutated from serialized history operations and read from Rx threads

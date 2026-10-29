@@ -1,2 +1,3 @@
+"NSBluetoothAlwaysUsageDescription" = "O Bluetooth é usado apenas para conectar uma carteira de hardware Ledger.";
 "NSCameraUsageDescription" = "O aplicativo precisa acessar a câmera para escanear os QR Codes.";
 "NSFaceIDUsageDescription" = "O FaceID será usado para desbloquear a carteira.";

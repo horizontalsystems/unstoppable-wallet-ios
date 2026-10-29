@@ -1,7 +1,7 @@
 import Combine
 import Testing
 @testable import WalletCore
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 @MainActor
 struct BackgroundTaskManagerTests {

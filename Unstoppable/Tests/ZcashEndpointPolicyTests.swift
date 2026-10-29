@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 @testable import WalletCore
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 struct ZcashEndpointPolicyTests {
     private let a = LightWalletEndpoint(address: "a", port: 443)
@@ -14,6 +14,7 @@ struct ZcashEndpointPolicyTests {
     @Test func anyErrorKeepsCurrent() {
         struct Boom: Error {}
         #expect(ZcashEndpointService.endpointAfterRebuild(target: b, current: a, error: Boom()) == a)
-        #expect(ZcashEndpointService.endpointAfterRebuild(target: b, current: a, error: ZcashError.slipstreamEngineNotQuiescent) == a)
+        let report = SlipstreamStopReport(settled: false, drained: false, settleWait: .seconds(10), drainWait: .seconds(10))
+        #expect(ZcashEndpointService.endpointAfterRebuild(target: b, current: a, error: ZcashError.slipstreamEngineNotQuiescent(report)) == a)
     }
 }

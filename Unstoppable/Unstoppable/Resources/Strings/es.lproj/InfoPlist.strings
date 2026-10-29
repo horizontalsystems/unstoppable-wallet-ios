@@ -1,2 +1,3 @@
+"NSBluetoothAlwaysUsageDescription" = "Bluetooth se usa solo para conectar un monedero físico Ledger.";
 "NSCameraUsageDescription" = "La aplicación necesita acceder a la cámara para escanear códigos QR.";
 "NSFaceIDUsageDescription" = "Se utilizará FaceID para desbloquear el monedero.";

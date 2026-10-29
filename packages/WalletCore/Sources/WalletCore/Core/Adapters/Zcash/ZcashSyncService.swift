@@ -2,7 +2,7 @@ import Combine
 import Foundation
 import HsToolKit
 import RxSwift
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 class ZcashSyncService {
     private let synchronizer: Synchronizer

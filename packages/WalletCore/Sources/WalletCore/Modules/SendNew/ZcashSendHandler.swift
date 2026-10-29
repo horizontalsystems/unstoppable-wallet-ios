@@ -1,6 +1,6 @@
 import Foundation
 import MarketKit
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 class ZcashSendHandler: SendHandler {
     override class func instance(sendData: WalletCore.SendData) -> ISendHandler? {

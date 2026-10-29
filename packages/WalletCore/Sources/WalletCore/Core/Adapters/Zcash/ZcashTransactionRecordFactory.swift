@@ -1,6 +1,6 @@
 import Foundation
 import MarketKit
-import ZcashLightClientKit
+import ZODLSwiftWalletSDK
 
 class ZcashTransactionRecordFactory {
     private let token: Token
