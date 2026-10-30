@@ -9,7 +9,7 @@ Unstoppable Wallet iOS is the iOS app of Unstoppable, a non-custodial multi-bloc
 - Open `Wallet.xcworkspace`. It holds the app project `Unstoppable/Unstoppable.xcodeproj` and the local Swift package `packages/WalletCore`, where nearly all the code lives.
 - Before the first build, create `Unstoppable/Unstoppable/Configuration/Config.xcconfig` from `Config.template.xcconfig` in the same folder. The file holds API keys and is git-ignored.
 - Schemes: `Development` (the `Debug-Dev` and `Release-Dev` configurations, the `.dev` bundle ids), `Production` (the `Debug-Prod` and `Release-Prod` configurations) and `E2E` (the `Debug-E2E` configuration, described in [`docs/e2e-build.md`](docs/e2e-build.md)). The unit-test target is `AppTests`, in `Unstoppable/Tests`.
-- fastlane, through Bundler (`Gemfile`, Ruby from `.ruby-version`): the lanes are `dev` (builds `Development`, ad hoc, uploads to Firebase), `release` (builds `Production`, uploads to TestFlight), `match_readonly` and `match_generate` (provisioning profiles). Run one as `bundle exec fastlane <lane>`. GitHub Actions runs `dev` on pushes to `version/*` and `release` on pushes to `master`; the release steps are in [`RELEASE.md`](RELEASE.md).
+- fastlane, through Bundler (`Gemfile`, Ruby from `.ruby-version`): the lanes are `dev` (builds `Development`, ad hoc, uploads to Firebase), `release` (builds `Production`, uploads to TestFlight), `match_readonly` and `match_generate` (provisioning profiles). Run one as `bundle exec fastlane <lane>`. GitHub Actions runs `dev` on pushes to `develop` and `release` on pushes to `master`; the release steps are in [`RELEASE.md`](RELEASE.md).
 
 ## Screens and tests
 
