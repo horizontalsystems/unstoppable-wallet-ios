@@ -8,8 +8,6 @@ struct RestoreMnemonicView: View {
 
     @State private var passphrase = ""
     @State private var passphraseSecureLock = true
-    @State private var isEnteringMnemonic = false
-    @State private var mnemonicHeightTrigger = false
     @State private var isMnemonicFocused = false
 
     @State private var restoreCoinsData: RestoreCoinsData?
@@ -36,7 +34,7 @@ struct RestoreMnemonicView: View {
                     }
                     .padding(EdgeInsets(top: 24, leading: 16, bottom: 32, trailing: 16))
                     .animation(.default, value: viewModel.mnemonicCaution)
-                    .animation(.default, value: isEnteringMnemonic)
+                    .animation(.default, value: isMnemonicFocused)
                     .animation(.default, value: viewModel.advanced)
                 }
                 .onTapGesture {
@@ -49,7 +47,7 @@ struct RestoreMnemonicView: View {
                 }
                 .disabled(!viewModel.buttonEnabled)
             } keyboardContent: {
-                if isEnteringMnemonic {
+                if isMnemonicFocused {
                     mnemonicHintRow
                 }
             }
@@ -63,9 +61,6 @@ struct RestoreMnemonicView: View {
                 RestoreCoinsView(accountName: data.name, accountType: data.accountType, isParentPresented: $isParentPresented)
             }
         }
-        // .onFirstAppear {
-        //     isMnemonicFocused = true
-        // }
         .onReceive(viewModel.proceedPublisher) { name, accountType in
             handleProceed(name: name, accountType: accountType)
         }
@@ -101,20 +96,14 @@ struct RestoreMnemonicView: View {
 
     private var mnemonicSection: some View {
         VStack(spacing: 0) {
-            MnemonicInputCellWrapper(
-                statPage: viewModel.advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey,
+            MnemonicInputView(
                 placeholder: "restore.mnemonic.placeholder".localized,
-                invalidRanges: $viewModel.invalidRanges,
-                cautionType: viewModel.mnemonicCaution.caution?.type,
-                replaceWordPublisher: viewModel.replaceWordPublisher,
-                heightTrigger: $mnemonicHeightTrigger,
+                value: $viewModel.input,
+                invalidRanges: viewModel.invalidRanges,
+                borderColor: mnemonicBorderColor,
                 isFocused: $isMnemonicFocused,
-                onChangeMnemonicText: { text, cursorOffset in
-                    viewModel.onChange(text: text, cursorOffset: cursorOffset)
-                },
-                onChangeEntering: { entering in
-                    isEnteringMnemonic = entering
-                }
+                statPage: viewModel.advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey,
+                statEntity: .recoveryPhrase
             )
 
             if let caution = viewModel.mnemonicCaution.caution {
@@ -124,6 +113,10 @@ struct RestoreMnemonicView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
+    }
+
+    private var mnemonicBorderColor: Color {
+        viewModel.mnemonicCaution.caution == nil ? .themeBlade : viewModel.mnemonicCaution.color
     }
 
     // MARK: - Advanced Toggle

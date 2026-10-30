@@ -14,13 +14,18 @@ class RestoreMnemonicViewModel: ObservableObject {
     private var selectedLanguage: Mnemonic.Language = .english
     private var wordListKind: WordListKind?
     private var passphrase: String = ""
-    private var cursorOffset = 0
 
     // MARK: - Published
 
     @Published var name: String {
         didSet {
             buttonEnabled = !resolvedName.isEmpty
+        }
+    }
+
+    @Published var input = CaretText() {
+        didSet {
+            syncInput()
         }
     }
 
@@ -33,11 +38,16 @@ class RestoreMnemonicViewModel: ObservableObject {
     @Published var buttonEnabled = true
 
     private let proceedSubject = PassthroughSubject<(String, AccountType), Never>()
-    private let replaceWordSubject = PassthroughSubject<(NSRange, String), Never>()
 
     init() {
         name = accountFactory.generatedAccountName
         wordListLanguage = displayName(language: selectedLanguage)
+
+        let defaultWords = AppConfig.defaultWords
+        if !defaultWords.isEmpty {
+            input = .end(defaultWords)
+            syncInput() // property observers do not fire in init
+        }
     }
 
     // MARK: - Private helpers
@@ -103,6 +113,18 @@ class RestoreMnemonicViewModel: ObservableObject {
         }
     }
 
+    static func replacingWord(in text: String, range: NSRange, with word: String) -> CaretText? {
+        guard let textRange = Range(range, in: text) else {
+            return nil
+        }
+
+        let replacement = word + " "
+        var newText = text
+        newText.replaceSubrange(textRange, with: replacement)
+
+        return CaretText(text: newText, caretOffset: range.location + (replacement as NSString).length)
+    }
+
     private func isValidWord(_ word: String, partial: Bool) -> Bool {
         switch wordListKind {
         case .bip39: return Self.isBip39Word(word, wordList: wordList, partial: partial)
@@ -123,11 +145,33 @@ class RestoreMnemonicViewModel: ObservableObject {
     }
 
     private func hasCursor(range: NSRange) -> Bool {
-        cursorOffset >= range.lowerBound && cursorOffset <= range.upperBound
+        input.caretOffset >= range.lowerBound && input.caretOffset <= range.upperBound
     }
 
     private var cursorItem: WordItem? {
         mnemonicItems.first { hasCursor(range: $0.range) }
+    }
+
+    private func syncInput() {
+        syncMnemonicItems(text: input.text)
+
+        mnemonicCaution = .none
+
+        let nonCursorInvalidItems = mnemonicItems.filter { item in
+            switch item.type {
+            case .correct: return false
+            case .incorrect: return true
+            case .correctPrefix: return !hasCursor(range: item.range)
+            }
+        }
+
+        invalidRanges = nonCursorInvalidItems.map(\.range)
+
+        if let cursorItem {
+            possibleWords = possibleMnemonicWords(string: cursorItem.word)
+        } else {
+            possibleWords = []
+        }
     }
 
     private var resolvedName: String {
@@ -176,7 +220,6 @@ class RestoreMnemonicViewModel: ObservableObject {
 
 extension RestoreMnemonicViewModel {
     var proceedPublisher: AnyPublisher<(String, AccountType), Never> { proceedSubject.eraseToAnyPublisher() }
-    var replaceWordPublisher: AnyPublisher<(NSRange, String), Never> { replaceWordSubject.eraseToAnyPublisher() }
 
     var wordListViewItems: [AlertViewItem] {
         Mnemonic.Language.allCases.map { language in
@@ -195,32 +238,12 @@ extension RestoreMnemonicViewModel {
         wordListLanguage = displayName(language: language)
     }
 
-    func onChange(text: String, cursorOffset: Int) {
-        self.cursorOffset = cursorOffset
-        syncMnemonicItems(text: text)
-
-        mnemonicCaution = .none
-
-        let nonCursorInvalidItems = mnemonicItems.filter { item in
-            switch item.type {
-            case .correct: return false
-            case .incorrect: return true
-            case .correctPrefix: return !hasCursor(range: item.range)
-            }
-        }
-
-        invalidRanges = nonCursorInvalidItems.map(\.range)
-
-        if let cursorItem {
-            possibleWords = possibleMnemonicWords(string: cursorItem.word)
-        } else {
-            possibleWords = []
-        }
-    }
-
     func onSelect(word: String) {
-        guard let cursorItem else { return }
-        replaceWordSubject.send((cursorItem.range, word))
+        guard let cursorItem, let replaced = Self.replacingWord(in: input.text, range: cursorItem.range, with: word) else {
+            return
+        }
+
+        input = replaced
     }
 
     func onChange(passphrase: String) {

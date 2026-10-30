@@ -80,14 +80,6 @@ public enum CautionType: Equatable, Hashable {
         }
     }
 
-    var borderColor: UIColor {
-        switch self {
-        case .error: return .themeLucian
-        case .warning: return .themeYellowD
-        case .regular: return .themeGray
-        }
-    }
-
     var colorStyle: ColorStyle {
         switch self {
         case .error: return .red

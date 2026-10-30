@@ -86,7 +86,6 @@ public extension UIColor {
     static let themeYellow50 = UIColor(hex: 0xFFA800, alpha: 0.5)
     static let themeYellow20 = UIColor(hex: 0xFFA800, alpha: 0.2)
     static let themeGreen50 = UIColor(hex: 0x05C46B, alpha: 0.5)
-    static let themeRed50 = UIColor(hex: 0xF43A4F, alpha: 0.5)
     static let themeLawrencePressedD = UIColor(hex: 0x353842)
     static let themeLawrencePressedL = UIColor(hex: 0xE3E4E8)
     static let themeStronbuy = UIColor(hex: 0x1A60FF)
