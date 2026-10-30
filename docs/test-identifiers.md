@@ -35,6 +35,7 @@ Every control the user interacts with, and every value a test checks, gets its n
 
 - A name sits on the control or value element itself, the one a user taps or a test reads, and not on a container around it. A name that lands on no element is not declared.
 - Identifiers are always on. No build flag gates them.
+- A container that carries a name becomes an accessibility element. `.accessibilityElement(children: .contain)` goes on it only where a flow reads a part inside it, never everywhere, and the E2E flag does not gate it. `.combine` serves the other case, a composite a flow addresses as one element.
 - An existing UIKit control is tagged only where that needs no rework.
 
 ## Names one platform has
