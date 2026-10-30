@@ -180,11 +180,13 @@ extension SolanaSendHandler {
                 .amount(
                     token: token,
                     appValueType: .regular(appValue: AppValue(token: token, value: amount)),
-                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) }
+                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
+                    identifier: TestTags.confirmAmount
                 ),
                 .address(
                     value: address,
-                    blockchainType: .solana
+                    blockchainType: .solana,
+                    identifier: TestTags.confirmRecipient
                 ),
             ], isFlow: true)
         }
@@ -206,7 +208,8 @@ extension SolanaSendHandler {
             return [
                 .fee(
                     title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
-                    amountData: .init(appValue: appValue, currencyValue: currencyValue)
+                    amountData: .init(appValue: appValue, currencyValue: currencyValue),
+                    identifier: TestTags.confirmNetworkFee
                 ),
             ]
         }

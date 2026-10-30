@@ -6,10 +6,11 @@ struct LargeTextField: View {
     let statPage: StatPage
     let statEntity: StatEntity
     var onButtonTap: (() -> Void)?
+    var identifier: String?
 
     var body: some View {
         VStack(spacing: .margin8) {
-            TextField(
+            let field = TextField(
                 placeholder,
                 text: $text,
                 axis: .vertical
@@ -18,6 +19,12 @@ struct LargeTextField: View {
             .autocorrectionDisabled()
             .font(TextStyle.body.font)
             .tint(.themeInputFieldTintColor)
+
+            if let identifier {
+                field.accessibilityIdentifier(identifier)
+            } else {
+                field
+            }
 
             HStack(spacing: .margin8) {
                 Spacer()

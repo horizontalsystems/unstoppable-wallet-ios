@@ -155,11 +155,13 @@ extension StellarSendHandler {
                     .amount(
                         token: token,
                         appValueType: .regular(appValue: AppValue(token: token, value: amount)),
-                        currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) }
+                        currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
+                        identifier: TestTags.confirmAmount
                     ),
                     .address(
                         value: accountId,
-                        blockchainType: .stellar
+                        blockchainType: .stellar,
+                        identifier: TestTags.confirmRecipient
                     ),
                 ], isFlow: true)
             case let .changeTrust(asset, limit):
@@ -179,7 +181,7 @@ extension StellarSendHandler {
         }
 
         func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
-            StellarSendHelper.feeFields(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid])
+            StellarSendHelper.feeFields(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid], identifier: TestTags.confirmNetworkFee)
         }
 
         func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {

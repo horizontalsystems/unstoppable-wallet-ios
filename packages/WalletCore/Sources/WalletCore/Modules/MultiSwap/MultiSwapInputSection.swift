@@ -59,7 +59,9 @@ struct MultiSwapInputSection: View {
             currency: viewModel.currency,
             focusedField: focusedField,
             amountField: .amount,
-            fiatField: .fiat
+            fiatField: .fiat,
+            amountIdentifier: TestTags.swapAmountIn,
+            tokenIdentifier: TestTags.swapTokenIn
         ) {
             Coordinator.shared.present { isPresented in
                 MultiSwapTokenSelectView(
@@ -79,6 +81,7 @@ struct MultiSwapInputSection: View {
                     viewModel.interchange()
                 }
                 .disabled(viewModel.externalRecipientRequired)
+                .accessibilityIdentifier(TestTags.swapSwitch)
             }
     }
 
@@ -95,6 +98,7 @@ struct MultiSwapInputSection: View {
                     )
                 }
             }
+            .accessibilityIdentifier(TestTags.swapTokenOut)
 
             Spacer()
 
@@ -104,8 +108,10 @@ struct MultiSwapInputSection: View {
                 {
                     ThemeText(formatted, style: .headline1)
                         .lineLimit(1)
+                        .accessibilityIdentifier(TestTags.swapAmountOut)
                 } else {
                     ThemeText("0", style: .headline1, colorStyle: .secondary)
+                        .accessibilityIdentifier(TestTags.swapAmountOut)
                 }
 
                 if viewModel.tokenOut != nil {

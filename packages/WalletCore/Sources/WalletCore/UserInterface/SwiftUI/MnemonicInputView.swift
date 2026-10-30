@@ -8,6 +8,7 @@ struct MnemonicInputView: View {
     @Binding var isFocused: Bool
     let statPage: StatPage
     let statEntity: StatEntity
+    var identifier: String?
 
     var body: some View {
         VStack(spacing: .margin8) {
@@ -16,7 +17,7 @@ struct MnemonicInputView: View {
                     ThemeText(placeholder, style: .body, colorStyle: .andy)
                 }
 
-                MnemonicTextView(value: $value, invalidRanges: invalidRanges, isFocused: $isFocused)
+                MnemonicTextView(value: $value, invalidRanges: invalidRanges, isFocused: $isFocused, identifier: identifier)
             }
 
             HStack(spacing: .margin8) {

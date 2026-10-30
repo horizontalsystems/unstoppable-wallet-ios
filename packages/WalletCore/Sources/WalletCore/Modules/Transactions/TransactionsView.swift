@@ -82,6 +82,7 @@ struct TransactionsView: View {
                 },
                 action: action
             )
+            .accessibilityIdentifier(TestTags.txItem(viewItem.id))
         }
 
         private func iconView(viewItem: TransactionsViewModel.ViewItem) -> some View {

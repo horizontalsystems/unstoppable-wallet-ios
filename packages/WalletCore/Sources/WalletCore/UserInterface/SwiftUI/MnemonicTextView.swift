@@ -11,6 +11,7 @@ struct MnemonicTextView: UIViewRepresentable {
     @Binding var value: CaretText
     let invalidRanges: [NSRange]
     @Binding var isFocused: Bool
+    var identifier: String?
 
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
@@ -39,6 +40,7 @@ struct MnemonicTextView: UIViewRepresentable {
         textView.textContainer.lineFragmentPadding = 0
         textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         textView.delegate = context.coordinator
+        textView.accessibilityIdentifier = identifier
 
         apply(to: textView, coordinator: context.coordinator)
 

@@ -53,6 +53,7 @@ extension ButtonGroupViewModel {
         let mode: ThemeButton.Mode
         let title: String
         let icon: String?
+        let identifier: String?
         let action: () -> Void
 
         init(
@@ -61,6 +62,7 @@ extension ButtonGroupViewModel {
             mode: ThemeButton.Mode = .solid,
             title: String,
             icon: String? = nil,
+            identifier: String? = nil,
             action: @escaping () -> Void
         ) {
             self.id = id
@@ -68,6 +70,7 @@ extension ButtonGroupViewModel {
             self.mode = mode
             self.title = title
             self.icon = icon
+            self.identifier = identifier
             self.action = action
         }
     }

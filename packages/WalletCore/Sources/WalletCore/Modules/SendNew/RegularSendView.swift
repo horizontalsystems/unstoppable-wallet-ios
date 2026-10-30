@@ -30,6 +30,7 @@ struct RegularSendView: View {
                 if showSlideButton {
                     SlideButton(
                         styling: .text(start: sendViewModel.sendData?.customSendButtonTitle ?? "send.confirmation.slide_to_send".localized, end: "", success: ""),
+                        identifier: TestTags.confirmSend,
                         action: {
                             try await sendViewModel.send()
                         }, completion: {

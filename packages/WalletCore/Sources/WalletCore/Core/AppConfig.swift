@@ -186,15 +186,24 @@ enum AppConfig {
     }
 
     static var defaultWords: String {
-        Bundle.main.object(forInfoDictionaryKey: "DefaultWords") as? String ?? ""
+        guard !AppEnvironment.isE2E else {
+            return ""
+        }
+        return Bundle.main.object(forInfoDictionaryKey: "DefaultWords") as? String ?? ""
     }
 
     static var defaultPassphrase: String {
-        Bundle.main.object(forInfoDictionaryKey: "DefaultPassphrase") as? String ?? ""
+        guard !AppEnvironment.isE2E else {
+            return ""
+        }
+        return Bundle.main.object(forInfoDictionaryKey: "DefaultPassphrase") as? String ?? ""
     }
 
     static var defaultWatchAddress: String? {
-        Bundle.main.object(forInfoDictionaryKey: "DefaultWatchAddress") as? String
+        guard !AppEnvironment.isE2E else {
+            return nil
+        }
+        return Bundle.main.object(forInfoDictionaryKey: "DefaultWatchAddress") as? String
     }
 
     static var sharedCloudContainer: String? {

@@ -44,7 +44,8 @@ struct WatchView: View {
                                 text: $viewModel.text,
                                 statPage: .watchWallet,
                                 statEntity: .key,
-                                onButtonTap: { focusedField = nil }
+                                onButtonTap: { focusedField = nil },
+                                identifier: TestTags.watchInput
                             )
                             .focused($focusedField, equals: .text)
                             .modifier(CautionBorder(cautionState: $viewModel.textCaution))
@@ -82,6 +83,7 @@ struct WatchView: View {
                     proceed()
                 }
                 .disabled(!viewModel.watchEnabled)
+                .accessibilityIdentifier(TestTags.watchSubmit)
             }
         }
         .navigationTitle("watch_address.title".localized)

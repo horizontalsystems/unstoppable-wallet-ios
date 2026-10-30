@@ -12,6 +12,17 @@ enum AutoLockPeriod: String, CaseIterable {
         "auto_lock.\(rawValue)".localized
     }
 
+    var identifierRaw: String {
+        switch self {
+        case .immediate: return "immediate"
+        case .minute1: return "1min"
+        case .minute5: return "5min"
+        case .minute15: return "15min"
+        case .minute30: return "30min"
+        case .hour1: return "1hour"
+        }
+    }
+
     var period: TimeInterval {
         switch self {
         case .immediate: return 0

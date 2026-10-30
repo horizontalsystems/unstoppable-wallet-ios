@@ -20,6 +20,7 @@ struct UnlockView: View {
                 maxDigits: viewModel.passcodeLength,
                 description: $viewModel.description,
                 errorText: $viewModel.errorText,
+                errorIdentifier: TestTags.pinAttemptsLeft,
                 passcode: $viewModel.passcode,
                 biometryType: $viewModel.resolvedBiometryType,
                 lockoutState: $viewModel.lockoutState,

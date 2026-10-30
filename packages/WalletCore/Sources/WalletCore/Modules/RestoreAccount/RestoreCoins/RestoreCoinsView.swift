@@ -52,6 +52,7 @@ struct RestoreCoinsView: View {
                     isParentPresented = false
                 }
                 .disabled(!viewModel.canRestore)
+                .accessibilityIdentifier(TestTags.restoreSubmit)
             }
         }
         .navigationTitle("restore_select.title".localized)
@@ -85,6 +86,7 @@ struct RestoreCoinsView: View {
                         ).animation(),
                         style: .yellow
                     )
+                    .accessibilityIdentifier(TestTags.restoreChain(item.blockchain.uid))
                 }
             }
         )

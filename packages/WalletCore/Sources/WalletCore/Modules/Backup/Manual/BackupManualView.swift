@@ -19,6 +19,7 @@ struct BackupManualView: View {
                 title: "backup.title".localized,
                 statPage: .manualBackup,
                 buttonTitle: "backup.verify".localized,
+                buttonIdentifier: TestTags.backupVerify,
                 buttonDisabled: !viewModel.canVerify,
                 onButtonTap: { verifyPresented = true }
             ) {

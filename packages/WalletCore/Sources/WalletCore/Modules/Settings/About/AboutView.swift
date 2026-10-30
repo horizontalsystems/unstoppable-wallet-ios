@@ -36,6 +36,7 @@ struct AboutView: View {
                         )
                     }
                     .buttonStyle(CellButtonStyle())
+                    .accessibilityIdentifier(TestTags.aboutAppStatus)
 
                     Cell(
                         left: { ThemeImage("list", size: .iconSize24) },
@@ -48,6 +49,7 @@ struct AboutView: View {
                             stat(page: .aboutApp, event: .open(page: .terms))
                         }
                     )
+                    .accessibilityIdentifier(TestTags.aboutTerms)
                 }
 
                 ListSection {

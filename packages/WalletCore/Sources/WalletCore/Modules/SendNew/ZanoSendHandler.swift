@@ -183,11 +183,13 @@ extension ZanoSendHandler {
                 .amount(
                     token: token,
                     appValueType: .regular(appValue: amountData.appValue),
-                    currencyValue: amountData.currencyValue
+                    currencyValue: amountData.currencyValue,
+                    identifier: TestTags.confirmAmount
                 ),
                 .address(
                     value: address,
-                    blockchainType: .zano
+                    blockchainType: .zano,
+                    identifier: TestTags.confirmRecipient
                 ),
             ], isFlow: true))
 
@@ -199,7 +201,7 @@ extension ZanoSendHandler {
 
             let feeRate = rates[feeToken.coin.uid]
             sections.append(
-                .init(fields + ZanoSendHelper.feeFields(fee: fee, feeToken: feeToken, currency: currency, feeTokenRate: feeRate), isMain: false)
+                .init(fields + ZanoSendHelper.feeFields(fee: fee, feeToken: feeToken, currency: currency, feeTokenRate: feeRate, identifier: TestTags.confirmNetworkFee), isMain: false)
             )
 
             return sections

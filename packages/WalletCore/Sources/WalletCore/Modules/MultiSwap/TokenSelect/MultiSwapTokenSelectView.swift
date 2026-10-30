@@ -176,6 +176,7 @@ struct MultiSwapTokenSelectView: View {
                     select(item.token)
                 }
             )
+            .accessibilityIdentifier(TestTags.swapCoin(item.token.coin.code, item.token.blockchainType.uid))
         }
     }
 }

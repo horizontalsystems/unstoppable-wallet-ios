@@ -10,14 +10,16 @@ public struct SlideButton: View {
 
     public typealias Styling = SlideButtonStyling
     private let styling: Styling
+    private let identifier: String?
 
     @GestureState private var offset: CGFloat
     @State private var swipeState: SwipeState = .start
 
-    public init(styling: Styling = .default, action: @escaping () async throws -> Void, completion: @escaping () -> Void) {
+    public init(styling: Styling = .default, identifier: String? = nil, action: @escaping () async throws -> Void, completion: @escaping () -> Void) {
         callback = action
         self.completion = completion
         self.styling = styling
+        self.identifier = identifier
 
         _offset = .init(initialValue: 0)
     }
@@ -124,7 +126,7 @@ public struct SlideButton: View {
         }
         .frame(height: styling.indicatorSize)
         .accessibilityRepresentation {
-            Button(action: {
+            let button = Button(action: {
                 swipeState = .end
 
                 Task {
@@ -135,6 +137,12 @@ public struct SlideButton: View {
                 label
             })
             .disabled(swipeState != .start)
+
+            if let identifier {
+                button.accessibilityIdentifier(identifier)
+            } else {
+                button
+            }
         }
     }
 

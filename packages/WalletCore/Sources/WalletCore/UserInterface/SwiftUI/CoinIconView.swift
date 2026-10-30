@@ -9,22 +9,38 @@ struct BalanceCoinIconView: View {
     let onTapFailed: () -> Void
 
     var body: some View {
-        if !isReachable {
-            // show standard icon when noInternet
-            coinIconView()
-        } else {
-            switch state {
-            case .notSynced:
-                ZStack {
-                    Circle().fill(Color.themeBlade)
-                    Image("warning_filled").themeIcon(color: .themeLucian)
-                }
-                .frame(size: 40)
-                .onTapGesture(perform: onTapFailed)
-            default:
+        Group {
+            if !isReachable {
+                // show standard icon when noInternet
                 coinIconView()
+            } else {
+                switch state {
+                case .notSynced:
+                    ZStack {
+                        Circle().fill(Color.themeBlade)
+                        Image("warning_filled").themeIcon(color: .themeLucian)
+                    }
+                    .frame(size: 40)
+                    .onTapGesture(perform: onTapFailed)
+                default:
+                    coinIconView()
+                }
             }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier(TestTags.balanceItemSync(token.coin.code, syncName))
+    }
+
+    private var syncName: String {
+        if isReachable, state.isNotSynced {
+            return "failed"
+        }
+
+        if state.syncing {
+            return "syncing"
+        }
+
+        return "synced"
     }
 
     private func coinIconView() -> some View {

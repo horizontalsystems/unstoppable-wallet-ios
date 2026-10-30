@@ -134,7 +134,7 @@ struct MultiSwapView: View {
     }
 
     @ViewBuilder private func buttonView(vm: MultiSwapViewModel) -> some View {
-        let (title, style, disabled, showProgress, progress, preSwapStep) = buttonState(vm: vm)
+        let (title, style, disabled, showProgress, progress, preSwapStep, identifier) = buttonState(vm: vm)
 
         ThemeButton(text: title, spinner: showProgress, progress: progress, style: style) {
             if vm.tokenInWalletState == .notEnabled {
@@ -148,6 +148,7 @@ struct MultiSwapView: View {
             }
         }
         .disabled(disabled)
+        .accessibilityIdentifier(identifier)
     }
 
     /// the sell wallet's own step, such as shielding ZEC: its screen comes from the wallet's handler, not the provider
@@ -264,6 +265,8 @@ struct MultiSwapView: View {
             }
         }
         .padding(.vertical, 8)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier(TestTags.swapProvider)
     }
 
     @ViewBuilder private func quoteCautionsView(quote: MultiSwapViewModel.Quote) -> some View {
@@ -375,13 +378,14 @@ struct MultiSwapView: View {
         }
     }
 
-    private func buttonState(vm: MultiSwapViewModel) -> (String, ThemeButton.Style, Bool, Bool, Double?, MultiSwapPreSwapStep?) {
+    private func buttonState(vm: MultiSwapViewModel) -> (String, ThemeButton.Style, Bool, Bool, Double?, MultiSwapPreSwapStep?, String) {
         let title: String
         var style: ThemeButton.Style = .primary
         var disabled = true
         var showProgress = false
         var progress: Double?
         var preSwapStep: MultiSwapPreSwapStep?
+        var identifier = TestTags.swapNext
 
         if vm.validatingProvider {
             title = "swap.proceed_button".localized
@@ -402,14 +406,18 @@ struct MultiSwapView: View {
             title = "swap.select_token_out".localized
         } else if vm.validProviders.isEmpty {
             title = "swap.no_providers".localized
+            identifier = TestTags.swapError
         } else if vm.amountIn == nil {
             title = "swap.enter_amount".localized
         } else if vm.currentQuote == nil {
             title = "swap.no_quotes".localized
+            identifier = TestTags.swapError
         } else if vm.adapterState == nil {
             title = "swap.token_not_enabled".localized
+            identifier = TestTags.swapError
         } else if let adapterState = vm.adapterState, !vm.spendMode.spendAllowed(state: adapterState) {
             title = "swap.token_not_synced".localized
+            identifier = TestTags.swapError
         } else if let spendStep = vm.spendStep {
             // asked before the balance check: the step covers the amounts between spendable and available
             switch spendStep {
@@ -425,18 +433,20 @@ struct MultiSwapView: View {
             }
         } else if let availableBalance = vm.availableBalance, let amountIn = vm.amountIn, amountIn > availableBalance {
             title = "swap.insufficient_balance".localized
+            identifier = TestTags.swapError
         } else if let currentQuote = vm.currentQuote, let state = currentQuote.quote.customButtonState {
             title = state.title
             style = state.style
             disabled = state.disabled
             showProgress = state.showProgress
             preSwapStep = state.preSwapStep
+            identifier = state.identifier
         } else {
             title = vm is SplitSwapViewModel ? "send.next_button".localized : "swap.proceed_button".localized
             disabled = false
         }
 
-        return (title, style, disabled, showProgress, progress, preSwapStep)
+        return (title, style, disabled, showProgress, progress, preSwapStep, identifier)
     }
 }
 

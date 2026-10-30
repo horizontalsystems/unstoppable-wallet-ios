@@ -69,7 +69,8 @@ extension MigrationSendHandler {
                 .amount(
                     token: token,
                     appValueType: .regular(appValue: AppValue(token: token, value: amount)),
-                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) }
+                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
+                    identifier: TestTags.confirmAmount
                 ),
             ]
 
@@ -81,7 +82,8 @@ extension MigrationSendHandler {
                 .init([
                     .fee(
                         title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
-                        amountData: .init(appValue: appValue, currencyValue: currencyValue)
+                        amountData: .init(appValue: appValue, currencyValue: currencyValue),
+                        identifier: TestTags.confirmNetworkFee
                     ),
                 ], isMain: false),
             ]

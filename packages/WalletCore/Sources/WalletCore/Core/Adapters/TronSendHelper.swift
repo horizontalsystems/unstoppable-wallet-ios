@@ -98,7 +98,7 @@ extension TronSendHelper {
         return CautionNew(title: title, text: text, type: .error)
     }
 
-    static func feeFields(baseToken: Token, totalFees: Int?, fees: [Fee]?, currency: Currency, feeTokenRate: Decimal?) -> [SendField] {
+    static func feeFields(baseToken: Token, totalFees: Int?, fees: [Fee]?, currency: Currency, feeTokenRate: Decimal?, identifier: String? = nil) -> [SendField] {
         var viewItems = [SendField]()
 
         if let totalFees {
@@ -109,7 +109,8 @@ extension TronSendHelper {
             viewItems.append(
                 .fee(
                     title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
-                    amountData: .init(appValue: appValue, currencyValue: currencyValue)
+                    amountData: .init(appValue: appValue, currencyValue: currencyValue),
+                    identifier: identifier
                 )
             )
         }

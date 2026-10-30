@@ -21,6 +21,7 @@ struct SecuritySettingsView: View {
                                 }
                             }
                         )
+                        .accessibilityIdentifier(TestTags.securityPasscode)
                         Cell(
                             middle: {
                                 MultiText(title: ComponentText(text: "settings_security.disable_passcode".localized, colorStyle: .red))
@@ -31,6 +32,7 @@ struct SecuritySettingsView: View {
                                 }
                             }
                         )
+                        .accessibilityIdentifier(TestTags.securityDisablePasscode)
                     } else {
                         Cell(
                             middle: {
@@ -43,6 +45,7 @@ struct SecuritySettingsView: View {
                                 presentCreatePasscode(reason: .regular)
                             }
                         )
+                        .accessibilityIdentifier(TestTags.securityPasscode)
                     }
                 }
 
@@ -70,6 +73,7 @@ struct SecuritySettingsView: View {
                                 }
                             }
                         )
+                        .accessibilityIdentifier(TestTags.securityBiometrics)
                         .onChange(of: viewModel.biometryEnabledType) { type in
                             if !viewModel.isPasscodeSet, type.isEnabled {
                                 presentCreatePasscode(reason: .biometry(enabledType: type, type: biometryType))
@@ -91,7 +95,7 @@ struct SecuritySettingsView: View {
                                 Coordinator.shared.present(type: .alert) { isPresented in
                                     OptionAlertView(
                                         title: "settings_security.auto_lock".localized,
-                                        viewItems: AutoLockPeriod.allCases.map { .init(text: $0.title, selected: viewModel.autoLockPeriod == $0) },
+                                        viewItems: AutoLockPeriod.allCases.map { .init(text: $0.title, selected: viewModel.autoLockPeriod == $0, identifier: TestTags.autolockInterval($0.identifierRaw)) },
                                         onSelect: { index in
                                             viewModel.autoLockPeriod = AutoLockPeriod.allCases[index]
                                         },
@@ -100,6 +104,7 @@ struct SecuritySettingsView: View {
                                 }
                             }
                         )
+                        .accessibilityIdentifier(TestTags.securityAutolock)
                     }
                     toggledRow(title: "settings_security.balance_auto_hide".localized, subtitle: "settings_security.balance_auto_hide.description".localized, isOn: $viewModel.balanceAutoHide)
 

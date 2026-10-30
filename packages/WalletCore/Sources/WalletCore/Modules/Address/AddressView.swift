@@ -45,7 +45,8 @@ struct AddressView: View {
                         result: $viewModel.addressResult,
                         parserFilter: parserFilter,
                         borderColor: Binding(get: { borderColor }, set: { _ in }),
-                        foregroundColor: $foregroundColor
+                        foregroundColor: $foregroundColor,
+                        identifier: TestTags.enterAddressInput
                     )
                     .focused($isInputActive)
                     .padding(.bottom, .margin12)
@@ -53,6 +54,8 @@ struct AddressView: View {
                     if case let .invalid(caution) = viewModel.state, let caution {
                         VStack(spacing: .margin12) {
                             HighlightedTextView(caution: caution)
+                                .accessibilityElement(children: .combine)
+                                .accessibilityIdentifier(TestTags.enterAddressError)
                         }
                         .padding(.top, .margin16)
                     } else {
@@ -108,6 +111,7 @@ struct AddressView: View {
                 }
             }
             .disabled(disabled)
+            .accessibilityIdentifier(TestTags.enterAddressSubmit)
         }
     }
 

@@ -84,11 +84,18 @@ struct ReceiveAddressBodyView<Content: View>: View {
                 Text(item.address)
                     .textSubhead2(color: .themeLeah)
                     .multilineTextAlignment(.center)
+                    .accessibilityIdentifier(TestTags.receiveAddress)
 
                 if let networkName = item.networkName {
-                    Text(networkName)
+                    let text = Text(networkName)
                         .textSubhead2()
                         .multilineTextAlignment(.center)
+
+                    if let identifier = item.networkIdentifier {
+                        text.accessibilityIdentifier(identifier)
+                    } else {
+                        text
+                    }
                 }
             }
             .frame(maxWidth: .infinity)
@@ -123,6 +130,7 @@ struct ReceiveAddressBodyView<Content: View>: View {
             IconButton(icon: type.icon, style: .secondary, size: .medium) {
                 handle(action: type)
             }
+            .accessibilityIdentifier(type.identifier)
 
             Text(type.title).textSubhead1()
         }

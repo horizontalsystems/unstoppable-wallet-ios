@@ -5,6 +5,7 @@ struct PasscodeView: View {
 
     @Binding var description: String
     @Binding var errorText: String
+    let errorIdentifier: String
     @Binding var passcode: String {
         didSet {
             backspaceVisible = !passcode.isEmpty
@@ -42,6 +43,7 @@ struct PasscodeView: View {
                         .frame(maxHeight: .infinity, alignment: .bottom)
                         .transition(.opacity.animation(.easeOut))
                         .id(description)
+                        .accessibilityIdentifier(TestTags.pinTitle)
 
                     HStack(spacing: .margin12) {
                         ForEach(0 ..< maxDigits, id: \.self) { index in
@@ -63,6 +65,7 @@ struct PasscodeView: View {
                         .frame(maxHeight: .infinity, alignment: .top)
                         .transition(.opacity.animation(.easeOut))
                         .id(errorText)
+                        .accessibilityIdentifier(errorIdentifier)
                 case let .locked(unlockDate):
                     VStack(spacing: .margin16) {
                         Image.lock(size: .iconSize48)

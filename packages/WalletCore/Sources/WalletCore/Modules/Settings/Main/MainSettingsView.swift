@@ -156,6 +156,7 @@ struct MainSettingsView: View {
             )
         }
         .buttonStyle(CellButtonStyle())
+        .accessibilityIdentifier(TestTags.settingsManageWallets)
     }
 
     private func blockchainSettings() -> some View {
@@ -172,6 +173,7 @@ struct MainSettingsView: View {
             )
         }
         .buttonStyle(CellButtonStyle())
+        .accessibilityIdentifier(TestTags.settingsBlockchain)
     }
 
     private func security() -> some View {
@@ -188,6 +190,7 @@ struct MainSettingsView: View {
             )
         }
         .buttonStyle(CellButtonStyle())
+        .accessibilityIdentifier(TestTags.settingsSecurity)
     }
 
     private func privacy() -> some View {
@@ -204,6 +207,7 @@ struct MainSettingsView: View {
             )
         }
         .buttonStyle(CellButtonStyle())
+        .accessibilityIdentifier(TestTags.settingsPrivacy)
     }
 
     private func dAppConnection() -> some View {
@@ -254,6 +258,7 @@ struct MainSettingsView: View {
             )
         }
         .buttonStyle(CellButtonStyle())
+        .accessibilityIdentifier(TestTags.settingsAppSettings)
     }
 
     private func subscription() -> some View {
@@ -286,6 +291,7 @@ struct MainSettingsView: View {
                 }
             }
         )
+        .accessibilityIdentifier(TestTags.settingsContacts)
     }
 
     private func backupManager() -> some View {
@@ -302,6 +308,7 @@ struct MainSettingsView: View {
             )
         }
         .buttonStyle(CellButtonStyle())
+        .accessibilityIdentifier(TestTags.settingsBackupManager)
     }
 
     private func vipSupport() -> some View {
@@ -358,6 +365,7 @@ struct MainSettingsView: View {
             )
         }
         .buttonStyle(CellButtonStyle())
+        .accessibilityIdentifier(TestTags.settingsAbout)
     }
 
     private func rateUs() -> some View {
@@ -509,6 +517,7 @@ struct MainSettingsView: View {
                     }
                 }
             )
+            .accessibilityIdentifier(TestTags.settingsDebugSimulateFailSwap)
 
             Cell(
                 middle: { ThemeText("Emulate Purchase", style: .headline2) },

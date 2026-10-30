@@ -20,7 +20,7 @@ struct ManageAccountsView: View {
                                 ForEach(viewModel.sections) { section in
                                     Section {
                                         ListForEach(section.items) { item in
-                                            itemView(item: item)
+                                            itemView(item: item, index: rowIndex(of: item, in: section))
                                         }
                                     } header: {
                                         ThemeListSectionHeader(text: section.title)
@@ -63,7 +63,7 @@ struct ManageAccountsView: View {
         }
     }
 
-    private func itemView(item: ManageAccountsViewModel.Item) -> some View {
+    private func itemView(item: ManageAccountsViewModel.Item, index: Int) -> some View {
         Cell(
             left: {
                 Image.checkbox(active: item.isActive)
@@ -85,12 +85,23 @@ struct ManageAccountsView: View {
                         }
                     }
                 }
+                .accessibilityIdentifier(TestTags.accountOptions(index))
             },
             action: {
                 viewModel.set(activeAccountId: item.account.id)
                 parentPresented?.wrappedValue = false
             }
         )
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier(TestTags.accountRow(index))
+    }
+
+    private func rowIndex(of item: ManageAccountsViewModel.Item, in section: ManageAccountsViewModel.Section) -> Int {
+        let offset = viewModel.sections
+            .prefix { $0.id != section.id }
+            .reduce(0) { $0 + $1.items.count }
+
+        return offset + (section.items.firstIndex(of: item) ?? 0)
     }
 
     private func alertSubtitle(item: ManageAccountsViewModel.Item) -> CustomStringConvertible? {

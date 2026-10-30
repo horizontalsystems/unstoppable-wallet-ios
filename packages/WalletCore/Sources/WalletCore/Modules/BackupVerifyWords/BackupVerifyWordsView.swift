@@ -19,8 +19,8 @@ struct BackupVerifyWordsView: View {
                     .padding(.bottom, .margin32)
 
                 VStack(spacing: .margin16) {
-                    ForEach(viewModel.inputViewItems) { item in
-                        inputRow(item)
+                    ForEach(Array(viewModel.inputViewItems.enumerated()), id: \.element.id) { index, item in
+                        inputRow(item, index: index)
                     }
                 }
                 .padding(.bottom, .margin16)
@@ -31,6 +31,7 @@ struct BackupVerifyWordsView: View {
                             viewModel.onSelectWord(index: item.id)
                         }
                         .disabled(!item.enabled)
+                        .accessibilityIdentifier(TestTags.quizOption(item.text))
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -54,8 +55,9 @@ struct BackupVerifyWordsView: View {
         }
     }
 
-    private func inputRow(_ item: BackupVerifyWordsViewModel.InputViewItem) -> some View {
+    private func inputRow(_ item: BackupVerifyWordsViewModel.InputViewItem, index: Int) -> some View {
         ThemeText(item.text, style: .body)
+            .accessibilityIdentifier(TestTags.quizPosition(index))
             .frame(maxWidth: .infinity, minHeight: .heightCell48, alignment: .leading)
             .padding(.horizontal, .margin16)
             .overlay(

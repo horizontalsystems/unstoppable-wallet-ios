@@ -8,6 +8,12 @@ public enum AppEnvironment: String {
         current = env
     }
 
+    public private(set) static var isE2E = false
+
+    public static func enableE2E() {
+        isE2E = true
+    }
+
     public static var config: Config {
         switch current {
         case .dev: return .dev

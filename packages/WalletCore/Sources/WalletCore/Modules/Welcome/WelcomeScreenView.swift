@@ -93,6 +93,7 @@ struct WelcomeScreenView: View {
             ThemeButton(text: "button.next".localized) {
                 onTapNext()
             }
+            .accessibilityIdentifier(TestTags.introNext)
             .padding(.horizontal, .margin32)
             .padding(.bottom, .margin32)
         }

@@ -143,12 +143,14 @@ extension BitcoinSendHandler {
             let from = SendField.amount(
                 token: baseToken,
                 appValueType: .regular(appValue: appValue),
-                currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * decimalValue) }
+                currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * decimalValue) },
+                identifier: TestTags.confirmAmount
             )
 
             let to = SendField.address(
                 value: toAddress,
-                blockchainType: baseToken.blockchainType
+                blockchainType: baseToken.blockchainType,
+                identifier: TestTags.confirmRecipient
             )
 
             return .init([from, to], isFlow: true)
@@ -176,7 +178,7 @@ extension BitcoinSendHandler {
         }
 
         func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
-            UtxoSendHelper.feeFields(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid])
+            UtxoSendHelper.feeFields(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid], identifier: TestTags.confirmNetworkFee)
         }
 
         func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {

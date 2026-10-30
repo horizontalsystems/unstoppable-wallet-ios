@@ -10,7 +10,7 @@ class ReceiveDerivationViewModel: ReceiveSettingsViewModel {
             return .init(
                 uid: derivation.rawValue,
                 title: derivation.addressType + derivation.recommended,
-                subtitle: derivation.title
+                subtitle: derivation.rawValue.uppercased()
             )
         }
     }

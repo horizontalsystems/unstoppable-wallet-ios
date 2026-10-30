@@ -82,7 +82,7 @@ enum XrpSendHelper {
         return .xrp(token: token, data: .payment(amount: amount, address: destination.classic), destinationTag: destination.tag)
     }
 
-    static func feeFields(fee: Decimal?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendField] {
+    static func feeFields(fee: Decimal?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?, identifier: String? = nil) -> [SendField] {
         guard let fee else {
             return []
         }
@@ -93,7 +93,8 @@ enum XrpSendHelper {
         return [
             .fee(
                 title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
-                amountData: .init(appValue: appValue, currencyValue: currencyValue)
+                amountData: .init(appValue: appValue, currencyValue: currencyValue),
+                identifier: identifier
             ),
         ]
     }

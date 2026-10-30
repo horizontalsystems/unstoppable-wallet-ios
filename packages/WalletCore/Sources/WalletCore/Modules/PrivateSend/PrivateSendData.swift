@@ -58,12 +58,14 @@ open class PrivateSendData: ISendData {
         let amount = SendField.amount(
             token: token,
             appValueType: .regular(appValue: AppValue(token: token, value: preview.amountOut)),
-            currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * preview.amountOut) }
+            currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * preview.amountOut) },
+            identifier: TestTags.confirmAmount
         )
 
         let to = SendField.address(
             value: preview.request.recipient,
-            blockchainType: token.blockchainType
+            blockchainType: token.blockchainType,
+            identifier: TestTags.confirmRecipient
         )
 
         var fields: [SendField] = inner.fields(baseToken: baseToken, currency: currency, rates: rates)

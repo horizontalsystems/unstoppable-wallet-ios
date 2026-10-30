@@ -10,6 +10,10 @@ class ZCashReceiveAddressViewItemFactory: ReceiveAddressViewItemFactory {
     override func networkName(item _: BaseReceiveAddressService.AssetReceiveAddress) -> String {
         "deposit.zcash.title".localized + ": " + addressType.title
     }
+
+    override func networkIdentifier(item _: BaseReceiveAddressService.AssetReceiveAddress) -> String {
+        TestTags.receiveAddressType
+    }
 }
 
 extension ZcashAdapter.AddressType {

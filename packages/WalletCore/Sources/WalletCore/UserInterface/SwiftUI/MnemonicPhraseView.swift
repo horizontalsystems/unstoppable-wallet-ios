@@ -20,6 +20,7 @@ struct MnemonicPhraseView: View {
                     HStack(alignment: .lastTextBaseline, spacing: .margin6) {
                         ThemeText("\(index + 1)", style: .subhead, colorStyle: .andy)
                         ThemeText(word, style: .body)
+                            .accessibilityIdentifier(TestTags.backupWord(index + 1))
                     }
                 }
             }
@@ -43,5 +44,7 @@ struct MnemonicPhraseView: View {
         .contentShape(Rectangle())
         .onTapGesture(perform: onTap)
         .accessibilityAddTraits(.isButton)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier(TestTags.backupReveal)
     }
 }

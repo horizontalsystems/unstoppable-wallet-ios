@@ -3,13 +3,14 @@ import Foundation
 import MarketKit
 
 class EvmSendHelper {
-    static func feeFields(evmFeeData: EvmFeeData?, gasPrice: GasPrice?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendField] {
+    static func feeFields(evmFeeData: EvmFeeData?, gasPrice: GasPrice?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?, identifier: String? = nil) -> [SendField] {
         let amountData = evmFeeData.flatMap { $0.totalAmountData(gasPrice: gasPrice, feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate) }
 
         return [
             .fee(
                 title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
-                amountData: amountData
+                amountData: amountData,
+                identifier: identifier
             ),
         ]
     }

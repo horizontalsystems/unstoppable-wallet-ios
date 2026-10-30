@@ -52,5 +52,5 @@ buildServer.json
 /.playwright-mcp/
 /.serena/
 /.venv-translate/
-/CLAUDE.md
+/CLAUDE.local.md
 /.env

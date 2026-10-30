@@ -40,14 +40,20 @@ struct ButtonGroupView: View {
         }
     }
 
+    @ViewBuilder
     private func buttonView(for button: ButtonGroupViewModel.ButtonItem) -> some View {
         let isDisabled = viewModel.isDisabled(button.id)
-
-        return ThemeButton(text: button.title, icon: button.icon, style: button.style, mode: button.mode) {
+        let view = ThemeButton(text: button.title, icon: button.icon, style: button.style, mode: button.mode) {
             if !isDisabled {
                 button.action()
             }
         }
         .disabled(isDisabled)
+
+        if let identifier = button.identifier {
+            view.accessibilityIdentifier(identifier)
+        } else {
+            view
+        }
     }
 }

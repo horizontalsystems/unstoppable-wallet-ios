@@ -13,6 +13,10 @@ struct UnstoppableApp: App {
             AppEnvironment.configure(.dev)
         #endif
 
+        #if E2E
+            AppEnvironment.enableE2E()
+        #endif
+
         Theme.updateNavigationBarTheme() // TODO: get rid of this
 
         do {

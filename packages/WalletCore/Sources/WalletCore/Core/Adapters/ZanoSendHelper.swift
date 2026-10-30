@@ -40,7 +40,8 @@ class ZanoSendHelper {
         fee: Decimal?,
         feeToken: Token,
         currency: Currency,
-        feeTokenRate: Decimal?
+        feeTokenRate: Decimal?,
+        identifier: String? = nil
     ) -> [SendField] {
         guard let fee else { return [] }
 
@@ -50,7 +51,8 @@ class ZanoSendHelper {
         return [
             .fee(
                 title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
-                amountData: .init(appValue: appValue, currencyValue: currencyValue)
+                amountData: .init(appValue: appValue, currencyValue: currencyValue),
+                identifier: identifier
             ),
         ]
     }

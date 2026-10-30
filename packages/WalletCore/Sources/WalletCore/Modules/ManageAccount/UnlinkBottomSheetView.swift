@@ -47,7 +47,9 @@ struct UnlinkBottomSheetView: View {
     @ViewBuilder private func selector() -> some View {
         let group = GroupSelector(
             id: Controls.selector,
-            items: items.map { .init(id: $0, description: $0) }
+            items: items.enumerated().map { index, text in
+                GroupSelectorItem(id: text, description: text, identifier: TestTags.unlinkConfirm(index))
+            }
         )
 
         SelectorGroupView(group: group, viewModel: selectorViewModel)
@@ -62,6 +64,7 @@ struct UnlinkBottomSheetView: View {
                     id: Controls.delete,
                     style: .secondary,
                     title: "security_settings.delete_alert_button".localized,
+                    identifier: TestTags.unlinkDelete,
                     action: {
                         onUnlink()
                         isPresented = false

@@ -43,8 +43,19 @@ struct TransactionInfoStatusRow: View {
                     ThemeText(text, style: .subhead, colorStyle: .primary)
                     icon
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier(TestTags.txInfoStatus(stateName))
             }
         )
+    }
+
+    private var stateName: String {
+        switch status {
+        case .pending: return "pending"
+        case .processing: return "processing"
+        case .completed: return "completed"
+        case .failed: return notProcessed ? "not_processed" : "failed"
+        }
     }
 
     private var text: String {

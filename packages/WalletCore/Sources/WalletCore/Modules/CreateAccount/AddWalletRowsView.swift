@@ -8,8 +8,11 @@ struct AddWalletRowsView: View {
     var body: some View {
         ListSection {
             row(icon: "plus", title: "add_wallet.new_wallet".localized, description: "add_wallet.new_wallet.description".localized, action: onNewWallet)
+                .accessibilityIdentifier(TestTags.onboardingNewWallet)
             row(icon: "arrow_in", title: "add_wallet.existing_wallet".localized, description: "add_wallet.existing_wallet.description".localized, action: onExistingWallet)
+                .accessibilityIdentifier(TestTags.onboardingExistingWallet)
             row(icon: "eye_on", title: "add_wallet.watch_wallet".localized, description: "add_wallet.watch_wallet.description".localized, action: onWatchWallet)
+                .accessibilityIdentifier(TestTags.onboardingWatchWallet)
         }
     }
 

@@ -69,6 +69,7 @@ struct AppearanceView: View {
                         )
                     }
                     .buttonStyle(CellButtonStyle())
+                    .accessibilityIdentifier(TestTags.appearanceBaseCurrency)
                 }
 
                 VStack(spacing: 0) {

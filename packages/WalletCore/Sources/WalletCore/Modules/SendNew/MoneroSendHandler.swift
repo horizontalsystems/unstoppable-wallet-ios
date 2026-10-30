@@ -153,11 +153,13 @@ extension MoneroSendHandler {
                 .amount(
                     token: token,
                     appValueType: .regular(appValue: amountData.appValue),
-                    currencyValue: amountData.currencyValue
+                    currencyValue: amountData.currencyValue,
+                    identifier: TestTags.confirmAmount
                 ),
                 .address(
                     value: address,
-                    blockchainType: .monero
+                    blockchainType: .monero,
+                    identifier: TestTags.confirmRecipient
                 ),
             ], isFlow: true))
 
@@ -168,7 +170,7 @@ extension MoneroSendHandler {
             }
 
             sections.append(
-                .init(fields + MoneroSendHelper.feeFields(fee: fee, feeToken: token, currency: currency, feeTokenRate: rate, priority: priority), isMain: false)
+                .init(fields + MoneroSendHelper.feeFields(fee: fee, feeToken: token, currency: currency, feeTokenRate: rate, priority: priority, identifier: TestTags.confirmNetworkFee), isMain: false)
             )
 
             return sections

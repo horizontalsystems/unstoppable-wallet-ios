@@ -89,7 +89,7 @@ extension MultiSwapAllowanceHelper {
             case let .notEnough(_, spenderAddress, revokeRequired): return .init(title: revokeRequired ? "swap.revoke".localized : "swap.approve".localized, preSwapStep: UnlockStep(spenderAddress: spenderAddress, isRevoke: revokeRequired))
             case .pendingAllowance: return .init(title: "swap.approving".localized, disabled: true, showProgress: true)
             case .pendingRevoke: return .init(title: "swap.revoking".localized, disabled: true, showProgress: true)
-            case .unknown: return .init(title: "swap.allowance_error".localized, disabled: true)
+            case .unknown: return .init(title: "swap.allowance_error".localized, disabled: true, identifier: TestTags.swapError)
             default: return nil
             }
         }

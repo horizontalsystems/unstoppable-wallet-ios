@@ -46,6 +46,7 @@ struct RestoreMnemonicView: View {
                     viewModel.onTapProceed()
                 }
                 .disabled(!viewModel.buttonEnabled)
+                .accessibilityIdentifier(TestTags.restoreNext)
             } keyboardContent: {
                 if isMnemonicFocused {
                     mnemonicHintRow
@@ -107,7 +108,8 @@ struct RestoreMnemonicView: View {
                 borderColor: mnemonicBorderColor,
                 isFocused: $isMnemonicFocused,
                 statPage: viewModel.advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey,
-                statEntity: .recoveryPhrase
+                statEntity: .recoveryPhrase,
+                identifier: TestTags.restorePhraseInput
             )
 
             if let caution = viewModel.mnemonicCaution.caution {
@@ -115,6 +117,7 @@ struct RestoreMnemonicView: View {
                     .themeCaption(color: viewModel.mnemonicCaution.color)
                     .padding(.top, 12)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .accessibilityIdentifier(TestTags.restoreError)
             }
         }
     }

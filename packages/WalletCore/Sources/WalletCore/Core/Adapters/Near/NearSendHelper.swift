@@ -74,7 +74,7 @@ enum NearSendHelper {
         CautionNew(title: "alert.warning".localized, text: "send.near.previous_transaction_pending".localized, type: .warning)
     }
 
-    static func feeFields(fee: Decimal?, storageDeposit: Decimal?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendField] {
+    static func feeFields(fee: Decimal?, storageDeposit: Decimal?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?, identifier: String? = nil) -> [SendField] {
         var fields = [SendField]()
 
         if let fee {
@@ -84,7 +84,8 @@ enum NearSendHelper {
             fields.append(
                 .fee(
                     title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
-                    amountData: .init(appValue: appValue, currencyValue: currencyValue)
+                    amountData: .init(appValue: appValue, currencyValue: currencyValue),
+                    identifier: identifier
                 )
             )
         }

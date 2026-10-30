@@ -50,6 +50,7 @@ struct BaseCurrencySettingsView: View {
                 }
             }
         )
+        .accessibilityIdentifier(TestTags.currency(currency.code))
     }
 
     private func confirmView(currency: Currency, isPresented: Binding<Bool>) -> some View {

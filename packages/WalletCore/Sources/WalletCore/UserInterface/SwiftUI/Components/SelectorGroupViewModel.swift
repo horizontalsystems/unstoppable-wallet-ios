@@ -94,11 +94,13 @@ struct GroupSelectorItem: Identifiable, Hashable {
     let id: String
     let text: CustomStringConvertible?
     let description: CustomStringConvertible?
+    let identifier: String?
 
-    init(id: String, text: CustomStringConvertible? = nil, description: CustomStringConvertible? = nil) {
+    init(id: String, text: CustomStringConvertible? = nil, description: CustomStringConvertible? = nil, identifier: String? = nil) {
         self.id = id
         self.text = text
         self.description = description
+        self.identifier = identifier
     }
 
     func hash(into hasher: inout Hasher) {

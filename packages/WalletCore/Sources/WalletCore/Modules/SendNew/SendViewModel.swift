@@ -265,6 +265,8 @@ public extension SendViewModel {
                 throw SendError.noSendData
             }
 
+            try BroadcastGuard.check()
+
             sending = true
 
             _ = try await handler.send(data: sendData)

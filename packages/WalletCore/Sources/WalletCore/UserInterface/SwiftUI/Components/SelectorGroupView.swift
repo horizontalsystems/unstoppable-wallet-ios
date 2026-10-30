@@ -46,7 +46,7 @@ struct SelectorGroupView: View {
                 MultiText(title: item.text, subtitle: item.description)
             },
             right: {
-                Toggle(
+                let toggle = Toggle(
                     isOn: Binding(
                         get: { isSelected },
                         set: { _ in
@@ -56,6 +56,12 @@ struct SelectorGroupView: View {
                 ) {}
                     .labelsHidden()
                     .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+
+                if let identifier = item.identifier {
+                    toggle.accessibilityIdentifier(identifier)
+                } else {
+                    toggle
+                }
             }
         )
     }
@@ -64,7 +70,7 @@ struct SelectorGroupView: View {
     private func checkboxCell(for item: GroupSelectorItem, leading: Bool) -> some View {
         let isSelected = viewModel.isSelected(item.id, in: group.id)
 
-        Group {
+        let cell = Group {
             if leading {
                 Cell(
                     style: .secondary,
@@ -92,6 +98,14 @@ struct SelectorGroupView: View {
             withAnimation(.linear(duration: 0.2)) {
                 viewModel.toggleSelection(item.id, in: group)
             }
+        }
+
+        if let identifier = item.identifier {
+            cell
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier(identifier)
+        } else {
+            cell
         }
     }
 }

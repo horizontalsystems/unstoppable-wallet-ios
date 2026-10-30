@@ -31,6 +31,7 @@ struct ManageAccountView: View {
                             .autocapitalization(.words)
                             .autocorrectionDisabled()
                             .focused($isNameFocused)
+                            .accessibilityIdentifier(TestTags.accountNameInput)
                         }
                     }
 
@@ -102,6 +103,7 @@ struct ManageAccountView: View {
                                     }
                                 }
                             )
+                            .accessibilityIdentifier(TestTags.accountManualBackup)
                         }
 
                         if !viewModel.account.watchAccount {
@@ -156,6 +158,7 @@ struct ManageAccountView: View {
                                 }
                             }
                         )
+                        .accessibilityIdentifier(TestTags.accountUnlink)
                     }
                 }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
@@ -195,6 +198,7 @@ struct ManageAccountView: View {
                     }
                     .modifier(ConfirmationButtonStyle())
                     .disabled(viewModel.name.isEmpty || viewModel.account.name == viewModel.name)
+                    .accessibilityIdentifier(TestTags.accountSave)
                 }
             }
         }
@@ -206,7 +210,7 @@ struct ManageAccountView: View {
                 .title(icon: ThemeImage.trash, title: "settings_manage_keys.delete.title".localized),
                 .text(text: "settings_manage_keys.delete.confirmation_watch".localized),
                 .buttonGroup(.init(buttons: [
-                    .init(style: .secondary, title: "settings_manage_keys.delete.confirmation_watch.button".localized) {
+                    .init(style: .secondary, title: "settings_manage_keys.delete.confirmation_watch.button".localized, identifier: TestTags.unlinkDelete) {
                         unlink()
                     },
                 ])),

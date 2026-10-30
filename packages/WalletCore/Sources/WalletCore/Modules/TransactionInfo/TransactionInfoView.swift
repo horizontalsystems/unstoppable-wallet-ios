@@ -94,6 +94,8 @@ struct TransactionInfoView: View {
                             CopyHelper.copyAndNotify(value: value)
                             stat(page: .transactionInfo, event: .copy(entity: .transactionId))
                         }
+                        .accessibilityElement(children: .combine)
+                        .accessibilityIdentifier(TestTags.txInfoHash(value))
 
                         IconButton(icon: "share", style: .secondary, size: .small) {
                             Coordinator.shared.present { _ in

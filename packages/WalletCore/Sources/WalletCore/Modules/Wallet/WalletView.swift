@@ -122,6 +122,8 @@ struct WalletView: View {
                         HapticGenerator.instance.notification(.feedback(.soft))
                     }
             }
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier(TestTags.balanceTotal)
             .padding(.vertical, 24)
             .padding(.horizontal, 16)
 
@@ -258,6 +260,7 @@ struct WalletView: View {
             IconButton(icon: "manage", style: .secondary, size: .small) {
                 onTapManage()
             }
+            .accessibilityIdentifier(TestTags.balanceManageCoins)
 
             Spacer()
 
@@ -268,6 +271,7 @@ struct WalletView: View {
                     .progressViewStyle(DeterminiteSpinnerStyle())
                     .frame(size: 20)
                     .spinning()
+                    .accessibilityIdentifier(TestTags.balanceSyncIndicator)
             }
         }
     }
@@ -281,8 +285,18 @@ struct WalletView: View {
         }
     }
 
+    private func identifier(button: WalletButton) -> String? {
+        switch button {
+        case .scan: return TestTags.balanceScan
+        case .receive: return TestTags.balanceReceive
+        case .send: return TestTags.balanceSend
+        case .swap: return TestTags.balanceSwap
+        case .chart: return nil
+        }
+    }
+
     private func buttonView(button: WalletButton) -> some View {
-        WalletButtonView(icon: button.icon, title: button.title, accent: button.accent) {
+        WalletButtonView(icon: button.icon, title: button.title, accent: button.accent, identifier: identifier(button: button)) {
             switch button {
             case .send:
                 Coordinator.shared.present { isPresented in

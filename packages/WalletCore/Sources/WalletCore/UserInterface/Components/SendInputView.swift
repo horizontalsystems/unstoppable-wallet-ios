@@ -11,15 +11,23 @@ struct SendInputView<FocusField: Hashable>: View {
     var focusedField: FocusState<FocusField?>.Binding
     let amountField: FocusField
     let fiatField: FocusField
+    var amountIdentifier: String?
+    var tokenIdentifier: String?
     var onSelectToken: (() -> Void)?
 
     var body: some View {
         HStack(spacing: 8) {
-            TokenSelectorButton(token: token, action: onSelectToken)
+            let selector = TokenSelectorButton(token: token, action: onSelectToken)
+
+            if let tokenIdentifier {
+                selector.accessibilityIdentifier(tokenIdentifier)
+            } else {
+                selector
+            }
 
             VStack(alignment: .trailing, spacing: 0) {
                 ValidatedAmountInput(text: $amountString, maxDecimals: amountDecimals) { text in
-                    TextField("", text: text, prompt: Text("0").foregroundColor(.themeGray))
+                    let field = TextField("", text: text, prompt: Text("0").foregroundColor(.themeGray))
                         .multilineTextAlignment(.trailing)
                         .foregroundColor(.themeLeah)
                         .font(.themeHeadline1)
@@ -27,6 +35,12 @@ struct SendInputView<FocusField: Hashable>: View {
                         .keyboardType(.decimalPad)
                         .focused(focusedField, equals: amountField)
                         .frame(height: 33)
+
+                    if let amountIdentifier {
+                        field.accessibilityIdentifier(amountIdentifier)
+                    } else {
+                        field
+                    }
                 }
 
                 if token != nil {

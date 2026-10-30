@@ -50,7 +50,7 @@ public struct OptionAlertView: View {
                 .padding(.vertical, .margin12)
 
             ForEach(Array(viewItems.enumerated()), id: \.offset) { index, viewItem in
-                Cell(
+                let cell = Cell(
                     middle: {
                         VStack(spacing: 1) {
                             ThemeText(viewItem.text, style: .body, colorStyle: viewItem.selected ? .yellow : .primary, dimmed: viewItem.disabled)
@@ -67,7 +67,15 @@ public struct OptionAlertView: View {
                         }
                     }
                 )
-                .disabled(viewItem.disabled)
+
+                if let identifier = viewItem.identifier {
+                    cell
+                        .accessibilityIdentifier(identifier)
+                        .disabled(viewItem.disabled)
+                } else {
+                    cell
+                        .disabled(viewItem.disabled)
+                }
             }
         }
         .background(Color.themeLawrence)

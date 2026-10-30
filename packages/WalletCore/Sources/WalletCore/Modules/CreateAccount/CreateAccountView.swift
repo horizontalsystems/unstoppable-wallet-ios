@@ -33,6 +33,7 @@ struct CreateAccountView: View {
                                         .autocapitalization(.words)
                                         .autocorrectionDisabled()
                                         .focused($focusedField, equals: .name)
+                                        .accessibilityIdentifier(TestTags.createNameInput)
                                 } trailing: {
                                     ShortcutButtonsView(
                                         showDelete: .constant(false),
@@ -138,6 +139,7 @@ struct CreateAccountView: View {
                     createAccount()
                 }
                 .disabled(!viewModel.createEnabled)
+                .accessibilityIdentifier(TestTags.createSubmit)
             }
         }
         .onChange(of: viewModel.passphrase) { _ in clearCautions() }

@@ -153,11 +153,13 @@ extension XrpSendHandler {
                     .amount(
                         token: token,
                         appValueType: .regular(appValue: AppValue(token: token, value: amount)),
-                        currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) }
+                        currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
+                        identifier: TestTags.confirmAmount
                     ),
                     .address(
                         value: address,
-                        blockchainType: .xrp
+                        blockchainType: .xrp,
+                        identifier: TestTags.confirmRecipient
                     ),
                 ], isFlow: true)
             case let .trustSet(_, issuer, limit):
@@ -187,7 +189,7 @@ extension XrpSendHandler {
         }
 
         func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
-            XrpSendHelper.feeFields(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid])
+            XrpSendHelper.feeFields(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid], identifier: TestTags.confirmNetworkFee)
         }
 
         func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {

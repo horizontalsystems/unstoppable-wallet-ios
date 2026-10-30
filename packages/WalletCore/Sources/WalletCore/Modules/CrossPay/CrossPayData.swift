@@ -83,12 +83,14 @@ public class CrossPayData: ISendData {
         let amount = SendField.amount(
             token: tokenOut,
             appValueType: .regular(appValue: AppValue(token: tokenOut, value: preview.amountOut)),
-            currencyValue: rateOut.map { CurrencyValue(currency: currency, value: $0 * preview.amountOut) }
+            currencyValue: rateOut.map { CurrencyValue(currency: currency, value: $0 * preview.amountOut) },
+            identifier: TestTags.confirmAmount
         )
 
         let to = SendField.address(
             value: preview.request.recipient,
-            blockchainType: tokenOut.blockchainType
+            blockchainType: tokenOut.blockchainType,
+            identifier: TestTags.confirmRecipient
         )
 
         var fields = [SendField]()

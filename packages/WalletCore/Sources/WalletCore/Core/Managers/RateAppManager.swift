@@ -73,6 +73,10 @@ extension RateAppManager {
     }
 
     func onLaunch() {
+        guard !AppEnvironment.isE2E else {
+            return
+        }
+
         if let lastRequestDate = localStorage.rateAppLastRequestDate, Date().timeIntervalSince1970 - lastRequestDate.timeIntervalSince1970 < repeatedRequestTimeInterval {
             return
         }
