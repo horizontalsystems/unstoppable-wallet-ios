@@ -26,7 +26,6 @@ class ChartUiView: UIView {
     private let chartSecondaryDiffLabel = DiffLabel()
 
     private let chartView: RateChartView
-    private let timePeriodView = FilterView(buttonStyle: .transparent, bottomSeparator: false)
     private let loadingView = HUDActivityView.create(with: .medium24)
     private let errorView = PlaceholderView()
 
@@ -186,16 +185,6 @@ class ChartUiView: UIView {
         chartView.delegate = viewModel
         chartView.setVolumes(hidden: !configuration.showIndicatorArea)
 
-        addSubview(timePeriodView)
-        timePeriodView.snp.makeConstraints { maker in
-            maker.top.equalTo(chartView.snp.bottom).offset(CGFloat.margin8)
-            maker.leading.trailing.equalToSuperview()
-            maker.height.equalTo(CGFloat.heightCell48)
-        }
-
-        timePeriodView.backgroundColor = .clear
-        updateIntervals()
-
         addSubview(loadingView)
         loadingView.snp.makeConstraints { maker in
             maker.center.equalTo(chartView)
@@ -220,31 +209,10 @@ class ChartUiView: UIView {
         CGSize(width: UIView.noIntrinsicMetric, height: totalHeight)
     }
 
-    func timePeriod(show: Bool) {
-        timePeriodView.isHidden = !show
-        timePeriodView.snp.updateConstraints { maker in
-            maker.height.equalTo(show ? CGFloat.heightCell48 : 0)
-        }
-
-        updateConstraints()
-    }
-
     var totalHeight: CGFloat {
         .heightDoubleLineCell
             + configuration.mainHeight
             + (configuration.showIndicatorArea ? configuration.indicatorHeight : 0)
-            + (timePeriodView.isHidden ? 0 : .heightCell48)
-            + .margin8
-    }
-
-    private func updateIntervals() {
-        var viewItems: [FilterView.ViewItem] = viewModel.intervals.map { .item(title: $0) }
-        if viewModel.showAll, !viewModel.intervals.isEmpty {
-            viewItems.append(.item(title: "chart.time_duration.all".localized))
-        }
-
-        timePeriod(show: !viewItems.isEmpty || viewModel.showAll)
-        timePeriodView.reload(filters: viewItems)
     }
 
     private func syncChart(viewItem: ChartModule.ViewItem?) {
@@ -392,15 +360,6 @@ class ChartUiView: UIView {
         }
     }
 
-    private func syncChart(typeIndex: Int) {
-        timePeriodView.select(index: typeIndex)
-    }
-
-    private func syncIntervals(typeIndex: Int) {
-        updateIntervals()
-        syncChart(typeIndex: typeIndex)
-    }
-
     private func syncChart(showIndicators: Bool) {
         self.showIndicators = showIndicators
     }
@@ -424,15 +383,9 @@ class ChartUiView: UIView {
 extension ChartUiView {
     func onLoad() {
         subscribe(disposeBag, viewModel.pointSelectedItemDriver) { [weak self] in self?.syncChart(selectedViewItem: $0) }
-        subscribe(disposeBag, viewModel.intervalsUpdatedWithCurrentIndexDriver) { [weak self] in self?.syncIntervals(typeIndex: $0) }
-
         subscribe(disposeBag, viewModel.indicatorsShownDriver) { [weak self] in self?.syncChart(showIndicators: $0) }
         subscribe(disposeBag, viewModel.loadingDriver) { [weak self] in self?.syncChart(loading: $0) }
         subscribe(disposeBag, viewModel.errorDriver) { [weak self] in self?.syncChart(error: $0) }
         subscribe(disposeBag, viewModel.chartInfoDriver) { [weak self] in self?.syncChart(viewItem: $0) }
-
-        timePeriodView.onSelect = { [weak self] index in
-            self?.viewModel.onSelectInterval(at: index)
-        }
     }
 }

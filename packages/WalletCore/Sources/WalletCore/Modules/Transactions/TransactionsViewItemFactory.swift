@@ -10,16 +10,6 @@ class TransactionsViewItemFactory {
         self.contactLabelService = contactLabelService
     }
 
-    func typeFilterViewItems(typeFilters: [TransactionTypeFilter]) -> [FilterView.ViewItem] {
-        typeFilters.map {
-            if $0 == .all {
-                return .all
-            } else {
-                return .item(title: "transactions.types.\($0.rawValue)".localized)
-            }
-        }
-    }
-
     private func mapped(address: String, blockchainType: BlockchainType) -> String {
         contactLabelService.contactData(for: address, blockchainType: blockchainType).name ?? evmLabelManager.mapped(address: address)
     }

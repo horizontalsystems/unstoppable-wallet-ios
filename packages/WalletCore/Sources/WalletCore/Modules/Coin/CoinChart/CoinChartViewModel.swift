@@ -15,7 +15,6 @@ class CoinChartViewModel: ObservableObject {
 
     private let pointSelectedItemRelay = BehaviorRelay<ChartModule.SelectedPointViewItem?>(value: nil)
 
-    private let intervalsUpdatedWithCurrentIndex = BehaviorRelay<Int>(value: 0)
     private let loadingRelay = BehaviorRelay<Bool>(value: false)
     private let chartInfoRelay = BehaviorRelay<ChartModule.ViewItem?>(value: nil)
     private let errorRelay = BehaviorRelay<Bool>(value: false)
@@ -23,10 +22,8 @@ class CoinChartViewModel: ObservableObject {
     private let openSettingsRelay = PublishRelay<Void>()
 
     @Published private(set) var indicatorsShown: Bool
-
-    var intervals: [String] {
-        service.validIntervals.map(\.shortTitle)
-    }
+    @Published private(set) var intervalTitles: [String] = []
+    @Published private(set) var selectedIntervalIndex: Int = 0
 
     init(service: CoinChartService, factory: CoinChartFactory) {
         self.service = service
@@ -34,18 +31,17 @@ class CoinChartViewModel: ObservableObject {
 
         indicatorsShown = service.indicatorsShown
 
-        subscribe(scheduler, disposeBag, service.intervalsUpdatedObservable) { [weak self] in self?.syncIntervalsUpdate() }
-        subscribe(scheduler, disposeBag, service.periodTypeObservable) { [weak self] in self?.sync(periodType: $0) }
+        subscribe(scheduler, disposeBag, service.intervalsUpdatedObservable) { [weak self] in self?.syncIntervals() }
+        subscribe(scheduler, disposeBag, service.periodTypeObservable) { [weak self] _ in self?.syncIntervals() }
         subscribe(scheduler, disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
         subscribe(scheduler, disposeBag, service.indicatorsShownUpdatedObservable) { [weak self] in self?.updateIndicatorsShown() }
 
-        sync(periodType: service.periodType)
+        let initialState = intervalState(periodType: service.periodType)
+        intervalTitles = initialState.titles
+        selectedIntervalIndex = initialState.selectedIndex
+
         sync(state: service.state)
         indicatorsShownRelay.accept(service.indicatorsShown)
-    }
-
-    private func syncIntervalsUpdate() {
-        intervalsUpdatedWithCurrentIndex.accept(index(periodType: service.periodType))
     }
 
     private func updateIndicatorsShown() {
@@ -60,8 +56,40 @@ class CoinChartViewModel: ObservableObject {
         }
     }
 
-    private func sync(periodType: HsPeriodType) {
-        intervalsUpdatedWithCurrentIndex.accept(index(periodType: periodType))
+    private func intervalState(periodType: HsPeriodType) -> (titles: [String], selectedIndex: Int) {
+        var titles = service.validIntervals.map(\.shortTitle)
+
+        if !titles.isEmpty {
+            titles.append("chart.time_duration.all".localized)
+        }
+
+        return (titles, index(periodType: periodType))
+    }
+
+    private func syncIntervals() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            let state = intervalState(periodType: service.periodType)
+            intervalTitles = state.titles
+            selectedIntervalIndex = state.selectedIndex
+        }
+    }
+
+    func onSelectInterval(at index: Int) {
+        let intervals = service.validIntervals
+
+        guard index >= 0, index <= intervals.count else {
+            return
+        }
+
+        selectedIntervalIndex = index
+
+        if index == intervals.count {
+            service.setPeriodAll()
+            return
+        }
+
+        service.setPeriod(interval: intervals[index])
     }
 
     private func sync(state: DataStatus<CoinChartService.Item>) {
@@ -83,14 +111,8 @@ class CoinChartViewModel: ObservableObject {
 }
 
 extension CoinChartViewModel: IChartViewModel {
-    var showAll: Bool { true }
-
     var pointSelectedItemDriver: Driver<ChartModule.SelectedPointViewItem?> {
         pointSelectedItemRelay.asDriver()
-    }
-
-    var intervalsUpdatedWithCurrentIndexDriver: Driver<Int> {
-        intervalsUpdatedWithCurrentIndex.asDriver()
     }
 
     var loadingDriver: Driver<Bool> {
@@ -111,21 +133,6 @@ extension CoinChartViewModel: IChartViewModel {
 
     var openSettingsSignal: Signal<Void> {
         openSettingsRelay.asSignal()
-    }
-
-    func onSelectInterval(at index: Int) {
-        let intervals = service.validIntervals
-
-        if intervals.count == index {
-            service.setPeriodAll()
-            return
-        }
-
-        guard intervals.count > index else {
-            return
-        }
-
-        service.setPeriod(interval: intervals[index])
     }
 
     func start() {

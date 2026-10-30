@@ -62,16 +62,12 @@ struct ValueDiff {
 }
 
 protocol IChartViewModel {
-    var showAll: Bool { get }
-    var intervals: [String] { get }
-    var intervalsUpdatedWithCurrentIndexDriver: Driver<Int> { get }
     var pointSelectedItemDriver: Driver<ChartModule.SelectedPointViewItem?> { get }
     var loadingDriver: Driver<Bool> { get }
     var indicatorsShownDriver: Driver<Bool> { get }
     var chartInfoDriver: Driver<ChartModule.ViewItem?> { get }
     var errorDriver: Driver<Bool> { get }
 
-    func onSelectInterval(at index: Int)
     func start()
     func retry()
 }

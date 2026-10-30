@@ -91,11 +91,17 @@ struct CoinOverviewView: View {
     }
 
     @ViewBuilder private func chart() -> some View {
-        ChartView(viewModel: chartViewModel, configuration: .chartWithIndicatorArea)
-            .frame(maxWidth: .infinity)
-            .onFirstAppear {
-                chartViewModel.start()
+        VStack(spacing: .margin8) {
+            ChartView(viewModel: chartViewModel, configuration: .chartWithIndicatorArea)
+                .frame(maxWidth: .infinity)
+
+            ChartIntervalsView(titles: chartViewModel.intervalTitles, selectedIndex: chartViewModel.selectedIntervalIndex) { index in
+                chartViewModel.onSelectInterval(at: index)
             }
+        }
+        .onFirstAppear {
+            chartViewModel.start()
+        }
     }
 
     @ViewBuilder private func indicators() -> some View {
