@@ -47,13 +47,10 @@ struct NearAccountNameView: View {
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
             } bottomContent: {
-                Button(action: {
+                ThemeButton(text: "button.add".localized) {
                     inputFocused = false
                     viewModel.add()
-                }) {
-                    Text("button.add".localized)
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 .disabled(!viewModel.buttonEnabled)
             }
         }

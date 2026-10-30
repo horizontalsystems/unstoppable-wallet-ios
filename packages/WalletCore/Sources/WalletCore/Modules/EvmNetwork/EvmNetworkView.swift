@@ -69,13 +69,10 @@ struct EvmNetworkView: View {
                         .padding(EdgeInsets(top: 12, leading: 16, bottom: 32, trailing: 16))
                     }
                 } bottomContent: {
-                    Button(action: {
+                    ThemeButton(text: "button.save".localized) {
                         viewModel.save()
                         isPresented = false
-                    }) {
-                        Text("button.save".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
                     .disabled(!viewModel.saveEnabled)
                 }
             }

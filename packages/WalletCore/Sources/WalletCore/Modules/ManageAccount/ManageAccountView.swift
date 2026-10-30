@@ -206,7 +206,7 @@ struct ManageAccountView: View {
                 .title(icon: ThemeImage.trash, title: "settings_manage_keys.delete.title".localized),
                 .text(text: "settings_manage_keys.delete.confirmation_watch".localized),
                 .buttonGroup(.init(buttons: [
-                    .init(style: .gray, title: "settings_manage_keys.delete.confirmation_watch.button".localized) {
+                    .init(style: .secondary, title: "settings_manage_keys.delete.confirmation_watch.button".localized) {
                         unlink()
                     },
                 ])),
@@ -220,11 +220,11 @@ struct ManageAccountView: View {
                 .title(icon: ThemeImage.trash, title: "manage_account.cloud_delete_backup_recovery_phrase".localized),
                 .text(text: "manage_account.cloud_delete_backup_recovery_phrase.description".localized),
                 .buttonGroup(.init(buttons: [
-                    .init(style: .gray, title: "button.delete".localized) {
+                    .init(style: .secondary, title: "button.delete".localized) {
                         isPresented.wrappedValue = false
                         deleteCloudBackup()
                     },
-                    .init(style: .transparent, title: "button.cancel".localized) {
+                    .init(style: .secondary, mode: .transparent, title: "button.cancel".localized) {
                         isPresented.wrappedValue = false
                     },
                 ])),
@@ -238,14 +238,14 @@ struct ManageAccountView: View {
                 .title(icon: ThemeImage.trash, title: "manage_account.manual_backup_required".localized),
                 .warning(text: "manage_account.manual_backup_required.description".localized),
                 .buttonGroup(.init(buttons: [
-                    .init(style: .gray, title: "manage_account.manual_backup_required.button".localized) {
+                    .init(style: .secondary, title: "manage_account.manual_backup_required.button".localized) {
                         isPresented.wrappedValue = false
 
                         Coordinator.shared.performAfterUnlock {
                             presentBackup(reason: .deleteCloudBackup)
                         }
                     },
-                    .init(style: .transparent, title: "button.cancel".localized) {
+                    .init(style: .secondary, mode: .transparent, title: "button.cancel".localized) {
                         isPresented.wrappedValue = false
                     },
                 ])),

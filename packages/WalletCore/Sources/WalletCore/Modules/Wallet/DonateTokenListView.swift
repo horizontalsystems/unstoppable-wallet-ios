@@ -23,12 +23,9 @@ struct DonateTokenListView: View {
                                 .textHeadline2()
                                 .multilineTextAlignment(.center)
                             Image("heart_fill_24").themeIcon(color: .themeJacob)
-                            Button(action: {
+                            ThemeButton(text: "donate.list.get_address".localized, style: .secondary) {
                                 addressesPresented = true
-                            }) {
-                                Text("donate.list.get_address".localized)
                             }
-                            .buttonStyle(PrimaryButtonStyle(style: .gray))
                             Text("donate.support.bottom_description".localized).textSubhead2()
                         }
                         .padding(.vertical, .margin24)

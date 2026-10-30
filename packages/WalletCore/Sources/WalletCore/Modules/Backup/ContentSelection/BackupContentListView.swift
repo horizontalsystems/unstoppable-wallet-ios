@@ -40,11 +40,8 @@ struct BackupContentListView: View {
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
             } bottomContent: {
-                Button(action: onAction) {
-                    Text(buttonTitle)
-                }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                .disabled(selectedWalletIds.isEmpty && selectedDataSections.isEmpty)
+                ThemeButton(text: buttonTitle, action: onAction)
+                    .disabled(selectedWalletIds.isEmpty && selectedDataSections.isEmpty)
             }
         }
     }

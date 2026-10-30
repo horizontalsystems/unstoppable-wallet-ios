@@ -60,7 +60,7 @@ struct UnlinkBottomSheetView: View {
             buttons: [
                 .init(
                     id: Controls.delete,
-                    style: .gray,
+                    style: .secondary,
                     title: "security_settings.delete_alert_button".localized,
                     action: {
                         onUnlink()

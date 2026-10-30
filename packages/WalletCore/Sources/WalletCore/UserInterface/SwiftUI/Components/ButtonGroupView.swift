@@ -44,23 +44,11 @@ struct ButtonGroupView: View {
     private func buttonView(for button: ButtonGroupViewModel.ButtonItem) -> some View {
         let isDisabled = viewModel.isDisabled(button.id)
 
-        return Button(
-            action: {
-                if !isDisabled {
-                    button.action()
-                }
-            },
-            label: {
-                HStack(spacing: .margin8) {
-                    if let icon = button.icon {
-                        Image(icon)
-                            .renderingMode(.template)
-                    }
-                    Text(button.title)
-                }
+        return ThemeButton(text: button.title, icon: button.icon, style: button.style, mode: button.mode) {
+            if !isDisabled {
+                button.action()
             }
-        )
-        .buttonStyle(PrimaryButtonStyle(style: button.style))
+        }
         .disabled(isDisabled)
     }
 }

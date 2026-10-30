@@ -79,10 +79,10 @@ enum WCPresenter {
                     .title(icon: ThemeImage.error, title: "wallet_connect.error.invalid_url.title".localized),
                     .text(text: description),
                     .buttonGroup(.init(buttons: [
-                        .init(style: .gray, title: "button.cancel".localized) {
+                        .init(style: .secondary, title: "button.cancel".localized) {
                             isPresented.wrappedValue = false
                         },
-                        .init(style: .yellow, title: "button.try_again".localized) {
+                        .init(style: .primary, title: "button.try_again".localized) {
                             isPresented.wrappedValue = false
                             presentScanner()
                         },
@@ -99,7 +99,7 @@ enum WCPresenter {
                     .title(icon: ThemeImage.error, title: "wallet_connect.error.request_failed.title".localized),
                     .text(text: "wallet_connect.error.request_failed.description".localized),
                     .buttonGroup(.init(buttons: [
-                        .init(style: .gray, title: "button.close".localized) {
+                        .init(style: .secondary, title: "button.close".localized) {
                             isPresented.wrappedValue = false
                         },
                     ])),
@@ -116,7 +116,7 @@ enum WCPresenter {
                     .subtitle(text: host),
                     .text(text: "wallet_connect.list.disconnect.description".localized),
                     .buttonGroup(.init(buttons: [
-                        .init(style: .gray, title: "wallet_connect.button_disconnect".localized) {
+                        .init(style: .secondary, title: "wallet_connect.button_disconnect".localized) {
                             isPresented.wrappedValue = false
                             onDisconnect()
                         },
@@ -133,7 +133,7 @@ enum WCPresenter {
                     .title(icon: ThemeImage.warning, title: "wallet_connect.title".localized),
                     .warning(text: "wallet_connect.no_account.description".localized),
                     .buttonGroup(.init(buttons: [
-                        .init(style: .yellow, title: "button.ok".localized) {
+                        .init(style: .primary, title: "button.ok".localized) {
                             isPresented.wrappedValue = false
                         },
                     ])),
@@ -149,7 +149,7 @@ enum WCPresenter {
                     .title(icon: ThemeImage.warning, title: "wallet_connect.title".localized),
                     .warning(text: "wallet_connect.non_supported_account.description".localized(accountType.description)),
                     .buttonGroup(.init(buttons: [
-                        .init(style: .yellow, title: "wallet_connect.non_supported_account.switch".localized) {
+                        .init(style: .primary, title: "wallet_connect.non_supported_account.switch".localized) {
                             isPresented.wrappedValue = false
 
                             DispatchQueue.main.async {

@@ -89,44 +89,30 @@ struct WCSendSheetView: View {
 
     @ViewBuilder private var buttons: some View {
         HStack(spacing: .margin8) {
-            Button(action: {
+            ThemeButton(text: "button.reject".localized, style: .secondary) {
                 reject()
                 isPresented = false
-            }) {
-                Text("button.reject".localized)
             }
-            .buttonStyle(PrimaryButtonStyle(style: .gray))
             .disabled(sendViewModel.sending)
 
             if expirationViewModel.isExpired, !sendViewModel.sending {
-                Button(action: {}) {
-                    Text("wallet_connect.button.expired".localized)
-                }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                .disabled(true)
+                ThemeButton(text: "wallet_connect.button.expired".localized) {}
+                    .disabled(true)
             } else {
                 switch sendViewModel.state {
                 case .syncing:
                     // shown disabled (not hidden) so the button row stays put while the fee estimates
-                    Button(action: {}) {
-                        Text((previewData ?? sendViewModel.sendData)?.customSendButtonTitle ?? "wallet_connect.button.confirm".localized)
-                    }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                    .disabled(true)
+                    ThemeButton(text: (previewData ?? sendViewModel.sendData)?.customSendButtonTitle ?? "wallet_connect.button.confirm".localized) {}
+                        .disabled(true)
                 case .success:
-                    Button(action: { send() }) {
-                        HStack(spacing: .margin8) {
-                            if sendViewModel.sending { ProgressView().progressViewStyle(.circular) }
-                            Text(sendViewModel.sendData?.customSendButtonTitle ?? "wallet_connect.button.confirm".localized)
-                        }
+                    ThemeButton(text: sendViewModel.sendData?.customSendButtonTitle ?? "wallet_connect.button.confirm".localized, spinner: sendViewModel.sending) {
+                        send()
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
                     .disabled(sendViewModel.sending || !(sendViewModel.sendData?.canSend ?? false))
                 case .failed:
-                    Button(action: { sendViewModel.sync() }) {
-                        Text("send.confirmation.refresh".localized)
+                    ThemeButton(text: "send.confirmation.refresh".localized) {
+                        sendViewModel.sync()
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 }
             }
         }

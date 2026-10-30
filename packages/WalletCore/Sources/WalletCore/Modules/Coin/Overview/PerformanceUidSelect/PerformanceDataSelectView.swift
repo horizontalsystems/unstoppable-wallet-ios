@@ -75,14 +75,11 @@ struct PerformanceDataSelectView: View {
         Cell(
             middle: { ThemeText("coin_overview.performance.period".localized(period), style: .headline2) },
             right: {
-                Button(action: {
+                DropdownButton(text: title) {
                     Coordinator.shared.performAfterPurchase(premiumFeature: .tokenInsights, page: .performance, trigger: .periodChange) {
                         presentTimePeriodSelector(period: period)
                     }
-                }) {
-                    Text(title)
                 }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
             }
         )
     }

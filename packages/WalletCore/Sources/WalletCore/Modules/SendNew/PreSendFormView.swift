@@ -156,7 +156,7 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
     @ViewBuilder private func buttonView() -> some View {
         let state = viewModel.buttonState
 
-        Button(action: {
+        ThemeButton(text: state.title, spinner: state.showProgress, progress: state.progress, style: state.style) {
             // the wallet's own step comes first: its screen is the handler's, not the confirmation
             if case .required = viewModel.spendStep, let handler = viewModel.spendStepHandler {
                 focusField = nil
@@ -190,34 +190,18 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
                             .title(icon: ThemeImage.warning, title: "send.address.risky.title".localized),
                             .warning(text: "send.address.risky.description".localized),
                             .buttonGroup(.init(buttons: [
-                                .init(style: .red, title: "send.continue_anyway".localized) {
+                                .init(style: .secondary, title: "send.continue_anyway".localized) {
                                     isPresented.wrappedValue = false
                                     proceedToSend()
                                 },
-                                .init(style: .transparent, title: "button.cancel".localized) { isPresented.wrappedValue = false },
+                                .init(style: .secondary, mode: .transparent, title: "button.cancel".localized) { isPresented.wrappedValue = false },
                             ])),
                         ],
                     )
                 }
             }
-        }) {
-            HStack(spacing: .margin8) {
-                if let progress = state.progress {
-                    ProgressView(value: max(0.1, progress))
-                        .progressViewStyle(DeterminiteSpinnerStyle())
-                        .frame(size: .iconSize20)
-                        .spinning()
-                } else if state.showProgress {
-                    ProgressView()
-                }
-
-                Text(state.title)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-            }
         }
         .disabled(state.disabled)
-        .buttonStyle(PrimaryButtonStyle(style: state.style))
     }
 
     private func presentAddressPicker() {

@@ -35,13 +35,10 @@ struct MarketWatchlistSignalsView: View {
                         .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                     }
                 } bottomContent: {
-                    Button(action: {
+                    ThemeButton(text: "market.watchlist.signals.turn_on".localized) {
                         setShowSignals(true)
                         isPresented = false
-                    }) {
-                        Text("market.watchlist.signals.turn_on".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 }
             }
             .navigationTitle("market.watchlist.signals".localized)

@@ -71,7 +71,7 @@ struct RestoreCoinsView: View {
             right: {
                 HStack(spacing: 8) {
                     if item.hasSettings {
-                        IconButton(icon: "edit2_20", style: .secondary, mode: .transparent, size: .small) {
+                        IconButton(icon: "pen", style: .secondary, mode: .transparent, size: .small) {
                             viewModel.configure(blockchain: item.blockchain)
                         }
                     }

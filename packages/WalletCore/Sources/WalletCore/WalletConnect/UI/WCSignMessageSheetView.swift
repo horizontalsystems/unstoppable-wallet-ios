@@ -70,22 +70,17 @@ struct WCSignMessageSheetView: View {
                 }
 
                 HStack(spacing: .margin8) {
-                    Button(action: {
+                    ThemeButton(text: "button.reject".localized, style: .secondary) {
                         viewModel.reject()
                         isPresented = false
-                    }) {
-                        Text("button.reject".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .gray))
                     .disabled(viewModel.signing)
 
-                    Button(action: { viewModel.sign() }) {
-                        HStack(spacing: .margin8) {
-                            if viewModel.signing { ProgressView().progressViewStyle(.circular) }
-                            Text((expirationViewModel.isExpired && !viewModel.signing ? "wallet_connect.button.expired" : "button.sign").localized)
-                        }
+                    let signText = (expirationViewModel.isExpired && !viewModel.signing ? "wallet_connect.button.expired" : "button.sign").localized
+
+                    ThemeButton(text: signText, spinner: viewModel.signing) {
+                        viewModel.sign()
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
                     .disabled(expirationViewModel.isExpired || !viewModel.signEnabled)
                 }
                 .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin16, trailing: .margin24))

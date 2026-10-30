@@ -75,10 +75,8 @@ extension InputTextView {
         return HStack(spacing: .margin16) {
             selfView
 
-            Button(action: {
+            IconButton(icon: secured.wrappedValue ? "eye_off" : "eye_on", style: .secondary, mode: .transparent, size: .small) {
                 secured.wrappedValue.toggle()
-            }) {
-                ThemeImage(secured.wrappedValue ? "eye_off_20" : "eye_20", size: .iconSize20, colorStyle: .primary)
             }
         }
     }

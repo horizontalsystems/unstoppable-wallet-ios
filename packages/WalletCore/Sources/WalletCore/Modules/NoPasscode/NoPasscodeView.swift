@@ -47,12 +47,9 @@ struct JailbreakView: View {
                 .padding(.horizontal, .margin24)
                 .frame(maxHeight: .infinity)
 
-                Button(action: {
+                ThemeButton(text: "button.i_understand".localized) {
                     isPresented = false
-                }) {
-                    Text("button.i_understand".localized)
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
             }
             .padding(.horizontal, .margin24)
             .padding(.bottom, .margin32)

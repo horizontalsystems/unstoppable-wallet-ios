@@ -71,7 +71,7 @@ struct ManageWalletListView: View {
                 .title(icon: ComponentImage(url: coin.imageUrl), title: coin.code),
                 .footer(text: text),
                 .buttonGroup(.init(buttons: [
-                    .init(style: .gray, title: "button.close".localized) {
+                    .init(style: .secondary, title: "button.close".localized) {
                         isPresented.wrappedValue = false
                     },
                 ])),
@@ -87,7 +87,7 @@ struct ManageWalletListView: View {
                     .init(title: "birthday_height.title".localized, value: ComponentCopyableValue(height.description)),
                 ]),
                 .buttonGroup(.init(buttons: [
-                    .init(style: .gray, title: "button.close".localized) {
+                    .init(style: .secondary, title: "button.close".localized) {
                         isPresented.wrappedValue = false
                     },
                 ])),
@@ -103,7 +103,7 @@ struct ManageWalletListView: View {
                     AnyView(contractRow(token: token, value: value, explorerUrl: explorerUrl)),
                 ]),
                 .buttonGroup(.init(buttons: [
-                    .init(style: .gray, title: "button.close".localized) {
+                    .init(style: .secondary, title: "button.close".localized) {
                         isPresented.wrappedValue = false
                     },
                 ])),
@@ -121,12 +121,9 @@ struct ManageWalletListView: View {
             },
             right: {
                 if let explorerUrl {
-                    Button {
+                    IconButton(icon: "globe", style: .secondary, size: .small) {
                         open(url: explorerUrl, statPage: .manageWallets)
-                    } label: {
-                        Image("globe_20").renderingMode(.template)
                     }
-                    .buttonStyle(SecondaryCircleButtonStyle())
                 }
             }
         )

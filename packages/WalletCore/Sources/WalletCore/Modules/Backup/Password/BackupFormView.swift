@@ -32,17 +32,9 @@ struct BackupFormView: View {
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
             } bottomContent: {
-                Button(action: {
+                ThemeButton(text: "button.save".localized, spinner: passwordViewModel.processing) {
                     onTapSave()
-                }) {
-                    HStack(spacing: .margin8) {
-                        if passwordViewModel.processing {
-                            ProgressView().progressViewStyle(.circular)
-                        }
-                        Text("button.save".localized)
-                    }
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 .disabled(!nameViewModel.isValid || passwordViewModel.processing)
                 .animation(.default, value: passwordViewModel.processing)
             }
@@ -65,7 +57,7 @@ struct BackupFormView: View {
                 .title(icon: ThemeImage.key, title: "backup.password.generate.title.cloud".localized),
                 .text(text: "backup.password.generate.description.cloud".localized),
                 .buttonGroup(.init(buttons: [
-                    .init(style: .gray, title: "backup.password.generate.action.cloud".localized) {
+                    .init(style: .secondary, title: "backup.password.generate.action.cloud".localized) {
                         do {
                             try passwordViewModel.useGeneratedPassword()
                         } catch {

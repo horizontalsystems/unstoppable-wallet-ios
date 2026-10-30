@@ -29,23 +29,17 @@ struct AppStatusView: View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
                 HStack(spacing: .margin8) {
-                    Button(action: {
+                    ThemeButton(text: "button.copy".localized) {
                         stat(page: .appStatus, event: .copy(entity: .status))
                         CopyHelper.copyAndNotify(value: viewModel.rawStatus)
-                    }) {
-                        Text("button.copy".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
 
-                    Button(action: {
+                    ThemeButton(text: "button.share".localized, style: .secondary) {
                         Coordinator.shared.present { _ in
                             ActivityView(activityItems: [viewModel.rawStatus])
                         }
                         stat(page: .appStatus, event: .share(entity: .status))
-                    }) {
-                        Text("button.share".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .gray))
                 }
 
                 ForEach(sections, id: \.title) { section in

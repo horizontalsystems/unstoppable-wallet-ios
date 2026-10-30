@@ -86,18 +86,10 @@ struct NodeNetworkView: View {
                         .padding(EdgeInsets(top: 12, leading: 16, bottom: 32, trailing: 16))
                     }
                 } bottomContent: {
-                    Button(action: {
+                    ThemeButton(text: "button.save".localized, spinner: viewModel.processing) {
                         viewModel.save()
                         isPresented = false
-                    }) {
-                        HStack(spacing: .margin8) {
-                            if viewModel.processing {
-                                ProgressView().progressViewStyle(.circular)
-                            }
-                            Text("button.save".localized)
-                        }
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
                     .disabled(!viewModel.saveEnabled || viewModel.processing || (viewModel.autoSelectEnabled && viewModel.pingsInFlight))
                     .animation(.default, value: viewModel.processing)
                 }

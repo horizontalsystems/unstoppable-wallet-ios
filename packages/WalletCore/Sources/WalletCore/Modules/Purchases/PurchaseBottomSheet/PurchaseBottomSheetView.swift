@@ -19,10 +19,8 @@ struct PurchaseBottomSheetView: View {
                 Image("circle_clock_24").themeIcon(color: .themeJacob)
                 Text("purchase.period.title".localized).themeHeadline2()
 
-                Button(action: {
+                IconButton(icon: "close", style: .secondary, mode: .transparent, size: .small) {
                     isPresented = false
-                }) {
-                    Image("close_3_24")
                 }
             }
             .padding(.horizontal, .margin32)
@@ -47,26 +45,15 @@ struct PurchaseBottomSheetView: View {
             .padding(.horizontal, .margin32)
 
             VStack(spacing: .margin12) {
-                Button(action: {
+                ThemeButton(text: buttonTitle, spinner: viewModel.buttonState == .loading) {
                     viewModel.subscribe()
-                }) {
-                    HStack(spacing: .margin8) {
-                        if viewModel.buttonState == .loading {
-                            ProgressView()
-                        }
-                        Text(buttonTitle)
-                    }
                 }
                 .disabled(viewModel.buttonState == .loading)
-                .buttonStyle(PrimaryButtonStyle(style: .yellowGradient))
 
-                Button(action: {
+                ThemeButton(text: "purchases.period.button.promo".localized, style: .secondary, mode: .transparent) {
                     redeemSheetPresented = true
-                }) {
-                    Text("purchases.period.button.promo".localized)
                 }
                 .disabled(viewModel.buttonState == .loading)
-                .buttonStyle(PrimaryButtonStyle(style: .transparent))
             }
             .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: 0, trailing: .margin24))
 

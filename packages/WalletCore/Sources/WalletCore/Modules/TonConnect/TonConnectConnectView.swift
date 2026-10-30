@@ -65,21 +65,15 @@ struct TonConnectConnectView: View {
                     }
                 } bottomContent: {
                     VStack(spacing: .margin16) {
-                        Button(action: {
+                        ThemeButton(text: "ton_connect.connect.connect".localized) {
                             viewModel.connect()
-                        }) {
-                            Text("ton_connect.connect.connect".localized)
                         }
-                        .buttonStyle(PrimaryButtonStyle(style: .yellow))
                         .disabled(viewModel.account == nil)
 
-                        Button(action: {
+                        ThemeButton(text: "ton_connect.connect.reject".localized, style: .secondary) {
                             viewModel.rejectConnection()
                             presentationMode.wrappedValue.dismiss()
-                        }) {
-                            Text("ton_connect.connect.reject".localized)
                         }
-                        .buttonStyle(PrimaryButtonStyle(style: .gray))
                     }
                 }
             }

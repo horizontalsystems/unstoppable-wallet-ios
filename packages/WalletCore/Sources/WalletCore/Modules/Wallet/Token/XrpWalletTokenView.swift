@@ -43,7 +43,7 @@ struct XrpWalletTokenView: View {
                             .list(items: lockedItems(reserveInfo: reserveInfo)),
                             .footer(text: "balance.token.locked.xrp.description".localized),
                             .buttonGroup(.init(buttons: [
-                                .init(style: .gray, title: "button.close".localized) {
+                                .init(style: .secondary, title: "button.close".localized) {
                                     isPresented.wrappedValue = false
                                 },
                             ])),

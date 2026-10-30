@@ -104,24 +104,19 @@ struct CoinOverviewView: View {
                 middle: { ThemeText("coin_overview.indicators".localized, style: .subhead) },
                 right: {
                     HStack(spacing: .margin8) {
-                        Button(action: {
-                            chartViewModel.onToggleIndicators()
-                        }) {
-                            Text(chartViewModel.indicatorsShown ? "coin_overview.indicators.hide".localized : "coin_overview.indicators.show".localized)
-                                .animation(.none)
-                        }
-                        .buttonStyle(SecondaryButtonStyle(style: .default))
+                        let indicatorsText = chartViewModel.indicatorsShown ? "coin_overview.indicators.hide".localized : "coin_overview.indicators.show".localized
 
-                        Button(action: {
+                        ThemeButton(text: indicatorsText, style: .secondary, size: .small) {
+                            chartViewModel.onToggleIndicators()
+                        }
+
+                        IconButton(icon: "gear", style: .secondary, size: .small) {
                             Coordinator.shared.present { isPresented in
                                 ChartIndicatorsView(repository: chartViewModel.service.indicatorRepository, isPresented: isPresented)
                             }
 
                             stat(page: .coinOverview, event: .open(page: .indicators))
-                        }) {
-                            Image("gear").buttonIcon(size: .iconSize20)
                         }
-                        .buttonStyle(SecondaryCircleButtonStyle(style: .default))
                     }
                 }
             )
@@ -283,29 +278,20 @@ struct CoinOverviewView: View {
                 HStack(spacing: .margin8) {
                     if let account = viewModel.walletData.account, !account.watchAccount, account.type.supports(token: token) {
                         if walletTokens.contains(token) {
-                            Button {
+                            IconButton(icon: "wallet", style: .primary, size: .small) {
                                 viewModel.removeFromWallet(token: token)
-                            } label: {
-                                Image("wallet").buttonIcon(size: .iconSize20)
                             }
-                            .buttonStyle(SecondaryCircleButtonStyle(isActive: true))
                         } else {
-                            Button {
+                            IconButton(icon: "wallet_add", style: .secondary, size: .small) {
                                 viewModel.addToWallet(token: token)
-                            } label: {
-                                Image("wallet_add").buttonIcon(size: .iconSize20)
                             }
-                            .buttonStyle(SecondaryCircleButtonStyle())
                         }
                     }
 
                     if let explorerUrl = explorerUrl(token: token) {
-                        Button {
+                        IconButton(icon: "globe", style: .secondary, size: .small) {
                             open(url: explorerUrl, statPage: .externalBlockExplorer)
-                        } label: {
-                            Image("globe").buttonIcon(size: .iconSize20)
                         }
-                        .buttonStyle(SecondaryCircleButtonStyle())
                     }
                 }
             },

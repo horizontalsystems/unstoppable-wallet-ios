@@ -16,12 +16,9 @@ struct NumPadView: View {
             }
 
             if let biometryType {
-                Button(action: {
+                IconButton(icon: biometryType.iconName, style: .secondary, mode: .transparent, size: .medium) {
                     onTapBiometry?()
-                }) {
-                    Image(biometryType.iconName).renderingMode(.template)
                 }
-                .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
                 .disabled(disabled)
             } else {
                 Text("")
@@ -31,12 +28,9 @@ struct NumPadView: View {
                 NumberView(digit: digit, disabled: disabled) { onTapDigit(digit) }
             }
 
-            Button(action: {
+            IconButton(icon: "backspace", style: .secondary, mode: .transparent, size: .medium) {
                 onTapBackspace()
-            }) {
-                Image("backspace_24").renderingMode(.template)
             }
-            .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))
             .disabled(disabled)
         }
         .frame(width: 280)

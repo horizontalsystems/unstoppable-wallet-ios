@@ -4,6 +4,8 @@ struct DuressModeSelectView: View {
     @ObservedObject var viewModel: DuressModeViewModel
     @Binding var showParentSheet: Bool
 
+    @State private var passcodePresented = false
+
     var body: some View {
         ThemeView {
             BottomGradientWrapper {
@@ -38,15 +40,15 @@ struct DuressModeSelectView: View {
                     }
                 }
             } bottomContent: {
-                NavigationLink(destination: {
-                    CreatePasscodeModule.createDuressPasscodeView(accountIds: Array(viewModel.selectedAccountIds), showParentSheet: $showParentSheet)
-                }) {
-                    Text("button.next".localized)
+                ThemeButton(text: "button.next".localized) {
+                    passcodePresented = true
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
             }
         }
         .navigationTitle("enable_duress_mode.select.title".localized)
+        .navigationDestination(isPresented: $passcodePresented) {
+            CreatePasscodeModule.createDuressPasscodeView(accountIds: Array(viewModel.selectedAccountIds), showParentSheet: $showParentSheet)
+        }
     }
 
     private struct AccountRow: View {

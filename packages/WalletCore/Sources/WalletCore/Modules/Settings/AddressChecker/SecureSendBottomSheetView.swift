@@ -17,7 +17,7 @@ struct SecureSendBottomSheetView: View {
 
                 BSModule.view(for: .buttonGroup(.init(buttons: [
                     .init(
-                        style: .yellow,
+                        style: .primary,
                         title: "button.done".localized,
                         action: {
                             $isPresented.wrappedValue = false

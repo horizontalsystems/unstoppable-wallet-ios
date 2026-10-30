@@ -28,7 +28,7 @@ struct MultiSwapProviderTypeBottomSheet: View {
 
                 BSModule.view(for: .buttonGroup(.init(buttons: [
                     .init(
-                        style: .gray,
+                        style: .secondary,
                         title: "button.close".localized,
                         action: {
                             $isPresented.wrappedValue = false

@@ -119,22 +119,15 @@ struct WCConnectView: View {
 
     @ViewBuilder private var buttons: some View {
         HStack(spacing: .margin8) {
-            Button(action: {
+            ThemeButton(text: "button.cancel".localized, style: .secondary) {
                 viewModel.reject()
                 isPresented = false
-            }) {
-                Text("button.cancel".localized)
             }
-            .buttonStyle(PrimaryButtonStyle(style: .gray))
             .disabled(viewModel.connecting)
 
-            Button(action: { viewModel.connect() }) {
-                HStack(spacing: .margin8) {
-                    if viewModel.connecting { ProgressView().progressViewStyle(.circular) }
-                    Text("button.connect".localized)
-                }
+            ThemeButton(text: "button.connect".localized, spinner: viewModel.connecting) {
+                viewModel.connect()
             }
-            .buttonStyle(PrimaryButtonStyle(style: .yellow))
             .disabled(!viewModel.connectEnabled)
         }
     }

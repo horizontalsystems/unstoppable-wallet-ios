@@ -18,12 +18,9 @@ struct TonConnectErrorView: View {
                     .padding(.top, .margin12)
                     .padding(.horizontal, .margin16)
                 } bottomContent: {
-                    Button(action: {
+                    ThemeButton(text: "button.close".localized, style: .secondary) {
                         presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Text("button.close".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .gray))
                 }
             }
             .navigationTitle(requestError.app.manifest.name)

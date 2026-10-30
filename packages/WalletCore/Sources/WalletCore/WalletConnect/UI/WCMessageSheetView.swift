@@ -22,7 +22,7 @@ struct WCMessageSheetView: View {
                     .padding(.bottom, .margin16)
             )),
             .buttonGroup(.init(buttons: [
-                .init(style: .gray, title: "button.back".localized) {
+                .init(style: .secondary, title: "button.back".localized) {
                     isPresented = false
                 },
             ])),

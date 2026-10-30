@@ -43,7 +43,7 @@ class StellarReceiveAddressViewModel: BaseReceiveAddressViewModel {
     override func popupButtons(mode: ReceiveAddressModule.PopupWarningItem.Mode, isPresented: Binding<Bool>) -> [ButtonGroupViewModel.ButtonItem] {
         if mode is ActivateStellarAssetMode {
             return [
-                .init(style: .yellow, title: "deposit.activate".localized) { [weak self] in
+                .init(style: .primary, title: "deposit.activate".localized) { [weak self] in
                     isPresented.wrappedValue = false
 
                     Coordinator.shared.present { isPresented in
@@ -57,7 +57,7 @@ class StellarReceiveAddressViewModel: BaseReceiveAddressViewModel {
                         }
                     }
                 },
-                .init(style: .transparent, title: "button.later".localized) {
+                .init(style: .secondary, mode: .transparent, title: "button.later".localized) {
                     isPresented.wrappedValue = false
                 },
             ]

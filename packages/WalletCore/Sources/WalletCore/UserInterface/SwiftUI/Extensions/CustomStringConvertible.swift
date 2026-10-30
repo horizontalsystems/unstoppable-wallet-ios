@@ -33,14 +33,12 @@ extension View {
         }
     }
 
+    /// Replaces the receiver with a small secondary `ThemeButton` that copies the value when `source` is a `ComponentCopyableValue`; otherwise returns the receiver unchanged.
     @ViewBuilder func copyable(_ source: CustomStringConvertible) -> some View {
         if let copyable = source as? ComponentCopyableValue {
-            Button {
+            ThemeButton(text: copyable.text, style: .secondary, size: .small) {
                 CopyHelper.copyAndNotify(value: copyable.value ?? copyable.text)
-            } label: {
-                self
             }
-            .buttonStyle(SecondaryButtonStyle())
         } else {
             self
         }

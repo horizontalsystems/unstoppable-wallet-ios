@@ -36,12 +36,9 @@ struct DonateAddressesView: View {
             },
             middle: { ThemeText(address, style: .subhead, colorStyle: .primary) },
             right: {
-                Button {
+                IconButton(icon: "copy", style: .secondary, size: .small) {
                     CopyHelper.copyAndNotify(value: address)
-                } label: {
-                    Image("copy").buttonIcon(size: .iconSize20)
                 }
-                .buttonStyle(SecondaryCircleButtonStyle())
             }
         )
     }

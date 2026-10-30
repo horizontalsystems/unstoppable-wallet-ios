@@ -240,7 +240,7 @@ extension Coordinator {
                     .title(icon: info.icon, title: info.title),
                     .text(text: info.description),
                     .buttonGroup(.init(buttons: [
-                        .init(style: .gray, title: "button.understood".localized) {
+                        .init(style: .secondary, title: "button.understood".localized) {
                             isPresented.wrappedValue = false
                         },
                     ])),

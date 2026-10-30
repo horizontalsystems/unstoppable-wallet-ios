@@ -55,7 +55,7 @@ struct BackupPromptView: View {
                     ),
                 ]),
                 .buttonGroup(.init(buttons: [
-                    .init(style: .gray, title: "backup_prompt.remind_later".localized) {
+                    .init(style: .secondary, title: "backup_prompt.remind_later".localized) {
                         isPresented = false
                     },
                 ])),

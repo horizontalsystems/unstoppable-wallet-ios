@@ -23,11 +23,8 @@ struct EvmResendView: View {
                         viewModel.sync()
                     }
                 } else {
-                    Button(action: send) {
-                        Text((type == .speedUp ? "send.confirmation.resend" : "send.confirmation.cancel").localized)
-                    }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                    .disabled(!viewModel.state.isSuccess || !viewModel.canSend || viewModel.sending)
+                    ThemeButton(text: (type == .speedUp ? "send.confirmation.resend" : "send.confirmation.cancel").localized, action: send)
+                        .disabled(!viewModel.state.isSuccess || !viewModel.canSend || viewModel.sending)
                 }
             }
         }

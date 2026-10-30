@@ -40,17 +40,14 @@ struct TonConnectListView: View {
                     }
                 }
             } bottomContent: {
-                Button(action: {
+                ThemeButton(text: "ton_connect.list.new_connection".localized) {
                     Coordinator.shared.present { isPresented in
                         ScanQrView(reportAfterDismiss: true, isPresented: isPresented) { deeplink in
                             viewModel.handle(deeplink: deeplink)
                         }
                         .ignoresSafeArea()
                     }
-                }) {
-                    Text("ton_connect.list.new_connection".localized)
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
             }
         }
         .onReceive(viewModel.openCreateConnectionPublisher) { config in
@@ -69,7 +66,7 @@ struct TonConnectListView: View {
                     .title(icon: ThemeImage.trash, title: "ton_connect.list.disconnect_app".localized),
                     .text(text: "ton_connect.list.disconnect_app.description".localized(app.manifest.name)),
                     .buttonGroup(.init(buttons: [
-                        .init(style: .red, title: "ton_connect.list.disconnect_app.disconnect".localized) {
+                        .init(style: .secondary, title: "ton_connect.list.disconnect_app.disconnect".localized) {
                             viewModel.disconnect(app: app)
 //                                                                tonConnectApp = nil
                         },

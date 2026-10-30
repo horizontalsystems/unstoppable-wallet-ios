@@ -114,12 +114,9 @@ struct NearAccountPickerView: View {
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             }
         } bottomContent: {
-            Button(action: {
+            ThemeButton(text: "button.continue".localized) {
                 viewModel.select()
-            }) {
-                Text("button.continue".localized)
             }
-            .buttonStyle(PrimaryButtonStyle(style: .yellow))
             .disabled(viewModel.selectedAccountId == nil)
         }
     }

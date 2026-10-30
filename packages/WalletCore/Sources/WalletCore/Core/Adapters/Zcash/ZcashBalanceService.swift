@@ -120,10 +120,10 @@ class ZcashBalanceService {
                         .title(icon: ThemeImage.shieldOff, title: "balance.token.transparent.detected.title".localized),
                         .text(text: "balance.token.transparent.detected.description".localized),
                         .buttonGroup(.init(buttons: [
-                                .init(style: .gray, title: "button.cancel".localized) {
+                                .init(style: .secondary, title: "button.cancel".localized) {
                                     isPresented.wrappedValue = false
                                 },
-                                .init(style: .yellow, title: "balance.token.shield".localized) {
+                                .init(style: .primary, title: "balance.token.shield".localized) {
                                     isPresented.wrappedValue = false
 
                                     Coordinator.shared.present { _ in

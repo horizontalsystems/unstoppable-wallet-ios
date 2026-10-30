@@ -109,13 +109,10 @@ struct ReceiveAddressBodyView<Content: View>: View {
                 HStack(spacing: .margin8) {
                     ThemeText(amount, style: .subheadSB)
 
-                    Button(action: {
+                    IconButton(icon: "trash", style: .secondary, size: .small) {
                         viewModel.set(amount: "")
                         stat(page: .receive, event: .removeAmount)
-                    }, label: {
-                        Image("trash").buttonIcon(size: .iconSize20)
-                    })
-                    .buttonStyle(SecondaryCircleButtonStyle(style: .default))
+                    }
                 }
             }
         )
@@ -123,12 +120,9 @@ struct ReceiveAddressBodyView<Content: View>: View {
 
     @ViewBuilder private func actionView(type: ReceiveAddressModule.ActionType) -> some View {
         VStack(spacing: .margin8) {
-            Button(action: {
+            IconButton(icon: type.icon, style: .secondary, size: .medium) {
                 handle(action: type)
-            }) {
-                Image(type.icon).renderingMode(.template)
             }
-            .buttonStyle(PrimaryCircleButtonStyle(style: .gray))
 
             Text(type.title).textSubhead1()
         }

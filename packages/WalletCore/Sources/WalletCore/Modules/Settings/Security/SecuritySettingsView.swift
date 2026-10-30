@@ -229,26 +229,20 @@ struct SecuritySettingsView: View {
             right: {
                 if viewModel.isDuressPasscodeSet {
                     HStack(spacing: .margin12) {
-                        Button {
+                        IconButton(icon: "pen", style: .secondary, size: .small) {
                             Coordinator.shared.presentAfterUnlock { isPresented in
                                 ThemeNavigationStack { EditPasscodeModule.editDuressPasscodeView(showParentSheet: isPresented) }
                             }
-                        } label: {
-                            Image("pen")
                         }
-                        .buttonStyle(SecondaryCircleButtonStyle())
 
-                        Button {
+                        IconButton(icon: "trash", style: .secondary, size: .small) {
                             Coordinator.shared.performAfterUnlock {
                                 viewModel.removeDuressPasscode()
                             }
-                        } label: {
-                            Image("trash")
                         }
-                        .buttonStyle(SecondaryCircleButtonStyle())
                     }
                 } else {
-                    Button {
+                    ThemeButton(text: "button.add".localized, style: .secondary, size: .small) {
                         if viewModel.isPasscodeSet {
                             Coordinator.shared.performAfterUnlock {
                                 presentCreateDuressPasscode()
@@ -256,10 +250,7 @@ struct SecuritySettingsView: View {
                         } else {
                             presentCreatePasscode(reason: .duress)
                         }
-                    } label: {
-                        Text("button.add".localized)
                     }
-                    .buttonStyle(SecondaryButtonStyle())
                 }
             }
         )

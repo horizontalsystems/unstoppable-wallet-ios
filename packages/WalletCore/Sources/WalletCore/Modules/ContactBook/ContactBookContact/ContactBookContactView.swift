@@ -135,11 +135,11 @@ struct ContactBookContactView: View {
                     .title(icon: ThemeImage.warning, title: "alert.warning".localized),
                     .warning(text: "contacts.contact.dismiss_changes.description".localized),
                     .buttonGroup(.init(buttons: [
-                        .init(style: .red, title: "contacts.contact.dismiss_changes.discard_changes".localized) {
+                        .init(style: .secondary, title: "contacts.contact.dismiss_changes.discard_changes".localized) {
                             confirmation.confirmed = true
                             isPresented.wrappedValue = false
                         },
-                        .init(style: .transparent, title: "contacts.contact.dismiss_changes.keep_editing".localized) {
+                        .init(style: .secondary, mode: .transparent, title: "contacts.contact.dismiss_changes.keep_editing".localized) {
                             isPresented.wrappedValue = false
                         },
                     ])),
@@ -161,11 +161,11 @@ struct ContactBookContactView: View {
                     .title(icon: ThemeImage.trash, title: "contacts.contact.delete_alert.title".localized),
                     .text(text: "contacts.contact.delete_alert.description".localized),
                     .buttonGroup(.init(buttons: [
-                        .init(style: .red, title: "contacts.contact.delete_alert.delete".localized) {
+                        .init(style: .secondary, title: "contacts.contact.delete_alert.delete".localized) {
                             confirmation.confirmed = true
                             isPresented.wrappedValue = false
                         },
-                        .init(style: .transparent, title: "button.cancel".localized) {
+                        .init(style: .secondary, mode: .transparent, title: "button.cancel".localized) {
                             isPresented.wrappedValue = false
                         },
                     ])),

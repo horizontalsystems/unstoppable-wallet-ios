@@ -74,7 +74,7 @@ struct PremiumFeaturesInfoBottomSheetView: View {
 
                 BSModule.view(for: .buttonGroup(.init(buttons: [
                     .init(
-                        style: .yellow,
+                        style: .primary,
                         title: buttonTitle,
                         action: {
                             action()

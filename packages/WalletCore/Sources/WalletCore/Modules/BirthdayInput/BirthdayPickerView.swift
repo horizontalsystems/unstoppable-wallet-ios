@@ -36,17 +36,11 @@ struct BirthdayPickerView: View {
                 .environment(\.locale, Locale.current)
                 .accentColor(.themeLeah)
 
-                Button(
-                    action: {
-                        onSelect(selectedDate)
-                        isPresented = false
-                    },
-                    label: {
-                        Text("button.apply".localized)
-                    }
-                )
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                .padding(EdgeInsets(top: 24, leading: 24, bottom: 16, trailing: 24))
+                ThemeButton(text: "button.apply".localized) {
+                    onSelect(selectedDate)
+                    isPresented = false
+                }
+                .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin16, trailing: .margin24))
             }
         }
     }

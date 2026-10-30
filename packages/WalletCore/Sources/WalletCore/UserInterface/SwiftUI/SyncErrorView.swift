@@ -5,12 +5,9 @@ struct SyncErrorView: View {
 
     var body: some View {
         PlaceholderViewNew(icon: "sync_error_48", subtitle: "sync_error".localized) {
-            Button(action: {
+            ThemeButton(text: "button.retry".localized) {
                 onRetry()
-            }) {
-                Text("button.retry".localized)
             }
-            .buttonStyle(PrimaryButtonStyle(style: .yellow))
         }
     }
 }

@@ -1,8 +1,9 @@
 import SwiftUI
 
-public struct ThemeButton: View {
+struct ThemeButton: View {
     let text: String
     var icon: String? = nil
+    var iconColorStyle: ColorStyle? = nil
     var spinner: Bool = false
     // a determinate spinner, as a transaction in progress shows in the transaction list
     var progress: Double? = nil
@@ -11,27 +12,7 @@ public struct ThemeButton: View {
     var size: ThemeButton.Size = .medium
     let action: () -> Void
 
-    public init(
-        text: String,
-        icon: String? = nil,
-        spinner: Bool = false,
-        progress: Double? = nil,
-        style: Style = .primary,
-        mode: Mode = .solid,
-        size: Size = .medium,
-        action: @escaping () -> Void
-    ) {
-        self.text = text
-        self.icon = icon
-        self.spinner = spinner
-        self.progress = progress
-        self.style = style
-        self.mode = mode
-        self.size = size
-        self.action = action
-    }
-
-    public var body: some View {
+    var body: some View {
         Button(action: action) {
             HStack(spacing: size.iconSpacing) {
                 if let progress {
@@ -44,7 +25,7 @@ public struct ThemeButton: View {
                 }
 
                 if let icon {
-                    Image(icon).buttonIcon(size: size.iconSize)
+                    Image(icon).buttonIcon(size: size.iconSize).foregroundColor(ifSet: iconColorStyle)
                 }
 
                 Text(text)
@@ -78,7 +59,7 @@ public struct ThemeButton: View {
     }
 }
 
-public extension ThemeButton {
+extension ThemeButton {
     enum Style {
         case primary
         case secondary
@@ -120,16 +101,9 @@ public extension ThemeButton {
             case .small: return .margin4
             }
         }
-
-        var pressOpacity: CGFloat {
-            switch self {
-            case .medium: return 0.6
-            case .small: return 0.7
-            }
-        }
     }
 
-    internal static func foregroundColor(style: Style, mode: Mode, size: Size, isEnabled: Bool) -> Color {
+    static func foregroundColor(style: Style, mode: Mode, size: Size, isEnabled: Bool) -> Color {
         switch mode {
         case .solid:
             guard isEnabled else {
@@ -152,7 +126,7 @@ public extension ThemeButton {
         }
     }
 
-    internal static func backgroundColor(style: Style, mode: Mode, size: Size, isEnabled: Bool) -> Color {
+    static func backgroundColor(style: Style, mode: Mode, size: Size, isEnabled: Bool) -> Color {
         switch mode {
         case .solid:
             guard isEnabled else {

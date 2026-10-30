@@ -77,13 +77,10 @@ struct BirthdayInputView: View {
                         inputFocused = false
                     }
                 } bottomContent: {
-                    Button(action: {
+                    ThemeButton(text: viewModel.buttonTitle) {
                         viewModel.apply()
                         presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Text(viewModel.buttonTitle)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
                     .disabled(!viewModel.buttonEnabled)
                 }
             }

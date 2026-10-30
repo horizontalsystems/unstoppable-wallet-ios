@@ -240,7 +240,7 @@ struct AccountsLostView: View {
                 .title(icon: ThemeImage.warning, title: "lost_accounts.warning_title".localized),
                 .text(text: "lost_accounts.warning_message".localized(records.map { "- \($0.name)" }.joined(separator: "\n"))),
                 .buttonGroup(.init(buttons: [
-                    .init(style: .yellow, title: "button.i_understand".localized) {
+                    .init(style: .primary, title: "button.i_understand".localized) {
                         isPresented = false
                     },
                 ])),

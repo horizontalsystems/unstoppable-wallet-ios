@@ -62,9 +62,9 @@ enum ReceiveAddressModule {
 
         var icon: String {
             switch self {
-            case .amount: return "edit_24"
-            case .share: return "share_1_24"
-            case .copy: return "copy_24"
+            case .amount: return "pen"
+            case .share: return "share"
+            case .copy: return "copy"
             }
         }
     }

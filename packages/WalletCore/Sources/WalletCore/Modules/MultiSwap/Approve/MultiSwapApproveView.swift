@@ -43,12 +43,9 @@ struct MultiSwapApproveView: View {
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
             } bottomContent: {
-                Button(action: {
+                ThemeButton(text: "swap.approve".localized) {
                     unlockPresented = true
-                }) {
-                    Text("swap.approve".localized)
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
             }
         }
         .navigationTitle("swap.unlock.title".localized)

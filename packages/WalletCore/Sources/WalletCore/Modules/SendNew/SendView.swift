@@ -77,7 +77,7 @@ struct SendView: View {
                         .title(icon: ThemeImage.error, title: "send.confirmation.unexpected_error".localized),
                         .text(text: "send.confirmation.unexpected_error.text".localized),
                         .buttonGroup(.init(buttons: [
-                            .init(style: .gray, title: "button.copy_error".localized, action: {
+                            .init(style: .secondary, title: "button.copy_error".localized, action: {
                                 CopyHelper.copyAndNotify(value: error)
                                 isPresented.wrappedValue = false
                             }),

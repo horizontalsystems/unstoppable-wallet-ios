@@ -44,18 +44,14 @@ struct UsedAddressesView: View {
                                 right: {
                                     HStack(spacing: .margin8) {
                                         if let explorerUrl = address.explorerUrl {
-                                            Button(action: {
+                                            IconButton(icon: "globe", style: .secondary, size: .small) {
                                                 Coordinator.shared.present(url: explorerUrl)
-                                            }) {
-                                                Image("globe").buttonIcon(size: .iconSize20)
                                             }
-                                            .buttonStyle(SecondaryCircleButtonStyle(style: .default))
                                         }
 
-                                        Button(action: { CopyHelper.copyAndNotify(value: address.address) }) {
-                                            Image("copy").buttonIcon(size: .iconSize20)
+                                        IconButton(icon: "copy", style: .secondary, size: .small) {
+                                            CopyHelper.copyAndNotify(value: address.address)
                                         }
-                                        .buttonStyle(SecondaryCircleButtonStyle(style: .default))
                                     }
                                 }
                             )

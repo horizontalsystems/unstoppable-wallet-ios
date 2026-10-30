@@ -74,11 +74,8 @@ struct SubscriptionView: View {
     @ViewBuilder private func actionButtonView() -> some View {
         let (title, disabled) = buttonState()
 
-        Button(action: showPurchase) {
-            Text(title)
-        }
-        .disabled(disabled)
-        .buttonStyle(PrimaryButtonStyle(style: .yellowGradient))
+        ThemeButton(text: title, action: showPurchase)
+            .disabled(disabled)
     }
 
     private func buttonState() -> (String, Bool) {

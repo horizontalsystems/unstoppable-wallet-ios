@@ -25,8 +25,8 @@ struct WCSessionsView: View {
                                         },
                                         middle: { MultiText(title: item.session.dAppName, subtitle: item.host) },
                                         right: {
-                                            Button(action: { disconnect(item: item) }) {
-                                                ThemeImage("trash", size: .iconSize20)
+                                            IconButton(icon: "trash", style: .secondary, mode: .transparent, size: .small) {
+                                                disconnect(item: item)
                                             }
                                         }
                                     )
@@ -48,10 +48,9 @@ struct WCSessionsView: View {
                     }
                 }
             } bottomContent: {
-                Button(action: { scan() }) {
-                    Text("wallet_connect_list.new_connection".localized)
+                ThemeButton(text: "wallet_connect_list.new_connection".localized) {
+                    scan()
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
             }
         }
         .onAppear { viewModel.refresh() }

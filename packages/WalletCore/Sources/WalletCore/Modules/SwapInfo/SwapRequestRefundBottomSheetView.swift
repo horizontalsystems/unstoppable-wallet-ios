@@ -40,7 +40,7 @@ struct SwapRequestRefundBottomSheetView: View {
         }
 
         items.append(.buttonGroup(.init(buttons: [
-            .init(style: .yellow, title: "swap_info.copy_details".localized) {
+            .init(style: .primary, title: "swap_info.copy_details".localized) {
                 viewModel.copyBody()
                 HudHelper.instance.show(banner: .copied)
             },

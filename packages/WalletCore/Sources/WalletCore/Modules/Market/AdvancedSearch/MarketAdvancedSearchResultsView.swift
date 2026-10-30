@@ -52,7 +52,7 @@ struct MarketAdvancedSearchResultsView: View {
     @ViewBuilder private func header() -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
-                Button(action: {
+                DropdownButton(text: viewModel.sortBy.title) {
                     Coordinator.shared.present(type: .alert) { isPresented in
                         OptionAlertView(
                             title: "market.sort_by.title".localized,
@@ -63,44 +63,30 @@ struct MarketAdvancedSearchResultsView: View {
                             isPresented: isPresented
                         )
                     }
-                }) {
-                    Text(viewModel.sortBy.title)
                 }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
 
-                if viewModel.showSignals {
-                    signalsButton()
-                        .buttonStyle(SecondaryActiveButtonStyle(leftAccessory:
-                            .custom(icon: "star_premium_20", enabledColor: .themeDark, disabledColor: .themeDark)
-                        ))
-                } else {
-                    signalsButton()
-                        .buttonStyle(
-                            SecondaryButtonStyle(leftAccessory:
-                                .custom(image: Image("star_premium_20"), pressedColor: .themeJacob, activeColor: .themeJacob, disabledColor: .themeJacob)
-                            ))
+                ThemeButton(
+                    text: "market.watchlist.signals".localized,
+                    icon: "star_filled",
+                    iconColorStyle: viewModel.showSignals ? nil : .yellow,
+                    style: viewModel.showSignals ? .primary : .secondary,
+                    size: .small
+                ) {
+                    Coordinator.shared.performAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearchResults, trigger: .tradingSignal) {
+                        if viewModel.showSignals {
+                            viewModel.set(showSignals: false)
+                        } else {
+                            Coordinator.shared.present { isPresented in
+                                MarketWatchlistSignalsView(setShowSignals: { [weak viewModel] in
+                                    viewModel?.set(showSignals: $0)
+                                }, isPresented: isPresented)
+                            }
+                        }
+                    }
                 }
             }
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
-        }
-    }
-
-    @ViewBuilder private func signalsButton() -> some View {
-        Button(action: {
-            Coordinator.shared.performAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearchResults, trigger: .tradingSignal) {
-                if viewModel.showSignals {
-                    viewModel.set(showSignals: false)
-                } else {
-                    Coordinator.shared.present { isPresented in
-                        MarketWatchlistSignalsView(setShowSignals: { [weak viewModel] in
-                            viewModel?.set(showSignals: $0)
-                        }, isPresented: isPresented)
-                    }
-                }
-            }
-        }) {
-            Text("market.watchlist.signals".localized)
         }
     }
 

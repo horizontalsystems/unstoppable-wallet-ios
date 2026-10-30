@@ -2,6 +2,7 @@ import SwiftUI
 
 struct IconButton: View {
     let icon: String
+    var iconColorStyle: ColorStyle? = nil
     var style: ThemeButton.Style = .primary
     var mode: ThemeButton.Mode = .solid
     var size: ThemeButton.Size = .medium
@@ -9,7 +10,7 @@ struct IconButton: View {
 
     var body: some View {
         Button(action: action) {
-            Image(icon).buttonIcon(size: size.iconSize)
+            Image(icon).buttonIcon(size: size.iconSize).foregroundColor(ifSet: iconColorStyle)
         }
         .buttonStyle(Style(style: style, mode: mode, size: size))
     }
@@ -27,7 +28,7 @@ struct IconButton: View {
                 .foregroundColor(ThemeButton.foregroundColor(style: style, mode: mode, size: size, isEnabled: isEnabled))
                 .background(ThemeButton.backgroundColor(style: style, mode: mode, size: size, isEnabled: isEnabled))
                 .clipShape(Circle())
-                .opacity(configuration.isPressed ? size.pressOpacity : 1)
+                .opacity(configuration.isPressed ? 0.6 : 1)
                 .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
         }
     }

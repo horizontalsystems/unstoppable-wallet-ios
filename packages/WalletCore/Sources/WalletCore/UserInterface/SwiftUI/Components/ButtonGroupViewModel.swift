@@ -49,20 +49,23 @@ extension ButtonGroupViewModel {
 
     struct ButtonItem: Identifiable {
         let id: String
-        let style: PrimaryButtonStyle.Style
+        let style: ThemeButton.Style
+        let mode: ThemeButton.Mode
         let title: String
         let icon: String?
         let action: () -> Void
 
         init(
             id: String = UUID().description,
-            style: PrimaryButtonStyle.Style,
+            style: ThemeButton.Style,
+            mode: ThemeButton.Mode = .solid,
             title: String,
             icon: String? = nil,
             action: @escaping () -> Void
         ) {
             self.id = id
             self.style = style
+            self.mode = mode
             self.title = title
             self.icon = icon
             self.action = action

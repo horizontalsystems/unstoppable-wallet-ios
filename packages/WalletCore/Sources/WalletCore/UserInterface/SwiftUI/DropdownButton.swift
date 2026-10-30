@@ -1,17 +1,12 @@
 import SwiftUI
 
-public struct DropdownButton: View {
+struct DropdownButton: View {
     let text: String
     var style: ThemeButton.Style = .secondary
     var mode: ThemeButton.Mode = .solid
     let action: () -> Void
 
-    public init(text: String, action: @escaping () -> Void) {
-        self.text = text
-        self.action = action
-    }
-
-    public var body: some View {
+    var body: some View {
         Button(action: action) {
             HStack(spacing: 2) {
                 Text(text)

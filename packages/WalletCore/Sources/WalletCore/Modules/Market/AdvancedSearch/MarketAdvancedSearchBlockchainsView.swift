@@ -47,10 +47,9 @@ struct MarketAdvancedSearchBlockchainsView: View {
                         .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                     }
                 } bottomContent: {
-                    Button(buttonTitle()) {
+                    ThemeButton(text: buttonTitle()) {
                         isPresented = false
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 }
             }
             .navigationTitle("market.advanced_search.blockchains".localized)

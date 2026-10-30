@@ -159,11 +159,11 @@ struct ContactBookView: View {
                     .title(icon: ThemeImage.trash, title: "contacts.contact.delete_alert.title".localized),
                     .text(text: "contacts.contact.delete_alert.description".localized),
                     .buttonGroup(.init(buttons: [
-                        .init(style: .red, title: "contacts.contact.delete_alert.delete".localized) {
+                        .init(style: .secondary, title: "contacts.contact.delete_alert.delete".localized) {
                             viewModel.delete(contactUid: item.id)
                             isPresented.wrappedValue = false
                         },
-                        .init(style: .transparent, title: "button.cancel".localized) {
+                        .init(style: .secondary, mode: .transparent, title: "button.cancel".localized) {
                             isPresented.wrappedValue = false
                         },
                     ])),
@@ -182,11 +182,11 @@ struct ContactBookView: View {
                     .title(icon: ThemeImage.warning, title: "alert.warning".localized),
                     .warning(text: "contacts.update_contact.already_has_address".localized(blockchainName, oldAddress.address.shortened, newAddress.address.shortened)),
                     .buttonGroup(.init(buttons: [
-                        .init(style: .yellow, title: "contacts.update_contact.replace".localized) {
+                        .init(style: .primary, title: "contacts.update_contact.replace".localized) {
                             confirmation.confirmed = true
                             isPresented.wrappedValue = false
                         },
-                        .init(style: .transparent, title: "button.cancel".localized) {
+                        .init(style: .secondary, mode: .transparent, title: "button.cancel".localized) {
                             isPresented.wrappedValue = false
                         },
                     ])),

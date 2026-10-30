@@ -96,7 +96,7 @@ struct AddressView: View {
         } bottomContent: {
             let (title, disabled, showProgress) = buttonState()
 
-            Button(action: {
+            ThemeButton(text: title, spinner: showProgress) {
                 switch viewModel.state {
                 case .empty:
                     if !viewModel.initialAddress.isEmpty, allowRemoval {
@@ -106,17 +106,8 @@ struct AddressView: View {
                     onFinish(resolvedAddress)
                 default: ()
                 }
-            }) {
-                HStack(spacing: .margin8) {
-                    if showProgress {
-                        ProgressView()
-                    }
-
-                    Text(title)
-                }
             }
             .disabled(disabled)
-            .buttonStyle(PrimaryButtonStyle(style: .yellow))
         }
     }
 

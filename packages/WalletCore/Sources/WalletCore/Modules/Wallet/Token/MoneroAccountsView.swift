@@ -91,7 +91,7 @@ struct MoneroAccountsView: View {
             }
             .buttonStyle(CellButtonStyle())
 
-            Button(action: {
+            IconButton(icon: "pen", style: .secondary, size: .small) {
                 presentNameSheet(
                     title: "monero.accounts.rename".localized,
                     buttonTitle: "button.save".localized,
@@ -100,10 +100,7 @@ struct MoneroAccountsView: View {
                 ) { name in
                     viewModel.renameAccount(index: item.index, label: name)
                 }
-            }, label: {
-                Image("edit_20").renderingMode(.template)
-            })
-            .buttonStyle(SecondaryCircleButtonStyle(style: .default))
+            }
             .padding(.trailing, .margin16)
         }
     }
@@ -147,13 +144,10 @@ struct MoneroAccountNameSheet: View {
                 }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin24, trailing: .margin16))
 
-                Button(action: {
+                ThemeButton(text: buttonTitle) {
                     onConfirm(name)
                     isPresented = false
-                }) {
-                    Text(buttonTitle)
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 .disabled(requireName && name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin32, trailing: .margin16))
             }

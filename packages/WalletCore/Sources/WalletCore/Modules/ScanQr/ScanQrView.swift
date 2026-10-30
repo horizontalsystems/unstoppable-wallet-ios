@@ -4,6 +4,7 @@ import SwiftUI
 public struct ScanQrView: View {
     @StateObject private var viewModel: ScanQrViewModel
     @Binding private var isPresented: Bool
+    @State private var pickerPresented = false
 
     private let reportAfterDismiss: Bool
     private let options: ScanQrModule.Options
@@ -73,26 +74,16 @@ public struct ScanQrView: View {
         if options.contains(.picker) || options.contains(.paste) {
             HStack(spacing: .margin16) {
                 if options.contains(.picker) {
-                    PhotosPicker(
-                        selection: $viewModel.pickerItem,
-                        matching: .images
-                    ) {
-                        HStack(spacing: .margin8) {
-                            Image("gallery").renderingMode(.template)
-                            Text("button.gallery".localized)
-                        }
+                    ThemeButton(text: "button.gallery".localized, icon: "gallery", style: .secondary) {
+                        pickerPresented = true
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .gray))
+                    .photosPicker(isPresented: $pickerPresented, selection: $viewModel.pickerItem, matching: .images)
                 }
 
                 if options.contains(.paste) {
-                    Button(action: { viewModel.onPaste() }) {
-                        HStack(spacing: .margin8) {
-                            Image("copy").renderingMode(.template)
-                            Text("button.paste".localized)
-                        }
+                    ThemeButton(text: "button.paste".localized, icon: "copy") {
+                        viewModel.onPaste()
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 }
             }
         }
@@ -103,14 +94,11 @@ public struct ScanQrView: View {
             Text("access_camera.message".localized)
                 .themeSubhead2(color: .themeGray, alignment: .center)
 
-            Button(action: {
+            ThemeButton(text: "access_camera.settings".localized, style: .secondary, mode: .transparent) {
                 if let url = URL(string: UIApplication.openSettingsURLString) {
                     UIApplication.shared.open(url)
                 }
-            }) {
-                Text("access_camera.settings".localized)
             }
-            .buttonStyle(PrimaryButtonStyle(style: .transparent))
         }
         .padding(.horizontal, .margin32)
     }

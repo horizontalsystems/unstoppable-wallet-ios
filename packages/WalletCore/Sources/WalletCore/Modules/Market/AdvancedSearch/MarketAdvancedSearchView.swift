@@ -77,24 +77,19 @@ struct MarketAdvancedSearchView: View {
             } bottomContent: {
                 switch viewModel.state {
                 case .loading:
-                    Button {} label: { ProgressView() }
-                        .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                    ThemeButton(text: "market.advanced_search.show_results".localized, spinner: true) {}
                         .disabled(true)
                 case let .loaded(marketInfos):
-                    Button {
+                    let resultsText = marketInfos.isEmpty ? "market.advanced_search.empty_results".localized : "\("market.advanced_search.show_results".localized): \(marketInfos.count)"
+
+                    ThemeButton(text: resultsText) {
                         resultsPresented = true
-                    } label: {
-                        Text(marketInfos.isEmpty ? "market.advanced_search.empty_results".localized : "\("market.advanced_search.show_results".localized): \(marketInfos.count)")
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
                     .disabled(marketInfos.isEmpty)
                 case .failed:
-                    Button {
+                    ThemeButton(text: "market.advanced_search.retry".localized, style: .secondary) {
                         viewModel.syncMarketInfos()
-                    } label: {
-                        Text("market.advanced_search.retry".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .gray))
                 }
             }
         }
@@ -346,7 +341,9 @@ private struct AdvancedSearchHeaderModifier: ViewModifier {
             HStack(spacing: .margin16) {
                 Image(imageName).themeIcon(color: .themeJacob)
                 Text(title.localized).themeHeadline2()
-                Button(action: { isPresented.wrappedValue = false }) { Image("close_3_24").themeIcon() }
+                IconButton(icon: "close", style: .secondary, mode: .transparent, size: .small) {
+                    isPresented.wrappedValue = false
+                }
             }
             .padding(.horizontal, .margin32)
             .padding(.vertical, .margin24)

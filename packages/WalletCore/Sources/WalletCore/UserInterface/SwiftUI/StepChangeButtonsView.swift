@@ -9,19 +9,13 @@ struct StepChangeButtonsView<Content: View>: View {
             content
         } trailing: {
             HStack(spacing: .margin16) {
-                Button(action: {
+                IconButton(icon: "minus", style: .secondary, size: .small) {
                     onTap(.down)
-                }, label: {
-                    Image("minus_20").renderingMode(.template)
-                })
-                .buttonStyle(SecondaryCircleButtonStyle(style: .default))
+                }
 
-                Button(action: {
+                IconButton(icon: "plus", style: .secondary, size: .small) {
                     onTap(.up)
-                }, label: {
-                    Image("plus_20").renderingMode(.template)
-                })
-                .buttonStyle(SecondaryCircleButtonStyle(style: .default))
+                }
             }
         }
     }

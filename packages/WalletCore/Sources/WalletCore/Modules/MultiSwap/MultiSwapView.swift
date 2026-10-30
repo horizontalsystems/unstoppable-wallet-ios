@@ -334,7 +334,7 @@ struct MultiSwapView: View {
                     .title(icon: result.icon, title: result.title),
                     .subhead2(text: result.description),
                     .buttonGroup(.init(buttons: [
-                        .init(style: .gray, title: result.buttonTitle) {
+                        .init(style: .secondary, title: result.buttonTitle) {
                             isPresented.wrappedValue = false
 
                             onTapResult(result, vm: vm)

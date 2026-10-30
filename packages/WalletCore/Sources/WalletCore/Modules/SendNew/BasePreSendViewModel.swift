@@ -235,7 +235,7 @@ public class BasePreSendViewModel: ObservableObject {
 
     var buttonState: PreSendButtonState {
         let title: String
-        var style: PrimaryButtonStyle.Style = .yellow
+        var style: ThemeButton.Style = .primary
         var disabled = true
         var showProgress = false
         var progress: Double?
@@ -256,7 +256,7 @@ public class BasePreSendViewModel: ObservableObject {
             switch spendStep {
             case let .required(stepTitle):
                 title = stepTitle
-                style = .gray
+                style = .secondary
                 disabled = false
             case let .pending(stepTitle, stepProgress):
                 title = stepTitle
@@ -381,5 +381,5 @@ struct PreSendButtonState {
     let showProgress: Bool
     var progress: Double?
     // the wallet's own step (shield ZEC) is secondary like "Enable coin", not the yellow Next
-    var style: PrimaryButtonStyle.Style = .yellow
+    var style: ThemeButton.Style = .primary
 }

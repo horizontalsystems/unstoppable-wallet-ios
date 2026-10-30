@@ -76,3 +76,13 @@ extension Image {
         ComponentImage(image: "premium_filled", size: .size20)
     }
 }
+
+extension View {
+    @ViewBuilder func foregroundColor(ifSet colorStyle: ColorStyle?) -> some View {
+        if let colorStyle {
+            foregroundColor(colorStyle.color)
+        } else {
+            self
+        }
+    }
+}

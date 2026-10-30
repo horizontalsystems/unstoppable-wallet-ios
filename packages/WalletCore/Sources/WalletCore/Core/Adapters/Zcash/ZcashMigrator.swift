@@ -152,10 +152,10 @@ class ZcashMigrator {
                     .title(icon: ThemeImage.warning, title: "balance.token.migration.detected.title".localized),
                     .text(text: "balance.token.migration.detected.description".localized),
                     .buttonGroup(.init(buttons: [
-                            .init(style: .gray, title: "button.cancel".localized) {
+                            .init(style: .secondary, title: "button.cancel".localized) {
                                 isPresented.wrappedValue = false
                             },
-                            .init(style: .yellow, title: "balance.token.migrate".localized) {
+                            .init(style: .primary, title: "balance.token.migrate".localized) {
                                 isPresented.wrappedValue = false
 
                                 Coordinator.shared.present { _ in

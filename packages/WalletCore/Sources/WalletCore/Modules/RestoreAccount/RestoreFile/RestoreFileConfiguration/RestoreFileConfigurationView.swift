@@ -36,11 +36,11 @@ struct RestoreFileConfigurationView: View {
                         .title(icon: ThemeImage.warning, title: "alert_card.title.caution".localized),
                         .text(text: "backup_app.restore.notice.description".localized),
                         .buttonGroup(.init(buttons: [
-                            .init(style: .gray, title: "button.replace".localized) {
+                            .init(style: .secondary, title: "button.replace".localized) {
                                 sheetPresented.wrappedValue = false
                                 viewModel.restore()
                             },
-                            .init(style: .transparent, title: "button.cancel".localized) {
+                            .init(style: .secondary, mode: .transparent, title: "button.cancel".localized) {
                                 sheetPresented.wrappedValue = false
                             },
                         ])),

@@ -17,7 +17,7 @@ struct Informed: ViewModifier {
                         .title(icon: infoDescription.icon, title: infoDescription.title),
                         .text(text: infoDescription.description),
                         .buttonGroup(.init(buttons: [
-                            .init(style: .gray, title: "button.understood".localized) {
+                            .init(style: .secondary, title: "button.understood".localized) {
                                 isPresented.wrappedValue = false
                             },
                         ])),

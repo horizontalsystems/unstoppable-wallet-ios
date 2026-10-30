@@ -61,10 +61,9 @@ struct MarketAdvancedSearchCategoriesView: View {
                         .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin24, trailing: .margin16))
                     }
                 } bottomContent: {
-                    Button(buttonTitle()) {
+                    ThemeButton(text: buttonTitle()) {
                         isPresented = false
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 }
             }
             .navigationTitle("market.advanced_search.categories".localized)

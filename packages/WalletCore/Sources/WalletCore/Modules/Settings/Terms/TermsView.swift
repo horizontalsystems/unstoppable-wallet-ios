@@ -22,14 +22,11 @@ struct TermsView: View {
                     BottomGradientWrapper {
                         content(readOnly: false)
                     } bottomContent: {
-                        Button(action: {
+                        ThemeButton(text: "terms.i_agree".localized) {
                             viewModel.setTermsAccepted()
                             isPresented = false
                             onAccept?()
-                        }) {
-                            Text("terms.i_agree".localized)
                         }
-                        .buttonStyle(PrimaryButtonStyle(style: .yellow))
                         .disabled(checkedIds.count < viewModel.terms.count)
                     }
                 }

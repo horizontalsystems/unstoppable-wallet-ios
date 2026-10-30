@@ -21,7 +21,6 @@ public extension Color {
     static let themeGray50 = Color.themeGray.opacity(0.5)
     static let themeYellow20 = Color.themeYellow.opacity(0.2)
     static let themeYellow50 = Color.themeYellow.opacity(0.5)
-    static let themeRed50 = Color.themeRed.opacity(0.5)
 
     static let themeTyler = Color("Tyler")
     static let themeTyler96 = Color("Tyler96")
@@ -47,8 +46,6 @@ public extension Color {
     static var themeBackgroundToGradient: Color { .themeHelsing }
     static var themeNavigationBarBackground: Color { .themeTyler96 }
     static var themeInputFieldTintColor: Color { .themeLeah }
-
-    var pressed: Color { opacity(0.5) }
 }
 
 public extension UIColor {

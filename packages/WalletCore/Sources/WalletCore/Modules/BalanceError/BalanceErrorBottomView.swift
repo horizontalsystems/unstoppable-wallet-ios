@@ -23,7 +23,7 @@ struct BalanceErrorBottomView: View {
 
     private func buttons(item: BalanceErrorBottomViewModel.Item) -> [ButtonGroupViewModel.ButtonItem] {
         var buttons: [ButtonGroupViewModel.ButtonItem] = [
-            .init(style: .gray, title: "button.retry".localized) {
+            .init(style: .secondary, title: "button.retry".localized) {
                 viewModel.refresh(wallet: item.wallet)
                 isPresented = false
             },
@@ -31,7 +31,7 @@ struct BalanceErrorBottomView: View {
 
         if let sourceType = item.sourceType {
             buttons.append(
-                .init(style: .transparent, title: "balance_error.change_source".localized) {
+                .init(style: .secondary, mode: .transparent, title: "balance_error.change_source".localized) {
                     isPresented = false
 
                     switch sourceType {

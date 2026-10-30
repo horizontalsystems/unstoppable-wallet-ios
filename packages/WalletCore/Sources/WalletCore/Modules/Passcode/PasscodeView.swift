@@ -94,28 +94,14 @@ struct PasscodeView: View {
                     onTapBiometry: onTapBiometry
                 )
 
-                if randomized {
-                    randomButton()
-                        .buttonStyle(SecondaryActiveButtonStyle())
-                } else {
-                    randomButton()
-                        .buttonStyle(SecondaryButtonStyle())
+                if randomEnabled {
+                    ThemeButton(text: "unlock.random".localized, style: randomized ? .primary : .secondary, size: .small) {
+                        randomized.toggle()
+                    }
+                    .disabled(lockoutState.isLocked)
                 }
             }
             .padding(.bottom, .margin32)
-        }
-    }
-
-    @ViewBuilder func randomButton() -> some View {
-        if randomEnabled {
-            Button(action: {
-                randomized.toggle()
-            }) {
-                Text("unlock.random".localized)
-            }
-            .disabled(lockoutState.isLocked)
-        } else {
-            EmptyView()
         }
     }
 

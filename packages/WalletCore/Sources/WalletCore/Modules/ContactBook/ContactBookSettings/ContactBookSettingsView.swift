@@ -108,12 +108,12 @@ struct ContactBookSettingsView: View {
                     .title(icon: ThemeImage.warning, title: "alert.warning".localized),
                     .warning(text: "contacts.settings.merge_disclaimer".localized),
                     .buttonGroup(.init(buttons: [
-                        .init(style: .yellow, title: "button.continue".localized) {
+                        .init(style: .primary, title: "button.continue".localized) {
                             confirmation.confirmed = true
                             viewModel.confirmMerge()
                             isPresented.wrappedValue = false
                         },
-                        .init(style: .transparent, title: "button.cancel".localized) {
+                        .init(style: .secondary, mode: .transparent, title: "button.cancel".localized) {
                             isPresented.wrappedValue = false
                         },
                     ])),
@@ -144,11 +144,11 @@ struct ContactBookSettingsView: View {
                     .title(icon: ThemeImage.warning, title: "alert.warning".localized),
                     .warning(text: "contacts.restore.overwrite_alert.description".localized),
                     .buttonGroup(.init(buttons: [
-                        .init(style: .red, title: "contacts.restore.overwrite_alert.replace".localized) {
+                        .init(style: .secondary, title: "contacts.restore.overwrite_alert.replace".localized) {
                             confirmation.confirmed = true
                             isPresented.wrappedValue = false
                         },
-                        .init(style: .transparent, title: "button.cancel".localized) {
+                        .init(style: .secondary, mode: .transparent, title: "button.cancel".localized) {
                             isPresented.wrappedValue = false
                         },
                     ])),

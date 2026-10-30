@@ -23,23 +23,17 @@ struct CoinPageView: View {
                         overview()
                     } bottomContent: {
                         HStack(spacing: .margin8) {
-                            Button(action: {
+                            ThemeButton(text: "coin_page.buy".localized) {
                                 Coordinator.shared.present { _ in
                                     RegularMultiSwapView(tokenOut: token)
                                 }
-                            }) {
-                                Text("coin_page.buy".localized)
                             }
-                            .buttonStyle(PrimaryButtonStyle(style: .yellow))
 
-                            Button(action: {
+                            ThemeButton(text: "coin_page.sell".localized, style: .secondary) {
                                 Coordinator.shared.present { _ in
                                     RegularMultiSwapView(token: token)
                                 }
-                            }) {
-                                Text("coin_page.sell".localized)
                             }
-                            .buttonStyle(PrimaryButtonStyle(style: .gray))
                         }
                     }
                 } else {

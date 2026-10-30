@@ -23,7 +23,7 @@ struct TonConnectSendView: View {
                         case .syncing:
                             EmptyView()
                         case .success:
-                            Button(action: {
+                            ThemeButton(text: "wallet_connect.button.confirm".localized) {
                                 Task {
                                     try await sendViewModel.send()
 
@@ -31,27 +31,18 @@ struct TonConnectSendView: View {
                                         presentationMode.wrappedValue.dismiss()
                                     }
                                 }
-                            }) {
-                                Text("wallet_connect.button.confirm".localized)
                             }
-                            .buttonStyle(PrimaryButtonStyle(style: .yellow))
                             .disabled(sendViewModel.sending)
                         case .failed:
-                            Button(action: {
+                            ThemeButton(text: "send.confirmation.refresh".localized, style: .secondary) {
                                 sendViewModel.sync()
-                            }) {
-                                Text("send.confirmation.refresh".localized)
                             }
-                            .buttonStyle(PrimaryButtonStyle(style: .gray))
                         }
 
-                        Button(action: {
+                        ThemeButton(text: "button.reject".localized, style: .secondary) {
                             viewModel.reject()
                             presentationMode.wrappedValue.dismiss()
-                        }) {
-                            Text("button.reject".localized)
                         }
-                        .buttonStyle(PrimaryButtonStyle(style: .gray))
                         .disabled(sendViewModel.sending)
                     }
                 }

@@ -97,7 +97,7 @@ struct BottomMultiSelectorView: View {
             buttons: [
                 ButtonGroupViewModel.ButtonItem(
                     id: Controls.apply,
-                    style: .yellow,
+                    style: .primary,
                     title: "button.done".localized,
                     action: handleApply
                 ),

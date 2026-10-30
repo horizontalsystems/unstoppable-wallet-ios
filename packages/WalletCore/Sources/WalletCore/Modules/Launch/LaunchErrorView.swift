@@ -19,16 +19,13 @@ public struct LaunchErrorView: View {
                     .textBody(color: .themeGray)
                     .multilineTextAlignment(.center)
 
-                Button(action: {
+                ThemeButton(text: "launch.failed_to_launch.report".localized, style: .secondary) {
                     if MFMailComposeViewController.canSendMail() {
                         mailPresented = true
                     } else {
                         CopyHelper.copyAndNotify(value: errorString)
                     }
-                }) {
-                    Text("launch.failed_to_launch.report".localized)
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .gray))
             }
             .padding(.horizontal, .margin48)
         }

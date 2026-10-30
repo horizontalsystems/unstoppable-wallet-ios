@@ -14,12 +14,9 @@ struct SwitchAccountView: View {
 
                 Text("switch_account.title".localized).themeHeadline2()
 
-                Button(
-                    action: {
-                        presentationMode.wrappedValue.dismiss()
-                    },
-                    label: { Image("close_3_24") }
-                )
+                IconButton(icon: "close", style: .secondary, mode: .transparent, size: .small) {
+                    presentationMode.wrappedValue.dismiss()
+                }
             }
             .padding(.horizontal, .margin32)
             .padding(.vertical, .margin24)

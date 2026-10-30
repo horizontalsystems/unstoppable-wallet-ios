@@ -5,6 +5,8 @@ struct DuressModeIntroView: View {
     let viewModel: DuressModeViewModel
     @Binding var showParentSheet: Bool
 
+    @State private var nextPresented = false
+
     var body: some View {
         ThemeView {
             BottomGradientWrapper {
@@ -41,19 +43,19 @@ struct DuressModeIntroView: View {
                     }
                 }
             } bottomContent: {
-                NavigationLink(destination: {
-                    if (viewModel.regularAccounts + viewModel.watchAccounts).isEmpty {
-                        CreatePasscodeModule.createDuressPasscodeView(accountIds: [], showParentSheet: $showParentSheet)
-                    } else {
-                        DuressModeSelectView(viewModel: viewModel, showParentSheet: $showParentSheet)
-                    }
-                }) {
-                    Text("button.continue".localized)
+                ThemeButton(text: "button.continue".localized) {
+                    nextPresented = true
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
             }
         }
         .navigationTitle("enable_duress_mode.intro.title".localized)
+        .navigationDestination(isPresented: $nextPresented) {
+            if (viewModel.regularAccounts + viewModel.watchAccounts).isEmpty {
+                CreatePasscodeModule.createDuressPasscodeView(accountIds: [], showParentSheet: $showParentSheet)
+            } else {
+                DuressModeSelectView(viewModel: viewModel, showParentSheet: $showParentSheet)
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button(action: {

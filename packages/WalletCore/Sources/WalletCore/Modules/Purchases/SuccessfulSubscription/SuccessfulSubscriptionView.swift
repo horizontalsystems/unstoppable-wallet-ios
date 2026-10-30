@@ -19,12 +19,9 @@ struct SuccessfulSubscriptionView: View {
                 Spacer()
 
                 VStack(spacing: .margin8) {
-                    Button(action: {
+                    ThemeButton(text: "purchases.successful_subscription.button.go_app".localized) {
                         isPresented = false
-                    }) {
-                        Text("purchases.successful_subscription.button.go_app".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellowGradient))
                 }
             }
             .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin12, trailing: .margin24))

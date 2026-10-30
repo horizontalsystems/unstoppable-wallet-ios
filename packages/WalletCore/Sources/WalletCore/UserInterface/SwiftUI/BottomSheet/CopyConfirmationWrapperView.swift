@@ -13,7 +13,7 @@ struct CopyConfirmationWrapperView: View {
                 .buttonGroup(
                     .init(buttons: [
                         .init(
-                            style: .gray,
+                            style: .secondary,
                             title: "copy_warning.i_will_risk_it".localized,
                             action: {
                                 UIPasteboard.general.string = value
@@ -23,7 +23,8 @@ struct CopyConfirmationWrapperView: View {
                             }
                         ),
                         .init(
-                            style: .transparent,
+                            style: .secondary,
+                            mode: .transparent,
                             title: "copy_warning.dont_copy".localized,
                             action: {
                                 isPresented = false

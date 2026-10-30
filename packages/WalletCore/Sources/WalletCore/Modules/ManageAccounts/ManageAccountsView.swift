@@ -76,7 +76,7 @@ struct ManageAccountsView: View {
             right: {
                 let alert = item.account.nonStandard || item.account.nonRecommended || !item.account.backedUp
 
-                Button(action: {
+                IconButton(icon: alert ? "warning" : "more", iconColorStyle: alert ? .red : nil, style: .secondary, size: .small) {
                     Coordinator.shared.present { isPresented in
                         ManageAccountView(account: item.account, isPresented: isPresented)
                     } onDismiss: {
@@ -84,10 +84,7 @@ struct ManageAccountsView: View {
                             parentPresented?.wrappedValue = false
                         }
                     }
-                }) {
-                    ThemeImage(alert ? "warning" : "more", size: .iconSize24, colorStyle: alert ? .red : .primary)
                 }
-                .buttonStyle(SecondaryCircleButtonStyle())
             },
             action: {
                 viewModel.set(activeAccountId: item.account.id)

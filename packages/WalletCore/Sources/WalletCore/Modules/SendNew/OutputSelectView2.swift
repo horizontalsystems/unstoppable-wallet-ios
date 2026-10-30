@@ -34,21 +34,20 @@ struct OutputSelectorView2: View {
                 HorizontalDivider(color: .themeBlade, height: .heightOneDp)
 
                 HStack {
-                    Button(action: {
+                    ThemeButton(text: "send.unselect_all".localized, mode: .transparent, size: .small) {
                         viewModel.unselectAll()
-                    }) {
-                        Text("send.unselect_all".localized).themeBody(color: viewModel.selectedSet.isEmpty ? .themeGray50 : .themeJacob)
                     }
+                    .disabled(viewModel.selectedSet.isEmpty)
 
                     Spacer()
 
-                    Button(action: {
+                    ThemeButton(text: "send.select_all".localized, mode: .transparent, size: .small) {
                         viewModel.selectAll()
-                    }) {
-                        Text("send.select_all".localized).themeBody(color: viewModel.allSelected ? .themeGray50 : .themeJacob, alignment: .trailing)
                     }
+                    .disabled(viewModel.allSelected)
                 }
-                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: CGFloat(43), trailing: .margin16))
+                .padding(.top, .margin12)
+                .padding(.bottom, CGFloat(43))
             }
         }
         .navigationTitle("send.unspent_outputs".localized)

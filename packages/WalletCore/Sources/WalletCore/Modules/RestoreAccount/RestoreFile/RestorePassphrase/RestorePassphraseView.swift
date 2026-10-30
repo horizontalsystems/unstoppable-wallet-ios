@@ -49,17 +49,9 @@ struct RestorePassphraseView: View {
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
             } bottomContent: {
-                Button(action: {
+                ThemeButton(text: viewModel.buttonTitle, spinner: viewModel.processing) {
                     viewModel.onTapNext()
-                }) {
-                    HStack(spacing: .margin8) {
-                        if viewModel.processing {
-                            ProgressView().progressViewStyle(.circular)
-                        }
-                        Text(viewModel.buttonTitle)
-                    }
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 .disabled(viewModel.processing)
                 .animation(.default, value: viewModel.processing)
             }
