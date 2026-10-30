@@ -1,8 +1,8 @@
 import SwiftUI
 import UIKit
 
-// Two-sided split slider: the left label is the share of Address 1, the right one the share of Address 2.
-// Moves in whole steps only; the binding is written only when the step changes.
+/// Two-sided split slider: the left label is the share of Address 1, the right one the share of Address 2.
+/// Moves in whole steps only; the binding is written only when the step changes.
 struct SplitPercentSlider: View {
     @Binding var percent: Int
     var range: ClosedRange<Int> = SplitSwapViewModel.percentRange

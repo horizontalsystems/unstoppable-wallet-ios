@@ -5,12 +5,12 @@ import RxSwift
 import Testing
 @testable import WalletCore
 
-// The NEAR confirmation (Android `SendTransactionServiceNear`): the balance check runs against the
-// estimate's required NEAR, which is well above the fee, so the caution names the amount to hold;
-// a token's receiver registration is its own row; a pending send only warns.
+/// The NEAR confirmation (Android `SendTransactionServiceNear`): the balance check runs against the
+/// estimate's required NEAR, which is well above the fee, so the caution names the amount to hold;
+/// a token's receiver registration is its own row; a pending send only warns.
 struct NearSendDataTests {
     @Test func insufficientNearCautionNamesTheRequiredAmount() throws {
-        let required = Decimal(string: "0.0313")!
+        let required = try #require(Decimal(string: "0.0313"))
         let data = Self.sendData(transactionError: NearSendHelper.TransactionError.insufficientNearBalance(required: required))
 
         let caution = try #require(data.cautions(baseToken: Self.nearToken, currency: Self.currency, rates: [:]).first)
@@ -23,21 +23,21 @@ struct NearSendDataTests {
         #expect(!data.canSend)
     }
 
-    @Test func requiredNearAboveAvailableIsInsufficient() {
-        let estimate = Self.estimate(requiredNear: Decimal(string: "1.0153")!)
+    @Test func requiredNearAboveAvailableIsInsufficient() throws {
+        let estimate = try Self.estimate(requiredNear: #require(Decimal(string: "1.0153")))
 
-        let error = NearSendHelper.transactionError(token: Self.nearToken, amount: 1, tokenBalance: 0, availableNear: Decimal(string: "1.01")!, estimate: estimate)
+        let error = try NearSendHelper.transactionError(token: Self.nearToken, amount: 1, tokenBalance: 0, availableNear: #require(Decimal(string: "1.01")), estimate: estimate)
 
         guard case let .insufficientNearBalance(required) = error as? NearSendHelper.TransactionError else {
             Issue.record("expected an insufficient NEAR error, got \(String(describing: error))")
             return
         }
-        #expect(required == Decimal(string: "1.0153")!)
+        #expect(try required == #require(Decimal(string: "1.0153")))
     }
 
-    // a token transfer on an account holding no NEAR: the token is there, the gas is not
-    @Test func tokenSendWithoutNearIsInsufficientNear() {
-        let estimate = Self.estimate(requiredNear: Decimal(string: "0.0313")!, storageDeposit: Decimal(string: "0.00125")!)
+    /// a token transfer on an account holding no NEAR: the token is there, the gas is not
+    @Test func tokenSendWithoutNearIsInsufficientNear() throws {
+        let estimate = try Self.estimate(requiredNear: #require(Decimal(string: "0.0313")), storageDeposit: #require(Decimal(string: "0.00125")))
 
         let error = NearSendHelper.transactionError(token: Self.usdtToken, amount: 10, tokenBalance: 100, availableNear: 0, estimate: estimate)
 
@@ -56,19 +56,19 @@ struct NearSendDataTests {
         }
     }
 
-    @Test func coveredSendHasNoError() {
-        #expect(NearSendHelper.transactionError(token: Self.nearToken, amount: 1, tokenBalance: 0, availableNear: 2, estimate: Self.estimate(requiredNear: Decimal(string: "1.0153")!)) == nil)
+    @Test func coveredSendHasNoError() throws {
+        #expect(try NearSendHelper.transactionError(token: Self.nearToken, amount: 1, tokenBalance: 0, availableNear: 2, estimate: Self.estimate(requiredNear: #require(Decimal(string: "1.0153")))) == nil)
     }
 
     @Test func storageDepositShowsAsReceiverRegistrationRow() throws {
-        let data = Self.sendData(token: Self.usdtToken, estimate: Self.estimate(requiredNear: 0.03, storageDeposit: Decimal(string: "0.00125")!))
+        let data = try Self.sendData(token: Self.usdtToken, estimate: Self.estimate(requiredNear: 0.03, storageDeposit: #require(Decimal(string: "0.00125"))))
 
         let fields = data.feeFields(baseToken: Self.nearToken, currency: Self.currency, rates: [:])
 
         #expect(fields.count == 2)
         #expect(fields.first?.content is FeeField)
         let registration = try #require(fields.last?.content as? ValueField)
-        #expect(registration.appValue?.value == Decimal(string: "0.00125")!)
+        #expect(try registration.appValue?.value == #require(Decimal(string: "0.00125")))
         #expect(registration.formatFull)
     }
 
@@ -91,7 +91,7 @@ struct NearSendDataTests {
         #expect(!data.canSend)
     }
 
-    // as Android: a warning, never a block
+    /// as Android: a warning, never a block
     @Test func previousPendingTransactionWarnsWithoutBlocking() {
         let data = Self.sendData(previousTransactionPending: true)
 
@@ -103,12 +103,12 @@ struct NearSendDataTests {
         #expect(data.canSend)
     }
 
-    // the estimate is what the send passes on: without one there is nothing confirmed to send
+    /// the estimate is what the send passes on: without one there is nothing confirmed to send
     @Test func missingEstimateBlocksTheSend() {
         #expect(!Self.sendData(estimate: nil).canSend)
     }
 
-    @Test func memoIsShownOnTheConfirmation() throws {
+    @Test func memoIsShownOnTheConfirmation() {
         let data = Self.sendData(token: Self.usdtToken, memo: "order-42")
 
         let fields = data.fields(baseToken: Self.nearToken, currency: Self.currency, rates: [:])
@@ -122,7 +122,7 @@ struct NearSendDataTests {
         #expect(NearSendHelper.rejectedError(details: #"{"InvalidTxError":"Expired"}"#) == .rejected)
     }
 
-    // a dropped connection reaches the confirmation as the kit's error and reads as "no internet"
+    /// a dropped connection reaches the confirmation as the kit's error and reads as "no internet"
     @Test func estimationWithoutConnectionShowsNoConnection() async {
         let adapter = EstimateFailingAdapter(error: NoEndpointAvailable(underlying: URLError(.notConnectedToInternet)))
 
@@ -133,8 +133,8 @@ struct NearSendDataTests {
         #expect(NearSendHelper.caution(transactionError: error, feeToken: Self.nearToken).text == AppError.noConnection.localizedDescription)
     }
 
-    // "Max" sends the whole spendable balance; the confirmation takes out what this receiver
-    // needs (Android `SendTransactionServiceNear.maxSendableAmount`)
+    /// "Max" sends the whole spendable balance; the confirmation takes out what this receiver
+    /// needs (Android `SendTransactionServiceNear.maxSendableAmount`)
     @Test func maxSendIsReducedToTheReceiversMaximum() async throws {
         let adapter = MaxSendAdapter()
         // what "Max" puts in the field: the balance the send form offers
@@ -148,7 +148,7 @@ struct NearSendDataTests {
         #expect(adapter.estimated == [1, 1 - MaxSendAdapter.reserve])
     }
 
-    // a Private Send or Cross Pay deposit goes out exactly as the order asks; a shortfall is reported instead
+    /// a Private Send or Cross Pay deposit goes out exactly as the order asks; a shortfall is reported instead
     @Test func depositAmountIsNeverReduced() async throws {
         let adapter = MaxSendAdapter()
         let handler = try Self.handler(adapter: adapter, amount: 1)
@@ -162,9 +162,9 @@ struct NearSendDataTests {
         #expect(adapter.estimated == [1])
     }
 
-    // Past signing the kit keeps a transaction that may have reached a node as pending: a failed
-    // broadcast that left a new pending record is a success, or the user would send twice (Android
-    // SendTransactionServiceNear)
+    /// Past signing the kit keeps a transaction that may have reached a node as pending: a failed
+    /// broadcast that left a new pending record is a success, or the user would send twice (Android
+    /// SendTransactionServiceNear)
     @Test func failureThatLeftANewPendingTransactionIsASuccess() async throws {
         let adapter = BroadcastAdapter(pendingBefore: ["old"], pendingAfter: ["old", "new"], error: URLError(.timedOut))
 
@@ -173,7 +173,7 @@ struct NearSendDataTests {
         #expect(hash == "new")
     }
 
-    // an older pending send is not mistaken for this one
+    /// an older pending send is not mistaken for this one
     @Test func failureWithoutANewPendingTransactionIsThrown() async throws {
         let adapter = BroadcastAdapter(pendingBefore: ["old"], pendingAfter: ["old"], error: URLError(.timedOut))
 
@@ -182,7 +182,7 @@ struct NearSendDataTests {
         }
     }
 
-    // the phrase's key removed from the chosen account, or only a function-call key left: a clear reason, not the kit's text
+    /// the phrase's key removed from the chosen account, or only a function-call key left: a clear reason, not the kit's text
     @Test func lostOrLimitedAccessIsExplained() async throws {
         let lost = BroadcastAdapter(pendingBefore: [], pendingAfter: [], error: NearKit.SendError.accessKeyNotFound)
         let limited = BroadcastAdapter(pendingBefore: [], pendingAfter: [], error: NearKit.SendError.notFullAccessKey)
@@ -195,13 +195,13 @@ struct NearSendDataTests {
         }
     }
 
-    // with less than the transfer needs, the amount stays and the caution names what is required
+    /// with less than the transfer needs, the amount stays and the caution names what is required
     @Test func maxSendBelowTheReserveIsInsufficient() async throws {
-        let adapter = MaxSendAdapter(availableNear: Decimal(string: "0.0001")!)
+        let adapter = try MaxSendAdapter(availableNear: #require(Decimal(string: "0.0001")))
 
-        let data = try await Self.sendData(handler: Self.handler(adapter: adapter, amount: Decimal(string: "0.0001")!))
+        let data = try await Self.sendData(handler: Self.handler(adapter: adapter, amount: #require(Decimal(string: "0.0001"))))
 
-        #expect(data.amount == Decimal(string: "0.0001")!)
+        #expect(try data.amount == #require(Decimal(string: "0.0001")))
         #expect(!data.canSend)
         #expect(adapter.estimated.count == 1)
     }
@@ -209,14 +209,14 @@ struct NearSendDataTests {
     @Test func amountBelowTheMaxIsKept() async throws {
         let adapter = MaxSendAdapter()
 
-        let data = try await Self.sendData(handler: Self.handler(adapter: adapter, amount: Decimal(string: "0.5")!))
+        let data = try await Self.sendData(handler: Self.handler(adapter: adapter, amount: #require(Decimal(string: "0.5"))))
 
-        #expect(data.amount == Decimal(string: "0.5")!)
+        #expect(try data.amount == #require(Decimal(string: "0.5")))
         #expect(!data.amountAdjusted)
-        #expect(adapter.estimated == [Decimal(string: "0.5")!])
+        #expect(try adapter.estimated == [#require(Decimal(string: "0.5"))])
     }
 
-    // a token's fee is paid in NEAR, its amount is never adjusted
+    /// a token's fee is paid in NEAR, its amount is never adjusted
     @Test func tokenAmountIsKept() async throws {
         let adapter = MaxSendAdapter()
 
@@ -300,8 +300,11 @@ extension NearSendDataTests {
         let isMainNet = true
         let balanceState: AdapterState = .synced
         let balanceStateUpdatedObservable: Observable<AdapterState> = .never()
-        // as NearAdapter: the spendable balance is the spendable NEAR
-        var balanceData: BalanceData { BalanceData(balance: availableNear) }
+        /// as NearAdapter: the spendable balance is the spendable NEAR
+        var balanceData: BalanceData {
+            BalanceData(balance: availableNear)
+        }
+
         let balanceDataUpdatedObservable: Observable<BalanceData> = .never()
 
         let address = "bob.near"

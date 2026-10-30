@@ -5,9 +5,9 @@ import Testing
 @testable import WalletCore
 import ZODLSwiftWalletSDK
 
-// The transparent-only parser filter behind a ZEC swap recipient on a route that cannot pay a shielded
-// receiver (spec 2026-10-16): transparent addresses pass; shielded and unified ones are recognised as
-// Zcash addresses and refused with the filter's own reason, which the form shows under "Invalid Address"
+/// The transparent-only parser filter behind a ZEC swap recipient on a route that cannot pay a shielded
+/// receiver (spec 2026-10-16): transparent addresses pass; shielded and unified ones are recognised as
+/// Zcash addresses and refused with the filter's own reason, which the form shows under "Invalid Address"
 struct ZcashTransparentFilterTests {
     private static let transparent = "t1RBzFrCTWSZe3FJbDewtveUMRX2og4kKph"
     // ZIP 320 example: the TEX form of t1VmmGiyjVNeCjxDZzg7vZmd99WyzVby9yC
@@ -23,12 +23,12 @@ struct ZcashTransparentFilterTests {
         #expect(handled.raw == address)
     }
 
-    // a TEX address is a transparent receiver (ZIP 320), so neither the filter nor the memo field may
-    // treat it as shielded (#7295)
+    /// a TEX address is a transparent receiver (ZIP 320), so neither the filter nor the memo field may
+    /// treat it as shielded (#7295)
     @Test func texIsTransparent() throws {
         let recipient = try Recipient(Self.tex, network: .mainnet)
         #expect(recipient.isTransparent)
-        #expect(!(try Recipient(Self.unified, network: .mainnet)).isTransparent)
+        #expect(try !Recipient(Self.unified, network: .mainnet).isTransparent)
     }
 
     @Test(arguments: [unified, AddressUriFixtures.zecShielded])
@@ -41,7 +41,7 @@ struct ZcashTransparentFilterTests {
         }
     }
 
-    // the chain hands the address to the Zcash parser and passes its reason on, so the form can show it
+    /// the chain hands the address to the Zcash parser and passes its reason on, so the form can show it
     @Test func chainPassesTheFilterReasonOn() async throws {
         let chain = AddressParserChain().append(handler: parserItem(addressType: .transparent))
 
@@ -54,7 +54,7 @@ struct ZcashTransparentFilterTests {
         }
     }
 
-    // the shielded fixtures are valid on their own, so a refusal above comes from the filter, not the validator
+    /// the shielded fixtures are valid on their own, so a refusal above comes from the filter, not the validator
     @Test(arguments: [unified, AddressUriFixtures.zecShielded])
     func unfilteredAcceptsShielded(address: String) async throws {
         let item = parserItem(addressType: nil)

@@ -118,7 +118,7 @@ public struct Swap: Hashable {
         case swap
         case privateSend = "private_send"
         case crossPay = "cross_pay"
-        // one deposit delivered to several addresses, recorded and tracked as one swap by its splitUuid
+        /// one deposit delivered to several addresses, recorded and tracked as one swap by its splitUuid
         case splitSwap = "split_swap"
 
         var title: String {

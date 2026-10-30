@@ -119,11 +119,7 @@ public class TonKitManager {
     private func handle(jettons: [Jetton], account: Account) {
         // print("HANDLE JETTONS: \(jettons.map { $0.name })")
 
-        guard Core.shared.config.autoEnableTokensOnReceive else {
-            return
-        }
-
-        guard !jettons.isEmpty else {
+        guard Core.shared.config.autoEnableTokensOnReceive, !jettons.isEmpty else {
             return
         }
 

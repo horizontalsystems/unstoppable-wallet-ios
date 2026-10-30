@@ -30,8 +30,8 @@ extension WCSolanaSendHandler: ISendHandler {
         makeSendData()
     }
 
-    // Fully synchronous (fee is a local compute, balance is cached), so the preview and the real send
-    // produce the same data — the sheet opens complete with no spinner or resize.
+    /// Fully synchronous (fee is a local compute, balance is cached), so the preview and the real send
+    /// produce the same data — the sheet opens complete with no spinner or resize.
     private func makeSendData() -> ISendData {
         let fees = payload.rawTransactions.compactMap { try? SolanaKit.Kit.estimateFee(rawTransaction: $0) }
         let fee: Decimal? = fees.count == payload.rawTransactions.count ? fees.reduce(0, +) : nil

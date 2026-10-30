@@ -16,8 +16,8 @@ public class CoinManager {
     }
 }
 
-// The token-lookup seam converters depend on. Mirrors Android's ICoinManager and lets
-// a converter be tested without standing up MarketKit and the wallet manager.
+/// The token-lookup seam converters depend on. Mirrors Android's ICoinManager and lets
+/// a converter be tested without standing up MarketKit and the wallet manager.
 protocol ICoinManager {
     func token(query: TokenQuery) throws -> Token?
 }

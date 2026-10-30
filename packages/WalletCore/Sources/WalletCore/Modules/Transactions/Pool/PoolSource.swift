@@ -16,14 +16,10 @@ struct PoolSource {
 }
 
 extension PoolSource: Hashable {
-    public func hash(into hasher: inout Hasher) {
+    func hash(into hasher: inout Hasher) {
         hasher.combine(token)
         hasher.combine(blockchainType)
         hasher.combine(filter)
         hasher.combine(address)
-    }
-
-    public static func == (lhs: PoolSource, rhs: PoolSource) -> Bool {
-        lhs.token == rhs.token && lhs.blockchainType == rhs.blockchainType && lhs.filter == rhs.filter && lhs.address == rhs.address
     }
 }

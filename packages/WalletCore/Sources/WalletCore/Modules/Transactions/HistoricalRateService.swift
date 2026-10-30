@@ -105,8 +105,4 @@ struct RateKey: Hashable {
         hasher.combine(token)
         hasher.combine(date)
     }
-
-    static func == (lhs: RateKey, rhs: RateKey) -> Bool {
-        lhs.token == rhs.token && lhs.date == rhs.date
-    }
 }

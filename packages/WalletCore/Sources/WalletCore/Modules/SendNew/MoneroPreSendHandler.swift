@@ -30,7 +30,7 @@ class MoneroPreSendHandler: PreSendHandler {
         stateLock.withLock { _transactionTimestamps }
     }
 
-    // nil = automatic input selection by the wallet
+    /// nil = automatic input selection by the wallet
     var customOutputs: [MoneroKit.UnspentOutput]? {
         get {
             stateLock.withLock { _customOutputs }
@@ -79,7 +79,7 @@ class MoneroPreSendHandler: PreSendHandler {
         }
     }
 
-    // Runs on syncQueue only: output enumeration takes the wallet mutex.
+    /// Runs on syncQueue only: output enumeration takes the wallet mutex.
     private func syncOutputs() {
         let outputs = (try? adapter.unspentOutputs())?.filter(\.spendable) ?? []
         let timestamps = adapter.transactionTimestamps()
@@ -149,8 +149,8 @@ extension MoneroPreSendHandler: IPreSendHandler {
         settingsModifiedSubject.eraseToAnyPublisher()
     }
 
-    // Chain-constant, so it reads the one table rather than restating it: a Monero memo is a local
-    // wallet note (.local).
+    /// Chain-constant, so it reads the one table rather than restating it: a Monero memo is a local
+    /// wallet note (.local).
     func memoType(address _: String?) -> MemoType {
         token.blockchainType.memoType
     }

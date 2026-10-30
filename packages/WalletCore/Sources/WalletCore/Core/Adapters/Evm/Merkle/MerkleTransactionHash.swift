@@ -10,7 +10,7 @@ class MerkleTransactionHash: Record {
         super.init()
     }
 
-    override public class var databaseTableName: String {
+    override class var databaseTableName: String {
         "merkleTransactionHashes"
     }
 
@@ -24,7 +24,7 @@ class MerkleTransactionHash: Record {
         try super.init(row: row)
     }
 
-    override public func encode(to container: inout PersistenceContainer) throws {
+    override func encode(to container: inout PersistenceContainer) throws {
         container[Columns.transactionHash] = transactionHash
     }
 }

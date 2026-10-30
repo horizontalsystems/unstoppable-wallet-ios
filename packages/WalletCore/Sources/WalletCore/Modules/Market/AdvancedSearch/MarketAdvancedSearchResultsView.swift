@@ -49,7 +49,7 @@ struct MarketAdvancedSearchResultsView: View {
         }
     }
 
-    @ViewBuilder private func header() -> some View {
+    private func header() -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 DropdownButton(text: viewModel.sortBy.title) {
@@ -90,7 +90,7 @@ struct MarketAdvancedSearchResultsView: View {
         }
     }
 
-    @ViewBuilder private func cell(coin: Coin, indicatorResult: TechnicalAdvice.Advice?, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?) -> some View {
+    private func cell(coin: Coin, indicatorResult: TechnicalAdvice.Advice?, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?) -> some View {
         Cell(
             left: {
                 CoinIconView(coin: coin)

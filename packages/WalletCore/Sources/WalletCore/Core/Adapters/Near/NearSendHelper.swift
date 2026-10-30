@@ -147,7 +147,7 @@ enum NearSendHelper {
         adapter.pendingTransactionHashes.subtracting(pendingBefore).first
     }
 
-    // details is the node's InvalidTxError, e.g. {"TxExecutionError":{"InvalidTxError":{"NotEnoughBalance":…}}}
+    /// details is the node's InvalidTxError, e.g. {"TxExecutionError":{"InvalidTxError":{"NotEnoughBalance":…}}}
     static func rejectedError(details: String) -> SendError {
         if details.contains("NotEnoughBalance") || details.contains("LackBalanceForState") {
             return .insufficientBalance

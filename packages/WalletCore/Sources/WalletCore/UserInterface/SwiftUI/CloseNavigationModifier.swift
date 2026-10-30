@@ -24,7 +24,7 @@ struct CloseNavigationModifier: ViewModifier {
 }
 
 extension View {
-    // Wraps in a navigation stack with a close button when presented modally; returns the view unchanged otherwise
+    /// Wraps in a navigation stack with a close button when presented modally; returns the view unchanged otherwise
     func closeNavigation(isPresented: Binding<Bool>?) -> some View {
         modifier(CloseNavigationModifier(isPresented: isPresented))
     }

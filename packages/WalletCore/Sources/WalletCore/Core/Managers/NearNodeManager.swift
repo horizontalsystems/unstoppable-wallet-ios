@@ -38,7 +38,7 @@ extension NearNodeManager {
         nodeUpdatedSubject.send(.near)
     }
 
-    // the selected node leads, the others stay behind it as the kit's failover
+    /// the selected node leads, the others stay behind it as the kit's failover
     func rpcUrls(network: NearKit.Network) -> [URL] {
         let selected = node(network: network).url
         return [selected] + network.rpcUrls.filter { $0 != selected }

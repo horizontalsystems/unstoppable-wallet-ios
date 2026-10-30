@@ -1,8 +1,8 @@
 import Foundation
 import GRDB
 
-// txId is nil when the broadcast landed but the SDK failed to record the id (reconciled later);
-// a row existing at all means a migration broadcast happened, createdAt is the privacy-buffer start
+/// txId is nil when the broadcast landed but the SDK failed to record the id (reconciled later);
+/// a row existing at all means a migration broadcast happened, createdAt is the privacy-buffer start
 struct ZcashMigrationTx: Equatable, FetchableRecord, PersistableRecord {
     let txId: String?
     let accountId: String
@@ -14,7 +14,9 @@ struct ZcashMigrationTx: Equatable, FetchableRecord, PersistableRecord {
         self.createdAt = createdAt
     }
 
-    static var databaseTableName: String { "zcashMigrationTx" }
+    static var databaseTableName: String {
+        "zcashMigrationTx"
+    }
 
     enum Columns: String, ColumnExpression, CaseIterable {
         case txId

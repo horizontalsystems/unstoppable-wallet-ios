@@ -192,11 +192,7 @@ extension AppValue {
     }
 }
 
-extension AppValue: Equatable {
-    public static func == (lhs: AppValue, rhs: AppValue) -> Bool {
-        lhs.kind == rhs.kind && lhs.value == rhs.value
-    }
-}
+extension AppValue: Equatable {}
 
 protocol TransferEventsProvider {
     var transferEvents: TransferEvents { get }

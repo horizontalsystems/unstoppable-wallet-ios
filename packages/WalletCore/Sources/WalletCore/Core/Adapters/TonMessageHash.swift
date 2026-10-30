@@ -7,9 +7,9 @@ enum TonMessageHash {
         case encodingFailed
     }
 
-    // TEP-467 normalized hash of a signed external-in message boc (base64): 64-char lowercase hex, no 0x.
-    // The message is re-serialized with src = addr_none, import_fee = 0, init = nothing and the body always
-    // stored as a reference, so the result depends only on the destination and the body cell.
+    /// TEP-467 normalized hash of a signed external-in message boc (base64): 64-char lowercase hex, no 0x.
+    /// The message is re-serialized with src = addr_none, import_fee = 0, init = nothing and the body always
+    /// stored as a reference, so the result depends only on the destination and the body cell.
     static func normalized(boc: String) throws -> String {
         let cell = try TonSwift.Cell.fromBase64(src: boc)
         let message: Message = try cell.beginParse().loadType()

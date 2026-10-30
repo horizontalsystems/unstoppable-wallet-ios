@@ -64,11 +64,7 @@ extension TronPreSendHandler: IPreSendHandler {
     }
 
     public func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
-        guard let amountBigUInt = BigUInt(amount.hs.roundedString(decimal: token.decimals)) else {
-            return .invalid(cautions: [])
-        }
-
-        guard let tronAddress = try? TronKit.Address(address: address) else {
+        guard let amountBigUInt = BigUInt(amount.hs.roundedString(decimal: token.decimals)), let tronAddress = try? TronKit.Address(address: address) else {
             return .invalid(cautions: [])
         }
 

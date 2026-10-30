@@ -6,8 +6,8 @@ import Testing
 @testable import Unstoppable
 @testable import WalletCore
 
-// Tier order (native first, then the hardcoded coin list) IS the ranking — the finder returns on
-// the first hit.
+/// Tier order (native first, then the hardcoded coin list) IS the ranking — the finder returns on
+/// the first hit.
 struct SwapPathFinderTests {
     @Test func noCandidatesReturnsNil() {
         let finder = SwapPathFinder(candidateProviders: [])
@@ -317,9 +317,17 @@ extension SwapPathFinderTests {
         let edges: Set<String>
         let log: CallLog?
 
-        var name: String { id }
-        var type: SwapProviderType? { .good }
-        var icon: String { "stub" }
+        var name: String {
+            id
+        }
+
+        var type: SwapProviderType? {
+            .good
+        }
+
+        var icon: String {
+            "stub"
+        }
 
         func supports(tokenIn: Token, tokenOut: Token) -> Bool {
             let edge = SwapPathFinderTests.edge(tokenIn, tokenOut)

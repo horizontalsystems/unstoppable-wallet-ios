@@ -38,7 +38,9 @@ open class HUDContainerView: CustomIntensityVisualEffectView, HUDContainerInterf
 
     private var _content: UIView?
     public var onTapContainer: (() -> Void)?
-    public var isVisible: Bool { !isHidden }
+    public var isVisible: Bool {
+        !isHidden
+    }
 
     public init(withModel model: HUDContainerModel) {
         self.model = model

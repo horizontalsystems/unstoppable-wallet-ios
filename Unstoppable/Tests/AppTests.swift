@@ -4,7 +4,7 @@ import Testing
 @testable import WalletCore
 
 struct AppTests {
-    @Test func example() async throws {
+    @Test func example() {
         // test goes here
     }
 }

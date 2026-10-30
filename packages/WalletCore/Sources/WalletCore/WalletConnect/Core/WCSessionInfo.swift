@@ -1,6 +1,6 @@
 import WalletConnectUtils
 
-// Slice of the persisted session snapshot the service verifies requests against
+/// Slice of the persisted session snapshot the service verifies requests against
 struct WCSessionInfo {
     let topic: String
     let accountId: String

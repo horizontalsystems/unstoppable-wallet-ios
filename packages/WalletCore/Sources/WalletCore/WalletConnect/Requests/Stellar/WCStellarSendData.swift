@@ -48,9 +48,17 @@ class WCStellarData {
 }
 
 class WCStellarSignData: WCStellarData, ISendData {
-    var feeData: FeeData? { nil }
-    var canSend: Bool { true }
-    var rateCoins: [Coin] { [] }
+    var feeData: FeeData? {
+        nil
+    }
+
+    var canSend: Bool {
+        true
+    }
+
+    var rateCoins: [Coin] {
+        []
+    }
 
     func cautions(baseToken _: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
         summaryCautions
@@ -73,9 +81,17 @@ class WCStellarSubmitData: WCStellarData, ISendData {
         super.init(xdr: xdr, transaction: transaction, sourceAccountId: sourceAccountId)
     }
 
-    var feeData: FeeData? { nil }
-    var canSend: Bool { transactionError == nil }
-    var rateCoins: [Coin] { [token.coin] }
+    var feeData: FeeData? {
+        nil
+    }
+
+    var canSend: Bool {
+        transactionError == nil
+    }
+
+    var rateCoins: [Coin] {
+        [token.coin]
+    }
 
     func cautions(baseToken: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
         summaryCautions + transactionCautions(baseToken: baseToken)

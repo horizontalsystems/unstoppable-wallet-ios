@@ -3,12 +3,12 @@ import MarketKit
 import Testing
 @testable import WalletCore
 
-// Adding an XRPL issued currency by reference (Android `AddXrpTokenBlockchainService`).
+/// Adding an XRPL issued currency by reference (Android `AddXrpTokenBlockchainService`).
 struct XrpTokenReferenceTests {
     private let service = AddXrpTokenBlockchainService(blockchain: Blockchain(type: .xrp, name: "XRP Ledger", explorerUrl: nil))
 
     private static let issuer = "rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De"
-    // "RLUSD" in the ledger's 40-hex form, as the token catalog lists it
+    /// "RLUSD" in the ledger's 40-hex form, as the token catalog lists it
     private static let rlusdHex = "524C555344000000000000000000000000000000"
 
     private func parsed(_ reference: String) throws -> (currency: String, issuer: String) {
@@ -55,13 +55,13 @@ struct XrpTokenReferenceTests {
         #expect(try parsed("  USD.\(Self.issuer)  ").currency == "USD")
     }
 
-    // XRP itself is not an issued currency: a trust line for it cannot exist
+    /// XRP itself is not an issued currency: a trust line for it cannot exist
     @Test func nativeCodeIsRejected() {
         #expect(throws: AddXrpTokenBlockchainService.TokenError.invalidReference) { try service.validate(reference: "XRP.\(Self.issuer)") }
         #expect(throws: AddXrpTokenBlockchainService.TokenError.invalidReference) { try service.validate(reference: "xrp.\(Self.issuer)") }
     }
 
-    // An issuer is an account; the tag an X-address carries has no meaning for a trust line
+    /// An issuer is an account; the tag an X-address carries has no meaning for a trust line
     @Test func xAddressIssuerIsRejected() {
         #expect(throws: AddXrpTokenBlockchainService.TokenError.invalidReference) { try service.validate(reference: "USD.XVLhHMPHU98es4dbozjVtdWzVrDjtV18pX8yuPT7y4xaEHi") }
     }
@@ -72,7 +72,7 @@ struct XrpTokenReferenceTests {
         }
     }
 
-    // The ledger keeps no metadata for an issued currency, so the code is the name and the symbol
+    /// The ledger keeps no metadata for an issued currency, so the code is the name and the symbol
     @Test func tokenIsBuiltLocallyFromTheCode() async throws {
         let token = try await service.token(reference: "RLUSD.\(Self.issuer)")
 

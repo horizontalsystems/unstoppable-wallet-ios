@@ -84,7 +84,7 @@ struct TransactionsView: View {
             )
         }
 
-        @ViewBuilder private func iconView(viewItem: TransactionsViewModel.ViewItem) -> some View {
+        private func iconView(viewItem: TransactionsViewModel.ViewItem) -> some View {
             ZStack {
                 if let progress = viewItem.progress {
                     ProgressView(value: max(0.1, progress))

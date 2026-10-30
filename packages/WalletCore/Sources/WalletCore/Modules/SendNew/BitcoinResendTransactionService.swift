@@ -38,7 +38,9 @@ class BitcoinResendTransactionService: TransactionService, ObservableObject {
         }
     }
 
-    var minFee: Int? { Int(minFeeText) }
+    var minFee: Int? {
+        Int(minFeeText)
+    }
 
     static func initialMinFee(recommended: Int, range: Range<Int>) -> Int? {
         guard !range.isEmpty else { return nil }
@@ -71,8 +73,13 @@ extension BitcoinResendTransactionService: ITransactionService {
         return .bitcoinResend(minFee: minFee, recommendedFee: recommendedFee)
     }
 
-    var modified: Bool { edited }
-    var updatePublisher: AnyPublisher<Void, Never> { updateSubject.eraseToAnyPublisher() }
+    var modified: Bool {
+        edited
+    }
+
+    var updatePublisher: AnyPublisher<Void, Never> {
+        updateSubject.eraseToAnyPublisher()
+    }
 
     var cautions: [CautionNew] {
         guard let minFee, feeRange.contains(minFee) else {
@@ -105,7 +112,9 @@ extension BitcoinResendTransactionService: ITransactionService {
         await MainActor.run {
             recommendedFee = recommended
             if !initialized {
-                if !edited { minFeeText = String(initial) }
+                if !edited {
+                    minFeeText = String(initial)
+                }
                 initialized = true
             }
         }

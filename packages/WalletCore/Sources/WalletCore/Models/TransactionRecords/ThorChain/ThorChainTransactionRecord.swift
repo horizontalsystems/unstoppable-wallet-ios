@@ -6,8 +6,8 @@ class ThorChainTransactionRecord: TransactionRecord {
     let transaction: ThorChainKit.Transaction
     let fee: AppValue?
 
-    // One Midgard action can produce several records — one per user-side asset — so the
-    // hash alone is not a unique identity and callers pass an asset-qualified uid.
+    /// One Midgard action can produce several records — one per user-side asset — so the
+    /// hash alone is not a unique identity and callers pass an asset-qualified uid.
     init(source: TransactionSource, transaction: ThorChainKit.Transaction, baseToken: Token, uid: String? = nil) {
         self.transaction = transaction
 
@@ -31,9 +31,9 @@ class ThorChainTransactionRecord: TransactionRecord {
         )
     }
 
-    // Midgard reports a transaction that was included but failed to execute as a `failed`
-    // action whose status is still `success`; the `failed` status is set only by the kit for
-    // a send the node rejected.
+    /// Midgard reports a transaction that was included but failed to execute as a `failed`
+    /// action whose status is still `success`; the `failed` status is set only by the kit for
+    /// a send the node rejected.
     private static func isFailed(_ transaction: ThorChainKit.Transaction) -> Bool {
         transaction.status.caseInsensitiveCompare("failed") == .orderedSame
             || transaction.type.caseInsensitiveCompare("failed") == .orderedSame

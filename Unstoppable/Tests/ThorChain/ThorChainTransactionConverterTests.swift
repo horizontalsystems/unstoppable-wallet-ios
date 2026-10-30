@@ -38,8 +38,8 @@ struct ThorChainTransactionConverterTests {
         #expect(incoming.value.value == Decimal(string: "2.5"))
     }
 
-    // the defect the single-record converter had: a swap spends one asset and delivers
-    // another in the same action, and only the spent side survived
+    /// the defect the single-record converter had: a swap spends one asset and delivers
+    /// another in the same action, and only the spent side survived
     @Test func swapProducesBothSpentAndReceivedAssets() throws {
         let records = try Self.converter().transactionRecords(
             from: Self.transaction(
@@ -86,8 +86,8 @@ struct ThorChainTransactionConverterTests {
         #expect(received.value.value == 5)
     }
 
-    // Midgard reports the same asset in full notation for swaps, so the lookup must
-    // normalise it to the bank denom before asking MarketKit
+    /// Midgard reports the same asset in full notation for swaps, so the lookup must
+    /// normalise it to the bank denom before asking MarketKit
     @Test func fullNotationResolvesToTheSameTokenAsTheBankDenom() throws {
         let tcy = Token(
             coin: Coin(uid: "tcy", name: "TCY", code: "TCY"),
@@ -135,8 +135,8 @@ struct ThorChainTransactionConverterTests {
         #expect(outgoing.sentToSelf)
     }
 
-    // in a swap the first outgoing entry is the user's own receive of the other asset —
-    // taking it as the recipient would name the user as their own counterparty
+    /// in a swap the first outgoing entry is the user's own receive of the other asset —
+    /// taking it as the recipient would name the user as their own counterparty
     @Test func counterpartyIsMatchedByAssetNotByPosition() throws {
         let records = try Self.converter().transactionRecords(
             from: Self.transaction(
@@ -174,8 +174,8 @@ struct ThorChainTransactionConverterTests {
         #expect(records.count == 1)
     }
 
-    // Midgard reports swaps in full notation but native sends in bank-denom notation;
-    // both must resolve to RUNE and carry the base token
+    /// Midgard reports swaps in full notation but native sends in bank-denom notation;
+    /// both must resolve to RUNE and carry the base token
     @Test func bankDenomRuneResolvesToTheBaseToken() throws {
         let records = try Self.converter().transactionRecords(
             from: Self.transaction(

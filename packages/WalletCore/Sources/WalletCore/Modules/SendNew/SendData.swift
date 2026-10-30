@@ -25,9 +25,9 @@ public enum SendData {
     case ton(token: Token, amount: Decimal, address: FriendlyAddress, memo: String?)
     case stellar(data: StellarSendData, token: Token, memo: String?)
     case solana(token: Token, amount: Decimal, address: String, memo: String?)
-    // address is the classic r-address; an X-address is resolved by the pre-send handler, its tag lands in destinationTag
+    /// address is the classic r-address; an X-address is resolved by the pre-send handler, its tag lands in destinationTag
     case xrp(token: Token, data: XrpSendData, destinationTag: UInt32?)
-    // memo is carried only by a NEP-141 ft_transfer; a NEAR transfer has no field for it
+    /// memo is carried only by a NEP-141 ft_transfer; a NEAR transfer has no field for it
     case near(token: Token, amount: Decimal, address: String, memo: String?)
     // recipientHolder: external delivery address entered before confirmation when the account
     // can't hold tokenOut; empty when the swap is delivered to the account's own wallet. A
@@ -53,10 +53,10 @@ public enum SendData {
     case crossPay(request: CrossPayRequest)
 }
 
-// App-agnostic display + reporting payload attached to a merchant payment send. Carried through the
-// neutral send flow so a Stable-side decorator handler (registered via SendHandlerFactory) can render
-// the merchant/rate/KGS fields and report the on-chain deposit to stable-backend. WalletCore itself
-// stays payment-backend-agnostic (mirrors the openCryptoPay case).
+/// App-agnostic display + reporting payload attached to a merchant payment send. Carried through the
+/// neutral send flow so a Stable-side decorator handler (registered via SendHandlerFactory) can render
+/// the merchant/rate/KGS fields and report the on-chain deposit to stable-backend. WalletCore itself
+/// stays payment-backend-agnostic (mirrors the openCryptoPay case).
 public struct PaymentInfo {
     public let recipient: String
     public let rate: Decimal

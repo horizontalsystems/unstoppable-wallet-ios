@@ -17,7 +17,7 @@ struct ManageWalletListView: View {
         }
     }
 
-    @ViewBuilder private func view(item: ManageWalletsViewModel.Item, forceToggleOn _: Bool? = nil) -> some View {
+    private func view(item: ManageWalletsViewModel.Item, forceToggleOn _: Bool? = nil) -> some View {
         Cell(
             left: {
                 CoinIconView(token: item.token)
@@ -111,7 +111,7 @@ struct ManageWalletListView: View {
         }
     }
 
-    @ViewBuilder private func contractRow(token: Token, value: String, explorerUrl: String?) -> some View {
+    private func contractRow(token: Token, value: String, explorerUrl: String?) -> some View {
         Cell(
             left: {
                 BlockchainIcon(blockchain: token.blockchain)

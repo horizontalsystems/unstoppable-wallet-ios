@@ -22,11 +22,11 @@ struct DefenseSystemView: View {
         .padding(.vertical, 8)
     }
 
-    @ViewBuilder private func bubble(tailPosition: BubbleShape.TailPosition) -> some View {
+    private func bubble(tailPosition: BubbleShape.TailPosition) -> some View {
         BubbleView(
             tailPosition: tailPosition,
             strokeColor: style.strokeColor,
-            fillColor: style.fillColor,
+            fillColor: style.fillColor
         ) {
             VStack(spacing: 12) {
                 VStack(spacing: 8) {

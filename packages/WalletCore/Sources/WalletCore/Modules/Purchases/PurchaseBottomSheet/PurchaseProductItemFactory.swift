@@ -91,7 +91,7 @@ extension PurchaseProductItemFactory {
             self.introductoryOfferType = introductoryOfferType
         }
 
-        public func hash(into hasher: inout Hasher) {
+        func hash(into hasher: inout Hasher) {
             hasher.combine(product.id)
         }
 

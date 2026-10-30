@@ -8,12 +8,19 @@ public struct WCRequest {
     var dAppIconUrl: String?
 
     var isBlocked: Bool {
-        if case .block = verdict { return true }
+        if case .block = verdict {
+            return true
+        }
         return false
     }
 
-    var isExpired: Bool { Self.isExpired(expiryTimestamp: payload.expiryTimestamp) }
-    var expirationDate: Date? { payload.expiryTimestamp.map { Date(timeIntervalSince1970: TimeInterval($0)) } }
+    var isExpired: Bool {
+        Self.isExpired(expiryTimestamp: payload.expiryTimestamp)
+    }
+
+    var expirationDate: Date? {
+        payload.expiryTimestamp.map { Date(timeIntervalSince1970: TimeInterval($0)) }
+    }
 
     static func isExpired(expiryTimestamp: UInt64?, now: Date = Date()) -> Bool {
         guard let expiryTimestamp else { return false }
@@ -27,6 +34,8 @@ public struct WCRequest {
     enum RequestError: LocalizedError {
         case expired
 
-        var errorDescription: String? { "wallet_connect.button.expired".localized }
+        var errorDescription: String? {
+            "wallet_connect.button.expired".localized
+        }
     }
 }

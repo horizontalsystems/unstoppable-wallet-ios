@@ -62,7 +62,7 @@ struct NearAccountPickerView: View {
         }
     }
 
-    @ViewBuilder private func list(rows: [NearAccountPickerViewModel.Row]) -> some View {
+    private func list(rows: [NearAccountPickerViewModel.Row]) -> some View {
         BottomGradientWrapper {
             ScrollView {
                 VStack(spacing: .margin24) {

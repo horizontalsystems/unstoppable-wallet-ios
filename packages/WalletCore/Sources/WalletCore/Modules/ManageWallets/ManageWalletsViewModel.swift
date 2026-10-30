@@ -210,7 +210,9 @@ extension ManageWalletsViewModel {
         let token: Token
         let hasInfo: Bool
 
-        var id: Int { token.hashValue }
+        var id: Int {
+            token.hashValue
+        }
 
         static func == (lhs: Item, rhs: Item) -> Bool {
             lhs.id == rhs.id && lhs.hasInfo == rhs.hasInfo

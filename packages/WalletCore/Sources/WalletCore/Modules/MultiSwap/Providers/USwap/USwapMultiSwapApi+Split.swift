@@ -3,13 +3,13 @@ import Foundation
 import HsToolKit
 import ObjectMapper
 
-// Split swap (/v3/split/*): one deposit of the sell asset delivered as several outputs. The calls
-// mirror the simple v3 flow with the buy side pluralised; the deposit side (sell amount, fee, the
-// transfer, the preview token) keeps its meaning.
+/// Split swap (/v3/split/*): one deposit of the sell asset delivered as several outputs. The calls
+/// mirror the simple v3 flow with the buy side pluralised; the deposit side (sell amount, fee, the
+/// transfer, the preview token) keeps its meaning.
 extension USwapMultiSwapApi {
-    // A route-less split rate answers 404 with `{ providerErrors }`, read here as a result with no routes.
-    // `amountTooSmall` carries no `minimumAmount` on split (the limit applies to one output's portion and
-    // is named in the message only), which `ProviderErrorResponse` already tolerates.
+    /// A route-less split rate answers 404 with `{ providerErrors }`, read here as a result with no routes.
+    /// `amountTooSmall` carries no `minimumAmount` on split (the limit applies to one output's portion and
+    /// is named in the message only), which `ProviderErrorResponse` already tolerates.
     func splitRate(_ request: SplitRequest) async throws -> SplitRateResult {
         let response: SplitRateResponseMapping
 
@@ -37,8 +37,8 @@ extension USwapMultiSwapApi {
         )
     }
 
-    // No side effects: the split route with a `previewToken` and a `stubDepositAddress` for the fee
-    // estimate. A split preview never carries an execution.
+    /// No side effects: the split route with a `previewToken` and a `stubDepositAddress` for the fee
+    /// estimate. A split preview never carries an execution.
     func splitPreview(_ request: SplitRequest) async throws -> SplitRoute {
         let response: SplitRouteMapping = try await networkManager.fetch(
             url: endpoint("split/preview"),
@@ -51,8 +51,8 @@ extension USwapMultiSwapApi {
         return response.route
     }
 
-    // Creates the split order. Failures follow `commit(_:)`: a non-2xx is rethrown as the raw network
-    // error, a 2xx that is not `ok` or carries no `splitUuid` throws `CommitError` directly.
+    /// Creates the split order. Failures follow `commit(_:)`: a non-2xx is rethrown as the raw network
+    /// error, a 2xx that is not `ok` or carries no `splitUuid` throws `CommitError` directly.
     func splitCommit(_ request: CommitRequest) async throws -> SplitCommitResponse {
         let response: SplitCommitResponseMapping = try await networkManager.fetch(
             url: endpoint("split/commit"),
@@ -71,8 +71,8 @@ extension USwapMultiSwapApi {
         return commit
     }
 
-    // Reports the inbound tx hash for every output of the split. Answers the `/v3/signed` body with
-    // `splitUuid` for `uuid` and the aggregate status
+    /// Reports the inbound tx hash for every output of the split. Answers the `/v3/signed` body with
+    /// `splitUuid` for `uuid` and the aggregate status
     @discardableResult
     func splitSigned(splitUuid: String, inboundTxHash: String) async throws -> SplitSignedResponse {
         let response: SplitSignedResponseMapping = try await networkManager.fetch(
@@ -174,7 +174,7 @@ public extension USwapMultiSwapApi {
             outputs.map(\.expectedBuyAmount).reduce(0, +)
         }
 
-        // The locked total of a fixed-rate split; nil when any output floats
+        /// The locked total of a fixed-rate split; nil when any output floats
         public var minBuyAmount: Decimal? {
             let mins = outputs.compactMap(\.minBuyAmount)
             return mins.count == outputs.count ? mins.reduce(0, +) : nil
@@ -195,7 +195,7 @@ public extension USwapMultiSwapApi {
         public let splitUuid: String?
         public let expiresAt: Date?
         public let execution: Execution?
-        // sorted by `index`
+        /// sorted by `index`
         public let outputs: [SplitCommitOutput]
     }
 
@@ -287,8 +287,8 @@ extension USwapMultiSwapApi {
         }
     }
 
-    // The aggregate `{ splitUuid, status, hash }`. Only `splitUuid` is required: the report succeeded
-    // whether or not the server echoes the status and hash.
+    /// The aggregate `{ splitUuid, status, hash }`. Only `splitUuid` is required: the report succeeded
+    /// whether or not the server echoes the status and hash.
     struct SplitSignedResponse {
         let splitUuid: String
         let status: String?

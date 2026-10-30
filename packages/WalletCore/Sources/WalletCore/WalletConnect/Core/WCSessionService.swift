@@ -2,7 +2,7 @@ import Combine
 import HsToolKit
 import ReownWalletKit
 
-// Owns the {account, topic, approved namespaces} binding; the SDK session list is never authoritative for it
+/// Owns the {account, topic, approved namespaces} binding; the SDK session list is never authoritative for it
 class WCSessionService {
     private let signClient: IWCSignClient
     private let storage: WCSessionStorage
@@ -42,7 +42,7 @@ class WCSessionService {
         sessionsSubject.value
     }
 
-    // the only write path for the approved set: an explicit user approve
+    /// the only write path for the approved set: an explicit user approve
     func store(session: Session, accountId: String) throws {
         let namespaces = WCSessionNamespaces(sessionNamespaces: session.namespaces)
         try storage.save(session: WCSessionRecord(topic: session.topic, accountId: accountId, dAppName: session.peer.name, namespaces: namespaces))
@@ -64,8 +64,8 @@ class WCSessionService {
         sync()
     }
 
-    // legacy sessions from the removed old module have no approval record; disconnect them once at start so
-    // they do not linger as live-but-invisible sessions the dApp still considers connected
+    /// legacy sessions from the removed old module have no approval record; disconnect them once at start so
+    /// they do not linger as live-but-invisible sessions the dApp still considers connected
     func disconnectOrphans() {
         Task { [weak self] in
             guard let self else { return }
@@ -125,7 +125,7 @@ class WCSessionService {
         sync()
     }
 
-    // dApp-driven updates never touch the persisted approval; verifiers read the snapshot
+    /// dApp-driven updates never touch the persisted approval; verifiers read the snapshot
     private func handleUpdate(topic: String, namespaces: [String: SessionNamespace]) {
         guard let record = try? storage.session(topic: topic), let persisted = try? record.sessionNamespaces() else {
             return

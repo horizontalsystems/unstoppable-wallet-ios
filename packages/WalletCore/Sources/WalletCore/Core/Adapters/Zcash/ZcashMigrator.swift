@@ -3,7 +3,7 @@ import HsToolKit
 import ZODLSwiftWalletSDK
 
 class ZcashMigrator {
-    // Orchard → Ironwood migration is live in production so users can migrate their Orchard funds.
+    /// Orchard → Ironwood migration is live in production so users can migrate their Orchard funds.
     static let migrationEnabled = true
 
     private let uniqueId: String
@@ -28,14 +28,14 @@ class ZcashMigrator {
         try? storage.deleteMigrationTxs(accountId: uniqueId)
     }
 
-    // per-call GRDB read, no cache: the table holds a handful of rows, record mapping is paginated,
-    // and dbPool is thread-safe by itself (same pattern as the shielding alertState reads)
+    /// per-call GRDB read, no cache: the table holds a handful of rows, record mapping is paginated,
+    /// and dbPool is thread-safe by itself (same pattern as the shielding alertState reads)
     func isMigrationTx(hash: String) -> Bool {
         ((try? storage.migrationTxIds(accountId: uniqueId)) ?? []).contains(hash)
     }
 
-    // history marker only: a row lets `isMigrationTx` label the self-send in transaction history.
-    // send-max is a normal transaction, so there is no privacy buffer to track here.
+    /// history marker only: a row lets `isMigrationTx` label the self-send in transaction history.
+    /// send-max is a normal transaction, so there is no privacy buffer to track here.
     private func save(txId: String?) {
         guard let txId, !isMigrationTx(hash: txId) else {
             return
@@ -43,9 +43,9 @@ class ZcashMigrator {
         try? storage.save(migrationTx: ZcashMigrationTx(txId: txId, accountId: uniqueId, createdAt: Date()))
     }
 
-    // The NU6.3 (Ironwood) activation height for the wallet's network. In DEBUG, when the
-    // "Emulate ZEC Migration" toggle is on, mainnet is forced to a low height so the migration flow
-    // can be exercised on mainnet; otherwise the real SDK/FFI activation height is used.
+    /// The NU6.3 (Ironwood) activation height for the wallet's network. In DEBUG, when the
+    /// "Emulate ZEC Migration" toggle is on, mainnet is forced to a low height so the migration flow
+    /// can be exercised on mainnet; otherwise the real SDK/FFI activation height is used.
     var activationHeight: BlockHeight? {
         #if DEBUG
             if Core.shared.localStorage.emulateZcashMigration, network.networkType == .mainnet {
@@ -72,15 +72,7 @@ class ZcashMigrator {
         // Only the active account's adapter may surface the global migration alert. An adapter from a
         // previously-selected account can outlive the switch (async synchronizer teardown) and fire a
         // late balance/state update — it must not present the sheet over the now-active account.
-        guard Core.shared.accountManager.activeAccount?.id == uniqueId else {
-            return false
-        }
-
-        guard let syncStatus else {
-            return false
-        }
-
-        guard Self.isMigrationSuggestionNeeded(
+        guard Core.shared.accountManager.activeAccount?.id == uniqueId, let syncStatus, Self.isMigrationSuggestionNeeded(
             migrationEnabled: Self.migrationEnabled,
             ironwoodActive: ironwoodActive(latestHeight: latestHeight),
             syncStatus: syncStatus,
@@ -97,8 +89,8 @@ class ZcashMigrator {
         return true
     }
 
-    // After a broadcast the swept notes become pending-spent, so orchardSpendable drops below the
-    // threshold and the predicate is false on its own — no timestamp-based suppression needed.
+    /// After a broadcast the swept notes become pending-spent, so orchardSpendable drops below the
+    /// threshold and the predicate is false on its own — no timestamp-based suppression needed.
     static func isMigrationSuggestionNeeded(migrationEnabled: Bool, ironwoodActive: Bool, syncStatus: SyncStatus,
                                             orchardSpendable: Decimal, threshold: Decimal, alertShown: Bool) -> Bool
     {
@@ -108,8 +100,8 @@ class ZcashMigrator {
         return orchardSpendable > threshold
     }
 
-    // read for the confirmation screen: both numbers come from the SDK proposal.
-    // `performMigration` re-proposes before broadcasting.
+    /// read for the confirmation screen: both numbers come from the SDK proposal.
+    /// `performMigration` re-proposes before broadcasting.
     func migrationProposal() async throws -> (amount: Decimal, fee: Decimal) {
         guard let engine else {
             throw AppError.ZcashError.noAccountId
@@ -127,8 +119,8 @@ class ZcashMigrator {
         return (amount: quote.amount.decimalValue.decimalValue, fee: quote.fee.decimalValue.decimalValue)
     }
 
-    // send-max sweep to the wallet's own UA. Runs as an ordinary send (the adapter wraps it in its
-    // send critical section); no stop-sync, no privacy buffer. Returns the broadcast txid.
+    /// send-max sweep to the wallet's own UA. Runs as an ordinary send (the adapter wraps it in its
+    /// send critical section); no stop-sync, no privacy buffer. Returns the broadcast txid.
     func performMigration() async throws -> String? {
         guard let engine else {
             throw AppError.ZcashError.noAccountId

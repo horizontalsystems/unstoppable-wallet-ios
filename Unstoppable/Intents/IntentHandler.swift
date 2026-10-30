@@ -7,14 +7,12 @@ class IntentHandler: INExtension, SingleCoinPriceIntentHandling {
         let coins = try await provider.topCoins(limit: 100)
 
         let widgetCoins = coins.map { coin in
-            let widgetCoin = WidgetCoin(
+            WidgetCoin(
                 identifier: coin.uid,
                 display: coin.code.uppercased(),
                 subtitle: coin.name,
                 image: nil
             )
-
-            return widgetCoin
         }
 
         return INObjectCollection(items: widgetCoins)

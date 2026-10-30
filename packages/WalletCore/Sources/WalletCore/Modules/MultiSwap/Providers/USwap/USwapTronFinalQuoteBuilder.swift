@@ -30,7 +30,7 @@ final class USwapTronFinalQuoteBuilder: USwapFinalQuoteBuilder {
         return try await buildTransfer(input: input, deposit: deposit)
     }
 
-    // server-built transaction: estimate and sign as is
+    /// server-built transaction: estimate and sign as is
     private func buildCreated(input: USwapFinalQuoteFactory.Input, jsonObject: [String: Any]) async throws -> SwapFinalQuote {
         let transaction = try Mapper<CreatedTransactionResponse>().map(JSON: jsonObject)
 
@@ -69,8 +69,8 @@ final class USwapTronFinalQuoteBuilder: USwapFinalQuoteBuilder {
         )
     }
 
-    // Plain TRX / TRC-20 transfer to the deposit (the stub at preview, the real address after commit),
-    // built through the send adapter exactly as the Tron send form does.
+    /// Plain TRX / TRC-20 transfer to the deposit (the stub at preview, the real address after commit),
+    /// built through the send adapter exactly as the Tron send form does.
     private func buildTransfer(input: USwapFinalQuoteFactory.Input, deposit: USwapFinalQuoteFactory.Input.Deposit) async throws -> SwapFinalQuote {
         // Thrown, not folded into `transactionError`: a Tron transfer carries no memo, so a text
         // attachment would never reach the provider and the deposit would be unmatchable.

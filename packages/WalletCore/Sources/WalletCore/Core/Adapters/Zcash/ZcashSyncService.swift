@@ -184,10 +184,10 @@ class ZcashSyncService {
         }
     }
 
-    // Pre-warm sapling params unconditionally: the SDK sync-time download is gated by
-    // sapling/transparent balances only, so a wallet with orchard-only funds would pay
-    // the ~50 MB download synchronously inside its first send. Idempotent: validates and
-    // returns when the files are already on disk.
+    /// Pre-warm sapling params unconditionally: the SDK sync-time download is gated by
+    /// sapling/transparent balances only, so a wallet with orchard-only funds would pay
+    /// the ~50 MB download synchronously inside its first send. Idempotent: validates and
+    /// returns when the files are already on disk.
     private func warmUpSaplingParams() {
         Task { [logger] in
             do {
@@ -208,9 +208,7 @@ class ZcashSyncService {
 
     private func prepare(seedData: [UInt8], walletBirthday: BlockHeight, initMode: ZcashInitMode) {
         queue.async { [weak self] in
-            guard let self else { return }
-
-            guard !state.isPrepairing else {
+            guard let self, !state.isPrepairing else {
                 return
             }
             state = .preparing
@@ -370,8 +368,8 @@ class ZcashSyncService {
         // send in flight: let the critical window finish the broadcast, the sink above stops after it
     }
 
-    // foreground resume goes through refresh() (start() only on creation) — deferred stop must not kill a live sync.
-    // deferredStopCancellable is main-confined: start()/refresh() arrive on background queues, subscription and fire are on main
+    /// foreground resume goes through refresh() (start() only on creation) — deferred stop must not kill a live sync.
+    /// deferredStopCancellable is main-confined: start()/refresh() arrive on background queues, subscription and fire are on main
     private func cancelDeferredStop() {
         DispatchQueue.main.async { [weak self] in
             self?.deferredStopCancellable = nil
@@ -519,11 +517,11 @@ class ZcashSyncService {
             .store(in: &cancellables)
     }
 
-    // The SDK's wipe is self-serializing: called mid-sync it registers an after-sync hook,
-    // stops the processor and wipes once the loop has fully wound down; called idle it wipes
-    // immediately. Stopping manually and waiting for a `.stopped` emission here used to hang
-    // forever on an idle synchronizer (the event is only produced by cancelling a running
-    // sync loop) and raced the SDK's own teardown when sync was active.
+    /// The SDK's wipe is self-serializing: called mid-sync it registers an after-sync hook,
+    /// stops the processor and wipes once the loop has fully wound down; called idle it wipes
+    /// immediately. Stopping manually and waiting for a `.stopped` emission here used to hang
+    /// forever on an idle synchronizer (the event is only produced by cancelling a running
+    /// sync loop) and raced the SDK's own teardown when sync was active.
     func wipe() -> AnyPublisher<Void, Error> {
         let logger = logger
         let migrator = migrator
@@ -556,8 +554,8 @@ extension ZcashSyncService {
 
     static let maxStallRebuildsPerForeground = 2
 
-    // attempt >= 2 (the SDK already restarted once) asks node auto-select for a healthier server;
-    // gaveUp rebuilds the engine ourselves within a per-foreground budget, then goes terminal.
+    /// attempt >= 2 (the SDK already restarted once) asks node auto-select for a healthier server;
+    /// gaveUp rebuilds the engine ourselves within a per-foreground budget, then goes terminal.
     static func stallAction(attempt: Int, gaveUp: Bool, isActive: Bool, autoSelectEnabled: Bool, rebuildsThisForeground: Int, alreadyRequestedAutoSelect: Bool) -> StallAction {
         guard isActive else { return .none }
         if gaveUp {
@@ -597,7 +595,7 @@ extension ZcashSyncService {
         state = .notSynced(error: AppError.zcash(reason: .syncStalled))
     }
 
-    // false when a rebuild is already in flight: the caller falls back to a plain start
+    /// false when a rebuild is already in flight: the caller falls back to a plain start
     @discardableResult
     private func startStallRebuild() -> Bool {
         guard stallTask == nil, let endpointService else { return false }
@@ -607,7 +605,11 @@ extension ZcashSyncService {
 
         stallTask = Task { [weak self] in
             // a task cancelled on background may outlive the next foreground's rebuild: clear only our own slot
-            defer { queue.async { [weak self] in if self?.lifecycleGeneration == generation { self?.stallTask = nil } } }
+            defer { queue.async {
+                [weak self] in if self?.lifecycleGeneration == generation {
+                    self?.stallTask = nil
+                }
+            } }
             do {
                 try await endpointService.rebuild(at: endpointService.currentEndpoint)
             } catch is CancellationError {
@@ -663,7 +665,7 @@ extension ZcashSyncService {
         let effectiveSpendable: Bool
     }
 
-    // Pure mapping of one SDK snapshot; the caller applies side effects (heights, started flag).
+    /// Pure mapping of one SDK snapshot; the caller applies side effects (heights, started flag).
     static func mapState(_ snapshot: Snapshot, started: Bool, birthday: Int, lastBlockHeight: Int, stallTerminal: Bool) -> Mapped {
         var state: ZCashAdapterState
         var spendable = false

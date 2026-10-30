@@ -2,7 +2,9 @@ import Foundation
 import HsToolKit
 
 class LowAmountCondition: SpamCondition {
-    var identifier: String { "low_amount" }
+    var identifier: String {
+        "low_amount"
+    }
 
     private let spamScore: Int
     private let riskScore: Int

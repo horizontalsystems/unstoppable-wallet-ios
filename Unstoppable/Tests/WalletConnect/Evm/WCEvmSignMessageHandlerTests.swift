@@ -10,7 +10,9 @@ struct WCEvmSignMessageHandlerTests {
     private static let privateKey = Data(repeating: 0x11, count: 32)
     private static let chain = Chain(id: 1, coinType: 60, syncInterval: 15, isEIP1559Supported: true)
 
-    private var signer: EvmKit.Signer { EvmKit.Signer.instance(privateKey: Self.privateKey, chain: Self.chain) }
+    private var signer: EvmKit.Signer {
+        EvmKit.Signer.instance(privateKey: Self.privateKey, chain: Self.chain)
+    }
 
     private func handler(provider: IWCEvmSignerProvider) -> WCEvmSignMessageHandler {
         WCEvmSignMessageHandler(signerProvider: provider, responder: WCResponder(signClient: client))
@@ -92,5 +94,7 @@ private final class StubSignerProvider: IWCEvmSignerProvider {
         stubSigner = signer
     }
 
-    func signer(chainId _: Int) -> EvmKit.Signer? { stubSigner }
+    func signer(chainId _: Int) -> EvmKit.Signer? {
+        stubSigner
+    }
 }

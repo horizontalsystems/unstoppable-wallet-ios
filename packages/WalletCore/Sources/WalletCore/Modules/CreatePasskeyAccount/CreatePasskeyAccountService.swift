@@ -2,20 +2,20 @@ import Foundation
 import HdWalletKit
 import MarketKit
 
-// Credential material handed to a provisioner: a fresh registration's attestation (which carries the
-// credential's public key) on create, or nothing on restore (the provisioner recovers the public key
-// out-of-band). Neutral WebAuthn/account-creation type.
+/// Credential material handed to a provisioner: a fresh registration's attestation (which carries the
+/// credential's public key) on create, or nothing on restore (the provisioner recovers the public key
+/// out-of-band). Neutral WebAuthn/account-creation type.
 public enum ProvisioningCredentials {
     case create(attestation: Data)
     case restore
 }
 
 public protocol IAccountProvisioner {
-    // The relying-party domain this provisioner's passkeys are bound to. The orchestrator builds the
-    // WebAuthn ceremony with it, so each app's domain reaches the ceremony without WalletCore having to
-    // read app-specific config.
+    /// The relying-party domain this provisioner's passkeys are bound to. The orchestrator builds the
+    /// WebAuthn ceremony with it, so each app's domain reaches the ceremony without WalletCore having to
+    /// read app-specific config.
     var domain: String { get }
-    // Self-selection by abstract type, evaluated BEFORE the ceremony (no credential exists yet).
+    /// Self-selection by abstract type, evaluated BEFORE the ceremony (no credential exists yet).
     func handles(abstract: AccountType.Abstract) -> Bool
     // Builds the account type from the credential the ceremony produced. nil only if construction fails.
     func accountType(abstract: AccountType.Abstract, credentialID: Data, mnemonic: [String]) -> AccountType?
@@ -33,8 +33,8 @@ public class CreatePasskeyAccountService {
     private let accountManager: AccountManager
     private let walletManager: WalletManager
 
-    // No PasskeyManager held here: the ceremony is built per request with the selected provisioner's
-    // domain (the provisioner is the only thing that knows which relying-party domain to use).
+    /// No PasskeyManager held here: the ceremony is built per request with the selected provisioner's
+    /// domain (the provisioner is the only thing that knows which relying-party domain to use).
     init(accountFactory: AccountFactory, accountManager: AccountManager, walletManager: WalletManager) {
         self.accountFactory = accountFactory
         self.accountManager = accountManager
@@ -115,7 +115,7 @@ public extension CreatePasskeyAccountService {
 }
 
 extension CreatePasskeyAccountService {
-    // First registered provisioner that handles `abstract` (selection before any ceremony).
+    /// First registered provisioner that handles `abstract` (selection before any ceremony).
     static func provisioner(for abstract: AccountType.Abstract) throws -> IAccountProvisioner {
         guard let provisioner = provisioners.first(where: { $0.handles(abstract: abstract) }) else {
             throw CreateError.noProvisioner

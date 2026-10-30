@@ -4,8 +4,8 @@ import SwiftUI
 
 struct SendView: View {
     @ObservedObject var viewModel: SendViewModel
-    var additionalContent: AnyView? = nil
-    var onSendError: ((String) -> Void)? = nil
+    var additionalContent: AnyView?
+    var onSendError: ((String) -> Void)?
 
     var body: some View {
         ZStack {
@@ -82,7 +82,7 @@ struct SendView: View {
                                 isPresented.wrappedValue = false
                             }),
                         ])),
-                    ],
+                    ]
                 )
             }
 
@@ -90,7 +90,7 @@ struct SendView: View {
         }
     }
 
-    @ViewBuilder private func dataView(sendData: ISendData, handler: ISendHandler) -> some View {
+    private func dataView(sendData: ISendData, handler: ISendHandler) -> some View {
         ScrollView {
             VStack(spacing: .margin16) {
                 let sections = sendData.sections(baseToken: handler.baseToken, currency: viewModel.currency, rates: viewModel.rates)

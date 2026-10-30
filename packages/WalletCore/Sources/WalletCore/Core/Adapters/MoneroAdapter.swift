@@ -10,7 +10,9 @@ class MoneroAdapter {
     static let networkType: MoneroKit.NetworkType = .mainnet
     static let confirmationsThreshold = Int(Kit.confirmationsThreshold)
 
-    var coinRate: Decimal { 1_000_000_000_000 } // pow(10, 12)
+    var coinRate: Decimal {
+        1_000_000_000_000
+    } // pow(10, 12)
 
     private let kit: MoneroKit.Kit
     private let moneroBalanceDataSubject = PublishSubject<MoneroBalanceData>()
@@ -158,15 +160,15 @@ class MoneroAdapter {
         }
     }
 
-    public var explorerTitle: String {
+    var explorerTitle: String {
         "Blockchair"
     }
 
-    public func explorerUrl(transactionHash: String) -> String? {
+    func explorerUrl(transactionHash: String) -> String? {
         "https://blockchair.com/monero/transaction/\(transactionHash)"
     }
 
-    public func explorerUrl(address _: String) -> String? {
+    func explorerUrl(address _: String) -> String? {
         ""
     }
 }

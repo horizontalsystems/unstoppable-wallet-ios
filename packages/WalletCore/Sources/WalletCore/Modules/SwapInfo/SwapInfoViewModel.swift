@@ -111,13 +111,13 @@ class SwapInfoViewModel: ObservableObject {
         let amountIn = SendField.amount(
             token: swap.tokenIn,
             appValueType: .regular(appValue: AppValue(token: swap.tokenIn, value: swap.amountIn)),
-            currencyValue: rates[rateKeyIn].map { CurrencyValue(currency: $0.currency, value: swap.amountIn * $0.value) },
+            currencyValue: rates[rateKeyIn].map { CurrencyValue(currency: $0.currency, value: swap.amountIn * $0.value) }
         )
 
         let amountOut = SendField.amount(
             token: swap.tokenOut,
             appValueType: .regular(appValue: AppValue(token: swap.tokenOut, value: swap.amountOut)),
-            currencyValue: rates[rateKeyOut].map { CurrencyValue(currency: $0.currency, value: swap.amountOut * $0.value) },
+            currencyValue: rates[rateKeyOut].map { CurrencyValue(currency: $0.currency, value: swap.amountOut * $0.value) }
         )
 
         let flowSection: SendDataSection
@@ -150,7 +150,7 @@ class SwapInfoViewModel: ObservableObject {
         }
     }
 
-    // Input, then an output + address pair per recipient, as on the split confirmation
+    /// Input, then an output + address pair per recipient, as on the split confirmation
     private func splitFlowSection(amountIn: SendField, outputs: [Swap.Output], rate: CurrencyValue?) -> SendDataSection {
         var fields = [amountIn]
         // dividers[i] sits after fields[i], so each one is added together with the field it precedes
@@ -186,7 +186,7 @@ class SwapInfoViewModel: ObservableObject {
         return .init(fields, isFlow: true, flowDividers: dividers)
     }
 
-    // Input and the total output, then every recipient's address: the split before its payouts are known
+    /// Input and the total output, then every recipient's address: the split before its payouts are known
     private func splitRecipientsFlowSection(amountIn: SendField, amountOut: SendField, outputs: [Swap.Output]) -> SendDataSection {
         var fields = [amountIn, amountOut]
         // dividers[i] sits after fields[i]
@@ -211,7 +211,7 @@ class SwapInfoViewModel: ObservableObject {
         return .init(fields, isFlow: true, flowDividers: dividers)
     }
 
-    // Each output's share of the deposit; the last one takes the rounding remainder so they add up to 100
+    /// Each output's share of the deposit; the last one takes the rounding remainder so they add up to 100
     static func percents(outputs: [Swap.Output]) -> [Int] {
         // One unit for every output: the deposit shares (tokenIn) when all are known, else the payouts (tokenOut)
         let fromAmounts = outputs.compactMap(\.fromAmount)
@@ -254,10 +254,10 @@ class SwapInfoViewModel: ObservableObject {
         legs = swapLegs.map { leg(leg: $0, fromAsset: fromAsset, toAsset: toAsset) }
     }
 
-    // One shared deposit step on top, from the split's top-level deposit leg, followed by each recipient's
-    // own steps, numbered by recipient. Rows stored by the former track shape carry a deposit leg per
-    // output, all flattened into `swap.legs`: they share the deposit hash and collapse into one step, and
-    // are left out of the outputs' own steps.
+    /// One shared deposit step on top, from the split's top-level deposit leg, followed by each recipient's
+    /// own steps, numbered by recipient. Rows stored by the former track shape carry a deposit leg per
+    /// output, all flattened into `swap.legs`: they share the deposit hash and collapse into one step, and
+    /// are left out of the outputs' own steps.
     private func splitLegs(outputs: [Swap.Output]) -> [Leg] {
         let fromAsset = swap.fromAsset
         let toAsset = swap.toAsset

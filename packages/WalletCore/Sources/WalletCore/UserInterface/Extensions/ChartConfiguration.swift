@@ -1,5 +1,4 @@
 import Chart
-
 import UIKit
 
 extension ChartConfiguration {

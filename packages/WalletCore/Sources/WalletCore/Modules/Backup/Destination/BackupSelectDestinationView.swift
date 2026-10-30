@@ -27,7 +27,6 @@ struct BackupSelectDestinationView: View {
         }
     }
 
-    @ViewBuilder
     private func row(destination: BackupModule.Destination) -> some View {
         Cell(
             left: {

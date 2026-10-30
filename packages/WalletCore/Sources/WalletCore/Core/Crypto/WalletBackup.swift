@@ -110,7 +110,7 @@ extension WalletBackup {
             self.init(tokenQueryId: tokenQueryId, coinName: coinName, coinCode: coinCode, tokenDecimals: tokenDecimals, settings: settings ?? [:])
         }
 
-        public func encode(to encoder: Encoder) throws {
+        func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try container.encode(tokenQueryId, forKey: .tokenQueryId)
             try container.encode(coinName, forKey: .coinName)

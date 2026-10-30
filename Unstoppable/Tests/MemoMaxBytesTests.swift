@@ -2,7 +2,7 @@ import MarketKit
 import Testing
 @testable import WalletCore
 
-// Memo limits are UTF-8 bytes, as on Android: a short Cyrillic memo can already exceed Stellar's 28
+/// Memo limits are UTF-8 bytes, as on Android: a short Cyrillic memo can already exceed Stellar's 28
 struct MemoMaxBytesTests {
     @Test(arguments: [
         (BlockchainType.bitcoin, 80),

@@ -4,7 +4,7 @@ import Testing
 @testable import Unstoppable
 @testable import WalletCore
 
-// default swap pair cascade per swap_default_state.md: explicit -> no wallets -> top wallet -> max fiat
+/// default swap pair cascade per swap_default_state.md: explicit -> no wallets -> top wallet -> max fiat
 struct MultiSwapDefaultPairResolverTests {
     @Test func noWalletsResolveToBitcoinMonero() {
         let pair = MultiSwapDefaultPairResolver.resolve(Self.input(hasWallets: false))

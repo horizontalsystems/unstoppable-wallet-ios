@@ -56,11 +56,25 @@ final class WCSpySignClient: IWCSignClient {
     var pairError: Error?
     var onPair: (() -> Void)?
 
-    var sessionsPublisher: AnyPublisher<[Session], Never> { sessionsSubject.eraseToAnyPublisher() }
-    var sessionUpdatePublisher: AnyPublisher<(topic: String, namespaces: [String: SessionNamespace]), Never> { sessionUpdateSubject.eraseToAnyPublisher() }
-    var sessionProposalPublisher: AnyPublisher<(proposal: Session.Proposal, context: VerifyContext?), Never> { sessionProposalSubject.eraseToAnyPublisher() }
-    var sessionRequestPublisher: AnyPublisher<(request: Request, context: VerifyContext?), Never> { sessionRequestSubject.eraseToAnyPublisher() }
-    var requestExpirationPublisher: AnyPublisher<RPCID, Never> { requestExpirationSubject.eraseToAnyPublisher() }
+    var sessionsPublisher: AnyPublisher<[Session], Never> {
+        sessionsSubject.eraseToAnyPublisher()
+    }
+
+    var sessionUpdatePublisher: AnyPublisher<(topic: String, namespaces: [String: SessionNamespace]), Never> {
+        sessionUpdateSubject.eraseToAnyPublisher()
+    }
+
+    var sessionProposalPublisher: AnyPublisher<(proposal: Session.Proposal, context: VerifyContext?), Never> {
+        sessionProposalSubject.eraseToAnyPublisher()
+    }
+
+    var sessionRequestPublisher: AnyPublisher<(request: Request, context: VerifyContext?), Never> {
+        sessionRequestSubject.eraseToAnyPublisher()
+    }
+
+    var requestExpirationPublisher: AnyPublisher<RPCID, Never> {
+        requestExpirationSubject.eraseToAnyPublisher()
+    }
 
     private(set) var approvals = [(proposalId: String, namespaces: [String: SessionNamespace])]()
     private(set) var rejectedProposalIds = [String]()
@@ -124,13 +138,33 @@ final class WCStubRequestPayload: WCRequestPayload, IWCTypedDataRequest {
     var stubDomain: WCTypedDataDomain?
     var stubSignOnly = false
 
-    override var isSignOnly: Bool { stubSignOnly }
-    override var to: String? { stubTo }
-    override var value: BigUInt? { stubValue }
-    override var data: Data? { stubData }
-    override var message: Data? { stubMessage }
-    override var decodedSwapInfo: WCSwapInfo? { stubSwapInfo }
-    var typedDataDomain: WCTypedDataDomain? { stubDomain }
+    override var isSignOnly: Bool {
+        stubSignOnly
+    }
+
+    override var to: String? {
+        stubTo
+    }
+
+    override var value: BigUInt? {
+        stubValue
+    }
+
+    override var data: Data? {
+        stubData
+    }
+
+    override var message: Data? {
+        stubMessage
+    }
+
+    override var decodedSwapInfo: WCSwapInfo? {
+        stubSwapInfo
+    }
+
+    var typedDataDomain: WCTypedDataDomain? {
+        stubDomain
+    }
 
     static func make(method: String = "eth_sendTransaction", chainId: String = "eip155:1", kind: WCRequestPayload.Kind = .transaction, from: String? = WCTestFixtures.address) throws -> WCStubRequestPayload {
         try WCStubRequestPayload(request: WCTestFixtures.request(method: method, chainId: chainId), kind: kind, from: from)

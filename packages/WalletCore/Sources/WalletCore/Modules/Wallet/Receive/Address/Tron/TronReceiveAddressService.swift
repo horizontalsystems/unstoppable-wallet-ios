@@ -1,5 +1,7 @@
 class TronReceiveAddressService: BaseReceiveAddressService {
-    var tronAdapter: TronAdapter? { super.adapter as? TronAdapter }
+    var tronAdapter: TronAdapter? {
+        super.adapter as? TronAdapter
+    }
 
     override func dataStatus(_ dataStatus: DataStatus<DepositAddress>, isMainNet: Bool) -> DataStatus<ReceiveAddress> {
         let assetReceiveAddress = super.dataStatus(dataStatus, isMainNet: isMainNet)

@@ -73,7 +73,7 @@ class DownloadService {
 }
 
 extension DownloadService {
-    public func download(source: URLConvertible, destination: URL, progress: ((Double) -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
+    func download(source: URLConvertible, destination: URL, progress: ((Double) -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
         let destination: DownloadRequest.Destination = { _, _ in
             (destination, [.removePreviousFile, .createIntermediateDirectories])
         }
@@ -83,16 +83,16 @@ extension DownloadService {
 }
 
 extension DownloadService {
-    public static func existing(url: URL) -> Bool {
+    static func existing(url: URL) -> Bool {
         (try? FileManager.default.attributesOfItem(atPath: url.path)) != nil
     }
 
-    public enum State: Equatable {
+    enum State: Equatable {
         case idle
         case inProgress(value: Double)
         case success
 
-        public static func == (lhs: State, rhs: State) -> Bool {
+        static func == (lhs: State, rhs: State) -> Bool {
             switch (lhs, rhs) {
             case (.idle, .idle): return true
             case (.success, .success): return true

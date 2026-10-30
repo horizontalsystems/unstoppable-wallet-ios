@@ -1,7 +1,7 @@
 import Foundation
 
-// Validates the text of an amount input field as the user edits it. "." and the locale decimal
-// separator are both accepted as the separator, matching `AmountDecimalParser`.
+/// Validates the text of an amount input field as the user edits it. "." and the locale decimal
+/// separator are both accepted as the separator, matching `AmountDecimalParser`.
 enum AmountInputValidator {
     static let defaultMaxDecimals = 8 // used when no token is selected
     static let fiatMaxDecimals = 2 // fiat field, all currencies
@@ -81,7 +81,7 @@ enum AmountInputValidator {
         return true
     }
 
-    // Returns the text with fraction digits cut to `maxDecimals`, or nil if it is invalid for any other reason
+    /// Returns the text with fraction digits cut to `maxDecimals`, or nil if it is invalid for any other reason
     static func truncated(_ text: String, maxDecimals: Int, decimalSeparator: String) -> String? {
         guard let (integerPart, fractionPart) = split(text, decimalSeparator: decimalSeparator), isValidIntegerPart(integerPart) else {
             return nil
@@ -111,8 +111,8 @@ enum AmountInputValidator {
         ("0" ... "9").contains(character)
     }
 
-    // Splits the text into integer and fraction digits. Returns nil if the text has a non-digit character
-    // or more than one separator. The fraction part is nil when there is no separator.
+    /// Splits the text into integer and fraction digits. Returns nil if the text has a non-digit character
+    /// or more than one separator. The fraction part is nil when there is no separator.
     private static func split(_ text: String, decimalSeparator: String) -> (String, String?)? {
         var integerPart = ""
         var fractionPart: String?
@@ -138,7 +138,7 @@ enum AmountInputValidator {
         return (integerPart, fractionPart)
     }
 
-    // Empty, exactly "0", or a number without a leading zero
+    /// Empty, exactly "0", or a number without a leading zero
     private static func isValidIntegerPart(_ integerPart: String) -> Bool {
         integerPart.count <= 1 || integerPart.first != "0"
     }

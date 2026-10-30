@@ -1,8 +1,8 @@
 import MarketKit
 import SwiftUI
 
-// Available balance, the You Pay / You Get boxes and the interchange button, bound to one swap view
-// model. Shared by the Standard and Private tabs of MultiSwapView, each with its own view model.
+/// Available balance, the You Pay / You Get boxes and the interchange button, bound to one swap view
+/// model. Shared by the Standard and Private tabs of MultiSwapView, each with its own view model.
 struct MultiSwapInputSection: View {
     @ObservedObject var viewModel: MultiSwapViewModel
     var focusedField: FocusState<MultiSwapView.FocusField?>.Binding
@@ -31,7 +31,7 @@ struct MultiSwapInputSection: View {
         }
     }
 
-    @ViewBuilder private func amountsView() -> some View {
+    private func amountsView() -> some View {
         VStack(spacing: 0) {
             boxInView()
                 .padding(.horizontal, 16)
@@ -49,7 +49,7 @@ struct MultiSwapInputSection: View {
         }
     }
 
-    @ViewBuilder private func boxInView() -> some View {
+    private func boxInView() -> some View {
         SendInputView(
             token: viewModel.tokenIn,
             amountDecimals: viewModel.amountInDecimals,
@@ -72,7 +72,7 @@ struct MultiSwapInputSection: View {
         }
     }
 
-    @ViewBuilder private func boxSeparatorView() -> some View {
+    private func boxSeparatorView() -> some View {
         Color.themeBlade.frame(height: .heightOnePixel)
             .overlay {
                 IconButton(icon: "arrow_m_down", style: .secondary, size: .small) {
@@ -82,7 +82,7 @@ struct MultiSwapInputSection: View {
             }
     }
 
-    @ViewBuilder private func boxOutView() -> some View {
+    private func boxOutView() -> some View {
         HStack(spacing: 8) {
             TokenSelectorButton(token: viewModel.tokenOut) {
                 Coordinator.shared.present { isPresented in

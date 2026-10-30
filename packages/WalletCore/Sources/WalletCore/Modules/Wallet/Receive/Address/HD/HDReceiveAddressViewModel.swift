@@ -42,6 +42,8 @@ extension HDReceiveAddressViewModel {
             }
         }
 
-        static func < (lhs: AddressChain, rhs: AddressChain) -> Bool { lhs.rawValue < rhs.rawValue }
+        static func < (lhs: AddressChain, rhs: AddressChain) -> Bool {
+            lhs.rawValue < rhs.rawValue
+        }
     }
 }

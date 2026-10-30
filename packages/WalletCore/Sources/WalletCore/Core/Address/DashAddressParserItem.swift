@@ -11,7 +11,9 @@ class DashAddressParserItem {
 }
 
 extension DashAddressParserItem: IAddressParserItem {
-    var blockchainType: BlockchainType { .dash }
+    var blockchainType: BlockchainType {
+        .dash
+    }
 
     func handle(address: String) -> Single<Address> {
         do {

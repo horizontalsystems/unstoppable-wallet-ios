@@ -53,8 +53,8 @@ struct ZcashOperationGuardTests {
     }
 }
 
-// Waiting on a fixed sleep for the other task to take the guard is a race under a loaded test run;
-// the body opens the latch once it is inside, and the test waits for that.
+/// Waiting on a fixed sleep for the other task to take the guard is a race under a loaded test run;
+/// the body opens the latch once it is inside, and the test waits for that.
 private actor Latch {
     private var isOpen = false
 

@@ -2,7 +2,7 @@ import SwiftUI
 
 struct TronReceiveAddressView: View {
     @StateObject var viewModel: TronReceiveAddressViewModel
-    private var onDismiss: (() -> Void)? = nil
+    private var onDismiss: (() -> Void)?
 
     @Environment(\.presentationMode) private var presentationMode
 

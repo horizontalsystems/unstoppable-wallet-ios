@@ -89,7 +89,7 @@ public struct ScanQrView: View {
         }
     }
 
-    @ViewBuilder private var permissionDeniedView: some View {
+    private var permissionDeniedView: some View {
         VStack(spacing: .margin32) {
             Text("access_camera.message".localized)
                 .themeSubhead2(color: .themeGray, alignment: .center)
@@ -103,7 +103,7 @@ public struct ScanQrView: View {
         .padding(.horizontal, .margin32)
     }
 
-    @ViewBuilder private var unsupportedView: some View {
+    private var unsupportedView: some View {
         ThemeText("access_camera.not_supported".localized, style: .subheadR, colorStyle: .secondary)
             .multilineTextAlignment(.center)
             .padding(.horizontal, .margin32)

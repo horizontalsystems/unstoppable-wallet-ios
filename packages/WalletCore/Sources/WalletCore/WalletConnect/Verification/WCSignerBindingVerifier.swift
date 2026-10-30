@@ -1,6 +1,6 @@
 import WalletConnectUtils
 
-// Bug-bounty #2 defense-in-depth: request.from must be an account approved for the exact request chain
+/// Bug-bounty #2 defense-in-depth: request.from must be an account approved for the exact request chain
 class WCSignerBindingVerifier: IWCVerifier {
     private let requireSigner: Bool
 

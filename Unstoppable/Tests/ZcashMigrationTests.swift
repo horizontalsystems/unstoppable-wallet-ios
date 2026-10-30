@@ -152,7 +152,7 @@ struct ZcashMigrationTests {
     }
 }
 
-// Test double for the send-max migration engine: fixed fee, sweeps its emulated balance to a fake txid.
+/// Test double for the send-max migration engine: fixed fee, sweeps its emulated balance to a fake txid.
 private final class MockMigrationEngine: IZcashMigrationEngine {
     private static let fee = Zatoshi(15000)
 

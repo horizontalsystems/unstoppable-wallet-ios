@@ -7,13 +7,17 @@ class WCSessionsViewModel: ObservableObject {
         let host: String
         let iconUrl: URL?
         let requests: [RequestItem]
-        var id: String { session.topic }
+        var id: String {
+            session.topic
+        }
     }
 
     struct RequestItem: Identifiable {
         let pending: WCPendingRequestItem
         let label: String
-        var id: String { pending.id.string }
+        var id: String {
+            pending.id.string
+        }
     }
 
     private let manager: WCManager?
@@ -56,7 +60,9 @@ class WCSessionsViewModel: ObservableObject {
         }
     }
 
-    var invalidUrlPublisher: AnyPublisher<Void, Never> { invalidUrlSubject.eraseToAnyPublisher() }
+    var invalidUrlPublisher: AnyPublisher<Void, Never> {
+        invalidUrlSubject.eraseToAnyPublisher()
+    }
 
     func refresh() {
         guard let kit = manager?.startedKit else { return }

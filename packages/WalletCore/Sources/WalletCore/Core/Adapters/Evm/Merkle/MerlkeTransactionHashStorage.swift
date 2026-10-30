@@ -48,10 +48,9 @@ extension MerkleTransactionHashStorage {
 
     @discardableResult func delete(hashes: [MerkleTransactionHash]) throws -> Int {
         guard !hashes.isEmpty else { return 0 }
-        let count = try dbPool.write { db in
+        return try dbPool.write { db in
             let keys = hashes.map(\.transactionHash)
             return try MerkleTransactionHash.deleteAll(db, keys: keys)
         }
-        return count
     }
 }

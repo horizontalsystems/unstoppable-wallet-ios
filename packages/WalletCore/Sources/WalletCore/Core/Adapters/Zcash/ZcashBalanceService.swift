@@ -33,8 +33,8 @@ class ZcashBalanceService {
         zCashBalanceData.balanceData
     }
 
-    // a rescan starts from a clean slate: the cached balance belonged to the old birthday and the
-    // shielding alert must fire again for the same transparent amount
+    /// a rescan starts from a clean slate: the cached balance belonged to the old birthday and the
+    /// shielding alert must fire again for the same transparent amount
     func clearOnWipe() {
         try? storage.delete(id: uniqueId)
         try? storage.deleteAlertState(id: uniqueId)
@@ -168,10 +168,10 @@ extension ZcashBalanceService {
         }
     }
 
-    // Totals from the unmasked local snapshot; during recovery from the engine-reconciled visible
-    // one, which never over-shows. Spendable only when the SDK is willing to state it: under the
-    // mask and during recovery (where "spendable" carries the whole reconciled total) the cached
-    // value stays.
+    /// Totals from the unmasked local snapshot; during recovery from the engine-reconciled visible
+    /// one, which never over-shows. Spendable only when the SDK is willing to state it: under the
+    /// mask and during recovery (where "spendable" carries the whole reconciled total) the cached
+    /// value stays.
     static func compose(id: String, local: Inputs?, visible: Inputs, isSpendableMasked: Bool, isRecovering: Bool, previous: ZcashBalanceData) -> ZcashBalanceData {
         let totals = (isRecovering ? nil : local) ?? visible
         let available = isSpendableMasked || isRecovering ? previous.available : visible.shieldedSpendable.decimalValue.decimalValue

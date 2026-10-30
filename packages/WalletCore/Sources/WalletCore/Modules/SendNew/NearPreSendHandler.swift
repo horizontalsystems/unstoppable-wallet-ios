@@ -69,8 +69,8 @@ extension NearPreSendHandler: IPreSendHandler {
         stateSubject.eraseToAnyPublisher()
     }
 
-    // the whole spendable balance, as most chains: for NEAR the confirmation takes out what the
-    // transfer to the actual receiver needs (NearSendHandler); a token's fee is paid in NEAR
+    /// the whole spendable balance, as most chains: for NEAR the confirmation takes out what the
+    /// transfer to the actual receiver needs (NearSendHandler); a token's fee is paid in NEAR
     var balance: Decimal {
         adapter.balanceData.available
     }
@@ -79,7 +79,7 @@ extension NearPreSendHandler: IPreSendHandler {
         balanceSubject.eraseToAnyPublisher()
     }
 
-    // only a NEP-141 ft_transfer carries a memo (Android `sendMemoSupport`)
+    /// only a NEP-141 ft_transfer carries a memo (Android `sendMemoSupport`)
     func memoType(address _: String?) -> MemoType {
         if case .nep141 = token.type {
             return .onChainPublic
@@ -98,8 +98,8 @@ extension NearPreSendHandler: IPreSendHandler {
         return .valid(sendData: .near(token: token, amount: amount, address: address, memo: sentMemo))
     }
 
-    // To the provider's deposit address, never with a memo: a NEAR deposit is a plain transfer,
-    // which has no field for one (Android `memoDelivery = None`).
+    /// To the provider's deposit address, never with a memo: a NEAR deposit is a plain transfer,
+    /// which has no field for one (Android `memoDelivery = None`).
     func depositSendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
         if let error = recipientError(address: address) {
             return error
@@ -112,8 +112,8 @@ extension NearPreSendHandler: IPreSendHandler {
         return .valid(sendData: .near(token: token, amount: amount, address: address, memo: nil))
     }
 
-    // Decided by the chain, not by memoType(address:): the default would let a token deposit carry
-    // a text memo, which the provider never reads.
+    /// Decided by the chain, not by memoType(address:): the default would let a token deposit carry
+    /// a text memo, which the provider never reads.
     func depositSendData(amount: Decimal, address: String, attachment: USwapMultiSwapApi.Attachment?, settings _: PreSendSettingsSnapshot?) throws -> SendDataResult {
         _ = try USwapMultiSwapApi.Attachment.memo(attachment, memoType: token.blockchainType.memoType)
         return depositSendData(amount: amount, address: address, memo: nil)

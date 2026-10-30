@@ -47,7 +47,7 @@ struct TermsView: View {
         }
     }
 
-    @ViewBuilder private func content(readOnly: Bool) -> some View {
+    private func content(readOnly: Bool) -> some View {
         ScrollView {
             VStack(spacing: .margin24) {
                 ListSection {
@@ -73,7 +73,7 @@ struct TermsView: View {
         }
     }
 
-    @ViewBuilder private func rowTitle(term: TermsManager.Term) -> some View {
+    private func rowTitle(term: TermsManager.Term) -> some View {
         ThemeText(term.localizedKey.localized, style: .subhead, colorStyle: .primary)
     }
 

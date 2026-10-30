@@ -24,8 +24,8 @@ public enum AccountType: Identifiable {
     case hdExtendedKey(key: HDExtendedKey)
     case btcAddress(address: String, blockchainType: BlockchainType, tokenType: TokenType)
     case moneroWatchAccount(address: String, viewKey: String)
-    // A raw ed25519 spend key behind a Monero legacy (Electrum-style) 25-word seed; no other
-    // chain can be derived from it. The passphrase is wallet2's seed offset, not a BIP39 salt.
+    /// A raw ed25519 spend key behind a Monero legacy (Electrum-style) 25-word seed; no other
+    /// chain can be derived from it. The passphrase is wallet2's seed offset, not a BIP39 salt.
     case moneroMnemonic(words: [String], passphrase: String)
 
     public var id: Self {

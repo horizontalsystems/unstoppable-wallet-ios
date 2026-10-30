@@ -14,11 +14,7 @@ public class AccountStorage {
     }
 
     private func createAccount(record: AccountRecord) -> Account? {
-        guard let typeName = TypeName(rawValue: record.type) else {
-            return nil
-        }
-
-        guard let origin = AccountOrigin(rawValue: record.origin) else {
+        guard let typeName = TypeName(rawValue: record.type), let origin = AccountOrigin(rawValue: record.origin) else {
             return nil
         }
 
@@ -27,10 +23,7 @@ public class AccountStorage {
 
         switch typeName {
         case .mnemonic:
-            guard let words = recoverStringArray(id: id, typeName: typeName, keyName: .words) else {
-                return nil
-            }
-            guard let salt: String = recover(id: id, typeName: typeName, keyName: .salt) else {
+            guard let words = recoverStringArray(id: id, typeName: typeName, keyName: .words), let salt: String = recover(id: id, typeName: typeName, keyName: .salt) else {
                 return nil
             }
 
@@ -118,21 +111,14 @@ public class AccountStorage {
 
             type = .mayaChainAddress(address: address)
         case .hdExtendedKey:
-            guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
-                return nil
-            }
-
-            guard let key = try? HDExtendedKey.deserialize(data: data) else {
+            guard let data = recoverData(id: id, typeName: typeName, keyName: .data), let key = try? HDExtendedKey.deserialize(data: data) else {
                 return nil
             }
 
             type = .hdExtendedKey(key: key)
         case .btcAddress:
-            guard let address = record.wordsKey else {
-                return nil
-            }
-
-            guard let tokenTypeId = record.dataKey,
+            guard let address = record.wordsKey,
+                  let tokenTypeId = record.dataKey,
                   let tokenType = TokenType(id: tokenTypeId),
                   let blockchainTypeUid = record.saltKey
             else {
@@ -148,10 +134,7 @@ public class AccountStorage {
 
             type = .moneroWatchAccount(address: address, viewKey: viewKey)
         case .moneroMnemonic:
-            guard let words = recoverStringArray(id: id, typeName: typeName, keyName: .words) else {
-                return nil
-            }
-            guard let passphrase: String = recover(id: id, typeName: typeName, keyName: .salt) else {
+            guard let words = recoverStringArray(id: id, typeName: typeName, keyName: .words), let passphrase: String = recover(id: id, typeName: typeName, keyName: .salt) else {
                 return nil
             }
 

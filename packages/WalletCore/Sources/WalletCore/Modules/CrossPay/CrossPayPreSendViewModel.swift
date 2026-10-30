@@ -2,10 +2,10 @@ import Combine
 import Foundation
 import MarketKit
 
-// The Cross Pay tab of PreSendView: the amount and recipient are in the token the RECIPIENT receives,
-// priced live in the wallet's token. The quote is display-only — the confirmation screen commits its
-// own order, building the deposit transfer from a snapshot of the shared `handler`'s settings taken
-// here, on the main thread.
+/// The Cross Pay tab of PreSendView: the amount and recipient are in the token the RECIPIENT receives,
+/// priced live in the wallet's token. The quote is display-only — the confirmation screen commits its
+/// own order, building the deposit transfer from a snapshot of the shared `handler`'s settings taken
+/// here, on the main thread.
 final class CrossPayPreSendViewModel: BasePreSendViewModel {
     private static let quoteDebounce: TimeInterval = 0.5
 
@@ -14,10 +14,10 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
 
     @Published private(set) var isSupported: Bool
 
-    // Preselected with the first popular token for the wallet's token; nil only when there is none.
+    /// Preselected with the first popular token for the wallet's token; nil only when there is none.
     @Published private(set) var tokenOut: Token?
 
-    // Sheet binding for the token selector; the reset logic runs once in onSelect.
+    /// Sheet binding for the token selector; the reset logic runs once in onSelect.
     @Published var selectedTokenOut: Token? {
         didSet {
             if let selectedTokenOut {
@@ -41,7 +41,7 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
         }
     }
 
-    // The predefined address and amount belong to the sending chain and token, never carried over.
+    /// The predefined address and amount belong to the sending chain and token, never carried over.
     init(wallet: Wallet, handler: IPreSendHandler?, spendStepHandler: ISpendStepHandler?, service: CrossPayService?) {
         self.service = service
         isSupported = Self.isSupported(token: wallet.token, service: service)
@@ -90,7 +90,7 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
         tokenOut
     }
 
-    // The recipient is on the destination chain, so there is no source address to compare against.
+    /// The recipient is on the destination chain, so there is no source address to compare against.
     override var addressFromAddress: String? {
         nil
     }
@@ -99,13 +99,13 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
         []
     }
 
-    // The amount is in the receive token, so the sent token's balance cannot fill it.
+    /// The amount is in the receive token, so the sent token's balance cannot fill it.
     override var maxAmountEnabled: Bool {
         false
     }
 
-    // Rounded DOWN to the receive token's precision: an over-precise value could never pass the
-    // strict exactness check at preview.
+    /// Rounded DOWN to the receive token's precision: an over-precise value could never pass the
+    /// strict exactness check at preview.
     override func roundedInput(_ amount: Decimal?) -> Decimal? {
         guard let amount, let tokenOut else {
             return amount
@@ -120,7 +120,7 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
 
     override func setAmountIn(percent _: Int) {}
 
-    // The amount leaving the wallet is the quoted pay amount, not the typed amount in the receive token.
+    /// The amount leaving the wallet is the quoted pay amount, not the typed amount in the receive token.
     override func syncSpendStep() {
         guard case let .success(payAmount) = quoteState else {
             spendStep = nil
@@ -130,8 +130,8 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
         spendStep = spendStepHandler?.step(amount: payAmount)
     }
 
-    // Never calls `handler.set(address:)`: the shared handler's address-dependent state belongs to the
-    // Standard tab, and the deposit address does not exist until the order is committed.
+    /// Never calls `handler.set(address:)`: the shared handler's address-dependent state belongs to the
+    /// Standard tab, and the deposit address does not exist until the order is committed.
     override func syncSendData() {
         if case let .error(error) = quoteState {
             cautions = [CautionNew(text: error.errorDescription ?? "cross_pay.error.commit_failed".localized, type: .error)]
@@ -206,13 +206,9 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
         return PreSendButtonState(title: "send.next_button".localized, disabled: sendData == nil, showProgress: false)
     }
 
-    // A nil service yields false permanently, so an app that never wires Cross Pay is unaffected.
+    /// A nil service yields false permanently, so an app that never wires Cross Pay is unaffected.
     static func isSupported(token: Token, service: CrossPayService?) -> Bool {
-        guard let service else {
-            return false
-        }
-
-        guard PrivateSendHandlerProvider.baseToken(token: token) != nil else {
+        guard let service, PrivateSendHandlerProvider.baseToken(token: token) != nil else {
             return false
         }
 

@@ -11,7 +11,7 @@ class BackgroundTaskManager {
         criticalCompletedSubject.eraseToAnyPublisher()
     }
 
-    // end() is awaited on both outcomes so callers observe a consistent state on return (no detached-Task races)
+    /// end() is awaited on both outcomes so callers observe a consistent state on return (no detached-Task races)
     func performCritical<T>(name: String, operation: () async throws -> T) async throws -> T {
         let token = await begin(name: name)
 

@@ -1,6 +1,6 @@
 import ReownWalletKit
 
-// Bug-bounty #3: attested origin from the SDK Verify API, never dApp-supplied metadata
+/// Bug-bounty #3: attested origin from the SDK Verify API, never dApp-supplied metadata
 class WCVerifyOriginVerifier: IWCVerifier {
     func handles(_: WCVerificationContext) -> Bool {
         true

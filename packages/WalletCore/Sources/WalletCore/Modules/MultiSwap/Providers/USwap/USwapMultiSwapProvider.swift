@@ -18,13 +18,33 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
         self.finalQuoteFactory = finalQuoteFactory
     }
 
-    public var id: String { subProvider.info.id }
-    public var name: String { subProvider.info.name }
-    public var type: SwapProviderType? { Core.shared.swapProviderManager.amlPolicy(providerId: subProvider.info.id) }
-    public var requireTerms: Bool { subProvider.info.requireTerms }
-    public var preciseEstimateTime: Bool { subProvider.info.preciseEstimateTime }
-    public var icon: String { subProvider.info.icon }
-    public var syncPublisher: AnyPublisher<Void, Never>? { subProvider.syncPublisher }
+    public var id: String {
+        subProvider.info.id
+    }
+
+    public var name: String {
+        subProvider.info.name
+    }
+
+    public var type: SwapProviderType? {
+        Core.shared.swapProviderManager.amlPolicy(providerId: subProvider.info.id)
+    }
+
+    public var requireTerms: Bool {
+        subProvider.info.requireTerms
+    }
+
+    public var preciseEstimateTime: Bool {
+        subProvider.info.preciseEstimateTime
+    }
+
+    public var icon: String {
+        subProvider.info.icon
+    }
+
+    public var syncPublisher: AnyPublisher<Void, Never>? {
+        subProvider.syncPublisher
+    }
 
     public func slippageSupported(tokenIn: Token, tokenOut: Token) -> Bool {
         subProvider.slippageSupported(tokenIn: tokenIn, tokenOut: tokenOut)
@@ -59,9 +79,9 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
         return quote
     }
 
-    // No side effects: previews the route (with the user's fee setting) and estimates the fee against
-    // the real deposit (signed / thorchain routes) or the stub (transfer providers). The order is
-    // created in `commit(finalQuote:)` when the user confirms.
+    /// No side effects: previews the route (with the user's fee setting) and estimates the fee against
+    /// the real deposit (signed / thorchain routes) or the stub (transfer providers). The order is
+    /// created in `commit(finalQuote:)` when the user confirms.
     public func confirmationQuote(
         multiSwapQuote: MultiSwapQuote,
         tokenIn: Token,
@@ -145,11 +165,11 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
         return finalQuote
     }
 
-    // Creates the order (the only call with side effects). Transfer providers learn the deposit
-    // address and attachment here, so their quote is rebuilt against the real deposit; for
-    // signed / thorchain routes the preview's transaction is final and only gains the `uuid`.
-    // Nothing visible on the previewed quote is written to (the screen is displaying it); the one
-    // exception is the provider-private `providerContext`, cleared once its token is consumed.
+    /// Creates the order (the only call with side effects). Transfer providers learn the deposit
+    /// address and attachment here, so their quote is rebuilt against the real deposit; for
+    /// signed / thorchain routes the preview's transaction is final and only gains the `uuid`.
+    /// Nothing visible on the previewed quote is written to (the screen is displaying it); the one
+    /// exception is the provider-private `providerContext`, cleared once its token is consumed.
     public func commit(finalQuote: SwapFinalQuote) async throws -> SwapCommitment {
         // Every quote this provider returns carries a context; a missing one can only mean the
         // token was already consumed, and a consumed preview must never be executed as-is.
@@ -289,8 +309,8 @@ extension USwapMultiSwapProvider: ISplitSwapProvider {
         )
     }
 
-    // A split preview never carries an execution: the fee is estimated against the stub deposit and the
-    // order is created in `splitCommit(finalQuote:)` when the user confirms.
+    /// A split preview never carries an execution: the fee is estimated against the stub deposit and the
+    /// order is created in `splitCommit(finalQuote:)` when the user confirms.
     public func splitPreview(
         tokenIn: Token,
         tokenOut: Token,
@@ -379,8 +399,8 @@ extension USwapMultiSwapProvider: ISplitSwapProvider {
         return SplitSwapPreview(quote: finalQuote, outputAmounts: route.outputs.map(\.expectedBuyAmount))
     }
 
-    // Creates the split order and rebuilds the one transfer against the real deposit. As for a simple
-    // transfer route, the transfer moves the amount the user saw, never the commit's.
+    /// Creates the split order and rebuilds the one transfer against the real deposit. As for a simple
+    /// transfer route, the transfer moves the amount the user saw, never the commit's.
     public func splitCommit(finalQuote: SwapFinalQuote) async throws -> SplitSwapCommitment {
         guard let context = finalQuote.providerContext as? SplitPreviewContext else {
             throw SwapError.invalidTransactionData
@@ -486,7 +506,7 @@ extension USwapMultiSwapProvider: ISplitSwapProvider {
 }
 
 extension USwapMultiSwapProvider {
-    // What `splitCommit(finalQuote:)` needs from the split preview
+    /// What `splitCommit(finalQuote:)` needs from the split preview
     private final class SplitPreviewContext {
         let previewToken: String
         let tokenIn: Token
@@ -527,9 +547,9 @@ extension USwapMultiSwapProvider {
         }
     }
 
-    // Output `i` must be the request's output `i` (indices exactly 0..<count, as the screen pairs
-    // amounts with recipients by position) and pay recipient `i`'s address. Funds sent to an order
-    // paying anyone else could never be recovered, so a missing or different destination fails.
+    /// Output `i` must be the request's output `i` (indices exactly 0..<count, as the screen pairs
+    /// amounts with recipients by position) and pay recipient `i`'s address. Funds sent to an order
+    /// paying anyone else could never be recovered, so a missing or different destination fails.
     private static func validateSplitOutputs(_ outputs: [(index: Int, destinationAddress: String?)], recipients: [SplitRecipient], tokenOut: Token) throws {
         guard outputs.count == recipients.count else {
             throw SplitSwapError.invalidRoute
@@ -550,8 +570,8 @@ extension USwapMultiSwapProvider {
 }
 
 extension USwapMultiSwapProvider {
-    // What `commit(finalQuote:)` needs from the preview: the token to commit and everything the
-    // final-quote factory needs to rebuild a transfer route against the real deposit.
+    /// What `commit(finalQuote:)` needs from the preview: the token to commit and everything the
+    /// final-quote factory needs to rebuild a transfer route against the real deposit.
     private final class PreviewContext {
         let previewToken: String
         let tokenIn: Token
@@ -589,8 +609,8 @@ extension USwapMultiSwapProvider {
     static let legTypeNativeSend = "native_send"
     static let legTypeSwap = "swap"
 
-    // MEV protection is a property of the route, not the provider: only a server-built signed
-    // transaction on a Merkle-supported same-chain EVM pair can be broadcast through the private RPC.
+    /// MEV protection is a property of the route, not the provider: only a server-built signed
+    /// transaction on a Merkle-supported same-chain EVM pair can be broadcast through the private RPC.
     private static func mevProtectionAllowed(execution: USwapMultiSwapApi.Execution?, tokenIn: Token, tokenOut: Token) -> Bool {
         guard case .signedTransaction = execution else {
             return false

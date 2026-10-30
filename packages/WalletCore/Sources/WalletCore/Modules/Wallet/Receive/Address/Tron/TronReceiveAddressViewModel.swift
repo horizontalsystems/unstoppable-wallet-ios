@@ -53,5 +53,7 @@ extension TronReceiveAddressViewModel {
 }
 
 extension ReceiveAddressModule.PopupWarningItem.Mode {
-    static func done(title: String) -> ReceiveAddressModule.PopupWarningItem.Mode { TronReceiveAddressViewModel.DoneMode(title: title) }
+    static func done(title: String) -> ReceiveAddressModule.PopupWarningItem.Mode {
+        TronReceiveAddressViewModel.DoneMode(title: title)
+    }
 }

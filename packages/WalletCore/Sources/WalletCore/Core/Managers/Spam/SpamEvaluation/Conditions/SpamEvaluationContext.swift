@@ -3,7 +3,7 @@ import MarketKit
 class SpamEvaluationContext {
     let transaction: SpamTransactionInfo
 
-    // Shared storage for conditions to pass data to each other
+    /// Shared storage for conditions to pass data to each other
     private var storage: [String: Any] = [:]
 
     init(transaction: SpamTransactionInfo) {

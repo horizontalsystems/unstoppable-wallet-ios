@@ -139,7 +139,7 @@ final class USwapEvmFinalQuoteBuilder: USwapFinalQuoteBuilder {
         )
     }
 
-    // The price the server put on the tx: `gasPrice` (legacy) or the EIP-1559 pair; nil when it carries none.
+    /// The price the server put on the tx: `gasPrice` (legacy) or the EIP-1559 pair; nil when it carries none.
     private static func gasPrice(json: [String: Any]) -> GasPrice? {
         if let maxFeePerGas = int(json["maxFeePerGas"]), let maxPriorityFeePerGas = int(json["maxPriorityFeePerGas"]) {
             return .eip1559(maxFeePerGas: maxFeePerGas, maxPriorityFeePerGas: maxPriorityFeePerGas)
@@ -150,8 +150,8 @@ final class USwapEvmFinalQuoteBuilder: USwapFinalQuoteBuilder {
         return nil
     }
 
-    // wei / gas values arrive as decimal or `0x`-hex strings (a bare number is tolerated too);
-    // a zero or negative price / limit is treated as absent so the user setting / estimate applies
+    /// wei / gas values arrive as decimal or `0x`-hex strings (a bare number is tolerated too);
+    /// a zero or negative price / limit is treated as absent so the user setting / estimate applies
     private static func int(_ value: Any?) -> Int? {
         let parsed: Int?
         if let number = value as? NSNumber {
@@ -168,10 +168,10 @@ final class USwapEvmFinalQuoteBuilder: USwapFinalQuoteBuilder {
         return parsed.flatMap { $0 > 0 ? $0 : nil }
     }
 
-    // Same encoding rule as `int`, for the tx value (wei), which can exceed 64 bits: a decimal or
-    // `0x`-hex string, or a bare JSON number taken through its decimal text so nothing is ever
-    // truncated through a fixed-width accessor. nil when it does not parse (a bare `0x`, a negative,
-    // a fraction, a bool).
+    /// Same encoding rule as `int`, for the tx value (wei), which can exceed 64 bits: a decimal or
+    /// `0x`-hex string, or a bare JSON number taken through its decimal text so nothing is ever
+    /// truncated through a fixed-width accessor. nil when it does not parse (a bare `0x`, a negative,
+    /// a fraction, a bool).
     private static func bigUInt(_ value: Any) -> BigUInt? {
         if let number = value as? NSNumber {
             guard CFGetTypeID(number) != CFBooleanGetTypeID() else {

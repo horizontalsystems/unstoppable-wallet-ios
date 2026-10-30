@@ -59,8 +59,8 @@ struct XrpWalletTokenView: View {
         }
     }
 
-    // one row per reserve source, as Android `XrpAdapter.reserveInfo`: the base reserve, each trust
-    // line, then every other owned object (offers, escrows, ...) folded into one row
+    /// one row per reserve source, as Android `XrpAdapter.reserveInfo`: the base reserve, each trust
+    /// line, then every other owned object (offers, escrows, ...) folded into one row
     private func lockedItems(reserveInfo: XrpReserveInfo) -> [BSModule.ListItem] {
         var items: [BSModule.ListItem] = [
             .init(

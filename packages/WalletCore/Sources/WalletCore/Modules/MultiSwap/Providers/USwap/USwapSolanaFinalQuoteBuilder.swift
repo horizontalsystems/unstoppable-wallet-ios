@@ -33,7 +33,7 @@ final class USwapSolanaFinalQuoteBuilder: USwapFinalQuoteBuilder {
         return try buildTransfer(input: input, adapter: adapter, deposit: deposit)
     }
 
-    // server-built transaction message: estimate and sign as is
+    /// server-built transaction message: estimate and sign as is
     private func buildRaw(input: USwapFinalQuoteFactory.Input, adapter: ISendSolanaAdapter & IBalanceAdapter, rawTransaction: Data) -> SwapFinalQuote {
         var transactionError: Error?
         var fee: Decimal?
@@ -75,8 +75,8 @@ final class USwapSolanaFinalQuoteBuilder: USwapFinalQuoteBuilder {
         )
     }
 
-    // Plain SOL / SPL transfer to the deposit (the stub at preview, the real address after commit),
-    // checked exactly as the Solana send form does.
+    /// Plain SOL / SPL transfer to the deposit (the stub at preview, the real address after commit),
+    /// checked exactly as the Solana send form does.
     private func buildTransfer(input: USwapFinalQuoteFactory.Input, adapter: ISendSolanaAdapter & IBalanceAdapter, deposit: USwapFinalQuoteFactory.Input.Deposit) throws -> SwapFinalQuote {
         // Thrown, not folded into `transactionError`: a memo cannot ride `sendSol` / `sendSpl`, so an
         // attachment of any kind would be dropped and the deposit would be unmatchable.

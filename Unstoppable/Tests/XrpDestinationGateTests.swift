@@ -8,11 +8,11 @@ import XrpKit
 /// on the send form, and an unanswered lookup blocks the send there (Android
 /// `SendTransactionServiceXrp.cautions`).
 struct XrpDestinationGateTests {
-    @Test func unfundedDestinationBelowBaseReserveIsRefused() async {
+    @Test func unfundedDestinationBelowBaseReserveIsRefused() async throws {
         let adapter = StubSendXrpAdapter(exists: false)
 
         // one drop short of the reserve
-        let error = await XrpSendHelper.destinationError(adapter: adapter, token: Self.xrpToken, amount: adapter.baseReserve - Decimal(string: "0.000001")!, address: Self.destination, destinationTag: nil)
+        let error = try await XrpSendHelper.destinationError(adapter: adapter, token: Self.xrpToken, amount: adapter.baseReserve - #require(Decimal(string: "0.000001")), address: Self.destination, destinationTag: nil)
 
         guard case let .belowMinimumFirstDeposit(minimum) = error as? XrpSendHelper.TransactionError else {
             Issue.record("expected a minimum first deposit error, got \(String(describing: error))")
@@ -21,7 +21,7 @@ struct XrpDestinationGateTests {
         #expect(minimum == adapter.baseReserve)
     }
 
-    // the ledger creates the account from the base reserve upwards, the boundary included
+    /// the ledger creates the account from the base reserve upwards, the boundary included
     @Test func unfundedDestinationAtBaseReservePasses() async {
         let adapter = StubSendXrpAdapter(exists: false)
 
@@ -57,7 +57,7 @@ struct XrpDestinationGateTests {
         #expect(error == nil)
     }
 
-    // an unknown flag is not the same as no flag: the payment would burn its fee on the ledger
+    /// an unknown flag is not the same as no flag: the payment would burn its fee on the ledger
     @Test func failedLookupBlocksTheSend() async {
         let adapter = StubSendXrpAdapter(exists: true, lookupError: StubError.unreachable)
 
@@ -66,7 +66,7 @@ struct XrpDestinationGateTests {
         #expect(error as? StubError == .unreachable)
     }
 
-    // the account gate is for XRP itself; an issued token lands on a trust line, checked on the form
+    /// the account gate is for XRP itself; an issued token lands on a trust line, checked on the form
     @Test func issuedTokenSkipsTheAccountGate() async {
         let adapter = StubSendXrpAdapter(exists: false)
 
@@ -115,17 +115,23 @@ extension XrpDestinationGateTests {
         let availableXrpBalance: Decimal = 100
 
         func doesAccountExist(address _: String) async throws -> Bool {
-            if let lookupError { throw lookupError }
+            if let lookupError {
+                throw lookupError
+            }
             return exists
         }
 
         func requiresDestinationTag(address _: String) async throws -> Bool {
-            if let lookupError { throw lookupError }
+            if let lookupError {
+                throw lookupError
+            }
             return requiresTag
         }
 
         func canReceive(address _: String) async throws -> Bool {
-            if let lookupError { throw lookupError }
+            if let lookupError {
+                throw lookupError
+            }
             return true
         }
 

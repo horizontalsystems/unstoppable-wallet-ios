@@ -95,7 +95,7 @@ struct ContactBookAddressView: View {
         .interactiveDismissDisabled(viewModel.hasChanges)
     }
 
-    @ViewBuilder private func blockchainRow(editable: Bool) -> some View {
+    private func blockchainRow(editable: Bool) -> some View {
         Cell(
             middle: { ThemeText("contacts.contact.address.blockchain".localized, style: .headline2) },
             right: {

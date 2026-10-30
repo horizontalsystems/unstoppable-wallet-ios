@@ -1,7 +1,7 @@
 import Foundation
 import MarketKit
 
-// Type B: broadcasts via MoneroKit, returns txID.
+/// Type B: broadcasts via MoneroKit, returns txID.
 class MoneroHashBroadcaster: IOpenCryptoPayBroadcaster {
     private let token: Token
 

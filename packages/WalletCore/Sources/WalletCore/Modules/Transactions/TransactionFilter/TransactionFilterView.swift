@@ -84,7 +84,7 @@ struct TransactionFilterView: View {
         }
     }
 
-    @ViewBuilder private func dropdownRow(title: String, value: String?, defaultValue: String, action: @escaping () -> Void) -> some View {
+    private func dropdownRow(title: String, value: String?, defaultValue: String, action: @escaping () -> Void) -> some View {
         Cell(
             middle: { ThemeText(title, style: .headline2) },
             right: {

@@ -1,7 +1,7 @@
 import Foundation
 import HsToolKit
 
-// Builds the started kit: configures the SDK first, then wires the services over the shared registries
+/// Builds the started kit: configures the SDK first, then wires the services over the shared registries
 class WCKitFactory: IWCKitFactory {
     private let signClient: WCSignClient
     private let responder: WCResponder

@@ -94,7 +94,7 @@ struct EvmNetworkView: View {
         }
     }
 
-    @ViewBuilder func cell(source: EvmSyncSource) -> some View {
+    func cell(source: EvmSyncSource) -> some View {
         Cell(
             middle: {
                 MultiText(title: source.name, subtitle: source.rpcSource.url.absoluteString)

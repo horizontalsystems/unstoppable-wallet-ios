@@ -36,8 +36,8 @@ extension WCStellarSendHandler: ISendHandler {
         return makeSendData(transaction: transaction, extraError: trustlineError)
     }
 
-    // Synchronous build (XDR parse, fee and reserve-aware balance are local), so the preview opens the
-    // sheet complete; `extraError` carries the async trustline result (nil for the preview).
+    /// Synchronous build (XDR parse, fee and reserve-aware balance are local), so the preview opens the
+    /// sheet complete; `extraError` carries the async trustline result (nil for the preview).
     private func makeSendData(transaction: stellarsdk.Transaction, extraError: Error?) -> ISendData {
         if payload.isSignOnly {
             let inner = WCStellarSignData(xdr: payload.xdr, transaction: transaction, sourceAccountId: payload.from ?? "")
@@ -54,8 +54,8 @@ extension WCStellarSendHandler: ISendHandler {
         return WCSendData(inner: inner, request: request, accountName: accountName)
     }
 
-    // Pre-flight (mirrors StellarSendHelper.preparePayment): a payment of a non-native asset needs the
-    // destination to already hold a trustline for it; Horizon rejects otherwise, so warn up front.
+    /// Pre-flight (mirrors StellarSendHelper.preparePayment): a payment of a non-native asset needs the
+    /// destination to already hold a trustline for it; Horizon rejects otherwise, so warn up front.
     private func noTrustlineError(operations: [stellarsdk.Operation]) async -> Error? {
         for case let payment as stellarsdk.PaymentOperation in operations {
             guard payment.asset.type != AssetType.ASSET_TYPE_NATIVE else { continue }

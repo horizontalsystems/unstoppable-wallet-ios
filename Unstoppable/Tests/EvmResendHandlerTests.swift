@@ -69,7 +69,7 @@ struct EvmResendHandlerTests {
             transactionData: replacement.transactionData, transactionError: nil,
             gasPrice: .legacy(gasPrice: 10), evmFeeData: EvmFeeData(gasLimit: 54321, surchargedGasLimit: 54321), nonce: 7
         )
-        kit.transactionManager.handle(transactions: [try transaction(blockNumber: 123)])
+        try kit.transactionManager.handle(transactions: [transaction(blockNumber: 123)])
 
         await #expect(throws: EvmReplacementData.ValidationError.alreadyInBlock) {
             try await handler.send(data: data)
@@ -117,7 +117,7 @@ struct EvmResendHandlerTests {
             #expect(replacement.transactionData.input == Data([0xAB, 0xCD]))
             #expect(replacement.predefinedGasLimit == 54321)
         case .cancel:
-            #expect(replacement.transactionData.to == (try address()))
+            #expect(try replacement.transactionData.to == address())
             #expect(replacement.transactionData.value == 0)
             #expect(replacement.transactionData.input.isEmpty)
             #expect(replacement.predefinedGasLimit == nil)

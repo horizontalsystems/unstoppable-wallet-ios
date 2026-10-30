@@ -136,11 +136,11 @@ extension MarketSectorsViewModel.CoinSectorWithTopCoins: Hashable, Equatable {
         }
     }
 
-    public static func == (lhs: MarketSectorsViewModel.CoinSectorWithTopCoins, rhs: MarketSectorsViewModel.CoinSectorWithTopCoins) -> Bool {
+    static func == (lhs: MarketSectorsViewModel.CoinSectorWithTopCoins, rhs: MarketSectorsViewModel.CoinSectorWithTopCoins) -> Bool {
         lhs.sector.uid == rhs.sector.uid
     }
 
-    public func hash(into hasher: inout Hasher) {
+    func hash(into hasher: inout Hasher) {
         hasher.combine(sector.uid)
     }
 }

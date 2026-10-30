@@ -18,7 +18,7 @@ class OpenCryptoPayProofWorkerProvider: IAppWorkerProvider {
         manager.pending().map { worker(record: $0) }
     }
 
-    // Hot path: a freshly transient-failed proof, scheduled while the app runs (registered deferred).
+    /// Hot path: a freshly transient-failed proof, scheduled while the app runs (registered deferred).
     func schedule(record: OpenCryptoPayPaymentRecord) {
         newWorkerSubject.send(worker(record: record))
     }

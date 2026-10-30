@@ -21,7 +21,7 @@ struct Informed: ViewModifier {
                                 isPresented.wrappedValue = false
                             },
                         ])),
-                    ],
+                    ]
                 )
             }
         }

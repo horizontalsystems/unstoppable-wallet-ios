@@ -26,13 +26,13 @@ public class SendViewModel: ObservableObject {
 
     @Published public var sendData: ISendData?
 
-    // A live send owns the screen: the quote-expiry timer is stopped so it can't swap the
-    // send button for "Refresh" mid-send (a mid-send "Refresh" would allow a second committed
-    // quote and a concurrent second execution). Any sync already in flight is
-    // cancelled with it: it would otherwise land and overwrite `sendData`/`state` mid-send,
-    // re-quoting under the running execution. On failure the expiry clock resumes from the
-    // ORIGINAL deadline, so an already-stale quote expires immediately; success dismisses
-    // the screen.
+    /// A live send owns the screen: the quote-expiry timer is stopped so it can't swap the
+    /// send button for "Refresh" mid-send (a mid-send "Refresh" would allow a second committed
+    /// quote and a concurrent second execution). Any sync already in flight is
+    /// cancelled with it: it would otherwise land and overwrite `sendData`/`state` mid-send,
+    /// re-quoting under the running execution. On failure the expiry clock resumes from the
+    /// ORIGINAL deadline, so an already-stale quote expires immediately; success dismisses
+    /// the screen.
     @Published var sending = false {
         didSet {
             if sending {
@@ -50,8 +50,8 @@ public class SendViewModel: ObservableObject {
 
     @Published var transactionSettingsModified = false
 
-    // Set when a non-auto-refreshing quote (a swap) reaches its expiration. The UI swaps the
-    // send action for a "Refresh" button; cleared on every state change (a fresh sync clears it).
+    /// Set when a non-auto-refreshing quote (a swap) reaches its expiration. The UI swaps the
+    /// send action for a "Refresh" button; cleared on every state change (a fresh sync clears it).
     @Published public var expired = false
 
     private var nextRefreshTime: Double?
@@ -180,9 +180,9 @@ public extension SendViewModel {
         }
     }
 
-    // Reached when the current quote hits its expiration. Regular sends silently re-quote (fee
-    // refresh); handlers that opt out of auto-refresh (swaps) mark the quote expired instead and
-    // wait for the user to tap "Refresh".
+    /// Reached when the current quote hits its expiration. Regular sends silently re-quote (fee
+    /// refresh); handlers that opt out of auto-refresh (swaps) mark the quote expired instead and
+    /// wait for the user to tap "Refresh".
     internal func onExpiration() {
         // Never expire under a live send — an already-armed timer can still fire after
         // `sending` flipped true (the didSet only stops FUTURE firings).
@@ -246,9 +246,9 @@ public extension SendViewModel {
         .erased()
     }
 
-    // Main-actor isolated so the quote read and the `sending` flip happen in one turn: a silent
-    // re-preview landing in between would commit a quote other than the one on screen. The
-    // handler's send itself runs off the main actor as before.
+    /// Main-actor isolated so the quote read and the `sending` flip happen in one turn: a silent
+    /// re-preview landing in between would commit a quote other than the one on screen. The
+    /// handler's send itself runs off the main actor as before.
     @MainActor func send() async throws {
         // A second slide while one is in flight is dropped here, for every handler: the quote read
         // and the flag flip below are one main-actor turn, so this check cannot interleave with them.

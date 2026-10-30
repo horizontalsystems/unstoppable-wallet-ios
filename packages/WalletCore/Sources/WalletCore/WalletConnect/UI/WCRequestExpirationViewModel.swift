@@ -1,7 +1,7 @@
 import Combine
 import Foundation
 
-// Both request sheets observe the kit's existing deadline/SDK/foreground updates.
+/// Both request sheets observe the kit's existing deadline/SDK/foreground updates.
 class WCRequestExpirationViewModel: ObservableObject {
     @Published private(set) var isExpired: Bool
 

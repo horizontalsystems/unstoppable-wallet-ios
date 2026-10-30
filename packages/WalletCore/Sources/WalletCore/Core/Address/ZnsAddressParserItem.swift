@@ -18,7 +18,9 @@ class ZnsAddressParserItem: IAddressParserItem {
         self.rawAddressParserItem = rawAddressParserItem
     }
 
-    var blockchainType: BlockchainType { rawAddressParserItem.blockchainType }
+    var blockchainType: BlockchainType {
+        rawAddressParserItem.blockchainType
+    }
 
     /// The on-chain name and the suffix it was typed with, or nil when `input` is not a Zcash Name. The suffix is
     /// required: a bare word is indistinguishable from a partly typed address, and the field validates every keystroke.

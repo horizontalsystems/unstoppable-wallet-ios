@@ -181,14 +181,14 @@ struct MarkdownParserTests {
         #expect(level == 3)
     }
 
-    @MainActor @Test func linkActionResolvesRelativeMarkdown() {
-        let url = URL(string: "https://host/faq/en/a.md")!
-        let relativeUrl = URL(string: "../b.md")!
+    @MainActor @Test func linkActionResolvesRelativeMarkdown() throws {
+        let url = try #require(URL(string: "https://host/faq/en/a.md"))
+        let relativeUrl = try #require(URL(string: "../b.md"))
 
         let viewModel = MarkdownViewModel(url: url, mode: .article, handleRelativeUrl: true, networkManager: NetworkManager())
-        #expect(viewModel.linkAction(url: relativeUrl) == .pushMarkdown(url: URL(string: "https://host/faq/b.md")!))
+        #expect(try viewModel.linkAction(url: relativeUrl) == .pushMarkdown(url: #require(URL(string: "https://host/faq/b.md"))))
 
-        let htmlUrl = URL(string: "https://host/page.html")!
+        let htmlUrl = try #require(URL(string: "https://host/page.html"))
         #expect(viewModel.linkAction(url: htmlUrl) == .external(url: htmlUrl))
 
         let notHandlingViewModel = MarkdownViewModel(url: url, mode: .article, handleRelativeUrl: false, networkManager: NetworkManager())

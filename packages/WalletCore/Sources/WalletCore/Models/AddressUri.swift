@@ -8,10 +8,6 @@ public struct AddressUri: Equatable {
     var parameters: [Field: String] = [:]
     var unhandledParameters: [String: String] = [:]
 
-    init(scheme: String) {
-        self.scheme = scheme
-    }
-
     func value<T>(field: Field) -> T? {
         var value: Any?
         switch T.self {
@@ -33,7 +29,7 @@ public struct AddressUri: Equatable {
         value(field: .memo) ?? value(field: .txDescription)
     }
 
-    // XRP destination tag as XLS-2 / XLS-32 and Xaman links carry it
+    /// XRP destination tag as XLS-2 / XLS-32 and Xaman links carry it
     var destinationTag: String? {
         value(field: .destinationTag)
     }

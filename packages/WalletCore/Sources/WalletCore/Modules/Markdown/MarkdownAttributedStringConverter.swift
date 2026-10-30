@@ -63,7 +63,7 @@ enum MarkdownAttributedStringConverter {
         return result
     }
 
-    // Down stores `.link` as a String; Foundation's `AttributedString` link attribute expects a URL
+    /// Down stores `.link` as a String; Foundation's `AttributedString` link attribute expects a URL
     private static func normalizedLinks(_ nsAttributedString: NSAttributedString) -> NSAttributedString {
         let mutable = NSMutableAttributedString(attributedString: nsAttributedString)
         let fullRange = NSRange(location: 0, length: mutable.length)

@@ -57,7 +57,7 @@ struct RestoreCoinsView: View {
         .navigationTitle("restore_select.title".localized)
     }
 
-    @ViewBuilder private func cell(item: RestoreCoinsViewModel.Item) -> some View {
+    private func cell(item: RestoreCoinsViewModel.Item) -> some View {
         Cell(
             left: {
                 BlockchainIcon(blockchain: item.blockchain)

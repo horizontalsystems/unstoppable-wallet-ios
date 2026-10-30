@@ -55,7 +55,11 @@ struct RestoreMnemonicView: View {
         .navigationTitle("restore.title".localized)
         .navigationDestination(isPresented: Binding(
             get: { restoreCoinsData != nil },
-            set: { if !$0 { restoreCoinsData = nil } }
+            set: {
+                if !$0 {
+                    restoreCoinsData = nil
+                }
+            }
         )) {
             if let data = restoreCoinsData {
                 RestoreCoinsView(accountName: data.name, accountType: data.accountType, isParentPresented: $isParentPresented)

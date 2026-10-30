@@ -172,11 +172,7 @@ extension USwapAssetRepository {
         var assetMap = [String: String]()
 
         for token in tokens {
-            guard includeAsset(token.identifier) else {
-                continue
-            }
-
-            guard let blockchainType = blockchainTypeMap[token.chainId] else {
+            guard includeAsset(token.identifier), let blockchainType = blockchainTypeMap[token.chainId] else {
                 continue
             }
 

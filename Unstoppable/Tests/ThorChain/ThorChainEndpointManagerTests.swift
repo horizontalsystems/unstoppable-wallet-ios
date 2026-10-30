@@ -24,7 +24,7 @@ struct ThorChainEndpointManagerTests {
 
         let configuration = try environment.manager.endpointConfiguration()
 
-        #expect(configuration.value.midgardURLs == [URL(string: "https://midgard.example/api/")!])
+        #expect(try configuration.value.midgardURLs == [#require(URL(string: "https://midgard.example/api/"))])
     }
 
     @Test func backupRestoresSelectedFamily() throws {
@@ -50,8 +50,8 @@ private struct EndpointTestEnvironment {
     let manager: ThorChainEndpointManager
     private let settingsStorage: BlockchainSettingsStorage
 
-    // A second manager over the same storage: reading back through the one that wrote
-    // proves nothing about what was persisted.
+    /// A second manager over the same storage: reading back through the one that wrote
+    /// proves nothing about what was persisted.
     func reloaded() -> ThorChainEndpointManager {
         ThorChainEndpointManager(
             blockchainSettingsStorage: settingsStorage,

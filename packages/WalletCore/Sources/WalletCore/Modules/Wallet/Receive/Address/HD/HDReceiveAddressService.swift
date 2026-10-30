@@ -1,5 +1,7 @@
 class HDReceiveAddressService: BaseReceiveAddressService {
-    var hdAdapter: IHDDepositAdapter? { super.adapter as? IHDDepositAdapter }
+    var hdAdapter: IHDDepositAdapter? {
+        super.adapter as? IHDDepositAdapter
+    }
 
     override func dataStatus(_ dataStatus: DataStatus<DepositAddress>, isMainNet: Bool) -> DataStatus<ReceiveAddress> {
         var usedAddresses = [HDReceiveAddressViewModel.AddressChain: [UsedAddress]]()

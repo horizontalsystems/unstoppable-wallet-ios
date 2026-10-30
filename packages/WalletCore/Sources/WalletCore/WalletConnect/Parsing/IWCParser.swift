@@ -1,6 +1,6 @@
 import WalletConnectSign
 
-// nil = not this parser's method; throw = this parser's method, but params are malformed
+/// nil = not this parser's method; throw = this parser's method, but params are malformed
 protocol IWCParser: AnyObject {
     func parse(request: Request) throws -> WCRequestPayload?
 }

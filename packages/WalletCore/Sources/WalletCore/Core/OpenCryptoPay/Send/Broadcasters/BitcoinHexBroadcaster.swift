@@ -2,7 +2,7 @@ import BitcoinCore
 import Foundation
 import MarketKit
 
-// Type A: signs UTXO tx locally, returns hex; OCP server broadcasts.
+/// Type A: signs UTXO tx locally, returns hex; OCP server broadcasts.
 class BitcoinHexBroadcaster: IOpenCryptoPayBroadcaster {
     private let token: Token
 

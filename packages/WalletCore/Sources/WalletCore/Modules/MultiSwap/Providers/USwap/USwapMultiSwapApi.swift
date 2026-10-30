@@ -4,8 +4,8 @@ import HsToolKit
 import ObjectMapper
 
 public final class USwapMultiSwapApi {
-    // Amounts arrive as decimal strings on the amount fields but as bare JSON numbers on
-    // providerErrors.minimumAmount/maximumAmount, so both representations are accepted.
+    /// Amounts arrive as decimal strings on the amount fields but as bare JSON numbers on
+    /// providerErrors.minimumAmount/maximumAmount, so both representations are accepted.
     static let decimalTransform = TransformOf<Decimal, Any>(
         fromJSON: { value in
             switch value {
@@ -19,7 +19,7 @@ public final class USwapMultiSwapApi {
         }
     )
 
-    // Server timestamps (`expiresAt`) are millisecond epochs.
+    /// Server timestamps (`expiresAt`) are millisecond epochs.
     static let millisecondsDateTransform = TransformOf<Date, Any>(
         fromJSON: { value in
             let milliseconds: Double? = switch value {
@@ -64,7 +64,7 @@ public final class USwapMultiSwapApi {
         return response.passedAmlCheck
     }
 
-    // GET /v3/providers answers with a top-level array, one entry per provider.
+    /// GET /v3/providers answers with a top-level array, one entry per provider.
     public func providers() async throws -> [ProviderDescriptor] {
         let responses: [ProviderDescriptorResponse] = try await networkManager.fetch(
             url: endpoint("providers"),
@@ -89,8 +89,8 @@ public final class USwapMultiSwapApi {
         )
     }
 
-    // No side effects: builds the route and returns it with a `previewToken` (no `uuid`). For transfer
-    // providers the response carries no `execution` yet, only an optional `stubDepositAddress`.
+    /// No side effects: builds the route and returns it with a `previewToken` (no `uuid`). For transfer
+    /// providers the response carries no `execution` yet, only an optional `stubDepositAddress`.
     public func preview(_ request: SwapRequest) async throws -> SwapResponse {
         let response: SwapResponseMapping = try await networkManager.fetch(
             url: endpoint("preview"),
@@ -103,10 +103,10 @@ public final class USwapMultiSwapApi {
         return response.response
     }
 
-    // The only call with side effects: creates the order for a previewed route. A non-2xx answer is
-    // rethrown as the raw network error (`commitError(networkError:)` turns it into a `CommitError`);
-    // a 2xx whose `status` is not `ok` or that carries no `uuid` is a failed commit too and throws
-    // `CommitError` directly. No retry semantics: the caller previews again.
+    /// The only call with side effects: creates the order for a previewed route. A non-2xx answer is
+    /// rethrown as the raw network error (`commitError(networkError:)` turns it into a `CommitError`);
+    /// a 2xx whose `status` is not `ok` or that carries no `uuid` is a failed commit too and throws
+    /// `CommitError` directly. No retry semantics: the caller previews again.
     public func commit(_ request: CommitRequest) async throws -> CommitResponse {
         let response: CommitResponseMapping = try await networkManager.fetch(
             url: endpoint("commit"),
@@ -125,8 +125,8 @@ public final class USwapMultiSwapApi {
         return commit
     }
 
-    // Reports the inbound tx hash of a committed swap (after broadcast). Re-sending the same hash is a
-    // no-op; a different one replaces it while nothing is observed yet.
+    /// Reports the inbound tx hash of a committed swap (after broadcast). Re-sending the same hash is a
+    /// no-op; a different one replaces it while nothing is observed yet.
     public func signed(_ request: SignedRequest) async throws -> SignedResponse {
         let response: SignedResponseMapping = try await networkManager.fetch(
             url: endpoint("signed"),
@@ -185,7 +185,7 @@ public extension USwapMultiSwapApi {
         }
     }
 
-    // /v3/rate and /v3/preview take exactly one of sellAmount / buyAmount — neither or both is a 400.
+    /// /v3/rate and /v3/preview take exactly one of sellAmount / buyAmount — neither or both is a 400.
     enum AmountSpec: Equatable {
         case sell(Decimal)
         case buy(Decimal)
@@ -197,7 +197,9 @@ public extension USwapMultiSwapApi {
         }
 
         public var isExactOutput: Bool {
-            if case .buy = self { return true }
+            if case .buy = self {
+                return true
+            }
             return false
         }
 
@@ -349,13 +351,13 @@ public extension USwapMultiSwapApi {
         }
     }
 
-    // A failed /v3/rate answers 200 with `{ routes, providerErrors }`; a failed /v3/preview (and a
-    // `provider_error` /v3/commit) answers a non-2xx with the provider error *itself* as the body —
-    // `{ error, provider, errorCode?, minimumAmount?, maximumAmount? }`, the same field set. Parsing it here keeps
-    // both surfaces on one wire mapping, and hands the caller only structured fields, never the body.
-    //
-    // Explicitly internal despite the public extension: the only caller is PrivateSendService, in this
-    // module — the same reason `track(_:)` is left internal in the class body above.
+    /// A failed /v3/rate answers 200 with `{ routes, providerErrors }`; a failed /v3/preview (and a
+    /// `provider_error` /v3/commit) answers a non-2xx with the provider error *itself* as the body —
+    /// `{ error, provider, errorCode?, minimumAmount?, maximumAmount? }`, the same field set. Parsing it here keeps
+    /// both surfaces on one wire mapping, and hands the caller only structured fields, never the body.
+    ///
+    /// Explicitly internal despite the public extension: the only caller is PrivateSendService, in this
+    /// module — the same reason `track(_:)` is left internal in the class body above.
     internal static func providerError(networkError: Error) -> ProviderError? {
         guard let responseError = networkError as? NetworkManager.ResponseError,
               let json = responseError.json as? [String: Any],
@@ -376,7 +378,7 @@ public extension USwapMultiSwapApi {
         return response.providerError
     }
 
-    // A refused /v3/rate may also answer a non-2xx carrying the same { routes, providerErrors } envelope
+    /// A refused /v3/rate may also answer a non-2xx carrying the same { routes, providerErrors } envelope
     internal static func rateProviderErrors(json: Any?) -> [ProviderError] {
         guard let json = json as? [String: Any], let response = Mapper<RateResponse>().map(JSON: json) else {
             return []
@@ -385,9 +387,9 @@ public extension USwapMultiSwapApi {
         return response.providerErrors.map(\.providerError)
     }
 
-    // The outcome of a failed /v3/commit. `status` is the server's discriminator
-    // (in_progress | refresh_required | rate_changed | provider_error) when the body carried one; nil
-    // for a transport failure, a 2xx that was not `ok`, or an unrecognisable body. Never retried.
+    /// The outcome of a failed /v3/commit. `status` is the server's discriminator
+    /// (in_progress | refresh_required | rate_changed | provider_error) when the body carried one; nil
+    /// for a transport failure, a 2xx that was not `ok`, or an unrecognisable body. Never retried.
     struct CommitError: Error {
         public let httpStatus: Int?
         public let status: String?
@@ -402,9 +404,9 @@ public extension USwapMultiSwapApi {
         }
     }
 
-    // Turns whatever `commit(_:)` threw into a `CommitError`: parses the non-2xx body
-    // (`{ status, reason | error | message, provider?, errorCode?, ... }`) and falls back to the HTTP
-    // status alone when the body is unusable. A `CommitError` passes through unchanged.
+    /// Turns whatever `commit(_:)` threw into a `CommitError`: parses the non-2xx body
+    /// (`{ status, reason | error | message, provider?, errorCode?, ... }`) and falls back to the HTTP
+    /// status alone when the body is unusable. A `CommitError` passes through unchanged.
     internal static func commitError(networkError: Error) -> CommitError {
         if let commitError = networkError as? CommitError {
             return commitError
@@ -434,9 +436,9 @@ public extension USwapMultiSwapApi {
         )
     }
 
-    // The user's fee setting for the sell chain, sent with the preview so the returned transaction is
-    // already priced as it will be signed. Must match the sell asset's chain (otherwise a 400), so the
-    // caller only builds it for EVM and the UTXO chains the server lists; Solana sends none.
+    /// The user's fee setting for the sell chain, sent with the preview so the returned transaction is
+    /// already priced as it will be signed. Must match the sell asset's chain (otherwise a 400), so the
+    /// caller only builds it for EVM and the UTXO chains the server lists; Solana sends none.
     enum NetworkFee: Equatable {
         case legacy(gasPrice: String) // wei, decimal string
         case eip1559(maxFeePerGas: String, maxPriorityFeePerGas: String) // wei, decimal strings
@@ -461,7 +463,7 @@ public extension USwapMultiSwapApi {
             self.previewToken = previewToken
         }
 
-        // Only the token: the inbound tx hash is reported after broadcast through `signed`, never here.
+        /// Only the token: the inbound tx hash is reported after broadcast through `signed`, never here.
         fileprivate var parameters: Parameters {
             ["previewToken": previewToken]
         }
@@ -646,8 +648,8 @@ public extension USwapMultiSwapApi {
             self.parameters = parameters
         }
 
-        // `inboundTxHash` stays in the body on purpose: the server keeps accepting it on /v3/track as a
-        // fallback for records whose hash was never reported through `signed`.
+        /// `inboundTxHash` stays in the body on purpose: the server keeps accepting it on /v3/track as a
+        /// fallback for records whose hash was never reported through `signed`.
         public static func swap(
             uuid: String?,
             inboundTxHash: String?
@@ -659,7 +661,7 @@ public extension USwapMultiSwapApi {
             return .init(path: "track", parameters: parameters)
         }
 
-        // The whole split by its `splitUuid`: the aggregate status plus every output's track body
+        /// The whole split by its `splitUuid`: the aggregate status plus every output's track body
         public static func split(
             splitUuid: String?,
             inboundTxHash: String?
@@ -683,7 +685,7 @@ public extension USwapMultiSwapApi {
         public let sellAmount: Decimal?
         public let minSellAmount: Decimal?
         public let exactOutput: Bool
-        // v3 preview: opaque token to pass to `commit`; nil on a v2-style (shim) result
+        /// v3 preview: opaque token to pass to `commit`; nil on a v2-style (shim) result
         public let previewToken: String?
         // v3 preview of a transfer provider: a ready-to-receive account on the sell chain to estimate the
         // network fee against. Never a destination to send to.
@@ -720,8 +722,8 @@ public extension USwapMultiSwapApi {
             self.expiresAt = expiresAt
         }
 
-        // The previewed route completed by its commit: the order's `uuid`, and for transfer providers
-        // the execution (deposit address) and the committed amounts, which may differ from the preview.
+        /// The previewed route completed by its commit: the order's `uuid`, and for transfer providers
+        /// the execution (deposit address) and the committed amounts, which may differ from the preview.
         public func merging(commit: CommitResponse) -> SwapResponse {
             SwapResponse(
                 expectedBuyAmount: commit.expectedBuyAmount ?? expectedBuyAmount,
@@ -749,7 +751,9 @@ public extension USwapMultiSwapApi {
         case unknown(type: String, value: String)
 
         public var text: String? {
-            if case let .text(value) = self { return value }
+            if case let .text(value) = self {
+                return value
+            }
             return nil
         }
 
@@ -767,15 +771,15 @@ public extension USwapMultiSwapApi {
             }
         }
 
-        // Only a text memo can be carried by the plain deposit transactions this app builds, and
-        // only on a chain where that memo actually reaches the deposit-address owner. Anything else
-        // must fail the route rather than be dropped: the provider matches the incoming deposit to
-        // the order by this identifier, and a deposit it cannot match is typically unrecoverable.
-        //
-        // `memoType` is mandatory on purpose — it is what a caller must have decided BEFORE it can
-        // read the memo out, so no new deposit builder can forget the question. Pass the chain's
-        // BlockchainType.memoType, or the finer IPreSendHandler.memoType(address:) where the
-        // destination address is known.
+        /// Only a text memo can be carried by the plain deposit transactions this app builds, and
+        /// only on a chain where that memo actually reaches the deposit-address owner. Anything else
+        /// must fail the route rather than be dropped: the provider matches the incoming deposit to
+        /// the order by this identifier, and a deposit it cannot match is typically unrecoverable.
+        ///
+        /// `memoType` is mandatory on purpose — it is what a caller must have decided BEFORE it can
+        /// read the memo out, so no new deposit builder can forget the question. Pass the chain's
+        /// BlockchainType.memoType, or the finer IPreSendHandler.memoType(address:) where the
+        /// destination address is known.
         public static func memo(_ attachment: Attachment?, memoType: MemoType) throws -> String? {
             switch attachment {
             case .none: return nil
@@ -786,10 +790,10 @@ public extension USwapMultiSwapApi {
             }
         }
 
-        // The mirror of `memo` for the chains whose crediting identifier is a numeric field of
-        // the transaction rather than a memo (XRP's Payment.DestinationTag). A text attachment is
-        // refused here for the same reason a tag is refused above: it would have to ride a memo the
-        // provider never reads, and an unmatched deposit is typically unrecoverable.
+        /// The mirror of `memo` for the chains whose crediting identifier is a numeric field of
+        /// the transaction rather than a memo (XRP's Payment.DestinationTag). A text attachment is
+        /// refused here for the same reason a tag is refused above: it would have to ride a memo the
+        /// provider never reads, and an unmatched deposit is typically unrecoverable.
         public static func destinationTag(_ attachment: Attachment?) throws -> UInt32? {
             switch attachment {
             case .none: return nil
@@ -802,24 +806,24 @@ public extension USwapMultiSwapApi {
         }
 
         public enum AttachmentError: Error {
-            // A destination tag or an attachment kind this app does not know how to carry.
+            /// A destination tag or an attachment kind this app does not know how to carry.
             case unsupported
-            // A numeric identifier the chain's field cannot hold; truncating it would credit
-            // somebody else's order.
+            /// A numeric identifier the chain's field cannot hold; truncating it would credit
+            /// somebody else's order.
             case outOfRange
-            // A text memo the transaction could technically hold, but which would never reach the
-            // provider on this chain (local-only or encrypted on-chain).
+            /// A text memo the transaction could technically hold, but which would never reach the
+            /// provider on this chain (local-only or encrypted on-chain).
             case undeliverable
         }
     }
 
     enum Execution {
         case signedTransaction(chain: String, transactions: [SignableTx], approval: Approval?)
-        // `amount` and `unsignedTx` are kept for parsing fidelity only: a transfer is always built locally with the previewed amount and is never built or signed from them.
+        /// `amount` and `unsignedTx` are kept for parsing fidelity only: a transfer is always built locally with the previewed amount and is never built or signed from them.
         case transfer(chain: String, depositAddress: String, amount: Decimal?, attachment: Attachment?, unsignedTx: SignableTx?)
-        // `inboundAddress` is empty when the server names no vault (a settlement-native sell such as
-        // RUNE / CACAO / a secured asset, `delivery.kind == "cosmos_memo"`): it is then a MsgDeposit
-        // carrying the memo, with no deposit address to display or send to.
+        /// `inboundAddress` is empty when the server names no vault (a settlement-native sell such as
+        /// RUNE / CACAO / a secured asset, `delivery.kind == "cosmos_memo"`): it is then a MsgDeposit
+        /// carrying the memo, with no deposit address to display or send to.
         case thorchainDeposit(chain: String, inboundAddress: String, memo: String, delivery: Delivery)
 
         var isTransfer: Bool {
@@ -974,9 +978,9 @@ public extension USwapMultiSwapApi {
             public let toAsset: String
             public let toAddress: String?
             public let toAmount: Decimal?
-            // /v3/split/track only: the output this leg belongs to (`meta.outputIndex`); nil for the deposit leg
+            /// /v3/split/track only: the output this leg belongs to (`meta.outputIndex`); nil for the deposit leg
             public let outputIndex: Int?
-            // /v3/split/track only: a refund leg for its output (`meta.refund`)
+            /// /v3/split/track only: a refund leg for its output (`meta.refund`)
             public let refund: Bool
 
             public init(
@@ -1280,7 +1284,7 @@ extension USwapMultiSwapApi {
         let provider: String?
         let pauseReason: String?
         let hash: String?
-        // /v3/split/track answers the /v3/track body with `splitUuid` standing in for `uuid`
+        /// /v3/split/track answers the /v3/track body with `splitUuid` standing in for `uuid`
         let isSplit: Bool
 
         init(map: Map) throws {

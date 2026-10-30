@@ -148,7 +148,9 @@ private final class StubParser: IWCParser {
 
     func parse(request: Request) throws -> WCRequestPayload? {
         guard request.method == method else { return nil }
-        if let error { throw error }
+        if let error {
+            throw error
+        }
         return StubPayload(request: request, kind: kind, sendData: sendData)
     }
 }
@@ -161,7 +163,9 @@ private final class StubPayload: WCRequestPayload {
         super.init(request: request, kind: kind, from: WCTestFixtures.address)
     }
 
-    override func makeSendData() -> SendData? { sendData }
+    override func makeSendData() -> SendData? {
+        sendData
+    }
 }
 
 private final class StubVerifier: IWCVerifier {
@@ -172,7 +176,9 @@ private final class StubVerifier: IWCVerifier {
         self.verdict = verdict
     }
 
-    func handles(_: WCVerificationContext) -> Bool { true }
+    func handles(_: WCVerificationContext) -> Bool {
+        true
+    }
 
     func verify(_ context: WCVerificationContext) -> WCVerificationVerdict {
         receivedContext = context

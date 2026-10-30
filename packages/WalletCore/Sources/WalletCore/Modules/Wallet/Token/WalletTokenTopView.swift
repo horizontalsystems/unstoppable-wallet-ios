@@ -2,18 +2,8 @@ import SwiftUI
 
 struct WalletTokenTopView<Content: View, Status: View>: View {
     @ObservedObject var viewModel: WalletTokenViewModel
-    let status: () -> Status
-    let content: () -> Content
-
-    init(
-        viewModel: WalletTokenViewModel,
-        @ViewBuilder status: @escaping () -> Status,
-        @ViewBuilder content: @escaping () -> Content
-    ) {
-        self.viewModel = viewModel
-        self.status = status
-        self.content = content
-    }
+    @ViewBuilder let status: () -> Status
+    @ViewBuilder let content: () -> Content
 
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
@@ -73,7 +63,7 @@ struct WalletTokenTopView<Content: View, Status: View>: View {
         .listRowSeparator(.hidden)
     }
 
-    @ViewBuilder private func buttonView(button: WalletButton) -> some View {
+    private func buttonView(button: WalletButton) -> some View {
         WalletButtonView(icon: button.icon, title: button.title, accent: button.accent) {
             switch button {
             case .send:

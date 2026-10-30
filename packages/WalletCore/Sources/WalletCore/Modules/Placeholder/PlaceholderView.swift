@@ -1,6 +1,5 @@
 
 import SnapKit
-
 import UIKit
 
 class PlaceholderView: UIView {

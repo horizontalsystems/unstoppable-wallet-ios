@@ -2,7 +2,7 @@ import MarketKit
 import WalletConnectUtils
 
 class WCSolanaChainSupport: IWCChainSupport {
-    // older dApps still use the legacy mainnet genesis reference
+    /// older dApps still use the legacy mainnet genesis reference
     private static let chains = ["5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp", "4sGjMW1sUnHzSxGspuhpqLDx6wiyjNtZ"]
         .compactMap { WalletConnectUtils.Blockchain(namespace: WCNamespace.solana, reference: $0) }
 

@@ -50,7 +50,7 @@ struct ReceiveSettingsListView: View {
         }
     }
 
-    @ViewBuilder private func cell(viewItem: ReceiveSettingsViewModel.ViewItem) -> some View {
+    private func cell(viewItem: ReceiveSettingsViewModel.ViewItem) -> some View {
         Cell(
             middle: {
                 MultiText(title: viewItem.title, subtitle: viewItem.subtitle)

@@ -56,7 +56,7 @@ struct MoneroOutputSelectorView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 
-    @ViewBuilder func output(viewItem: MoneroOutputSelectorViewModel.OutputViewItem) -> some View {
+    func output(viewItem: MoneroOutputSelectorViewModel.OutputViewItem) -> some View {
         Cell(
             left: { CheckBoxUiView(checked: .init(get: { viewModel.selectedSet.contains(viewItem.id) }, set: { _ in })) },
             middle: { MultiText(title: viewItem.date, subtitle: viewItem.address) },
@@ -109,8 +109,12 @@ class MoneroOutputSelectorViewModel: ObservableObject {
             let timestamp = handler.transactionTimestamps[output.txHash] ?? 0
             let timestamp2 = handler.transactionTimestamps[output2.txHash] ?? 0
 
-            if timestamp > timestamp2 { return true }
-            if timestamp == timestamp2, output.amount > output2.amount { return true }
+            if timestamp > timestamp2 {
+                return true
+            }
+            if timestamp == timestamp2, output.amount > output2.amount {
+                return true
+            }
             return false
         }
 
@@ -195,7 +199,9 @@ extension MoneroOutputSelectorViewModel {
         let coinValue: String
         let fiatValue: String?
 
-        var id: String { keyImage }
+        var id: String {
+            keyImage
+        }
 
         func hash(into hasher: inout Hasher) {
             hasher.combine(keyImage)

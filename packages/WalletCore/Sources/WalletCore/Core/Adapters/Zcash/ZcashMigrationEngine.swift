@@ -2,11 +2,11 @@ import Foundation
 import ZODLSwiftWalletSDK
 
 protocol IZcashMigrationEngine: AnyObject {
-    // Propose a send-max sweep of the account's spendable Orchard funds to its own Unified Address;
-    // the SDK states both the net amount and the fee. Used by the confirmation screen.
+    /// Propose a send-max sweep of the account's spendable Orchard funds to its own Unified Address;
+    /// the SDK states both the net amount and the fee. Used by the confirmation screen.
     func quote() async throws -> (amount: Zatoshi, fee: Zatoshi)
-    // Re-propose fresh and execute the sweep, returning the first broadcast txid (display hex),
-    // or nil if no transaction landed.
+    /// Re-propose fresh and execute the sweep, returning the first broadcast txid (display hex),
+    /// or nil if no transaction landed.
     func migrate() async throws -> String?
 }
 
@@ -28,8 +28,8 @@ final class ZcashMigrationEngine: IZcashMigrationEngine {
         return (proposal.amount, proposal.fee)
     }
 
-    // An ordinary send-max over the same broadcaster path as every send; the SDK migration store is
-    // told about the sweep afterwards so it does not re-offer the migration while the tx is unmined.
+    /// An ordinary send-max over the same broadcaster path as every send; the SDK migration store is
+    /// told about the sweep afterwards so it does not re-offer the migration while the tx is unmined.
     func migrate() async throws -> String? {
         // re-propose: the balance may have moved since the confirmation screen was shown
         let immediate = try await synchronizer.proposeImmediateMigration(accountUUID: accountUUID)
@@ -48,7 +48,13 @@ final class ZcashMigrationEngine: IZcashMigrationEngine {
             return created.first?.txId.toHexStringTxId()
         }
 
-        if let accepted = outcomes.first(where: { if case .accepted = $0.outcome { return true } else { return false } }) {
+        if let accepted = outcomes.first(where: {
+            if case .accepted = $0.outcome {
+                return true
+            } else {
+                return false
+            }
+        }) {
             // bookkeeping only: a failed record never turns a landed broadcast into a failure
             try? await synchronizer.recordImmediateMigration(accountUUID: accountUUID, txid: accepted.txId)
         }

@@ -457,8 +457,7 @@ public class Core {
             Eip20AddressValidator(
                 evmSyncSourceManager: evmSyncSourceManager,
                 networkManager: networkManager
-            )
-        )
+            ))
         contractAddressValidator.append(validator: Trc20AddressValidator(networkManager: networkManager))
 
         valueFormatter = CurrencyValueFormatter(amountRoundingManager: amountRoundingManager)

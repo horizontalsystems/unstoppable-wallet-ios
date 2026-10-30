@@ -87,7 +87,7 @@ class WCNamespaceBuilder {
         }
     }
 
-    // CAIP-25 allows chain-scoped keys ("eip155:1") with no `chains` field
+    /// CAIP-25 allows chain-scoped keys ("eip155:1") with no `chains` field
     private static func chains(key: String, namespace: ProposalNamespace) -> [WalletConnectUtils.Blockchain] {
         if let chains = namespace.chains {
             return chains
@@ -95,7 +95,7 @@ class WCNamespaceBuilder {
         return [WalletConnectUtils.Blockchain(key)].compactMap { $0 }
     }
 
-    // a malformed optional-namespace key ("" or ":") must not crash: return nil and let callers skip it
+    /// a malformed optional-namespace key ("" or ":") must not crash: return nil and let callers skip it
     private static func namespaceName(key: String) -> String? {
         key.split(separator: ":", maxSplits: 1).first.map(String.init)
     }

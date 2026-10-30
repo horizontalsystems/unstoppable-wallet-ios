@@ -5,10 +5,10 @@ import NearKit
 import Testing
 @testable import WalletCore
 
-// Android `NearTransactionConverter`: the net change of each asset across the transaction. One asset
-// moving is a send or a receive, several are a contract call listing each; NEAR paid into a call is a
-// contract call; the fee is the account's only when it signed. An expired transaction is failed and
-// "not processed".
+/// Android `NearTransactionConverter`: the net change of each asset across the transaction. One asset
+/// moving is a send or a receive, several are a contract call listing each; NEAR paid into a call is a
+/// contract call; the fee is the account's only when it signed. An expired transaction is failed and
+/// "not processed".
 struct NearTransactionConverterTests {
     @Test func signedTransferIsASend() async throws {
         let record = try await Self.record(
@@ -27,7 +27,7 @@ struct NearTransactionConverterTests {
         #expect(to == Self.other)
         #expect(!sentToSelf)
         #expect(memo == nil)
-        #expect(record.fee?.value == Decimal(string: "0.0000446365125")!)
+        #expect(try record.fee?.value == #require(Decimal(string: "0.0000446365125")))
         #expect(record.status(lastBlockHeight: nil) == .completed)
     }
 
@@ -74,7 +74,7 @@ struct NearTransactionConverterTests {
             return
         }
         #expect(value.token == Self.usdtToken)
-        #expect(value.value == Decimal(string: "-2.5")!)
+        #expect(try value.value == #require(Decimal(string: "-2.5")))
         #expect(to == Self.other)
         #expect(memo == "order-42")
         // what the account signed stays out of the phishing check
@@ -86,14 +86,14 @@ struct NearTransactionConverterTests {
             signer: Self.other, receiver: Self.usdtContract,
             actions: [Self.functionCall("ft_transfer", deposit: "1")],
             ftTransfers: [Self.ftTransfer(from: Self.other, to: Self.own, amount: "2500000", memo: nil)],
-            metadata: try Self.metadata(symbol: "USDt", decimals: 6)
+            metadata: Self.metadata(symbol: "USDt", decimals: 6)
         )
 
         guard case let .receive(value, from, _) = record.type else {
             Issue.record("expected a receive, got \(record.type)")
             return
         }
-        #expect(value.value == Decimal(string: "2.5")!)
+        #expect(try value.value == #require(Decimal(string: "2.5")))
         #expect(value.code == "USDt")
         #expect(from == Self.other)
     }
@@ -109,14 +109,14 @@ struct NearTransactionConverterTests {
         #expect(record.mainValue?.code == Self.usdtContract)
     }
 
-    // the spam scan at adapter creation: no contract read per unknown token ahead of the first page
+    /// the spam scan at adapter creation: no contract read per unknown token ahead of the first page
     @Test func spamScanRecordSkipsTokenMetadata() async throws {
         let metadataRequests = MetadataRequests()
         let record = try await Self.record(
             signer: Self.other, receiver: Self.usdtContract,
             actions: [Self.functionCall("ft_transfer", deposit: "1")],
             ftTransfers: [Self.ftTransfer(from: Self.other, to: Self.own, amount: "2500000", memo: nil)],
-            metadata: try Self.metadata(symbol: "USDt", decimals: 6),
+            metadata: Self.metadata(symbol: "USDt", decimals: 6),
             metadataRequests: metadataRequests,
             resolvesUnknownMetadata: false
         )
@@ -135,7 +135,7 @@ struct NearTransactionConverterTests {
             signer: Self.other, receiver: Self.usdtContract,
             actions: [Self.functionCall("ft_transfer", deposit: "1")],
             ftTransfers: [Self.ftTransfer(from: Self.other, to: Self.own, amount: "2500000", memo: nil)],
-            metadata: try Self.metadata(symbol: "USDt", decimals: 6),
+            metadata: Self.metadata(symbol: "USDt", decimals: 6),
             metadataRequests: metadataRequests
         )
 
@@ -163,7 +163,7 @@ struct NearTransactionConverterTests {
         #expect(record.fee != nil)
     }
 
-    // a wrap moves two assets: one contract call listing both, in both histories
+    /// a wrap moves two assets: one contract call listing both, in both histories
     @Test func wrapShowsBothLegs() async throws {
         let record = try await Self.record(
             signer: Self.own, receiver: Self.usdtContract,
@@ -187,7 +187,7 @@ struct NearTransactionConverterTests {
         #expect(record.transferEvents.incoming.isEmpty)
     }
 
-    // the receiver's registration and the 1 yocto proof belong to the token send, net of the refund
+    /// the receiver's registration and the 1 yocto proof belong to the token send, net of the refund
     @Test func registrationNextToATokenSendIsNotANearMovement() async throws {
         let record = try await Self.record(
             signer: Self.own, receiver: Self.usdtContract,
@@ -209,9 +209,9 @@ struct NearTransactionConverterTests {
         #expect(to == Self.other)
     }
 
-    // A forged NEP-141 event: someone else's contract logs a transfer from the account to a lookalike.
-    // Only the account's signature moves its tokens, so the outgoing leg goes to the spam check, and
-    // a token the account does not hold makes it spam (OutgoingPoisoningFilter)
+    /// A forged NEP-141 event: someone else's contract logs a transfer from the account to a lookalike.
+    /// Only the account's signature moves its tokens, so the outgoing leg goes to the spam check, and
+    /// a token the account does not hold makes it spam (OutgoingPoisoningFilter)
     @Test func forgedOutgoingTransferIsSpam() async throws {
         let record = try await Self.record(
             signer: Self.other, receiver: Self.usdtContract,
@@ -231,7 +231,7 @@ struct NearTransactionConverterTests {
         #expect(OutgoingPoisoningFilter().evaluate(info) == .spam)
     }
 
-    // the account's own send is never handed to the spam check
+    /// the account's own send is never handed to the spam check
     @Test func ownSendHasNoSpamEvents() async throws {
         let record = try await Self.record(
             signer: Self.own, receiver: Self.other,
@@ -242,7 +242,7 @@ struct NearTransactionConverterTests {
         #expect(record.transferEvents.isEmpty)
     }
 
-    // someone else's call that paid the account in two assets is checked for phishing
+    /// someone else's call that paid the account in two assets is checked for phishing
     @Test func unsignedContractCallIncomingIsCheckedForPhishing() async throws {
         let record = try await Self.record(
             signer: Self.other, receiver: Self.usdtContract,
@@ -280,7 +280,7 @@ struct NearTransactionConverterTests {
         #expect(!record.expired)
     }
 
-    // never included before its block hash expired: nothing happened on chain (Android `notProcessed`)
+    /// never included before its block hash expired: nothing happened on chain (Android `notProcessed`)
     @Test func expiredTransactionIsNotProcessed() async throws {
         let record = try await Self.record(signer: Self.own, receiver: Self.other, actions: [Self.transfer(Self.oneNear)], status: "Failed", failure: "expired")
 

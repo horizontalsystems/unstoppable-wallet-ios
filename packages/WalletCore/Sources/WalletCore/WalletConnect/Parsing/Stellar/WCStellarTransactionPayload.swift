@@ -11,5 +11,7 @@ class WCStellarTransactionPayload: WCRequestPayload {
         super.init(request: request, kind: .transaction, from: sourceAccountId)
     }
 
-    override var isSignOnly: Bool { method == Self.signMethod }
+    override var isSignOnly: Bool {
+        method == Self.signMethod
+    }
 }

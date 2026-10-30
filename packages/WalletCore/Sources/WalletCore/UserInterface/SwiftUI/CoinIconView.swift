@@ -9,27 +9,24 @@ struct BalanceCoinIconView: View {
     let onTapFailed: () -> Void
 
     var body: some View {
-        Group {
-            if !isReachable {
-                // show standard icon when noInternet
-                coinIconView()
-            } else {
-                switch state {
-                case .notSynced:
-                    ZStack {
-                        Circle().fill(Color.themeBlade)
-                        Image("warning_filled").themeIcon(color: .themeLucian)
-                    }
-                    .frame(size: 40)
-                    .onTapGesture(perform: onTapFailed)
-                default:
-                    coinIconView()
+        if !isReachable {
+            // show standard icon when noInternet
+            coinIconView()
+        } else {
+            switch state {
+            case .notSynced:
+                ZStack {
+                    Circle().fill(Color.themeBlade)
+                    Image("warning_filled").themeIcon(color: .themeLucian)
                 }
+                .frame(size: 40)
+                .onTapGesture(perform: onTapFailed)
+            default:
+                coinIconView()
             }
         }
     }
 
-    @ViewBuilder
     private func coinIconView() -> some View {
         CoinIconView(token: token, iconOpacity: state.syncing ? 0.5 : 1, iconOverlay: syncOverlay)
     }
@@ -162,7 +159,7 @@ public struct IconView: View {
         }
     }
 
-    @ViewBuilder private func rawIcon(url: URL?, alternativeSources: [Source]? = nil) -> some View {
+    private func rawIcon(url: URL?, alternativeSources: [Source]? = nil) -> some View {
         KFImage.url(url)
             .alternativeSources(alternativeSources)
             .resizable()

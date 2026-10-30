@@ -5,7 +5,7 @@ import ObjectMapper
 import Testing
 @testable import WalletCore
 
-// The server's confidential list is stored whole; only ids with a registered, confidential USwapProviderInfo are offered
+/// The server's confidential list is stored whole; only ids with a registered, confidential USwapProviderInfo are offered
 struct ConfidentialProviderRegistryTests {
     @Test func unknownIdsAreHiddenOnRead() throws {
         let storage = try Self.storage(providerIds: ["NEAR_CONFIDENTIAL", "NEAR_CONFIDENTIAL_ADVANCED"])
@@ -29,8 +29,8 @@ struct ConfidentialProviderRegistryTests {
         #expect(registry.providerIds == ["B"])
     }
 
-    // An empty storage leaves the registry unsynced, so `init` fires a sync; the API points at a closed
-    // local port so it fails fast and keeps the seed instead of reaching the live server.
+    /// An empty storage leaves the registry unsynced, so `init` fires a sync; the API points at a closed
+    /// local port so it fails fast and keeps the seed instead of reaching the live server.
     static func registry(
         storage: ConfidentialProviderStorage,
         fallbackIds: [String] = ["NEAR_CONFIDENTIAL"],
@@ -45,8 +45,8 @@ struct ConfidentialProviderRegistryTests {
         return ConfidentialProviderRegistry(api: api, storage: storage, fallbackIds: fallbackIds)
     }
 
-    // The table as StorageMigrator leaves it; the migrator itself touches the app keychain, so it is not run here.
-    // Seeded with a fresh timestamp so the registry's TTL skips the sync.
+    /// The table as StorageMigrator leaves it; the migrator itself touches the app keychain, so it is not run here.
+    /// Seeded with a fresh timestamp so the registry's TTL skips the sync.
     static func storage(providerIds: [String]) throws -> ConfidentialProviderStorage {
         let path = FileManager.default.temporaryDirectory.appendingPathComponent("confidential-provider-registry-tests-\(UUID().uuidString).sqlite").path
         let dbPool = try DatabasePool(path: path)
@@ -69,10 +69,10 @@ struct ConfidentialProviderRegistryTests {
     }
 }
 
-// Lives in the serialized SwapProviderFactoryTests suite (whose init resets the factory) because
-// SwapProviderFactory is global mutable state that a parallel suite would race on.
+/// Lives in the serialized SwapProviderFactoryTests suite (whose init resets the factory) because
+/// SwapProviderFactory is global mutable state that a parallel suite would race on.
 extension SwapProviderFactoryTests {
-    // NEAR is registered but not confidential locally; NEAR_CONFIDENTIAL_ADVANCED is not registered
+    /// NEAR is registered but not confidential locally; NEAR_CONFIDENTIAL_ADVANCED is not registered
     @Test func confidentialRegistryDefaultCheckRequiresLocalConfidentialFlag() throws {
         SwapProviderFactory.register([SwapProviderResolver.self])
         defer { SwapProviderFactory.reset() }
@@ -88,8 +88,8 @@ extension SwapProviderFactoryTests {
 }
 
 extension SwapProviderFactoryTests {
-    // SWAPUZ_SPLIT reports `privacy: "split"`, which marks the descriptor confidential (NEAR_CONFIDENTIAL_ADVANCED
-    // needs that), so the sync stores it; the default check drops it on read because its local info is not confidential
+    /// SWAPUZ_SPLIT reports `privacy: "split"`, which marks the descriptor confidential (NEAR_CONFIDENTIAL_ADVANCED
+    /// needs that), so the sync stores it; the default check drops it on read because its local info is not confidential
     @Test func splitSwapProviderIsNotOfferedForPrivateSend() throws {
         SwapProviderFactory.register([SwapProviderResolver.self])
         defer { SwapProviderFactory.reset() }

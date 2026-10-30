@@ -31,7 +31,7 @@ struct MoneroFeeSettingsView: View {
                                         fee: viewModel.fee,
                                         feeToken: feeToken,
                                         currency: currency,
-                                        feeTokenRate: feeTokenRate,
+                                        feeTokenRate: feeTokenRate
                                     ),
                                     infoDescription: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized)
                                 )

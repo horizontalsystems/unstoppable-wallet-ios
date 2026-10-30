@@ -6,7 +6,7 @@ import RxSwift
 
 class NearAdapter {
     static let decimals = NearAmount.decimals
-    // Android DEFAULT_FEE: a transfer to a named account at the usual gas price, shown until an estimate arrives
+    /// Android DEFAULT_FEE: a transfer to a named account at the usual gas price, shown until an estimate arrives
     static let defaultFee = Decimal(string: "0.0000446")!
 
     let nearKit: NearKit.Kit

@@ -16,7 +16,7 @@ struct CrossPayPreSendTabView: View {
         }
     }
 
-    @ViewBuilder private func payView() -> some View {
+    private func payView() -> some View {
         HStack(spacing: 8) {
             ThemeText("cross_pay.you_will_pay".localized, style: .subhead, colorStyle: .secondary)
 
@@ -33,13 +33,13 @@ struct CrossPayPreSendTabView: View {
         .frame(minHeight: 48)
     }
 
-    @ViewBuilder private func infoCard() -> some View {
+    private func infoCard() -> some View {
         AlertCardView(.init(icon: "info_filled", title: "cross_pay.info.title".localized, text: "cross_pay.info.text %@".localized(viewModel.tokenIn.coin.code), type: .regular))
             .padding(.top, 16)
             .padding(.horizontal, 16)
     }
 
-    // Zero with no quote or on a quote error.
+    /// Zero with no quote or on a quote error.
     private var payAmount: Decimal {
         if case let .success(payAmount) = viewModel.quoteState {
             return payAmount

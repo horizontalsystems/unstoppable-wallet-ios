@@ -312,7 +312,7 @@ extension PurchaseManager {
         }
     }
 
-    // Check for trial offer usage history
+    /// Check for trial offer usage history
     private func hasUsedIntroOffer(for productId: String) async -> Bool {
         var seenProductTypes = Set<PurchaseType>()
 
@@ -437,15 +437,15 @@ extension PurchaseManager {
     }
 
     enum IntroductoryOfferType: Int, Comparable {
-        public static let `default` = Self.none
+        static let `default` = Self.none
 
         case trial, discount, none
 
-        public static func == (lhs: IntroductoryOfferType, rhs: IntroductoryOfferType) -> Bool {
+        static func == (lhs: IntroductoryOfferType, rhs: IntroductoryOfferType) -> Bool {
             lhs.rawValue == rhs.rawValue
         }
 
-        public static func < (lhs: IntroductoryOfferType, rhs: IntroductoryOfferType) -> Bool {
+        static func < (lhs: IntroductoryOfferType, rhs: IntroductoryOfferType) -> Bool {
             lhs.rawValue < rhs.rawValue
         }
 
@@ -594,11 +594,13 @@ extension PurchaseManager {
     }
 }
 
-// test data for emulate purchases
+/// test data for emulate purchases
 extension PurchaseManager.ProductData {
-    static var testProducts: [PurchaseManager.ProductData] { [
-        PurchaseManager.ProductData(id: "premium_1m", type: .subscription, period: .monthly, price: 5.99, priceFormatted: "USD 5.99", priceFormatStyle: .currency(code: "USD"), introductoryOffer: nil),
-        PurchaseManager.ProductData(id: "premium_1y", type: .subscription, period: .annually, price: 20.99, priceFormatted: "USD 20.99", priceFormatStyle: .currency(code: "USD"), introductoryOffer: nil),
-        PurchaseManager.ProductData(id: "premium_lifetime", type: .lifetime, period: nil, price: 100, priceFormatted: "USD 100", priceFormatStyle: .currency(code: "USD"), introductoryOffer: nil),
-    ] }
+    static var testProducts: [PurchaseManager.ProductData] {
+        [
+            PurchaseManager.ProductData(id: "premium_1m", type: .subscription, period: .monthly, price: 5.99, priceFormatted: "USD 5.99", priceFormatStyle: .currency(code: "USD"), introductoryOffer: nil),
+            PurchaseManager.ProductData(id: "premium_1y", type: .subscription, period: .annually, price: 20.99, priceFormatted: "USD 20.99", priceFormatStyle: .currency(code: "USD"), introductoryOffer: nil),
+            PurchaseManager.ProductData(id: "premium_lifetime", type: .lifetime, period: nil, price: 100, priceFormatted: "USD 100", priceFormatStyle: .currency(code: "USD"), introductoryOffer: nil),
+        ]
+    }
 }

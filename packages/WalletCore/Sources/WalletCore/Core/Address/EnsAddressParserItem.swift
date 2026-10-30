@@ -27,7 +27,9 @@ class EnsAddressParserItem {
 }
 
 extension EnsAddressParserItem: IAddressParserItem {
-    var blockchainType: BlockchainType { rawAddressParserItem.blockchainType }
+    var blockchainType: BlockchainType {
+        rawAddressParserItem.blockchainType
+    }
 
     func handle(address: String) -> Single<Address> {
         let blockchainType = blockchainType

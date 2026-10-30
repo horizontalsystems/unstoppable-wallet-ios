@@ -105,8 +105,8 @@ extension BlockchainSettingsStorage {
         try? storage.save(record: record)
     }
 
-    // Chain-agnostic flag: explicit values win, absent/malformed falls back to the chain's
-    // default (a corrupted record must not flip the feature). Monero keeps its legacy key.
+    /// Chain-agnostic flag: explicit values win, absent/malformed falls back to the chain's
+    /// default (a corrupted record must not flip the feature). Monero keeps its legacy key.
     func endpointAutoSelectEnabled(blockchainType: BlockchainType) -> Bool {
         switch try? storage.record(blockchainUid: blockchainType.uid, key: keyEndpointAutoSelect)?.value {
         case "true": return true
@@ -136,8 +136,8 @@ extension BlockchainSettingsStorage {
         try? storage.save(record: record)
     }
 
-    // Separate keys per network: the two node lists share no URL, so one key would let a testnet
-    // pick silently overwrite the mainnet one and drop the user back on the default node.
+    /// Separate keys per network: the two node lists share no URL, so one key would let a testnet
+    /// pick silently overwrite the mainnet one and drop the user back on the default node.
     func xrpNodeUrl(blockchainType: BlockchainType, testNet: Bool) -> String? {
         try? storage.record(blockchainUid: blockchainType.uid, key: testNet ? keyXrpTestNetNode : keyXrpNode).map(\.value)
     }

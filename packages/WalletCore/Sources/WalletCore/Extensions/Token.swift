@@ -57,18 +57,26 @@ extension Token {
         badge ?? "coin_platforms.native".localized
     }
 
-    // "ETH(Optimism)" for a token that carries a badge, plain coin code otherwise
+    /// "ETH(Optimism)" for a token that carries a badge, plain coin code otherwise
     var coinCodeWithBadge: String {
         badge.map { "\(coin.code)(\($0))" } ?? coin.code
     }
 
     var sendToSelfAllowed: Bool {
-        if case .native = type, blockchainType == .zcash { return false }
-        if blockchainType == .tron { return false }
+        if case .native = type, blockchainType == .zcash {
+            return false
+        }
+        if blockchainType == .tron {
+            return false
+        }
         // the ledger rejects a payment to the sending account itself (temREDUNDANT)
-        if blockchainType == .xrp { return false }
+        if blockchainType == .xrp {
+            return false
+        }
         // Android NearAddressValidator refuses the account's own id as the receiver
-        if blockchainType == .near { return false }
+        if blockchainType == .near {
+            return false
+        }
 
         return true
     }

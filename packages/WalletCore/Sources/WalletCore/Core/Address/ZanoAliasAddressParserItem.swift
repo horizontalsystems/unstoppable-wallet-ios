@@ -5,8 +5,8 @@ import RxSwift
 /// Resolves Zano address aliases (e.g. "@zano" or "zano") into addresses through the current
 /// node's daemon RPC, the way ENS domains resolve for EVM chains.
 class ZanoAliasAddressParserItem: IAddressParserItem {
-    // On-chain alias rules (zano currency_config.h): lowercase a-z, digits, '-' and '.',
-    // up to 255 characters.
+    /// On-chain alias rules (zano currency_config.h): lowercase a-z, digits, '-' and '.',
+    /// up to 255 characters.
     private static let aliasRegex = try! NSRegularExpression(pattern: "^[a-z0-9.-]{1,255}$")
 
     private let resolver: ZanoAliasResolver
@@ -15,7 +15,9 @@ class ZanoAliasAddressParserItem: IAddressParserItem {
         self.resolver = resolver
     }
 
-    var blockchainType: BlockchainType { .zano }
+    var blockchainType: BlockchainType {
+        .zano
+    }
 
     static func normalize(_ input: String) -> String? {
         let trimmed = input.trimmingCharacters(in: .whitespacesAndNewlines)

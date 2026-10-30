@@ -54,7 +54,7 @@ class ZcashWalletTokenViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    // The SDK may move a new wallet's birthday to a checkpoint of its own after prepare.
+    /// The SDK may move a new wallet's birthday to a checkpoint of its own after prepare.
     private func syncBirthdayHeight() {
         birthdayHeight = restoreSettingsService.settings(accountId: wallet.account.id, blockchainType: wallet.token.blockchainType).birthdayHeight ?? adapter.birthdayHeight
     }

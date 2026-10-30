@@ -160,7 +160,9 @@ public class ValueFormatter {
         switch signType {
         case .never: ()
         case .always: string = "\(sign)\(string)"
-        case .auto: if signValue.isSignMinus { string = "\(sign)\(string)" }
+        case .auto: if signValue.isSignMinus {
+                string = "\(sign)\(string)"
+            }
         }
 
         if tooSmall {

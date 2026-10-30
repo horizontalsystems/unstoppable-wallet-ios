@@ -58,7 +58,7 @@ struct WalletView: View {
         }
     }
 
-    @ViewBuilder private func listView(account: Account) -> some View {
+    private func listView(account: Account) -> some View {
         ThemeView(style: .list) {
             ScrollViewReader { proxy in
                 ThemeList(bottomSpacing: .margin16) {
@@ -105,7 +105,7 @@ struct WalletView: View {
         }
     }
 
-    @ViewBuilder private func topView(account: Account) -> some View {
+    private func topView(account: Account) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading, spacing: 0) {
                 ThemeText(primaryValue, style: .title2)
@@ -157,7 +157,7 @@ struct WalletView: View {
         }
     }
 
-    @ViewBuilder private func emptyView(account: Account) -> some View {
+    private func emptyView(account: Account) -> some View {
         ThemeView {
             VStack(spacing: 0) {
                 topView(account: account)
@@ -172,7 +172,7 @@ struct WalletView: View {
         }
     }
 
-    @ViewBuilder private func itemsView() -> some View {
+    private func itemsView() -> some View {
         ListForEachIdentifiable(viewModel.items) { item in
             WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .price, isReachable: viewModel.isReachable) {
                 selectedWallet = item.wallet
@@ -240,7 +240,7 @@ struct WalletView: View {
         CopyHelper.copyAndNotify(value: address)
     }
 
-    @ViewBuilder private func headerView(account _: Account) -> some View {
+    private func headerView(account _: Account) -> some View {
         ListHeader {
             DropdownButton(text: viewModel.sortType.title) {
                 Coordinator.shared.present(type: .alert) { isPresented in
@@ -281,7 +281,7 @@ struct WalletView: View {
         }
     }
 
-    @ViewBuilder private func buttonView(button: WalletButton) -> some View {
+    private func buttonView(button: WalletButton) -> some View {
         WalletButtonView(icon: button.icon, title: button.title, accent: button.accent) {
             switch button {
             case .send:

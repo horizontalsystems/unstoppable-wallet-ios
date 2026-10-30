@@ -12,13 +12,17 @@ public struct ComponentText: CustomStringConvertible {
         self.dimmed = dimmed
     }
 
-    public var description: String { text }
+    public var description: String {
+        text
+    }
 }
 
 struct AttibutedComponentText: CustomStringConvertible {
     let text: AttributedString
 
-    var description: String { text.description }
+    var description: String {
+        text.description
+    }
 }
 
 struct ComponentBadge: CustomStringConvertible {
@@ -36,7 +40,9 @@ struct ComponentBadge: CustomStringConvertible {
         self.onTap = onTap
     }
 
-    var description: String { text }
+    var description: String {
+        text
+    }
 }
 
 extension Text {

@@ -2,8 +2,8 @@ import Foundation
 import HsToolKit
 import ZODLSwiftWalletSDK
 
-// Endpoint selection and switching. #7163 (server autoselect/failover) lands here:
-// evaluateBestOf over the ZcashNodeManager pool without touching the adapter contract.
+/// Endpoint selection and switching. #7163 (server autoselect/failover) lands here:
+/// evaluateBestOf over the ZcashNodeManager pool without touching the adapter contract.
 class ZcashEndpointService {
     private static let lifecycleTimeout: TimeInterval = 60
 
@@ -20,7 +20,7 @@ class ZcashEndpointService {
         self.logger = logger
     }
 
-    // Used by AdapterManager to revert the stored selection on switch failure.
+    /// Used by AdapterManager to revert the stored selection on switch failure.
     var currentEndpointURL: URL? {
         URL(string: "\(currentEndpoint.secure ? "https" : "http")://\(currentEndpoint.host):\(currentEndpoint.port)")
     }
@@ -54,9 +54,9 @@ class ZcashEndpointService {
         }
     }
 
-    // Endpoint changes only on a confirmed success: the SDK moves it after reopen but before
-    // start, and a failed reopen leaves a closed handle — either way the app rolls back by
-    // rebuilding at the previous endpoint.
+    /// Endpoint changes only on a confirmed success: the SDK moves it after reopen but before
+    /// start, and a failed reopen leaves a closed handle — either way the app rolls back by
+    /// rebuilding at the previous endpoint.
     static func endpointAfterRebuild(target: LightWalletEndpoint, current: LightWalletEndpoint, error: Error?) -> LightWalletEndpoint {
         error == nil ? target : current
     }
@@ -68,8 +68,8 @@ class ZcashEndpointService {
         try await rebuild(at: endpoint)
     }
 
-    // restartSync is the one call that leaves the engine running in both engines: the legacy
-    // switchTo only re-registers services, the Slipstream one restarts a pass only if one was running.
+    /// restartSync is the one call that leaves the engine running in both engines: the legacy
+    /// switchTo only re-registers services, the Slipstream one restarts a pass only if one was running.
     func rebuild(at target: LightWalletEndpoint) async throws {
         do {
             try await ZcashOperationGuard.shared.withLifecycle(timeout: Self.lifecycleTimeout) {

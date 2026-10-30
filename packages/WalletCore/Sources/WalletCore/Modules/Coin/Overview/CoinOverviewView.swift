@@ -73,7 +73,7 @@ struct CoinOverviewView: View {
         }
     }
 
-    @ViewBuilder private func header(coin: Coin, rank: Int?) -> some View {
+    private func header(coin: Coin, rank: Int?) -> some View {
         HStack(spacing: .margin8) {
             HStack(spacing: .margin16) {
                 CoinIconView(coin: coin)
@@ -90,7 +90,7 @@ struct CoinOverviewView: View {
         .padding(.vertical, .margin12)
     }
 
-    @ViewBuilder private func chart() -> some View {
+    private func chart() -> some View {
         VStack(spacing: .margin8) {
             ChartView(viewModel: chartViewModel, configuration: .chartWithIndicatorArea)
                 .frame(maxWidth: .infinity)
@@ -104,7 +104,7 @@ struct CoinOverviewView: View {
         }
     }
 
-    @ViewBuilder private func indicators() -> some View {
+    private func indicators() -> some View {
         ListSection {
             Cell(
                 middle: { ThemeText("coin_overview.indicators".localized, style: .subhead) },
@@ -159,7 +159,7 @@ struct CoinOverviewView: View {
         }
     }
 
-    @ViewBuilder private func marketInfoRow(title: String, badge: String? = nil, value: String) -> some View {
+    private func marketInfoRow(title: String, badge: String? = nil, value: String) -> some View {
         Cell(
             middle: {
                 HStack(spacing: .margin8) {
@@ -270,7 +270,7 @@ struct CoinOverviewView: View {
         }
     }
 
-    @ViewBuilder private func tokenRow(token: Token, walletTokens: [Token], action: (() -> Void)?) -> some View {
+    private func tokenRow(token: Token, walletTokens: [Token], action: (() -> Void)?) -> some View {
         Cell(
             left: {
                 KFImage.url(URL(string: token.blockchainType.imageUrl))
@@ -305,7 +305,7 @@ struct CoinOverviewView: View {
         )
     }
 
-    @ViewBuilder private func description(attributedString: NSAttributedString) -> some View {
+    private func description(attributedString: NSAttributedString) -> some View {
         ListSection {
             VStack(spacing: .margin24) {
                 AttributedStringView(attributedString: attributedString)
@@ -316,7 +316,7 @@ struct CoinOverviewView: View {
         }
     }
 
-    @ViewBuilder private func links(guideUrl: URL?, links: [LinkType: String]) -> some View {
+    private func links(guideUrl: URL?, links: [LinkType: String]) -> some View {
         ListSection {
             if let guideUrl {
                 NavigationLink(destination: {
@@ -368,7 +368,7 @@ struct CoinOverviewView: View {
         }
     }
 
-    @ViewBuilder private func linkCell(icon: String, title: String, action: (() -> Void)? = nil) -> some View {
+    private func linkCell(icon: String, title: String, action: (() -> Void)? = nil) -> some View {
         Cell(
             left: { ThemeImage(icon, size: .iconSize24) },
             middle: { ThemeText(title, style: .headline2) },
@@ -377,7 +377,7 @@ struct CoinOverviewView: View {
         )
     }
 
-    @ViewBuilder private func header(text: String) -> some View {
+    private func header(text: String) -> some View {
         VStack(spacing: 0) {
             HorizontalDivider()
                 .padding(.horizontal, -.margin16)

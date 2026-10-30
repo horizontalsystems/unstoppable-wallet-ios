@@ -4,7 +4,7 @@ import StellarKit
 import stellarsdk
 
 class StellarSendHelper {
-    // Two base reserves; fixed, as Android's StellarAdapter.getMinimumSendAmount
+    /// Two base reserves; fixed, as Android's StellarAdapter.getMinimumSendAmount
     static let minimumFirstDeposit: Decimal = 1
 
     static func preparePayment(
@@ -81,7 +81,7 @@ class StellarSendHelper {
         try await StellarKit.Kit.send(
             operations: operations,
             memo: memo,
-            keyPair: keyPair,
+            keyPair: keyPair
         )
     }
 
@@ -97,7 +97,7 @@ class StellarSendHelper {
         case let .envelope(envelope):
             return try await StellarKit.Kit.send(
                 transactionEnvelope: envelope,
-                keyPair: keyPair,
+                keyPair: keyPair
             )
 
         case let .payment(asset, amount, accountId, memo):

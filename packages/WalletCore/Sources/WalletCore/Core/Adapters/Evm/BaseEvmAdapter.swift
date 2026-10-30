@@ -20,11 +20,7 @@ public class BaseEvmAdapter {
     }
 
     func balanceDecimal(kitBalance: BigUInt?, decimals: Int) -> Decimal {
-        guard let kitBalance else {
-            return 0
-        }
-
-        guard let significand = Decimal(string: kitBalance.description) else {
+        guard let kitBalance, let significand = Decimal(string: kitBalance.description) else {
             return 0
         }
 
@@ -48,7 +44,7 @@ public class BaseEvmAdapter {
     }
 }
 
-// IAdapter
+/// IAdapter
 public extension BaseEvmAdapter {
     var statusInfo: [(String, Any)] {
         evmKit.statusInfo()
@@ -59,7 +55,7 @@ public extension BaseEvmAdapter {
     }
 }
 
-// ITransactionsAdapter
+/// ITransactionsAdapter
 extension BaseEvmAdapter {
     var lastBlockInfo: LastBlockInfo? {
         evmKit.lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }

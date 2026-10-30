@@ -5,7 +5,7 @@ import NearKit
 import RxSwift
 
 class NearTransactionAdapter {
-    // the kit pages its local table by (timestamp, hash); filters apply here, so pages are read until enough match
+    /// the kit pages its local table by (timestamp, hash); filters apply here, so pages are read until enough match
     private static let pageSize = 100
 
     private let nearKit: NearKit.Kit

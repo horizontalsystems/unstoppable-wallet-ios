@@ -19,7 +19,7 @@ extension EvmAdapter {
     }
 }
 
-// IAdapter
+/// IAdapter
 extension EvmAdapter: IAdapter {
     func start() {
         // started via EvmKitManager

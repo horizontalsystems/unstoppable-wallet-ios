@@ -32,8 +32,13 @@ final class WCStubAccountProvider: IWCAccountProvider {
         }
     }
 
-    var activeAccountIdPublisher: AnyPublisher<String?, Never> { activeAccountSubject.eraseToAnyPublisher() }
-    var deletedAccountIdPublisher: AnyPublisher<String, Never> { deletedAccountSubject.eraseToAnyPublisher() }
+    var activeAccountIdPublisher: AnyPublisher<String?, Never> {
+        activeAccountSubject.eraseToAnyPublisher()
+    }
+
+    var deletedAccountIdPublisher: AnyPublisher<String, Never> {
+        deletedAccountSubject.eraseToAnyPublisher()
+    }
 }
 
 final class WCStubForegroundProvider: IWCForegroundProvider {
@@ -48,5 +53,7 @@ final class WCStubForegroundProvider: IWCForegroundProvider {
         set { subject.send(newValue) }
     }
 
-    var isActivePublisher: AnyPublisher<Bool, Never> { subject.eraseToAnyPublisher() }
+    var isActivePublisher: AnyPublisher<Bool, Never> {
+        subject.eraseToAnyPublisher()
+    }
 }

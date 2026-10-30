@@ -2,7 +2,9 @@ import Foundation
 import HsToolKit
 
 class ZeroValueCondition: SpamCondition {
-    var identifier: String { "zero_value" }
+    var identifier: String {
+        "zero_value"
+    }
 
     private let score: Int
     private let logger: Logger?

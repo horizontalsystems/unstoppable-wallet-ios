@@ -2,11 +2,11 @@ import SwiftUI
 
 struct ThemeButton: View {
     let text: String
-    var icon: String? = nil
-    var iconColorStyle: ColorStyle? = nil
+    var icon: String?
+    var iconColorStyle: ColorStyle?
     var spinner: Bool = false
     // a determinate spinner, as a transaction in progress shows in the transaction list
-    var progress: Double? = nil
+    var progress: Double?
     var style: ThemeButton.Style = .primary
     var mode: ThemeButton.Mode = .solid
     var size: ThemeButton.Size = .medium

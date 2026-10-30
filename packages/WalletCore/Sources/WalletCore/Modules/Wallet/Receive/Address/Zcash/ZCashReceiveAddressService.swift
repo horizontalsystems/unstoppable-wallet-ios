@@ -1,7 +1,9 @@
 import ZODLSwiftWalletSDK
 
 class ZCashReceiveAddressService: BaseReceiveAddressService {
-    var zcashAdapter: ZcashAdapter? { super.adapter as? ZcashAdapter }
+    var zcashAdapter: ZcashAdapter? {
+        super.adapter as? ZcashAdapter
+    }
 
     let addressType: ZcashAdapter.AddressType
     private var resolvedAddress: String?

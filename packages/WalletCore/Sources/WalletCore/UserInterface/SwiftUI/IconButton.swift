@@ -2,7 +2,7 @@ import SwiftUI
 
 struct IconButton: View {
     let icon: String
-    var iconColorStyle: ColorStyle? = nil
+    var iconColorStyle: ColorStyle?
     var style: ThemeButton.Style = .primary
     var mode: ThemeButton.Mode = .solid
     var size: ThemeButton.Size = .medium

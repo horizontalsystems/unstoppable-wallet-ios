@@ -118,7 +118,9 @@ extension BaseReceiveAddressService {
             super.init(coinCode: coinCode, imageUrl: imageUrl)
         }
 
-        override var raw: String { address.address }
+        override var raw: String {
+            address.address
+        }
     }
 
     enum AdapterError: LocalizedError {
@@ -151,5 +153,7 @@ class ReceiveAddress {
         self.imageUrl = imageUrl
     }
 
-    var raw: String { fatalError("must be overridden") }
+    var raw: String {
+        fatalError("must be overridden")
+    }
 }

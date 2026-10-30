@@ -1,7 +1,7 @@
 import Foundation
 
 public class ContactBookHelper {
-    // Merge contacts with replace older contacts by newer
+    /// Merge contacts with replace older contacts by newer
     func mergeNewer(lhs: [Contact], rhs: [Contact]) -> [Contact] {
         let left = Set(lhs)
         let right = Set(rhs)
@@ -21,7 +21,7 @@ public class ContactBookHelper {
         return difference + mergedNewer
     }
 
-    // Merge deleted contacts with replace older contacts by newer
+    /// Merge deleted contacts with replace older contacts by newer
     func mergeNewer(lhs: [DeletedContact], rhs: [DeletedContact]) -> [DeletedContact] {
         let left = Set(lhs)
         let right = Set(rhs)
@@ -41,7 +41,7 @@ public class ContactBookHelper {
         return difference + mergedNewer
     }
 
-    // Remove from contacts all deleted lately and remove from deleted array all changed lately
+    /// Remove from contacts all deleted lately and remove from deleted array all changed lately
     func filter(contacts: [Contact], deleted: [DeletedContact]) -> (newContacts: [Contact], newDeleted: [DeletedContact]) {
         var deleted = deleted
 
@@ -59,7 +59,7 @@ public class ContactBookHelper {
         return (newContacts: contacts, newDeleted: deleted)
     }
 
-    // check if contacts and deleted both identical in contact books
+    /// check if contacts and deleted both identical in contact books
     func identical(lhs: ContactBook, rhs: ContactBook) -> Bool {
         let lhsContacts = lhs.contacts.map { EqualContactData(uid: $0.uid, timestamp: $0.modifiedAt) }
         let rhsContacts = rhs.contacts.map { EqualContactData(uid: $0.uid, timestamp: $0.modifiedAt) }
@@ -131,7 +131,7 @@ extension ContactBookHelper {
         return book
     }
 
-    // try resolve contact book. If one of them not changed - return it, else return new one
+    /// try resolve contact book. If one of them not changed - return it, else return new one
     func resolved(lhs: ContactBook, rhs: ContactBook) -> ResolveResult {
         if lhs.version > rhs.version {
             return .left
@@ -191,10 +191,6 @@ extension ContactBookHelper {
     private struct EqualContactData: Equatable, Hashable {
         let uid: String
         let timestamp: TimeInterval
-
-        static func == (lhs: EqualContactData, rhs: EqualContactData) -> Bool {
-            lhs.uid == rhs.uid && lhs.timestamp == rhs.timestamp
-        }
 
         func hash(into hasher: inout Hasher) {
             hasher.combine(uid)

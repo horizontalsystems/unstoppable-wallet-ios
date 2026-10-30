@@ -3,9 +3,9 @@ import MarketKit
 import Testing
 @testable import WalletCore
 
-// Which providers take a unified ZEC refund (USwapProviderInfo.acceptsUnifiedZcashRefund), and that a ZEC sell names
-// no source address to any other provider or when the host app turns the source hook off (spec 2026-10-19). The
-// negative branches of USwapCommitRequestBuilder return before touching Core.shared, so no fixtures beyond the token.
+/// Which providers take a unified ZEC refund (USwapProviderInfo.acceptsUnifiedZcashRefund), and that a ZEC sell names
+/// no source address to any other provider or when the host app turns the source hook off (spec 2026-10-19). The
+/// negative branches of USwapCommitRequestBuilder return before touching Core.shared, so no fixtures beyond the token.
 struct USwapZcashRefundPolicyTests {
     @Test(arguments: ["MAYACHAIN", "NEAR"])
     func unifiedRefundProviders(id: String) throws {

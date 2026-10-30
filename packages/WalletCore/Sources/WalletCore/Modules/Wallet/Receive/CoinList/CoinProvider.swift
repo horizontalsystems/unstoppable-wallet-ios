@@ -75,11 +75,9 @@ extension CoinProvider {
         let nativeFullCoins = nativeFullCoins
 
         // filter not supported by current account
-        let predefined = (walletFullCoins + nativeFullCoins).removeDuplicates()
+        return (walletFullCoins + nativeFullCoins).removeDuplicates()
             .filter { fullCoin in
                 fullCoin.tokens.contains { accountType.supports(token: $0) }
             }
-
-        return predefined
     }
 }

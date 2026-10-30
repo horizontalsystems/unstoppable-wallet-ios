@@ -1,16 +1,16 @@
 import Foundation
 import MarketKit
 
-// What the `.crossPay` SendData case carries: the funding amount is known at preview, the deposit
-// address only after commit.
+/// What the `.crossPay` SendData case carries: the funding amount is known at preview, the deposit
+/// address only after commit.
 public struct CrossPayRequest {
     public let tokenIn: Token // the funding token (the wallet being sent from)
     public let tokenOut: Token // what the recipient receives
     public let recipient: String // the REAL recipient on tokenOut's chain, never a deposit address
     public let amount: Decimal // exact output — the amount of tokenOut the recipient receives
-    // An immutable copy of the user's send settings, taken on the main thread when the request is
-    // built, so they apply to the deposit transfer without the handler ever reading the live,
-    // UI-owned pre-send handler. Nil falls back to default settings.
+    /// An immutable copy of the user's send settings, taken on the main thread when the request is
+    /// built, so they apply to the deposit transfer without the handler ever reading the live,
+    /// UI-owned pre-send handler. Nil falls back to default settings.
     public let depositSettings: PreSendSettingsSnapshot?
 
     public init(tokenIn: Token, tokenOut: Token, recipient: String, amount: Decimal, depositSettings: PreSendSettingsSnapshot? = nil) {
@@ -22,10 +22,10 @@ public struct CrossPayRequest {
     }
 }
 
-// A previewed route (/v3/preview), produced inside the handler for the confirmation screen. No order
-// exists yet: the token is handed to /v3/commit when the user slides. `stubDepositAddress` is a
-// ready-to-receive account on the sell chain the inner send is estimated against — never a
-// destination to send to.
+/// A previewed route (/v3/preview), produced inside the handler for the confirmation screen. No order
+/// exists yet: the token is handed to /v3/commit when the user slides. `stubDepositAddress` is a
+/// ready-to-receive account on the sell chain the inner send is estimated against — never a
+/// destination to send to.
 public struct CrossPayPreview {
     public let request: CrossPayRequest
     public let previewToken: String
@@ -59,13 +59,13 @@ public struct CrossPayPreview {
         self.previewedAt = previewedAt
     }
 
-    // No cross-asset fee figure: subtracting a tokenOut quantity from a tokenIn one is meaningless.
+    /// No cross-asset fee figure: subtracting a tokenOut quantity from a tokenIn one is meaningless.
     public var refundableBuffer: Decimal? {
         minSellAmount.map { max(0, depositAmount - $0) }
     }
 }
 
-// The committed order (/v3/commit on a preview), produced inside the handler when the user slides.
+/// The committed order (/v3/commit on a preview), produced inside the handler when the user slides.
 public struct CrossPayOrder {
     public let request: CrossPayRequest
     public let depositAmount: Decimal // the PREVIEW's sellAmount in tokenIn — EXACTLY what to transfer
@@ -102,7 +102,7 @@ public struct CrossPayOrder {
         self.estimatedTime = estimatedTime
     }
 
-    // Everything the commit does not restate is carried over from the preview the user confirmed.
+    /// Everything the commit does not restate is carried over from the preview the user confirmed.
     public init(
         preview: CrossPayPreview,
         depositAmount: Decimal,
@@ -126,8 +126,8 @@ public struct CrossPayOrder {
     }
 }
 
-// Raw server text never leaves the service. Min/max figures are in the DESTINATION token — the
-// amount field the user can act on.
+/// Raw server text never leaves the service. Min/max figures are in the DESTINATION token — the
+/// amount field the user can act on.
 public enum CrossPayError: Error {
     case tokenUnsupported
     case belowMinimum(amount: Decimal, token: Token)

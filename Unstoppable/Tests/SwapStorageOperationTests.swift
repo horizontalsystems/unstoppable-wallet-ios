@@ -73,7 +73,7 @@ struct SwapStorageOperationTests {
         #expect(saved.legs == [refundLeg])
     }
 
-    // Rows written before split payout legs existed carry none of the new leg keys
+    /// Rows written before split payout legs existed carry none of the new leg keys
     @Test func legWithoutSplitKeysDecodes() throws {
         let (storage, dbPool) = try Self.storage()
         try storage.save(swap: Self.swap(uid: "old", operation: .splitSwap))
@@ -121,7 +121,7 @@ extension SwapStorageOperationTests {
         )
     }
 
-    // The table as StorageMigrator leaves it; the migrator itself touches the app keychain, so it is not run here
+    /// The table as StorageMigrator leaves it; the migrator itself touches the app keychain, so it is not run here
     private static func storage() throws -> (SwapStorage, DatabasePool) {
         let path = FileManager.default.temporaryDirectory.appendingPathComponent("swap-storage-operation-tests-\(UUID().uuidString).sqlite").path
         let dbPool = try DatabasePool(path: path)

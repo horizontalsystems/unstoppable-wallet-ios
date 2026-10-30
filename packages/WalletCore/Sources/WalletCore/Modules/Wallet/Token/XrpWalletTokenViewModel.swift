@@ -39,7 +39,7 @@ class XrpWalletTokenViewModel: ObservableObject {
         sync()
     }
 
-    // the reserve is a property of a funded account: nothing is locked before the first deposit
+    /// the reserve is a property of a funded account: nothing is locked before the first deposit
     private func sync() {
         accountActive = adapter.accountActivated
         reserveInfo = accountActive ? adapter.reserveInfo : nil

@@ -175,11 +175,21 @@ class MultiSwapProviderManager {
 
         let json: [[String: Any]] = suspensions.map { rule in
             var dict: [String: Any] = ["kind": rule.kind.rawValue, "side": rule.side.rawValue]
-            if let asset = rule.asset { dict["asset"] = asset }
-            if let chain = rule.chain { dict["chain"] = chain }
-            if let sellAsset = rule.sellAsset { dict["sellAsset"] = sellAsset }
-            if let buyAsset = rule.buyAsset { dict["buyAsset"] = buyAsset }
-            if let expiresAt = rule.expiresAt { dict["expiresAt"] = ISO8601DateFormatter().string(from: expiresAt) }
+            if let asset = rule.asset {
+                dict["asset"] = asset
+            }
+            if let chain = rule.chain {
+                dict["chain"] = chain
+            }
+            if let sellAsset = rule.sellAsset {
+                dict["sellAsset"] = sellAsset
+            }
+            if let buyAsset = rule.buyAsset {
+                dict["buyAsset"] = buyAsset
+            }
+            if let expiresAt = rule.expiresAt {
+                dict["expiresAt"] = ISO8601DateFormatter().string(from: expiresAt)
+            }
             return dict
         }
 

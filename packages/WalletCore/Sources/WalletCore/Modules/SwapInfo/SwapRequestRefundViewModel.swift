@@ -202,11 +202,7 @@ public enum SwapRequestRefundBuilder {
         }
 
         let username = trimmed.stripping(prefix: "@")
-        guard username.range(of: "^[A-Za-z0-9_]{5,32}$", options: .regularExpression) != nil else {
-            return nil
-        }
-
-        guard let webURL = URL(string: "https://t.me/\(username)") else {
+        guard username.range(of: "^[A-Za-z0-9_]{5,32}$", options: .regularExpression) != nil, let webURL = URL(string: "https://t.me/\(username)") else {
             return nil
         }
 

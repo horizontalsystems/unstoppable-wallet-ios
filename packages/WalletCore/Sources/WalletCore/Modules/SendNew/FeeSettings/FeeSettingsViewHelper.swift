@@ -40,7 +40,7 @@ class FeeSettingsViewHelper {
         )
     }
 
-    @ViewBuilder func row(title: String, feeValue: FeeSettings.FeeValue, infoDescription: InfoDescription) -> some View {
+    func row(title: String, feeValue: FeeSettings.FeeValue, infoDescription: InfoDescription) -> some View {
         Cell(
             middle: {
                 MiddleTextIcon(text: title)
@@ -64,7 +64,7 @@ class FeeSettingsViewHelper {
         )
     }
 
-    @ViewBuilder func headerRow(title: String, infoDescription: InfoDescription) -> some View {
+    func headerRow(title: String, infoDescription: InfoDescription) -> some View {
         HStack(spacing: 0) {
             ThemeText(title, style: .subheadSB, colorStyle: .secondary)
                 .modifier(Informed(infoDescription: infoDescription))
@@ -74,7 +74,7 @@ class FeeSettingsViewHelper {
         .padding(.bottom, 12)
     }
 
-    @ViewBuilder func inputNumberWithSteps(placeholder: String = "", text: Binding<String>, cautionState: Binding<FieldCautionState>, onTap: @escaping (StepChangeButtonsViewDirection) -> Void) -> some View {
+    func inputNumberWithSteps(placeholder: String = "", text: Binding<String>, cautionState: Binding<FieldCautionState>, onTap: @escaping (StepChangeButtonsViewDirection) -> Void) -> some View {
         InputTextRow {
             StepChangeButtonsView(content: {
                 InputTextView(

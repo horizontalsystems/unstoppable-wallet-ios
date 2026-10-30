@@ -62,11 +62,7 @@ class BackupPromptManager {
     }
 
     private var targetAccount: Account? {
-        guard let account = accountManager.activeAccount, account.canBeBackedUp, !account.watchAccount else {
-            return nil
-        }
-
-        guard !(account.backedUp || cloudBackupManager.backedUp(uniqueId: account.type.uniqueId())) else {
+        guard let account = accountManager.activeAccount, account.canBeBackedUp, !account.watchAccount, !(account.backedUp || cloudBackupManager.backedUp(uniqueId: account.type.uniqueId())) else {
             return nil
         }
 

@@ -87,8 +87,16 @@ extension ZanoNetworkViewModel {
         let node: ZanoNode
         let selected: Bool
 
-        var id: String { node.url.absoluteString }
-        var name: String { node.name }
-        var url: String { node.url.absoluteString }
+        var id: String {
+            node.url.absoluteString
+        }
+
+        var name: String {
+            node.name
+        }
+
+        var url: String {
+            node.url.absoluteString
+        }
     }
 }

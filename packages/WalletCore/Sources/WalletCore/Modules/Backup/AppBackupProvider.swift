@@ -2,8 +2,8 @@ import Foundation
 import MarketKit
 
 class AppBackupProvider {
-    // Android accepts a full backup only with version 2 (BackupProvider.validate); bumping it breaks
-    // cross-platform restore — see AccountTypeBackupCodec for the rest of the format contract
+    /// Android accepts a full backup only with version 2 (BackupProvider.validate); bumping it breaks
+    /// cross-platform restore — see AccountTypeBackupCodec for the rest of the format contract
     private static let version = 2
 
     private let accountManager: AccountManager
@@ -82,7 +82,7 @@ class AppBackupProvider {
         self.walletButtonHiddenManager = walletButtonHiddenManager
     }
 
-    // Parts of backups
+    /// Parts of backups
     func enabledWallets(account: Account) -> [WalletBackup.EnabledWallet] {
         walletManager
             .wallets(account: account).map {

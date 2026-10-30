@@ -21,7 +21,7 @@ public enum SwapBroadcasterFactory {
         throw SwapBroadcasterError.noBroadcaster
     }
 
-    // test seam: registry is global mutable state
+    /// test seam: registry is global mutable state
     static func reset() {
         types = []
     }

@@ -96,7 +96,9 @@ class RestoreFileConfigurationViewModel: ObservableObject {
 }
 
 extension RestoreFileConfigurationViewModel {
-    var backupTitle: String { backupName }
+    var backupTitle: String {
+        backupName
+    }
 
     func onTapRestore() {
         if selectedDataSections.contains(.contacts), !(contactBookManager.state.data?.contacts.isEmpty ?? true) {

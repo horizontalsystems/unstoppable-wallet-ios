@@ -76,7 +76,7 @@ struct SplitSwapRecipientsView: View {
         }
     }
 
-    @ViewBuilder private func recipientCard(index: Int) -> some View {
+    private func recipientCard(index: Int) -> some View {
         ListSection {
             Cell(
                 left: {
@@ -117,7 +117,7 @@ struct SplitSwapRecipientsView: View {
         }
     }
 
-    // A flagged address stays red; a repeat of an earlier recipient's address is yellow
+    /// A flagged address stays red; a repeat of an earlier recipient's address is yellow
     private func addressColorStyle(address: ResolvedAddress, index: Int, regular: ColorStyle) -> ColorStyle {
         if !address.issueTypes.isEmpty {
             return .red

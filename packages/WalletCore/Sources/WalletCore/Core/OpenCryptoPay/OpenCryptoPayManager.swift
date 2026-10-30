@@ -44,10 +44,7 @@ class OpenCryptoPayManager {
     }
 
     func resolve(wallet: Wallet, against payment: OpenCryptoPayPayment) async throws -> SendData {
-        guard accountManager.activeAccount?.id == payment.capturedAccountId, wallet.account.watchAccount == false else {
-            throw OpenCryptoPayManager.Error.accountChanged
-        }
-        guard walletManager.activeWallets.contains(wallet) else {
+        guard accountManager.activeAccount?.id == payment.capturedAccountId, wallet.account.watchAccount == false, walletManager.activeWallets.contains(wallet) else {
             throw OpenCryptoPayManager.Error.accountChanged
         }
         guard let entry = payment.entry(for: wallet) else {

@@ -2,11 +2,11 @@ import Combine
 import Foundation
 import MarketKit
 
-// Where the whole network path lives: /v3/rate -> pick the cheapest confidential route -> /v3/preview
-// (estimated against the stub deposit address, re-run silently while the screen is open) ->
-// /v3/commit when the user slides -> build the inner send against the committed deposit address
-// through the platform's own IPreSendHandler -> delegate broadcast to the inner handler -> report the
-// hash through /v3/signed. The handler never builds a transaction itself.
+/// Where the whole network path lives: /v3/rate -> pick the cheapest confidential route -> /v3/preview
+/// (estimated against the stub deposit address, re-run silently while the screen is open) ->
+/// /v3/commit when the user slides -> build the inner send against the committed deposit address
+/// through the platform's own IPreSendHandler -> delegate broadcast to the inner handler -> report the
+/// hash through /v3/signed. The handler never builds a transaction itself.
 final class PrivateSendHandler {
     typealias DataBuilder = (PrivateSendPreview, ISendData, TransactionSettings?) -> PrivateSendData
 
@@ -33,8 +33,8 @@ final class PrivateSendHandler {
     // with it.
     private var committedPreviewTokens = Set<String>()
 
-    // Re-entrancy guard: rejects a second concurrent broadcast (double-tap / overlapping send) so
-    // the same deposit is never sent twice.
+    /// Re-entrancy guard: rejects a second concurrent broadcast (double-tap / overlapping send) so
+    /// the same deposit is never sent twice.
     private var isSending = false
 
     private let refreshSubject = PassthroughSubject<Void, Never>()
@@ -57,9 +57,9 @@ final class PrivateSendHandler {
         self.dataBuilder = dataBuilder
     }
 
-    // The preview task is unstructured (shared by every concurrent sendData(...) caller), so nothing
-    // cancels it for a dismissed screen but this. Not done in discardPreview(): another caller may
-    // still be awaiting the shared task there.
+    /// The preview task is unstructured (shared by every concurrent sendData(...) caller), so nothing
+    /// cancels it for a dismissed screen but this. Not done in discardPreview(): another caller may
+    /// still be awaiting the shared task there.
     deinit {
         withLock {
             if let previewTask = self.previewTask {
@@ -70,27 +70,35 @@ final class PrivateSendHandler {
 }
 
 extension PrivateSendHandler: ISendHandler {
-    var syncingText: String? { nil }
+    var syncingText: String? {
+        nil
+    }
 
-    var expirationDuration: Int? { Int(PrivateSendData.quoteLifetime) }
+    var expirationDuration: Int? {
+        Int(PrivateSendData.quoteLifetime)
+    }
 
-    // The preview has no side effects (the order is created by `send(data:)` when the user slides),
-    // so it is silently re-requested on expiry: the sellAmount ceiling under the slide control is
-    // always the one the server currently honours.
-    var autoRefreshEnabled: Bool { true }
+    /// The preview has no side effects (the order is created by `send(data:)` when the user slides),
+    /// so it is silently re-requested on expiry: the sellAmount ceiling under the slide control is
+    /// always the one the server currently honours.
+    var autoRefreshEnabled: Bool {
+        true
+    }
 
-    // Correct rather than a compromise: the protocol default is nil and EVM/Tron regular sends
-    // return nil too. Only ZcashSendHandler (resend) overrides it.
-    var initialTransactionSettings: InitialTransactionSettings? { nil }
+    /// Correct rather than a compromise: the protocol default is nil and EVM/Tron regular sends
+    /// return nil too. Only ZcashSendHandler (resend) overrides it.
+    var initialTransactionSettings: InitialTransactionSettings? {
+        nil
+    }
 
-    // Forwarded lazily: there is no inner handler until the first sendData(...) has previewed a
-    // route, and SendView re-reads menuItems on every render, so it fills in afterwards.
+    /// Forwarded lazily: there is no inner handler until the first sendData(...) has previewed a
+    /// route, and SendView re-reads menuItems on every render, so it fills in afterwards.
     var menuItems: [SendMenuItem] {
         withLock { self.innerHandler }?.menuItems ?? []
     }
 
-    // Fired after a failed or consumed commit: the screen must show a fresh preview, never the one
-    // whose token was already spent.
+    /// Fired after a failed or consumed commit: the screen must show a fresh preview, never the one
+    /// whose token was already spent.
     var refreshPublisher: AnyPublisher<Void, Never>? {
         refreshSubject.eraseToAnyPublisher()
     }
@@ -146,7 +154,9 @@ extension PrivateSendHandler: ISendHandler {
 
     func send(data: ISendData) async throws {
         let alreadySending = withLock { () -> Bool in
-            if self.isSending { return true }
+            if self.isSending {
+                return true
+            }
             self.isSending = true
             return false
         }
@@ -288,9 +298,9 @@ private extension PrivateSendHandler {
         return action()
     }
 
-    // The inner send for a deposit of `amount` to `address`, resolved through the platform's own
-    // IPreSendHandler and estimated by the chain's handler. `publish` runs between resolving the
-    // handler and estimating with it, so the caller can register (or reject) it.
+    /// The inner send for a deposit of `amount` to `address`, resolved through the platform's own
+    /// IPreSendHandler and estimated by the chain's handler. `publish` runs between resolving the
+    /// handler and estimating with it, so the caller can register (or reject) it.
     func innerSendData(
         amount: Decimal,
         address: String,
@@ -334,9 +344,9 @@ private extension PrivateSendHandler {
         return (inner, innerHandler)
     }
 
-    // The order could not be created, or could not be funded: the memo is dropped, the reason is
-    // toasted, a fresh preview is requested and the send ends with an error the screen does not
-    // present (it already shows the new quote).
+    /// The order could not be created, or could not be funded: the memo is dropped, the reason is
+    /// toasted, a fresh preview is requested and the send ends with an error the screen does not
+    /// present (it already shows the new quote).
     func failCommit(error: Error) async throws -> Never {
         discardPreview()
 
@@ -351,8 +361,8 @@ private extension PrivateSendHandler {
         withLock { self.previewTask = nil }
     }
 
-    // What the toast says when the order could not be created: the server's discriminator when it
-    // names one, a generic line otherwise (server-supplied text is never shown verbatim).
+    /// What the toast says when the order could not be created: the server's discriminator when it
+    /// names one, a generic line otherwise (server-supplied text is never shown verbatim).
     static func commitFailureMessage(_ error: Error) -> String {
         switch error as? PrivateSendUnavailableReason {
         case .rateChanged:
@@ -364,10 +374,10 @@ private extension PrivateSendHandler {
         }
     }
 
-    // Previewing is memoised while the preview is alive: sendData(transactionSettings:) is re-invoked
-    // on every settings change, and two concurrent callers await the same task rather than each
-    // issuing their own request. A preview past its quoteLifetime is discarded and re-requested, as
-    // is one whose token was spent by a commit.
+    /// Previewing is memoised while the preview is alive: sendData(transactionSettings:) is re-invoked
+    /// on every settings change, and two concurrent callers await the same task rather than each
+    /// issuing their own request. A preview past its quoteLifetime is discarded and re-requested, as
+    /// is one whose token was spent by a commit.
     func previewedQuote() async throws -> PrivateSendPreview {
         // Two passes at most: a stale memo is cleared exactly once per pass, and a task created
         // after that returns a preview stamped `previewedAt: Date()` — always fresh. A second stale
@@ -426,7 +436,7 @@ private extension PrivateSendHandler {
 }
 
 extension PrivateSendHandler {
-    // The order could not be created or funded; the handler already toasted the reason and re-previewed.
+    /// The order could not be created or funded; the handler already toasted the reason and re-previewed.
     struct CommitFailedError: IHandledSendError {
         let underlying: Error
     }

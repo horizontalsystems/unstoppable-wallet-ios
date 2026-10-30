@@ -40,7 +40,7 @@ struct ZcashWalletTokenView: View {
         }
     }
 
-    @ViewBuilder private func view(transparent: Decimal) -> some View {
+    private func view(transparent: Decimal) -> some View {
         Cell(
             middle: {
                 MiddleTextIcon(text: "balance.token.transparent".localized)
@@ -78,14 +78,14 @@ struct ZcashWalletTokenView: View {
                                     },
                                 ],
                                 alignment: .horizontal)),
-                        ],
+                        ]
                     )
                 }
             }
         )
     }
 
-    @ViewBuilder private func view(orchard: Decimal) -> some View {
+    private func view(orchard: Decimal) -> some View {
         Cell(
             middle: {
                 MiddleTextIcon(text: ComponentText(text: "balance.token.migration.required".localized, colorStyle: .yellow))
@@ -123,14 +123,14 @@ struct ZcashWalletTokenView: View {
                                     },
                                 ],
                                 alignment: .horizontal)),
-                        ],
+                        ]
                     )
                 }
             }
         )
     }
 
-    @ViewBuilder private func view(birthdayHeight: Int) -> some View {
+    private func view(birthdayHeight: Int) -> some View {
         Cell(
             middle: {
                 MiddleTextIcon(text: "birthday_height.title".localized)

@@ -2,7 +2,9 @@ import Foundation
 import HsToolKit
 
 final class AddressSimilarityCondition: SpamCondition {
-    var identifier: String { "address_similarity" }
+    var identifier: String {
+        "address_similarity"
+    }
 
     private let cache: OutputTransactionCache
     private let minMatchLength: Int
@@ -31,11 +33,7 @@ final class AddressSimilarityCondition: SpamCondition {
         let blockchainType = context.transaction.blockchainType
         let cachedOutputs = cache.get(blockchainType: blockchainType)
 
-        guard !cachedOutputs.isEmpty else {
-            return 0
-        }
-
-        guard !context.transaction.events.incoming.isEmpty else {
+        guard !cachedOutputs.isEmpty, !context.transaction.events.incoming.isEmpty else {
             return 0
         }
 
@@ -82,7 +80,7 @@ final class AddressSimilarityCondition: SpamCondition {
         return bestScore
     }
 
-    // what a chain's addresses share carries no information; the chain's normalizer drops it
+    /// what a chain's addresses share carries no information; the chain's normalizer drops it
     private func normalize(_ address: String) -> String {
         (normalizer?(address) ?? address).lowercased()
     }

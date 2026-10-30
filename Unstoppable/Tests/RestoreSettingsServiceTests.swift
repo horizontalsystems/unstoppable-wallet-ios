@@ -6,9 +6,9 @@ import Testing
 @testable import Unstoppable
 @testable import WalletCore
 
-// When enabling a chain asks its restore settings (Android `RestoreSettingsServiceAccountPickerTest`): the
-// service decides whether to ask, the registered handler decides what. The restore flow and the
-// "chain already enabled" rule live in view models built on Core.shared and are checked by hand.
+/// When enabling a chain asks its restore settings (Android `RestoreSettingsServiceAccountPickerTest`): the
+/// service decides whether to ask, the registered handler decides what. The restore flow and the
+/// "chain already enabled" rule live in view models built on Core.shared and are checked by hand.
 @Suite(.serialized)
 struct RestoreSettingsServiceTests {
     private static let mnemonic = AccountType.mnemonic(words: Array(repeating: "abandon", count: 11) + ["about"], salt: "", bip39Compliant: true)
@@ -26,7 +26,7 @@ struct RestoreSettingsServiceTests {
         var cancellables = Set<AnyCancellable>()
     }
 
-    // asks for a mnemonic only, as the NEAR handler does
+    /// asks for a mnemonic only, as the NEAR handler does
     private final class StubHandler: RestoreSettingsHandler, IRestoreSettingsHandler {
         override class func instance(blockchainType: BlockchainType, accountType: AccountType?) -> IRestoreSettingsHandler? {
             guard blockchainType == .near, case .mnemonic = accountType else {
@@ -98,7 +98,7 @@ struct RestoreSettingsServiceTests {
         #expect(recorder.approved.first?.nearAccountId == nil)
     }
 
-    // no handler for a watch account: nothing to ask
+    /// no handler for a watch account: nothing to ask
     @Test func accountWithoutHandlerIsNotAsked() throws {
         let (service, _, recorder) = try makeService()
 

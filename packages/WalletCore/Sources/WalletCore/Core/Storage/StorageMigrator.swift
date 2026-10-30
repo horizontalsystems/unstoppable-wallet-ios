@@ -586,7 +586,6 @@ public enum StorageMigrator {
         }
 
         migrator.registerMigration("Migrate refactoring of MarketKit") { db in
-
             // RestoreSettingRecord
 
             let oldRestoreSettings = try RestoreSettingRecord_v_0_25.fetchAll(db)

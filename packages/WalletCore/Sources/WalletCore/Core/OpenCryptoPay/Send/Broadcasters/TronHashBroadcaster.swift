@@ -2,7 +2,7 @@ import Foundation
 import MarketKit
 import TronKit
 
-// Type B: broadcasts via TronKit, returns txID.
+/// Type B: broadcasts via TronKit, returns txID.
 class TronHashBroadcaster: IOpenCryptoPayBroadcaster {
     private let token: Token
 

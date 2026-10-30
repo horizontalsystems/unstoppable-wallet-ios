@@ -27,7 +27,7 @@ struct SubscriptionView: View {
             .padding(.bottom, .margin32)
     }
 
-    @ViewBuilder private func bottomContent() -> some View {
+    private func bottomContent() -> some View {
         VStack(spacing: .margin8) {
             actionButtonView()
         }
@@ -39,7 +39,7 @@ struct SubscriptionView: View {
         )
     }
 
-    @ViewBuilder private func walletDescription() -> some View {
+    private func walletDescription() -> some View {
         VStack {
             Text("purchases.wallet_description.title".localized)
                 .themeHeadline2(alignment: .center)
@@ -52,7 +52,7 @@ struct SubscriptionView: View {
         }
     }
 
-    @ViewBuilder private func approvedBy() -> some View {
+    private func approvedBy() -> some View {
         VStack {
             Text("purchases.wallet_description.approved".localized)
                 .textSubhead2()

@@ -1,7 +1,7 @@
 import Foundation
 import MarketKit
 
-// `chainId != nil && blockchainType == nil` ⇒ caller must reject (unsupported chain).
+/// `chainId != nil && blockchainType == nil` ⇒ caller must reject (unsupported chain).
 struct Eip681PathParts {
     let address: String
     let chainId: Int?

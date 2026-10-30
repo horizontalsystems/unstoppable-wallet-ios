@@ -47,7 +47,7 @@ public struct EvmDecoration {
             .amount(
                 token: token,
                 appValueType: .regular(appValue: appValue),
-                currencyValue: currencyValue,
+                currencyValue: currencyValue
             ),
             .address(
                 value: to.eip55,
@@ -65,7 +65,7 @@ public struct EvmDecoration {
             .amount(
                 token: token,
                 appValueType: .regular(appValue: appValue),
-                currencyValue: currencyValue,
+                currencyValue: currencyValue
             ),
             .address(
                 value: to.eip55,
@@ -83,14 +83,14 @@ public struct EvmDecoration {
             amountField = .amount(
                 token: token,
                 appValueType: .withoutAmount(code: token.coin.code),
-                currencyValue: nil,
+                currencyValue: nil
             )
         } else {
             amountField = self.amountField(
                 token: token,
                 value: value,
                 currency: currency,
-                rate: rates[token.coin.uid],
+                rate: rates[token.coin.uid]
             )
         }
 
@@ -121,7 +121,7 @@ public struct EvmDecoration {
         return .amount(
             token: token,
             appValueType: appValue.isMaxValue ? .infinity(code: appValue.code) : .regular(appValue: appValue),
-            currencyValue: appValue.isMaxValue ? nil : rate.map { CurrencyValue(currency: currency, value: $0 * value) },
+            currencyValue: appValue.isMaxValue ? nil : rate.map { CurrencyValue(currency: currency, value: $0 * value) }
         )
     }
 }

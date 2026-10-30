@@ -6,7 +6,7 @@ import Testing
 @testable import WalletCore
 import ZODLSwiftWalletSDK
 
-// Zcash Names on the Name Notes protocol, with live mainnet Resolver responses as vectors.
+/// Zcash Names on the Name Notes protocol, with live mainnet Resolver responses as vectors.
 struct ZcashNamesTests {
     // MARK: - Name normalization
 
@@ -27,7 +27,7 @@ struct ZcashNamesTests {
         #expect(ZnsAddressParserItem.normalize("alice.zcash")?.suffix == ".zcash")
     }
 
-    // the suffix is required: a bare word is indistinguishable from a partly typed address
+    /// the suffix is required: a bare word is indistinguishable from a partly typed address
     @Test func normalizeRejectsBareNamesAndAddresses() {
         #expect(name("alice") == nil)
         #expect(name("thebackupkid") == nil)
@@ -52,7 +52,7 @@ struct ZcashNamesTests {
         #expect(name("alice\n.zcash") == nil)
     }
 
-    // as on Android: Unicode lowercasing folds the Kelvin sign into an ASCII "k"
+    /// as on Android: Unicode lowercasing folds the Kelvin sign into an ASCII "k"
     @Test func normalizeFoldsKelvinSignLikeAndroid() {
         #expect(name("\u{212A}im.zcash") == "kim")
     }
@@ -147,7 +147,7 @@ struct ZcashNamesTests {
         #expect(error.map(kind) == "malformedResponse")
     }
 
-    // the expiry is the Resolver's business: a lapsed name resolves until its release lands on chain
+    /// the expiry is the Resolver's business: a lapsed name resolves until its release lands on chain
     @Test(arguments: [#""none""#, #""1""#, #""1824002006""#, #""garbage""#, "null"])
     func parseIgnoresExpiry(expiresAt: String) throws {
         let body = #"{"jsonrpc":"2.0","id":1,"result":{"name":"alice","address":"u1example","last_action":"claim","expires_at":\#(expiresAt)}}"#
@@ -167,7 +167,7 @@ struct ZcashNamesTests {
         #expect(address == Self.thebackupkidAddress)
     }
 
-    // a record of another name must not answer this query, and names match bytes, not canonical equivalence
+    /// a record of another name must not answer this query, and names match bytes, not canonical equivalence
     @Test(arguments: [
         ("alice", "thebackupkid"),
         ("thebackupkid.zec", "thebackupkid"),
@@ -243,7 +243,7 @@ struct ZcashNamesTests {
         await #expect(throws: AddressService.AddressError.self) { try await handle(item, "thebackupkid.zec") }
     }
 
-    // a resolved address still has to be a Zcash address; the regular parser refuses it
+    /// a resolved address still has to be a Zcash address; the regular parser refuses it
     @Test func garbageResolvedAddressIsRefused() async {
         let item = ZnsAddressParserItem(resolver: StubZnsResolver(address: "u1garbage"), rawAddressParserItem: zcashParserItem())
 

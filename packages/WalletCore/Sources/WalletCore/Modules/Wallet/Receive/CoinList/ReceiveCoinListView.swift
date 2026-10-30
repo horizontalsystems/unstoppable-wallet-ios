@@ -52,7 +52,7 @@ struct ReceiveCoinListView: View {
         }
     }
 
-    @ViewBuilder private func cell(viewItem: ReceiveCoinListViewModel.ViewItem) -> some View {
+    private func cell(viewItem: ReceiveCoinListViewModel.ViewItem) -> some View {
         Cell(
             left: {
                 CoinIconView(coin: viewItem.coin)

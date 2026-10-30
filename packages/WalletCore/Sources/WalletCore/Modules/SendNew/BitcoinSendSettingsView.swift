@@ -146,7 +146,7 @@ struct BitcoinSendSettingsView: View {
         )
     }
 
-    @ViewBuilder private func row(title: String, subtitle: String, isOn: Binding<Bool>) -> some View {
+    private func row(title: String, subtitle: String, isOn: Binding<Bool>) -> some View {
         Cell(
             middle: {
                 MultiText(title: title, subtitle: subtitle)

@@ -35,8 +35,12 @@ class OutputSelectorViewModel2: ObservableObject {
     private func sync() {
         // create outputs viewItems
         let all = handler.allUtxos.sorted { output, output2 in
-            if output.timestamp > output2.timestamp { return true }
-            if output.timestamp == output2.timestamp, output.outputIndex < output2.outputIndex { return true }
+            if output.timestamp > output2.timestamp {
+                return true
+            }
+            if output.timestamp == output2.timestamp, output.outputIndex < output2.outputIndex {
+                return true
+            }
             return false
         }
 
@@ -121,12 +125,6 @@ extension OutputSelectorViewModel2 {
         let address: String
         let title: String
         let subtitle: String?
-
-        static func == (lhs: ChangeViewItem, rhs: ChangeViewItem) -> Bool {
-            lhs.address == rhs.address &&
-                lhs.title == rhs.title &&
-                lhs.subtitle == rhs.subtitle
-        }
     }
 
     struct OutputViewItem: Hashable, Identifiable, Equatable {
@@ -146,6 +144,8 @@ extension OutputSelectorViewModel2 {
             hasher.combine(transactionHash)
         }
 
-        static func id(hash: Data, index: Int) -> String { [hash.hs.hexString, index.description].joined(separator: "_") }
+        static func id(hash: Data, index: Int) -> String {
+            [hash.hs.hexString, index.description].joined(separator: "_")
+        }
     }
 }

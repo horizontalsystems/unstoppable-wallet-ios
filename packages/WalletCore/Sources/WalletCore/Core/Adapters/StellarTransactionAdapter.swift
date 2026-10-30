@@ -179,7 +179,6 @@ extension StellarTransactionAdapter: ITransactionsAdapter {
 
         return Single.create { [weak self, stellarKit] observer in
             Task { [weak self, stellarKit] in
-
                 let operations = stellarKit.operations(tagQuery: tagQuery, pagingToken: pagingToken, descending: true, limit: limit)
                 let completed = self?.completingLastTransaction(operations, tagQuery: tagQuery, limit: limit) ?? operations
                 let records = self?.handleTransactions(completed) ?? []
@@ -196,7 +195,6 @@ extension StellarTransactionAdapter: ITransactionsAdapter {
 
         return Single.create { [weak self, stellarKit] observer in
             Task { [weak self, stellarKit] in
-
                 let operations = stellarKit.operations(tagQuery: .init(), pagingToken: pagingToken, descending: false, limit: nil)
                 let records = Self.groupedByTransaction(operations).compactMap { self?.converter.transactionRecord(operations: $0) }
 

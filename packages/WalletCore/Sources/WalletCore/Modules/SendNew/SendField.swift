@@ -46,7 +46,9 @@ public struct SendField {
         _row = { @MainActor in AnyView(content.listRow()) }
     }
 
-    @MainActor public func listRow() -> AnyView { _row() }
+    @MainActor public func listRow() -> AnyView {
+        _row()
+    }
 }
 
 public struct AmountField: SendFieldContent {
@@ -60,7 +62,7 @@ public struct AmountField: SendFieldContent {
         self.currencyValue = currencyValue
     }
 
-    @ViewBuilder @MainActor public func listRow() -> some View {
+    @MainActor public func listRow() -> some View {
         Cell(
             left: {
                 CoinIconView(token: token)
@@ -81,7 +83,7 @@ public struct AmountField: SendFieldContent {
     }
 }
 
-// One output of a split swap: like AmountField, with the output's share next to the coin code
+/// One output of a split swap: like AmountField, with the output's share next to the coin code
 public struct SplitOutputField: SendFieldContent {
     public let token: Token
     public let percent: Int
@@ -95,7 +97,7 @@ public struct SplitOutputField: SendFieldContent {
         self.currencyValue = currencyValue
     }
 
-    @ViewBuilder @MainActor public func listRow() -> some View {
+    @MainActor public func listRow() -> some View {
         Cell(
             left: {
                 CoinIconView(token: token)
@@ -133,7 +135,7 @@ public struct ValueField: SendFieldContent {
         self.formatFull = formatFull
     }
 
-    @ViewBuilder @MainActor public func listRow() -> some View {
+    @MainActor public func listRow() -> some View {
         Cell(
             style: .secondary,
             middle: {
@@ -202,7 +204,7 @@ public struct LevelValueField: SendFieldContent {
         self.level = level
     }
 
-    @ViewBuilder @MainActor public func listRow() -> some View {
+    @MainActor public func listRow() -> some View {
         Cell(
             style: .secondary,
             middle: {
@@ -224,7 +226,7 @@ public struct NoteField: SendFieldContent {
         self.title = title
     }
 
-    @ViewBuilder @MainActor public func listRow() -> some View {
+    @MainActor public func listRow() -> some View {
         Cell(
             style: .secondary,
             left: {
@@ -250,7 +252,7 @@ public struct SimpleValueField: SendFieldContent {
         self.value = value
     }
 
-    @ViewBuilder @MainActor public func listRow() -> some View {
+    @MainActor public func listRow() -> some View {
         Cell(
             style: isPrimary ? .primary : .secondary,
             left: {
@@ -277,7 +279,7 @@ public struct AddressField: SendFieldContent {
         self.blockchainType = blockchainType
     }
 
-    @ViewBuilder @MainActor public func listRow() -> some View {
+    @MainActor public func listRow() -> some View {
         // the row's view model is built from the address once per identity, so a new address needs a new identity
         AddressRowsView(value: value, blockchainType: blockchainType)
             .id([blockchainType.uid, value])
@@ -297,7 +299,7 @@ public struct RecipientField: SendFieldContent {
         self.blockchainType = blockchainType
     }
 
-    @ViewBuilder @MainActor public func listRow() -> some View {
+    @MainActor public func listRow() -> some View {
         // the row's view model is built from the address once per identity, so a new address needs a new identity
         RecipientRowsView(title: title, value: value, copyable: copyable, blockchainType: blockchainType)
             .id([blockchainType.uid, value])
@@ -313,7 +315,7 @@ public struct SelfAddressField: SendFieldContent {
         self.title = title
     }
 
-    @ViewBuilder @MainActor public func listRow() -> some View {
+    @MainActor public func listRow() -> some View {
         Cell(
             left: {
                 ThemeImage("wallet_filled", size: .iconSize24)
@@ -372,7 +374,7 @@ public struct HexField: SendFieldContent {
         self.value = value
     }
 
-    @ViewBuilder @MainActor public func listRow() -> some View {
+    @MainActor public func listRow() -> some View {
         Cell(
             style: .secondary,
             middle: {
@@ -394,7 +396,7 @@ public struct MevProtectionField: SendFieldContent {
         self.isOn = isOn
     }
 
-    @ViewBuilder @MainActor public func listRow() -> some View {
+    @MainActor public func listRow() -> some View {
         VStack(spacing: 0) {
             SectionHeader(image: Image.defenseIcon, text: "purchases.swap_protection".localized, horizontalInsets: .margin16)
             ListSection {
@@ -423,7 +425,7 @@ public struct TimerField: SendFieldContent {
         self.expirationDate = expirationDate
     }
 
-    @ViewBuilder @MainActor public func listRow() -> some View {
+    @MainActor public func listRow() -> some View {
         ExpirationTimerCell(title: title, expirationDate: expirationDate)
     }
 }

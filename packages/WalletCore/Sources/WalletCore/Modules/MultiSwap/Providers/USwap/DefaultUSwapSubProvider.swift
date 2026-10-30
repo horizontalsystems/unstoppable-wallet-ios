@@ -9,8 +9,8 @@ public class DefaultUSwapSubProvider: USwapSubProvider {
     private let assetRepository: USwapAssetRepository?
     let commitRequestBuilder: USwapCommitRequestBuilder
     private let tracker: USwapTracker
-    // Sell-side capability hook: lets an entry exclude source tokens it cannot execute
-    // (e.g. chains whose deposit cannot carry the route's memo) even when the server lists them.
+    /// Sell-side capability hook: lets an entry exclude source tokens it cannot execute
+    /// (e.g. chains whose deposit cannot carry the route's memo) even when the server lists them.
     private let supportsSourceToken: (Token) -> Bool
 
     public init(

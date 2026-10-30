@@ -25,8 +25,8 @@ class WCEvmSignMessageParser: IWCParser {
         }
     }
 
-    // eth_sign is [address, message], personal_sign is [message, address]; dApps mix them up, so
-    // the address is whichever element parses as one
+    /// eth_sign is [address, message], personal_sign is [message, address]; dApps mix them up, so
+    /// the address is whichever element parses as one
     private static func addressAndMessage(params: AnyCodable) throws -> (EvmKit.Address, Data) {
         guard let strings = try? params.get([String].self), strings.count >= 2 else {
             throw ParsingError.malformedParams
@@ -52,7 +52,7 @@ class WCEvmSignMessageParser: IWCParser {
         if let json = try? items[1].get(String.self) {
             return (address, Data(json.utf8))
         }
-        return (address, try JSONEncoder().encode(items[1]))
+        return try (address, JSONEncoder().encode(items[1]))
     }
 
     private static func message(string: String) -> Data {

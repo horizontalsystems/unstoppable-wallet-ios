@@ -1,7 +1,7 @@
 import Kingfisher
 import SwiftUI
 
-// BSTitleView layout with a rounded remote dApp icon; ThemeImage does not clip remote images
+/// BSTitleView layout with a rounded remote dApp icon; ThemeImage does not clip remote images
 struct WCDAppTitleView: View {
     let iconUrl: String?
     let title: String

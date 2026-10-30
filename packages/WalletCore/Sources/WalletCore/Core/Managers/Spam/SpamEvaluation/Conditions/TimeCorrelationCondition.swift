@@ -1,10 +1,12 @@
 import Foundation
 import HsToolKit
 
-// Proximity to any counterparty in the window, most recent first; block distance is checked
-// before time for each entry, and the first entry within either threshold decides
+/// Proximity to any counterparty in the window, most recent first; block distance is checked
+/// before time for each entry, and the first entry within either threshold decides
 class TimeCorrelationCondition: SpamCondition {
-    var identifier: String { "time_correlation" }
+    var identifier: String {
+        "time_correlation"
+    }
 
     private let cache: OutputTransactionCache
     private let blockThreshold: Int

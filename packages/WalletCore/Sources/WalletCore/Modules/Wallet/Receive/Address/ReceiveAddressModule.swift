@@ -35,7 +35,7 @@ enum ReceiveAddressModule {
                 lhs.description.text == rhs.description.text
         }
 
-        public var id: String {
+        var id: String {
             title + description.text
         }
 
@@ -85,7 +85,7 @@ enum ReceiveAddressModule {
                 copyValue: address,
                 highlightedDescription: nil,
                 qrItem: .init(address: address, uri: nil, networkName: nil),
-                amount: nil,
+                amount: nil
             )
         }
     }

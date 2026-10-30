@@ -107,9 +107,13 @@ class XrpPreSendHandler: PreSendHandler {
             // asked separately, as the two Android call sites are: one node hiccup must not throw
             // away the other answer
             let requiresTag = try? await adapter.requiresDestinationTag(address: destination.classic)
-            if Task.isCancelled { return }
+            if Task.isCancelled {
+                return
+            }
             let canReceive = try? await adapter.canReceive(address: destination.classic)
-            if Task.isCancelled { return }
+            if Task.isCancelled {
+                return
+            }
             guard let self else { return }
 
             // checked and applied on main, where set(address:) runs, so a stale answer cannot
@@ -169,7 +173,7 @@ extension XrpPreSendHandler: IPreSendHandler {
         balanceSubject.eraseToAnyPublisher()
     }
 
-    // No memo on the XRP form, as Android: the tag is the recipient-facing field.
+    /// No memo on the XRP form, as Android: the tag is the recipient-facing field.
     func memoType(address _: String?) -> MemoType {
         .none
     }
@@ -193,7 +197,7 @@ extension XrpPreSendHandler: IPreSendHandler {
         .invalid(cautions: [])
     }
 
-    // To the deposit address itself, with the provider's tag in the Payment's DestinationTag.
+    /// To the deposit address itself, with the provider's tag in the Payment's DestinationTag.
     func depositSendData(amount: Decimal, address: String, attachment: USwapMultiSwapApi.Attachment?, settings _: PreSendSettingsSnapshot?) throws -> SendDataResult {
         try .valid(sendData: XrpSendHelper.depositSendData(token: token, amount: amount, depositAddress: address, attachment: attachment))
     }

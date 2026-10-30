@@ -2,7 +2,9 @@ import MarketKit
 
 extension BlockchainType {
     var uriScheme: String? {
-        if isEvm { return "ethereum" }
+        if isEvm {
+            return "ethereum"
+        }
         switch self {
         case .bitcoin: return "bitcoin"
         case .bitcoinCash: return "bitcoincash"
@@ -23,10 +25,12 @@ extension BlockchainType {
         }
     }
 
-    // BCH/eCash keep the scheme prefix as part of the canonical address form;
-    // everything else strips it.
+    /// BCH/eCash keep the scheme prefix as part of the canonical address form;
+    /// everything else strips it.
     var removeScheme: Bool {
-        if isEvm { return true }
+        if isEvm {
+            return true
+        }
         switch self {
         case .bitcoin, .litecoin, .dash, .zcash, .tron, .ton, .monero, .zano, .stellar, .solana, .xrp: return true
         case .bitcoinCash, .ecash: return false

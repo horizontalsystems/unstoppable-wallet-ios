@@ -13,10 +13,7 @@ class AuthData: NSObject, NSCoding {
     }
 
     required convenience init?(coder aDecoder: NSCoder) {
-        guard let walletId = aDecoder.decodeObject(forKey: AuthData.walletIdKey) as? String else {
-            return nil
-        }
-        guard let words = aDecoder.decodeObject(forKey: AuthData.wordsKey) as? [String] else {
+        guard let walletId = aDecoder.decodeObject(forKey: AuthData.walletIdKey) as? String, let words = aDecoder.decodeObject(forKey: AuthData.wordsKey) as? [String] else {
             return nil
         }
 

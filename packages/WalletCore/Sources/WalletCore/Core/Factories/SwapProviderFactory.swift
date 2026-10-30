@@ -59,10 +59,10 @@ public class SwapProviderFactory {
         "quickswap": "QuickSwap",
     ]
 
-    // The ordinary swap screen must never offer a retired provider. Not automatic: a registered
-    // entry resolves through `provider(id:)` (which tracking needs). Split-only providers that do
-    // not serve /v3/rate (`quotes: false`, e.g. SWAPUZ_SPLIT) are kept off the Standard tab by
-    // `MultiSwapProviderManager.providers`, not here.
+    /// The ordinary swap screen must never offer a retired provider. Not automatic: a registered
+    /// entry resolves through `provider(id:)` (which tracking needs). Split-only providers that do
+    /// not serve /v3/rate (`quotes: false`, e.g. SWAPUZ_SPLIT) are kept off the Standard tab by
+    /// `MultiSwapProviderManager.providers`, not here.
     public static func swappableProviders(ids: [String]) -> [IMultiSwapProvider] {
         ids
             .filter { !retiredProviderIds.contains($0) }
@@ -73,7 +73,7 @@ public class SwapProviderFactory {
         providerInfo(id: id)?.name ?? retiredProviderNames[id]
     }
 
-    // test seam: registry is global mutable state
+    /// test seam: registry is global mutable state
     static func reset() {
         resolvers = []
     }
@@ -125,8 +125,8 @@ public enum SwapProviderResolver: ISwapProviderResolver {
         }
     )
 
-    // Accessible so the app can build the same USwap API instance for the private send stack
-    // instead of duplicating the base URL / api key construction.
+    /// Accessible so the app can build the same USwap API instance for the private send stack
+    /// instead of duplicating the base URL / api key construction.
     public static func uSwapApi(networkManager: NetworkManager) -> USwapMultiSwapApi {
         guard let baseURL = URL(string: "\(AppConfig.swapApiUrl)/v3") else {
             preconditionFailure("Invalid USwap API URL: \(AppConfig.swapApiUrl)")
@@ -250,8 +250,8 @@ public enum SwapProviderResolver: ISwapProviderResolver {
         return uSwapProvider(subProvider: subProvider)
     }
 
-    // Resolves a retired provider for history and tracking only: with no asset repository it
-    // supports no pair, so it can never be quoted.
+    /// Resolves a retired provider for history and tracking only: with no asset repository it
+    /// supports no pair, so it can never be quoted.
     private static func historyUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
         let api = uSwapApi(networkManager: NetworkManager(logger: nil))
         let subProvider = DefaultUSwapSubProvider(
@@ -352,8 +352,8 @@ public enum SwapProviderResolver: ISwapProviderResolver {
         return uSwapProvider(subProvider: subProvider)
     }
 
-    // Shared by every vault-deposit (thorchain_deposit) provider: the token list served for the
-    // provider id, not the code, tells them apart.
+    /// Shared by every vault-deposit (thorchain_deposit) provider: the token list served for the
+    /// provider id, not the code, tells them apart.
     private static func thorChainUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
         let api = uSwapApi(networkManager: NetworkManager(logger: nil))
         let subProvider = DefaultUSwapSubProvider(
@@ -372,11 +372,11 @@ public enum SwapProviderResolver: ISwapProviderResolver {
         return uSwapProvider(subProvider: subProvider)
     }
 
-    // A vault deposit needs the swap memo to reach the vault. The app can carry it on chains
-    // whose memo is public on-chain (UTXO OP_RETURN, THORChain/Maya memo), inside a server-built
-    // EVM transaction (calldata / router call), or through a vault's shielded memo address on
-    // Zcash. Solana, Tron and XRP deposits built here carry no text memo, so they are not offered
-    // as a sell side even though the server lists them.
+    /// A vault deposit needs the swap memo to reach the vault. The app can carry it on chains
+    /// whose memo is public on-chain (UTXO OP_RETURN, THORChain/Maya memo), inside a server-built
+    /// EVM transaction (calldata / router call), or through a vault's shielded memo address on
+    /// Zcash. Solana, Tron and XRP deposits built here carry no text memo, so they are not offered
+    /// as a sell side even though the server lists them.
     private static func supportsThorChainDeposit(token: Token) -> Bool {
         let blockchainType = token.blockchainType
         return blockchainType.isEvm || blockchainType == .zcash || blockchainType.memoType == .onChainPublic

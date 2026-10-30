@@ -100,7 +100,7 @@ extension LocalStorage {
         set { userDefaultsStorage.set(value: newValue, for: keyZCashRewind) }
     }
 
-    // nil for a chain with no legacy swap providers at all, such as Arc
+    /// nil for a chain with no legacy swap providers at all, such as Arc
     func defaultProvider(blockchainType: BlockchainType) -> LegacySwapProvider? {
         let key = [keyDefaultProvider, blockchainType.uid].joined(separator: "|")
         let raw: String? = userDefaultsStorage.value(for: key)
@@ -237,7 +237,7 @@ extension LocalStorage {
         }
     }
 
-    // Send Security
+    /// Send Security
     var recipientAddressCheckOld: Bool? {
         get { userDefaultsStorage.value(for: keyRecipientAddressCheck) }
         set { userDefaultsStorage.set(value: newValue, for: keyRecipientAddressCheck) }
@@ -263,7 +263,7 @@ extension LocalStorage {
 }
 
 extension LocalStorage {
-    // Keyed per app account, matching Android's convention
+    /// Keyed per app account, matching Android's convention
     func moneroActiveAccount(accountId: String) -> Int {
         userDefaultsStorage.value(for: "monero_active_account_\(accountId)") ?? 0
     }

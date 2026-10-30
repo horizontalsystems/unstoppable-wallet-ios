@@ -3,10 +3,10 @@ import MarketKit
 import Testing
 @testable import WalletCore
 
-// The Cross Pay deposit on XRP: to the provider's deposit address, with the provider's tag. Each
-// failure here is a deposit the provider could not match. A classic deposit address, so the network
-// setting does not matter (the app-hosted test still reads it through Core); X-address resolution is
-// covered by the kit's own tests.
+/// The Cross Pay deposit on XRP: to the provider's deposit address, with the provider's tag. Each
+/// failure here is a deposit the provider could not match. A classic deposit address, so the network
+/// setting does not matter (the app-hosted test still reads it through Core); X-address resolution is
+/// covered by the kit's own tests.
 struct XrpDepositSendDataTests {
     @Test func noAttachmentPaysTheDepositAddressUntagged() throws {
         let payment = try Self.payment(depositAddress: Self.depositAddress, attachment: nil)
@@ -23,7 +23,7 @@ struct XrpDepositSendDataTests {
         #expect(payment.tag == 123_456)
     }
 
-    // a text memo has nowhere to go on XRP: the provider credits by tag only
+    /// a text memo has nowhere to go on XRP: the provider credits by tag only
     @Test func textAttachmentIsRefused() {
         #expect(throws: USwapMultiSwapApi.Attachment.AttachmentError.unsupported) {
             try Self.payment(depositAddress: Self.depositAddress, attachment: .text("order-42"))

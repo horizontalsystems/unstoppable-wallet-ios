@@ -2,9 +2,9 @@ import Foundation
 import MarketKit
 import XrpKit
 
-// The shared node bundle with two slots left empty: no auto-select engine (no toggle, no pings)
-// and no custom-node handler (no Added section, no Add New). Android has no XRP node UI at all,
-// so the screen stays a pick from the kit's own list.
+/// The shared node bundle with two slots left empty: no auto-select engine (no toggle, no pings)
+/// and no custom-node handler (no Added section, no Add New). Android has no XRP node UI at all,
+/// so the screen stays a pick from the kit's own list.
 class XrpNodeNetworkHandler: NodeNetworkHandlerProvider {
     override class func instance(blockchain: Blockchain) -> NodeNetworkHandlers? {
         guard blockchain.type == .xrp else {
@@ -49,8 +49,8 @@ extension XrpNodeNetworkHandler: INodeProvider {
         return (items, [])
     }
 
-    // One `server_state` round-trip: a node that is unreachable, behind, or on the other network
-    // reverts the pick on the screen instead of leaving the wallet stuck on it.
+    /// One `server_state` round-trip: a node that is unreachable, behind, or on the other network
+    /// reverts the pick on the screen instead of leaving the wallet stuck on it.
     func validate(id: String) async throws {
         guard let node = node(id: id) else { return }
 

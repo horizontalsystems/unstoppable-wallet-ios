@@ -13,7 +13,7 @@ struct CloudNotAvailableView: View {
                         isPresented = false
                     },
                 ])),
-            ],
+            ]
         )
     }
 }

@@ -9,6 +9,8 @@ protocol IRestoreSettingsHandler {
 class RestoreSettingsHandler {
     init() {}
 
-    // nil when the chain or the account has nothing to ask
-    class func instance(blockchainType _: BlockchainType, accountType _: AccountType?) -> IRestoreSettingsHandler? { nil }
+    /// nil when the chain or the account has nothing to ask
+    class func instance(blockchainType _: BlockchainType, accountType _: AccountType?) -> IRestoreSettingsHandler? {
+        nil
+    }
 }

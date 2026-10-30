@@ -21,7 +21,9 @@ class CryptoPaySendTokenListViewModel: ObservableObject {
         } catch is CancellationError {
             // no-op
         } catch {
-            if Task.isCancelled { return }
+            if Task.isCancelled {
+                return
+            }
             state = .failed(error: error)
         }
     }

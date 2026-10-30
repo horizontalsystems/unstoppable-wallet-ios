@@ -35,7 +35,7 @@ class NearTransactionRecord: TransactionRecord, TransferEventsProvider {
         )
     }
 
-    // pending until its receipts have executed, then completed or failed for good
+    /// pending until its receipts have executed, then completed or failed for good
     override func status(lastBlockHeight _: Int?) -> TransactionStatus {
         if failed {
             return .failed
@@ -51,9 +51,9 @@ class NearTransactionRecord: TransactionRecord, TransferEventsProvider {
         }
     }
 
-    // Only the account's signature moves its NEAR or its tokens (NEP-141 has no allowance), so an
-    // outgoing leg in a transaction someone else signed is a forged event log: handed to the spam
-    // check as outgoing, as an EVM external contract call is (iOS only: Android checks incoming only)
+    /// Only the account's signature moves its NEAR or its tokens (NEP-141 has no allowance), so an
+    /// outgoing leg in a transaction someone else signed is a forged event log: handed to the spam
+    /// check as outgoing, as an EVM external contract call is (iOS only: Android checks incoming only)
     var transferEvents: TransferEvents {
         guard !signed else {
             return .init()

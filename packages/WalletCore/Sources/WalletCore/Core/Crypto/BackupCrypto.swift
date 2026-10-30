@@ -129,7 +129,7 @@ extension BackupCrypto {
 }
 
 extension BackupCrypto.ValidationError: LocalizedError {
-    public var errorDescription: String? {
+    var errorDescription: String? {
         switch self {
         case .emptyPassphrase: return "backup.cloud.password.error.empty_passphrase".localized
         case .simplePassword: return "backup.cloud.password.error.minimum_requirement".localized

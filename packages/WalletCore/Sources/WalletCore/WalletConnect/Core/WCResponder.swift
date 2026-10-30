@@ -9,7 +9,7 @@ class WCResponder {
         self.signClient = signClient
     }
 
-    // fires once the dApp has been answered, so pending-request lists can drop the request
+    /// fires once the dApp has been answered, so pending-request lists can drop the request
     var answeredPublisher: AnyPublisher<RPCID, Never> {
         answeredSubject.eraseToAnyPublisher()
     }

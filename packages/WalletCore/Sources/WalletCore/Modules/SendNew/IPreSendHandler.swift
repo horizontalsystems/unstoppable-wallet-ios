@@ -89,9 +89,9 @@ public extension IPreSendHandler {
         depositSendData(amount: amount, address: address, memo: memo)
     }
 
-    // A text memo, where the chain delivers it to the provider — see MemoType.deliversAttachment
-    // for why only .onChainPublic is safe. The handler is asked rather than the chain because it can
-    // narrow the answer by address (shielded vs transparent Zcash).
+    /// A text memo, where the chain delivers it to the provider — see MemoType.deliversAttachment
+    /// for why only .onChainPublic is safe. The handler is asked rather than the chain because it can
+    /// narrow the answer by address (shielded vs transparent Zcash).
     func depositSendData(amount: Decimal, address: String, attachment: USwapMultiSwapApi.Attachment?, settings: PreSendSettingsSnapshot?) throws -> SendDataResult {
         guard let attachment else {
             return depositSendData(amount: amount, address: address, memo: nil, settings: settings)

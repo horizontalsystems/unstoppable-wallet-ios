@@ -29,6 +29,8 @@ public enum SpendStepPurpose {
 class SpendStepHandler {
     init() {}
 
-    // nil when the chain has no such step for the wallet
-    class func instance(wallet _: Wallet, purpose _: SpendStepPurpose) -> ISpendStepHandler? { nil }
+    /// nil when the chain has no such step for the wallet
+    class func instance(wallet _: Wallet, purpose _: SpendStepPurpose) -> ISpendStepHandler? {
+        nil
+    }
 }

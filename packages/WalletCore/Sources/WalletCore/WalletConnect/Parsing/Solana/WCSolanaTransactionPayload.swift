@@ -15,5 +15,7 @@ class WCSolanaTransactionPayload: WCRequestPayload {
         super.init(request: request, kind: .transaction, from: from)
     }
 
-    override var isSignOnly: Bool { method != Self.signAndSendMethod }
+    override var isSignOnly: Bool {
+        method != Self.signAndSendMethod
+    }
 }

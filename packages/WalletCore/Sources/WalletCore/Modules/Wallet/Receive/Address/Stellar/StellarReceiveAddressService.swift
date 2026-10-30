@@ -1,5 +1,7 @@
 class StellarReceiveAddressService: BaseReceiveAddressService {
-    var stellarAdapter: StellarAdapter? { super.adapter as? StellarAdapter }
+    var stellarAdapter: StellarAdapter? {
+        super.adapter as? StellarAdapter
+    }
 
     override func dataStatus(_ dataStatus: DataStatus<DepositAddress>, isMainNet: Bool) -> DataStatus<ReceiveAddress> {
         let assetReceiveAddress = super.dataStatus(dataStatus, isMainNet: isMainNet)

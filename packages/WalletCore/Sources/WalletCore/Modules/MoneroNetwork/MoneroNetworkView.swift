@@ -111,7 +111,7 @@ struct MoneroNetworkView: View {
         }
     }
 
-    @ViewBuilder private func nodeCell(item: MoneroNetworkViewModel.NodeItem) -> some View {
+    private func nodeCell(item: MoneroNetworkViewModel.NodeItem) -> some View {
         Cell(
             middle: {
                 MultiText(title: item.name, subtitle: item.url)

@@ -71,7 +71,7 @@ public struct HUDConfig: HUDViewModel, HUDCoverModel, HUDContainerModel {
     public var coverOutAnimationDuration: TimeInterval = HUDTheme.coverDisappearDuration
     public var coverAnimationCurve: UIView.AnimationOptions = HUDTheme.coverAnimationCurve
     public var coverBackgroundColor: UIColor = HUDTheme.coverBackgroundColor
-    public var coverBlurEffectStyle: UIBlurEffect.Style? = nil
+    public var coverBlurEffectStyle: UIBlurEffect.Style?
     public var coverBlurEffectIntensity: CGFloat? = HUDTheme.coverBlurEffectIntensity
 
     public var userInteractionEnabled: Bool = true

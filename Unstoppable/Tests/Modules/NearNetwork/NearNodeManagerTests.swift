@@ -37,7 +37,7 @@ struct NearNodeManagerTests {
     private let mainNet = NearKit.Network.mainNet
     private let testNet = NearKit.Network.testNet
 
-    // Android NearRpcSourceManager names over the kit's own list
+    /// Android NearRpcSourceManager names over the kit's own list
     @Test func listComesFromTheKitWithAndroidNames() throws {
         let env = try NearNodeTestEnvironment()
 
@@ -67,7 +67,7 @@ struct NearNodeManagerTests {
         #expect(reloaded.node(network: mainNet).url == target.url)
     }
 
-    // The choice reorders the kit's failover list rather than shortening it
+    /// The choice reorders the kit's failover list rather than shortening it
     @Test func selectedNodeLeadsTheFailoverList() throws {
         let env = try NearNodeTestEnvironment()
         let target = env.manager.allNodes(network: mainNet)[2]
@@ -82,7 +82,7 @@ struct NearNodeManagerTests {
         #expect(env.manager.rpcUrls(network: mainNet) == mainNet.rpcUrls)
     }
 
-    // a stored url the kit no longer lists falls back to its first node
+    /// a stored url the kit no longer lists falls back to its first node
     @Test func unknownStoredNodeFallsBackToTheFirst() throws {
         let env = try NearNodeTestEnvironment()
 
@@ -103,7 +103,7 @@ struct NearNodeManagerTests {
         #expect(env.manager.node(network: mainNet).url == mainTarget.url)
     }
 
-    @Test func testnetChoiceDoesNotOverwriteMainnetChoice() throws {
+    @Test func netChoiceDoesNotOverwriteMainnetChoice() throws {
         let env = try NearNodeTestEnvironment()
         let mainTarget = env.manager.allNodes(network: mainNet)[2]
         let testTarget = env.manager.allNodes(network: testNet)[1]

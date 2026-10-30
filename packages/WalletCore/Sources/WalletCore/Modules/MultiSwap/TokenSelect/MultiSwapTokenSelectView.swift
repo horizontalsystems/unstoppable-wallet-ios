@@ -65,7 +65,7 @@ struct MultiSwapTokenSelectView: View {
             }
         }
 
-        @ViewBuilder private func list() -> some View {
+        private func list() -> some View {
             ThemeList(bottomSpacing: .margin16) {
                 if viewModel.searching {
                     ListForEach(viewModel.searchResults) { item in
@@ -113,7 +113,7 @@ struct MultiSwapTokenSelectView: View {
             }
         }
 
-        @ViewBuilder private func popularRow() -> some View {
+        private func popularRow() -> some View {
             VStack(spacing: 0) {
                 HorizontalDivider()
 
@@ -147,8 +147,8 @@ struct MultiSwapTokenSelectView: View {
             .background(Color.themeLawrence)
         }
 
-        // 20pt coin circle; non-native tokens get a 10pt chain badge on a 12pt background-colored plate
-        @ViewBuilder private func chipIcon(token: Token) -> some View {
+        /// 20pt coin circle; non-native tokens get a 10pt chain badge on a 12pt background-colored plate
+        private func chipIcon(token: Token) -> some View {
             ZStack(alignment: .bottomTrailing) {
                 CoinIconView(token: token, size: 20)
 
@@ -167,7 +167,7 @@ struct MultiSwapTokenSelectView: View {
             }
         }
 
-        @ViewBuilder private func row(_ item: MultiSwapTokenSelectViewModel.Item) -> some View {
+        private func row(_ item: MultiSwapTokenSelectViewModel.Item) -> some View {
             Cell(
                 left: { CoinIconView(token: item.token) },
                 middle: { MultiText(title: item.token.coin.code, badge: item.token.badge, subtitle: item.token.coin.name) },

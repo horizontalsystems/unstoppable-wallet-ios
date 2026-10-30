@@ -3,8 +3,8 @@ import ObjectMapper
 import Testing
 @testable import WalletCore
 
-// /v3/split/track answers the /v3/track body with `splitUuid`: one deposit leg, then each output's payout
-// (and refund) legs tagged `meta.outputIndex`
+/// /v3/split/track answers the /v3/track body with `splitUuid`: one deposit leg, then each output's payout
+/// (and refund) legs tagged `meta.outputIndex`
 struct SplitSwapTrackTests {
     @Test func flatSplitBodyDerivesOutputsFromPayoutLegs() throws {
         let response = try Self.response([

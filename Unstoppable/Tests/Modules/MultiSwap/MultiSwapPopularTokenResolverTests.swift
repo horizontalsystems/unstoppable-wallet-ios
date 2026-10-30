@@ -3,8 +3,8 @@ import Testing
 @testable import Unstoppable
 @testable import WalletCore
 
-// context-aware Popular Tokens formula, ported from Android SwapPopularTokens:
-// Case A (non-native context) -> own-chain native first, Case B (native) -> same-chain USDT first
+/// context-aware Popular Tokens formula, ported from Android SwapPopularTokens:
+/// Case A (non-native context) -> own-chain native first, Case B (native) -> same-chain USDT first
 struct MultiSwapPopularTokenResolverTests {
     @Test func noContextStartsWithBitcoinAndFollowsFormula() {
         let result = MultiSwapPopularTokenResolver.tokens(marketKit: Self.stub(), for: nil)

@@ -64,6 +64,8 @@ extension RestoreBackupListViewModel {
         let walletCount: Int?
         let timestamp: TimeInterval?
 
-        var isFull: Bool { walletCount != nil }
+        var isFull: Bool {
+            walletCount != nil
+        }
     }
 }

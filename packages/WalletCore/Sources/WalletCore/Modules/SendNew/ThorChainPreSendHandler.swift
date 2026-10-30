@@ -36,19 +36,30 @@ final class ThorChainPreSendHandler: PreSendHandler, IPreSendHandler {
             .disposed(by: disposeBag)
     }
 
-    var state: AdapterState { adapter.balanceState }
-    var statePublisher: AnyPublisher<AdapterState, Never> { stateSubject.eraseToAnyPublisher() }
-    // The fee is charged in RUNE, so only a RUNE send has to leave room for it. This is
-    // the balance the amount is chosen against, and nothing re-reads it before signing.
+    var state: AdapterState {
+        adapter.balanceState
+    }
+
+    var statePublisher: AnyPublisher<AdapterState, Never> {
+        stateSubject.eraseToAnyPublisher()
+    }
+
+    /// The fee is charged in RUNE, so only a RUNE send has to leave room for it. This is
+    /// the balance the amount is chosen against, and nothing re-reads it before signing.
     var balance: Decimal {
         let available = adapter.balanceData.available
         return adapter.isNativeCoin ? max(0, available - adapter.fee) : available
     }
 
-    var balancePublisher: AnyPublisher<Decimal, Never> { balanceSubject.eraseToAnyPublisher() }
-    // Chain-constant, so it reads the one table rather than restating it: a THORChain memo is public
-    // on-chain (.onChainPublic).
-    func memoType(address _: String?) -> MemoType { token.blockchainType.memoType }
+    var balancePublisher: AnyPublisher<Decimal, Never> {
+        balanceSubject.eraseToAnyPublisher()
+    }
+
+    /// Chain-constant, so it reads the one table rather than restating it: a THORChain memo is public
+    /// on-chain (.onChainPublic).
+    func memoType(address _: String?) -> MemoType {
+        token.blockchainType.memoType
+    }
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
         do {

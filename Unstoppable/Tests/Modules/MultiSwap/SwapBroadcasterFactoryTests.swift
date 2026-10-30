@@ -59,7 +59,7 @@ struct SwapBroadcasterFactoryTests {
         #expect(stub.id == "matching")
     }
 
-    // downstream apps extend SwapBroadcasterError without touching WalletCore
+    /// downstream apps extend SwapBroadcasterError without touching WalletCore
     @Test func errorIsExtensible() {
         #expect(SwapBroadcasterError.stubExternal == SwapBroadcasterError(rawValue: "stubExternal"))
         #expect(SwapBroadcasterError.stubExternal != .noBroadcaster)
@@ -67,7 +67,9 @@ struct SwapBroadcasterFactoryTests {
 }
 
 private extension SwapBroadcasterError {
-    static var stubExternal: Self { .init(rawValue: "stubExternal") }
+    static var stubExternal: Self {
+        .init(rawValue: "stubExternal")
+    }
 }
 
 private struct StubBroadcaster: ISwapBroadcaster {

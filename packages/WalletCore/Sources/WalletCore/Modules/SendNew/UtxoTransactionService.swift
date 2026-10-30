@@ -5,7 +5,9 @@ import SwiftUI
 
 class UtxoTransactionService: TransactionService {
     override class func instance(sendData: SendData, baseToken: Token, initialTransactionSettings _: InitialTransactionSettings?) -> ITransactionService? {
-        if case .bitcoinResend = sendData { return nil }
+        if case .bitcoinResend = sendData {
+            return nil
+        }
         guard BtcBlockchainManager.blockchainTypes.contains(baseToken.blockchainType),
               let adapter = Core.shared.adapterManager.adapter(for: baseToken) as? BitcoinBaseAdapter
         else { return nil }

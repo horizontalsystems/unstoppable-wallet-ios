@@ -2,7 +2,7 @@ import Combine
 import Foundation
 import MarketKit
 
-// The Standard tab of PreSendView: a direct transfer to the recipient, with memo and destination tag.
+/// The Standard tab of PreSendView: a direct transfer to the recipient, with memo and destination tag.
 public class PreSendViewModel: BasePreSendViewModel {
     @Published var memoType: MemoType = .none
     @Published var destinationTagState: DestinationTagState = .hidden
@@ -61,8 +61,8 @@ public class PreSendViewModel: BasePreSendViewModel {
         syncSendData()
     }
 
-    // Only the Standard tab tells the shared handler about the recipient: the handler's
-    // address-dependent state (e.g. the XRP destination tag) follows the Standard address.
+    /// Only the Standard tab tells the shared handler about the recipient: the handler's
+    /// address-dependent state (e.g. the XRP destination tag) follows the Standard address.
     override func didChangeAddress() {
         handler?.set(address: resolvedAddress?.address)
         syncMemoType()
@@ -105,7 +105,7 @@ public class PreSendViewModel: BasePreSendViewModel {
         isMemoTooLong ? "send.memo.too_long".localized : nil
     }
 
-    // Shown as it came and blocking the send, never cut to fit; measured as sent, without edge whitespace
+    /// Shown as it came and blocking the send, never cut to fit; measured as sent, without edge whitespace
     private var isMemoTooLong: Bool {
         guard let memoMaxBytes else {
             return false

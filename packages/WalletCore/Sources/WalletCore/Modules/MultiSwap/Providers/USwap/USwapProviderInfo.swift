@@ -4,12 +4,12 @@ public struct USwapProviderInfo: Equatable {
     public let icon: String
     public let preciseEstimateTime: Bool
     public let requireTerms: Bool
-    // Routes through a confidential rail. The private send flow offers a provider only when both the server
-    // (ConfidentialProviderRegistry) and this flag mark it confidential; the swap screen lists it like any other.
+    /// Routes through a confidential rail. The private send flow offers a provider only when both the server
+    /// (ConfidentialProviderRegistry) and this flag mark it confidential; the swap screen lists it like any other.
     public let confidential: Bool
-    // Takes a unified ZEC address as the refund target. Not published by /v3/providers, so declared here:
-    // transfer venues validate a ZEC refund as transparent (QuickEx and StealthEX reject `u1`), Maya refunds to
-    // the memo's address (Sapling receiver), 1Click to an Orchard one.
+    /// Takes a unified ZEC address as the refund target. Not published by /v3/providers, so declared here:
+    /// transfer venues validate a ZEC refund as transparent (QuickEx and StealthEX reject `u1`), Maya refunds to
+    /// the memo's address (Sapling receiver), 1Click to an Orchard one.
     public let acceptsUnifiedZcashRefund: Bool
 
     public init(id: String, name: String, icon: String, preciseEstimateTime: Bool = true, requireTerms: Bool, confidential: Bool = false, acceptsUnifiedZcashRefund: Bool = false) {
@@ -32,8 +32,8 @@ public extension USwapProviderInfo {
         acceptsUnifiedZcashRefund: true
     )
 
-    // Quoted on the ordinary swap screen like the others and also used by the private send flow,
-    // which resolves it through ConfidentialProviderRegistry.
+    /// Quoted on the ordinary swap screen like the others and also used by the private send flow,
+    /// which resolves it through ConfidentialProviderRegistry.
     static let nearConfidential = USwapProviderInfo(
         id: "NEAR_CONFIDENTIAL",
         name: "Near Confidential",
@@ -130,7 +130,7 @@ public extension USwapProviderInfo {
         requireTerms: true
     )
 
-    // History only: records made through the former single Stellar card. Never quoted.
+    /// History only: records made through the former single Stellar card. Never quoted.
     static let stellarBroker = USwapProviderInfo(
         id: "STELLARBROKER",
         name: "StellarBroker",

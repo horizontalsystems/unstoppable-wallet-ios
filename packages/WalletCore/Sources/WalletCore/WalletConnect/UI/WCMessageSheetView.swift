@@ -1,6 +1,6 @@
 import SwiftUI
 
-// Full message text over the sign sheet; content sizes the sheet, as every other bottom sheet here
+/// Full message text over the sign sheet; content sizes the sheet, as every other bottom sheet here
 struct WCMessageSheetView: View {
     let text: String
     @Binding var isPresented: Bool

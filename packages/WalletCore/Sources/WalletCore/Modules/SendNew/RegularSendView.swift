@@ -15,7 +15,9 @@ struct RegularSendView: View {
     }
 
     private var showSlideButton: Bool {
-        if sendViewModel.sending { return true }
+        if sendViewModel.sending {
+            return true
+        }
         guard case .success = sendViewModel.state else { return false }
         return sendViewModel.sendData != nil && sendViewModel.canSend && !sendViewModel.expired
     }

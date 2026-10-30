@@ -42,7 +42,7 @@ struct ZcashReceiveAddressSelectView: View {
         })
     }
 
-    @ViewBuilder private func cell(viewItem: ZcashReceiveAddressSelectViewModel.ViewItem) -> some View {
+    private func cell(viewItem: ZcashReceiveAddressSelectViewModel.ViewItem) -> some View {
         Cell(
             middle: {
                 MultiText(title: viewItem.title, subtitle: viewItem.description)

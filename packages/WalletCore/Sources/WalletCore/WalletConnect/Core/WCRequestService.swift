@@ -1,7 +1,7 @@
 import HsToolKit
 import ReownWalletKit
 
-// Single entry for every incoming request (live, pending replay, expiration): parse → verify → branch
+/// Single entry for every incoming request (live, pending replay, expiration): parse → verify → branch
 class WCRequestService {
     private let parsers: WCParserRegistry
     private let verifiers: WCVerifierRegistry

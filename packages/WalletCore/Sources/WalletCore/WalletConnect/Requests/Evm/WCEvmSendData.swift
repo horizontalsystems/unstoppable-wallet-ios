@@ -2,7 +2,7 @@ import EvmKit
 import Foundation
 import MarketKit
 
-// The EVM rows of the request card without the fee, which the wrapper places after network and wallet
+/// The EVM rows of the request card without the fee, which the wrapper places after network and wallet
 class WCEvmSendData: ISendData {
     let evmSendData: EvmSendData
 
@@ -10,10 +10,21 @@ class WCEvmSendData: ISendData {
         self.evmSendData = evmSendData
     }
 
-    var feeData: FeeData? { evmSendData.feeData }
-    var canSend: Bool { evmSendData.canSend }
-    var rateCoins: [Coin] { evmSendData.rateCoins }
-    var amountAdjusted: Bool { evmSendData.amountAdjusted }
+    var feeData: FeeData? {
+        evmSendData.feeData
+    }
+
+    var canSend: Bool {
+        evmSendData.canSend
+    }
+
+    var rateCoins: [Coin] {
+        evmSendData.rateCoins
+    }
+
+    var amountAdjusted: Bool {
+        evmSendData.amountAdjusted
+    }
 
     var customSendButtonTitle: String? {
         if case .approveEip20 = evmSendData.decoration.type {
@@ -70,7 +81,7 @@ class WCEvmSendData: ISendData {
         return [SendDataSection(fields, isMain: false)]
     }
 
-    // Android ViewItem.Amount -> "Value" coin amount only (no fiat); ViewItem.Address -> shortened + copy
+    /// Android ViewItem.Amount -> "Value" coin amount only (no fiat); ViewItem.Address -> shortened + copy
     private func outgoingFields(token: Token, to: EvmKit.Address, value: Decimal) -> [SendField] {
         [
             .value(title: "value".localized, appValue: AppValue(token: token, value: value), currencyValue: nil, formatFull: true),

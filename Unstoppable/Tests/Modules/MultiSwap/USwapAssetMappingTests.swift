@@ -52,8 +52,8 @@ struct USwapAssetMappingTests {
         #expect(assetMap[bitcoinTokenQueryId] == "BTC.BTC")
     }
 
-    // The server calls the XRP Ledger "ripple"; without the row the chain is dropped silently and
-    // the swap never even asks for a quote.
+    /// The server calls the XRP Ledger "ripple"; without the row the chain is dropped silently and
+    /// the swap never even asks for a quote.
     @Test func rippleChainMapsToNativeXrp() {
         let assetMap = USwapAssetRepository.assetMap(
             tokens: [.init(chain: "Ripple", chainId: "ripple", address: nil, identifier: "XRP.XRP")],
@@ -63,7 +63,7 @@ struct USwapAssetMappingTests {
         #expect(assetMap[BlockchainType.xrp.nativeTokenQueries[0].id.lowercased()] == "XRP.XRP")
     }
 
-    // Only native XRP is quotable: an issued currency carries an issuer in `address` (Android parity)
+    /// Only native XRP is quotable: an issued currency carries an issuer in `address` (Android parity)
     @Test func xrpIssuedCurrencyIsNotMapped() {
         let assetMap = USwapAssetRepository.assetMap(
             tokens: [.init(chain: "Ripple", chainId: "ripple", address: "rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De", identifier: "XRP.RLUSD")],
@@ -73,7 +73,7 @@ struct USwapAssetMappingTests {
         #expect(assetMap.isEmpty)
     }
 
-    // native NEAR has no contract; the server routes it through wrap.near itself (Android parity)
+    /// native NEAR has no contract; the server routes it through wrap.near itself (Android parity)
     @Test func nearChainMapsNativeWithoutAddress() {
         let assetMap = USwapAssetRepository.assetMap(
             tokens: [.init(chain: "Near", chainId: "near", address: nil, identifier: "NEAR.NEAR")],
@@ -94,7 +94,7 @@ struct USwapAssetMappingTests {
         #expect(assetMap[query.id.lowercased()] == "NEAR.USDT-USDT.TETHER-TOKEN.NEAR")
     }
 
-    // Android SwapSuspension: the chain code and the upper-cased contract
+    /// Android SwapSuspension: the chain code and the upper-cased contract
     @Test func nearCanonicalIds() {
         let blockchain = Blockchain(type: .near, name: "Near Protocol", explorerUrl: nil)
         let near = Token(coin: Coin(uid: "near", name: "NEAR", code: "NEAR"), blockchain: blockchain, type: .native, decimals: 24)

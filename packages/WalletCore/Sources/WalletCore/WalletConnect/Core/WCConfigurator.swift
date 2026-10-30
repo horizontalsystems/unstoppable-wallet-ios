@@ -2,7 +2,7 @@ import Foundation
 import ReownWalletKit
 
 class WCConfigurator {
-    // the SDK's telemetry storage writes `true` on first access, so the key must exist before Networking.configure
+    /// the SDK's telemetry storage writes `true` on first access, so the key must exist before Networking.configure
     static let telemetryKey = "com.walletconnect.sdk.telemetryEnabled"
 
     private let sdk: IWCSdkConfigurator

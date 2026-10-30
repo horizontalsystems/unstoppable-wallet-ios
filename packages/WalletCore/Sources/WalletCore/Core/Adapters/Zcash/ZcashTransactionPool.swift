@@ -98,8 +98,8 @@ class ZcashTransactionPool {
         }
     }
 
-    // The newest by mined height, unmined ones newest of all; expired unmined and failed ones do not count. Not
-    // by timestamp: an unmined wrapper's timestamp is the wrap time, renewed on every resync.
+    /// The newest by mined height, unmined ones newest of all; expired unmined and failed ones do not count. Not
+    /// by timestamp: an unmined wrapper's timestamp is the wrap time, renewed on every resync.
     private func latest(lastBlockHeight: Int, where isIncluded: (ZcashTransactionWrapper) -> Bool) -> ZcashTransactionWrapper? {
         let snapshot = stateQueue.sync { confirmedTransactions.union(pendingTransactions) }
 

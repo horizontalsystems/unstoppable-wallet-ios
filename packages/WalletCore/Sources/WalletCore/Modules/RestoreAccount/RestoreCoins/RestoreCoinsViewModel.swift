@@ -222,7 +222,9 @@ extension RestoreCoinsViewModel {
         let isEnabled: Bool
         let hasSettings: Bool
 
-        var id: String { blockchain.uid }
+        var id: String {
+            blockchain.uid
+        }
 
         static func == (lhs: Item, rhs: Item) -> Bool {
             lhs.id == rhs.id

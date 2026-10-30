@@ -6,8 +6,8 @@ import Testing
 @testable import Unstoppable
 @testable import WalletCore
 
-// the "Guaranteed" row must prefer the server-enforced minBuyAmount over the
-// client-side slippage estimate, and USwap providers must wire it through
+/// the "Guaranteed" row must prefer the server-enforced minBuyAmount over the
+/// client-side slippage estimate, and USwap providers must wire it through
 struct SwapGuaranteedAmountTests {
     private static func finalQuote(slippage: Decimal?, minAmountOut: Decimal? = nil) -> SwapFinalQuote {
         SwapFinalQuote(
@@ -117,11 +117,21 @@ extension SwapGuaranteedAmountTests {
     private struct StubSubProvider: USwapSubProvider {
         let response: USwapMultiSwapApi.SwapResponse
 
-        var info: USwapProviderInfo { .quickEx }
-        var syncPublisher: AnyPublisher<Void, Never>? { nil }
+        var info: USwapProviderInfo {
+            .quickEx
+        }
 
-        func slippageSupported(tokenIn _: Token, tokenOut _: Token) -> Bool { true }
-        func supports(tokenIn _: Token, tokenOut _: Token) -> Bool { true }
+        var syncPublisher: AnyPublisher<Void, Never>? {
+            nil
+        }
+
+        func slippageSupported(tokenIn _: Token, tokenOut _: Token) -> Bool {
+            true
+        }
+
+        func supports(tokenIn _: Token, tokenOut _: Token) -> Bool {
+            true
+        }
 
         func rate(input _: USwapRateInput) async throws -> USwapRateResult {
             throw USwapMultiSwapProvider.SwapError.noRoutes
@@ -137,12 +147,19 @@ extension SwapGuaranteedAmountTests {
 
         func reportSigned(uuid _: String, inboundTxHash _: String) async throws {}
 
-        func validateTrustedProvider(tokenIn _: Token, amountIn _: Decimal) async throws -> Bool? { nil }
-        func track(swap: Swap) async throws -> Swap { swap }
+        func validateTrustedProvider(tokenIn _: Token, amountIn _: Decimal) async throws -> Bool? {
+            nil
+        }
+
+        func track(swap: Swap) async throws -> Swap {
+            swap
+        }
     }
 
     private struct StubFinalQuoteBuilder: USwapFinalQuoteBuilder {
-        func supports(input _: USwapFinalQuoteFactory.Input) -> Bool { true }
+        func supports(input _: USwapFinalQuoteFactory.Input) -> Bool {
+            true
+        }
 
         func build(input: USwapFinalQuoteFactory.Input) async throws -> SwapFinalQuote {
             SwapFinalQuote(

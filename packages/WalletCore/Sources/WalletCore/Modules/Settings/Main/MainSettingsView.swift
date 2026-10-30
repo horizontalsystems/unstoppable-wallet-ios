@@ -93,7 +93,7 @@ struct MainSettingsView: View {
         }
     }
 
-    @ViewBuilder private func slider() -> some View {
+    private func slider() -> some View {
         VStack(spacing: 0) {
             let hasIndicators = viewModel.slides.count > 1
             TabView(selection: $currentSlideIndex) {
@@ -142,7 +142,7 @@ struct MainSettingsView: View {
         }
     }
 
-    @ViewBuilder private func manageWallets() -> some View {
+    private func manageWallets() -> some View {
         NavigationLink(destination: {
             ManageAccountsView(parentPresented: nil)
                 .onFirstAppear {
@@ -158,7 +158,7 @@ struct MainSettingsView: View {
         .buttonStyle(CellButtonStyle())
     }
 
-    @ViewBuilder private func blockchainSettings() -> some View {
+    private func blockchainSettings() -> some View {
         NavigationLink(destination: {
             BlockchainSettingsModule.view()
                 .onFirstAppear {
@@ -174,7 +174,7 @@ struct MainSettingsView: View {
         .buttonStyle(CellButtonStyle())
     }
 
-    @ViewBuilder private func security() -> some View {
+    private func security() -> some View {
         NavigationLink(destination: {
             SecuritySettingsView()
                 .onFirstAppear {
@@ -190,7 +190,7 @@ struct MainSettingsView: View {
         .buttonStyle(CellButtonStyle())
     }
 
-    @ViewBuilder private func privacy() -> some View {
+    private func privacy() -> some View {
         NavigationLink(destination: {
             PrivacyPolicyView(config: .privacy)
                 .onFirstAppear {
@@ -206,7 +206,7 @@ struct MainSettingsView: View {
         .buttonStyle(CellButtonStyle())
     }
 
-    @ViewBuilder private func dAppConnection() -> some View {
+    private func dAppConnection() -> some View {
         Cell(
             left: { ThemeImage("link", size: .iconSize24) },
             middle: { ThemeText("settings.dapp_connection".localized, style: .headline2) },
@@ -227,7 +227,7 @@ struct MainSettingsView: View {
         )
     }
 
-    @ViewBuilder private func tonConnect() -> some View {
+    private func tonConnect() -> some View {
         NavigationLink(destination: {
             TonConnectListView()
         }) {
@@ -240,7 +240,7 @@ struct MainSettingsView: View {
         .buttonStyle(CellButtonStyle())
     }
 
-    @ViewBuilder private func appSettings() -> some View {
+    private func appSettings() -> some View {
         NavigationLink(destination: {
             AppearanceView()
                 .onFirstAppear {
@@ -256,7 +256,7 @@ struct MainSettingsView: View {
         .buttonStyle(CellButtonStyle())
     }
 
-    @ViewBuilder private func subscription() -> some View {
+    private func subscription() -> some View {
         NavigationLink(destination: {
             PurchaseListView()
                 .onFirstAppear {
@@ -272,7 +272,7 @@ struct MainSettingsView: View {
         .buttonStyle(CellButtonStyle())
     }
 
-    @ViewBuilder private func contacts() -> some View {
+    private func contacts() -> some View {
         Cell(
             left: { ThemeImage("user", size: .iconSize24) },
             middle: { ThemeText("contacts.title".localized, style: .headline2) },
@@ -288,7 +288,7 @@ struct MainSettingsView: View {
         )
     }
 
-    @ViewBuilder private func backupManager() -> some View {
+    private func backupManager() -> some View {
         NavigationLink(destination: {
             BackupManagerView()
                 .onFirstAppear {
@@ -304,7 +304,7 @@ struct MainSettingsView: View {
         .buttonStyle(CellButtonStyle())
     }
 
-    @ViewBuilder private func vipSupport() -> some View {
+    private func vipSupport() -> some View {
         Cell(
             left: { ThemeImage("support", size: .iconSize24, colorStyle: .yellow) },
             middle: { ThemeText("purchases.priority_support".localized, style: .headline2) },
@@ -326,7 +326,7 @@ struct MainSettingsView: View {
         )
     }
 
-    @ViewBuilder private func addressChecker() -> some View {
+    private func addressChecker() -> some View {
         Cell(
             left: { ThemeImage("radar", size: .iconSize24, colorStyle: .yellow) },
             middle: { ThemeText("address_checker.title".localized, style: .headline2) },
@@ -344,7 +344,7 @@ struct MainSettingsView: View {
         )
     }
 
-    @ViewBuilder private func aboutApp() -> some View {
+    private func aboutApp() -> some View {
         NavigationLink(destination: {
             AboutModule.view()
                 .onFirstAppear {
@@ -360,7 +360,7 @@ struct MainSettingsView: View {
         .buttonStyle(CellButtonStyle())
     }
 
-    @ViewBuilder private func rateUs() -> some View {
+    private func rateUs() -> some View {
         Cell(
             left: { ThemeImage("star", size: .iconSize24) },
             middle: { ThemeText("settings.rate_us".localized, style: .headline2) },
@@ -372,7 +372,7 @@ struct MainSettingsView: View {
         )
     }
 
-    @ViewBuilder private func tellFriend() -> some View {
+    private func tellFriend() -> some View {
         Cell(
             left: { ThemeImage("arrow_out", size: .iconSize24) },
             middle: { ThemeText("settings.tell_friends".localized, style: .headline2) },
@@ -386,7 +386,7 @@ struct MainSettingsView: View {
         )
     }
 
-    @ViewBuilder private func faq() -> some View {
+    private func faq() -> some View {
         NavigationLink(destination: {
             FaqView()
                 .onFirstAppear {
@@ -402,7 +402,7 @@ struct MainSettingsView: View {
         .buttonStyle(CellButtonStyle())
     }
 
-    @ViewBuilder private func telegram() -> some View {
+    private func telegram() -> some View {
         Cell(
             left: { ThemeImage("telegram_logo", size: .iconSize24) },
             middle: { ThemeText("Telegram", style: .headline2) },
@@ -422,7 +422,7 @@ struct MainSettingsView: View {
         )
     }
 
-    @ViewBuilder private func twitter() -> some View {
+    private func twitter() -> some View {
         Cell(
             left: { ThemeImage("x_logo", size: .iconSize24) },
             middle: { ThemeText("Twitter", style: .headline2) },
@@ -441,7 +441,7 @@ struct MainSettingsView: View {
         )
     }
 
-    @ViewBuilder private func donate() -> some View {
+    private func donate() -> some View {
         Cell(
             left: { Image("heart_24").themeIcon() },
             middle: { ThemeText("settings.donate.title".localized, style: .headline2) },
@@ -455,7 +455,7 @@ struct MainSettingsView: View {
         )
     }
 
-    @ViewBuilder private func footer() -> some View {
+    private func footer() -> some View {
         VStack(spacing: .margin32) {
             VStack(spacing: 0) {
                 Text("\(AppConfig.appName.uppercased()) \(viewModel.appVersion)")
@@ -478,7 +478,7 @@ struct MainSettingsView: View {
         }
     }
 
-    @ViewBuilder private func testSwitchersSection() -> some View {
+    private func testSwitchersSection() -> some View {
         ListSection {
             Cell(
                 middle: { ThemeText("Force Enable Swap", style: .headline2) },

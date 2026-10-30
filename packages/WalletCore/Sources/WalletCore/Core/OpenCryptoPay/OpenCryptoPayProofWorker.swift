@@ -1,6 +1,6 @@
 import Foundation
 
-// Per-txHash worker: re-submits one OCP proof until delivered (or terminal/expired). Foreground-only, own 30s period.
+/// Per-txHash worker: re-submits one OCP proof until delivered (or terminal/expired). Foreground-only, own 30s period.
 class OpenCryptoPayProofWorker: IAppWorker {
     let id: String
     let interval: TimeInterval = 30
@@ -25,10 +25,7 @@ class OpenCryptoPayProofWorker: IAppWorker {
         } catch {
             return false // transient DB read error → retry next interval, don't self-terminate
         }
-        guard let fresh else {
-            return true
-        }
-        guard fresh.proofStatus == .pending else {
+        guard let fresh, fresh.proofStatus == .pending else {
             return true
         }
 

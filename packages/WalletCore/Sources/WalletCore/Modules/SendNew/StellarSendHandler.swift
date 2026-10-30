@@ -85,7 +85,7 @@ extension StellarSendHandler: ISendHandler {
 }
 
 extension StellarSendHandler: ISendHandlerRefCapturing {
-    // Same broadcast path as `send`, returning the on-chain tx hash.
+    /// Same broadcast path as `send`, returning the on-chain tx hash.
     func sendCapturingRef(data: ISendData) async throws -> String {
         guard let data = data as? SendData, let operations = data.operations else {
             throw StellarSendHelper.SendError.noStellarKit
@@ -127,8 +127,8 @@ extension StellarSendHandler {
             transactionError == nil
         }
 
-        // An amount below the create-account minimum needs new input, not a refresh: a disabled
-        // Send, as on Android. Every other error keeps Refresh
+        /// An amount below the create-account minimum needs new input, not a refresh: a disabled
+        /// Send, as on Android. Every other error keeps Refresh
         var customSendButtonTitle: String? {
             if case .belowMinimumFirstDeposit = transactionError as? StellarSendHelper.TransactionError {
                 return "button.send".localized
@@ -168,7 +168,7 @@ extension StellarSendHandler {
                     .amount(
                         token: token,
                         appValueType: appValue.isMaxValue ? .infinity(code: appValue.code) : .regular(appValue: appValue),
-                        currencyValue: appValue.isMaxValue ? nil : rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * limit) },
+                        currencyValue: appValue.isMaxValue ? nil : rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * limit) }
                     ),
                     .address(
                         value: asset.issuer ?? "",
@@ -211,15 +211,7 @@ extension StellarSendHandler {
 
 extension StellarSendHandler {
     static func instance(data: StellarSendData, token: Token, memo: String?) -> StellarSendHandler? {
-        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .stellar, tokenType: .native)) else {
-            return nil
-        }
-
-        guard let stellarKit = Core.shared.stellarKitManager.stellarKit else {
-            return nil
-        }
-
-        guard let account = Core.shared.accountManager.activeAccount, let keyPair = try? StellarKitManager.keyPair(accountType: account.type) else {
+        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .stellar, tokenType: .native)), let stellarKit = Core.shared.stellarKitManager.stellarKit, let account = Core.shared.accountManager.activeAccount, let keyPair = try? StellarKitManager.keyPair(accountType: account.type) else {
             return nil
         }
 

@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension Image {
-    // deprecated!
+    /// deprecated!
     func themeIcon(color: Color = .themeGray) -> some View {
         renderingMode(.template).foregroundColor(color)
     }
@@ -26,7 +26,7 @@ extension Image {
         Image("arrow_b_right").icon(size: CGFloat.iconSize20)
     }
 
-    @ViewBuilder static func disclosure(alert: Bool) -> some View {
+    static func disclosure(alert: Bool) -> some View {
         HStack(spacing: .margin8) {
             if alert {
                 Image.warningIcon

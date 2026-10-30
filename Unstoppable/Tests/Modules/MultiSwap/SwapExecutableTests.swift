@@ -10,8 +10,8 @@ import TronKit
 @testable import Unstoppable
 @testable import WalletCore
 
-// build-argument equivalence oracle: executable(tokenIn:) must repackage
-// exactly the fields MultiSwapSendHandler.send reads from each quote today
+/// build-argument equivalence oracle: executable(tokenIn:) must repackage
+/// exactly the fields MultiSwapSendHandler.send reads from each quote today
 struct SwapExecutableTests {
     private static func nearQuote(address: String) -> NearSwapFinalQuote {
         NearSwapFinalQuote(
@@ -368,7 +368,7 @@ struct SwapExecutableTests {
         #expect(executable.amount == 3)
     }
 
-    // built against the preview's stand-in deposit (placeholder.near) for the fee row only: nothing to send
+    /// built against the preview's stand-in deposit (placeholder.near) for the fee row only: nothing to send
     @Test func nearQuoteBuiltOnTheStubDepositIsNotExecutable() {
         let quote = Self.nearQuote(address: "placeholder.near")
         quote.isEstimateOnly = true

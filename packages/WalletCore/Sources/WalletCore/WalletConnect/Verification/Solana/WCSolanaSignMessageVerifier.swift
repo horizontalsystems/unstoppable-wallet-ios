@@ -1,7 +1,7 @@
 import Foundation
 import SolanaKit
 
-// A "message" that deserializes as a transaction or as its signable message would authorize it once signed
+/// A "message" that deserializes as a transaction or as its signable message would authorize it once signed
 class WCSolanaSignMessageVerifier: IWCVerifier {
     func handles(_ context: WCVerificationContext) -> Bool {
         context.payload is WCSolanaSignMessagePayload

@@ -59,11 +59,7 @@ extension EvmPreSendHandler: IPreSendHandler {
     }
 
     func sendData(amount: Decimal, address: String, memo _: String?) -> SendDataResult {
-        guard let evmAmount = BigUInt(amount.hs.roundedString(decimal: token.decimals)) else {
-            return .invalid(cautions: [])
-        }
-
-        guard let evmAddress = try? EvmKit.Address(hex: address) else {
+        guard let evmAmount = BigUInt(amount.hs.roundedString(decimal: token.decimals)), let evmAddress = try? EvmKit.Address(hex: address) else {
             return .invalid(cautions: [])
         }
 

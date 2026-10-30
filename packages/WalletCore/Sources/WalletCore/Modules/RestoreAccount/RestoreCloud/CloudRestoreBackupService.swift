@@ -73,8 +73,12 @@ extension CloudRestoreBackupService {
 extension CloudRestoreBackupService {
     class Item: Comparable, Equatable {
         let name: String
-        var id: String { fatalError() } // Override in subclasses
-        var timestamp: TimeInterval? { nil } // Override in subclasses
+        var id: String {
+            fatalError()
+        } // Override in subclasses
+        var timestamp: TimeInterval? {
+            nil
+        } // Override in subclasses
 
         init(name: String) {
             self.name = name

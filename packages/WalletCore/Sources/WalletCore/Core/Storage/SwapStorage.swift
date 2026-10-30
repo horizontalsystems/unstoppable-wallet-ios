@@ -196,8 +196,8 @@ extension SwapStorage {
         }
     }
 
-    // attaches the on-chain hash to a mechanism-pending swap; returns false when
-    // the handle is unknown or the hash is already set
+    /// attaches the on-chain hash to a mechanism-pending swap; returns false when
+    /// the handle is unknown or the hash is already set
     func setTxHash(_ txHash: String, trackingHandle: String) throws -> Bool {
         try dbPool.write { db in
             try SwapRecord
@@ -206,10 +206,10 @@ extension SwapStorage {
         }
     }
 
-    // releases a mechanism-pending swap whose mechanism broadcast successfully but can never yield
-    // a ref (e.g. TonKit's send returns Void): clearing the handle hands tracking to the provider
-    // by providerSwapId alone, the same way deposit-based swaps are tracked from the start.
-    // Scoped to a nil txHash so it never races a resolve() that already landed
+    /// releases a mechanism-pending swap whose mechanism broadcast successfully but can never yield
+    /// a ref (e.g. TonKit's send returns Void): clearing the handle hands tracking to the provider
+    /// by providerSwapId alone, the same way deposit-based swaps are tracked from the start.
+    /// Scoped to a nil txHash so it never races a resolve() that already landed
     func clearTrackingHandle(_ trackingHandle: String) throws -> Bool {
         try dbPool.write { db in
             try SwapRecord
@@ -218,8 +218,8 @@ extension SwapStorage {
         }
     }
 
-    // the inverse of markFailed for a broadcast retry: only a failed row goes back to notStarted,
-    // so a settled or in-flight swap can never be reset
+    /// the inverse of markFailed for a broadcast retry: only a failed row goes back to notStarted,
+    /// so a settled or in-flight swap can never be reset
     func markNotStarted(trackingHandle: String) throws -> Bool {
         try dbPool.write { db in
             try SwapRecord
@@ -228,8 +228,8 @@ extension SwapStorage {
         }
     }
 
-    // targeted status update for a swap whose mechanism reported failure; scoped to pending
-    // statuses so a settled swap can never be downgraded and a re-delivery is a no-op
+    /// targeted status update for a swap whose mechanism reported failure; scoped to pending
+    /// statuses so a settled swap can never be downgraded and a re-delivery is a no-op
     func markFailed(trackingHandle: String) throws -> Bool {
         let pendingStatuses = Swap.pendingStatuses.map(\.rawValue)
 

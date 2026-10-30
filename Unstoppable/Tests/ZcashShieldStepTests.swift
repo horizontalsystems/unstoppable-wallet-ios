@@ -2,8 +2,8 @@ import Foundation
 import Testing
 @testable import WalletCore
 
-// Spec 2026-10-14 §5.3: a form's balance is everything the user will be able to spend; the step bridges the
-// spendable part and the rest: Shielding in flight → Confirming private funds that cover it → Shield the transparent funds.
+/// Spec 2026-10-14 §5.3: a form's balance is everything the user will be able to spend; the step bridges the
+/// spendable part and the rest: Shielding in flight → Confirming private funds that cover it → Shield the transparent funds.
 struct ZcashShieldStepTests {
     private typealias Helper = ZcashShieldHelper
 
@@ -61,19 +61,19 @@ struct ZcashShieldStepTests {
         #expect(step(amount: 4, available: 2, full: 4) == .confirming)
     }
 
-    // the wallet's own change right after a send
+    /// the wallet's own change right after a send
     @Test func changeAfterSendWaitsForConfirmation() {
         #expect(step(amount: 1, available: 0, full: 3.9998) == .confirming)
     }
 
-    // confirming private funds that cover the amount are waited for rather than shielded: the wallet's own
-    // change confirms in a few blocks, a shielding takes ten and a fee
+    /// confirming private funds that cover the amount are waited for rather than shielded: the wallet's own
+    /// change confirms in a few blocks, a shielding takes ten and a fee
     @Test func amountCoveredByConfirmingFundsWaitsEvenWithTransparent() {
         #expect(step(amount: 1, available: 0, full: 3.4, transparent: 2) == .confirming)
         #expect(step(amount: 3.4, available: 0, full: 3.4, transparent: 2) == .confirming)
     }
 
-    // both waits run in parallel: shielding is offered right away when the private funds will not cover the amount
+    /// both waits run in parallel: shielding is offered right away when the private funds will not cover the amount
     @Test func shieldOfferedWhenConfirmingFundsFallShort() {
         #expect(step(amount: 3.40000001, available: 0, full: 3.4, transparent: 2) == .shield)
         #expect(step(amount: 7.5, available: 2, full: 3, transparent: 5) == .shield)
@@ -121,7 +121,7 @@ struct ZcashShieldStepTests {
         #expect(balance(available: 2, full: 7) == 7)
     }
 
-    // under the SDK's mask the cached available balance can exceed the total
+    /// under the SDK's mask the cached available balance can exceed the total
     @Test func staleAvailableAboveFullKeepsBalanceAtAvailable() {
         #expect(balance(available: 3, full: 2) == 3)
         #expect(step(amount: 3, available: 3, full: 2) == nil)
@@ -163,8 +163,8 @@ struct ZcashShieldStepTests {
 
     // MARK: Held output
 
-    // the summary counts a shielding's output by its transparent inputs' age; a proposal spends it only once the
-    // shielding is at or below the anchor (trusted policy: 3 confirmations of the shielding itself)
+    /// the summary counts a shielding's output by its transparent inputs' age; a proposal spends it only once the
+    /// shielding is at or below the anchor (trusted policy: 3 confirmations of the shielding itself)
     @Test func outputIsHeldUntilTheShieldingIsAnchored() {
         #expect(!Helper.isHeld(minedHeight: nil, lastBlockHeight: 100))
         #expect(Helper.isHeld(minedHeight: 100, lastBlockHeight: 100))
@@ -173,7 +173,7 @@ struct ZcashShieldStepTests {
         #expect(!Helper.isHeld(minedHeight: 100, lastBlockHeight: 0))
     }
 
-    // 2 confirmations: the summary already counts the output, the amount needs it → still Shielding
+    /// 2 confirmations: the summary already counts the output, the amount needs it → still Shielding
     @Test func heldOutputKeepsShieldingUntilAnchored() {
         #expect(step(amount: 0.0051, available: 0.00529606, full: 0.00529606, shieldingProgress: 0.2, heldOutput: 0.00185) == .shielding(progress: 0.2))
         #expect(step(amount: 0.003, available: 0.00529606, full: 0.00529606, shieldingProgress: 0.2, heldOutput: 0.00185) == nil)

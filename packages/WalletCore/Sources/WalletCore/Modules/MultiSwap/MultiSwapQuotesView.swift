@@ -61,7 +61,7 @@ struct MultiSwapQuotesView: View {
         }
     }
 
-    @ViewBuilder private func headerView() -> some View {
+    private func headerView() -> some View {
         ListHeader {
             DropdownButton(text: viewModel.quoteSortType.title) {
                 Coordinator.shared.present(type: .alert) { isPresented in
@@ -104,7 +104,7 @@ struct MultiSwapQuotesView: View {
         return ValueFormatter.instance.formatFull(currency: viewModel.currency, value: quote.quote.expectedBuyAmount * rateOut)
     }
 
-    @ViewBuilder private func providerDescriptionView(quote: MultiSwapViewModel.Quote) -> some View {
+    private func providerDescriptionView(quote: MultiSwapViewModel.Quote) -> some View {
         VStack(alignment: .trailing, spacing: 1) {
             if let type = quote.provider.type {
                 Button(action: onTapProviderInfo) {
@@ -149,9 +149,17 @@ extension MultiSwapQuotesView {
         case subheadSB
         case captionSB
 
-        var hMargin: CGFloat { self == .subheadSB ? 8 : 4 }
-        var iconSize: CGFloat { self == .subheadSB ? .iconSize20 : .iconSize16 }
-        var textStyle: TextStyle { self == .subheadSB ? .subheadSB : .captionSB }
+        var hMargin: CGFloat {
+            self == .subheadSB ? 8 : 4
+        }
+
+        var iconSize: CGFloat {
+            self == .subheadSB ? .iconSize20 : .iconSize16
+        }
+
+        var textStyle: TextStyle {
+            self == .subheadSB ? .subheadSB : .captionSB
+        }
     }
 
     @ViewBuilder static func view(time: MultiSwapViewModel.SwapTimeValue, colorStyle: ColorStyle = .yellow, style: Style = .subheadSB, iconFirst: Bool = false, showIcon: Bool = true) -> some View {
@@ -172,8 +180,8 @@ extension MultiSwapQuotesView {
         }
     }
 
-    // Android-parity formatting: range bounds rounded to whole minutes (floor 1m); a range
-    // that collapses after rounding renders as a single approximate value.
+    /// Android-parity formatting: range bounds rounded to whole minutes (floor 1m); a range
+    /// that collapses after rounding renders as a single approximate value.
     static func string(time: MultiSwapViewModel.SwapTimeValue) -> String {
         switch time {
         case let .approximate(time):
@@ -194,7 +202,7 @@ extension MultiSwapQuotesView {
         max(1, (seconds / 60).rounded()) * 60
     }
 
-    @ViewBuilder static func view(type: SwapProviderType, style: Style = .subheadSB, iconFirst: Bool = false) -> some View {
+    static func view(type: SwapProviderType, style: Style = .subheadSB, iconFirst: Bool = false) -> some View {
         HStack(spacing: style.hMargin) {
             if iconFirst {
                 ThemeImage(type.icon, size: style.iconSize, colorStyle: type.colorStyle)

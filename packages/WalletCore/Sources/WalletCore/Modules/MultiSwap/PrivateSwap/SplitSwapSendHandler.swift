@@ -4,9 +4,7 @@ import MarketKit
 
 class SplitSwapSendHandler: SendHandler {
     override class func instance(sendData: WalletCore.SendData) -> ISendHandler? {
-        guard case let .splitSwap(tokenIn, tokenOut, amountIn, provider, recipients) = sendData else { return nil }
-
-        guard let baseToken = MultiSwapSendHandler.baseToken(tokenIn: tokenIn) else {
+        guard case let .splitSwap(tokenIn, tokenOut, amountIn, provider, recipients) = sendData, let baseToken = MultiSwapSendHandler.baseToken(tokenIn: tokenIn) else {
             return nil
         }
 
@@ -25,7 +23,7 @@ class SplitSwapSendHandler: SendHandler {
     let provider: ISplitSwapProvider
     let recipients: [SplitRecipient]
 
-    // resolved once per confirmation: the mechanism is fixed by (chain, account)
+    /// resolved once per confirmation: the mechanism is fixed by (chain, account)
     private lazy var broadcaster: ISwapBroadcaster? = accountManager.activeAccount.flatMap {
         try? SwapBroadcasterFactory.broadcaster(blockchainType: tokenIn.blockchainType, account: $0)
     }
@@ -51,13 +49,13 @@ extension SplitSwapSendHandler: ISendHandler {
         broadcaster?.expirationDuration ?? 15
     }
 
-    // As the standard swap: the confirmation quote is a side-effect-free preview, silently re-requested on
-    // expiry; the order is created by `provider.splitCommit(finalQuote:)` when the user slides.
+    /// As the standard swap: the confirmation quote is a side-effect-free preview, silently re-requested on
+    /// expiry; the order is created by `provider.splitCommit(finalQuote:)` when the user slides.
     var autoRefreshEnabled: Bool {
         true
     }
 
-    // The recipients and the split are chosen before confirmation: only the generic fee settings remain
+    /// The recipients and the split are chosen before confirmation: only the generic fee settings remain
     var menuItems: [SendMenuItem] {
         []
     }
@@ -155,9 +153,9 @@ extension SplitSwapSendHandler: ISendHandler {
         }
     }
 
-    // One record for the whole split, tracked by its `splitUuid`. The record names no single recipient;
-    // `outputs` is seeded with every recipient and its deposit share, so the info screen lists them
-    // before the first track, and tracking merges its per-output state into these entries by index.
+    /// One record for the whole split, tracked by its `splitUuid`. The record names no single recipient;
+    /// `outputs` is seeded with every recipient and its deposit share, so the info screen lists them
+    /// before the first track, and tracking merges its per-output state into these entries by index.
     private func saveSwap(commitment: SplitSwapCommitment, txHash: String?, trackingHandle: String?) {
         guard let account = accountManager.activeAccount else {
             return
@@ -221,8 +219,8 @@ extension SplitSwapSendHandler {
             super.init(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote, broadcaster: broadcaster, otherSections: [])
         }
 
-        // Input, then an output + address pair per recipient. The arrow sits only under the input;
-        // the recipient pairs are separated by a plain line.
+        /// Input, then an output + address pair per recipient. The arrow sits only under the input;
+        /// the recipient pairs are separated by a plain line.
         override func flowSection(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> SendDataSection {
             var fields: [SendField] = [
                 .amount(

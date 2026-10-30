@@ -17,7 +17,7 @@ struct WCSolanaSignMessageVerifierTests {
         #expect(verifier.verify(context) == .block(reason: .solanaMessageIsTransaction))
     }
 
-    // the bytes a signer actually signs: the transaction without its signatures section
+    /// the bytes a signer actually signs: the transaction without its signatures section
     @Test func blocksBareCompiledMessage() throws {
         let context = try WCTestFixtures.context(payload: payload(message: SolanaRawSigningFixtures.partiallySigned.dropFirst(129)))
         #expect(verifier.verify(context) == .block(reason: .solanaMessageIsTransaction))

@@ -2,13 +2,19 @@ import Foundation
 
 enum Comparators {
     static func booleanFirst(_ lhs: Bool, _ rhs: Bool) -> ComparisonResult {
-        if lhs == rhs { return .orderedSame }
+        if lhs == rhs {
+            return .orderedSame
+        }
         return lhs ? .orderedAscending : .orderedDescending
     }
 
     static func intAscending(_ lhs: Int, _ rhs: Int) -> ComparisonResult {
-        if lhs < rhs { return .orderedAscending }
-        if lhs > rhs { return .orderedDescending }
+        if lhs < rhs {
+            return .orderedAscending
+        }
+        if lhs > rhs {
+            return .orderedDescending
+        }
         return .orderedSame
     }
 
@@ -17,8 +23,12 @@ enum Comparators {
     }
 
     static func decimalDescending(_ lhs: Decimal, _ rhs: Decimal) -> ComparisonResult {
-        if lhs > rhs { return .orderedAscending }
-        if lhs < rhs { return .orderedDescending }
+        if lhs > rhs {
+            return .orderedAscending
+        }
+        if lhs < rhs {
+            return .orderedDescending
+        }
         return .orderedSame
     }
 
@@ -36,8 +46,12 @@ enum Comparators {
     }
 
     static func rawStringAscending(_ lhs: String, _ rhs: String) -> ComparisonResult {
-        if lhs < rhs { return .orderedAscending }
-        if lhs > rhs { return .orderedDescending }
+        if lhs < rhs {
+            return .orderedAscending
+        }
+        if lhs > rhs {
+            return .orderedDescending
+        }
         return .orderedSame
     }
 
@@ -65,10 +79,14 @@ enum Comparators {
         guard !filter.isEmpty else { return .orderedSame }
 
         let exact = exactMatch(lhsCode, rhsCode, filter: filter)
-        if exact != .orderedSame { return exact }
+        if exact != .orderedSame {
+            return exact
+        }
 
         let prefixCode = prefixMatch(lhsCode, rhsCode, filter: filter)
-        if prefixCode != .orderedSame { return prefixCode }
+        if prefixCode != .orderedSame {
+            return prefixCode
+        }
 
         return prefixMatch(lhsName, rhsName, filter: filter)
     }

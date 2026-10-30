@@ -57,13 +57,13 @@ struct ManageAccountsView: View {
         }
     }
 
-    @ViewBuilder private func menuButton(option: AddWalletOption) -> some View {
+    private func menuButton(option: AddWalletOption) -> some View {
         Button(option.label) {
             option.perform(parentPresented: parentPresented)
         }
     }
 
-    @ViewBuilder private func itemView(item: ManageAccountsViewModel.Item) -> some View {
+    private func itemView(item: ManageAccountsViewModel.Item) -> some View {
         Cell(
             left: {
                 Image.checkbox(active: item.isActive)

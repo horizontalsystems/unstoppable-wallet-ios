@@ -12,7 +12,7 @@ protocol IAppWorkerProvider: AnyObject {
     var newWorkerPublisher: AnyPublisher<IAppWorker, Never> { get } // push: appears during the session
 }
 
-// Serializes every worker.run() so per-worker timers may overlap but network calls never fire in parallel.
+/// Serializes every worker.run() so per-worker timers may overlap but network calls never fire in parallel.
 private actor AppWorkerRunner {
     func run(_ worker: IAppWorker) async -> Bool {
         await worker.run()
@@ -41,7 +41,7 @@ class AppWorkerRegistry {
             .store(in: &cancellables)
     }
 
-    // Start + every foreground: (re)create workers for whatever is still unfinished.
+    /// Start + every foreground: (re)create workers for whatever is still unfinished.
     private func bootstrap() {
         for worker in providers.flatMap({ $0.pendingWorkers() }) {
             add(worker, deferred: false)
@@ -65,7 +65,9 @@ class AppWorkerRegistry {
             while !Task.isCancelled {
                 guard let self else { break }
                 let done = await runner.run(worker)
-                if done { break }
+                if done {
+                    break
+                }
                 try? await Task.sleep(seconds: interval)
             }
             // self-remove only on natural finish; cancelAll already cleared the map.

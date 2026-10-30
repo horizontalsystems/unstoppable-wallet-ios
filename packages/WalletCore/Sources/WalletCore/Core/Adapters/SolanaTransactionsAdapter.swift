@@ -48,9 +48,9 @@ class SolanaTransactionsAdapter {
         return records
     }
 
-    // The kit picks a coin's rows by a raw SOL or SPL movement, so a token send that paid the recipient's
-    // account rent lands in SOL. Keep a recognized transfer or swap only when its resolved operation moves
-    // the coin; anything else (unknown, a swap without sides yet) keeps today's behavior.
+    /// The kit picks a coin's rows by a raw SOL or SPL movement, so a token send that paid the recipient's
+    /// account rent lands in SOL. Keep a recognized transfer or swap only when its resolved operation moves
+    /// the coin; anything else (unknown, a swap without sides yet) keeps today's behavior.
     private static func movesToken(_ record: TransactionRecord, token: Token) -> Bool {
         switch record {
         case let record as SolanaIncomingTransactionRecord:

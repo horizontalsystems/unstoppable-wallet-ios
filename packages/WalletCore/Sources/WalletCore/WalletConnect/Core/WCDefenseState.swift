@@ -1,4 +1,4 @@
-// What the Defense System block shows; security decisions stay in WCVerifyState
+/// What the Defense System block shows; security decisions stay in WCVerifyState
 enum WCDefenseState: Equatable {
     case disabled
     case loading

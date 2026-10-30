@@ -25,9 +25,7 @@ class FileStorage {
         let fileUrl = directoryUrl.appendingPathComponent(filename)
 
         logger?.debug("=> FDStorage =>: Start reading file : \(fileUrl.path)")
-        let data = try FileManager.default.contentsOfFile(coordinatingAccessAt: fileUrl)
-
-        return data
+        return try FileManager.default.contentsOfFile(coordinatingAccessAt: fileUrl)
     }
 
     func write(directoryUrl: URL, filename: String, data: Data) throws {

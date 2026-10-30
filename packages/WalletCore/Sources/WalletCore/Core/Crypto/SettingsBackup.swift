@@ -97,10 +97,10 @@ class SettingsBackup: Codable {
         self.appIcon = appIcon
     }
 
-    // Android's Gson omits null fields entirely and the two platforms' key sets are not
-    // identical, so a cross-platform restore must survive any missing key: optionals stay
-    // nil, everything else falls back to the app default instead of failing the whole
-    // FullBackup decode.
+    /// Android's Gson omits null fields entirely and the two platforms' key sets are not
+    /// identical, so a cross-platform restore must survive any missing key: optionals stay
+    /// nil, everything else falls back to the app default instead of failing the whole
+    /// FullBackup decode.
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         evmSyncSources = (try? container.decode(EvmSyncSourceManager.SyncSourceBackup.self, forKey: .evmSyncSources)) ?? .init(selected: [], custom: [])

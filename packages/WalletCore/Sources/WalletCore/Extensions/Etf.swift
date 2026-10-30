@@ -20,11 +20,11 @@ struct RankedEtf: Hashable {
     let etf: Etf
     let rank: Int
 
-    public static func == (lhs: RankedEtf, rhs: RankedEtf) -> Bool {
+    static func == (lhs: RankedEtf, rhs: RankedEtf) -> Bool {
         lhs.etf.ticker == rhs.etf.ticker
     }
 
-    public func hash(into hasher: inout Hasher) {
+    func hash(into hasher: inout Hasher) {
         hasher.combine(etf.ticker)
     }
 }

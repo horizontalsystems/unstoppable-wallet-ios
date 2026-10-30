@@ -11,7 +11,7 @@ struct WCVerificationContextTests {
     }
 
     @Test func contextKeepsOriginAndApprovedAccounts() throws {
-        let account = WalletConnectUtils.Account("eip155:1:\(WCTestFixtures.address)")!
+        let account = try #require(WalletConnectUtils.Account("eip155:1:\(WCTestFixtures.address)"))
         let verifyContext = VerifyContext(origin: "https://react-app.walletconnect.com", validation: .valid)
 
         let context = try WCTestFixtures.context(verifyContext: verifyContext, approvedAccounts: [account])

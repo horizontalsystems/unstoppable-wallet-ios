@@ -13,11 +13,7 @@ class StellarSwapBroadcaster: ISwapBroadcaster {
     }
 
     func submit(_ prepared: IPrepared) async throws -> BroadcastResult {
-        guard let prepared = prepared as? DirectPrepared else {
-            throw SwapBroadcasterError.dataMismatch
-        }
-
-        guard let executable = prepared.executable as? StellarExecutable else {
+        guard let prepared = prepared as? DirectPrepared, let executable = prepared.executable as? StellarExecutable else {
             throw SwapBroadcasterError.dataMismatch
         }
 

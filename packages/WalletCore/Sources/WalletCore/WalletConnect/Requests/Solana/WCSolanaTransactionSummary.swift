@@ -2,8 +2,8 @@ import Foundation
 import MarketKit
 import SolanaKit
 
-// Best-effort disclosure of top-level actions, not simulation or a guarantee of a swap's effects.
-// Lookup-table addresses cannot be resolved offline and must never disappear from a transfer row.
+/// Best-effort disclosure of top-level actions, not simulation or a guarantee of a swap's effects.
+/// Lookup-table addresses cannot be resolved offline and must never disappear from a transfer row.
 struct WCSolanaTransactionSummary {
     enum Method {
         case swap
@@ -15,7 +15,7 @@ struct WCSolanaTransactionSummary {
         case lookupTable
     }
 
-    // Declaration order is the display priority, including across a signAll batch.
+    /// Declaration order is the display priority, including across a signAll batch.
     enum Warning: CaseIterable, Hashable {
         case hiddenRecipient
         case unreadable
@@ -48,7 +48,7 @@ struct WCSolanaTransactionSummary {
     let feePayer: String?
     let warnings: Set<Warning>
 
-    // nothing material decoded: the user would be signing blind
+    /// nothing material decoded: the user would be signing blind
     var opaque: Bool {
         method == nil && transfers.isEmpty
     }
@@ -105,7 +105,7 @@ struct WCSolanaTransactionSummary {
                 if (data.count >= 12 && data.prefix(4) == Data([2, 0, 0, 0])) ||
                     (data.count >= 52 && data.prefix(4) == Data([0, 0, 0, 0]))
                 {
-                    transfers.append(try Transfer(amount: Self.u64(data, at: 4), decimals: nil, isSol: true, source: account(0), destination: account(1)))
+                    try transfers.append(Transfer(amount: Self.u64(data, at: 4), decimals: nil, isSol: true, source: account(0), destination: account(1)))
                 } else {
                     // Includes CreateAccountWithSeed, Assign and nonce operations.
                     hasUnknownInstructions = true
@@ -114,10 +114,10 @@ struct WCSolanaTransactionSummary {
                 switch data.first {
                 // SPL Transfer: index 3, u64 amount; accounts [source, destination, owner]
                 case 3 where data.count >= 9:
-                    transfers.append(try Transfer(amount: Self.u64(data, at: 1), decimals: nil, isSol: false, source: account(2), destination: account(1)))
+                    try transfers.append(Transfer(amount: Self.u64(data, at: 1), decimals: nil, isSol: false, source: account(2), destination: account(1)))
                 // SPL TransferChecked: index 12, u64 amount, u8 decimals; accounts [source, mint, destination, owner]
                 case 12 where data.count >= 10:
-                    transfers.append(try Transfer(amount: Self.u64(data, at: 1), decimals: Int(data[data.startIndex + 9]), isSol: false, source: account(3), destination: account(2)))
+                    try transfers.append(Transfer(amount: Self.u64(data, at: 1), decimals: Int(data[data.startIndex + 9]), isSol: false, source: account(3), destination: account(2)))
                 case 9:
                     // CloseAccount sweeps lamports; only a known return to the owner is exempt.
                     let destination = try account(1)
@@ -147,7 +147,9 @@ struct WCSolanaTransactionSummary {
 
         let method: Method? = isSwap ? .swap : (transfers.isEmpty ? nil : .transfer)
         var warnings = Set<Warning>()
-        if transfers.contains(where: { $0.destination == .lookupTable }) { warnings.insert(.hiddenRecipient) }
+        if transfers.contains(where: { $0.destination == .lookupTable }) {
+            warnings.insert(.hiddenRecipient)
+        }
         if method == nil, transfers.isEmpty {
             warnings.insert(.unreadable)
         } else if hasUnknownInstructions {

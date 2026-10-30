@@ -57,7 +57,7 @@ struct XrpNodeManagerTests {
         #expect(env.manager.node(network: mainNet).url == target.url)
     }
 
-    // The choice reorders the kit's failover list rather than shortening it (Android rotation)
+    /// The choice reorders the kit's failover list rather than shortening it (Android rotation)
     @Test func selectedNodeLeadsTheFailoverList() throws {
         let env = try XrpNodeTestEnvironment()
         let target = env.manager.allNodes(network: mainNet)[2]
@@ -75,7 +75,7 @@ struct XrpNodeManagerTests {
         #expect(env.manager.rpcUrls(network: mainNet) == mainNet.rpcUrls)
     }
 
-    // Each network keeps its own choice: one shared key let a testnet pick overwrite the mainnet one
+    /// Each network keeps its own choice: one shared key let a testnet pick overwrite the mainnet one
     @Test func selectionDoesNotLeakAcrossNetworks() throws {
         let env = try XrpNodeTestEnvironment()
         let mainTarget = env.manager.allNodes(network: mainNet)[1]
@@ -87,8 +87,8 @@ struct XrpNodeManagerTests {
         #expect(env.manager.node(network: mainNet).url == mainTarget.url)
     }
 
-    // The direction that used to lose the choice: pick on testnet, come back to mainnet
-    @Test func testnetChoiceDoesNotOverwriteMainnetChoice() throws {
+    /// The direction that used to lose the choice: pick on testnet, come back to mainnet
+    @Test func netChoiceDoesNotOverwriteMainnetChoice() throws {
         let env = try XrpNodeTestEnvironment()
         let mainTarget = env.manager.allNodes(network: mainNet)[2]
         let testTarget = env.manager.allNodes(network: testNet)[1]

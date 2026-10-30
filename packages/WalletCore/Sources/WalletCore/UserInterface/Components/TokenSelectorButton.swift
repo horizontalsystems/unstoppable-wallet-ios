@@ -3,7 +3,7 @@ import SwiftUI
 
 struct TokenSelectorButton: View {
     let token: Token?
-    var action: (() -> Void)? = nil
+    var action: (() -> Void)?
 
     var body: some View {
         if let action {

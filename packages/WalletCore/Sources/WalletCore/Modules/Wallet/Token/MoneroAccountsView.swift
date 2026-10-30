@@ -70,9 +70,9 @@ struct MoneroAccountsView: View {
         }
     }
 
-    // The select area and the rename button are sibling buttons - nesting the rename
-    // Button inside the row's own tappable Cell would make the outer row swallow its taps.
-    @ViewBuilder private func accountCell(item: MoneroAccountsViewModel.Item) -> some View {
+    /// The select area and the rename button are sibling buttons - nesting the rename
+    /// Button inside the row's own tappable Cell would make the outer row swallow its taps.
+    private func accountCell(item: MoneroAccountsViewModel.Item) -> some View {
         HStack(spacing: 0) {
             Button(action: {
                 viewModel.setActive(index: item.index)
@@ -235,6 +235,8 @@ extension MoneroAccountsViewModel {
         let title: String
         let balanceText: String
 
-        var id: UInt32 { index }
+        var id: UInt32 {
+            index
+        }
     }
 }

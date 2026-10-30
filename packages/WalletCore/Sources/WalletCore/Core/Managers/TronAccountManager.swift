@@ -167,11 +167,7 @@ public class TronAccountManager {
     }
 
     private func handle(processedTokenInfos infos: [TokenInfo], account: Account) {
-        guard Core.shared.config.autoEnableTokensOnReceive else {
-            return
-        }
-
-        guard !infos.isEmpty else {
+        guard Core.shared.config.autoEnableTokensOnReceive, !infos.isEmpty else {
             return
         }
 

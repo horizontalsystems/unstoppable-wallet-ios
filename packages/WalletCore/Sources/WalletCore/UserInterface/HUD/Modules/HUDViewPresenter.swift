@@ -9,7 +9,7 @@ class HUDViewPresenter: HUDViewPresenterInterface, HUDViewInteractorDelegate, Co
 
     var coverView: CoverViewInterface
     var containerView: HUDContainerInterface
-    public let config: HUDConfig
+    let config: HUDConfig
 
     private var timers = [Timer]()
 

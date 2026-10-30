@@ -7,7 +7,9 @@ import RxSwift
 
 class ECashAdapter: BitcoinBaseAdapter {
     private static let networkType: ECashKit.Kit.NetworkType = .mainNet
-    override var coinRate: Decimal { 100 } // pow(10,2)
+    override var coinRate: Decimal {
+        100
+    } // pow(10,2)
 
     private let eCashKit: ECashKit.Kit
 

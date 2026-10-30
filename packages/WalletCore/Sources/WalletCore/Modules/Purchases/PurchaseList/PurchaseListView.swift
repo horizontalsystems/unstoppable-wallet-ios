@@ -27,7 +27,7 @@ struct PurchaseListView: View {
         .navigationTitle("subscription.title".localized)
     }
 
-    @ViewBuilder private func row(value: String, action: @escaping () -> Void) -> some View {
+    private func row(value: String, action: @escaping () -> Void) -> some View {
         Cell(
             middle: { ThemeText("subscription.plan".localized, style: .headline2) },
             right: {
@@ -38,7 +38,7 @@ struct PurchaseListView: View {
         )
     }
 
-    @ViewBuilder private func noPurchaseView() -> some View {
+    private func noPurchaseView() -> some View {
         ListSection {
             Cell(
                 middle: { ThemeText("subscription.get".localized, style: .headline2) },
@@ -57,7 +57,7 @@ struct PurchaseListView: View {
         }
     }
 
-    @ViewBuilder private func status(purchase: PurchaseManager.PurchaseData) -> some View {
+    private func status(purchase: PurchaseManager.PurchaseData) -> some View {
         ListSection {
             ForEach(viewModel.viewItems(purchase: purchase)) { viewItem in
                 Cell(
@@ -68,7 +68,7 @@ struct PurchaseListView: View {
         }
     }
 
-    @ViewBuilder private func manageSubscriptionView() -> some View {
+    private func manageSubscriptionView() -> some View {
         ListSection {
             Cell(
                 middle: { ThemeText("subscription.manage".localized, style: .headline2) },
@@ -80,7 +80,7 @@ struct PurchaseListView: View {
         }
     }
 
-    @ViewBuilder private func debugActionsSubscriptionView() -> some View {
+    private func debugActionsSubscriptionView() -> some View {
         ListSection {
             Cell(
                 middle: { ThemeText("Cancel Subscription", style: .headline2) },

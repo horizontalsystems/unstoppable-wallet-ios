@@ -123,8 +123,8 @@ extension NearTokenAdapter: ISendNearAdapter {
         )
     }
 
-    // Without the confirmed estimate the kit could not tell a changed storage deposit from the one
-    // the user saw, so a send without it is refused (Android `require(estimate is FtSendEstimate)`)
+    /// Without the confirmed estimate the kit could not tell a changed storage deposit from the one
+    /// the user saw, so a send without it is refused (Android `require(estimate is FtSendEstimate)`)
     func send(amount: Decimal, address: String, memo: String?, estimate: NearSendEstimate, signer: NearKit.Signer) async throws -> String {
         guard let ftTransferEstimate = estimate.ftTransferEstimate else {
             throw SendError.notTokenTransferEstimate

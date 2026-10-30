@@ -40,7 +40,7 @@ enum SecretKeyKind {
         }
     }
 
-    // `evmChain` is injectable for tests; when nil the Ethereum chain is resolved from `Core` (mnemonic accounts only)
+    /// `evmChain` is injectable for tests; when nil the Ethereum chain is resolved from `Core` (mnemonic accounts only)
     func key(accountType: AccountType, evmChain: EvmKit.Chain? = nil) -> String? {
         switch self {
         case .evmPrivateKey:

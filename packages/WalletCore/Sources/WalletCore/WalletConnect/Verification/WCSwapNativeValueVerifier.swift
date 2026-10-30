@@ -1,6 +1,6 @@
 import BigInt
 
-// Bug-bounty #4: a token swap must not carry native value hidden behind the swap decoration
+/// Bug-bounty #4: a token swap must not carry native value hidden behind the swap decoration
 class WCSwapNativeValueVerifier: IWCVerifier {
     func handles(_ context: WCVerificationContext) -> Bool {
         context.payload.kind == .transaction && context.payload.decodedSwapInfo != nil

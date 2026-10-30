@@ -1,7 +1,7 @@
 import Foundation
 
 enum SortCriterion {
-    // Ownership
+    /// Ownership
     case enabled
 
     // Context-dependent
@@ -26,7 +26,7 @@ enum SortCriterion {
     case nonZeroBalanceFirst
     case hasPriceFirst
 
-    // MultiSwap default pair: ETH -> TRON -> BSC (blockchainOrder puts BSC before TRON)
+    /// MultiSwap default pair: ETH -> TRON -> BSC (blockchainOrder puts BSC before TRON)
     case swapNetworkPriority
 }
 
@@ -54,10 +54,10 @@ extension SortCriterion {
     static let tokenByBlockchain: [SortCriterion] = [.enabled, .codeNativeFirst, .blockchainOrder, .tokenTypeOrder, .badge]
     static let tokenFilteredByBlockchain: [SortCriterion] = [.enabled, .filterRelevance, .codeNativeFirst, .blockchainOrder, .tokenTypeOrder, .badge]
 
-    // Legacy Transactions Screen
+    /// Legacy Transactions Screen
     static let transactionToken: [SortCriterion] = [.nameAscending, .codeNativeFirst, .tokenTypeOrder, .badge]
 
-    // Receive-Blockchains Screen
+    /// Receive-Blockchains Screen
     static let blockchainList: [SortCriterion] = [.tokenTypeOrder, .blockchainOrder]
 
     // Receive-List Screen

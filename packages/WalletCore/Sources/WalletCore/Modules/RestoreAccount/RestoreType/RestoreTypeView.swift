@@ -55,7 +55,7 @@ struct RestoreTypeView: View {
         }
     }
 
-    @ViewBuilder private func row(restoreType: RestoreType) -> some View {
+    private func row(restoreType: RestoreType) -> some View {
         Cell(
             left: {
                 ThemeImage(restoreType.icon, size: 24)

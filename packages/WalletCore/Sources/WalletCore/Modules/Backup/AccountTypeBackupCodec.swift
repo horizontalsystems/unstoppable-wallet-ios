@@ -7,13 +7,13 @@ import ThorChainKit
 import TronKit
 import XrpKit
 
-// The whole backup-file format of an account lives here, mirroring Android's BackupLocalModule:
-// type names (AccountType.Abstract raw values), the bytes each type is written as, and the parsing
-// back. CHANGING OR ADDING A TYPE REQUIRES PARITY WITH ANDROID (getAccountTypeFromData /
-// getDataForEncryption) and keeps reading every format iOS wrote before; both are pinned by the
-// golden vectors in AccountTypeBackupCodecTests.
+/// The whole backup-file format of an account lives here, mirroring Android's BackupLocalModule:
+/// type names (AccountType.Abstract raw values), the bytes each type is written as, and the parsing
+/// back. CHANGING OR ADDING A TYPE REQUIRES PARITY WITH ANDROID (getAccountTypeFromData /
+/// getDataForEncryption) and keeps reading every format iOS wrote before; both are pinned by the
+/// golden vectors in AccountTypeBackupCodecTests.
 enum AccountTypeBackupCodec {
-    // what a parsed account brings besides its type; restore settings only exist for Monero today
+    /// what a parsed account brings besides its type; restore settings only exist for Monero today
     struct Decoded {
         let accountType: AccountType
         let restoreSettings: [BlockchainType: RestoreSettings]
@@ -24,11 +24,11 @@ enum AccountTypeBackupCodec {
         }
     }
 
-    // Android's BigInteger(1, data) accepts any length; a key must still be exactly 32 bytes here,
-    // because secp256k1 reads 32 bytes whatever it is given and never reports a bad key
+    /// Android's BigInteger(1, data) accepts any length; a key must still be exactly 32 bytes here,
+    /// because secp256k1 reads 32 bytes whatever it is given and never reports a bad key
     static let secp256k1Order = BigUInt("fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141", radix: 16)!
 
-    // Monero heights are bounded so a tampered plain-text value cannot send a wallet syncing into the future
+    /// Monero heights are bounded so a tampered plain-text value cannot send a wallet syncing into the future
     static let maxRestoreHeight = 100_000_000
 
     static func normalizedPrivateKey(_ data: Data) -> Data? {
@@ -58,8 +58,8 @@ enum AccountTypeBackupCodec {
 }
 
 extension AccountTypeBackupCodec {
-    // Android writes the height as the third part of the account data and ignores the wallet's
-    // restore settings for a watch account, so it has to be there for a file to restore on Android
+    /// Android writes the height as the third part of the account data and ignores the wallet's
+    /// restore settings for a watch account, so it has to be there for a file to restore on Android
     static func data(accountType: AccountType, moneroHeight: Int) -> Data {
         switch accountType {
         case let .btcAddress(address, blockchainType, tokenType):
@@ -219,8 +219,8 @@ extension AccountTypeBackupCodec {
     }
 }
 
-// Names Android writes; the names iOS wrote before are still read. CHANGING THESE BREAKS EVERY
-// EXISTING BACKUP FILE — see the note at the top of this file.
+/// Names Android writes; the names iOS wrote before are still read. CHANGING THESE BREAKS EVERY
+/// EXISTING BACKUP FILE — see the note at the top of this file.
 extension AccountType.Abstract {
     private static let legacyNames: [String: AccountType.Abstract] = [
         "stellar_secret_key": .stellarSecretKey,

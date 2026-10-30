@@ -5,7 +5,7 @@ import Testing
 @testable import Unstoppable
 @testable import WalletCore
 
-// deterministic mainnet regardless of the host app's dev testnet toggle in UserDefaults.standard
+/// deterministic mainnet regardless of the host app's dev testnet toggle in UserDefaults.standard
 private final class EphemeralUserDefaultsStorage: UserDefaultsStorage {
     private var values = [String: Any]()
 
@@ -72,7 +72,7 @@ struct ZcashNodeManagerTests {
 
     @Test func setCurrentPersistsSelection() throws {
         let env = try ZcashNodeTestEnvironment()
-        let target = ZcashNode(name: "eu.zec.rocks", url: URL(string: "https://eu.zec.rocks:443")!)
+        let target = try ZcashNode(name: "eu.zec.rocks", url: #require(URL(string: "https://eu.zec.rocks:443")))
 
         env.manager.setCurrent(node: target, blockchainType: zcash)
 
@@ -81,7 +81,7 @@ struct ZcashNodeManagerTests {
 
     @Test func addNewCustomNodeAppears() throws {
         let env = try ZcashNodeTestEnvironment()
-        try env.manager.addNew(blockchainType: zcash, url: URL(string: "https://my.lightwalletd.example:9067")!)
+        try env.manager.addNew(blockchainType: zcash, url: #require(URL(string: "https://my.lightwalletd.example:9067")))
 
         let (_, custom) = env.manager.defaultAndCustomNodes(blockchainType: zcash)
         #expect(custom.contains { $0.url.absoluteString == "https://my.lightwalletd.example:9067" })
@@ -91,7 +91,7 @@ struct ZcashNodeManagerTests {
 
     @Test func customMatchingDefaultIsDeduped() throws {
         let env = try ZcashNodeTestEnvironment()
-        try env.manager.addNew(blockchainType: zcash, url: URL(string: "https://zec.rocks:443")!)
+        try env.manager.addNew(blockchainType: zcash, url: #require(URL(string: "https://zec.rocks:443")))
 
         let (defaults, custom) = env.manager.defaultAndCustomNodes(blockchainType: zcash)
         #expect(!custom.contains { $0.url.absoluteString == "https://zec.rocks:443" })
@@ -100,7 +100,7 @@ struct ZcashNodeManagerTests {
 
     @Test func customNodeWithUnsupportedSchemeIsIgnored() throws {
         let env = try ZcashNodeTestEnvironment()
-        try env.manager.addNew(blockchainType: zcash, url: URL(string: "wss://my.lightwalletd.example:443")!)
+        try env.manager.addNew(blockchainType: zcash, url: #require(URL(string: "wss://my.lightwalletd.example:443")))
 
         let (_, custom) = env.manager.defaultAndCustomNodes(blockchainType: zcash)
         #expect(custom.isEmpty)
@@ -108,7 +108,7 @@ struct ZcashNodeManagerTests {
 
     @Test func deletingSelectedCustomFallsBackToDefault() throws {
         let env = try ZcashNodeTestEnvironment()
-        let custom = ZcashNode(name: "my.lightwalletd.example", url: URL(string: "https://my.lightwalletd.example:9067")!)
+        let custom = try ZcashNode(name: "my.lightwalletd.example", url: #require(URL(string: "https://my.lightwalletd.example:9067")))
 
         try env.manager.addNew(blockchainType: zcash, url: custom.url)
         env.manager.setCurrent(node: custom, blockchainType: zcash)
@@ -120,8 +120,8 @@ struct ZcashNodeManagerTests {
 
     @Test func backupEncodeDecodeRoundTrip() throws {
         let env = try ZcashNodeTestEnvironment()
-        try env.manager.addNew(blockchainType: zcash, url: URL(string: "https://a.example:443")!)
-        try env.manager.addNew(blockchainType: zcash, url: URL(string: "https://b.example:9067")!)
+        try env.manager.addNew(blockchainType: zcash, url: #require(URL(string: "https://a.example:443")))
+        try env.manager.addNew(blockchainType: zcash, url: #require(URL(string: "https://b.example:9067")))
 
         let records = env.manager.customNodeRecords
         let encoded = env.manager.encode(nodes: records)

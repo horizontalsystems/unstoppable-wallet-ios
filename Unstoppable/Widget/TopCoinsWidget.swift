@@ -27,7 +27,7 @@ struct TopCoinsWidget: Widget {
         ])
     }
 
-    @ViewBuilder private func view(entry: CoinPriceListEntry) -> some View {
+    private func view(entry: CoinPriceListEntry) -> some View {
         CoinListView(items: entry.items, maxItemCount: entry.maxItemCount, title: "top_coins.title", subtitle: title(sortType: entry.sortType))
     }
 

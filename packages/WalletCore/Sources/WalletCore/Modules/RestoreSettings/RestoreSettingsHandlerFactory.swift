@@ -21,7 +21,7 @@ enum RestoreSettingsHandlerFactory {
         return nil
     }
 
-    // test seam: registry is global mutable state
+    /// test seam: registry is global mutable state
     static func reset() {
         providers = []
     }

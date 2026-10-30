@@ -4,18 +4,18 @@ import MarketKit
 import Testing
 @testable import WalletCore
 
-// The NEAR spam decision path, composed as SpamWrapper does for NEAR: OutgoingPoisoningFilter, then
-// Android's two passes (value first, correlation only in the gray zone). Addresses compare on 2
-// characters, a name without its top-level account. NEAR limit 0.01: spam < 0.001, risk (3) < 0.01,
-// danger (2) < 0.05.
+/// The NEAR spam decision path, composed as SpamWrapper does for NEAR: OutgoingPoisoningFilter, then
+/// Android's two passes (value first, correlation only in the gray zone). Addresses compare on 2
+/// characters, a name without its top-level account. NEAR limit 0.01: spam < 0.001, risk (3) < 0.01,
+/// danger (2) < 0.05.
 struct NearSpamPolicyTests {
-    // a normal amount is trusted on its value alone, whoever paid the account before
+    /// a normal amount is trusted on its value alone, whoever paid the account before
     @Test func normalAmountFromAnotherNameIsNotSpam() throws {
         let spam = try isSpam(events: incoming(from: "bob.near", near: "50"), timestamp: 600, counterparties: [("alice.near", 0)])
         #expect(!spam)
     }
 
-    // ".near" is shared by every name, so it does not make two names alike
+    /// ".near" is shared by every name, so it does not make two names alike
     @Test func dustFromAnUnrelatedNameIsNotSpam() throws {
         // 3 (risk) + 3 (within 20 minutes) = 6
         let spam = try isSpam(events: incoming(from: "bob.near", near: "0.005"), timestamp: 600, counterparties: [("alice.near", 0)])
@@ -35,7 +35,7 @@ struct NearSpamPolicyTests {
         #expect(try isSpam(events: incoming(from: "alise.tg", near: "0.005"), timestamp: 999_999, counterparties: [("alice.near", 0)]))
     }
 
-    // only the full address is a return: the account the user paid, whatever its case
+    /// only the full address is a return: the account the user paid, whatever its case
     @Test func dustBackFromThePaidAccountIsNotALookalike() throws {
         #expect(try !isSpam(events: incoming(from: "Alice.NEAR", near: "0.005"), timestamp: 999_999, counterparties: [("alice.near", 0)]))
     }

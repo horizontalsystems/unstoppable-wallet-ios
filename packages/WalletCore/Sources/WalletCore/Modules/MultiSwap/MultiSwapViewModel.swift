@@ -48,11 +48,11 @@ public class MultiSwapViewModel: ObservableObject {
 
     private var enteringFiat = false
 
-    // External delivery address entered before confirmation for a tokenOut the account
-    // can't hold. Shared with the confirmation handler, which writes back into it when the
-    // user edits the recipient there. Cleared whenever tokenOut changes or the account
-    // switches, and when tokenIn changes while the address is optional, so it can only ever
-    // hold an address meant for the current pair.
+    /// External delivery address entered before confirmation for a tokenOut the account
+    /// can't hold. Shared with the confirmation handler, which writes back into it when the
+    /// user edits the recipient there. Cleared whenever tokenOut changes or the account
+    /// switches, and when tokenIn changes while the address is optional, so it can only ever
+    /// hold an address meant for the current pair.
     let externalRecipientHolder = SwapExternalRecipientHolder()
 
     var externalRecipient: String? {
@@ -65,8 +65,8 @@ public class MultiSwapViewModel: ObservableObject {
         externalRecipientHolder.address = address
     }
 
-    // tokenOut the account can't hold: the swap is deliverable only to an external
-    // address, which the user is asked for before the confirmation screen
+    /// tokenOut the account can't hold: the swap is deliverable only to an external
+    /// address, which the user is asked for before the confirmation screen
     var externalRecipientRequired: Bool {
         externalRecipientRequired(tokenOut: internalTokenOut)
     }
@@ -81,11 +81,11 @@ public class MultiSwapViewModel: ObservableObject {
 
     @Published public var validProviders = [IMultiSwapProvider]()
 
-    // A 1-hop route offered when the pair can't be served directly: no provider supports it, or
-    // the ones that do came back with no quotes. It is never quoted itself.
+    /// A 1-hop route offered when the pair can't be served directly: no provider supports it, or
+    /// the ones that do came back with no quotes. It is never quoted itself.
     @Published public private(set) var suggestedPath: SwapPath?
 
-    // The (pair, valid providers) of the last quote round that finished with zero quotes
+    /// The (pair, valid providers) of the last quote round that finished with zero quotes
     private var emptyRoundKey: QuoteRoundKey?
 
     private var internalTokenIn: Token? {
@@ -215,7 +215,7 @@ public class MultiSwapViewModel: ObservableObject {
     @Published public var adapterState: AdapterState?
     @Published public var availableBalance: Decimal?
 
-    // the sell token has an active wallet; its adapter is created asynchronously after the wallet is saved
+    /// the sell token has an active wallet; its adapter is created asynchronously after the wallet is saved
     @Published private var tokenInWalletActive = false
 
     @Published var spendStep: SpendStep?
@@ -234,7 +234,7 @@ public class MultiSwapViewModel: ObservableObject {
         }
     }
 
-    // The fraction-digit limit of the "You pay" amount input.
+    /// The fraction-digit limit of the "You pay" amount input.
     var amountInDecimals: Int {
         tokenIn?.decimals ?? AmountInputValidator.defaultMaxDecimals
     }
@@ -449,7 +449,7 @@ public class MultiSwapViewModel: ObservableObject {
         swapProviderManager.sync()
     }
 
-    // account switched -> full re-resolve; enabled source disappeared (spec rule 1.3) -> re-resolve
+    /// account switched -> full re-resolve; enabled source disappeared (spec rule 1.3) -> re-resolve
     private func handle(walletData: WalletManager.WalletData) {
         let accountChanged = walletData.account?.id != currentAccountId
         currentAccountId = walletData.account?.id
@@ -732,9 +732,9 @@ public class MultiSwapViewModel: ObservableObject {
         return QuoteRoundKey(tokenIn: internalTokenIn, tokenOut: internalTokenOut, providerIds: Set(validProviders.map(\.id)))
     }
 
-    // Scoped to the pair and its valid providers: a changed pair or an untried set of providers
-    // has not failed at anything yet. The amount is deliberately not part of it, so the
-    // suggestion stays put while the user edits the amount and leaves only once quotes arrive.
+    /// Scoped to the pair and its valid providers: a changed pair or an untried set of providers
+    /// has not failed at anything yet. The amount is deliberately not part of it, so the
+    /// suggestion stays put while the user edits the amount and leaves only once quotes arrive.
     private var quotesUnavailable: Bool {
         emptyRoundKey != nil && emptyRoundKey == currentRoundKey
     }
@@ -816,15 +816,7 @@ public class MultiSwapViewModel: ObservableObject {
             quotes = []
         }
 
-        guard let internalTokenIn, let internalTokenOut, let amountIn, amountIn != 0 else {
-            if quoting {
-                quoting = false
-            }
-
-            return
-        }
-
-        guard !validProviders.isEmpty else {
+        guard let internalTokenIn, let internalTokenOut, let amountIn, amountIn != 0, !validProviders.isEmpty else {
             if quoting {
                 quoting = false
             }
@@ -912,18 +904,18 @@ public class MultiSwapViewModel: ObservableObject {
 
     typealias QuoteFetcher = (IMultiSwapProvider, Token, Token, Decimal) async throws -> MultiSwapQuote
 
-    // Called at the end of every `quotes` assignment, after the dependent state is synced
+    /// Called at the end of every `quotes` assignment, after the dependent state is synced
     func didUpdateQuotes() {}
 
-    // Providers this view model quotes. Called from init and on every provider list sync, so an
-    // override must not rely on state set after `super.init`.
+    /// Providers this view model quotes. Called from init and on every provider list sync, so an
+    /// override must not rely on state set after `super.init`.
     func resolveProviders() -> [IMultiSwapProvider] {
         SwapProviderFactory.swappableProviders(ids: swapProviderManager.providers)
     }
 
-    // The per-provider quote call of a quote round. Built once per round on the main thread, so an
-    // override can snapshot its own inputs; the closure runs off the main thread and must not
-    // capture the view model.
+    /// The per-provider quote call of a quote round. Built once per round on the main thread, so an
+    /// override can snapshot its own inputs; the closure runs off the main thread and must not
+    /// capture the view model.
     func quoteFetcher() -> QuoteFetcher {
         { provider, tokenIn, tokenOut, amountIn in
             try await provider.quote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
@@ -1117,7 +1109,9 @@ public extension MultiSwapViewModel {
             return quotes.sorted {
                 let t0 = $0.quote.estimatedTime ?? .infinity
                 let t1 = $1.quote.estimatedTime ?? .infinity
-                if t0 != t1 { return t0 < t1 }
+                if t0 != t1 {
+                    return t0 < t1
+                }
                 return $0.quote.expectedBuyAmount > $1.quote.expectedBuyAmount
             }
         }
@@ -1336,7 +1330,7 @@ extension MultiSwapViewModel {
         }
     }
 
-    // internal visibility intentional: pure function covered by unit tests via @testable import.
+    /// internal visibility intentional: pure function covered by unit tests via @testable import.
     static func timeState(for time: TimeInterval?, precise: Bool, baseline: TimeInterval?) -> SwapTimeState? {
         guard let time, time > 0 else { return nil }
         // An imprecise estimate renders as (X−25%)–(X+25%); the warning rule judges its upper bound.
@@ -1348,8 +1342,8 @@ extension MultiSwapViewModel {
         return .neutral(value)
     }
 
-    // internal visibility intentional: pure function covered by unit tests via @testable import.
-    // baseline == nil means no comparison context — single-provider rule (absolute threshold only).
+    /// internal visibility intentional: pure function covered by unit tests via @testable import.
+    /// baseline == nil means no comparison context — single-provider rule (absolute threshold only).
     static func warningTime(for time: TimeInterval?, baseline: TimeInterval?) -> TimeInterval? {
         guard let time, time > 0, time > timeWarningThreshold else { return nil }
         guard let baseline, baseline > 0 else { return time }

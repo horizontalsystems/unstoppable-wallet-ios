@@ -2,7 +2,7 @@ import Combine
 import Foundation
 import RxSwift
 
-// Rx boundary for Combine-only consumers; the hop keeps the sink off the provider's queue
+/// Rx boundary for Combine-only consumers; the hop keeps the sink off the provider's queue
 extension WhitelistDappProvider {
     func whitelistDappsPublisher() -> AnyPublisher<[WhitelistDapp], Error> {
         Future<[WhitelistDapp], Error> { [self] promise in

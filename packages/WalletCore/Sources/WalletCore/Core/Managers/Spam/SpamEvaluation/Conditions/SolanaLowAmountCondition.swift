@@ -1,11 +1,13 @@
 import Foundation
 import HsToolKit
 
-// Mirrors Android's Solana value scoring: per-event maximum, never a signed native aggregate.
-// Zero-value coin transfers are instant spam; token legs score by absolute value, while
-// negative (outgoing) native legs never score — matching the Android converter's data shape.
+/// Mirrors Android's Solana value scoring: per-event maximum, never a signed native aggregate.
+/// Zero-value coin transfers are instant spam; token legs score by absolute value, while
+/// negative (outgoing) native legs never score — matching the Android converter's data shape.
 class SolanaLowAmountCondition: SpamCondition {
-    var identifier: String { "solana_low_amount" }
+    var identifier: String {
+        "solana_low_amount"
+    }
 
     private let spamScore: Int
     private let riskScore: Int

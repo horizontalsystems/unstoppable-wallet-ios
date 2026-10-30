@@ -60,7 +60,7 @@ class ZcashShieldStepHandler: SpendStepHandler {
         syncQueue.sync { sync() }
     }
 
-    // Runs on syncQueue only: the pool scans its whole set for the latest transactions.
+    /// Runs on syncQueue only: the pool scans its whole set for the latest transactions.
     private func sync() {
         let lastBlockHeight = adapter.lastBlockInfo?.height ?? 0
         let threshold = ZcashSDK.defaultRewindDistance

@@ -177,11 +177,7 @@ class TransactionsViewModel: ObservableObject {
     }
 
     private func __load() {
-        guard !__loading else {
-            return
-        }
-
-        guard __loadMoreRequested || __poolUpdateRequested else {
+        guard !__loading, __loadMoreRequested || __poolUpdateRequested else {
             return
         }
 
@@ -228,15 +224,7 @@ class TransactionsViewModel: ObservableObject {
     }
 
     private func __loadMoreIfRequired(index: Int) {
-        guard index > __items.count - 5 else {
-            return
-        }
-
-        guard !__loadMoreRequested else {
-            return
-        }
-
-        guard __lastRequestedCount == __items.count else {
+        guard index > __items.count - 5, !__loadMoreRequested, __lastRequestedCount == __items.count else {
             return
         }
 

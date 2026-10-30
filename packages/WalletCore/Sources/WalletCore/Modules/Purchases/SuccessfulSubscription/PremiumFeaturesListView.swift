@@ -52,7 +52,7 @@ struct PremiumFeaturesListView: View {
         }
     }
 
-    @ViewBuilder private func row(title: String, description: String, icon: String, action: @escaping () -> Void) -> some View {
+    private func row(title: String, description: String, icon: String, action: @escaping () -> Void) -> some View {
         Cell(
             left: {
                 Image(icon).icon(colorStyle: .yellow)

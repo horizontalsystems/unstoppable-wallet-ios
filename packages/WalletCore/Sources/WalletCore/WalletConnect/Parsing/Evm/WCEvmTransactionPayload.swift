@@ -20,11 +20,25 @@ class WCEvmTransactionPayload: WCRequestPayload {
         super.init(request: request, kind: .transaction, from: transaction.from.eip55)
     }
 
-    override var isSignOnly: Bool { method == Self.signMethod }
-    override var to: String? { transaction.to.eip55 }
-    override var value: BigUInt? { transaction.value }
-    override var data: Data? { transaction.data }
-    override var decodedSwapInfo: WCSwapInfo? { swapInfo }
+    override var isSignOnly: Bool {
+        method == Self.signMethod
+    }
+
+    override var to: String? {
+        transaction.to.eip55
+    }
+
+    override var value: BigUInt? {
+        transaction.value
+    }
+
+    override var data: Data? {
+        transaction.data
+    }
+
+    override var decodedSwapInfo: WCSwapInfo? {
+        swapInfo
+    }
 
     override func makeSendData() -> SendData? {
         .evm(blockchainType: blockchainType, transactionData: transaction.transactionData, token: baseToken)

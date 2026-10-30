@@ -1,8 +1,8 @@
 import Foundation
 import MarketKit
 
-// Marker protocol for types that carry a Coin. Enables sharing coin-level
-// comparison logic between Token and FullCoin.
+/// Marker protocol for types that carry a Coin. Enables sharing coin-level
+/// comparison logic between Token and FullCoin.
 private protocol ICoinProvider {
     var coin: Coin { get }
 }
@@ -10,9 +10,9 @@ private protocol ICoinProvider {
 extension Token: ICoinProvider {}
 extension FullCoin: ICoinProvider {}
 
-// Shared comparison logic for criteria that read only from Coin fields.
-// Applicable to any ICoinProvider-conforming type. Both Token and FullCoin delegate
-// these cases via their compare(...) switch.
+/// Shared comparison logic for criteria that read only from Coin fields.
+/// Applicable to any ICoinProvider-conforming type. Both Token and FullCoin delegate
+/// these cases via their compare(...) switch.
 private func compareByCoin<T: ICoinProvider>(_ lhs: T, _ rhs: T, by criterion: SortCriterion, filter: String) -> ComparisonResult {
     switch criterion {
     // Search relevance: exact code match -> code prefix match -> name prefix match.
@@ -105,10 +105,26 @@ extension Token: IComposableSortable {
         // e.g. BNB native on BSC beats BNB BEP20 wrapped on Ethereum.
         // Returns .orderedSame when codes differ, blockchains match, or both sides are (non-)native.
         case .codeNativeFirst:
-            if lhs.coin.code != rhs.coin.code { return .orderedSame }
-            if lhs.blockchainType == rhs.blockchainType { return .orderedSame }
-            let lhsNative: Bool = { if case .native = lhs.type { return true } else { return false } }()
-            let rhsNative: Bool = { if case .native = rhs.type { return true } else { return false } }()
+            if lhs.coin.code != rhs.coin.code {
+                return .orderedSame
+            }
+            if lhs.blockchainType == rhs.blockchainType {
+                return .orderedSame
+            }
+            let lhsNative: Bool = {
+                if case .native = lhs.type {
+                    return true
+                } else {
+                    return false
+                }
+            }()
+            let rhsNative: Bool = {
+                if case .native = rhs.type {
+                    return true
+                } else {
+                    return false
+                }
+            }()
             return Comparators.booleanFirst(lhsNative, rhsNative)
 
         // Tokens with a known price come before tokens without.
@@ -188,12 +204,22 @@ extension FullCoin: IComposableSortable {
         // with identical code). The one containing at least one native-type token wins.
         // Returns .orderedSame when codes differ or both sides contain (or lack) a native token.
         case .codeNativeFirst:
-            if lhs.coin.code != rhs.coin.code { return .orderedSame }
+            if lhs.coin.code != rhs.coin.code {
+                return .orderedSame
+            }
             let lhsHasNative = lhs.tokens.contains {
-                if case .native = $0.type { return true } else { return false }
+                if case .native = $0.type {
+                    return true
+                } else {
+                    return false
+                }
             }
             let rhsHasNative = rhs.tokens.contains {
-                if case .native = $0.type { return true } else { return false }
+                if case .native = $0.type {
+                    return true
+                } else {
+                    return false
+                }
             }
             return Comparators.booleanFirst(lhsHasNative, rhsHasNative)
 
@@ -210,9 +236,9 @@ extension FullCoin: IComposableSortable {
         }
     }
 
-    // Returns the blockchain display order of the first token the current account type supports.
-    // If accountType is nil, falls back to the first token in the coin's tokens list.
-    // Returns Int.max when no token matches, so unsupported coins sort last.
+    /// Returns the blockchain display order of the first token the current account type supports.
+    /// If accountType is nil, falls back to the first token in the coin's tokens list.
+    /// Returns Int.max when no token matches, so unsupported coins sort last.
     private static func firstSupportedBlockchainOrder(fullCoin: FullCoin, accountType: AccountType?) -> Int {
         if let accountType {
             return fullCoin.tokens.first { accountType.supports(token: $0) }?.blockchainType.order ?? .max

@@ -14,7 +14,10 @@ public class HUDActivityView: UIView, HUDAnimatedViewInterface, HUDTappableViewI
     private var radius: CGFloat
     private var duration: TimeInterval
 
-    public var centerPoint: CGFloat { radius }
+    public var centerPoint: CGFloat {
+        radius
+    }
+
     public var isAnimating = false
 
     public var actions: [HUDTimeAction] = []

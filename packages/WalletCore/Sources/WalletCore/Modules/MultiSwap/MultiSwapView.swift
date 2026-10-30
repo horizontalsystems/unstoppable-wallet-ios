@@ -70,8 +70,8 @@ struct MultiSwapView: View {
         }
     }
 
-    // Both tabs share the layout; the Private tab only adds the "Private Swap" alert card
-    @ViewBuilder private func tabView(vm: MultiSwapViewModel, privateSwap: Bool) -> some View {
+    /// Both tabs share the layout; the Private tab only adds the "Private Swap" alert card
+    private func tabView(vm: MultiSwapViewModel, privateSwap: Bool) -> some View {
         BottomGradientWrapper(gradientColor: .themeLawrence) {
             ScrollView {
                 VStack(spacing: 16) {
@@ -123,8 +123,8 @@ struct MultiSwapView: View {
         }
     }
 
-    // `autoQuoteIfRequired` only re-runs an interrupted or expired round: the first entry into the
-    // Private tab, with no quote yet, has to start one
+    /// `autoQuoteIfRequired` only re-runs an interrupted or expired round: the first entry into the
+    /// Private tab, with no quote yet, has to start one
     private func resumeSplitQuoting() {
         splitViewModel.autoQuoteIfRequired()
 
@@ -150,7 +150,7 @@ struct MultiSwapView: View {
         .disabled(disabled)
     }
 
-    // the sell wallet's own step, such as shielding ZEC: its screen comes from the wallet's handler, not the provider
+    /// the sell wallet's own step, such as shielding ZEC: its screen comes from the wallet's handler, not the provider
     private func presentSpendStep(vm: MultiSwapViewModel) {
         guard let handler = vm.spendStepHandler else {
             return
@@ -199,7 +199,7 @@ struct MultiSwapView: View {
         }
     }
 
-    @ViewBuilder private func quoteList(quote: MultiSwapViewModel.Quote, vm: MultiSwapViewModel) -> some View {
+    private func quoteList(quote: MultiSwapViewModel.Quote, vm: MultiSwapViewModel) -> some View {
         VStack(spacing: 0) {
             Cell(
                 style: .secondary,
@@ -294,8 +294,8 @@ struct MultiSwapView: View {
         }
     }
 
-    // tokenOut the account can't hold: ask for the external delivery address first,
-    // then open the confirmation with it
+    /// tokenOut the account can't hold: ask for the external delivery address first,
+    /// then open the confirmation with it
     private func proceedToConfirmation(vm: MultiSwapViewModel) {
         focusedField = nil
 

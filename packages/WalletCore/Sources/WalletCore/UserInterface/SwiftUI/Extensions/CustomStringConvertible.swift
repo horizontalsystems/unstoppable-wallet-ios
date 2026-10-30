@@ -4,7 +4,9 @@ public struct ComponentInformedTitle: CustomStringConvertible {
     let title: String
     let info: InfoDescription
 
-    public var description: String { title }
+    public var description: String {
+        title
+    }
 
     public init(_ title: String, info: InfoDescription) {
         self.title = title
@@ -16,7 +18,9 @@ struct ComponentCopyableValue: CustomStringConvertible {
     let text: String
     let value: String?
 
-    var description: String { text }
+    var description: String {
+        text
+    }
 
     init(_ text: String, value: String? = nil) {
         self.text = text
@@ -44,7 +48,7 @@ extension View {
         }
     }
 
-    @ViewBuilder func styled(_ title: CustomStringConvertible) -> some View {
+    func styled(_ title: CustomStringConvertible) -> some View {
         informed(title).copyable(title)
     }
 }

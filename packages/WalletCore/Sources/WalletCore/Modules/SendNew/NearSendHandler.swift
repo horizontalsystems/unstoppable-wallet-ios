@@ -15,7 +15,7 @@ class NearSendHandler: SendHandler {
     private let amount: Decimal
     private let address: String
     private let memo: String?
-    // a Private Send or Cross Pay deposit must go out exactly as the order asks
+    /// a Private Send or Cross Pay deposit must go out exactly as the order asks
     var allowsAmountAdjustment = true
 
     init(signer: NearKit.Signer, token: Token, baseToken: Token, adapter: ISendNearAdapter & IBalanceAdapter, amount: Decimal, address: String, memo: String?) {
@@ -30,7 +30,7 @@ class NearSendHandler: SendHandler {
 }
 
 extension NearSendHandler: ISendHandler {
-    // refreshed on the shared timer: a storage deposit or the receiver's existence can change meanwhile
+    /// refreshed on the shared timer: a storage deposit or the receiver's existence can change meanwhile
     var expirationDuration: Int? {
         nil
     }
@@ -79,8 +79,8 @@ extension NearSendHandler: ISendHandler {
 extension NearSendHandler: IAmountAdjustingSendHandler {}
 
 extension NearSendHandler: ISendHandlerRefCapturing {
-    // Same broadcast path as `send`, returning the on-chain tx hash. The estimate is the one the
-    // confirmation showed, so a token's storage deposit that changed since is refused by the kit.
+    /// Same broadcast path as `send`, returning the on-chain tx hash. The estimate is the one the
+    /// confirmation showed, so a token's storage deposit that changed since is refused by the kit.
     func sendCapturingRef(data: ISendData) async throws -> String {
         guard let data = data as? SendData, let estimate = data.estimate else {
             throw SendError.invalidData
@@ -100,7 +100,7 @@ extension NearSendHandler {
         private let fee: Decimal
         private let transactionError: Error?
         private let previousTransactionPending: Bool
-        // "Max" took the fee out of the entered amount: a deposit that must go out exact refuses it
+        /// "Max" took the fee out of the entered amount: a deposit that must go out exact refuses it
         let amountAdjusted: Bool
 
         init(
@@ -122,7 +122,7 @@ extension NearSendHandler {
             nil
         }
 
-        // the pending warning does not block, as on Android
+        /// the pending warning does not block, as on Android
         var canSend: Bool {
             transactionError == nil && estimate != nil
         }
@@ -191,15 +191,8 @@ extension NearSendHandler {
 
 extension NearSendHandler {
     static func instance(token: Token, amount: Decimal, address: String, memo: String?) -> NearSendHandler? {
-        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .near, tokenType: .native)) else {
-            return nil
-        }
-
-        guard let adapter = Core.shared.adapterManager.adapter(for: token) as? ISendNearAdapter & IBalanceAdapter else {
-            return nil
-        }
-
-        guard let account = Core.shared.accountManager.activeAccount,
+        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .near, tokenType: .native)), let adapter = Core.shared.adapterManager.adapter(for: token) as? ISendNearAdapter & IBalanceAdapter,
+              let account = Core.shared.accountManager.activeAccount,
               let signer = try? NearKitManager.signer(accountType: account.type)
         else {
             return nil

@@ -103,7 +103,7 @@ extension EvmSendHandler: ISendHandler {
 }
 
 extension EvmSendHandler: ISendHandlerRefCapturing {
-    // Same broadcast path as `send`, returning the on-chain tx hash.
+    /// Same broadcast path as `send`, returning the on-chain tx hash.
     func sendCapturingRef(data: ISendData) async throws -> String {
         guard let data = data as? EvmSendData else {
             throw SendError.invalidData
@@ -144,11 +144,7 @@ extension EvmSendHandler {
 
 extension EvmSendHandler {
     static func instance(blockchainType: BlockchainType, transactionData: TransactionData, sendToken: Token) -> EvmSendHandler? {
-        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: blockchainType, tokenType: .native)) else {
-            return nil
-        }
-
-        guard let evmKitWrapper = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
+        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: blockchainType, tokenType: .native)), let evmKitWrapper = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
             return nil
         }
 

@@ -56,11 +56,11 @@ public final class USwapCommitRequestBuilder {
         )
     }
 
-    // The user's fee setting as the server expects it. The `kind` must match the sell chain (a mismatch
-    // is a 400), so only the settings the server names are mapped: EVM gas price and the UTXO rate on
-    // bitcoin / litecoin / bitcoinCash / dash (eCash is not in the server's list). Everything else —
-    // account-abstraction, Monero, Zcash, bitcoin resend, Solana — sends nothing and the server prices
-    // the transaction itself.
+    /// The user's fee setting as the server expects it. The `kind` must match the sell chain (a mismatch
+    /// is a 400), so only the settings the server names are mapped: EVM gas price and the UTXO rate on
+    /// bitcoin / litecoin / bitcoinCash / dash (eCash is not in the server's list). Everything else —
+    /// account-abstraction, Monero, Zcash, bitcoin resend, Solana — sends nothing and the server prices
+    /// the transaction itself.
     static func networkFee(tokenIn: Token, transactionSettings: TransactionSettings?) -> USwapMultiSwapApi.NetworkFee? {
         switch transactionSettings {
         case let .evm(gasPriceData, _):

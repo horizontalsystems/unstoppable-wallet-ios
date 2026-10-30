@@ -157,8 +157,8 @@ struct AddressUriParserBaselineTests {
         #expect(result.memo == "Order123")
     }
 
-    // No standard scheme exists for the XRP Ledger; this is the one Android emits, so a QR made
-    // there scans here (BlockchainType+UriScheme).
+    /// No standard scheme exists for the XRP Ledger; this is the one Android emits, so a QR made
+    /// there scans here (BlockchainType+UriScheme).
     @Test
     func parseXrp() throws {
         let result = try anyParser.parse(url: "xrp:\(AddressUriFixtures.xrp)?amount=12")
@@ -168,7 +168,7 @@ struct AddressUriParserBaselineTests {
         #expect(result.amount == .decimals(Decimal(12)))
     }
 
-    // XLS-2 / XLS-32 and Xaman carry the destination tag as `dt`; dropping it loses an exchange deposit
+    /// XLS-2 / XLS-32 and Xaman carry the destination tag as `dt`; dropping it loses an exchange deposit
     @Test
     func parseXrpDestinationTag() throws {
         let result = try anyParser.parse(url: "xrp:\(AddressUriFixtures.xrp)?amount=12&dt=123456")
@@ -212,7 +212,7 @@ struct AddressUriParserBaselineTests {
         #expect(result.amount == .decimals(Decimal(5)))
     }
 
-    // Solana Pay format is BIP-21-shaped; native SOL transfers parse via Bip21Parser.
+    /// Solana Pay format is BIP-21-shaped; native SOL transfers parse via Bip21Parser.
     @Test
     func parseSolanaPayNative() throws {
         let result = try anyParser.parse(url: "solana:\(AddressUriFixtures.solana)?amount=5")
@@ -225,9 +225,9 @@ struct AddressUriParserBaselineTests {
         #expect(result.allowedBlockchainTypes == [.solana])
     }
 
-    // Builder roundtrip: receive QR for SPL must include the `solana:` scheme prefix.
-    // Master-era builder dropped it (because `BlockchainType.solana.uriScheme` was nil),
-    // producing schemeless QRs that downstream consumers couldn't reparse.
+    /// Builder roundtrip: receive QR for SPL must include the `solana:` scheme prefix.
+    /// Master-era builder dropped it (because `BlockchainType.solana.uriScheme` was nil),
+    /// producing schemeless QRs that downstream consumers couldn't reparse.
     @Test
     func buildSolanaSplReceiveUriIncludesScheme() throws {
         let mint = "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB"
@@ -348,8 +348,8 @@ struct AddressUriParserBaselineTests {
         #expect(result.parameters[.label] == "Hello World")
     }
 
-    // Unichain (chainId 130) is not in EvmBlockchainManager.blockchainTypes; rejecting
-    // here prevents the URI from silently becoming a chain-agnostic native EVM send.
+    /// Unichain (chainId 130) is not in EvmBlockchainManager.blockchainTypes; rejecting
+    /// here prevents the URI from silently becoming a chain-agnostic native EVM send.
     @Test
     func rejectsUnknownEvmChainIdAtParseTime() {
         #expect(throws: AddressUriParser.ParseError.invalidBlockchainType) {
@@ -357,9 +357,9 @@ struct AddressUriParserBaselineTests {
         }
     }
 
-    // `ton://transfer/...` is the tonkeeper-spec form. Two pre-existing issues pinned:
-    // (a) URLComponents leaves a leading "/" in path; (b) amount is interpreted as Decimal
-    // human, not nanograms (bug B1). Fix scheduled for Future F6.
+    /// `ton://transfer/...` is the tonkeeper-spec form. Two pre-existing issues pinned:
+    /// (a) URLComponents leaves a leading "/" in path; (b) amount is interpreted as Decimal
+    /// human, not nanograms (bug B1). Fix scheduled for Future F6.
     @Test
     func parseTonkeeperStyleDeeplinkPinsCurrentBugs() throws {
         let result = try anyParser.parse(url: "ton://transfer/EQBseDk7VQ8xeANJ0QS-5KEEe56SKw4-gCurRSFUVZ5wSMj9?amount=80000000000&text=4114143799")

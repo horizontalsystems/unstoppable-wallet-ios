@@ -34,7 +34,6 @@ struct ButtonGroupView: View {
         .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin16, trailing: .margin24))
     }
 
-    @ViewBuilder
     private var buttonViews: some View {
         ForEach(group.buttons) { button in
             buttonView(for: button)

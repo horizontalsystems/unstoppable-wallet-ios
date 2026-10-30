@@ -26,7 +26,7 @@ struct DepositAttachmentTests {
         #expect(handler.depositCalls.first?.memo == "order-42")
     }
 
-    // the chain's handler is asked about the deposit address itself (shielded vs transparent Zcash)
+    /// the chain's handler is asked about the deposit address itself (shielded vs transparent Zcash)
     @Test func memoTypeIsAskedForTheDepositAddress() throws {
         let handler = StubPreSendHandler(memoType: .onChainPublic)
 
@@ -46,7 +46,7 @@ struct DepositAttachmentTests {
         }
     }
 
-    // a tag has no field outside XRP, and an unknown kind cannot be carried at all
+    /// a tag has no field outside XRP, and an unknown kind cannot be carried at all
     @Test func tagAndUnknownAttachmentsAreRefused() {
         let handler = StubPreSendHandler(memoType: .onChainPublic)
 
@@ -59,7 +59,7 @@ struct DepositAttachmentTests {
         #expect(handler.depositCalls.isEmpty)
     }
 
-    // Cross Pay's commit gate: XRP by its destination tag, every other chain by a delivered memo
+    /// Cross Pay's commit gate: XRP by its destination tag, every other chain by a delivered memo
     @Test func commitGateFollowsTheChain() throws {
         try USwapMultiSwapApi.Attachment.validate(.destinationTag("123"), blockchainType: .xrp)
         try USwapMultiSwapApi.Attachment.validate(.text("order-42"), blockchainType: .bitcoin)
@@ -90,9 +90,14 @@ extension DepositAttachmentTests {
         }
 
         let state: AdapterState = .synced
-        var statePublisher: AnyPublisher<AdapterState, Never> { Empty().eraseToAnyPublisher() }
+        var statePublisher: AnyPublisher<AdapterState, Never> {
+            Empty().eraseToAnyPublisher()
+        }
+
         let balance: Decimal = 100
-        var balancePublisher: AnyPublisher<Decimal, Never> { Empty().eraseToAnyPublisher() }
+        var balancePublisher: AnyPublisher<Decimal, Never> {
+            Empty().eraseToAnyPublisher()
+        }
 
         func memoType(address: String?) -> MemoType {
             memoTypeAddresses.append(address)
@@ -103,7 +108,7 @@ extension DepositAttachmentTests {
             .invalid(cautions: [])
         }
 
-        // the chain's own deposit method, as Bitcoin overrides it: reached through the default
+        /// the chain's own deposit method, as Bitcoin overrides it: reached through the default
         func depositSendData(amount _: Decimal, address: String, memo: String?, settings _: PreSendSettingsSnapshot?) -> SendDataResult {
             depositCalls.append((address, memo))
             return .invalid(cautions: [])

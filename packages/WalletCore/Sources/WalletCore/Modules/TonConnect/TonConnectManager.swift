@@ -67,7 +67,7 @@ class TonConnectManager {
 //        start()
     }
 
-    public func start() {
+    func start() {
         task?.cancel()
 
         // print("Start")

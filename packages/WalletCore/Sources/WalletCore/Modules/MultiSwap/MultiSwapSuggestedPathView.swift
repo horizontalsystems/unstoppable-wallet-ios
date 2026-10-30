@@ -31,11 +31,11 @@ struct MultiSwapSuggestedPathView: View {
         .background(RoundedRectangle(cornerRadius: 16, style: .continuous).fill(Color.themeTyler))
     }
 
-    @ViewBuilder private func hopView(token: Token) -> some View {
+    private func hopView(token: Token) -> some View {
         CoinIconView(token: token, size: 32)
     }
 
-    @ViewBuilder private func separatorView() -> some View {
+    private func separatorView() -> some View {
         ThemeImage("arrow_m_right", size: 16, colorStyle: .secondary)
     }
 
@@ -49,13 +49,21 @@ struct MultiSwapSuggestedPathView: View {
 
         var result = AttributedString("")
 
-        if !components[0].isEmpty { result.append(AttributedString(components[0])) }
+        if !components[0].isEmpty {
+            result.append(AttributedString(components[0]))
+        }
         result.append(swapPart())
-        if !components[1].isEmpty { result.append(AttributedString(components[1])) }
+        if !components[1].isEmpty {
+            result.append(AttributedString(components[1]))
+        }
         result.append(AttributedString(path.intermediateToken.coin.code))
-        if !components[2].isEmpty { result.append(AttributedString(components[2])) }
+        if !components[2].isEmpty {
+            result.append(AttributedString(components[2]))
+        }
         result.append(AttributedString(path.tokenOut.coin.code))
-        if !components[3].isEmpty { result.append(AttributedString(components[3])) }
+        if !components[3].isEmpty {
+            result.append(AttributedString(components[3]))
+        }
 
         return result
     }

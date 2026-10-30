@@ -11,7 +11,7 @@ struct SendInputView<FocusField: Hashable>: View {
     var focusedField: FocusState<FocusField?>.Binding
     let amountField: FocusField
     let fiatField: FocusField
-    var onSelectToken: (() -> Void)? = nil
+    var onSelectToken: (() -> Void)?
 
     var body: some View {
         HStack(spacing: 8) {

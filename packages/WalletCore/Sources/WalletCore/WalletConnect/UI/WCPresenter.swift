@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-// Routes module events to screens; the only place UI knows how requests and proposals are shown
+/// Routes module events to screens; the only place UI knows how requests and proposals are shown
 enum WCPresenter {
     static func pair(uri: String) {
         guard let manager = Core.shared.walletConnect else { return }

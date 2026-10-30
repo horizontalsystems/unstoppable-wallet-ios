@@ -1,7 +1,7 @@
 import Foundation
 import ReownWalletKit
 
-// Bug-bounty #3: the badge is derived from the SDK-attested origin, never from dApp metadata
+/// Bug-bounty #3: the badge is derived from the SDK-attested origin, never from dApp metadata
 class WCVerifyService {
     private let whitelist: IWCDappWhitelist?
     private let premiumGate: IWCPremiumGate?
@@ -33,7 +33,7 @@ class WCVerifyService {
         return whitelistDefenseState(trusted: false)
     }
 
-    // an approved session has no attestation any more: the check runs against the peer url, as Android does
+    /// an approved session has no attestation any more: the check runs against the peer url, as Android does
     func defenseState(peerUrl: String) -> WCDefenseState {
         whitelistDefenseState(trusted: isTrusted(origin: peerUrl))
     }
@@ -60,7 +60,7 @@ class WCVerifyService {
     }
 }
 
-// exact host or a subdomain of an whitelisted domain; suffix tricks like evil-uniswap.org do not match
+/// exact host or a subdomain of an whitelisted domain; suffix tricks like evil-uniswap.org do not match
 enum WCWhitelistMatcher {
     static func matches(host: String, allowed: String) -> Bool {
         let allowed = allowed.lowercased()

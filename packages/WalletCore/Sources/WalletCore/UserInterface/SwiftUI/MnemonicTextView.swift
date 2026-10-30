@@ -62,7 +62,7 @@ struct MnemonicTextView: UIViewRepresentable {
         return CGSize(width: width, height: max(fitting.height, minHeight))
     }
 
-    // Pushes SwiftUI state into the text view. Never writes bindings.
+    /// Pushes SwiftUI state into the text view. Never writes bindings.
     private func apply(to textView: UITextView, coordinator: Coordinator) {
         if textView.markedTextRange == nil {
             applyContent(to: textView, coordinator: coordinator)
@@ -91,7 +91,7 @@ struct MnemonicTextView: UIViewRepresentable {
         }
     }
 
-    // Text, colouring and caret. Must only be called while `markedTextRange == nil`.
+    /// Text, colouring and caret. Must only be called while `markedTextRange == nil`.
     private func applyContent(to textView: UITextView, coordinator: Coordinator) {
         // The value came from outside the text view (paste, scan, clear, suggestion, initial seed)
         // when it differs from what the text view itself last reported or what was last applied.

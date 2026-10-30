@@ -53,9 +53,9 @@ class XrpSwapFinalQuote: SwapFinalQuote {
         XrpSendHelper.feeFields(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate)
     }
 
-    // The provider matches the deposit by this field, so it belongs on the confirmation beside the
-    // deposit address, where the memo-carrying chains show their memo (Android `DataFieldDestinationTag`).
-    override public func fields(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
+    /// The provider matches the deposit by this field, so it belongs on the confirmation beside the
+    /// deposit address, where the memo-carrying chains show their memo (Android `DataFieldDestinationTag`).
+    override func fields(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
         var fields = super.fields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
 
         if let destinationTag {

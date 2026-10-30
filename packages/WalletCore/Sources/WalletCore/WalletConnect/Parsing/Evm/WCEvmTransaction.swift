@@ -48,8 +48,8 @@ struct WCEvmTransaction: Equatable {
         return gasPrice.map { .legacy(gasPrice: $0) }
     }
 
-    // EVM QUANTITY is unsigned hex; parsing via BigUInt keeps it non-negative (no RLP BigUInt(-1) trap)
-    // and overflow-safe, matching Android which parses these fields as hex bytes
+    /// EVM QUANTITY is unsigned hex; parsing via BigUInt keeps it non-negative (no RLP BigUInt(-1) trap)
+    /// and overflow-safe, matching Android which parses these fields as hex bytes
     private static func quantity(_ hex: String?) -> BigUInt? {
         hex.flatMap { BigUInt(strip(hex: $0), radix: 16) }
     }
@@ -62,8 +62,8 @@ struct WCEvmTransaction: Equatable {
         hex.hasPrefix("0x") ? String(hex.dropFirst(2)) : hex
     }
 
-    // EVM DATA must be valid hex; a non-failing decode would silently corrupt calldata (odd length,
-    // non-hex chars), so reject it instead — Android's hexStringToByteArray throws on odd length too
+    /// EVM DATA must be valid hex; a non-failing decode would silently corrupt calldata (odd length,
+    /// non-hex chars), so reject it instead — Android's hexStringToByteArray throws on odd length too
     private static func data(hex: String?) throws -> Data {
         guard let hex else { return Data() }
         let stripped = strip(hex: hex)

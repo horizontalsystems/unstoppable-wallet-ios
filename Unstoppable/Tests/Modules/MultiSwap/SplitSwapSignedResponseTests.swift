@@ -16,7 +16,7 @@ struct SplitSwapSignedResponseTests {
         #expect(response.hash == "0xdeposit")
     }
 
-    // The report succeeded whether or not the server echoes the status; only a body without the id is malformed
+    /// The report succeeded whether or not the server echoes the status; only a body without the id is malformed
     @Test func splitSignedWithoutStatusParses() throws {
         let response = try USwapMultiSwapApi.SplitSignedResponseMapping(JSONObject: ["splitUuid": "be52c0bd"]).response
 

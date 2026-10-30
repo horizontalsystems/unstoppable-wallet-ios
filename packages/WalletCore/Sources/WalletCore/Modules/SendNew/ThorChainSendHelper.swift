@@ -15,8 +15,7 @@ enum ThorChainSendHelper {
     }
 
     static func baseUnits(_ value: Decimal, decimals: Int = 8) throws -> BigUInt {
-        guard value.isFinite, value > 0 else { throw Error.invalidAmount }
-        guard let result = BigUInt(value.hs.roundedString(decimal: decimals)), result > 0 else {
+        guard value.isFinite, value > 0, let result = BigUInt(value.hs.roundedString(decimal: decimals)), result > 0 else {
             throw Error.invalidAmount
         }
         return result

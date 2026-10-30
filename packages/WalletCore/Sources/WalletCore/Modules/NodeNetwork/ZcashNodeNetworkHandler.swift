@@ -2,8 +2,8 @@ import Combine
 import Foundation
 import MarketKit
 
-// Single conformer serving all zcash slots of the bundle, like adapters conforming
-// to several narrow protocols; the engine slot reuses the auto-select conformer.
+/// Single conformer serving all zcash slots of the bundle, like adapters conforming
+/// to several narrow protocols; the engine slot reuses the auto-select conformer.
 class ZcashNodeNetworkHandler: NodeNetworkHandlerProvider {
     override class func instance(blockchain: Blockchain) -> NodeNetworkHandlers? {
         guard blockchain.type == .zcash else {

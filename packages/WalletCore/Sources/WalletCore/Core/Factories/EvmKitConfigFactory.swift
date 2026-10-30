@@ -37,15 +37,15 @@ public enum EvmKitConfigFactory {
         }
     }
 
-    // The default base transaction syncers (ethereum + internal + eip20). Public so each app composes the set it
-    // needs (or wraps it in its own syncer) instead of re-listing it. WalletCore registers NO provider itself —
-    // every app sets its own syncers/decorators (no shared fallback).
+    /// The default base transaction syncers (ethereum + internal + eip20). Public so each app composes the set it
+    /// needs (or wraps it in its own syncer) instead of re-listing it. WalletCore registers NO provider itself —
+    /// every app sets its own syncers/decorators (no shared fallback).
     public static func defaultSyncers(evmKit: EvmKit.Kit) -> [ITransactionSyncer] {
         [evmKit.ethereumSyncer, evmKit.internalSyncer, Eip20Kit.Kit.transactionSyncer(for: evmKit)]
     }
 
-    // The default EVM decorators (eip20 + uniswap v2/v3 + 1inch). Public so an app-side provider applies the set
-    // it needs instead of re-listing it.
+    /// The default EVM decorators (eip20 + uniswap v2/v3 + 1inch). Public so an app-side provider applies the set
+    /// it needs instead of re-listing it.
     public static func defaultDecorators(evmKit: EvmKit.Kit) {
         Eip20Kit.Kit.addDecorators(to: evmKit)
         UniswapKit.Kit.addDecorators(to: evmKit)

@@ -1,7 +1,7 @@
 import MarketKit
 
-// Per-chain capability bundle for the network screen: nil slots hide their UI —
-// no engine = no auto-select toggle and no pings, no custom handler = no Added/Add New.
+/// Per-chain capability bundle for the network screen: nil slots hide their UI —
+/// no engine = no auto-select toggle and no pings, no custom handler = no Added/Add New.
 public struct NodeNetworkHandlers {
     public let nodeProvider: INodeProvider
     public let autoSelectEngine: INodeAutoSelectEngine?
@@ -19,5 +19,7 @@ public struct NodeNetworkHandlers {
 open class NodeNetworkHandlerProvider {
     public init() {}
 
-    open class func instance(blockchain _: Blockchain) -> NodeNetworkHandlers? { nil }
+    open class func instance(blockchain _: Blockchain) -> NodeNetworkHandlers? {
+        nil
+    }
 }

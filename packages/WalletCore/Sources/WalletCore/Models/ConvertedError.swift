@@ -109,7 +109,7 @@ extension XrpKit.NoEndpointAvailable: ConvertibleError {
 }
 
 private extension Error {
-    // the kits throw NoEndpointAvailable over the last transport error, which Alamofire wraps
+    /// the kits throw NoEndpointAvailable over the last transport error, which Alamofire wraps
     var isNoConnection: Bool {
         let error = (self as? AFError)?.underlyingError ?? self
 

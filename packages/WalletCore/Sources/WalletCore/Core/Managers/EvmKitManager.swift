@@ -32,11 +32,7 @@ public class EvmKitManager {
 
     private func handleUpdatedSyncSource(blockchainType: BlockchainType) {
         queue.sync {
-            guard let _evmKitWrapper else {
-                return
-            }
-
-            guard _evmKitWrapper.blockchainType == blockchainType else {
+            guard let _evmKitWrapper, _evmKitWrapper.blockchainType == blockchainType else {
                 return
             }
 

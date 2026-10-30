@@ -2,7 +2,7 @@ import MarketKit
 import Testing
 @testable import WalletCore
 
-// WCSendHandlerProvider.registry is process-wide state, so these tests must not run in parallel
+/// WCSendHandlerProvider.registry is process-wide state, so these tests must not run in parallel
 @Suite(.serialized)
 struct WCSendHandlerRegistryTests {
     private func request() throws -> WCRequest {
@@ -71,7 +71,13 @@ private final class StubFactory: IWCSendHandlerFactory {
 }
 
 private final class StubHandler: ISendHandler {
-    var baseToken: MarketKit.Token { fatalError("not used") }
-    func sendData(transactionSettings _: TransactionSettings?) async throws -> ISendData { fatalError("not used") }
+    var baseToken: MarketKit.Token {
+        fatalError("not used")
+    }
+
+    func sendData(transactionSettings _: TransactionSettings?) async throws -> ISendData {
+        fatalError("not used")
+    }
+
     func send(data _: ISendData) async throws {}
 }

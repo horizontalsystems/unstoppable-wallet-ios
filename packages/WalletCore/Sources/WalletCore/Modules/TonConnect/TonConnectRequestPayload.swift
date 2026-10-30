@@ -3,11 +3,6 @@ import Foundation
 struct TonConnectRequestPayload: Decodable {
     let manifestUrl: URL
     let items: [Item]
-
-    init(manifestUrl: URL, items: [Item]) {
-        self.manifestUrl = manifestUrl
-        self.items = items
-    }
 }
 
 extension TonConnectRequestPayload {

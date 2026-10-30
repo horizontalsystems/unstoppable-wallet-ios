@@ -47,7 +47,7 @@ struct BitcoinResendView: View {
 
 struct BitcoinResendFeeView: View {
     @ObservedObject var service: BitcoinResendTransactionService
-    var cautionType: CautionType? = nil
+    var cautionType: CautionType?
     private let helper = FeeSettingsViewHelper()
 
     var body: some View {

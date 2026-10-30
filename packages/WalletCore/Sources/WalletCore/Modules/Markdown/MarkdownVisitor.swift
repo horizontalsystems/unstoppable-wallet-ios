@@ -15,17 +15,17 @@ class MarkdownVisitor {
 }
 
 extension MarkdownVisitor: Visitor {
-    public typealias Result = MarkdownBlock
+    typealias Result = MarkdownBlock
 
-    public func visit(document node: Document) -> MarkdownBlock {
+    func visit(document node: Document) -> MarkdownBlock {
         DocumentBlock(blocks: visitChildren(of: node))
     }
 
-    public func visit(blockQuote node: BlockQuote) -> MarkdownBlock {
+    func visit(blockQuote node: BlockQuote) -> MarkdownBlock {
         BlockQuoteBlock(blocks: visitChildren(of: node))
     }
 
-    public func visit(list node: List) -> MarkdownBlock {
+    func visit(list node: List) -> MarkdownBlock {
         var startOrder: Int?
 
         if case let .ordered(start) = node.listType {
@@ -35,23 +35,23 @@ extension MarkdownVisitor: Visitor {
         return ListBlock(blocks: visitChildren(of: node), tight: node.isTight, startOrder: startOrder)
     }
 
-    public func visit(item node: Item) -> MarkdownBlock {
+    func visit(item node: Item) -> MarkdownBlock {
         ItemBlock(blocks: visitChildren(of: node))
     }
 
-    public func visit(codeBlock _: CodeBlock) -> MarkdownBlock {
+    func visit(codeBlock _: CodeBlock) -> MarkdownBlock {
         UnhandledBlock(type: "CodeBlock")
     }
 
-    public func visit(htmlBlock _: HtmlBlock) -> MarkdownBlock {
+    func visit(htmlBlock _: HtmlBlock) -> MarkdownBlock {
         UnhandledBlock(type: "HtmlBlock")
     }
 
-    public func visit(customBlock _: CustomBlock) -> MarkdownBlock {
+    func visit(customBlock _: CustomBlock) -> MarkdownBlock {
         UnhandledBlock(type: "CustomBlock")
     }
 
-    public func visit(paragraph node: Paragraph) -> MarkdownBlock {
+    func visit(paragraph node: Paragraph) -> MarkdownBlock {
         // handle paragraph with single image
         if node.children.count == 1, let image = node.children.first as? Image {
             return visit(image: image)
@@ -62,53 +62,53 @@ extension MarkdownVisitor: Visitor {
         return ParagraphBlock(attributedString: s)
     }
 
-    public func visit(heading node: Heading) -> MarkdownBlock {
+    func visit(heading node: Heading) -> MarkdownBlock {
         let s = attributedStringVisitor.visitChildren(of: node).joined
         styler.style(heading: s, level: node.headingLevel)
         return HeadingBlock(attributedString: s, level: node.headingLevel)
     }
 
-    public func visit(thematicBreak _: ThematicBreak) -> MarkdownBlock {
+    func visit(thematicBreak _: ThematicBreak) -> MarkdownBlock {
         UnhandledBlock(type: "ThematicBreak")
     }
 
-    public func visit(text _: Text) -> MarkdownBlock {
+    func visit(text _: Text) -> MarkdownBlock {
         UnhandledBlock(type: "Text")
     }
 
-    public func visit(softBreak _: SoftBreak) -> MarkdownBlock {
+    func visit(softBreak _: SoftBreak) -> MarkdownBlock {
         UnhandledBlock(type: "SoftBreak")
     }
 
-    public func visit(lineBreak _: LineBreak) -> MarkdownBlock {
+    func visit(lineBreak _: LineBreak) -> MarkdownBlock {
         UnhandledBlock(type: "LineBreak")
     }
 
-    public func visit(code _: Code) -> MarkdownBlock {
+    func visit(code _: Code) -> MarkdownBlock {
         UnhandledBlock(type: "Code")
     }
 
-    public func visit(htmlInline _: HtmlInline) -> MarkdownBlock {
+    func visit(htmlInline _: HtmlInline) -> MarkdownBlock {
         UnhandledBlock(type: "HtmlInline")
     }
 
-    public func visit(customInline _: CustomInline) -> MarkdownBlock {
+    func visit(customInline _: CustomInline) -> MarkdownBlock {
         UnhandledBlock(type: "CustomInline")
     }
 
-    public func visit(emphasis _: Emphasis) -> MarkdownBlock {
+    func visit(emphasis _: Emphasis) -> MarkdownBlock {
         UnhandledBlock(type: "Emphasis")
     }
 
-    public func visit(strong _: Strong) -> MarkdownBlock {
+    func visit(strong _: Strong) -> MarkdownBlock {
         UnhandledBlock(type: "Strong")
     }
 
-    public func visit(link _: Link) -> MarkdownBlock {
+    func visit(link _: Link) -> MarkdownBlock {
         UnhandledBlock(type: "Link")
     }
 
-    public func visit(image node: Image) -> MarkdownBlock {
+    func visit(image node: Image) -> MarkdownBlock {
         ImageBlock(title: node.title, url: node.url)
     }
 }

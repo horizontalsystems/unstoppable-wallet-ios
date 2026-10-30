@@ -67,7 +67,6 @@ struct AddTokenView: View {
         }
     }
 
-    @ViewBuilder
     private var inputSection: some View {
         VStack(spacing: 0) {
             InputTextRow {

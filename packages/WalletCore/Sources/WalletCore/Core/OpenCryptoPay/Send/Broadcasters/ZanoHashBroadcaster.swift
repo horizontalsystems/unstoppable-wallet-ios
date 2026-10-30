@@ -1,7 +1,7 @@
 import Foundation
 import MarketKit
 
-// Type B: broadcasts via ZanoKit, returns hash.
+/// Type B: broadcasts via ZanoKit, returns hash.
 class ZanoHashBroadcaster: IOpenCryptoPayBroadcaster {
     private let token: Token
 

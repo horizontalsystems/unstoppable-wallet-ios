@@ -2,7 +2,9 @@ import Foundation
 import HsToolKit
 
 final class OutgoingPoisoningFilter: SpamFilter {
-    var identifier: String { "zero_value_poisoning" }
+    var identifier: String {
+        "zero_value_poisoning"
+    }
 
     private let logger: Logger?
 
@@ -11,11 +13,7 @@ final class OutgoingPoisoningFilter: SpamFilter {
     }
 
     func evaluate(_ transaction: SpamTransactionInfo) -> SpamFilterResult {
-        guard !transaction.events.isEmpty else {
-            return .ignore
-        }
-
-        guard !transaction.events.outgoing.isEmpty else {
+        guard !transaction.events.isEmpty, !transaction.events.outgoing.isEmpty else {
             return .ignore
         }
 

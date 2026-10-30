@@ -1,15 +1,15 @@
 import Foundation
 import MarketKit
 
-// The intent, known at pre-send time. This is what the `.privateSend` SendData case carries: neither
-// the deposit address nor the amount to transfer exists until the order is committed.
+/// The intent, known at pre-send time. This is what the `.privateSend` SendData case carries: neither
+/// the deposit address nor the amount to transfer exists until the order is committed.
 public struct PrivateSendRequest {
     public let token: Token // sent == received token
     public let recipient: String // the REAL recipient, never a deposit address
     public let amount: Decimal // exact output — the amount the recipient receives
-    // An immutable copy of the user's send settings, taken on the main thread when the request is
-    // built, so they apply to the deposit transfer without the handler ever reading the live,
-    // UI-owned pre-send handler. Nil falls back to default settings.
+    /// An immutable copy of the user's send settings, taken on the main thread when the request is
+    /// built, so they apply to the deposit transfer without the handler ever reading the live,
+    /// UI-owned pre-send handler. Nil falls back to default settings.
     public let depositSettings: PreSendSettingsSnapshot?
 
     public init(token: Token, recipient: String, amount: Decimal, depositSettings: PreSendSettingsSnapshot? = nil) {
@@ -20,10 +20,10 @@ public struct PrivateSendRequest {
     }
 }
 
-// A previewed route (/v3/preview), produced inside the handler for the confirmation screen. No order
-// exists yet: the token is handed to /v3/commit when the user slides. `stubDepositAddress` is a
-// ready-to-receive account on the sell chain the inner send is estimated against — never a
-// destination to send to.
+/// A previewed route (/v3/preview), produced inside the handler for the confirmation screen. No order
+/// exists yet: the token is handed to /v3/commit when the user slides. `stubDepositAddress` is a
+/// ready-to-receive account on the sell chain the inner send is estimated against — never a
+/// destination to send to.
 public struct PrivateSendPreview {
     public let request: PrivateSendRequest
     public let previewToken: String
@@ -63,9 +63,9 @@ public struct PrivateSendPreview {
         self.previewedAt = previewedAt
     }
 
-    // The route's cost, NOT `depositAmount - amountOut`: the gap up to `depositAmount` is a
-    // refundable deposit ceiling, not a price. With `minSellAmount` unknown this over-states rather
-    // than under-states — an upper bound, never a lowball.
+    /// The route's cost, NOT `depositAmount - amountOut`: the gap up to `depositAmount` is a
+    /// refundable deposit ceiling, not a price. With `minSellAmount` unknown this over-states rather
+    /// than under-states — an upper bound, never a lowball.
     public var privateFee: Decimal {
         max(0, (minSellAmount ?? depositAmount) - amountOut)
     }
@@ -75,7 +75,7 @@ public struct PrivateSendPreview {
     }
 }
 
-// The committed order (/v3/commit on a preview), produced inside the handler when the user slides.
+/// The committed order (/v3/commit on a preview), produced inside the handler when the user slides.
 public struct PrivateSendOrder {
     public let request: PrivateSendRequest
     public let depositAmount: Decimal // the commit's amount — EXACTLY what to transfer, never above the preview's
@@ -115,7 +115,7 @@ public struct PrivateSendOrder {
         self.estimatedTime = estimatedTime
     }
 
-    // Everything the commit does not restate is carried over from the preview the user confirmed.
+    /// Everything the commit does not restate is carried over from the preview the user confirmed.
     public init(
         preview: PrivateSendPreview,
         depositAmount: Decimal,

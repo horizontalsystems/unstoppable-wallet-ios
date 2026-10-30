@@ -47,14 +47,12 @@ class BirthdayInputViewModel: ObservableObject {
             } else {
                 state = .invalid
             }
+        } else if heightString.isEmpty {
+            state = .valid
+        } else if let height, height <= lastHeight {
+            state = .valid
         } else {
-            if heightString.isEmpty {
-                state = .valid
-            } else if let height, height <= lastHeight {
-                state = .valid
-            } else {
-                state = .invalid
-            }
+            state = .invalid
         }
     }
 

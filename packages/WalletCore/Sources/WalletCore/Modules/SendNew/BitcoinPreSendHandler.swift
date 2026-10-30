@@ -101,8 +101,8 @@ class BitcoinPreSendHandler: PreSendHandler {
         syncBalance()
     }
 
-    // The time lock is a sticky user setting: it is applied only where it can be (a direct send to a
-    // P2PKH address) and silently skipped everywhere else, without being cleared.
+    /// The time lock is a sticky user setting: it is applied only where it can be (a direct send to a
+    /// P2PKH address) and silently skipped everywhere else, without being cleared.
     static func timeLockApplicable(address: String) -> Bool {
         address.hasPrefix("1")
     }
@@ -180,8 +180,8 @@ extension BitcoinPreSendHandler: IPreSendHandler {
         settingsModifiedSubject.eraseToAnyPublisher()
     }
 
-    // Chain-constant, so it reads the one table rather than restating it: a memo here becomes an
-    // OP_RETURN output (.onChainPublic).
+    /// Chain-constant, so it reads the one table rather than restating it: a memo here becomes an
+    /// OP_RETURN output (.onChainPublic).
     func memoType(address _: String?) -> MemoType {
         token.blockchainType.memoType
     }
@@ -202,8 +202,8 @@ extension BitcoinPreSendHandler: IPreSendHandler {
         depositSendData(amount: amount, address: address, memo: memo, settings: nil)
     }
 
-    // The time lock is never part of the snapshot and plugin data is always empty: a deposit address
-    // must receive a plain, immediately spendable transfer.
+    /// The time lock is never part of the snapshot and plugin data is always empty: a deposit address
+    /// must receive a plain, immediately spendable transfer.
     var depositSettingsSnapshot: PreSendSettingsSnapshot? {
         PreSendSettingsSnapshot(bitcoin: currentDepositSettings)
     }
@@ -213,9 +213,9 @@ extension BitcoinPreSendHandler: IPreSendHandler {
     }
 }
 
-// The deposit-relevant subset of the Bitcoin send settings, as immutable values. `@unchecked` only
-// because BitcoinCore's UnspentOutputInfo (a plain struct of Int/Data/TimeInterval/String?) does not
-// declare Sendable; every stored property is a value type.
+/// The deposit-relevant subset of the Bitcoin send settings, as immutable values. `@unchecked` only
+/// because BitcoinCore's UnspentOutputInfo (a plain struct of Int/Data/TimeInterval/String?) does not
+/// declare Sendable; every stored property is a value type.
 struct BitcoinDepositSettings: @unchecked Sendable {
     let sortMode: TransactionDataSortMode
     let rbfEnabled: Bool

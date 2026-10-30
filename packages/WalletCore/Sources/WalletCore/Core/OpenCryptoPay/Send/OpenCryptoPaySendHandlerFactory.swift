@@ -7,12 +7,13 @@ enum OpenCryptoPaySendHandlerFactory {
                         inner: SendData) -> ISendHandler?
     {
         // Reject accidental nesting.
-        if case .openCryptoPay = inner { return nil }
+        if case .openCryptoPay = inner {
+            return nil
+        }
 
         let manager = Core.shared.openCryptoPay.manager
 
-        guard let innerHandler = SendHandlerFactory.handler(sendData: inner) else { return nil }
-        guard let broadcaster = manager.broadcasterFactory.make(method: entry.method, token: entry.token) else {
+        guard let innerHandler = SendHandlerFactory.handler(sendData: inner), let broadcaster = manager.broadcasterFactory.make(method: entry.method, token: entry.token) else {
             return nil
         }
 

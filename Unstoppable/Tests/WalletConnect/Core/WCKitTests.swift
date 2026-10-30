@@ -4,8 +4,8 @@ import ReownWalletKit
 import Testing
 @testable import WalletCore
 
-// Deadline tests sleep on the wall clock; under the parallel test run their 0.1s setup sleeps stretched
-// past the one-second deadlines, so this suite runs alone (it passes in isolation).
+/// Deadline tests sleep on the wall clock; under the parallel test run their 0.1s setup sleeps stretched
+/// past the one-second deadlines, so this suite runs alone (it passes in isolation).
 @Suite(.serialized)
 struct WCKitTests {
     private let client = WCSpySignClient()
@@ -55,7 +55,7 @@ struct WCKitTests {
         let cancellable = collect(kit.requestPublisher, into: box)
         defer { cancellable.cancel() }
 
-        client.sessionRequestSubject.send((request: try WCTestFixtures.request(), context: nil))
+        try client.sessionRequestSubject.send((request: WCTestFixtures.request(), context: nil))
         try await waitUntil { box.value.count == 1 }
 
         let item = try #require(box.value.first)
@@ -87,7 +87,7 @@ struct WCKitTests {
         let cancellable = collect(kit.requestPublisher, into: box)
         defer { cancellable.cancel() }
 
-        let foreign = try Request(topic: "unknown-topic", method: "eth_sendTransaction", params: AnyCodable([String]()), chainId: WalletConnectUtils.Blockchain("eip155:1")!)
+        let foreign = try Request(topic: "unknown-topic", method: "eth_sendTransaction", params: AnyCodable([String]()), chainId: #require(WalletConnectUtils.Blockchain("eip155:1")))
         client.sessionRequestSubject.send((request: foreign, context: nil))
         try await Task.sleep(nanoseconds: 150_000_000)
 
@@ -101,7 +101,7 @@ struct WCKitTests {
         let cancellable = collect(kit.requestPublisher, into: box)
         defer { cancellable.cancel() }
 
-        client.sessionRequestSubject.send((request: try WCTestFixtures.request(), context: nil))
+        try client.sessionRequestSubject.send((request: WCTestFixtures.request(), context: nil))
         try await Task.sleep(nanoseconds: 150_000_000)
         #expect(box.value.isEmpty)
     }
@@ -113,7 +113,7 @@ struct WCKitTests {
         let cancellable = collect(kit.requestPublisher, into: box)
         defer { cancellable.cancel() }
 
-        client.sessionRequestSubject.send((request: try WCTestFixtures.request(), context: nil))
+        try client.sessionRequestSubject.send((request: WCTestFixtures.request(), context: nil))
         try await Task.sleep(nanoseconds: 150_000_000)
         #expect(box.value.isEmpty)
 
@@ -359,7 +359,7 @@ struct WCKitTests {
         let cancellable = collect(kit.requestPublisher, into: box)
         defer { cancellable.cancel() }
 
-        client.sessionRequestSubject.send((request: try WCTestFixtures.request(), context: nil))
+        try client.sessionRequestSubject.send((request: WCTestFixtures.request(), context: nil))
         try await Task.sleep(nanoseconds: 150_000_000)
         #expect(box.value.isEmpty)
 
@@ -477,20 +477,20 @@ struct WCKitTests {
     }
 
     @Test func rejectForwardsToSignClient() async throws {
-        let kit = makeKit(storage: try WCSessionFixtures.storage())
+        let kit = try makeKit(storage: WCSessionFixtures.storage())
         let proposal = try WCPairingFixtures.proposal()
         try await kit.reject(proposal: proposal)
         #expect(client.rejectedProposalIds == [proposal.id])
     }
 
     @Test func proposalIsPublishedWithVerifyStateAndChains() async throws {
-        let kit = makeKit(storage: try WCSessionFixtures.storage())
+        let kit = try makeKit(storage: WCSessionFixtures.storage())
         kit.start()
         let box = Box<[WCProposalItem]>([])
         let cancellable = collect(kit.proposalPublisher, into: box)
         defer { cancellable.cancel() }
 
-        client.sessionProposalSubject.send((proposal: try WCPairingFixtures.proposal(), context: VerifyContext(origin: "https://react-app.walletconnect.com", validation: .valid)))
+        try client.sessionProposalSubject.send((proposal: WCPairingFixtures.proposal(), context: VerifyContext(origin: "https://react-app.walletconnect.com", validation: .valid)))
         try await waitUntil { box.value.count == 1 }
 
         let item = try #require(box.value.first)
@@ -507,7 +507,7 @@ struct WCKitTests {
         let cancellable = collect(kit.requestPublisher, into: box)
         defer { cancellable.cancel() }
 
-        client.sessionRequestSubject.send((request: try WCTestFixtures.request(method: "wallet_switchEthereumChain"), context: nil))
+        try client.sessionRequestSubject.send((request: WCTestFixtures.request(method: "wallet_switchEthereumChain"), context: nil))
         try await waitUntil { handler.responded == 1 }
 
         #expect(box.value.isEmpty)
@@ -532,7 +532,7 @@ struct WCKitTests {
         parsers.register(StubParser())
         try WCSessionService(signClient: client, storage: storage, accountProvider: accounts).store(session: session, accountId: "a1")
         let request = try WCTestFixtures.request()
-        let foreign = try Request(topic: "other", method: "eth_sendTransaction", params: AnyCodable([String]()), chainId: WalletConnectUtils.Blockchain("eip155:1")!)
+        let foreign = try Request(topic: "other", method: "eth_sendTransaction", params: AnyCodable([String]()), chainId: #require(WalletConnectUtils.Blockchain("eip155:1")))
         client.pendingRequests = [(request: request, context: nil), (request: foreign, context: nil)]
         let kit = makeKit(storage: storage)
         kit.start()
@@ -552,7 +552,7 @@ struct WCKitTests {
         let box = Box<[WCRequestItem]>([])
         let cancellable = collect(kit.requestPublisher, into: box)
         defer { cancellable.cancel() }
-        client.sessionRequestSubject.send((request: try WCTestFixtures.request(), context: nil))
+        try client.sessionRequestSubject.send((request: WCTestFixtures.request(), context: nil))
         try await waitUntil { box.value.count == 1 }
         let item = try #require(box.value.first)
 
@@ -604,7 +604,9 @@ private final class StubLockProvider: IWCLockProvider {
         set { subject.send(newValue) }
     }
 
-    var isLockedPublisher: AnyPublisher<Bool, Never> { subject.eraseToAnyPublisher() }
+    var isLockedPublisher: AnyPublisher<Bool, Never> {
+        subject.eraseToAnyPublisher()
+    }
 }
 
 private final class DirectStubParser: IWCParser {
@@ -617,7 +619,9 @@ private final class DirectStubParser: IWCParser {
 private final class SpyDirectHandler: IWCDirectHandler {
     private(set) var responded = 0
 
-    func handles(_ payload: WCRequestPayload) -> Bool { payload.kind == .direct }
+    func handles(_ payload: WCRequestPayload) -> Bool {
+        payload.kind == .direct
+    }
 
     func respond(request _: WCRequest, session _: WCSessionInfo) async throws {
         responded += 1

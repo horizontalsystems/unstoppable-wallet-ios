@@ -11,7 +11,9 @@ class BitcoinBaseAdapter {
     static let txStatusConfirmationsThreshold = 3 // Number of confirmations for transaction status displayed
     private let abstractKit: AbstractKit
 
-    var coinRate: Decimal { 100_000_000 } // pow(10, 8)
+    var coinRate: Decimal {
+        100_000_000
+    } // pow(10, 8)
 
     private let bitcoinBalanceDataSubject = PublishSubject<BitcoinBalanceData>()
 
@@ -254,10 +256,8 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
                 ? abstractKit.lastBlockInfo?.timestamp.map { Date(timeIntervalSince1970: Double($0)) }
                 : nil
 
-            if case let .syncing(currentProgress, _, currentDate) = balanceState, newProgress == currentProgress {
-                if let currentDate, let newDate, currentDate.isSameDay(as: newDate) {
-                    return
-                }
+            if case let .syncing(currentProgress, _, currentDate) = balanceState, newProgress == currentProgress, let currentDate, let newDate, currentDate.isSameDay(as: newDate) {
+                return
             }
 
             balanceState = .syncing(progress: newProgress, remaining: newRemaining, lastBlockDate: newDate)
@@ -508,8 +508,8 @@ public struct UsedAddress: Hashable {
 struct SendInfo {
     static let empty: Self = .init(unspentOutputs: [], fee: 0, changeValue: nil, changeAddress: nil)
 
-    public let unspentOutputs: [UnspentOutputInfo]
-    public let fee: Decimal
-    public let changeValue: Decimal?
-    public let changeAddress: String?
+    let unspentOutputs: [UnspentOutputInfo]
+    let fee: Decimal
+    let changeValue: Decimal?
+    let changeAddress: String?
 }

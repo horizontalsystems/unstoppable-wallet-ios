@@ -36,9 +36,9 @@ final class ThorChainSendHandler: SendHandler, ISendHandler {
         self.thorChainKitWrapper = thorChainKitWrapper
     }
 
-    // Re-quoting costs ten to eleven sequential preflight requests, far more than the
-    // single fee estimate other chains repeat. The THORChain fee is a network constant
-    // rather than a floating gas price, so there is nothing to gain from doing it often.
+    /// Re-quoting costs ten to eleven sequential preflight requests, far more than the
+    /// single fee estimate other chains repeat. The THORChain fee is a network constant
+    /// rather than a floating gas price, so there is nothing to gain from doing it often.
     var expirationDuration: Int? {
         60
     }
@@ -71,7 +71,7 @@ final class ThorChainSendHandler: SendHandler, ISendHandler {
 }
 
 extension ThorChainSendHandler: ISendHandlerRefCapturing {
-    // Same broadcast path as `send`, returning the on-chain tx hash.
+    /// Same broadcast path as `send`, returning the on-chain tx hash.
     func sendCapturingRef(data: ISendData) async throws -> String {
         guard let data = data as? ThorChainSendData,
               let quote = data.quote

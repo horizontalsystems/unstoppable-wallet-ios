@@ -63,7 +63,7 @@ enum WCChainSupportFixtures {
         ProposalNamespace(chains: chains.map { $0.compactMap { WalletConnectUtils.Blockchain($0) } }, methods: Set(methods), events: Set(events))
     }
 
-    // exact proposal from the 2026-09-02 spike against react-app.walletconnect.com
+    /// exact proposal from the 2026-09-02 spike against react-app.walletconnect.com
     static let spikeOptional: [String: ProposalNamespace] = [
         "eip155": namespace(["eip155:1", "eip155:10"], methods: ["eth_sendTransaction", "personal_sign"], events: ["accountsChanged", "chainChanged"]),
     ]

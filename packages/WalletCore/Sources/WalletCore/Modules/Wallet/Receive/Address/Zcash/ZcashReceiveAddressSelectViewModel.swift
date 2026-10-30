@@ -19,7 +19,9 @@ class ZcashReceiveAddressSelectViewModel: ObservableObject {
 
 extension ZcashReceiveAddressSelectViewModel {
     struct ViewItem: Hashable, Identifiable {
-        var id: String { addressType.title }
+        var id: String {
+            addressType.title
+        }
 
         let title: String
         let description: String

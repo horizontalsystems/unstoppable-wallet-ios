@@ -1,7 +1,7 @@
 import SwiftUI
 
-// The form shared by the Standard, Private and Cross Pay tabs of PreSendView: balance, amount/fiat input,
-// address, tab-specific fields, cautions, a footer (info cards) and the Next button.
+/// The form shared by the Standard, Private and Cross Pay tabs of PreSendView: balance, amount/fiat input,
+/// address, tab-specific fields, cautions, a footer (info cards) and the Next button.
 struct PreSendFormView<Fields: View, Footer: View>: View {
     @ObservedObject var viewModel: BasePreSendViewModel
     let addressVisible: Bool
@@ -9,7 +9,7 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
     @Binding var path: NavigationPath
     @Binding var isPresented: Bool
 
-    // When set, the input's token selector is tappable (the amount is in a user-selected token).
+    /// When set, the input's token selector is tappable (the amount is in a user-selected token).
     let onSelectToken: (() -> Void)?
 
     let fields: (FocusState<PreSendFocusField?>.Binding) -> Fields
@@ -96,7 +96,7 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
         .animation(.easeOut(duration: 0.25), value: focusField != nil)
     }
 
-    @ViewBuilder private func inputView() -> some View {
+    private func inputView() -> some View {
         SendInputView(
             token: viewModel.inputToken,
             amountDecimals: viewModel.inputDecimals,
@@ -111,7 +111,7 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
         )
     }
 
-    @ViewBuilder private func inputSeparatorView() -> some View {
+    private func inputSeparatorView() -> some View {
         Color.themeBlade.frame(height: .heightOnePixel)
             .overlay {
                 ThemeImage("arrow_m_down", size: 20)
@@ -120,7 +120,7 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
             }
     }
 
-    @ViewBuilder private func addressView() -> some View {
+    private func addressView() -> some View {
         HStack(spacing: 16) {
             // a 32 glyph centred in the 40 column of the token icon above, as on Android
             ThemeImage(viewModel.contactName != nil ? "user_filled" : "wallet_filled", size: 32)
@@ -168,8 +168,7 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
                 return
             }
 
-            guard let resolvedAddress = viewModel.resolvedAddress else { return }
-            guard let data = viewModel.sendData?.sendData else { return }
+            guard let resolvedAddress = viewModel.resolvedAddress, let data = viewModel.sendData?.sendData else { return }
 
             let address = viewModel.sendData?.address
 
@@ -196,7 +195,7 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
                                 },
                                 .init(style: .secondary, mode: .transparent, title: "button.cancel".localized) { isPresented.wrappedValue = false },
                             ])),
-                        ],
+                        ]
                     )
                 }
             }

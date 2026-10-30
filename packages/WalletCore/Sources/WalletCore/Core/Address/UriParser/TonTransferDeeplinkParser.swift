@@ -1,8 +1,8 @@
 import Foundation
 import MarketKit
 
-// Pre-chain parser invoked by the facade and skipping enrichers — preserves master
-// `handleDeepLink` behavior of bypassing init.blockchainType / tokenType filters.
+/// Pre-chain parser invoked by the facade and skipping enrichers — preserves master
+/// `handleDeepLink` behavior of bypassing init.blockchainType / tokenType filters.
 class TonTransferDeeplinkParser: UriParser {
     func canHandle(scheme: String, components: URLComponents) -> Bool {
         scheme == DeepLinkManager.deepLinkScheme && components.host == "transfer"

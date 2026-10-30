@@ -1,8 +1,8 @@
 import Combine
 import Foundation
 
-// Zcash re-check signal: arms a debounce on .notSynced of the live adapter, disarms on
-// recovery, keeps firing with backoff while the stall persists; re-attaches on adapter rebuild.
+/// Zcash re-check signal: arms a debounce on .notSynced of the live adapter, disarms on
+/// recovery, keeps firing with backoff while the stall persists; re-attaches on adapter rebuild.
 class ZcashNodeUpdateSignalProvider {
     private static let debounceInterval: TimeInterval = 15
     private static let initialRetryInterval: TimeInterval = 60
@@ -31,8 +31,8 @@ class ZcashNodeUpdateSignalProvider {
             .store(in: &adapterDataCancellables)
     }
 
-    // Foreground return resets the backoff. Deferred to the first adapter event: this provider
-    // is built during Core's own init, when Core.shared is not yet available.
+    /// Foreground return resets the backoff. Deferred to the first adapter event: this provider
+    /// is built during Core's own init, when Core.shared is not yet available.
     private func subscribeToForegroundIfNeeded() {
         guard cancellables.isEmpty else { return }
 

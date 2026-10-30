@@ -1,5 +1,4 @@
 import Foundation
-
 import MarketKit
 
 class ReceiveSettingsViewModel: ObservableObject {
@@ -17,9 +16,17 @@ class ReceiveSettingsViewModel: ObservableObject {
         nil
     }
 
-    var title: String { fatalError("Must be overridden by subclass") }
-    var topDescription: String { fatalError("Must be overridden by subclass") }
-    var highlightedBottomDescription: String? { nil }
+    var title: String {
+        fatalError("Must be overridden by subclass")
+    }
+
+    var topDescription: String {
+        fatalError("Must be overridden by subclass")
+    }
+
+    var highlightedBottomDescription: String? {
+        nil
+    }
 }
 
 extension ReceiveSettingsViewModel {

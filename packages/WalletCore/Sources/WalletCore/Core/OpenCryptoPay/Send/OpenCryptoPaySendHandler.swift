@@ -17,7 +17,7 @@ class OpenCryptoPaySendHandler {
     private let refreshSubject = PassthroughSubject<Void, Never>()
     private var expirationTimer: Timer?
 
-    // Type A: signed-hex + expired quote = burned EOA nonce.
+    /// Type A: signed-hex + expired quote = burned EOA nonce.
     private let quoteExpiryGuardSeconds: TimeInterval = 30
 
     init(payment: OpenCryptoPayPayment,
@@ -57,11 +57,26 @@ class OpenCryptoPaySendHandler {
 }
 
 extension OpenCryptoPaySendHandler: ISendHandler {
-    var baseToken: Token { innerHandler.baseToken }
-    var syncingText: String? { innerHandler.syncingText }
-    var expirationDuration: Int? { innerHandler.expirationDuration }
-    var initialTransactionSettings: InitialTransactionSettings? { innerHandler.initialTransactionSettings }
-    var menuItems: [SendMenuItem] { innerHandler.menuItems }
+    var baseToken: Token {
+        innerHandler.baseToken
+    }
+
+    var syncingText: String? {
+        innerHandler.syncingText
+    }
+
+    var expirationDuration: Int? {
+        innerHandler.expirationDuration
+    }
+
+    var initialTransactionSettings: InitialTransactionSettings? {
+        innerHandler.initialTransactionSettings
+    }
+
+    var menuItems: [SendMenuItem] {
+        innerHandler.menuItems
+    }
+
     var refreshPublisher: AnyPublisher<Void, Never>? {
         let own = refreshSubject.eraseToAnyPublisher()
         guard let inner = innerHandler.refreshPublisher else { return own }
@@ -110,10 +125,7 @@ extension OpenCryptoPaySendHandler: ISendHandler {
     }
 
     private func preSendGuards() throws {
-        guard accountManager.activeAccount?.id == payment.capturedAccountId else {
-            throw OpenCryptoPayManager.Error.accountChanged
-        }
-        guard walletManager.activeWallets.contains(where: { $0.token == entry.token }) else {
+        guard accountManager.activeAccount?.id == payment.capturedAccountId, walletManager.activeWallets.contains(where: { $0.token == entry.token }) else {
             throw OpenCryptoPayManager.Error.accountChanged
         }
         let safetyMargin = Date().addingTimeInterval(quoteExpiryGuardSeconds)

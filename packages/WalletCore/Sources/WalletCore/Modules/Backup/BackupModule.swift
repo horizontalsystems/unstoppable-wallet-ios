@@ -38,7 +38,9 @@ enum BackupModule {
         let isWatch: Bool
         let cautionType: CautionType?
 
-        var id: String { accountId }
+        var id: String {
+            accountId
+        }
     }
 
     struct DataItem: Identifiable, Hashable {
@@ -46,7 +48,9 @@ enum BackupModule {
         let title: String
         let subtitle: String
 
-        var id: BackupSection { section }
+        var id: BackupSection {
+            section
+        }
     }
 
     enum Source {

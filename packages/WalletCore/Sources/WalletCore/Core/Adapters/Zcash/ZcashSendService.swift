@@ -4,8 +4,8 @@ import RxSwift
 import ZODLSwiftWalletSDK
 
 class ZcashSendService {
-    // Custom fee (zip317 marginal fee) and tx expiry are kept wired end-to-end but the SDK has no
-    // public parameter for them yet; the flag gates the fee-settings UI until upstream support lands.
+    /// Custom fee (zip317 marginal fee) and tx expiry are kept wired end-to-end but the SDK has no
+    /// public parameter for them yet; the flag gates the fee-settings UI until upstream support lands.
     static let customFeeEnabled = false
 
     // RESEARCH SHIM: upstream has no ZcashSDK.defaultZip317MarginalFee (HS delta, replayed in step 3).
@@ -14,12 +14,12 @@ class ZcashSendService {
 
     static let defaultTxExpiryHeightDelta: UInt32 = 10
 
-    // zcashd RPC_VERIFY_ERROR: the node has terminally rejected the tx (e.g. duplicate
-    // nullifier / spent inputs); resubmitting the same bytes can never succeed.
+    /// zcashd RPC_VERIFY_ERROR: the node has terminally rejected the tx (e.g. duplicate
+    /// nullifier / spent inputs); resubmitting the same bytes can never succeed.
     static let terminalNodeRejectionCode = -25
 
-    // Local SDK refusals, reported as .rejected: the tx is built for a stale consensus branch or has
-    // expired at the server's height — the wallet is behind, and the same bytes can never be mined.
+    /// Local SDK refusals, reported as .rejected: the tx is built for a stale consensus branch or has
+    /// expired at the server's height — the wallet is behind, and the same bytes can never be mined.
     static let localRefusalCodes: Set<Int> = [
         TransactionSubmissionRefusal.wrongConsensusBranch.code,
         TransactionSubmissionRefusal.expired.code,
@@ -212,9 +212,9 @@ class ZcashSendService {
         try await migrator.migrationProposal()
     }
 
-    // send-max sweep to the wallet's own UA. It is an ordinary send: no stop-sync, no privacy buffer.
-    // Runs under the same "zcash-send" critical section as every send, so background survivability and
-    // same-bytes resubmit apply for free.
+    /// send-max sweep to the wallet's own UA. It is an ordinary send: no stop-sync, no privacy buffer.
+    /// Runs under the same "zcash-send" critical section as every send, so background survivability and
+    /// same-bytes resubmit apply for free.
     func performMigration() async throws -> String? {
         let txId = try await Core.shared.backgroundTaskManager.performCritical(name: "zcash-send") {
             try await self.migrator.performMigration()
@@ -254,7 +254,7 @@ class ZcashSendService {
         return mapped.txIds.first
     }
 
-    // created but never handed to a server: the SDK background resubmission owns them from here
+    /// created but never handed to a server: the SDK background resubmission owns them from here
     private func handOverToBackgroundResubmission(_ created: [CreatedTransaction], endpoint: LightWalletEndpoint, reason: String) async -> String? {
         logger?.log(level: .error, message: "Submit skipped (\(reason)), released \(created.count) tx to SDK resubmission")
         await synchronizer.broadcaster.releaseForResubmission(transactions: created, to: [endpoint])
@@ -294,11 +294,11 @@ class ZcashSendService {
         return result
     }
 
-    // Directly re-broadcasts created-but-undelivered transactions with their original bytes.
-    // Runs on foreground start (deferred until the first sync state with a non-zero height):
-    // the SDK sync-loop resubmission only runs once the sync state machine reaches it, so a
-    // short "check the app" session would never deliver without this.
-    // Same-bytes resubmit is safe: an already-delivered transaction comes back as .accepted.
+    /// Directly re-broadcasts created-but-undelivered transactions with their original bytes.
+    /// Runs on foreground start (deferred until the first sync state with a non-zero height):
+    /// the SDK sync-loop resubmission only runs once the sync state machine reaches it, so a
+    /// short "check the app" session would never deliver without this.
+    /// Same-bytes resubmit is safe: an already-delivered transaction comes back as .accepted.
     func resubmitPendingTransactions() async {
         guard let endpointService else {
             return

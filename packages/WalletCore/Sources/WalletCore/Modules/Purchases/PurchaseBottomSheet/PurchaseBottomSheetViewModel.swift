@@ -146,7 +146,9 @@ extension PurchaseBottomSheetViewModel {
 }
 
 extension PurchaseManager.SubscriptionPeriod: Identifiable {
-    var id: String { rawValue }
+    var id: String {
+        rawValue
+    }
 
     var title: String {
         switch self {

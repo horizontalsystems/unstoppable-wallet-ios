@@ -104,8 +104,12 @@ class TransactionInfoService {
             tokens.append(tx.value.token)
         case let tx as SolanaSwapTransactionRecord:
             tokens.append(tx.fee?.token)
-            if let valueIn = tx.valueIn { tokens.append(valueIn.token) }
-            if let valueOut = tx.valueOut { tokens.append(valueOut.token) }
+            if let valueIn = tx.valueIn {
+                tokens.append(valueIn.token)
+            }
+            if let valueOut = tx.valueOut {
+                tokens.append(valueOut.token)
+            }
         case let tx as SolanaUnknownTransactionRecord:
             tokens.append(contentsOf: tx.incomingTransfers.map(\.value.token))
             tokens.append(contentsOf: tx.outgoingTransfers.map(\.value.token))

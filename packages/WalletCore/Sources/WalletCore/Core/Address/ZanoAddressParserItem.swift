@@ -4,7 +4,9 @@ import RxSwift
 import ZanoKit
 
 class ZanoAddressParserItem: IAddressParserItem {
-    var blockchainType: BlockchainType { .zano }
+    var blockchainType: BlockchainType {
+        .zano
+    }
 
     func handle(address: String) -> Single<Address> {
         if ZanoAdapter.isValidAddress(address) {

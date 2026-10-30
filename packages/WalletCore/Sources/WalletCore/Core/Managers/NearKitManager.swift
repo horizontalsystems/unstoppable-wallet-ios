@@ -115,7 +115,7 @@ public class NearKitManager {
             }
     }
 
-    // the index lists every token the account ever touched, so only tokens known to the coin list are enabled
+    /// the index lists every token the account ever touched, so only tokens known to the coin list are enabled
     private func handle(ftBalances: [FtBalance], account: Account) {
         guard Core.shared.config.autoEnableTokensOnReceive else {
             return
@@ -160,7 +160,7 @@ extension NearKitManager {
         kitStoppedRelay.asObservable()
     }
 
-    // an adapter of a dropped kit may stop after the new kit started; it must not touch the new kit's set
+    /// an adapter of a dropped kit may stop after the new kit started; it must not touch the new kit's set
     func watch(contractId: String, nearKit: NearKit.Kit) {
         queue.async { [weak self] in
             guard let self, let _nearKit, _nearKit === nearKit else { return }

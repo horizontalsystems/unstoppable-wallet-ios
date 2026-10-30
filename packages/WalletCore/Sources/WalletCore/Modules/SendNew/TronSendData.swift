@@ -119,7 +119,7 @@ class TronSendData: ISendData {
                 .amount(
                     token: coinService.token,
                     appValueType: .withoutAmount(code: coinService.token.coin.code),
-                    currencyValue: nil,
+                    currencyValue: nil
                 )
             )
         } else {
@@ -127,7 +127,7 @@ class TronSendData: ISendData {
                 .amount(
                     token: coinService.token,
                     appValueType: approveValue.isMaxValue ? .infinity(code: approveValue.code) : .regular(appValue: approveValue),
-                    currencyValue: approveValue.isMaxValue ? nil : rates[contractAddress.base58].map { CurrencyValue(currency: currency, value: $0 * value) },
+                    currencyValue: approveValue.isMaxValue ? nil : rates[contractAddress.base58].map { CurrencyValue(currency: currency, value: $0 * value) }
                 )
             )
         }

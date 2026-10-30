@@ -69,7 +69,7 @@ extension BitcoinSendHandler: ISendHandler {
 }
 
 extension BitcoinSendHandler: ISendHandlerRefCapturing {
-    // Same broadcast path as `send`, returning the on-chain tx hash.
+    /// Same broadcast path as `send`, returning the on-chain tx hash.
     func sendCapturingRef(data: ISendData) async throws -> String {
         guard let data = data as? SendData else {
             throw SendError.invalidData
@@ -143,7 +143,7 @@ extension BitcoinSendHandler {
             let from = SendField.amount(
                 token: baseToken,
                 appValueType: .regular(appValue: appValue),
-                currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * decimalValue) },
+                currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * decimalValue) }
             )
 
             let to = SendField.address(

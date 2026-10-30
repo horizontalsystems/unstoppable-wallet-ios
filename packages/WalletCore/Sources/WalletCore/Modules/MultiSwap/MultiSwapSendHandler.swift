@@ -36,8 +36,8 @@ class MultiSwapSendHandler: SendHandler {
         set { recipientHolder.address = newValue }
     }
 
-    // tokenOut the account can't hold — the recipient was entered before confirmation,
-    // is mandatory and must not be cleared (there is no own-wallet address to fall back to)
+    /// tokenOut the account can't hold — the recipient was entered before confirmation,
+    /// is mandatory and must not be cleared (there is no own-wallet address to fall back to)
     private var recipientRequired: Bool {
         guard let accountType = accountManager.activeAccount?.type else {
             return false
@@ -46,7 +46,7 @@ class MultiSwapSendHandler: SendHandler {
         return !accountType.supports(token: tokenOut)
     }
 
-    // resolved once per confirmation: the mechanism is fixed by (chain, account)
+    /// resolved once per confirmation: the mechanism is fixed by (chain, account)
     private lazy var broadcaster: ISwapBroadcaster? = accountManager.activeAccount.flatMap {
         try? SwapBroadcasterFactory.broadcaster(blockchainType: tokenIn.blockchainType, account: $0)
     }
@@ -261,8 +261,8 @@ extension MultiSwapSendHandler: ISendHandler {
         swapHistoryManager.save(swap: swap)
     }
 
-    // What the toast says when the order could not be created: the server's discriminator when it
-    // names one, a generic line otherwise (server-supplied text is never shown verbatim).
+    /// What the toast says when the order could not be created: the server's discriminator when it
+    /// names one, a generic line otherwise (server-supplied text is never shown verbatim).
     static func commitFailureMessage(_ error: Error) -> String {
         switch (error as? USwapMultiSwapApi.CommitError)?.status {
         case "rate_changed":
@@ -318,8 +318,7 @@ extension MultiSwapSendHandler {
             let fiatAmountOut = rates[tokenOut.coin.uid].map { quote.amountOut * $0 }
 
             if let fiatAmountIn, let fiatAmountOut, fiatAmountIn != 0, fiatAmountIn > fiatAmountOut {
-                let priceImpact = (fiatAmountOut * 100 / fiatAmountIn) - 100
-                return priceImpact
+                return (fiatAmountOut * 100 / fiatAmountIn) - 100
             }
 
             return nil
@@ -346,12 +345,12 @@ extension MultiSwapSendHandler {
                 .amount(
                     token: tokenIn,
                     appValueType: .regular(appValue: AppValue(token: tokenIn, value: amountIn)),
-                    currencyValue: rates[tokenIn.coin.uid].map { CurrencyValue(currency: currency, value: amountIn * $0) },
+                    currencyValue: rates[tokenIn.coin.uid].map { CurrencyValue(currency: currency, value: amountIn * $0) }
                 ),
                 .amount(
                     token: tokenOut,
                     appValueType: .regular(appValue: AppValue(token: tokenOut, value: quote.amountOut)),
-                    currencyValue: rates[tokenOut.coin.uid].map { CurrencyValue(currency: currency, value: quote.amountOut * $0) },
+                    currencyValue: rates[tokenOut.coin.uid].map { CurrencyValue(currency: currency, value: quote.amountOut * $0) }
                 ),
             ], isFlow: true)
         }
@@ -406,7 +405,7 @@ extension MultiSwapSendHandler {
         }
     }
 
-    // The order could not be created; the handler already toasted the reason and re-previewed.
+    /// The order could not be created; the handler already toasted the reason and re-previewed.
     struct CommitFailedError: IHandledSendError {
         let underlying: Error
     }

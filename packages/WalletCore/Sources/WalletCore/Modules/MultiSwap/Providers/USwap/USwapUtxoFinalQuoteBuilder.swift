@@ -67,9 +67,9 @@ final class USwapUtxoFinalQuoteBuilder: USwapFinalQuoteBuilder {
         )
     }
 
-    // A vault deposit (thorchain_deposit) refunds to the transaction's first input and cannot pay
-    // a taproot address, so it spends only non-taproot UTXOs and returns change to the first input.
-    // Every other route is a plain transfer.
+    /// A vault deposit (thorchain_deposit) refunds to the transaction's first input and cannot pay
+    /// a taproot address, so it spends only non-taproot UTXOs and returns change to the first input.
+    /// Every other route is a plain transfer.
     private static func sendParameters(
         execution: USwapMultiSwapApi.Execution?,
         address: String,

@@ -38,7 +38,7 @@ public struct SwapSuspension: ImmutableMappable {
     public let expiresAt: Date?
 
     public init(map: Map) throws {
-        kind = Kind(rawValue: try map.value("kind")) ?? .asset
+        kind = try Kind(rawValue: map.value("kind")) ?? .asset
         side = Side(rawValue: (try? map.value("side")) ?? "any") ?? .any
         asset = try? map.value("asset")
         chain = try? map.value("chain")
@@ -73,8 +73,12 @@ public struct SwapSuspension: ImmutableMappable {
     }
 
     private func matchesSided(sell: String?, buy: String?, test: (String) -> Bool) -> Bool {
-        if side != .buy, let sell, test(sell) { return true }
-        if side != .sell, let buy, test(buy) { return true }
+        if side != .buy, let sell, test(sell) {
+            return true
+        }
+        if side != .sell, let buy, test(buy) {
+            return true
+        }
         return false
     }
 }

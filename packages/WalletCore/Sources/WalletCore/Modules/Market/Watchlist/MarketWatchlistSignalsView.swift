@@ -54,7 +54,7 @@ struct MarketWatchlistSignalsView: View {
         }
     }
 
-    @ViewBuilder private func row(signal: TechnicalAdvice.Advice) -> some View {
+    private func row(signal: TechnicalAdvice.Advice) -> some View {
         Cell(
             left: {
                 BadgeViewNew(signal.title, mode: .transparent, colorStyle: signal.colorStyle)

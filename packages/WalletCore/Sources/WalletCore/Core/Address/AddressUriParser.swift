@@ -43,7 +43,9 @@ extension AddressUriParser {
         components.queryItems = addressUri.parameters.map { URLQueryItem(name: $0.rawValue, value: $1) }
         components.queryItems?.append(contentsOf: addressUri.unhandledParameters.map { URLQueryItem(name: $0, value: $1) })
 
-        if let url = components.url { return url.absoluteString }
+        if let url = components.url {
+            return url.absoluteString
+        }
         return [components.scheme, components.path].compactMap { $0 }.joined(separator: ":")
     }
 

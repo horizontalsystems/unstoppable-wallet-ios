@@ -56,9 +56,9 @@ class ThorChainTransactionConverter {
         return AppValue(tokenName: asset.ticker, tokenCode: asset.ticker, tokenDecimals: decimals, value: value(decimals: decimals))
     }
 
-    // Bank-denom decimals for assets MarketKit does not list. THOR is uniformly 1e8;
-    // Maya is heterogeneous: CACAO 1e10, the MAYA governance token 1e4 (verified against
-    // the MAYA.MAYA pool depth on midgard), synths 1e8.
+    /// Bank-denom decimals for assets MarketKit does not list. THOR is uniformly 1e8;
+    /// Maya is heterogeneous: CACAO 1e10, the MAYA governance token 1e4 (verified against
+    /// the MAYA.MAYA pool depth on midgard), synths 1e8.
     private func fallbackDecimals(denom: String) -> Int {
         guard network.chain == .maya else { return network.decimals }
         switch denom {
@@ -75,11 +75,11 @@ class ThorChainTransactionConverter {
 }
 
 extension ThorChainTransactionConverter {
-    // Midgard action semantics: `incoming` transfers enter the action (spent by their
-    // address), `outgoing` transfers leave it (received by their address). One action
-    // can carry the user on BOTH sides with different assets — a swap spends RUNE and
-    // delivers TCY in the same action — so every user-side transfer becomes its own
-    // record; a single-record conversion would drop the received asset entirely.
+    /// Midgard action semantics: `incoming` transfers enter the action (spent by their
+    /// address), `outgoing` transfers leave it (received by their address). One action
+    /// can carry the user on BOTH sides with different assets — a swap spends RUNE and
+    /// delivers TCY in the same action — so every user-side transfer becomes its own
+    /// record; a single-record conversion would drop the received asset entirely.
     func transactionRecords(from transaction: ThorChainKit.Transaction) -> [ThorChainTransactionRecord] {
         let userSpends = transaction.incoming.filter { isOwn($0.address) }
         let userReceives = transaction.outgoing.filter { isOwn($0.address) }

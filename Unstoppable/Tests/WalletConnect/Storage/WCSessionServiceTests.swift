@@ -38,7 +38,7 @@ struct WCSessionServiceTests {
         #expect(other == nil)
     }
 
-    // bug-bounty #2: deleting the owner account disconnects in the SDK and never re-adopts the topic
+    /// bug-bounty #2: deleting the owner account disconnects in the SDK and never re-adopts the topic
     @Test func deletingAccountDisconnectsAndDoesNotRebind() async throws {
         let storage = try WCSessionFixtures.storage()
         let session = try WCSessionFixtures.session(topic: "t1")

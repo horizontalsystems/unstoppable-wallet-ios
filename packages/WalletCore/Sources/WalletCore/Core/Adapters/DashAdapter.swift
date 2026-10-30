@@ -70,7 +70,7 @@ class DashAdapter: BitcoinBaseAdapter {
 }
 
 extension DashAdapter: DashKitDelegate {
-    public func transactionsUpdated(inserted: [DashTransactionInfo], updated: [DashTransactionInfo]) {
+    func transactionsUpdated(inserted: [DashTransactionInfo], updated: [DashTransactionInfo]) {
         var records = [BitcoinTransactionRecord]()
 
         for info in inserted {

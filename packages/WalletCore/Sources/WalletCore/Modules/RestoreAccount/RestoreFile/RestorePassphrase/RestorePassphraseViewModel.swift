@@ -127,10 +127,21 @@ extension RestorePassphraseViewModel {
         case restoredFullBackup(RawFullBackup)
     }
 
-    var showErrorPublisher: AnyPublisher<String, Never> { showErrorSubject.eraseToAnyPublisher() }
-    var openSelectCoinsPublisher: AnyPublisher<Account, Never> { openSelectCoinsSubject.eraseToAnyPublisher() }
-    var openConfigurationPublisher: AnyPublisher<RawFullBackup, Never> { openConfigurationSubject.eraseToAnyPublisher() }
-    var successPublisher: AnyPublisher<AccountType, Never> { successSubject.eraseToAnyPublisher() }
+    var showErrorPublisher: AnyPublisher<String, Never> {
+        showErrorSubject.eraseToAnyPublisher()
+    }
+
+    var openSelectCoinsPublisher: AnyPublisher<Account, Never> {
+        openSelectCoinsSubject.eraseToAnyPublisher()
+    }
+
+    var openConfigurationPublisher: AnyPublisher<RawFullBackup, Never> {
+        openConfigurationSubject.eraseToAnyPublisher()
+    }
+
+    var successPublisher: AnyPublisher<AccountType, Never> {
+        successSubject.eraseToAnyPublisher()
+    }
 
     var buttonTitle: String {
         switch restoredBackup.source {

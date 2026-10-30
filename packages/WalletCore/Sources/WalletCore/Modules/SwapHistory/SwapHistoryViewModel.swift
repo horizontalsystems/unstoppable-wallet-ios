@@ -109,11 +109,7 @@ class SwapHistoryViewModel: ObservableObject {
     }
 
     private func __loadMoreIfRequired(index: Int) {
-        guard !__allLoaded else {
-            return
-        }
-
-        guard index > __items.count - 5 else {
+        guard !__allLoaded, index > __items.count - 5 else {
             return
         }
 

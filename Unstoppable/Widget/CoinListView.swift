@@ -18,7 +18,7 @@ struct CoinListView: View {
         }
     }
 
-    @ViewBuilder private func smallView() -> some View {
+    private func smallView() -> some View {
         list(verticalPadding: 4) { item in
             HStack(spacing: 8) {
                 icon(image: item.icon)
@@ -37,13 +37,13 @@ struct CoinListView: View {
         }
     }
 
-    @ViewBuilder private func mediumView() -> some View {
+    private func mediumView() -> some View {
         list(verticalPadding: 4) { item in
             row(item: item)
         }
     }
 
-    @ViewBuilder private func largeView() -> some View {
+    private func largeView() -> some View {
         VStack(spacing: 0) {
             HStack(spacing: 16) {
                 Text(title)
@@ -69,7 +69,7 @@ struct CoinListView: View {
         .padding(.vertical, 4)
     }
 
-    @ViewBuilder private func list(verticalPadding: CGFloat, rowBuilder: @escaping (CoinItem) -> some View) -> some View {
+    private func list(verticalPadding: CGFloat, rowBuilder: @escaping (CoinItem) -> some View) -> some View {
         GeometryReader { proxy in
             ListSection {
                 ForEach(items) { item in
@@ -91,7 +91,7 @@ struct CoinListView: View {
         .padding(.vertical, verticalPadding)
     }
 
-    @ViewBuilder private func row(item: CoinItem) -> some View {
+    private func row(item: CoinItem) -> some View {
         HStack(spacing: 16) {
             icon(image: item.icon)
 

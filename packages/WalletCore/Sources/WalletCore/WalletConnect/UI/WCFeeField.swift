@@ -1,15 +1,15 @@
 import MarketKit
 import SwiftUI
 
-// Android WCSendEthScreen FeeCell: coin amount and fiat shown together. While the gas estimate is still
-// pending (loading) the value is replaced by a spinner, so the request sheet can open full with the rows
-// already visible instead of blocking the whole screen on a loader.
+/// Android WCSendEthScreen FeeCell: coin amount and fiat shown together. While the gas estimate is still
+/// pending (loading) the value is replaced by a spinner, so the request sheet can open full with the rows
+/// already visible instead of blocking the whole screen on a loader.
 struct WCFeeField: SendFieldContent {
     let title: CustomStringConvertible
     let amountData: AmountData?
     let loading: Bool
 
-    @ViewBuilder @MainActor func listRow() -> some View {
+    @MainActor func listRow() -> some View {
         Cell(
             style: .secondary,
             middle: {

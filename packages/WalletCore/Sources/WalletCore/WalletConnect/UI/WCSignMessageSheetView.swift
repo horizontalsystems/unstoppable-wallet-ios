@@ -1,6 +1,6 @@
 import SwiftUI
 
-// Sign request as a bottom sheet: dApp header, one bordered card of request rows, Reject | Sign
+/// Sign request as a bottom sheet: dApp header, one bordered card of request rows, Reject | Sign
 struct WCSignMessageSheetView: View {
     @StateObject private var viewModel: WCSignMessageViewModel
     @StateObject private var expirationViewModel: WCRequestExpirationViewModel

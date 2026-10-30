@@ -44,7 +44,7 @@ struct SwapTermsView: View {
         }
     }
 
-    @ViewBuilder private func cell(item: Item) -> some View {
+    private func cell(item: Item) -> some View {
         Cell(
             left: {
                 Image.checkbox(active: acceptedItems.contains(item))
@@ -62,7 +62,7 @@ struct SwapTermsView: View {
                             return .handled
                         })
                 }
-            },
+            }
         )
         .contentShape(Rectangle())
         .onTapGesture {
@@ -106,9 +106,13 @@ extension SwapTermsView {
 
             var result = AttributedString("")
 
-            if !components[0].isEmpty { result.append(textPart(string: components[0])) }
+            if !components[0].isEmpty {
+                result.append(textPart(string: components[0]))
+            }
             result.append(textPart(string: "swap.quotes.providers.risk_levels.title".localized, color: .themeJacob, url: Self.providerInfoUrl))
-            if !components[1].isEmpty { result.append(textPart(string: components[1])) }
+            if !components[1].isEmpty {
+                result.append(textPart(string: components[1]))
+            }
 
             return result
         }

@@ -28,10 +28,14 @@ struct OpenCryptoPayPaymentRecord: Codable, FetchableRecord, PersistableRecord {
         }
     }
 
-    // proofSubmittedAt has priority; markSubmitted always clears proofFailedAt, so both never coexist.
+    /// proofSubmittedAt has priority; markSubmitted always clears proofFailedAt, so both never coexist.
     var proofStatus: ProofStatus {
-        if proofSubmittedAt != nil { return .submitted }
-        if proofFailedAt != nil { return .reconciliation }
+        if proofSubmittedAt != nil {
+            return .submitted
+        }
+        if proofFailedAt != nil {
+            return .reconciliation
+        }
         return .pending
     }
 }

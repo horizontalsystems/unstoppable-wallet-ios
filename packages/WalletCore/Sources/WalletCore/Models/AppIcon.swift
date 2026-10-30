@@ -25,7 +25,7 @@ enum AppIcon {
 }
 
 extension AppIcon: Hashable {
-    public func hash(into hasher: inout Hasher) {
+    func hash(into hasher: inout Hasher) {
         switch self {
         case .main:
             hasher.combine("main")
@@ -37,7 +37,7 @@ extension AppIcon: Hashable {
 }
 
 extension AppIcon: Equatable {
-    public static func == (lhs: AppIcon, rhs: AppIcon) -> Bool {
+    static func == (lhs: AppIcon, rhs: AppIcon) -> Bool {
         switch (lhs, rhs) {
         case (.main, .main): return true
         case let (.alternate(lhsName, _, _), .alternate(rhsName, _, _)): return lhsName == rhsName

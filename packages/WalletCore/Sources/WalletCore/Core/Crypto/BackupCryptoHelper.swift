@@ -59,11 +59,11 @@ enum BackupCryptoHelper {
 }
 
 extension BackupCryptoHelper {
-    public static func generateInitialVector(len: Int = 16) -> Data {
+    static func generateInitialVector(len: Int = 16) -> Data {
         Data(Array(0 ..< len).map { _ in UInt8.random(in: UInt8.min ... UInt8.max) })
     }
 
-    public static func makeScrypt(pass: Data, salt: Data, dkLen: Int, N: UInt64, r: UInt32, p: UInt32) throws -> Data {
+    static func makeScrypt(pass: Data, salt: Data, dkLen: Int, N: UInt64, r: UInt32, p: UInt32) throws -> Data {
         let result: [UInt8]
         #if DEBUG
             result = try scrypt(
@@ -88,7 +88,7 @@ extension BackupCryptoHelper {
         return Data(result)
     }
 
-    public static func AES128(operation: Operation, ivHex: String, pass: String, message: Data, kdf: KdfParams) throws -> Data {
+    static func AES128(operation: Operation, ivHex: String, pass: String, message: Data, kdf: KdfParams) throws -> Data {
         do {
             let key = try BackupCryptoHelper.makeScrypt(
                 pass: pass.hs.data,
@@ -109,7 +109,7 @@ extension BackupCryptoHelper {
         }
     }
 
-    public static func mac(pass: String, message: Data, kdf: KdfParams) throws -> Data {
+    static func mac(pass: String, message: Data, kdf: KdfParams) throws -> Data {
         let key = try BackupCryptoHelper.makeScrypt(
             pass: pass.hs.data,
             salt: kdf.salt.hs.data,
@@ -125,7 +125,7 @@ extension BackupCryptoHelper {
         return Crypto.sha3(data)
     }
 
-    public static func isValid(macHex: String, pass: String, message: Data, kdf: KdfParams) throws -> Bool {
+    static func isValid(macHex: String, pass: String, message: Data, kdf: KdfParams) throws -> Bool {
         let sha3 = try mac(pass: pass, message: message, kdf: kdf)
         return macHex == sha3.hs.hex
     }

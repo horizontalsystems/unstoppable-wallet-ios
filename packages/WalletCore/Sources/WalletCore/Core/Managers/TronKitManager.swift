@@ -140,9 +140,9 @@ extension TronKitManager {
 public class TronKitWrapper {
     public let tronKit: TronKit.Kit
     let signer: Signer?
-    // True when this wrapper serves an account that pays network fees in tokens. UI uses it to bypass
-    // the on-chain `accountActive == false` cosmetic ("not activated") for accounts whose wallet
-    // contract is not yet deployed on chain.
+    /// True when this wrapper serves an account that pays network fees in tokens. UI uses it to bypass
+    /// the on-chain `accountActive == false` cosmetic ("not activated") for accounts whose wallet
+    /// contract is not yet deployed on chain.
     let gasTokenPayment: Bool
 
     init(tronKit: TronKit.Kit, signer: Signer?, gasTokenPayment: Bool) {

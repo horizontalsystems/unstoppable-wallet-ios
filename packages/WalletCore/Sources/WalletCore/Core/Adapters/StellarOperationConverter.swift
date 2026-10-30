@@ -73,8 +73,12 @@ class StellarOperationConverter {
             // falls through as a labeled contract invocation.
             var deltas = [Asset: Decimal]()
             for change in data.balanceChanges {
-                if change.from == accountId { deltas[change.asset, default: 0] -= change.amount }
-                if change.to == accountId { deltas[change.asset, default: 0] += change.amount }
+                if change.from == accountId {
+                    deltas[change.asset, default: 0] -= change.amount
+                }
+                if change.to == accountId {
+                    deltas[change.asset, default: 0] += change.amount
+                }
             }
             let spent = deltas.filter { $0.value < 0 }
             let gained = deltas.filter { $0.value > 0 }
@@ -100,8 +104,8 @@ class StellarOperationConverter {
         }
     }
 
-    // Where the moved asset went (outgoing) or came from (incoming): the first change of that
-    // asset touching this account in that direction
+    /// Where the moved asset went (outgoing) or came from (incoming): the first change of that
+    /// asset touching this account in that direction
     private func counterparty(asset: Asset, outgoing: Bool, changes: [TxOperation.BalanceChange]) -> String? {
         if outgoing {
             return changes.first { $0.asset == asset && $0.from == accountId }?.to
@@ -124,7 +128,9 @@ extension StellarOperationConverter {
 
         let types = operations.map { type(type: $0.type) }
         let primaryIndex = types.firstIndex {
-            if case .swap = $0 { return true }
+            if case .swap = $0 {
+                return true
+            }
             return false
         } ?? 0
 

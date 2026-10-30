@@ -8,13 +8,13 @@ class SecurityManager {
     @PostPublished private(set) var securityChecks: [AddressSecurityIssueType: Bool]
     @PostPublished private(set) var secureSendEnabled: Bool
 
-    // swap settings
+    /// swap settings
     @PostPublished private(set) var swapProtectionEnabled: Bool
 
-    // scam protection
+    /// scam protection
     @PostPublished private(set) var scamProtectionEnabled: Bool
 
-    // tx filter
+    /// tx filter
     @PostPublished private(set) var spamFilterEnabled: Bool
 
     init(localStorage: LocalStorage) {

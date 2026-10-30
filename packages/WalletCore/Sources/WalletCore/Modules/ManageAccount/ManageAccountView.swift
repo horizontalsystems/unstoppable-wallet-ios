@@ -200,7 +200,7 @@ struct ManageAccountView: View {
         }
     }
 
-    @ViewBuilder private func confirmUnlinkWatchView(isPresented _: Binding<Bool>) -> some View {
+    private func confirmUnlinkWatchView(isPresented _: Binding<Bool>) -> some View {
         BottomSheetView(
             items: [
                 .title(icon: ThemeImage.trash, title: "settings_manage_keys.delete.title".localized),
@@ -210,11 +210,11 @@ struct ManageAccountView: View {
                         unlink()
                     },
                 ])),
-            ],
+            ]
         )
     }
 
-    @ViewBuilder private func confirmDeleteCloudBackupView(isPresented: Binding<Bool>) -> some View {
+    private func confirmDeleteCloudBackupView(isPresented: Binding<Bool>) -> some View {
         BottomSheetView(
             items: [
                 .title(icon: ThemeImage.trash, title: "manage_account.cloud_delete_backup_recovery_phrase".localized),
@@ -228,11 +228,11 @@ struct ManageAccountView: View {
                         isPresented.wrappedValue = false
                     },
                 ])),
-            ],
+            ]
         )
     }
 
-    @ViewBuilder private func confirmDeleteCloudBackupAfterManualBackupView(isPresented: Binding<Bool>) -> some View {
+    private func confirmDeleteCloudBackupAfterManualBackupView(isPresented: Binding<Bool>) -> some View {
         BottomSheetView(
             items: [
                 .title(icon: ThemeImage.trash, title: "manage_account.manual_backup_required".localized),
@@ -249,7 +249,7 @@ struct ManageAccountView: View {
                         isPresented.wrappedValue = false
                     },
                 ])),
-            ],
+            ]
         )
     }
 
@@ -287,6 +287,8 @@ extension ManageAccountView {
         case manual
         case deleteCloudBackup
 
-        var id: Self { self }
+        var id: Self {
+            self
+        }
     }
 }

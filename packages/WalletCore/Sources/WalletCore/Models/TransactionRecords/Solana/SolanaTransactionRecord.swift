@@ -30,7 +30,9 @@ class SolanaTransactionRecord: TransactionRecord {
     }
 
     override func status(lastBlockHeight _: Int?) -> TransactionStatus {
-        if failed { return .failed }
+        if failed {
+            return .failed
+        }
         return pending ? .pending : .completed
     }
 }
@@ -102,11 +104,11 @@ class SolanaUnknownTransactionRecord: SolanaTransactionRecord, TransferEventsPro
     }
 }
 
-// A DEX swap detected via the transaction's recognized program ids (SolanaKit `KnownPrograms`,
-// e.g. Jupiter) — the Solana counterpart of the EVM `SwapTransactionRecord`. `valueIn` (paid) /
-// `valueOut` (received) are nil while the transaction is still pending: the kit's pending record
-// carries no balance changes yet, but the program id is known at send time, so the row can already
-// render as "Swapped / <exchange>" instead of an unknown transaction.
+/// A DEX swap detected via the transaction's recognized program ids (SolanaKit `KnownPrograms`,
+/// e.g. Jupiter) — the Solana counterpart of the EVM `SwapTransactionRecord`. `valueIn` (paid) /
+/// `valueOut` (received) are nil while the transaction is still pending: the kit's pending record
+/// carries no balance changes yet, but the program id is known at send time, so the row can already
+/// render as "Swapped / <exchange>" instead of an unknown transaction.
 class SolanaSwapTransactionRecord: SolanaTransactionRecord {
     let exchangeName: String
     let valueIn: AppValue?

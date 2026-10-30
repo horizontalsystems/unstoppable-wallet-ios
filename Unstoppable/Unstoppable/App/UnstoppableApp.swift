@@ -58,8 +58,8 @@ struct UnstoppableApp: App {
         Core.shared.appManager.didFinishLaunching()
     }
 
-    // Wired after Core.initApp because every piece reads Core.shared. Left unwired,
-    // Core.privateSendService stays nil and the private send toggle is simply never shown.
+    /// Wired after Core.initApp because every piece reads Core.shared. Left unwired,
+    /// Core.privateSendService stays nil and the private send toggle is simply never shown.
     private static func initPrivateSend() {
         // One API instance for the whole private send stack, built the same way the swap providers
         // build theirs (AppConfig.swapApiUrl + AppConfig.uswapApiKey).

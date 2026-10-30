@@ -143,7 +143,9 @@ final class SpamManager {
         initCondition.lock()
         defer { initCondition.unlock() }
 
-        if isInitialized { return }
+        if isInitialized {
+            return
+        }
 
         let deadline = Date().addingTimeInterval(initTimeout)
         while !isInitialized {
@@ -158,8 +160,8 @@ final class SpamManager {
 
     /// Mutates .spam on each record. No return value needed —
     /// caller holds references to the same objects.
-    // EVM/Tron/Stellar hashes are hex; Solana signatures are base58 —
-    // fall back to raw bytes, as Android does (hash.toByteArray())
+    /// EVM/Tron/Stellar hashes are hex; Solana signatures are base58 —
+    /// fall back to raw bytes, as Android does (hash.toByteArray())
     private func hashData(record: TransactionRecord) -> Data? {
         record.transactionHash.hs.hexData ?? record.transactionHash.data(using: .utf8)
     }

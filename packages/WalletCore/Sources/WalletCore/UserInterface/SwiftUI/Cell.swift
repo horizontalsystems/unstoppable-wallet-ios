@@ -12,7 +12,7 @@ public struct Cell<Left: View, Middle: View, Right: View>: View {
         @ViewBuilder left: () -> Left = { EmptyView() },
         @ViewBuilder middle: () -> Middle,
         @ViewBuilder right: () -> Right = { EmptyView() },
-        action: (() -> Void)? = nil,
+        action: (() -> Void)? = nil
     ) {
         self.style = style
         self.left = left()
@@ -32,7 +32,7 @@ public struct Cell<Left: View, Middle: View, Right: View>: View {
         }
     }
 
-    @ViewBuilder func content() -> some View {
+    func content() -> some View {
         HStack(spacing: .margin8) {
             HStack(spacing: .margin16) {
                 left

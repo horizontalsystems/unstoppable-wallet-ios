@@ -70,7 +70,7 @@ struct ExtendedKeyView: View {
         }
     }
 
-    @ViewBuilder private func controlRow(title: String, value: String, switchable: Bool, infoDescription: String? = nil, onSelect: @escaping () -> Void) -> some View {
+    private func controlRow(title: String, value: String, switchable: Bool, infoDescription: String? = nil, onSelect: @escaping () -> Void) -> some View {
         Cell(
             middle: {
                 if let infoDescription {

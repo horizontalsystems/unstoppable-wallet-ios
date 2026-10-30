@@ -42,7 +42,7 @@ struct ReceiveBlockhainListView: View {
         }
     }
 
-    @ViewBuilder private func cell(viewItem: ReceiveBlockchainListViewModel.ViewItem) -> some View {
+    private func cell(viewItem: ReceiveBlockchainListViewModel.ViewItem) -> some View {
         Cell(
             left: {
                 IconView(url: viewItem.imageUrl)

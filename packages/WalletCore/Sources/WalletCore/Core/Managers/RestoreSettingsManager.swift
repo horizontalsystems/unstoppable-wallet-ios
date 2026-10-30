@@ -49,10 +49,10 @@ extension RestoreSettingsManager {
         storage.save(restoreSettingRecords: records)
     }
 
-    // Enabling a chain that needs restore settings without recording them leaves the adapter
-    // on its worst-case fallback (a restored account scans Zcash from Sapling activation).
-    // Flows that ask the user save their values before the wallet, so this only fills gaps
-    // with the "wallet is new" defaults.
+    /// Enabling a chain that needs restore settings without recording them leaves the adapter
+    /// on its worst-case fallback (a restored account scans Zcash from Sapling activation).
+    /// Flows that ask the user save their values before the wallet, so this only fills gaps
+    /// with the "wallet is new" defaults.
     func saveDefaultSettingsIfNeeded(account: Account, blockchainType: BlockchainType) {
         let existingSettings = settings(accountId: account.id, blockchainType: blockchainType)
         var defaultSettings = RestoreSettings()

@@ -76,7 +76,7 @@ extension XrpSendHandler: ISendHandler {
 }
 
 extension XrpSendHandler: ISendHandlerRefCapturing {
-    // Same broadcast path as `send`, returning the on-chain tx hash.
+    /// Same broadcast path as `send`, returning the on-chain tx hash.
     func sendCapturingRef(data: ISendData) async throws -> String {
         guard let data = data as? SendData else {
             throw SendError.invalidData
@@ -117,8 +117,8 @@ extension XrpSendHandler {
             transactionError == nil
         }
 
-        // An amount below the reserve or a missing destination tag needs new input, not a refresh:
-        // a disabled Send, as on Android. Every other error keeps Refresh
+        /// An amount below the reserve or a missing destination tag needs new input, not a refresh:
+        /// a disabled Send, as on Android. Every other error keeps Refresh
         var customSendButtonTitle: String? {
             switch transactionError as? XrpSendHelper.TransactionError {
             case .belowMinimumFirstDeposit, .destinationRequiresTag: return "button.send".localized
@@ -208,15 +208,8 @@ extension XrpSendHandler {
 
 extension XrpSendHandler {
     static func instance(token: Token, data: XrpSendData, destinationTag: UInt32?) -> XrpSendHandler? {
-        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .xrp, tokenType: .native)) else {
-            return nil
-        }
-
-        guard let adapter = Core.shared.adapterManager.adapter(for: token) as? ISendXrpAdapter & IBalanceAdapter else {
-            return nil
-        }
-
-        guard let account = Core.shared.accountManager.activeAccount,
+        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .xrp, tokenType: .native)), let adapter = Core.shared.adapterManager.adapter(for: token) as? ISendXrpAdapter & IBalanceAdapter,
+              let account = Core.shared.accountManager.activeAccount,
               let signer = try? XrpKitManager.signer(accountType: account.type)
         else {
             return nil

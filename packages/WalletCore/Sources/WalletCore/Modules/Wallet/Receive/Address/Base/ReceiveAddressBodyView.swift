@@ -62,7 +62,7 @@ struct ReceiveAddressBodyView<Content: View>: View {
         .alertButtonTint(color: .themeJacob)
     }
 
-    @ViewBuilder private func qrView(item: ReceiveAddressModule.QrItem) -> some View {
+    private func qrView(item: ReceiveAddressModule.QrItem) -> some View {
         VStack(spacing: .margin24) {
             if let uiImage = UIImage.qrCodeImage(qrCodeString: item.uri ?? item.address, size: qrSize) {
                 ZStack {
@@ -102,7 +102,7 @@ struct ReceiveAddressBodyView<Content: View>: View {
         .padding(EdgeInsets(top: .margin24, leading: .margin32, bottom: .margin24, trailing: .margin32))
     }
 
-    @ViewBuilder func view(amount: String) -> some View {
+    func view(amount: String) -> some View {
         Cell(
             middle: { ThemeText("deposit.amount".localized, style: .subhead) },
             right: {
@@ -118,7 +118,7 @@ struct ReceiveAddressBodyView<Content: View>: View {
         )
     }
 
-    @ViewBuilder private func actionView(type: ReceiveAddressModule.ActionType) -> some View {
+    private func actionView(type: ReceiveAddressModule.ActionType) -> some View {
         VStack(spacing: .margin8) {
             IconButton(icon: type.icon, style: .secondary, size: .medium) {
                 handle(action: type)

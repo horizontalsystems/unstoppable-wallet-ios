@@ -15,17 +15,34 @@ public protocol ISendHandler {
     func send(data: ISendData) async throws
 }
 
-// An error the handler has already surfaced to the user itself (toast, re-quote); the send screen
-// must not present its generic error sheet for it.
+/// An error the handler has already surfaced to the user itself (toast, re-quote); the send screen
+/// must not present its generic error sheet for it.
 public protocol IHandledSendError: Error {}
 
 public extension ISendHandler {
-    var syncingText: String? { nil }
-    var expirationDuration: Int? { nil }
-    var autoRefreshEnabled: Bool { true }
-    var initialTransactionSettings: InitialTransactionSettings? { nil }
-    var menuItems: [SendMenuItem] { [] }
-    var refreshPublisher: AnyPublisher<Void, Never>? { nil }
+    var syncingText: String? {
+        nil
+    }
+
+    var expirationDuration: Int? {
+        nil
+    }
+
+    var autoRefreshEnabled: Bool {
+        true
+    }
+
+    var initialTransactionSettings: InitialTransactionSettings? {
+        nil
+    }
+
+    var menuItems: [SendMenuItem] {
+        []
+    }
+
+    var refreshPublisher: AnyPublisher<Void, Never>? {
+        nil
+    }
 }
 
 public struct SendMenuItem {

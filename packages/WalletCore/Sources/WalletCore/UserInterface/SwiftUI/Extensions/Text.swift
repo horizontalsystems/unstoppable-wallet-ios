@@ -1,6 +1,6 @@
 import SwiftUI
 
-// DEPRECATED
+/// DEPRECATED
 extension View {
     func textBody(color: Color = .themeLeah) -> some View {
         foregroundColor(color).font(.themeBody)

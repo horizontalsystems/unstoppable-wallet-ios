@@ -111,7 +111,7 @@ struct AddressView: View {
         }
     }
 
-    @ViewBuilder private func row(contact: AddressViewModel.Contact) -> some View {
+    private func row(contact: AddressViewModel.Contact) -> some View {
         Cell(
             middle: {
                 if let name = contact.name {

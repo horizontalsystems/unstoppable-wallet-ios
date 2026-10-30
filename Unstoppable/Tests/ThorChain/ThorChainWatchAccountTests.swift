@@ -4,7 +4,7 @@ import RxSwift
 import Testing
 @testable import WalletCore
 
-// Watch accounts by address on THORChain and Maya (Android `ThorchainAddress` / `MayachainAddress`).
+/// Watch accounts by address on THORChain and Maya (Android `ThorchainAddress` / `MayachainAddress`).
 struct ThorChainWatchAccountTests {
     // MARK: tokens and networks
 
@@ -37,12 +37,12 @@ struct ThorChainWatchAccountTests {
 
     // MARK: watch screen parsing
 
-    // Solana checks only "base58, 32 bytes": a thor1 address without 0 and l passes it
+    /// Solana checks only "base58, 32 bytes": a thor1 address without 0 and l passes it
     @Test func solanaAloneTakesThorAddressWithoutZeroAndL() {
         #expect(parse(Self.thorWithoutZeroAndL, handlers: AddressParserFactory.parserChainHandlers(blockchainType: .solana))?.blockchainType == .solana)
     }
 
-    // the order of WatchViewModel: THORChain and Maya before Solana
+    /// the order of WatchViewModel: THORChain and Maya before Solana
     @Test func watchOrderResolvesThorAndMayaBeforeSolana() {
         #expect(parse(Self.thorWithoutZeroAndL)?.blockchainType == .thorChain)
         #expect(parse(Self.thor)?.blockchainType == .thorChain)

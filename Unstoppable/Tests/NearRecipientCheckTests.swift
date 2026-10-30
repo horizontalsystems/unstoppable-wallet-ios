@@ -5,8 +5,8 @@ import RxSwift
 import Testing
 @testable import WalletCore
 
-// The receiver check of Android `NearAddressValidator` the address parser cannot make: the account
-// itself is refused (whether a named account exists is NearAddressParserItemTests).
+/// The receiver check of Android `NearAddressValidator` the address parser cannot make: the account
+/// itself is refused (whether a named account exists is NearAddressParserItemTests).
 struct NearRecipientCheckTests {
     @Test func ownAccountIsRefused() {
         let handler = Self.handler()
@@ -30,7 +30,7 @@ struct NearRecipientCheckTests {
         #expect(cautions.first?.text == "send.address.invalid_address".localized)
     }
 
-    // only a NEP-141 ft_transfer carries a memo (Android `sendMemoSupport`)
+    /// only a NEP-141 ft_transfer carries a memo (Android `sendMemoSupport`)
     @Test func memoOnlyForTokens() throws {
         #expect(Self.handler().memoType(address: Self.implicit) == .none)
         #expect(Self.handler(token: Self.usdtToken).memoType(address: Self.implicit) == .onChainPublic)
@@ -45,8 +45,8 @@ struct NearRecipientCheckTests {
         #expect(blankMemo.memo == nil)
     }
 
-    // A NEAR deposit is a plain transfer with no memo field (Android `memoDelivery = None`): a token
-    // handler must not let its own memo support carry the provider's attachment.
+    /// A NEAR deposit is a plain transfer with no memo field (Android `memoDelivery = None`): a token
+    /// handler must not let its own memo support carry the provider's attachment.
     @Test func depositRefusesAnyAttachment() {
         let handler = Self.handler(token: Self.usdtToken)
 
@@ -69,7 +69,7 @@ struct NearRecipientCheckTests {
         #expect(sendData.memo == nil)
     }
 
-    // a Private Send or Cross Pay payout to NEAR is not refused up front (unlike XRP and Stellar)
+    /// a Private Send or Cross Pay payout to NEAR is not refused up front (unlike XRP and Stellar)
     @Test func nearRecipientIsNotRefusedUpFront() {
         #expect(!PrivateSendHandlerProvider.unsupportedBlockchainTypes.contains(.near))
     }

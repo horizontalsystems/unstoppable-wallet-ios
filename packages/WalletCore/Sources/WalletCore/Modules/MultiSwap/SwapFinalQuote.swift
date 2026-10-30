@@ -14,17 +14,17 @@ public class SwapFinalQuote {
     public let providerSwapId: String?
     public var refundAddress: String?
     public var minAmountOut: Decimal?
-    // Set by the provider from the route: the send handler offers the MEV toggle only when true.
+    /// Set by the provider from the route: the send handler offers the MEV toggle only when true.
     public let mevProtectionAllowed: Bool
-    // Provider-private state carried from the preview to `IMultiSwapProvider.commit(finalQuote:)`;
-    // cleared once the preview is committed so the same token can never be committed twice.
+    /// Provider-private state carried from the preview to `IMultiSwapProvider.commit(finalQuote:)`;
+    /// cleared once the preview is committed so the same token can never be committed twice.
     var providerContext: AnyObject?
-    // Built against a stand-in deposit (USwap's `stubDepositAddress`) purely for the fee row: the
-    // payload targets an address that must never receive funds, so `executable(tokenIn:)` refuses
-    // to hand it out. `canSwap` stays true — the slide button shows and commit rebuilds the quote.
+    /// Built against a stand-in deposit (USwap's `stubDepositAddress`) purely for the fee row: the
+    /// payload targets an address that must never receive funds, so `executable(tokenIn:)` refuses
+    /// to hand it out. `canSwap` stays true — the slide button shows and commit rebuilds the quote.
     var isEstimateOnly = false
-    // Set by the send handler from the provider; a deposit-based exchanger's estimate
-    // renders as a (X−25%)–(X+25%) range instead of ~X.
+    /// Set by the send handler from the provider; a deposit-based exchanger's estimate
+    /// renders as a (X−25%)–(X+25%) range instead of ~X.
     public var preciseEstimateTime = true
 
     public init(
@@ -57,13 +57,13 @@ public class SwapFinalQuote {
         expectedBuyAmount
     }
 
-    // Display metadata only; executable payloads retain their original address and memo.
+    /// Display metadata only; executable payloads retain their original address and memo.
     func setDeposit(address: String?, memo: String?) {
         depositAddress = address.flatMap { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? nil : $0 }
         depositMemo = memo.flatMap { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? nil : $0 }
     }
 
-    // server-enforced floor when the provider reports one, slippage estimate otherwise
+    /// server-enforced floor when the provider reports one, slippage estimate otherwise
     var guaranteedAmountOut: Decimal? {
         guard let slippage else {
             return nil

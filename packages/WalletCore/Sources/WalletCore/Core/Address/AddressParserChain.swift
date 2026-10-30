@@ -79,7 +79,7 @@ extension AddressParserChain {
         case validationError
         case fetchError(Error)
 
-        public var errorDescription: String? {
+        var errorDescription: String? {
             switch self {
             case .validationError: return "swap.advanced_settings.error.invalid_address".localized
             case .fetchError: return "swap.advanced_settings.error.invalid_address".localized

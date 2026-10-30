@@ -26,7 +26,7 @@ struct WatchlistWidget: Widget {
         ])
     }
 
-    @ViewBuilder private func view(entry: WatchlistEntry) -> some View {
+    private func view(entry: WatchlistEntry) -> some View {
         CoinListView(items: entry.items, maxItemCount: entry.maxItemCount, title: "watchlist.title", subtitle: title(sortBy: entry.sortBy))
     }
 

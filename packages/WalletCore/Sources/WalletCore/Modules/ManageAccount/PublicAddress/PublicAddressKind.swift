@@ -12,14 +12,14 @@ enum PublicAddressKind {
         }
     }
 
-    // Tron deliberately reuses the EVM stat cases because none exist for Tron
+    /// Tron deliberately reuses the EVM stat cases because none exist for Tron
     var statPage: StatPage {
         switch self {
         case .evm, .tron: return .evmAddress
         }
     }
 
-    // Tron deliberately reuses the EVM stat cases because none exist for Tron
+    /// Tron deliberately reuses the EVM stat cases because none exist for Tron
     var statEntity: StatEntity {
         switch self {
         case .evm, .tron: return .evmAddress

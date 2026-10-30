@@ -30,8 +30,8 @@ public extension ConfidentialProviderStorage {
         }
     }
 
-    // Whole-list replace: a provider the server stops marking confidential must disappear, so a
-    // partial upsert would be wrong.
+    /// Whole-list replace: a provider the server stops marking confidential must disappear, so a
+    /// partial upsert would be wrong.
     func save(providerIds: [String], executionTypes: [String: String], lastSyncTimestamp: TimeInterval) throws {
         _ = try dbPool.write { db in
             try ConfidentialProviderRecord.deleteAll(db)

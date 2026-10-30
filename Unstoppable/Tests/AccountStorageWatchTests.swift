@@ -4,8 +4,8 @@ import HsToolKit
 import Testing
 @testable import WalletCore
 
-// THORChain and Maya watch accounts survive a restart: saved by one AccountStorage, read back by a new one on the
-// same database. They keep the address in the record itself, so the keychain is never touched.
+/// THORChain and Maya watch accounts survive a restart: saved by one AccountStorage, read back by a new one on the
+/// same database. They keep the address in the record itself, so the keychain is never touched.
 struct AccountStorageWatchTests {
     @Test func thorChainAndMayaWatchAccountsSurviveRestart() throws {
         let dbPool = try Self.dbPool()
@@ -32,7 +32,7 @@ extension AccountStorageWatchTests {
         )
     }
 
-    // The table as StorageMigrator leaves it; the migrator itself touches the app keychain, so it is not run here
+    /// The table as StorageMigrator leaves it; the migrator itself touches the app keychain, so it is not run here
     private static func dbPool() throws -> DatabasePool {
         let path = FileManager.default.temporaryDirectory.appendingPathComponent("account-storage-watch-tests-\(UUID().uuidString).sqlite").path
         let dbPool = try DatabasePool(path: path)

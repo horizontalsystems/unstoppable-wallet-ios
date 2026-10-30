@@ -2,7 +2,7 @@ import Foundation
 import MarketKit
 import SolanaKit
 
-// Type B: broadcasts via SolanaKit, returns tx hash.
+/// Type B: broadcasts via SolanaKit, returns tx hash.
 class SolanaHashBroadcaster: IOpenCryptoPayBroadcaster {
     func broadcast(data: ISendData) async throws -> OpenCryptoPayBroadcastResult {
         guard let solData = data as? SolanaSendHandler.SendData else {

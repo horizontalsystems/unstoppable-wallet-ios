@@ -1,9 +1,9 @@
 import SwiftUI
 
-// Hosts an amount text field bound to local text, so only accepted edits reach `text`. A rejected edit
-// reverts the local text to `text`, shakes the content and fires a light haptic. Changes made to `text`
-// from outside (view model sync, percent buttons, clearing) are copied into the field as-is, except that
-// extra fraction digits are silently truncated as a safety net.
+/// Hosts an amount text field bound to local text, so only accepted edits reach `text`. A rejected edit
+/// reverts the local text to `text`, shakes the content and fires a light haptic. Changes made to `text`
+/// from outside (view model sync, percent buttons, clearing) are copied into the field as-is, except that
+/// extra fraction digits are silently truncated as a safety net.
 struct ValidatedAmountInput<Content: View>: View {
     @Binding var text: String
     let maxDecimals: Int
@@ -52,7 +52,7 @@ struct ValidatedAmountInput<Content: View>: View {
             .shake($shake)
     }
 
-    // A no-op for values that fit `maxDecimals`, so it never writes back what the view model produced itself
+    /// A no-op for values that fit `maxDecimals`, so it never writes back what the view model produced itself
     private func truncateExtraDecimals() {
         let separator = AmountInputValidator.currentDecimalSeparator
 

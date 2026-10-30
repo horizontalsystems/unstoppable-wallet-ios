@@ -57,8 +57,8 @@ extension StellarPreSendHandler: IPreSendHandler {
         balanceSubject.eraseToAnyPublisher()
     }
 
-    // Chain-constant, so it reads the one table rather than restating it: a Stellar text memo is a
-    // public field of the payment (.onChainPublic).
+    /// Chain-constant, so it reads the one table rather than restating it: a Stellar text memo is a
+    /// public field of the payment (.onChainPublic).
     func memoType(address _: String?) -> MemoType {
         token.blockchainType.memoType
     }

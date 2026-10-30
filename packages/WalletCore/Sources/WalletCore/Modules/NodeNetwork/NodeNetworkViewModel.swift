@@ -16,10 +16,10 @@ class NodeNetworkViewModel: ObservableObject {
     @Published var saveEnabled = false
     @Published var processing = false
     @Published var pingStates: [String: PingState] = [:]
-    // Blocks Save while auto-select is drafted ON and there is no probe result to apply yet
+    /// Blocks Save while auto-select is drafted ON and there is no probe result to apply yet
     @Published var pingsInFlight = false
 
-    // Draft state, like the node selection: nothing is persisted or applied until save().
+    /// Draft state, like the node selection: nothing is persisted or applied until save().
     @Published var autoSelectEnabled: Bool {
         didSet {
             updateSaveEnabled()
@@ -106,12 +106,10 @@ class NodeNetworkViewModel: ObservableObject {
         }
     }
 
-    // Applies via applyNode → node manager relay: AdapterManager switches the live adapter
-    // and reverts the stored selection if the switch fails.
+    /// Applies via applyNode → node manager relay: AdapterManager switches the live adapter
+    /// and reverts the stored selection if the switch fails.
     private func applyFastestNode(pings: [NodeAutoSelector.PingResult]) {
-        guard let nodeProvider, !pings.isEmpty else { return }
-
-        guard let fastestId = NodeAutoSelector.fastestNodeId(results: pings, currentId: nodeProvider.currentNodeId) else { return }
+        guard let nodeProvider, !pings.isEmpty, let fastestId = NodeAutoSelector.fastestNodeId(results: pings, currentId: nodeProvider.currentNodeId) else { return }
 
         nodeProvider.applyNode(id: fastestId)
         selectedNodeId = fastestId
@@ -237,9 +235,17 @@ extension NodeNetworkViewModel {
         let item: NodeNetworkItem
         let selected: Bool
 
-        var id: String { item.id }
-        var name: String { item.name }
-        var url: String { item.url }
+        var id: String {
+            item.id
+        }
+
+        var name: String {
+            item.name
+        }
+
+        var url: String {
+            item.url
+        }
     }
 
     enum PingState {

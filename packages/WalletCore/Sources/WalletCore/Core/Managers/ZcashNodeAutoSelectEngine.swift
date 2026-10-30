@@ -2,8 +2,8 @@ import Foundation
 import MarketKit
 import ZODLSwiftWalletSDK
 
-// Thin Zcash conformer for the auto-select seam: node list and persistence come from
-// ZcashNodeManager, switching goes through the live adapter (switchTo, no rebuild).
+/// Thin Zcash conformer for the auto-select seam: node list and persistence come from
+/// ZcashNodeManager, switching goes through the live adapter (switchTo, no rebuild).
 class ZcashNodeAutoSelectEngine {
     private let nodeManager: ZcashNodeManager
     private let coinManager: ICoinManager
@@ -15,8 +15,8 @@ class ZcashNodeAutoSelectEngine {
         self.adapterManager = adapterManager
     }
 
-    // Project idiom for reaching a chain adapter: native token → adapter(for:) with a cast.
-    // At most one exists — the zcash chain has a single native token per account.
+    /// Project idiom for reaching a chain adapter: native token → adapter(for:) with a cast.
+    /// At most one exists — the zcash chain has a single native token per account.
     private var zcashAdapter: ZcashAdapter? {
         guard let token = try? coinManager.token(query: .init(blockchainType: .zcash, tokenType: .native)) else {
             return nil

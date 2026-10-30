@@ -29,7 +29,7 @@ struct MarketCoinsView: View {
         }
     }
 
-    @ViewBuilder private func header(disabled: Bool = false) -> some View {
+    private func header(disabled: Bool = false) -> some View {
         ListHeader(scrollable: true) {
             DropdownButton(text: viewModel.sortBy.title) {
                 Coordinator.shared.present(type: .alert) { isPresented in
@@ -75,7 +75,7 @@ struct MarketCoinsView: View {
         }
     }
 
-    @ViewBuilder private func list(marketInfos: [MarketInfo]) -> some View {
+    private func list(marketInfos: [MarketInfo]) -> some View {
         ScrollViewReader { proxy in
             ThemeList(marketInfos, bottomSpacing: 16) { marketInfo in
                 let coin = marketInfo.fullCoin.coin
@@ -100,7 +100,7 @@ struct MarketCoinsView: View {
         }
     }
 
-    @ViewBuilder private func loadingList() -> some View {
+    private func loadingList() -> some View {
         ThemeList(Array(0 ... 10)) { index in
             cell(
                 coin: nil,
@@ -114,7 +114,7 @@ struct MarketCoinsView: View {
         .scrollDisabled(true)
     }
 
-    @ViewBuilder private func cell(coin: Coin?, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?, action: (() -> Void)? = nil) -> some View {
+    private func cell(coin: Coin?, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?, action: (() -> Void)? = nil) -> some View {
         Cell(
             left: {
                 CoinIconView(coin: coin)

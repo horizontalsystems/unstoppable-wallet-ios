@@ -85,8 +85,8 @@ public class AddressViewModel: ObservableObject {
         }
     }
 
-    // A parser's own reason for refusing a well-formed address (a swap route that pays only one address
-    // type, a send to self) is shown under the title; the chain's generic validation failure carries none.
+    /// A parser's own reason for refusing a well-formed address (a swap route that pays only one address
+    /// type, a send to self) is shown under the title; the chain's generic validation failure carries none.
     private static func caution(failure: AddressInput.Failure) -> CautionNew? {
         guard case let AddressParserChain.ParserError.fetchError(error) = failure.error,
               let description = (error as? LocalizedError)?.errorDescription

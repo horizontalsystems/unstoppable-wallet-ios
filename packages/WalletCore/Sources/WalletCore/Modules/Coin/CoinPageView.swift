@@ -62,7 +62,7 @@ struct CoinPageView: View {
         }
     }
 
-    @ViewBuilder private func overview() -> some View {
+    private func overview() -> some View {
         CoinOverviewView(viewModel: overviewViewModel, chartViewModel: chartViewModel)
             .frame(maxHeight: .infinity)
             .onFirstAppear {

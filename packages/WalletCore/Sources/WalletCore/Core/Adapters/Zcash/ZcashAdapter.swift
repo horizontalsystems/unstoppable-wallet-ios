@@ -203,7 +203,7 @@ class ZcashAdapter {
         return try await synchronizer.getCustomUnifiedAddress(accountUUID: account.id, receivers: [.orchard, .sapling])
     }
 
-    // Used by AdapterManager to revert the stored selection on switch failure.
+    /// Used by AdapterManager to revert the stored selection on switch failure.
     var currentEndpointURL: URL? {
         endpointService.currentEndpointURL
     }
@@ -220,7 +220,7 @@ class ZcashAdapter {
         recordFactory.transactionRecord(fromTransaction: transaction)
     }
 
-    public func wipe() -> AnyPublisher<Void, Error> {
+    func wipe() -> AnyPublisher<Void, Error> {
         syncService.wipe()
     }
 }
@@ -230,7 +230,7 @@ extension ZcashAdapter {
         SDKSynchronizer.estimateBirthdayHeight(for: date, isMainnet: isMainnet)
     }
 
-    public static func estimateBirthdayTime(for height: BlockHeight, isMainnet: Bool = ZcashAdapter.networkType == .mainnet) -> UInt32 {
+    static func estimateBirthdayTime(for height: BlockHeight, isMainnet: Bool = ZcashAdapter.networkType == .mainnet) -> UInt32 {
         SDKSynchronizer.birthdayTime(for: height, isMainnet: isMainnet)
     }
 
@@ -260,11 +260,8 @@ extension ZcashAdapter {
             break
         }
 
-        guard let account = try await synchronizer.listAccounts().first else {
-            throw AppError.ZcashError.noReceiveAddress
-        }
-
-        guard let uAddress = try? await synchronizer.getUnifiedAddress(accountUUID: account.id),
+        guard let account = try await synchronizer.listAccounts().first,
+              let uAddress = try? await synchronizer.getUnifiedAddress(accountUUID: account.id),
               let tAddress = try? await synchronizer.getTransparentAddress(accountUUID: account.id)
         else {
             throw AppError.ZcashError.noReceiveAddress
@@ -283,7 +280,7 @@ extension ZcashAdapter {
 }
 
 extension ZcashAdapter {
-    public static func newBirthdayHeight(network: ZcashNetwork) -> Int {
+    static func newBirthdayHeight(network: ZcashNetwork) -> Int {
         BlockHeight.ofLatestCheckpoint(network: network)
     }
 
@@ -312,7 +309,7 @@ extension ZcashAdapter {
         )
     }
 
-    public static func clear(except excludedWalletIds: [String]) throws {
+    static func clear(except excludedWalletIds: [String]) throws {
         try ZcashFileStore.clear(except: excludedWalletIds)
     }
 }
@@ -453,17 +450,17 @@ extension ZcashAdapter: IBalanceAdapter {
 }
 
 extension ZcashAdapter: IDepositAdapter {
-    public var receiveAddress: DepositAddress {
+    var receiveAddress: DepositAddress {
         .init(uAddress?.stringEncoded ?? "n/a".localized)
     }
 
-    public var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
+    var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
         syncService.receiveAddressPublisher
     }
 }
 
 extension ZcashAdapter {
-    public enum AddressType {
+    enum AddressType {
         case shielded
         case transparent
     }
@@ -552,7 +549,7 @@ extension ZcashAdapter {
         try await sendService.migrationProposal()
     }
 
-    // the shield step of the send and swap forms (spec 2026-10-14 §5.2)
+    /// the shield step of the send and swap forms (spec 2026-10-14 §5.2)
     func latestOwnTransaction(lastBlockHeight: Int) -> ZcashTransactionWrapper? {
         historyService.transactionPool?.latestOwnTransaction(lastBlockHeight: lastBlockHeight)
     }
@@ -597,7 +594,7 @@ class ZcashAddressValidator {
         self.network = network
     }
 
-    public func validate(address: String) throws -> Recipient {
+    func validate(address: String) throws -> Recipient {
         do {
             return try Recipient(address, network: network.networkType)
         } catch {
@@ -623,7 +620,7 @@ enum ZCashAdapterState: Equatable {
     case syncing(progress: Int?, remaining: Int?, lastBlockDate: Date?)
     case notSynced(error: Error)
 
-    public static func == (lhs: ZCashAdapterState, rhs: ZCashAdapterState) -> Bool {
+    static func == (lhs: ZCashAdapterState, rhs: ZCashAdapterState) -> Bool {
         switch (lhs, rhs) {
         case (.idle, .idle): return true
         case (.preparing, .preparing): return true
@@ -662,13 +659,15 @@ enum ZCashAdapterState: Equatable {
     }
 
     var isNotSynced: Bool {
-        if case .notSynced = self { return true }
+        if case .notSynced = self {
+            return true
+        }
         return false
     }
 }
 
-// SDK 4.x derives the init flow itself (nil birthday = new wallet); this stays for the
-// birthday-vs-nil decision in prepare and for status info.
+/// SDK 4.x derives the init flow itself (nil birthday = new wallet); this stays for the
+/// birthday-vs-nil decision in prepare and for status info.
 enum ZcashInitMode {
     case newWallet
     case existingWallet

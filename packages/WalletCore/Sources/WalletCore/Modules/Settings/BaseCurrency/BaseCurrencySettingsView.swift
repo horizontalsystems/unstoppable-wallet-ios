@@ -28,7 +28,7 @@ struct BaseCurrencySettingsView: View {
         .navigationBarTitle("settings.base_currency.title".localized)
     }
 
-    @ViewBuilder private func row(currency: Currency, showConfirmation: Bool) -> some View {
+    private func row(currency: Currency, showConfirmation: Bool) -> some View {
         Cell(
             left: { Image(currency.code) },
             middle: { MultiText(title: currency.code, subtitle: currency.symbol) },
@@ -52,7 +52,7 @@ struct BaseCurrencySettingsView: View {
         )
     }
 
-    @ViewBuilder private func confirmView(currency: Currency, isPresented: Binding<Bool>) -> some View {
+    private func confirmView(currency: Currency, isPresented: Binding<Bool>) -> some View {
         BottomSheetView(
             items: [
                 .title(icon: ThemeImage.warning, title: "settings.base_currency.disclaimer".localized),
@@ -67,7 +67,7 @@ struct BaseCurrencySettingsView: View {
                         isPresented.wrappedValue = false
                     },
                 ])),
-            ],
+            ]
         )
     }
 }

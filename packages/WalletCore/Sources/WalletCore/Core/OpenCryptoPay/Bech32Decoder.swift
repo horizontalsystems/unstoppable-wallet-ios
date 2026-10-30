@@ -109,7 +109,9 @@ enum Bech32Decoder {
         let maxAcc = (1 << (fromBits + toBits - 1)) - 1
         for v in data {
             let value = Int(v)
-            if value < 0 || (value >> fromBits) != 0 { throw Error.invalidChar }
+            if value < 0 || (value >> fromBits) != 0 {
+                throw Error.invalidChar
+            }
             acc = ((acc << fromBits) | value) & maxAcc
             bits += fromBits
             while bits >= toBits {

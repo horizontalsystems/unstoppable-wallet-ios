@@ -3,7 +3,7 @@ import ObjectMapper
 import Testing
 @testable import WalletCore
 
-// GET /v3/providers is a top-level array keyed by `provider`; `privacy` is "none" | "basic" | "split"
+/// GET /v3/providers is a top-level array keyed by `provider`; `privacy` is "none" | "basic" | "split"
 struct USwapProvidersResponseTests {
     private typealias Response = USwapMultiSwapApi.ProviderDescriptorResponse
 

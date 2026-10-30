@@ -46,7 +46,7 @@ public enum PrivateSendUnavailableReason: Error {
     case providerSuspended
     case networkError(Error)
     case tokenUnsupported
-    // /v3/preview named no account to estimate the deposit against: nothing can be shown or sent.
+    /// /v3/preview named no account to estimate the deposit against: nothing can be shown or sent.
     case noDepositEstimate
     // /v3/commit refusals, by the server's discriminator. Only ever toasted by the handler (the
     // screen re-previews), never rendered as the confirmation screen's error view.
@@ -75,11 +75,11 @@ public enum PrivateSendError: Error {
     case invalidData
 }
 
-// Both error types are thrown out of PrivateSendHandler.sendData(transactionSettings:) and land in
-// SendViewModel's generic `catch`. UserFacingError is what lets SendView.errorView show the authored
-// reason instead of the bare "couldn't fetch data" placeholder — without it the whole taxonomy is
-// invisible and every private_send.caution.* string is dead copy. Every case below returns a
-// localized string built only from values we control; no server text is ever interpolated.
+/// Both error types are thrown out of PrivateSendHandler.sendData(transactionSettings:) and land in
+/// SendViewModel's generic `catch`. UserFacingError is what lets SendView.errorView show the authored
+/// reason instead of the bare "couldn't fetch data" placeholder — without it the whole taxonomy is
+/// invisible and every private_send.caution.* string is dead copy. Every case below returns a
+/// localized string built only from values we control; no server text is ever interpolated.
 extension PrivateSendUnavailableReason: UserFacingError {
     public var errorDescription: String? {
         switch self {
@@ -117,8 +117,8 @@ extension PrivateSendUnavailableReason: UserFacingError {
         "private_send.unavailable".localized
     }
 
-    // The reason carries a bare Decimal (no token context reaches it), so the amount is formatted
-    // without a symbol. The screen it renders on is single-token, so the figure is unambiguous.
+    /// The reason carries a bare Decimal (no token context reaches it), so the amount is formatted
+    /// without a symbol. The screen it renders on is single-token, so the figure is unambiguous.
     private static func formatted(amount: Decimal) -> String {
         ValueFormatter.instance.formatFull(value: amount, decimalCount: 8) ?? "\(amount)"
     }

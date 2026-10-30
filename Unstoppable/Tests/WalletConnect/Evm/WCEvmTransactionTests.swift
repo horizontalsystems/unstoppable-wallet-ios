@@ -6,7 +6,7 @@ import WalletConnectSign
 @testable import WalletCore
 
 struct WCEvmTransactionTests {
-    // params[0] exactly as react-app.walletconnect.com sent it during the 2026-09-02 spike
+    /// params[0] exactly as react-app.walletconnect.com sent it during the 2026-09-02 spike
     private let spikeParams: [[String: String]] = [[
         "from": "0x3f4E9c3Ac73a4cff7540293c24a3D055E03fd78d",
         "to": "0x3f4E9c3Ac73a4cff7540293c24a3D055E03fd78d",

@@ -8,7 +8,7 @@ import NearKit
 /// asset moving is a send or a receive; several (a swap, a wrap) are one contract call listing each,
 /// so every wallet the transaction appears in sees the same row.
 class NearTransactionConverter {
-    // the kit's failure value for a transaction whose block hash expired before inclusion
+    /// the kit's failure value for a transaction whose block hash expired before inclusion
     static let expiredFailure = "expired"
 
     private let accountId: String

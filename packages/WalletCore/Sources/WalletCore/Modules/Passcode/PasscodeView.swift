@@ -15,7 +15,7 @@ struct PasscodeView: View {
     @Binding var lockoutState: LockoutState
     @Binding var shakeTrigger: Int
     let randomEnabled: Bool
-    var onTapBiometry: (() -> Void)? = nil
+    var onTapBiometry: (() -> Void)?
 
     @State var digits: [Int] = (1 ... 9) + [0]
     @State var backspaceVisible: Bool = false

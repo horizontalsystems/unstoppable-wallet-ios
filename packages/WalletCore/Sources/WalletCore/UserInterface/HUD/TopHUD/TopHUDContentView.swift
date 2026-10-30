@@ -8,7 +8,7 @@ class TopHUDContentView: UIView {
     private let titleLabel = UILabel()
 
     private var loading: Bool = false
-    public var actions: [HUDTimeAction] = []
+    var actions: [HUDTimeAction] = []
 
     init() {
         super.init(frame: .zero)
@@ -80,5 +80,7 @@ extension TopHUDContentView {
 }
 
 extension TopHUDContentView: HUDContentViewInterface, HUDTappableViewInterface {
-    public func isTappable() -> Bool { true }
+    func isTappable() -> Bool {
+        true
+    }
 }

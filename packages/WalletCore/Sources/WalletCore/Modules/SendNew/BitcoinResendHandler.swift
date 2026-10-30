@@ -36,7 +36,9 @@ class BitcoinResendHandler: SendHandler {
 }
 
 extension BitcoinResendHandler: ISendHandler {
-    var baseToken: Token { request.token }
+    var baseToken: Token {
+        request.token
+    }
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
         guard case let .bitcoinResend(minFee, recommendedFee) = transactionSettings else {

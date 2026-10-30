@@ -62,11 +62,7 @@ class WatchViewModel: ObservableObject {
     @Published var requiredFields: [RequiredField] = []
     @Published var viewKey = "" {
         didSet {
-            guard oldValue != viewKey else {
-                return
-            }
-
-            guard let address else {
+            guard oldValue != viewKey, let address else {
                 return
             }
 

@@ -81,7 +81,9 @@ extension ManageAccountsViewModel {
         let kind: Kind
         let items: [Item]
 
-        var id: Kind { kind }
+        var id: Kind {
+            kind
+        }
 
         var title: String {
             switch kind {

@@ -15,7 +15,7 @@ struct WCBlockchainsView: View {
                         },
                         middle: {
                             ThemeText(WCBlockchainsView.name(type: type), style: .headline2, colorStyle: .primary)
-                        },
+                        }
                     )
                 }
             }

@@ -3,9 +3,9 @@ import Foundation
 import HsToolKit
 import MarketKit
 
-// /v3/preview + /v3/commit in cross-asset exact-output mode; execution is a plain transfer to a
-// deposit address. The preview has no side effects (the confirmation screen re-runs it silently);
-// only /v3/commit creates a REAL order, so the entry screen's rate is display-only.
+/// /v3/preview + /v3/commit in cross-asset exact-output mode; execution is a plain transfer to a
+/// deposit address. The preview has no side effects (the confirmation screen re-runs it silently);
+/// only /v3/commit creates a REAL order, so the entry screen's rate is display-only.
 public final class CrossPayService {
     public static let providerId = "NEAR"
 
@@ -25,8 +25,8 @@ public final class CrossPayService {
         self.commitRequestBuilder = commitRequestBuilder
     }
 
-    // Reads only the already-synced asset map, never triggers a fetch: unsynced = "not supported yet".
-    // A recipient on an unsupported chain shows "not supported".
+    /// Reads only the already-synced asset map, never triggers a fetch: unsynced = "not supported yet".
+    /// A recipient on an unsupported chain shows "not supported".
     public func supports(tokenIn: Token, tokenOut: Token) -> Bool {
         guard !PrivateSendHandlerProvider.unsupportedBlockchainTypes.contains(tokenOut.blockchainType) else {
             return false
@@ -35,7 +35,7 @@ public final class CrossPayService {
         return supports(token: tokenIn) && supports(token: tokenOut)
     }
 
-    // Also the entry screen's "has the asset map landed" probe: ZEC is always in the provider's map.
+    /// Also the entry screen's "has the asset map landed" probe: ZEC is always in the provider's map.
     public func supports(token: Token) -> Bool {
         assetRepository(Self.providerId).asset(token: token) != nil
     }
@@ -86,10 +86,10 @@ public final class CrossPayService {
         return sellAmount
     }
 
-    // No side effects: prices the route for the confirmation screen (re-run silently every
-    // `CrossPayData.quoteLifetime`). The order is created by `commit(preview:)` when the user
-    // slides. Throws CrossPayError only. NO rate-quote fallbacks: minSellAmount and amountOut come
-    // from the /v3/preview response alone.
+    /// No side effects: prices the route for the confirmation screen (re-run silently every
+    /// `CrossPayData.quoteLifetime`). The order is created by `commit(preview:)` when the user
+    /// slides. Throws CrossPayError only. NO rate-quote fallbacks: minSellAmount and amountOut come
+    /// from the /v3/preview response alone.
     public func preview(request: CrossPayRequest) async throws -> CrossPayPreview {
         let repository = assetRepository(Self.providerId)
 
@@ -184,9 +184,9 @@ public final class CrossPayService {
         )
     }
 
-    // The only call with side effects: creates the order for a previewed route. Every failure is an
-    // authored reason the handler toasts before re-previewing; the token is never retried. The
-    // deposit address and attachment only exist from here on.
+    /// The only call with side effects: creates the order for a previewed route. Every failure is an
+    /// authored reason the handler toasts before re-previewing; the token is never retried. The
+    /// deposit address and attachment only exist from here on.
     public func commit(preview: CrossPayPreview) async throws -> CrossPayOrder {
         // Never create an order from a cancelled task.
         try Task.checkCancellation()
@@ -268,8 +268,8 @@ public final class CrossPayService {
         )
     }
 
-    // Reports the broadcast hash to the backend. Best-effort for the caller: /v3/track carries the
-    // hash as a fallback.
+    /// Reports the broadcast hash to the backend. Best-effort for the caller: /v3/track carries the
+    /// hash as a fallback.
     public func reportSigned(uuid: String, inboundTxHash: String) async throws {
         _ = try await api.signed(.init(uuid: uuid, inboundTxHash: inboundTxHash))
     }
@@ -287,7 +287,7 @@ private extension CrossPayService {
             return .aboveMaximum(amount: maximum, token: tokenOut)
         }
 
-        let routeLevelCodes: Set<String> = ["amountOutOfRange", "routeNotFound"]
+        let routeLevelCodes: Set = ["amountOutOfRange", "routeNotFound"]
         let recognised = providerErrors.contains { providerError in providerError.errorCode.map(routeLevelCodes.contains) ?? false }
 
         return recognised ? .noRoute : nil

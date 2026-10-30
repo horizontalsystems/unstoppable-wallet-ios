@@ -3,8 +3,8 @@ import MarketKit
 import SolanaKit
 
 class SolanaTransactionConverter {
-    // Display labels for the swap programs SolanaKit recognizes (`Transaction.programIds`).
-    // Mirrors the EVM flow, where the exchange contract address maps to a label ("1inch v5").
+    /// Display labels for the swap programs SolanaKit recognizes (`Transaction.programIds`).
+    /// Mirrors the EVM flow, where the exchange contract address maps to a label ("1inch v5").
     private static let swapProgramLabels: [(program: String, label: String)] = [
         (KnownPrograms.oneInchFusion, "1inch"),
         (KnownPrograms.jupiterV6, "Jupiter"),
@@ -12,9 +12,9 @@ class SolanaTransactionConverter {
         (KnownPrograms.dflow, "DFlow"),
     ]
 
-    // ≈ one account's rent: classic ATA (165 bytes) ~0.00204 SOL, Token-2022 with extensions
-    // 0.00207–0.00220 (mainnet 0.00210888 for a Pump.fun ATA). Applied to the NET SOL change, so a
-    // real payment bundled with a create pushes past the bound and stays visible.
+    /// ≈ one account's rent: classic ATA (165 bytes) ~0.00204 SOL, Token-2022 with extensions
+    /// 0.00207–0.00220 (mainnet 0.00210888 for a Pump.fun ATA). Applied to the NET SOL change, so a
+    /// real payment bundled with a create pushes past the bound and stays visible.
     private static let maxSolRent = Decimal(string: "0.0023")!
 
     private let userAddress: String
@@ -29,30 +29,29 @@ class SolanaTransactionConverter {
         self.coinManager = coinManager
     }
 
-    // Aggregator priority, independent of instruction order (Fusion can execute via Jupiter).
+    /// Aggregator priority, independent of instruction order (Fusion can execute via Jupiter).
     static func swapExchangeName(programIds: String?) -> String? {
         guard let programIds else { return nil }
         let invokedPrograms = Set(programIds.split(separator: " ").map(String.init))
         return swapProgramLabels.first { invokedPrograms.contains($0.program) }?.label
     }
 
-    // The swap-relevant leg of one side: the SPL transfer when a native-SOL leg rides along
-    // (token-account rent), otherwise the single/first leg (a genuinely-SOL swap side).
+    /// The swap-relevant leg of one side: the SPL transfer when a native-SOL leg rides along
+    /// (token-account rent), otherwise the single/first leg (a genuinely-SOL swap side).
     private func primaryTransfer(among transfers: [SolanaTransactionRecord.Transfer]) -> SolanaTransactionRecord.Transfer? {
         transfers.first { $0.value.token != baseToken } ?? transfers.first
     }
 
-    // A side that is exactly one token leg plus small SOL legs (each ≤ maxSolRent) is one logical
-    // transfer plus token-account rent — reduce it to the token leg. createdTokenAccount decides:
-    // true → rent, false → real SOL transfer (kept), nil (row synced before the flag) → treat as rent.
+    /// A side that is exactly one token leg plus small SOL legs (each ≤ maxSolRent) is one logical
+    /// transfer plus token-account rent — reduce it to the token leg. createdTokenAccount decides:
+    /// true → rent, false → real SOL transfer (kept), nil (row synced before the flag) → treat as rent.
     private func collapseTokenWithSolRent(_ transfers: [SolanaTransactionRecord.Transfer], createdTokenAccount: Bool?) -> [SolanaTransactionRecord.Transfer] {
         guard transfers.count > 1 else { return transfers }
 
         let solLegs = transfers.filter { $0.value.token == baseToken }
         let tokenLegs = transfers.filter { $0.value.token != baseToken }
 
-        guard tokenLegs.count == 1, !solLegs.isEmpty else { return transfers }
-        guard solLegs.allSatisfy({ abs($0.value.value) <= Self.maxSolRent }) else { return transfers }
+        guard tokenLegs.count == 1, !solLegs.isEmpty, solLegs.allSatisfy({ abs($0.value.value) <= Self.maxSolRent }) else { return transfers }
 
         return (createdTokenAccount ?? true) ? tokenLegs : transfers
     }

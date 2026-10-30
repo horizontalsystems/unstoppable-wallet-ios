@@ -24,8 +24,8 @@ extension SwapProviderStorage {
         }
     }
 
-    // Whole-list replace: a provider the server stops listing must disappear, so a partial upsert
-    // would be wrong.
+    /// Whole-list replace: a provider the server stops listing must disappear, so a partial upsert
+    /// would be wrong.
     func save(providers: [SwapProviderRecord]) throws {
         _ = try dbPool.write { db in
             try SwapProviderRecord.deleteAll(db)

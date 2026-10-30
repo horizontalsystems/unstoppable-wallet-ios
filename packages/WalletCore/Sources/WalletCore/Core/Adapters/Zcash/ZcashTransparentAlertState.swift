@@ -10,7 +10,9 @@ struct ZcashTransparentAlertState: Equatable, FetchableRecord, PersistableRecord
         self.lastAlertedBalance = lastAlertedBalance
     }
 
-    static var databaseTableName: String { "zcashTransparentAlertState" }
+    static var databaseTableName: String {
+        "zcashTransparentAlertState"
+    }
 
     enum Columns: String, ColumnExpression, CaseIterable {
         case id

@@ -14,8 +14,8 @@ struct SolanaKitRawSigningTests {
         #expect(signers == [SolanaRawSigningFixtures.other, SolanaRawSigningFixtures.ours])
     }
 
-    // CryptoKit Ed25519 signatures are randomized, so only the bytes outside our slot are compared
-    // byte-for-byte; our signature is verified cryptographically against the message.
+    /// CryptoKit Ed25519 signatures are randomized, so only the bytes outside our slot are compared
+    /// byte-for-byte; our signature is verified cryptographically against the message.
     @Test func requiredSignersOfBareMessageMatchTransaction() throws {
         let message = SolanaRawSigningFixtures.partiallySigned.dropFirst(129)
         let signers = try Kit.requiredSigners(message: message)

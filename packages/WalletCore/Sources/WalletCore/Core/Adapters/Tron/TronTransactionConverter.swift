@@ -106,7 +106,7 @@ extension TronTransactionConverter {
                         transaction: transaction,
                         baseToken: baseToken,
                         from: transfer.ownerAddress.base58,
-                        value: appValue,
+                        value: appValue
                     )
                 } else {
                     return TronOutgoingTransactionRecord(
@@ -177,7 +177,7 @@ extension TronTransactionConverter {
                     transaction: transaction,
                     baseToken: baseToken,
                     incomingEvents: incomingEvents,
-                    outgoingEvents: outgoingEvents,
+                    outgoingEvents: outgoingEvents
                 )
             }
 

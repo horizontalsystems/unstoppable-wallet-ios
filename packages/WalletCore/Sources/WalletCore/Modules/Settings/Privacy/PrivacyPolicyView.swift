@@ -45,7 +45,7 @@ struct PrivacyPolicyView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 
-    @ViewBuilder private func statsRow() -> some View {
+    private func statsRow() -> some View {
         Cell(
             left: { ThemeImage("share", size: .iconSize24) },
             middle: { ThemeText("settings.privacy.allow".localized, style: .headline2) },

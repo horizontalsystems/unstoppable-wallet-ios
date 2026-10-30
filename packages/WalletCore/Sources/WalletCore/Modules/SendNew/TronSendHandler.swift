@@ -104,7 +104,7 @@ extension TronSendHandler: ISendHandler {
 }
 
 extension TronSendHandler: ISendHandlerRefCapturing {
-    // Same broadcast path as `send`. The Tron tx hash IS the created transaction's `txID`.
+    /// Same broadcast path as `send`. The Tron tx hash IS the created transaction's `txID`.
     func sendCapturingRef(data: ISendData) async throws -> String {
         guard let data = data as? TronSendData else {
             throw SendError.invalidData
@@ -137,11 +137,7 @@ extension TronSendHandler {
 
 extension TronSendHandler {
     static func instance(token: Token, contract: Contract) -> TronSendHandler? {
-        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .tron, tokenType: .native)) else {
-            return nil
-        }
-
-        guard let adapter = Core.shared.adapterManager.adapter(for: token) as? ISendTronAdapter else {
+        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .tron, tokenType: .native)), let adapter = Core.shared.adapterManager.adapter(for: token) as? ISendTronAdapter else {
             return nil
         }
 

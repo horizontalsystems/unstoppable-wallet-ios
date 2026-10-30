@@ -2,16 +2,16 @@ import Combine
 import Foundation
 import MarketKit
 
-// The chain-agnostic form state shared by the Standard, Private and Cross Pay tabs of PreSendView:
-// amount/fiat input, recipient address, balance and adapter state. Subclasses decide how `sendData` is
-// built, and may denominate the amount and the recipient in a token other than the wallet's.
+/// The chain-agnostic form state shared by the Standard, Private and Cross Pay tabs of PreSendView:
+/// amount/fiat input, recipient address, balance and adapter state. Subclasses decide how `sendData` is
+/// built, and may denominate the amount and the recipient in a token other than the wallet's.
 public class BasePreSendViewModel: ObservableObject {
     let wallet: Wallet
     let handler: IPreSendHandler?
-    // the wallet's step before spending, such as shielding transparent ZEC; shared by the tabs like `handler`
+    /// the wallet's step before spending, such as shielding transparent ZEC; shared by the tabs like `handler`
     let spendStepHandler: ISpendStepHandler?
 
-    // Overrides the input token's decimals when rounding percent/max and fiat-derived amounts.
+    /// Overrides the input token's decimals when rounding percent/max and fiat-derived amounts.
     private let customDecimals: Int?
 
     private let currencyManager = Core.shared.currencyManager
@@ -106,8 +106,8 @@ public class BasePreSendViewModel: ObservableObject {
     @Published public internal(set) var sendData: ExtendedSendData?
     @Published public var cautions = [CautionNew]()
 
-    // `initialInputToken` is the token `inputToken` resolves to at construction time; the coin price is
-    // subscribed for it up front. Nil means no token is chosen yet, so no price is subscribed.
+    /// `initialInputToken` is the token `inputToken` resolves to at construction time; the coin price is
+    /// subscribed for it up front. Nil means no token is chosen yet, so no price is subscribed.
     init(wallet: Wallet, handler: IPreSendHandler?, spendStepHandler: ISpendStepHandler? = nil, predefinedAddress: ResolvedAddress?, amount: Decimal?, initialInputToken: Token?, customDecimals: Int? = nil) {
         self.wallet = wallet
         self.handler = handler
@@ -167,7 +167,7 @@ public class BasePreSendViewModel: ObservableObject {
         syncFiatAmount()
     }
 
-    // The amount the step is asked for is the one leaving the wallet; a tab denominated in another token overrides it.
+    /// The amount the step is asked for is the one leaving the wallet; a tab denominated in another token overrides it.
     func syncSpendStep() {
         spendStep = amount.flatMap { spendStepHandler?.step(amount: $0) }
     }
@@ -183,29 +183,29 @@ public class BasePreSendViewModel: ObservableObject {
         syncSendData()
     }
 
-    // Hook for subclasses, called after the address changes and before `syncSendData()`.
+    /// Hook for subclasses, called after the address changes and before `syncSendData()`.
     func didChangeAddress() {}
 
     func syncSendData() {
         sendData = nil
     }
 
-    // The token the amount/fiat input is denominated in. Nil means no token is chosen yet.
+    /// The token the amount/fiat input is denominated in. Nil means no token is chosen yet.
     var inputToken: Token? {
         token
     }
 
-    // The fraction-digit limit of the amount input.
+    /// The fraction-digit limit of the amount input.
     var inputDecimals: Int {
         inputToken?.decimals ?? AmountInputValidator.defaultMaxDecimals
     }
 
-    // The token whose chain the recipient address belongs to. Nil means no token is chosen yet.
+    /// The token whose chain the recipient address belongs to. Nil means no token is chosen yet.
     var addressToken: Token? {
         token
     }
 
-    // The source address for the address picker's self-send check.
+    /// The source address for the address picker's self-send check.
     var addressFromAddress: String? {
         Core.shared.adapterManager.depositAdapter(for: wallet)?.receiveAddress.address
     }
@@ -218,17 +218,17 @@ public class BasePreSendViewModel: ObservableObject {
         true
     }
 
-    // Applied to the typed amount before it is compared with and assigned to `amount`.
+    /// Applied to the typed amount before it is compared with and assigned to `amount`.
     func roundedInput(_ amount: Decimal?) -> Decimal? {
         amount
     }
 
-    // Whether the fiat input may be converted to an amount with this price.
+    /// Whether the fiat input may be converted to an amount with this price.
     func canConvertFiat(coinPrice _: CoinPrice) -> Bool {
         true
     }
 
-    // A tab's own input error that blocks the send, checked once amount and address are in place
+    /// A tab's own input error that blocks the send, checked once amount and address are in place
     var formError: String? {
         nil
     }
@@ -380,6 +380,6 @@ struct PreSendButtonState {
     let disabled: Bool
     let showProgress: Bool
     var progress: Double?
-    // the wallet's own step (shield ZEC) is secondary like "Enable coin", not the yellow Next
+    /// the wallet's own step (shield ZEC) is secondary like "Enable coin", not the yellow Next
     var style: ThemeButton.Style = .primary
 }

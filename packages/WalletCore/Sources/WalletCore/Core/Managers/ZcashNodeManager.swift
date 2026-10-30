@@ -128,9 +128,9 @@ extension ZcashNodeManager {
 }
 
 extension ZcashNodeManager {
-    // Self-reported estimate this far above served blocks = still catching up; Android-parity
-    // 10 blocks at 75s, kept in seconds since NU7 shortens blocks to 25s. SDK's evaluateBestOf
-    // allows 6h — raise if probes filter everyone out.
+    /// Self-reported estimate this far above served blocks = still catching up; Android-parity
+    /// 10 blocks at 75s, kept in seconds since NU7 shortens blocks to 25s. SDK's evaluateBestOf
+    /// allows 6h — raise if probes filter everyone out.
     private static let syncedThresholdSeconds: TimeInterval = 750
 
     var autoSelectEnabled: Bool {
@@ -138,14 +138,14 @@ extension ZcashNodeManager {
         set { blockchainSettingsStorage.save(endpointAutoSelectEnabled: newValue, blockchainType: .zcash) }
     }
 
-    // Persist without firing nodeUpdatedSubject: the auto-select engine has already switched the
-    // live adapter itself, so the subject's adapter-switch path must not run a second time.
+    /// Persist without firing nodeUpdatedSubject: the auto-select engine has already switched the
+    /// live adapter itself, so the subject's adapter-switch path must not run a second time.
     func persistCurrent(node: ZcashNode, blockchainType: BlockchainType) {
         blockchainSettingsStorage.save(zcashNodeUrl: node.url.absoluteString, blockchainType: blockchainType)
     }
 
-    // One probe serves both consumers: settings-screen badges and the auto-select policy.
-    // nil responseTime = unreachable or failed chain validation — the selector skips those.
+    /// One probe serves both consumers: settings-screen badges and the auto-select policy.
+    /// nil responseTime = unreachable or failed chain validation — the selector skips those.
     func pingNodes(blockchainType: BlockchainType) async -> [NodeAutoSelector.PingResult] {
         let nodes = allNodes(blockchainType: blockchainType)
         let validated = await validatedProbe(nodes: nodes)
@@ -169,15 +169,13 @@ extension ZcashNodeManager {
         let results = await SDKSynchronizer.pingEndpoints(nodes.map { ZcashAdapter.endpoint(url: $0.url) })
 
         return results.compactMap { result in
-            guard result.chainName == expectedChainName else { return nil }
-            guard result.saplingActivationHeight == expectedSaplingActivation else { return nil }
-            guard let remoteBranchID = ConsensusBranchID.fromString(result.consensusBranchID),
-                  remoteBranchID == SDKSynchronizer.consensusBranchID(at: result.blockHeight, networkType: network.networkType)
-            else { return nil }
-            guard spacing.seconds(from: result.blockHeight, to: result.estimatedHeight) < Self.syncedThresholdSeconds else { return nil }
-            guard let node = nodes.first(where: { node in
-                node.url.host == result.endpoint.host && (node.url.port ?? 443) == result.endpoint.port
-            }) else { return nil }
+            guard result.chainName == expectedChainName, result.saplingActivationHeight == expectedSaplingActivation,
+                  let remoteBranchID = ConsensusBranchID.fromString(result.consensusBranchID),
+                  remoteBranchID == SDKSynchronizer.consensusBranchID(at: result.blockHeight, networkType: network.networkType),
+                  spacing.seconds(from: result.blockHeight, to: result.estimatedHeight) < Self.syncedThresholdSeconds,
+                  let node = nodes.first(where: { node in
+                      node.url.host == result.endpoint.host && (node.url.port ?? 443) == result.endpoint.port
+                  }) else { return nil }
 
             return (node: node, responseTime: result.responseTime, height: result.blockHeight)
         }

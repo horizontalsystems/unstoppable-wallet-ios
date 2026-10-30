@@ -126,8 +126,8 @@ public class WalletListViewModel: ObservableObject {
         __items = sorter.sort(items: __items, sortType: sortType)
     }
 
-    // Coalesces item, noTokens and subclass publications into a single main-thread hop,
-    // at most once per reportInterval while updates stream. The latest state is always flushed.
+    /// Coalesces item, noTokens and subclass publications into a single main-thread hop,
+    /// at most once per reportInterval while updates stream. The latest state is always flushed.
     func _reportItems(immediately: Bool = false) {
         if immediately {
             reportWorkItem?.cancel()
@@ -176,8 +176,8 @@ public class WalletListViewModel: ObservableObject {
         }
     }
 
-    // Called on queue right before a flush. Subclasses return a closure that publishes
-    // their own pending state on the main thread within the same hop.
+    /// Called on queue right before a flush. Subclasses return a closure that publishes
+    /// their own pending state on the main thread within the same hop.
     func _pendingPublication() -> (() -> Void)? {
         nil
     }
@@ -186,8 +186,8 @@ public class WalletListViewModel: ObservableObject {
         __items.firstIndex { $0.wallet == wallet }
     }
 
-    // Account transitions bypass the report interval so the previous account's rows
-    // never stay visible after the account has changed.
+    /// Account transitions bypass the report interval so the previous account's rows
+    /// never stay visible after the account has changed.
     private func _syncWalletService() {
         walletService?.delegate = nil
 

@@ -65,7 +65,7 @@ extension MarketEtfFetcher: IMetricChartFetcher {
 }
 
 extension MarketEtfFetcher {
-    public enum EtfCategory: String, CaseIterable {
+    enum EtfCategory: String, CaseIterable {
         case btc
         case eth
     }

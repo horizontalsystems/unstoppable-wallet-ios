@@ -45,7 +45,7 @@ public struct BadgeViewNew: View {
         }
     }
 
-    @ViewBuilder func content() -> some View {
+    func content() -> some View {
         HStack(spacing: .margin2) {
             ThemeText(text, style: .microSB, colorStyle: colorStyle)
 

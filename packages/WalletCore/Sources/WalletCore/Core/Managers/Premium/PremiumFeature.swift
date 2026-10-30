@@ -27,7 +27,9 @@ enum PremiumFeature: String, Identifiable {
     case advancedSearch = "advanced_search"
     case tradeSignals = "trade_signals"
 
-    var id: String { rawValue }
+    var id: String {
+        rawValue
+    }
 
     var index: Int {
         Self.allCases.firstIndex(of: self) ?? 0

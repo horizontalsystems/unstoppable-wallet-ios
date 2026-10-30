@@ -8,11 +8,11 @@ public protocol USwapFinalQuoteBuilder {
 
 public final class USwapFinalQuoteFactory {
     public struct Input {
-        // Where a transfer route sends the sell amount: the real deposit (from `execution`) after commit
-        // or on a thorchain route, or the preview's stub (`isStub`) that only serves the fee estimate.
-        // A stub build is estimate-only: the factory marks the quote `isEstimateOnly`, which withholds
-        // its executable until commit rebuilds against the real deposit. A transfer preview without a
-        // stub has nothing to estimate against and fails (`noTransactionData`).
+        /// Where a transfer route sends the sell amount: the real deposit (from `execution`) after commit
+        /// or on a thorchain route, or the preview's stub (`isStub`) that only serves the fee estimate.
+        /// A stub build is estimate-only: the factory marks the quote `isEstimateOnly`, which withholds
+        /// its executable until commit rebuilds against the real deposit. A transfer preview without a
+        /// stub has nothing to estimate against and fails (`noTransactionData`).
         public struct Deposit {
             public let address: String
             public let attachment: USwapMultiSwapApi.Attachment?
@@ -40,9 +40,9 @@ public final class USwapFinalQuoteFactory {
         public let slippage: Decimal?
         public let recipient: String?
         public let transactionSettings: TransactionSettings?
-        // decided by the provider from the route's execution
+        /// decided by the provider from the route's execution
         public let mevProtectionAllowed: Bool
-        // nil on a transfer route without a stub (no fee estimate) and on signed routes
+        /// nil on a transfer route without a stub (no fee estimate) and on signed routes
         public let deposit: Deposit?
 
         public init(

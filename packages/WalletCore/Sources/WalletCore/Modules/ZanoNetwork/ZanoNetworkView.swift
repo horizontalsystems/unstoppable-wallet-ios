@@ -98,7 +98,7 @@ struct ZanoNetworkView: View {
         }
     }
 
-    @ViewBuilder private func nodeCell(item: ZanoNetworkViewModel.NodeItem, action: @escaping () -> Void) -> some View {
+    private func nodeCell(item: ZanoNetworkViewModel.NodeItem, action: @escaping () -> Void) -> some View {
         Cell(
             middle: {
                 MultiText(title: item.name, subtitle: item.url)

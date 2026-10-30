@@ -1,9 +1,9 @@
 import Combine
 import Foundation
 
-// Owns the one send-settings handler shared by every PreSendView tab, plus the per-tab view models.
-// Everything is created inside a single `@StateObject` autoclosure, so the tabs are guaranteed to share
-// the same handler and their state survives tab switches.
+/// Owns the one send-settings handler shared by every PreSendView tab, plus the per-tab view models.
+/// Everything is created inside a single `@StateObject` autoclosure, so the tabs are guaranteed to share
+/// the same handler and their state survives tab switches.
 final class PreSendTabsViewModel: ObservableObject {
     private let wallet: Wallet
     private let crossPayVisible: Bool
@@ -64,7 +64,7 @@ extension PreSendTabsViewModel {
         handler?.title(wallet.token.coin.code) ?? "send.send".localized
     }
 
-    // Settings are shared, so a change made on any tab re-syncs every tab's send data.
+    /// Settings are shared, so a change made on any tab re-syncs every tab's send data.
     func syncSendData() {
         settingsModified = handler?.settingsModified ?? false
         standard.syncSendData()

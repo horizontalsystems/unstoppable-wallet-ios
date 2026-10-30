@@ -4,8 +4,8 @@ import MarketKit
 import ReownWalletKit
 import WalletConnectUtils
 
-// The connect (proposal) screen. An approved session is never opened as a screen (parity with Android),
-// so this view model only ever describes a pending proposal.
+/// The connect (proposal) screen. An approved session is never opened as a screen (parity with Android),
+/// so this view model only ever describes a pending proposal.
 class WCConnectViewModel: ObservableObject {
     enum DAppCheck {
         case locked // scam protection off: tapping the row opens the purchase flow
@@ -25,7 +25,7 @@ class WCConnectViewModel: ObservableObject {
     let accountName: String?
     let blockchainTypes: [BlockchainType]
     let unsupported: Bool
-    // protocol origin attestation shown on top (Android VerificationAlert); nil = nothing to report
+    /// protocol origin attestation shown on top (Android VerificationAlert); nil = nothing to report
     let verificationCaution: CautionNew?
 
     @Published private(set) var defenseState: WCDefenseState = .disabled
@@ -60,7 +60,7 @@ class WCConnectViewModel: ObservableObject {
         verificationCaution = Self.verificationCaution(for: item.verifyState, origin: item.context?.origin)
     }
 
-    // scam and mismatch are red, an unverified origin is a yellow caution; a valid origin shows nothing
+    /// scam and mismatch are red, an unverified origin is a yellow caution; a valid origin shows nothing
     private static func verificationCaution(for state: WCVerifyState, origin: String?) -> CautionNew? {
         switch state {
         case .scam:
@@ -76,8 +76,13 @@ class WCConnectViewModel: ObservableObject {
         }
     }
 
-    var finishPublisher: AnyPublisher<Void, Never> { finishSubject.eraseToAnyPublisher() }
-    var errorPublisher: AnyPublisher<String, Never> { errorSubject.eraseToAnyPublisher() }
+    var finishPublisher: AnyPublisher<Void, Never> {
+        finishSubject.eraseToAnyPublisher()
+    }
+
+    var errorPublisher: AnyPublisher<String, Never> {
+        errorSubject.eraseToAnyPublisher()
+    }
 
     var dAppCheck: DAppCheck {
         switch defenseState {
@@ -89,7 +94,7 @@ class WCConnectViewModel: ObservableObject {
         }
     }
 
-    // the premium "Danger!" plaque; scam is surfaced by the top alert instead, so it is never doubled here
+    /// the premium "Danger!" plaque; scam is surfaced by the top alert instead, so it is never doubled here
     var showDanger: Bool {
         defenseState == .danger
     }

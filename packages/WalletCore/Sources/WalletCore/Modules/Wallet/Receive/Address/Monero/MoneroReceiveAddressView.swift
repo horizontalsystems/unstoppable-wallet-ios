@@ -2,7 +2,7 @@ import SwiftUI
 
 struct MoneroReceiveAddressView: View {
     @StateObject var viewModel: MoneroReceiveAddressViewModel
-    private var onDismiss: (() -> Void)? = nil
+    private var onDismiss: (() -> Void)?
 
     @Environment(\.presentationMode) private var presentationMode
 

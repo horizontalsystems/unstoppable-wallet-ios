@@ -1,6 +1,6 @@
 import WalletConnectSign
 
-// Persisted copy of what the user approved: CAIP strings only, never the dApp-mutable SDK namespace
+/// Persisted copy of what the user approved: CAIP strings only, never the dApp-mutable SDK namespace
 struct WCSessionNamespaces: Codable, Equatable {
     struct Namespace: Codable, Equatable {
         let accounts: [String]

@@ -9,10 +9,10 @@ public final class PrivateSendService {
     private let commitRequestBuilder: (String) -> USwapCommitRequestBuilder
     private let tokenManager: PrivateSendTokenManager
 
-    // The token manager is injected, not built here: it is the single source of truth for "can this
-    // token be sent privately", and a second instance would mean a second repository dictionary and a
-    // second subscription to the same registry.syncPublisher. The confidential provider registry is
-    // reached only through it — this service never consults the registry directly.
+    /// The token manager is injected, not built here: it is the single source of truth for "can this
+    /// token be sent privately", and a second instance would mean a second repository dictionary and a
+    /// second subscription to the same registry.syncPublisher. The confidential provider registry is
+    /// reached only through it — this service never consults the registry directly.
     public init(
         api: USwapMultiSwapApi,
         tokenManager: PrivateSendTokenManager,
@@ -25,8 +25,8 @@ public final class PrivateSendService {
         self.commitRequestBuilder = commitRequestBuilder
     }
 
-    // Synchronous by contract: called from the pre-send render path, it reads only already-synced
-    // caches and must never trigger or await a fetch.
+    /// Synchronous by contract: called from the pre-send render path, it reads only already-synced
+    /// caches and must never trigger or await a fetch.
     public func isSupported(token: Token) -> Bool {
         tokenManager.supports(token: token)
     }
@@ -43,16 +43,16 @@ public final class PrivateSendService {
         tokenManager.syncPublisher
     }
 
-    // Kept public for testing and for a future price-preview surface. The send flow itself only
-    // ever calls `preview(request:)` and `commit(preview:)`. The amount is the exact output the
-    // recipient receives.
+    /// Kept public for testing and for a future price-preview surface. The send flow itself only
+    /// ever calls `preview(request:)` and `commit(preview:)`. The amount is the exact output the
+    /// recipient receives.
     public func quote(token: Token, amount: Decimal) async throws -> PrivateSendQuote {
         try await bestRoute(token: token, amount: amount).quote
     }
 
-    // No side effects: prices the route for the confirmation screen (re-run silently every
-    // `PrivateSendData.quoteLifetime`). The order is created by `commit(preview:)` when the user
-    // slides. Under the synchronous-pre-send decision nothing else ever holds a bare PrivateSendQuote.
+    /// No side effects: prices the route for the confirmation screen (re-run silently every
+    /// `PrivateSendData.quoteLifetime`). The order is created by `commit(preview:)` when the user
+    /// slides. Under the synchronous-pre-send decision nothing else ever holds a bare PrivateSendQuote.
     public func preview(request: PrivateSendRequest) async throws -> PrivateSendPreview {
         let token = request.token
         let providerIds = supportedProviderIds(token: token)
@@ -191,9 +191,9 @@ public final class PrivateSendService {
         )
     }
 
-    // The only call with side effects: creates the order for a previewed route. Every failure is an
-    // authored reason the handler toasts before re-previewing; the token is never retried. The
-    // deposit address and attachment only exist from here on.
+    /// The only call with side effects: creates the order for a previewed route. Every failure is an
+    /// authored reason the handler toasts before re-previewing; the token is never retried. The
+    /// deposit address and attachment only exist from here on.
     public func commit(preview: PrivateSendPreview) async throws -> PrivateSendOrder {
         // Never create an order from a cancelled task.
         try Task.checkCancellation()
@@ -277,8 +277,8 @@ public final class PrivateSendService {
         )
     }
 
-    // Reports the broadcast hash to the backend. Best-effort for the caller: /v3/track carries the
-    // hash as a fallback.
+    /// Reports the broadcast hash to the backend. Best-effort for the caller: /v3/track carries the
+    /// hash as a fallback.
     public func reportSigned(uuid: String, inboundTxHash: String) async throws {
         _ = try await api.signed(.init(uuid: uuid, inboundTxHash: inboundTxHash))
     }
@@ -385,7 +385,7 @@ private extension PrivateSendService {
         // An amountOutOfRange that carries no figures (API.txt §4 line 358 shows exactly that shape on
         // a failed preview) is still a route-level refusal, and "no private route for this token and amount"
         // is honest about it. Anything else is not ours to interpret.
-        let routeLevelCodes: Set<String> = ["amountOutOfRange", "routeNotFound"]
+        let routeLevelCodes: Set = ["amountOutOfRange", "routeNotFound"]
         let recognised = providerErrors.contains { providerError in providerError.errorCode.map(routeLevelCodes.contains) ?? false }
 
         return recognised ? .noRoute : nil

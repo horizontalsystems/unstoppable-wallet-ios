@@ -9,7 +9,7 @@ import TonSwift
 import TronKit
 import ZODLSwiftWalletSDK
 
-// returned by the SwapFinalQuote base class; no broadcaster accepts it
+/// returned by the SwapFinalQuote base class; no broadcaster accepts it
 struct UnsupportedExecutable: ISwapExecutable {}
 
 public struct EvmExecutable: ISwapExecutable {
@@ -22,8 +22,8 @@ public struct EvmExecutable: ISwapExecutable {
     public let approval: SwapApproval?
 }
 
-// router-approve intent, exact amount; how it turns into on-chain approve call(s)
-// is the consuming broadcaster's decision, not encoded here
+/// router-approve intent, exact amount; how it turns into on-chain approve call(s)
+/// is the consuming broadcaster's decision, not encoded here
 public struct SwapApproval {
     public let spender: EvmKit.Address
     public let token: EvmKit.Address
@@ -31,15 +31,9 @@ public struct SwapApproval {
 }
 
 public extension SwapApproval {
-    // eip20 router-approve intent for the exact swap input; nil for a native tokenIn (no approve needed).
+    /// eip20 router-approve intent for the exact swap input; nil for a native tokenIn (no approve needed).
     static func build(spender: EvmKit.Address, tokenIn: Token, amountIn: Decimal) -> SwapApproval? {
-        guard case let .eip20(tokenAddress) = tokenIn.type else {
-            return nil
-        }
-        guard let token = try? EvmKit.Address(hex: tokenAddress) else {
-            return nil
-        }
-        guard let amount = tokenIn.rawAmount(amountIn) else {
+        guard case let .eip20(tokenAddress) = tokenIn.type, let token = try? EvmKit.Address(hex: tokenAddress), let amount = tokenIn.rawAmount(amountIn) else {
             return nil
         }
 
@@ -47,14 +41,14 @@ public extension SwapApproval {
     }
 }
 
-// Tron, Solana and TON each have two execution shapes — a server-built transaction, or a plain
-// transfer the app builds itself for a USwap transfer route — so, like StellarExecutable below, the
-// variants are cases of one executable: the broadcaster does one cast and an exhaustive switch.
+/// Tron, Solana and TON each have two execution shapes — a server-built transaction, or a plain
+/// transfer the app builds itself for a USwap transfer route — so, like StellarExecutable below, the
+/// variants are cases of one executable: the broadcaster does one cast and an exhaustive switch.
 public struct TronExecutable: ISwapExecutable {
     enum Kind {
-        // Server-built transaction (signed_transaction route): sign it and submit.
+        /// Server-built transaction (signed_transaction route): sign it and submit.
         case created(CreatedTransactionResponse)
-        // Plain transfer to a deposit address, built locally through the send kit.
+        /// Plain transfer to a deposit address, built locally through the send kit.
         case transfer(TronTransferExecution)
     }
 
@@ -63,7 +57,7 @@ public struct TronExecutable: ISwapExecutable {
     public let token: Token
 }
 
-// plain transfer to a deposit address: the contract to sign and the fee limit from its estimate
+/// plain transfer to a deposit address: the contract to sign and the fee limit from its estimate
 public struct TronTransferExecution {
     public let contract: TronKit.Contract
     public let feeLimit: Int
@@ -74,8 +68,8 @@ public struct TronTransferExecution {
     }
 }
 
-// plain p2p transfer description for routes that are a single token transfer;
-// how it is broadcast is the consuming broadcaster's decision
+/// plain p2p transfer description for routes that are a single token transfer;
+/// how it is broadcast is the consuming broadcaster's decision
 public struct TronTransferIntent {
     public let token: TronKit.Address
     public let receiver: TronKit.Address
@@ -100,9 +94,9 @@ public struct ZcashExecutable: ISwapExecutable {
 
 public struct TonExecutable: ISwapExecutable {
     enum Kind {
-        // Server-built TonConnect-style transaction: build the transfer from it and sign.
+        /// Server-built TonConnect-style transaction: build the transfer from it and sign.
         case param(SendTransactionParam)
-        // Plain transfer to a deposit address, built locally through the send adapter.
+        /// Plain transfer to a deposit address, built locally through the send adapter.
         case transfer(TonTransferExecution)
     }
 
@@ -129,9 +123,9 @@ public struct StellarExecutable: ISwapExecutable {
 
 public struct ThorChainExecutable: ISwapExecutable {
     enum Kind {
-        // No inbound vault: the swap is a MsgDeposit addressed to the chain.
+        /// No inbound vault: the swap is a MsgDeposit addressed to the chain.
         case deposit(asset: ThorChainKit.Asset)
-        // Maya and anything with a vault: an ordinary transfer into it.
+        /// Maya and anything with a vault: an ordinary transfer into it.
         case send(recipient: ThorChainKit.Address)
     }
 
@@ -175,9 +169,9 @@ public struct ZanoExecutable: ISwapExecutable {
 
 public struct SolanaExecutable: ISwapExecutable {
     enum Kind {
-        // Server-built transaction message: sign it and submit.
+        /// Server-built transaction message: sign it and submit.
         case raw(Data)
-        // Plain SOL / SPL transfer to a deposit address (no memo can ride it).
+        /// Plain SOL / SPL transfer to a deposit address (no memo can ride it).
         case transfer(SolanaTransferExecution)
     }
 

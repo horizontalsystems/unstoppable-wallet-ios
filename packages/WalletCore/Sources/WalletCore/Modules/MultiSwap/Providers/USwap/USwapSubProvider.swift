@@ -9,9 +9,9 @@ public protocol USwapSubProvider {
     func slippageSupported(tokenIn: Token, tokenOut: Token) -> Bool
     func supports(tokenIn: Token, tokenOut: Token) -> Bool
     func rate(input: USwapRateInput) async throws -> USwapRateResult
-    // No side effects: the route for the confirmation screen (carries a `previewToken`)
+    /// No side effects: the route for the confirmation screen (carries a `previewToken`)
     func preview(input: USwapPreviewInput) async throws -> USwapPreviewResult
-    // Creates the order for a previewed route. Throws `USwapMultiSwapApi.CommitError` on failure.
+    /// Creates the order for a previewed route. Throws `USwapMultiSwapApi.CommitError` on failure.
     func commit(previewToken: String) async throws -> USwapMultiSwapApi.CommitResponse
     // Reports the broadcast hash of a committed order (best-effort, after a successful broadcast)
     func reportSigned(uuid: String, inboundTxHash: String) async throws
@@ -25,7 +25,7 @@ public protocol USwapSubProvider {
     func track(swap: Swap) async throws -> Swap
 }
 
-// Split (Private) swap support is opt-in: sub-providers that can't quote a split inherit these.
+/// Split (Private) swap support is opt-in: sub-providers that can't quote a split inherit these.
 public extension USwapSubProvider {
     func splitRate(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, percents _: [Int]) async throws -> USwapMultiSwapApi.SplitRoute {
         throw SplitSwapError.notSupported

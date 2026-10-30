@@ -122,7 +122,6 @@ extension TronTransactionsAdapter: ITransactionsAdapter {
 
         return tronKit.transactionsPublisher(tagQueries: [tagQuery(token: token, filter: filter, address: address)]).asObservable()
             .map { [weak self] in
-
                 self?.handleTransactions($0) ?? []
             }
     }

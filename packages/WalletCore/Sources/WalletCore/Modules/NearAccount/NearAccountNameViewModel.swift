@@ -37,8 +37,8 @@ extension NearAccountNameViewModel {
         state == .loading
     }
 
-    // a refused name stays refused until it is edited (editing resets the state to idle); a failed
-    // check can be tried again as is
+    /// a refused name stays refused until it is edited (editing resets the state to idle); a failed
+    /// check can be tried again as is
     var buttonEnabled: Bool {
         switch state {
         case .idle, .checkFailed: return !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -80,7 +80,9 @@ extension NearAccountNameViewModel {
                 result = .checkFailed
             }
 
-            if Task.isCancelled { return }
+            if Task.isCancelled {
+                return
+            }
 
             await MainActor.run { [weak self] in
                 self?.state = result

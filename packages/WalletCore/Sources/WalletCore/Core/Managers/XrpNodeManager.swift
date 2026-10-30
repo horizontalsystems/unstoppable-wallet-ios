@@ -9,7 +9,7 @@ import XrpKit
 public class XrpNodeManager {
     private let blockchainSettingsStorage: BlockchainSettingsStorage
 
-    // senders are user flows on the settings screen — effectively serialized
+    /// senders are user flows on the settings screen — effectively serialized
     private let nodeUpdatedSubject = PassthroughSubject<BlockchainType, Never>()
 
     public init(blockchainSettingsStorage: BlockchainSettingsStorage) {

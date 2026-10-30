@@ -3,7 +3,9 @@ import Foundation
 class BackupKeychainService: IBackupPasswordStorage {
     private static let service = "unstoppable.money"
 
-    var requiresUnlock: Bool { true }
+    var requiresUnlock: Bool {
+        true
+    }
 
     func save(password: String, account: String) async throws {
         guard let data = password.data(using: .utf8) else {

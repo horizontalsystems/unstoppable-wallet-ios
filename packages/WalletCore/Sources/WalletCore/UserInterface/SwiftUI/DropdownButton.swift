@@ -41,7 +41,7 @@ struct DropdownButton: View {
 
 struct ArrowModifier: ViewModifier {
     var style: Style
-    var colorStyle: ColorStyle? = nil
+    var colorStyle: ColorStyle?
     var spacing: CGFloat = .margin8
 
     func body(content: Content) -> some View {

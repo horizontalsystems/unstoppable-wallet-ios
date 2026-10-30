@@ -11,7 +11,7 @@ struct OpenCryptoPayBroadcastResult {
     let transactionHash: String?
 }
 
-// Type A signs locally without broadcasting; Type B broadcasts and returns hash.
+/// Type A signs locally without broadcasting; Type B broadcasts and returns hash.
 protocol IOpenCryptoPayBroadcaster {
     func broadcast(data: ISendData) async throws -> OpenCryptoPayBroadcastResult
 }

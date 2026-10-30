@@ -9,10 +9,6 @@ struct WhitelistDapp: ImmutableMappable, Equatable, Hashable {
         url = try map.value("url")
     }
 
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.name == rhs.name && lhs.url == rhs.url
-    }
-
     func hash(into hasher: inout Hasher) {
         hasher.combine(name)
         hasher.combine(url)

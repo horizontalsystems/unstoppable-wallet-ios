@@ -2,9 +2,9 @@ import Combine
 import Foundation
 import MarketKit
 
-// The Private (split) swap tab: the same input handling as the Standard tab, with its own tokens and
-// amount, quoted across the split-capable providers only. The received amount is delivered to two
-// addresses, split by `splitPercent`.
+/// The Private (split) swap tab: the same input handling as the Standard tab, with its own tokens and
+/// amount, quoted across the split-capable providers only. The received amount is delivered to two
+/// addresses, split by `splitPercent`.
 final class SplitSwapViewModel: MultiSwapViewModel {
     static let percentRange = 10 ... 90
     static let percentStep = 10
@@ -16,21 +16,21 @@ final class SplitSwapViewModel: MultiSwapViewModel {
         didSet { syncContactNames() }
     }
 
-    // Contact book name of each recipient address, if any
+    /// Contact book name of each recipient address, if any
     @Published private(set) var contactNames: [String?] = [nil, nil]
 
-    // Output amounts of the last quote, kept while a split change requotes so the cards don't blank out
+    /// Output amounts of the last quote, kept while a split change requotes so the cards don't blank out
     @Published private(set) var lastOutputAmounts: [Decimal]?
 
-    // Set at once on a split change, before the debounced requote starts, so the button switches immediately
+    /// Set at once on a split change, before the debounced requote starts, so the button switches immediately
     @Published private(set) var pendingSplitRequote = false
 
-    // At least one split-capable provider is registered; drives the tab header's visibility. A stored
-    // default, so it is in place before `super.init`, which already calls `resolveProviders()`
+    /// At least one split-capable provider is registered; drives the tab header's visibility. A stored
+    /// default, so it is in place before `super.init`, which already calls `resolveProviders()`
     @Published private(set) var splitAvailable = false
 
-    // A split change whose debounced requote has not started yet: quotes arriving meanwhile belong to
-    // an older round and must not clear `pendingSplitRequote`
+    /// A split change whose debounced requote has not started yet: quotes arriving meanwhile belong to
+    /// an older round and must not clear `pendingSplitRequote`
     private var splitRequoteScheduled = false
 
     private let contactManager = Core.shared.contactManager
@@ -80,8 +80,8 @@ final class SplitSwapViewModel: MultiSwapViewModel {
         false
     }
 
-    // Clears the pending flag only once the requote round has delivered its quotes; `quoting` is reset
-    // before `quotes` is assigned on completion, so a round still in flight keeps the flag set
+    /// Clears the pending flag only once the requote round has delivered its quotes; `quoting` is reset
+    /// before `quotes` is assigned on completion, so a round still in flight keeps the flag set
     override func didUpdateQuotes() {
         super.didUpdateQuotes()
 
@@ -130,7 +130,7 @@ extension SplitSwapViewModel {
         currentQuote?.quote as? SplitMultiSwapQuote
     }
 
-    // A recipient whose address an earlier recipient already uses
+    /// A recipient whose address an earlier recipient already uses
     func isDuplicateRecipient(at index: Int) -> Bool {
         guard recipients.indices.contains(index), let key = recipientKey(at: index) else {
             return false
@@ -143,7 +143,7 @@ extension SplitSwapViewModel {
         recipients.indices.contains { isDuplicateRecipient(at: $0) }
     }
 
-    // EVM addresses are case-insensitive (checksum casing); other chains compare exactly
+    /// EVM addresses are case-insensitive (checksum casing); other chains compare exactly
     private func recipientKey(at index: Int) -> String? {
         guard let address = recipients[index]?.address else {
             return nil
@@ -156,7 +156,7 @@ extension SplitSwapViewModel {
         quoting || pendingSplitRequote
     }
 
-    // The amount delivered to the recipient at `index`, or the last known one while requoting
+    /// The amount delivered to the recipient at `index`, or the last known one while requoting
     func outputAmount(at index: Int) -> Decimal? {
         if let splitQuote, splitQuote.percents == percents, splitQuote.outputAmounts.indices.contains(index) {
             return splitQuote.outputAmounts[index]
@@ -169,8 +169,8 @@ extension SplitSwapViewModel {
         return nil
     }
 
-    // The last round for the current split ratio returned no quote: the ratio was quoted fine before
-    // (that is how the recipients screen is reached), so the provider refuses this split
+    /// The last round for the current split ratio returned no quote: the ratio was quoted fine before
+    /// (that is how the recipients screen is reached), so the provider refuses this split
     var splitUnavailable: Bool {
         !requoting && currentQuote == nil && (amountIn ?? 0) > 0 && !validProviders.isEmpty
     }

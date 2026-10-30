@@ -62,8 +62,8 @@ final class ThorChainEndpointConfigurationProvider: IThorChainEndpointConfigurat
     }
 }
 
-// Maya Protocol (mayanode, a thornode fork) served by the same kit; single public
-// node family so far, mirroring thorchain-kit-android's MayaMainnet defaults.
+/// Maya Protocol (mayanode, a thornode fork) served by the same kit; single public
+/// node family so far, mirroring thorchain-kit-android's MayaMainnet defaults.
 final class MayaChainEndpointConfigurationProvider: IThorChainEndpointConfigurationProvider {
     func configuration() throws -> ThorChainEndpointConfiguration {
         let families = try [
@@ -105,8 +105,7 @@ final class ThorChainKitWrapper {
             throw Error.signerNotSupported
         }
 
-        let submission = try await thorChainKit.send(quote: quote, signer: signer)
-        return submission
+        return try await thorChainKit.send(quote: quote, signer: signer)
     }
 
     enum Error: Swift.Error {
@@ -217,9 +216,9 @@ final class ThorChainKitManager {
         return wrapper
     }
 
-    // Auto-enable of held denoms (TCY, secured assets, …), mirroring TonKitManager's
-    // dual pattern: a one-shot balances pass for restore, then tx-driven enabling.
-    // Re-subscription is free: a new kit (endpoint or account switch) passes here again.
+    /// Auto-enable of held denoms (TCY, secured assets, …), mirroring TonKitManager's
+    /// dual pattern: a one-shot balances pass for restore, then tx-driven enabling.
+    /// Re-subscription is free: a new kit (endpoint or account switch) passes here again.
     private func subscribeToAutoEnable(kit: ThorChainKit.Kit, address: ThorChainKit.Address, account: Account) {
         guard let restoreStateManager else { return }
 

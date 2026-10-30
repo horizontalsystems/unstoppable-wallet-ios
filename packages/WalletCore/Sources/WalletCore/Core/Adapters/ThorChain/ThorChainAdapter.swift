@@ -7,13 +7,13 @@ import ThorChainKit
 
 final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
     let thorChainKitWrapper: ThorChainKitWrapper
-    // One account read carries every denom, so the native coin and every chain asset
-    // share a single kit; the adapter only picks its own denom out of that state.
+    /// One account read carries every denom, so the native coin and every chain asset
+    /// share a single kit; the adapter only picks its own denom out of that state.
     private let denom: ThorChainKit.Denom
 
-    // The network fee is fixed chain-wide; start() refreshes the cached value. The
-    // refresh runs off a task and the fee is read from wherever a screen asks, so the
-    // two are kept apart by a lock rather than by hoping they never overlap.
+    /// The network fee is fixed chain-wide; start() refreshes the cached value. The
+    /// refresh runs off a task and the fee is read from wherever a screen asks, so the
+    /// two are kept apart by a lock rather than by hoping they never overlap.
     private let feeLock = NSLock()
     // NativeTransactionFee node constant: 0.02 RUNE (1e8) / 0.2 CACAO (1e10)
     private var storedFee: BigUInt
@@ -47,7 +47,7 @@ final class ThorChainAdapter: IAdapter, IBalanceAdapter, IDepositAdapter {
         balanceData.available
     }
 
-    // Native-coin balance backing the fee: RUNE on THORChain, CACAO on Maya
+    /// Native-coin balance backing the fee: RUNE on THORChain, CACAO on Maya
     var runeAvailableBalance: Decimal {
         balanceData(baseUnits: thorChainKitWrapper.thorChainKit.balance(denom: nativeDenom)).available
     }

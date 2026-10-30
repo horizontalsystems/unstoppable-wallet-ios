@@ -32,10 +32,22 @@ class SetPasscodeViewModel: ObservableObject {
         syncDescription()
     }
 
-    var title: String { "" }
-    var passcodeDescription: String { "" }
-    var confirmDescription: String { "" }
-    func isCurrent(passcode _: String) -> Bool { false }
+    var title: String {
+        ""
+    }
+
+    var passcodeDescription: String {
+        ""
+    }
+
+    var confirmDescription: String {
+        ""
+    }
+
+    func isCurrent(passcode _: String) -> Bool {
+        false
+    }
+
     func onEnter(passcode _: String) {}
     func onCancel() {}
 

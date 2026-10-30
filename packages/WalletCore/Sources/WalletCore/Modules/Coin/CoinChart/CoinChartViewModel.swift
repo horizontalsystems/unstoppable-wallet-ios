@@ -154,9 +154,9 @@ extension CoinChartViewModel: IChartViewModel {
 }
 
 extension CoinChartViewModel: IChartViewTouchDelegate {
-    public func touchDown() {}
+    func touchDown() {}
 
-    public func select(item: ChartItem, indicators: [ChartIndicator]) {
+    func select(item: ChartItem, indicators: [ChartIndicator]) {
         HapticGenerator.instance.notification(.feedback(.soft))
 
         pointSelectedItemRelay.accept(
@@ -169,7 +169,7 @@ extension CoinChartViewModel: IChartViewTouchDelegate {
         )
     }
 
-    public func touchUp() {
+    func touchUp() {
         pointSelectedItemRelay.accept(nil)
     }
 }
@@ -198,7 +198,9 @@ extension [HsTimePeriod] {
 extension [HsPeriodType] {
     var timePeriods: [HsTimePeriod] {
         compactMap {
-            if case let .byPeriod(interval) = $0 { return interval }
+            if case let .byPeriod(interval) = $0 {
+                return interval
+            }
             return nil
         }
     }

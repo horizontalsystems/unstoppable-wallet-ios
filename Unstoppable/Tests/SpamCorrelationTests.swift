@@ -5,12 +5,12 @@ import MarketKit
 import Testing
 @testable import WalletCore
 
-// Android-parity fixtures for the shared correlation machinery:
-// prefix/suffix length, inclusive thresholds, any-entry proximity, a window of distinct counterparties.
+/// Android-parity fixtures for the shared correlation machinery:
+/// prefix/suffix length, inclusive thresholds, any-entry proximity, a window of distinct counterparties.
 struct SpamCorrelationTests {
     // MARK: - Address similarity
 
-    // EVM/Tron/Stellar are ungated, so they keep the 4-character match; Solana (gated) uses Android's 3
+    /// EVM/Tron/Stellar are ungated, so they keep the 4-character match; Solana (gated) uses Android's 3
     @Test func matchLengthIsFourByDefaultAndThreeForSolana() throws {
         let cache = try makeCache(rows: [("0xabc000000000000000000000000000000000fed", 0, nil)])
         let context = context(from: "0xabc111111111111111111111111111111111fed", timestamp: 0)
@@ -30,8 +30,8 @@ struct SpamCorrelationTests {
         #expect(AddressSimilarityCondition(cache: cache, normalize: SpamWrapper.addressNormalizer(blockchainType: .tron)).evaluate(context) == 0)
     }
 
-    // The condition knows no chain: an address is compared as given, lowercased, unless the chain's
-    // normalizer says otherwise
+    /// The condition knows no chain: an address is compared as given, lowercased, unless the chain's
+    /// normalizer says otherwise
     @Test func withoutNormalizerAddressesCompareAsGiven() throws {
         let cache = try makeCache(rows: [("0xabc000000000000000000000000000000000fed", 0, nil)])
         let context = context(from: "0xABC111111111111111111111111111111111FED", timestamp: 0)
@@ -74,7 +74,7 @@ struct SpamCorrelationTests {
         #expect(TimeCorrelationCondition(cache: cache).evaluate(context(timestamp: 999_999, blockHeight: 106)) == 0)
     }
 
-    // The most recent entry is far away; an older one in the window is close enough
+    /// The most recent entry is far away; an older one in the window is close enough
     @Test func anyEntryInWindowCorrelates() throws {
         let cache = try makeCache(rows: [("0xfar", 5000, nil), ("0xnear", 900, nil)])
 
@@ -92,7 +92,7 @@ struct SpamCorrelationTests {
         #expect(window.first?.timestamp == 140)
     }
 
-    // A repeated counterparty moves to the front instead of taking a second slot
+    /// A repeated counterparty moves to the front instead of taking a second slot
     @Test func addDedupsRepeatedAddress() throws {
         let cache = try makeCache(rows: [])
         let token = Self.ethToken
@@ -194,7 +194,7 @@ struct SpamSharedValueScoringTests {
         decimals: 6
     )
 
-    // Outgoing legs are stored negative; Android scores dust only for positive values
+    /// Outgoing legs are stored negative; Android scores dust only for positive values
     @Test func negativeOutgoingLegNeverScoresAsDust() {
         let events = TransferEvents(
             incoming: [TransferEvent(address: "0xsender", value: AppValue(token: Self.usdt, value: 5))],
@@ -211,8 +211,8 @@ struct SpamSharedValueScoringTests {
         #expect(LowAmountCondition().evaluate(context(events: events)) == 3)
     }
 
-    @Test func stablecoinDustBelowTenthOfCentIsSpam() {
-        let events = TransferEvents(incoming: [TransferEvent(address: "0xsender", value: AppValue(token: Self.usdt, value: Decimal(string: "0.0001")!))])
+    @Test func stablecoinDustBelowTenthOfCentIsSpam() throws {
+        let events = try TransferEvents(incoming: [TransferEvent(address: "0xsender", value: AppValue(token: Self.usdt, value: #require(Decimal(string: "0.0001"))))])
 
         #expect(LowAmountCondition().evaluate(context(events: events)) == 7)
     }

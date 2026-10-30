@@ -104,7 +104,7 @@ extension BlockchainType {
         }
     }
 
-    // used for EVM blockchains only
+    /// used for EVM blockchains only
     var feePriceScale: FeePriceScale {
         switch self {
         case .bitcoin, .bitcoinCash, .dash, .litecoin, .ecash: return .satoshi
@@ -209,7 +209,9 @@ extension BlockchainType {
     }
 
     var isUnsupported: Bool {
-        if case .unsupported = self { return true }
+        if case .unsupported = self {
+            return true
+        }
         return false
     }
 

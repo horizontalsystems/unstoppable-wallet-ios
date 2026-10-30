@@ -4,11 +4,11 @@ import MarketKit
 import Testing
 @testable import WalletCore
 
-// XRP dust through the shared (non-Solana) chain SpamManager composes: ZeroValue +
-// AddressSimilarity + LowAmount + TimeCorrelation. XRP limit 0.001 → spam < 0.0001,
-// risk < 0.001, danger < 0.005.
+/// XRP dust through the shared (non-Solana) chain SpamManager composes: ZeroValue +
+/// AddressSimilarity + LowAmount + TimeCorrelation. XRP limit 0.001 → spam < 0.0001,
+/// risk < 0.001, danger < 0.005.
 struct XrpSpamPolicyTests {
-    // The reported case: 0.00001 XRP from an unknown account
+    /// The reported case: 0.00001 XRP from an unknown account
     @Test func dustBelowSpamLimitIsSpam() throws {
         let events = TransferEvents(incoming: [event(xrp: "0.00001")])
         #expect(try isSpam(events: events) == true)
@@ -29,19 +29,19 @@ struct XrpSpamPolicyTests {
         #expect(try isSpam(events: events) == false)
     }
 
-    // The base reserve arriving to activate an account must never be hidden
+    /// The base reserve arriving to activate an account must never be hidden
     @Test func firstDepositIsNotSpam() throws {
         let events = TransferEvents(incoming: [event(xrp: "1")])
         #expect(try isSpam(events: events) == false)
     }
 
-    // An outgoing dust leg is the user's own send: the negative value must not score
+    /// An outgoing dust leg is the user's own send: the negative value must not score
     @Test func outgoingDustLegIsInert() throws {
         let events = TransferEvents(incoming: [event(xrp: "12")], outgoing: [event(xrp: "-0.00001")])
         #expect(try isSpam(events: events) == false)
     }
 
-    // A gray-zone amount alone stays visible; a look-alike of a known counterparty pushes it over
+    /// A gray-zone amount alone stays visible; a look-alike of a known counterparty pushes it over
     @Test func grayZoneAmountAloneIsNotSpam() throws {
         let events = TransferEvents(incoming: [event(xrp: "0.0005", from: Self.mimic)])
         #expect(try isSpam(events: events, timestamp: 1000) == false)
@@ -88,7 +88,7 @@ extension XrpSpamPolicyTests {
         return cache
     }
 
-    // The composition SpamWrapper builds for every chain except Solana
+    /// The composition SpamWrapper builds for every chain except Solana
     private func isSpam(events: TransferEvents, timestamp: Int = 0, counterparties: [(address: String, timestamp: Int)] = []) throws -> Bool {
         let info = SpamTransactionInfo(hash: "hash", blockchainType: .xrp, timestamp: timestamp, blockHeight: nil, events: events)
 

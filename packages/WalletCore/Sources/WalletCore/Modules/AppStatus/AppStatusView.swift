@@ -24,7 +24,6 @@ struct AppStatusView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 
-    @ViewBuilder
     func sections(_ sections: [AppStatusViewModel.Section]) -> some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {

@@ -5,8 +5,8 @@ import Testing
 @testable import WalletCore
 import XrpKit
 
-// NearKit and XrpKit throw NoEndpointAvailable over the last transport error once every node has
-// failed; a lost connection under it reads as "no internet", anything else stays the kit's error.
+/// NearKit and XrpKit throw NoEndpointAvailable over the last transport error once every node has
+/// failed; a lost connection under it reads as "no internet", anything else stays the kit's error.
 struct NoEndpointAvailableConvertedErrorTests {
     @Test func nearLostConnectionIsNoConnection() {
         let error = NearKit.NoEndpointAvailable(underlying: URLError(.notConnectedToInternet))

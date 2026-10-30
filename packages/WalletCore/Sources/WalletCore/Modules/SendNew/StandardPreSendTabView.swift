@@ -26,7 +26,9 @@ struct StandardPreSendTabView: View {
         let infoTextColorStyle: ColorStyle = invalid ? .red : (state == .required ? .yellow : .secondary)
 
         let fixedTag: UInt32? = {
-            if case let .fixed(tag) = state { return tag }
+            if case let .fixed(tag) = state {
+                return tag
+            }
             return nil
         }()
         let text: Binding<String> = fixedTag.map { .constant(String($0)) } ?? $viewModel.destinationTag
@@ -52,7 +54,7 @@ struct StandardPreSendTabView: View {
         }
     }
 
-    @ViewBuilder private func memoView(type: MemoType, focus: FocusState<PreSendFocusField?>.Binding) -> some View {
+    private func memoView(type: MemoType, focus: FocusState<PreSendFocusField?>.Binding) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             InputTextView(
                 placeholder: "send.confirmation.memo_placeholder".localized,

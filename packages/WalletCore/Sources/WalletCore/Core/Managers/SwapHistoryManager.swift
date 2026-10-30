@@ -11,8 +11,8 @@ public class SwapHistoryManager {
 
     private let swapUpdateSubject = PassthroughSubject<Swap, Never>()
 
-    // No work in init: the first sync is kicked by AppManager.didFinishLaunching, once the app
-    // (registries, adapters, host-app context) is assembled.
+    /// No work in init: the first sync is kicked by AppManager.didFinishLaunching, once the app
+    /// (registries, adapters, host-app context) is assembled.
     init(accountManager: AccountManager, storage: SwapStorage) {
         self.accountManager = accountManager
         self.storage = storage
@@ -128,8 +128,8 @@ public extension SwapHistoryManager {
         }
     }
 
-    // mechanism-agnostic hook: attaches the on-chain txHash to the swap saved with
-    // this trackingHandle and starts tracking it
+    /// mechanism-agnostic hook: attaches the on-chain txHash to the swap saved with
+    /// this trackingHandle and starts tracking it
     func resolve(trackingHandle: String, txHash: String) {
         do {
             guard try storage.setTxHash(txHash, trackingHandle: trackingHandle) else {
@@ -142,10 +142,10 @@ public extension SwapHistoryManager {
         }
     }
 
-    // mechanism-agnostic hook: the broadcast succeeded but the mechanism can never yield a ref
-    // (e.g. TonKit's send returns Void). Clearing the handle releases the record from
-    // isAwaitingTxHash() so the provider tracks it by providerSwapId alone — without this the
-    // swap would sit "awaiting tx hash" forever.
+    /// mechanism-agnostic hook: the broadcast succeeded but the mechanism can never yield a ref
+    /// (e.g. TonKit's send returns Void). Clearing the handle releases the record from
+    /// isAwaitingTxHash() so the provider tracks it by providerSwapId alone — without this the
+    /// swap would sit "awaiting tx hash" forever.
     func beginProviderTracking(trackingHandle: String) {
         do {
             guard try storage.clearTrackingHandle(trackingHandle) else {
@@ -158,8 +158,8 @@ public extension SwapHistoryManager {
         }
     }
 
-    // mechanism-agnostic hook: a retried broadcast reuses the row it failed on. Scoped to the
-    // failed status — never resurrects a settled swap; false = nothing to retry.
+    /// mechanism-agnostic hook: a retried broadcast reuses the row it failed on. Scoped to the
+    /// failed status — never resurrects a settled swap; false = nothing to retry.
     func retryFailed(trackingHandle: String) -> Bool {
         do {
             guard try storage.markNotStarted(trackingHandle: trackingHandle) else {
@@ -176,9 +176,9 @@ public extension SwapHistoryManager {
         }
     }
 
-    // mechanism-agnostic hook: the mechanism itself learned the swap failed (e.g. a reverted /
-    // never-mined userOp) — no server tracking involved. Targeted update scoped to pending
-    // statuses; a settled swap is never downgraded, a re-delivery is a no-op.
+    /// mechanism-agnostic hook: the mechanism itself learned the swap failed (e.g. a reverted /
+    /// never-mined userOp) — no server tracking involved. Targeted update scoped to pending
+    /// statuses; a settled swap is never downgraded, a re-delivery is a no-op.
     func markFailed(trackingHandle: String) {
         do {
             guard try storage.markFailed(trackingHandle: trackingHandle) else {

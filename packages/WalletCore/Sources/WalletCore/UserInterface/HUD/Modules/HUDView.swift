@@ -6,7 +6,10 @@ class HUDView: UIViewController, HUDViewInterface {
     var config: HUDViewModel
     var window: UIWindow?
     var backgroundWindow: BackgroundHUDWindow
-    var holderView: UIView? { window }
+    var holderView: UIView? {
+        window
+    }
+
     let statusBarStyle: UIStatusBarStyle?
 
     let containerView: HUDContainerView
@@ -19,8 +22,8 @@ class HUDView: UIViewController, HUDViewInterface {
 
     var visibleKeyboardOffset: CGFloat = 0
 
-    public var showCompletion: (() -> Void)?
-    public var dismissCompletion: (() -> Void)?
+    var showCompletion: (() -> Void)?
+    var dismissCompletion: (() -> Void)?
 
     init(presenter: HUDViewPresenterInterface, config: HUDViewModel, backgroundWindow: BackgroundHUDWindow, containerView: HUDContainerView, statusBarStyle: UIStatusBarStyle? = nil) {
         self.presenter = presenter

@@ -50,12 +50,16 @@ class WCEvmTransactionParser: IWCParser {
     }
 
     private static func isNative(_ token: OneInchDecoration.Token) -> Bool {
-        if case .evmCoin = token { return true }
+        if case .evmCoin = token {
+            return true
+        }
         return false
     }
 
     private static func isNative(_ token: SwapDecoration.Token) -> Bool {
-        if case .evmCoin = token { return true }
+        if case .evmCoin = token {
+            return true
+        }
         return false
     }
 }

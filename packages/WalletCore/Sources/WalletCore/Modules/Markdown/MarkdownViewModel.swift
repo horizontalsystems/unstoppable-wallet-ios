@@ -59,7 +59,7 @@ final class MarkdownViewModel: ObservableObject {
         }
     }
 
-    // Runs off the main actor: network fetch, Down parsing and attributed string building
+    /// Runs off the main actor: network fetch, Down parsing and attributed string building
     private nonisolated static func loadViewItems(url: URL, mode: Mode, networkManager: NetworkManager) async throws -> [MarkdownBlockViewItem] {
         let content: String
 

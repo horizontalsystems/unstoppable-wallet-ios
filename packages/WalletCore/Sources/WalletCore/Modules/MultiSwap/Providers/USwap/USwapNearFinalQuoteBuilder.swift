@@ -13,8 +13,8 @@ final class USwapNearFinalQuoteBuilder: USwapFinalQuoteBuilder {
         input.tokenIn.blockchainType == .near
     }
 
-    // A deposit-address transfer: NEAR, or `ft_transfer` for a NEP-141 token (Android `USwapProvider`,
-    // `depositType = ORIGIN_CHAIN`).
+    /// A deposit-address transfer: NEAR, or `ft_transfer` for a NEP-141 token (Android `USwapProvider`,
+    /// `depositType = ORIGIN_CHAIN`).
     func build(input: USwapFinalQuoteFactory.Input) async throws -> SwapFinalQuote {
         guard let adapter = adapterManager.adapter(for: input.tokenIn) as? ISendNearAdapter & IBalanceAdapter else {
             throw USwapMultiSwapProvider.SwapError.noNearAdapter

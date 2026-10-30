@@ -3,7 +3,7 @@ import ObjectMapper
 import Testing
 @testable import WalletCore
 
-// The swap screen's view of GET /v3/providers: `quotes` decides the Standard tab, `splitSwaps` the Private tab
+/// The swap screen's view of GET /v3/providers: `quotes` decides the Standard tab, `splitSwaps` the Private tab
 struct MultiSwapProviderResponseTests {
     private typealias Response = MultiSwapProviderManager.ProviderResponse
 

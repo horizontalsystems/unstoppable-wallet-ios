@@ -2,7 +2,9 @@ import Foundation
 import HsToolKit
 
 final class ContactsFilter: SpamFilter {
-    var identifier: String { "contacts_whitelist" }
+    var identifier: String {
+        "contacts_whitelist"
+    }
 
     private let contactManager: ContactBookManager
     private let logger: Logger?
@@ -22,7 +24,7 @@ final class ContactsFilter: SpamFilter {
         return .ignore
     }
 
-    // A contact's address is trusted on every network, as its saved spam verdicts are cleared on every network
+    /// A contact's address is trusted on every network, as its saved spam verdicts are cleared on every network
     private func isContact(address: String) -> Bool {
         let address = address.lowercased()
         return contactManager.all?.contains { contact in

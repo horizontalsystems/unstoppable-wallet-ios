@@ -9,9 +9,9 @@ import Foundation
 public final class ConfidentialProviderRegistry {
     private static let expiration: TimeInterval = 6 * 60 * 60
 
-    // A confidential provider is only usable here if it executes as a plain transfer: anything
-    // else (signed_transaction, thorchain_deposit, …) needs real transaction building and must
-    // not silently join the private send flow.
+    /// A confidential provider is only usable here if it executes as a plain transfer: anything
+    /// else (signed_transaction, thorchain_deposit, …) needs real transaction building and must
+    /// not silently join the private send flow.
     private static let supportedExecutionType = "transfer"
 
     private let api: USwapMultiSwapApi
@@ -56,8 +56,8 @@ public final class ConfidentialProviderRegistry {
         refreshTask?.cancel()
     }
 
-    // Filtered on read, not on sync: the server's full confidential list is persisted, so a release that
-    // registers a provider the server already lists offers it at once instead of waiting out the TTL.
+    /// Filtered on read, not on sync: the server's full confidential list is persisted, so a release that
+    /// registers a provider the server already lists offers it at once instead of waiting out the TTL.
     public var providerIds: [String] {
         withState { $0.providerIds }.filter(isUsableProvider)
     }

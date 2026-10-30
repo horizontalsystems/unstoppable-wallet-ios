@@ -244,7 +244,7 @@ struct AccountsLostView: View {
                         isPresented = false
                     },
                 ])),
-            ],
+            ]
         )
     }
 }

@@ -5,16 +5,7 @@ enum OpenCryptoPayUrl {
 
     static func detect(text: String) -> URL? {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard let url = URL(string: trimmed) else {
-            return nil
-        }
-        guard validate(url: url) else {
-            return nil
-        }
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
-            return nil
-        }
-        guard components.percentEncodedQueryItems?.contains(where: { $0.name.lowercased() == "lightning" }) == true else {
+        guard let url = URL(string: trimmed), validate(url: url), let components = URLComponents(url: url, resolvingAgainstBaseURL: true), components.percentEncodedQueryItems?.contains(where: { $0.name.lowercased() == "lightning" }) == true else {
             return nil
         }
         return url
@@ -22,12 +13,9 @@ enum OpenCryptoPayUrl {
 
     static func decodeLnurl(_ url: URL) throws -> URL {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
-              let lnurl = components.percentEncodedQueryItems?.first(where: { $0.name.lowercased() == "lightning" })?.value
+              let lnurl = components.percentEncodedQueryItems?.first(where: { $0.name.lowercased() == "lightning" })?.value,
+              lnurl.count <= lnurlMaxLength
         else {
-            throw OpenCryptoPayManager.Error.invalidLnurl
-        }
-
-        guard lnurl.count <= lnurlMaxLength else {
             throw OpenCryptoPayManager.Error.invalidLnurl
         }
 
@@ -38,11 +26,7 @@ enum OpenCryptoPayUrl {
             throw OpenCryptoPayManager.Error.invalidLnurl
         }
 
-        guard decoded.unicodeScalars.allSatisfy({ !CharacterSet.controlCharacters.contains($0) }) else {
-            throw OpenCryptoPayManager.Error.invalidLnurl
-        }
-
-        guard let inner = URL(string: decoded), validate(url: inner), inner.fragment == nil else {
+        guard decoded.unicodeScalars.allSatisfy({ !CharacterSet.controlCharacters.contains($0) }), let inner = URL(string: decoded), validate(url: inner), inner.fragment == nil else {
             throw OpenCryptoPayManager.Error.invalidLnurl
         }
 
@@ -56,16 +40,7 @@ enum OpenCryptoPayUrl {
         if let port = url.port, port != 443 {
             return false
         }
-        guard url.user == nil, url.password == nil else {
-            return false
-        }
-        guard let host = url.host else {
-            return false
-        }
-        guard host.allSatisfy(\.isASCII) else {
-            return false
-        }
-        guard !host.split(separator: ".").contains(where: { $0.hasPrefix("xn--") }) else {
+        guard url.user == nil, url.password == nil, let host = url.host, host.allSatisfy(\.isASCII), !host.split(separator: ".").contains(where: { $0.hasPrefix("xn--") }) else {
             return false
         }
         return true

@@ -72,7 +72,9 @@ private final class StubParser: IWCParser {
     func parse(request: Request) throws -> WCRequestPayload? {
         guard request.method == method else { return nil }
         parseCount += 1
-        if let error { throw error }
+        if let error {
+            throw error
+        }
         return WCRequestPayload(request: request, kind: .transaction, from: nil)
     }
 }

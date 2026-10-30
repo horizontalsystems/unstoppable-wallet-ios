@@ -2,10 +2,10 @@ import Combine
 import Foundation
 import MarketKit
 
-// Single source of truth for "can this token be sent privately". Deliberately separate from the
-// regular swap asset lists: a token being swappable says nothing about it being privately sendable.
-// Each confidential provider gets its own USwapAssetRepository, so its token list is persisted under
-// its own provider key in SwapAssetStorage with no schema change.
+/// Single source of truth for "can this token be sent privately". Deliberately separate from the
+/// regular swap asset lists: a token being swappable says nothing about it being privately sendable.
+/// Each confidential provider gets its own USwapAssetRepository, so its token list is persisted under
+/// its own provider key in SwapAssetStorage with no schema change.
 public final class PrivateSendTokenManager {
     private let registry: ConfidentialProviderRegistry
     private let makeRepository: (String) -> USwapAssetRepository
@@ -15,9 +15,9 @@ public final class PrivateSendTokenManager {
     private var cancellables = Set<AnyCancellable>()
     private var repositoryCancellables = [String: AnyCancellable]()
 
-    // The repository factory is injected so an app that already memoises repositories elsewhere
-    // (the private send service uses the same ones) shares instances rather than duplicating the
-    // per-provider GET /v3/tokens traffic.
+    /// The repository factory is injected so an app that already memoises repositories elsewhere
+    /// (the private send service uses the same ones) shares instances rather than duplicating the
+    /// per-provider GET /v3/tokens traffic.
     public init(registry: ConfidentialProviderRegistry, repository: @escaping (String) -> USwapAssetRepository) {
         self.registry = registry
         makeRepository = repository
@@ -35,13 +35,13 @@ public final class PrivateSendTokenManager {
         syncSubject.eraseToAnyPublisher()
     }
 
-    // Chains that are already privacy-native: routing them through a confidential intermediary adds
-    // cost without adding unlinkability, so private send is not offered even when a provider maps
-    // their tokens.
+    /// Chains that are already privacy-native: routing them through a confidential intermediary adds
+    /// cost without adding unlinkability, so private send is not offered even when a provider maps
+    /// their tokens.
     private static let excludedBlockchainTypes: Set<BlockchainType> = [.monero, .zcash, .zano]
 
-    // Pure in-memory lookup over already-synced state. Called from the render path: it must never
-    // trigger a fetch, block, or become async.
+    /// Pure in-memory lookup over already-synced state. Called from the render path: it must never
+    /// trigger a fetch, block, or become async.
     public func supports(token: Token) -> Bool {
         !supportedProviderIds(token: token).isEmpty
     }
@@ -86,8 +86,8 @@ private extension PrivateSendTokenManager {
         syncSubject.send()
     }
 
-    // Re-derives the repository set from the registry, creating missing ones lazily and dropping
-    // repositories for providers that are no longer confidential.
+    /// Re-derives the repository set from the registry, creating missing ones lazily and dropping
+    /// repositories for providers that are no longer confidential.
     func syncRepositories() {
         let providerIds = registry.providerIds
 

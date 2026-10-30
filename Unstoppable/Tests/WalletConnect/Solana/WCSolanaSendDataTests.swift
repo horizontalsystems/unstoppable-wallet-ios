@@ -27,7 +27,7 @@ struct WCSolanaSendDataTests {
         #expect(cautions[0].type == .error)
     }
 
-    // The fixture transfers from the other signer, which also pays the network fee.
+    /// The fixture transfers from the other signer, which also pays the network fee.
     @Test func sectionsListDecodedTransferAndFee() throws {
         let data = try WCSolanaSendData(token: Self.token, payload: payload(), fee: 0.000005, transactionError: nil)
         let sections = data.sections(baseToken: Self.token, currency: currency, rates: [:])

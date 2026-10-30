@@ -5,8 +5,7 @@ import ZODLSwiftWalletSDK
 
 class ZcashTransactionService: TransactionService {
     override class func instance(sendData: SendData, baseToken: Token, initialTransactionSettings: InitialTransactionSettings?) -> ITransactionService? {
-        guard ZcashSendService.customFeeEnabled else { return nil }
-        guard baseToken.blockchainType == .zcash else { return nil }
+        guard ZcashSendService.customFeeEnabled, baseToken.blockchainType == .zcash else { return nil }
         switch sendData {
         case let .zcash(amount, recipient, memo), let .zcashResend(amount, recipient, memo, _):
             return ZcashTransactionService(token: baseToken, proposalRequest: .transfer(amount: amount, recipient: recipient, memo: memo), initialTransactionSettings: initialTransactionSettings)

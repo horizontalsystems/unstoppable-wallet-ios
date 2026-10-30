@@ -93,11 +93,26 @@ struct SwapDepositDetailsTests {
 
     private struct StubSubProvider: USwapSubProvider {
         let response: USwapMultiSwapApi.SwapResponse
-        var info: USwapProviderInfo { .quickEx }
-        var syncPublisher: AnyPublisher<Void, Never>? { nil }
-        func slippageSupported(tokenIn _: Token, tokenOut _: Token) -> Bool { true }
-        func supports(tokenIn _: Token, tokenOut _: Token) -> Bool { true }
-        func rate(input _: USwapRateInput) async throws -> USwapRateResult { throw USwapMultiSwapProvider.SwapError.noRoutes }
+        var info: USwapProviderInfo {
+            .quickEx
+        }
+
+        var syncPublisher: AnyPublisher<Void, Never>? {
+            nil
+        }
+
+        func slippageSupported(tokenIn _: Token, tokenOut _: Token) -> Bool {
+            true
+        }
+
+        func supports(tokenIn _: Token, tokenOut _: Token) -> Bool {
+            true
+        }
+
+        func rate(input _: USwapRateInput) async throws -> USwapRateResult {
+            throw USwapMultiSwapProvider.SwapError.noRoutes
+        }
+
         func preview(input _: USwapPreviewInput) async throws -> USwapPreviewResult {
             USwapPreviewResult(response: response, refundAddress: nil, destinationAddress: SwapDepositDetailsTests.destination)
         }
@@ -108,13 +123,21 @@ struct SwapDepositDetailsTests {
 
         func reportSigned(uuid _: String, inboundTxHash _: String) async throws {}
 
-        func validateTrustedProvider(tokenIn _: Token, amountIn _: Decimal) async throws -> Bool? { nil }
-        func track(swap: Swap) async throws -> Swap { swap }
+        func validateTrustedProvider(tokenIn _: Token, amountIn _: Decimal) async throws -> Bool? {
+            nil
+        }
+
+        func track(swap: Swap) async throws -> Swap {
+            swap
+        }
     }
 
     private struct StubBuilder: USwapFinalQuoteBuilder {
         let rejectBuild: Bool
-        func supports(input _: USwapFinalQuoteFactory.Input) -> Bool { true }
+        func supports(input _: USwapFinalQuoteFactory.Input) -> Bool {
+            true
+        }
+
         func build(input: USwapFinalQuoteFactory.Input) async throws -> SwapFinalQuote {
             if rejectBuild {
                 Issue.record("Builder must not run for an invalid swap memo")

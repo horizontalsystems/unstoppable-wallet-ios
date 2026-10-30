@@ -92,7 +92,9 @@ public extension IDepositAdapter {
         Just(receiveAddressStatus).eraseToAnyPublisher()
     }
 
-    func usedAddresses(change _: Bool) -> [UsedAddress] { [] }
+    func usedAddresses(change _: Bool) -> [UsedAddress] {
+        []
+    }
 }
 
 public protocol ITransactionsAdapter {
@@ -221,7 +223,10 @@ protocol Warning {
 }
 
 extension Warning {
-    var titledCaution: TitledCaution { TitledCaution(title: "", text: "", type: .warning) }
+    var titledCaution: TitledCaution {
+        TitledCaution(title: "", text: "", type: .warning)
+    }
+
     var caution: CautionNew {
         let caution = titledCaution
         return .init(title: caution.title, text: caution.text, type: caution.type)

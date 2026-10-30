@@ -1,7 +1,7 @@
 import Foundation
 import MarketKit
 
-// Registry of OCP broadcasters; each app registers only what it ships.
+/// Registry of OCP broadcasters; each app registers only what it ships.
 class OpenCryptoPayBroadcasterFactory {
     private var types: [IOpenCryptoPayBroadcasterType.Type] = []
 
@@ -15,7 +15,7 @@ class OpenCryptoPayBroadcasterFactory {
         }
     }
 
-    // Union across registered types; first registered wins on method collision.
+    /// Union across registered types; first registered wins on method collision.
     var supportedChains: [String: BlockchainType] {
         types.reduce(into: [:]) { acc, type in
             acc.merge(type.supportedChains) { current, _ in current }

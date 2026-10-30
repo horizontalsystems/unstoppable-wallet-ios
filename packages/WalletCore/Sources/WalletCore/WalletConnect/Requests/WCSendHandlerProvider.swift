@@ -1,4 +1,4 @@
-// Bridges SendHandlerFactory (type-based) to the per-chain registry assembled by the facade
+/// Bridges SendHandlerFactory (type-based) to the per-chain registry assembled by the facade
 class WCSendHandlerProvider: SendHandler {
     static var registry: WCSendHandlerRegistry?
 

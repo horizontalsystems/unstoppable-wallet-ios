@@ -2,7 +2,7 @@ import Foundation
 import Starscream
 import WalletConnectRelay
 
-// Starscream's WebSocket is the concrete transport reown's WebSocketConnecting expects
+/// Starscream's WebSocket is the concrete transport reown's WebSocketConnecting expects
 extension WebSocket: WebSocketConnecting {}
 
 struct WCSocketFactory: WebSocketFactory {

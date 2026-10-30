@@ -1,22 +1,22 @@
 import MarketKit
 
 public extension MemoType {
-    // The one question every flow that has to hand an identifier to a counterparty must ask. It is
-    // NOT "does this chain have a memo field" — it is "will a memo attached here actually reach the
-    // owner of the destination address, readable by them".
-    //
-    // A swap/private-send provider matches an incoming deposit to its order by that identifier, and
-    // a deposit it cannot match is typically unrecoverable (API.txt §5), so only .onChainPublic is
-    // safe to proceed on:
-    //   .local          — kept on this device only, never broadcast (Monero writes it as a wallet
-    //                     user note). The counterparty could never see it, yet the send would look
-    //                     successful.
-    //   .onChainPrivate — encrypted on-chain (Zano transfer comment, shielded Zcash memo). Whether
-    //                     the counterparty decrypts and reads it is unverifiable from the client,
-    //                     and the failure mode is lost funds. Relax only with evidence.
-    //   .none           — no memo is carried at all (EVM, Tron, Solana, transparent Zcash).
-    //
-    // Do not simplify this to `!= .none`.
+    /// The one question every flow that has to hand an identifier to a counterparty must ask. It is
+    /// NOT "does this chain have a memo field" — it is "will a memo attached here actually reach the
+    /// owner of the destination address, readable by them".
+    ///
+    /// A swap/private-send provider matches an incoming deposit to its order by that identifier, and
+    /// a deposit it cannot match is typically unrecoverable (API.txt §5), so only .onChainPublic is
+    /// safe to proceed on:
+    ///   .local          — kept on this device only, never broadcast (Monero writes it as a wallet
+    ///                     user note). The counterparty could never see it, yet the send would look
+    ///                     successful.
+    ///   .onChainPrivate — encrypted on-chain (Zano transfer comment, shielded Zcash memo). Whether
+    ///                     the counterparty decrypts and reads it is unverifiable from the client,
+    ///                     and the failure mode is lost funds. Relax only with evidence.
+    ///   .none           — no memo is carried at all (EVM, Tron, Solana, transparent Zcash).
+    ///
+    /// Do not simplify this to `!= .none`.
     var deliversAttachment: Bool {
         switch self {
         case .onChainPublic: true
@@ -66,9 +66,9 @@ public extension BlockchainType {
         }
     }
 
-    // The send form's memo limit in UTF-8 bytes, as on Android (ChainPlugin SendMemoSupport.maxBytes):
-    // OP_RETURN relays 80 bytes of data on Bitcoin, Litecoin and Dash and 220 on Bitcoin Cash and eCash,
-    // a Zcash memo field holds 512. TON stays within one comment cell; Monero's 120 is a local note.
+    /// The send form's memo limit in UTF-8 bytes, as on Android (ChainPlugin SendMemoSupport.maxBytes):
+    /// OP_RETURN relays 80 bytes of data on Bitcoin, Litecoin and Dash and 220 on Bitcoin Cash and eCash,
+    /// a Zcash memo field holds 512. TON stays within one comment cell; Monero's 120 is a local note.
     var memoMaxBytes: Int? {
         switch self {
         case .bitcoin, .litecoin, .dash: 80
@@ -83,10 +83,10 @@ public extension BlockchainType {
         }
     }
 
-    // Chains whose transfer memo rides an OP_RETURN output (80 bytes on Bitcoin, Litecoin and Dash, 220 on
-    // Bitcoin Cash and eCash), as on Android (MemoDelivery.kt memoRidesOpReturn): a swap route memo there
-    // cannot name a unified Zcash address. TON and Stellar memos are short too, but no vault route sells
-    // them into ZEC.
+    /// Chains whose transfer memo rides an OP_RETURN output (80 bytes on Bitcoin, Litecoin and Dash, 220 on
+    /// Bitcoin Cash and eCash), as on Android (MemoDelivery.kt memoRidesOpReturn): a swap route memo there
+    /// cannot name a unified Zcash address. TON and Stellar memos are short too, but no vault route sells
+    /// them into ZEC.
     var memoRidesOpReturn: Bool {
         switch self {
         case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash: true
@@ -98,8 +98,8 @@ public extension BlockchainType {
 }
 
 public extension USwapMultiSwapApi.Attachment {
-    // Whether a deposit on this chain can carry the attachment at all, before anything is built:
-    // XRP by its DestinationTag, every other chain by a memo the chain delivers.
+    /// Whether a deposit on this chain can carry the attachment at all, before anything is built:
+    /// XRP by its DestinationTag, every other chain by a memo the chain delivers.
     static func validate(_ attachment: USwapMultiSwapApi.Attachment?, blockchainType: BlockchainType) throws {
         if blockchainType == .xrp {
             _ = try destinationTag(attachment)

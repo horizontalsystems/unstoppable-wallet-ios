@@ -137,10 +137,10 @@ public class AdapterManager {
         })
     }
 
-    // Zcash changes the lightwalletd endpoint in place (synchronizer.restartSync), not by recreating the
-    // adapter over the same local DB (which would report synced from cache). switchTo validates the
-    // server and throws on failure; on failure we revert the stored selection to the endpoint actually
-    // applied so the UI stays in sync with reality.
+    /// Zcash changes the lightwalletd endpoint in place (synchronizer.restartSync), not by recreating the
+    /// adapter over the same local DB (which would report synced from cache). switchTo validates the
+    /// server and throws on failure; on failure we revert the stored selection to the endpoint actually
+    /// applied so the UI stays in sync with reality.
     private func handleZcashEndpointChange(blockchainType: BlockchainType) {
         guard blockchainType == .zcash else { return }
 
@@ -170,11 +170,8 @@ public class AdapterManager {
     private func revertZcashSelection(to adapter: ZcashAdapter, failedURL: URL) {
         // revert only while the failed target is still the persisted choice —
         // a newer user selection must not be clobbered by an older failure
-        guard zcashNodeManager.node(blockchainType: .zcash).url == failedURL else {
-            return
-        }
-
-        guard let appliedURL = adapter.currentEndpointURL,
+        guard zcashNodeManager.node(blockchainType: .zcash).url == failedURL,
+              let appliedURL = adapter.currentEndpointURL,
               let node = zcashNodeManager.allNodes(blockchainType: .zcash).first(where: { $0.url == appliedURL })
         else {
             return
@@ -213,9 +210,9 @@ extension AdapterManager {
         queue.sync { _adapterData.adapterMap[wallet] }
     }
 
-    // Re-emits the current adapter data so consumers (e.g. transaction pools) rebuild against
-    // adapters whose internal scope changed without being recreated - such as a Monero
-    // account switch, which requires no kit restart.
+    /// Re-emits the current adapter data so consumers (e.g. transaction pools) rebuild against
+    /// adapters whose internal scope changed without being recreated - such as a Monero
+    /// account switch, which requires no kit restart.
     func reloadAdapterData() {
         queue.async {
             self.adapterDataReadySubject.send(self._adapterData)
@@ -240,8 +237,8 @@ extension AdapterManager {
         queue.sync { _adapterData.adapterMap[wallet] as? IDepositAdapter }
     }
 
-    // Re-runs adapter creation for active wallets that don't have an adapter yet
-    // (e.g. Monero, deferred until the fastest node was resolved).
+    /// Re-runs adapter creation for active wallets that don't have an adapter yet
+    /// (e.g. Monero, deferred until the fastest node was resolved).
     func initMissingAdapters() {
         let activeWalletData = walletManager.activeWalletData
         initAdapters(wallets: activeWalletData.wallets, account: activeWalletData.account)

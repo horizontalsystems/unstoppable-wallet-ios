@@ -19,11 +19,11 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
     private let localStorage = Core.shared.localStorage
 
     private let token: Token?
-    // "You Get" side: tokens the account can't hold stay selectable — the swap is
-    // delivered to an external address the user enters before confirmation
+    /// "You Get" side: tokens the account can't hold stay selectable — the swap is
+    /// delivered to an external address the user enters before confirmation
     private let allowExternalReceive: Bool
-    // Cross Pay: paying out in the very asset that funds the payment is a plain send, so `token`
-    // is hidden on its own chain, in every derivation/address-format variant (as on Android)
+    /// Cross Pay: paying out in the very asset that funds the payment is a plain send, so `token`
+    /// is hidden on its own chain, in every derivation/address-format variant (as on Android)
     private let excludeToken: Bool
 
     @Published var searchText: String = "" {
@@ -48,9 +48,9 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
         syncSections()
     }
 
-    // For external delivery the derivation/address-format variants of a chain are
-    // indistinguishable — the funds go to whatever address the user enters — so only
-    // the chain's default variant is offered (e.g. one BTC row with BIP84, not four).
+    /// For external delivery the derivation/address-format variants of a chain are
+    /// indistinguishable — the funds go to whatever address the user enters — so only
+    /// the chain's default variant is offered (e.g. one BTC row with BIP84, not four).
     private static func isExternallyReceivable(token: Token) -> Bool {
         switch token.type {
         case .derived, .addressType:
@@ -60,8 +60,8 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
         }
     }
 
-    // Recent ids are stored globally, so a variant saved by another session (e.g. BTC BIP44)
-    // is narrowed to the chain-default variant here too, keeping the collapse rule canonical.
+    /// Recent ids are stored globally, so a variant saved by another session (e.g. BTC BIP44)
+    /// is narrowed to the chain-default variant here too, keeping the collapse rule canonical.
     private static func includeToken(_ token: Token, account: Account?, allowExternalReceive: Bool) -> Bool {
         if allowExternalReceive {
             return BlockchainType.supported.contains(token.blockchainType) && isExternallyReceivable(token: token)
@@ -82,7 +82,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
         !searchText.trimmingCharacters(in: .whitespaces).isEmpty
     }
 
-    // tokens picked while the search field is active are remembered as recent
+    /// tokens picked while the search field is active are remembered as recent
     func handleSelection(token: Token) {
         guard searchActive || searching else {
             return

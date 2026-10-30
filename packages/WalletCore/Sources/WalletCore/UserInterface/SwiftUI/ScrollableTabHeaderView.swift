@@ -44,7 +44,7 @@ struct ScrollableTabHeaderView: View {
         .animation(.spring().speed(1.5), value: currentTabIndex)
     }
 
-    @ViewBuilder private func item(tab: Tab, isActive: Bool, namespace: Namespace.ID) -> some View {
+    private func item(tab: Tab, isActive: Bool, namespace: Namespace.ID) -> some View {
         ThemeText(
             tab.title,
             style: isActive || tab.highlighted ? .subheadSB : .subhead,
@@ -99,7 +99,7 @@ public struct Shimmer: ViewModifier {
     /// The default animation effect.
     public static let defaultAnimation = Animation.linear(duration: 1.5).delay(0.25).repeatForever(autoreverses: false)
 
-    // A default gradient for the animated mask.
+    /// A default gradient for the animated mask.
     public static let defaultGradient = Gradient(colors: [
         .black.opacity(0.3), // translucent
         .black, // opaque
@@ -186,7 +186,7 @@ public extension View {
     ///   - bounce: Whether to bounce (reverse) the animation back and forth. Defaults to `false`.
     ///   - delay:A delay in seconds. Defaults to `0.25`.
     @available(*, deprecated, message: "Use shimmering(active:animation:gradient:bandSize:) instead.")
-    @ViewBuilder func shimmering(
+    func shimmering(
         active: Bool = true, duration: Double, bounce: Bool = false, delay: Double = 0.25
     ) -> some View {
         shimmering(

@@ -50,8 +50,4 @@ public struct TransactionLockState {
     public let date: Date
 }
 
-extension TransactionLockState: Equatable {
-    public static func == (lhs: TransactionLockState, rhs: TransactionLockState) -> Bool {
-        lhs.locked == rhs.locked && lhs.date == rhs.date
-    }
-}
+extension TransactionLockState: Equatable {}

@@ -34,7 +34,7 @@ struct BaseReceiveAddressView<Content: View>: View {
                         .title(icon: ThemeImage.warning, title: popup.title),
                         .text(text: popup.description.text),
                         .buttonGroup(.init(buttons: viewModel.popupButtons(mode: popup.mode, isPresented: isPresented))),
-                    ],
+                    ]
                 )
             }
         }

@@ -37,13 +37,12 @@ public struct TonConnectSessionCrypto {
         }
         let nonce = message[0 ..< Int.nonceLength]
         let internalMessage = message[Int.nonceLength ..< message.count]
-        let decrypted = try TweetNacl.NaclBox.open(
+        return try TweetNacl.NaclBox.open(
             message: internalMessage,
             nonce: nonce,
             publicKey: senderPublicKey,
             secretKey: keyPair.privateKey.data
         )
-        return decrypted
     }
 }
 

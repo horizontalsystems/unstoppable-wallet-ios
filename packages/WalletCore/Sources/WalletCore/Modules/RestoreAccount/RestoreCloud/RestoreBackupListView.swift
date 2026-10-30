@@ -82,12 +82,13 @@ struct RestoreBackupListView: View {
                 HudHelper.instance.show(banner: .deleted)
             } else {
                 HudHelper.instance.show(
-                    banner: .error(string: "backup.cloud.cant_delete_file".localized))
+                    banner: .error(string: "backup.cloud.cant_delete_file".localized)
+                )
             }
         }
     }
 
-    @ViewBuilder private func row(item: RestoreBackupListViewModel.BackupViewItem) -> some View {
+    private func row(item: RestoreBackupListViewModel.BackupViewItem) -> some View {
         Cell(
             middle: {
                 MultiText(

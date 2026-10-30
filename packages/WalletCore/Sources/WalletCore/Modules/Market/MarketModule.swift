@@ -33,7 +33,9 @@ enum MarketModule {
             }
         }
 
-        var isAsc: Bool { self == .asc }
+        var isAsc: Bool {
+            self == .asc
+        }
     }
 
     enum Top: Int, CaseIterable, Identifiable {

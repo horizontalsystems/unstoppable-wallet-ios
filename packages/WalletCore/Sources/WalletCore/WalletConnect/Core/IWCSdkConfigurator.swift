@@ -1,6 +1,6 @@
 import ReownWalletKit
 
-// Slice over the SDK statics so the configuration order can be verified
+/// Slice over the SDK statics so the configuration order can be verified
 protocol IWCSdkConfigurator: AnyObject {
     func configureNetworking(groupIdentifier: String, projectId: String)
     func configureWalletKit(metadata: AppMetadata)

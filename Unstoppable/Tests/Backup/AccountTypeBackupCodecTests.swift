@@ -5,8 +5,8 @@ import Testing
 import TronKit
 @testable import WalletCore
 
-// Golden vectors shared with Android: the bytes on the left are what BackupLocalModule writes and reads.
-// A new account type must appear here, or the name table test below fails.
+/// Golden vectors shared with Android: the bytes on the left are what BackupLocalModule writes and reads.
+/// A new account type must appear here, or the name table test below fails.
 struct AccountTypeBackupCodecTests {
     // MARK: names
 
@@ -57,7 +57,7 @@ struct AccountTypeBackupCodecTests {
 
     // MARK: private keys
 
-    @Test func normalizesAndroidPrivateKeys() throws {
+    @Test func normalizesAndroidPrivateKeys() {
         let key = Data(repeating: 0x8F, count: 32) // high bit set: Android writes 33 bytes
 
         #expect(AccountTypeBackupCodec.normalizedPrivateKey(key) == key)
@@ -194,8 +194,8 @@ struct AccountTypeBackupCodecTests {
         #expect(fromHex.base58 == base58)
     }
 
-    // Android stores the address as typed; it comes back in the kit's lowercase form, and anything
-    // that is not an address of that chain skips the account
+    /// Android stores the address as typed; it comes back in the kit's lowercase form, and anything
+    /// that is not an address of that chain skips the account
     @Test func readsThorAndMayaAddressesInCanonicalForm() throws {
         let thor = "thor1le9eykyndunax8k24w8fykd8ndx35w2h27c008"
         let maya = "maya1le9eykyndunax8k24w8fykd8ndx35w2h2fxreh"
@@ -209,7 +209,7 @@ struct AccountTypeBackupCodecTests {
         #expect(AccountTypeBackupCodec.decode(data: "garbage".hs.data, type: .thorChainAddress) == nil)
     }
 
-    // Android writes the account id as UTF-8, implicit (64 hex) and named alike
+    /// Android writes the account id as UTF-8, implicit (64 hex) and named alike
     @Test func roundTripsNearImplicitAndNamedAccounts() throws {
         let implicit = "98793cd91a3f870fb126f66285808c7e094afcfc4eda8a970f6648cdf0dbd6de"
         let named = "alice.near"

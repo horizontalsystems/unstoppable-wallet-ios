@@ -27,7 +27,9 @@ public protocol ISwapBroadcaster {
 }
 
 public extension ISwapBroadcaster {
-    var expirationDuration: Int? { nil }
+    var expirationDuration: Int? {
+        nil
+    }
 }
 
 public protocol ISwapBroadcasterType {
@@ -42,6 +44,11 @@ public struct SwapBroadcasterError: Error, Equatable, RawRepresentable {
         self.rawValue = rawValue
     }
 
-    public static var noBroadcaster: Self { .init(rawValue: "noBroadcaster") }
-    public static var dataMismatch: Self { .init(rawValue: "dataMismatch") }
+    public static var noBroadcaster: Self {
+        .init(rawValue: "noBroadcaster")
+    }
+
+    public static var dataMismatch: Self {
+        .init(rawValue: "dataMismatch")
+    }
 }

@@ -6,7 +6,7 @@ protocol IWCKitFactory: AnyObject {
     func makeKit() throws -> WCKit
 }
 
-// Root of the module: owns the registries and the lazily started kit, the relay socket opens only when needed
+/// Root of the module: owns the registries and the lazily started kit, the relay socket opens only when needed
 class WCManager {
     let chainSupportRegistry: WCChainSupportRegistry
     let sendHandlerRegistry: WCSendHandlerRegistry
@@ -28,7 +28,7 @@ class WCManager {
         self.logger = logger
     }
 
-    // persisted sessions mean a relay reconnect may deliver a request right away: subscribe before it happens
+    /// persisted sessions mean a relay reconnect may deliver a request right away: subscribe before it happens
     func start() {
         let count = (try? storage.sessions().count) ?? 0
         guard count > 0 else {
@@ -70,7 +70,7 @@ class WCManager {
             .eraseToAnyPublisher()
     }
 
-    // emits the active-account pending-request count as the kit starts and as its pending list changes
+    /// emits the active-account pending-request count as the kit starts and as its pending list changes
     var pendingRequestCountPublisher: AnyPublisher<Int, Never> {
         kitSubject
             .map { kit -> AnyPublisher<Int, Never> in

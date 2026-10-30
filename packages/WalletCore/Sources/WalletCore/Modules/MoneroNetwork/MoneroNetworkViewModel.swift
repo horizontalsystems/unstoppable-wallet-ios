@@ -14,8 +14,8 @@ class MoneroNetworkViewModel: ObservableObject {
     @Published var saveEnabled = false
     @Published var pingStates: [String: PingState] = [:]
 
-    // Draft state, like the node selection: nothing is persisted or applied until save().
-    // The close button just dismisses the screen, so it must not leave side effects behind.
+    /// Draft state, like the node selection: nothing is persisted or applied until save().
+    /// The close button just dismisses the screen, so it must not leave side effects behind.
     @Published var autoSelectEnabled: Bool {
         didSet {
             updateSaveEnabled()
@@ -80,12 +80,10 @@ class MoneroNetworkViewModel: ObservableObject {
         }
     }
 
-    // Auto-select applies immediately (with the manager's height-lag and hysteresis rules);
-    // fires the node relay, so a running wallet reconnects to the winner.
+    /// Auto-select applies immediately (with the manager's height-lag and hysteresis rules);
+    /// fires the node relay, so a running wallet reconnects to the winner.
     private func applyFastestNode(results: [NodePingResult]) {
-        guard !results.isEmpty else { return }
-
-        guard let fastest = moneroNodeManager.fastestNode(results: results, blockchainType: blockchain.type) else { return }
+        guard !results.isEmpty, let fastest = moneroNodeManager.fastestNode(results: results, blockchainType: blockchain.type) else { return }
 
         moneroNodeManager.setCurrent(node: fastest, blockchainType: blockchain.type)
         selectedNode = fastest
@@ -194,9 +192,20 @@ extension MoneroNetworkViewModel {
         let node: MoneroNode
         let selected: Bool
 
-        var id: String { node.node.url.absoluteString }
-        var name: String { node.name }
-        var url: String { node.node.url.absoluteString }
-        var isTrusted: Bool { node.node.isTrusted }
+        var id: String {
+            node.node.url.absoluteString
+        }
+
+        var name: String {
+            node.name
+        }
+
+        var url: String {
+            node.node.url.absoluteString
+        }
+
+        var isTrusted: Bool {
+            node.node.isTrusted
+        }
     }
 }

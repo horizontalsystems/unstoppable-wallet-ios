@@ -1,7 +1,7 @@
 import BigInt
 import EvmKit
 
-// EIP-2612 Permit and Permit2 PermitSingle with an unlimited amount: nothing hits the chain now, so warn loudly
+/// EIP-2612 Permit and Permit2 PermitSingle with an unlimited amount: nothing hits the chain now, so warn loudly
 class WCEvmPermitVerifier: IWCVerifier {
     static let permit2Contract = "0x000000000022D473030F116dDEE9F6B43aC78BA3"
     private static let maxUint256 = BigUInt(2).power(256) - 1

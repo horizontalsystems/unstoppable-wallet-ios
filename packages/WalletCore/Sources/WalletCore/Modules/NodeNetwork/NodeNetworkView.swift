@@ -11,7 +11,7 @@ struct NodeNetworkView: View {
         _isPresented = isPresented
     }
 
-    // Per-chain localization keys follow the "<uid>_network.*" convention
+    /// Per-chain localization keys follow the "<uid>_network.*" convention
     private var keyPrefix: String {
         "\(viewModel.blockchain.type.uid)_network"
     }
@@ -115,7 +115,7 @@ struct NodeNetworkView: View {
         }
     }
 
-    @ViewBuilder private func nodeCell(item: NodeNetworkViewModel.NodeItem) -> some View {
+    private func nodeCell(item: NodeNetworkViewModel.NodeItem) -> some View {
         Cell(
             middle: {
                 MultiText(title: item.name, subtitle: item.url)

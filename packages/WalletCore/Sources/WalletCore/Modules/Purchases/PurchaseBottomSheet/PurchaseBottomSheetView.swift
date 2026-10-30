@@ -124,11 +124,17 @@ struct PurchaseBottomSheetView: View {
 
         var result = AttributedString("")
 
-        if !components[0].isEmpty { result.append(termsTextPart(string: components[0])) }
+        if !components[0].isEmpty {
+            result.append(termsTextPart(string: components[0]))
+        }
         result.append(termsTextPart(string: "purchase.agree.terms_of_service".localized, url: AppConfig.appleTermsOfServiceLink))
-        if !components[1].isEmpty { result.append(termsTextPart(string: components[1])) }
+        if !components[1].isEmpty {
+            result.append(termsTextPart(string: components[1]))
+        }
         result.append(termsTextPart(string: "purchase.agree.privacy_policy".localized, url: AppConfig.privacyPolicyLink))
-        if !components[2].isEmpty { result.append(termsTextPart(string: components[2])) }
+        if !components[2].isEmpty {
+            result.append(termsTextPart(string: components[2]))
+        }
 
         return result
     }

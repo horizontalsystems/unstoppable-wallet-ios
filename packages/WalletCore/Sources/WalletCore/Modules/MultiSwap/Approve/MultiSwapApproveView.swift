@@ -68,7 +68,7 @@ struct MultiSwapApproveView: View {
         }
     }
 
-    @ViewBuilder private func row(text: String, selected: Bool, action: @escaping () -> Void) -> some View {
+    private func row(text: String, selected: Bool, action: @escaping () -> Void) -> some View {
         Cell(
             left: { CheckBoxUiView(checked: .init(get: { selected }, set: { _ in })) },
             middle: { ThemeText(text, style: .subhead, colorStyle: .primary) },

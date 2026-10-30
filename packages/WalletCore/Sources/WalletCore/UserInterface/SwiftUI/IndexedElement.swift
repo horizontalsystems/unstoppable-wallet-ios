@@ -1,6 +1,6 @@
 import Foundation
 
-// Positional `ForEach` identity for static lists that may contain equal elements; lists are replaced wholesale on reload
+/// Positional `ForEach` identity for static lists that may contain equal elements; lists are replaced wholesale on reload
 struct IndexedElement<Element>: Identifiable {
     let index: Int
     let element: Element

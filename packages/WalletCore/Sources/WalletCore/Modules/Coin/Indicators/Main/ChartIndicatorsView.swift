@@ -31,7 +31,11 @@ struct ChartIndicatorsView: View {
             }
             .navigationDestination(isPresented: Binding(
                 get: { settingsForm != nil },
-                set: { if !$0 { settingsForm = nil } }
+                set: {
+                    if !$0 {
+                        settingsForm = nil
+                    }
+                }
             )) {
                 if let settingsForm {
                     ChartIndicatorSettingsView(form: settingsForm) { indicator in
@@ -57,7 +61,7 @@ struct ChartIndicatorsView: View {
         }
     }
 
-    @ViewBuilder private func row(item: ChartIndicatorsViewModel.Item) -> some View {
+    private func row(item: ChartIndicatorsViewModel.Item) -> some View {
         Cell(
             left: {
                 if let color = item.color {

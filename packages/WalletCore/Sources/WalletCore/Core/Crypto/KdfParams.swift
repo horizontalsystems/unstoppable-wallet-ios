@@ -1,12 +1,12 @@
 import Foundation
 
 class KdfParams: Codable {
-    // A fresh salt per file, as Android writes since 526b491bf: with a constant one the same passphrase
-    // gives the same key in every backup of every user, so a dictionary can be precomputed once and
-    // files can be correlated. Restore reads the salt back from the file's kdfparams, so older files
-    // and other platforms keep working.
-    // a function, not a property: every call returns a different salt, and two calls in one file
-    // would give the AES key and the MAC key different salts
+    /// A fresh salt per file, as Android writes since 526b491bf: with a constant one the same passphrase
+    /// gives the same key in every backup of every user, so a dictionary can be precomputed once and
+    /// files can be correlated. Restore reads the salt back from the file's kdfparams, so older files
+    /// and other platforms keep working.
+    /// a function, not a property: every call returns a different salt, and two calls in one file
+    /// would give the AES key and the MAC key different salts
     static func newBackupParams() -> KdfParams {
         KdfParams(dklen: 32, n: 16384, p: 4, r: 8, salt: randomSalt())
     }

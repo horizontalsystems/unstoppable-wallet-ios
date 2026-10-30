@@ -3,11 +3,11 @@ import MarketKit
 import NearKit
 import RxSwift
 
-// Android AddressHandlerNear + NearAddressValidator: a bare single-label name (`alice`) is a valid id
-// but also a plausible word in any field, so it is not claimed. A named account has to exist, or the
-// transfer fails on chain; an implicit (64-hex) one is created by the first transfer, so it is not
-// asked about. Only a definite "no" refuses a name: a node that did not answer must not reject a
-// well-formed id (the kit asks again before a NEAR transfer).
+/// Android AddressHandlerNear + NearAddressValidator: a bare single-label name (`alice`) is a valid id
+/// but also a plausible word in any field, so it is not claimed. A named account has to exist, or the
+/// transfer fails on chain; an implicit (64-hex) one is created by the first transfer, so it is not
+/// asked about. Only a definite "no" refuses a name: a node that did not answer must not reject a
+/// well-formed id (the kit asks again before a NEAR transfer).
 class NearAddressParserItem: IAddressParserItem {
     var blockchainType: MarketKit.BlockchainType = .near
 

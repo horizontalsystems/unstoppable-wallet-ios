@@ -5,7 +5,7 @@ import MarketKit
 import Testing
 @testable import WalletCore
 
-// Every signing gate added for watch accounts keys on `Account.watchAccount`, so the mapping itself is pinned here.
+/// Every signing gate added for watch accounts keys on `Account.watchAccount`, so the mapping itself is pinned here.
 struct WatchAccountGateTests {
     @Test func addressTypesAreWatched() {
         #expect(account(type: .evmAddress(address: .init(raw: Data(repeating: 1, count: 20)))).watchAccount)
@@ -20,7 +20,7 @@ struct WatchAccountGateTests {
         #expect(account(type: .btcAddress(address: "bc1...", blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84))).watchAccount)
     }
 
-    @Test func signingTypesAreNotWatched() throws {
+    @Test func signingTypesAreNotWatched() {
         #expect(!account(type: .mnemonic(words: ["one", "two"], salt: "", bip39Compliant: true)).watchAccount)
         #expect(!account(type: .evmPrivateKey(data: Data(repeating: 2, count: 32))).watchAccount)
         #expect(!account(type: .trcPrivateKey(data: Data(repeating: 3, count: 32))).watchAccount)

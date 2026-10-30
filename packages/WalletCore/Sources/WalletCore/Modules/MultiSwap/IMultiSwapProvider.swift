@@ -60,9 +60,9 @@ public extension IMultiSwapProvider {
     func reportInboundTxHash(providerSwapId _: String, txHash _: String) async throws {}
 }
 
-// What a confirmed order resolves to: the quote whose executable is broadcast and the order id the
-// record tracks by. Carried beside the quote so the previewed instance is never written to. The sell
-// amount is always the previewed one (the amount the user confirmed), so it is not repeated here.
+/// What a confirmed order resolves to: the quote whose executable is broadcast and the order id the
+/// record tracks by. Carried beside the quote so the previewed instance is never written to. The sell
+/// amount is always the previewed one (the amount the user confirmed), so it is not repeated here.
 public struct SwapCommitment {
     public let quote: SwapFinalQuote
     public let providerSwapId: String?
@@ -73,7 +73,7 @@ public struct SwapCommitment {
     }
 }
 
-// Raw values are the backend's `amlPolicy` strings (/v3/providers); do not rename them.
+/// Raw values are the backend's `amlPolicy` strings (/v3/providers); do not rename them.
 public enum SwapProviderType: String, CaseIterable, Identifiable {
     case excellent
     case good

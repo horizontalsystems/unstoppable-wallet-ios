@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 enum WalletInfoView {
-    @ViewBuilder static func infoView(title: String, value: ValueFormatStyle, action: (() -> Void)?) -> some View {
+    static func infoView(title: String, value: ValueFormatStyle, action: (() -> Void)?) -> some View {
         Cell(
             middle: {
                 MiddleTextIcon(text: title, icon: "info_filled")
@@ -19,7 +19,7 @@ enum WalletInfoView {
         )
     }
 
-    @ViewBuilder static func infoView(title: String, info: InfoDescription, value: ValueFormatStyle) -> some View {
+    static func infoView(title: String, info: InfoDescription, value: ValueFormatStyle) -> some View {
         infoView(title: title, value: value, action: {
             Coordinator.shared.present(info: info)
         })

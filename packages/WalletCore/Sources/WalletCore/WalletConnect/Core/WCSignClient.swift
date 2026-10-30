@@ -1,7 +1,7 @@
 import Combine
 import ReownWalletKit
 
-// The only place that touches WalletKit.instance
+/// The only place that touches WalletKit.instance
 class WCSignClient: IWCSignClient {
     var sessions: [Session] {
         WalletKit.instance.getSessions()

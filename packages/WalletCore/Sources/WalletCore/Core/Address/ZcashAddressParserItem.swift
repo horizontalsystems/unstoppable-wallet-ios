@@ -48,7 +48,9 @@ class ZcashAddressParserItem {
 }
 
 extension ZcashAddressParserItem: IAddressParserItem {
-    var blockchainType: BlockchainType { .zcash }
+    var blockchainType: BlockchainType {
+        .zcash
+    }
 
     func handle(address: String) -> Single<Address> {
         validate(address: address, checkSendToSelf: true, applyAddressType: true)

@@ -1,7 +1,7 @@
 import Foundation
 
-// A matcher either passes the url on (nil), consumes it silently (.handled — e.g. a malformed
-// referral link), or resolves it into a DeepLink.
+/// A matcher either passes the url on (nil), consumes it silently (.handled — e.g. a malformed
+/// referral link), or resolves it into a DeepLink.
 enum DeepLinkMatchResult {
     case handled
     case deepLink(DeepLinkManager.DeepLink)
@@ -119,9 +119,9 @@ class OpenCryptoPayDeepLinkMatcher: IDeepLinkMatcher {
     }
 }
 
-// App-scheme transfer link: <scheme>://send?uri=<percent-encoded transfer uri>, e.g. myapp://send?uri=tron:TXyz?amount=5.
-// The scheme is app-provided at registration (DeepLinkRouteFactory.register(appTransferScheme:)), mirroring
-// the wc-host pattern of WalletConnectDeepLinkMatcher.
+/// App-scheme transfer link: <scheme>://send?uri=<percent-encoded transfer uri>, e.g. myapp://send?uri=tron:TXyz?amount=5.
+/// The scheme is app-provided at registration (DeepLinkRouteFactory.register(appTransferScheme:)), mirroring
+/// the wc-host pattern of WalletConnectDeepLinkMatcher.
 class AppSchemeTransferDeepLinkMatcher: IDeepLinkMatcher {
     let route: DeepLinkRoute = .appTransfer
 

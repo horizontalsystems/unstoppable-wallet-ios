@@ -167,11 +167,7 @@ class ExtendedKeyViewModel: ObservableObject {
     }
 
     private func rootKey(seed: Data?) -> HDPrivateKey? {
-        guard let seed else {
-            return nil
-        }
-
-        guard let version = try? HDExtendedKeyVersion(purpose: derivation.purpose, coinType: blockchain.extendedKeyCoinType) else {
+        guard let seed, let version = try? HDExtendedKeyVersion(purpose: derivation.purpose, coinType: blockchain.extendedKeyCoinType) else {
             return nil
         }
 

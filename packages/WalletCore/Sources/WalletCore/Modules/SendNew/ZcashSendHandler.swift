@@ -105,7 +105,7 @@ extension ZcashSendHandler {
             [token.coin]
         }
 
-        // Protocol member (default []) so a decorating handler's data can render the ZIP-317 row.
+        /// Protocol member (default []) so a decorating handler's data can render the ZIP-317 row.
         func feeFields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
             UtxoSendHelper.feeFields(
                 fee: proposal?.totalFeeRequired().decimalValue.decimalValue,
@@ -132,7 +132,7 @@ extension ZcashSendHandler {
             let from = SendField.amount(
                 token: baseToken,
                 appValueType: .regular(appValue: appValue),
-                currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * amount) },
+                currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * amount) }
             )
 
             let to = SendField.address(
@@ -173,8 +173,8 @@ extension ZcashSendHandler {
 }
 
 extension ZcashSendHandler: ISendHandlerRefCapturing {
-    // Same broadcast path as `send`, returning the txid. Empty string = submitted but id unknown
-    // (resubmit path) — caller falls back to provider-side tracking.
+    /// Same broadcast path as `send`, returning the txid. Empty string = submitted but id unknown
+    /// (resubmit path) — caller falls back to provider-side tracking.
     func sendCapturingRef(data: ISendData) async throws -> String {
         guard let data = data as? SendData, let proposal = data.proposal else {
             throw SendError.invalidData
@@ -195,11 +195,7 @@ extension ZcashSendHandler {
 
 extension ZcashSendHandler {
     static func instance(amount: Decimal, recipient: Recipient, memo: String?, initialTransactionSettings: InitialTransactionSettings? = nil) -> ZcashSendHandler? {
-        guard let token = try? Core.shared.coinManager.token(query: .init(blockchainType: .zcash, tokenType: .native)) else {
-            return nil
-        }
-
-        guard let adapter = Core.shared.adapterManager.adapter(for: token) as? ZcashAdapter else {
+        guard let token = try? Core.shared.coinManager.token(query: .init(blockchainType: .zcash, tokenType: .native)), let adapter = Core.shared.adapterManager.adapter(for: token) as? ZcashAdapter else {
             return nil
         }
 

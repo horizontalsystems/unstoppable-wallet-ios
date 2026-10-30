@@ -21,19 +21,23 @@ public class MoneroNodeManager {
         resolvingLock.withLock { _isResolvingFastestNode }
     }
 
-    // Nodes lagging more than this many blocks behind the best-known tip are never
-    // auto-selected, no matter how fast they respond.
+    /// Nodes lagging more than this many blocks behind the best-known tip are never
+    /// auto-selected, no matter how fast they respond.
     private static let heightLagThreshold: UInt64 = 10
-    // Only switch away from a working current node when the winner is meaningfully faster,
-    // so repeated pings don't flip-flop nodes (and tear down the wallet) over noise.
+    /// Only switch away from a working current node when the winner is meaningfully faster,
+    /// so repeated pings don't flip-flop nodes (and tear down the wallet) over noise.
     private static let switchLatencyGain: TimeInterval = 0.1
 
     // Mirrors NodePinger.probeUrl's scheme inference: an explicit scheme wins; a bare
     // "host:port" URL is TLS only when the port implies it (443/18443).
     static func isTls(url: URL) -> Bool {
         let raw = url.absoluteString
-        if raw.hasPrefix("https://") { return true }
-        if raw.hasPrefix("http://") { return false }
+        if raw.hasPrefix("https://") {
+            return true
+        }
+        if raw.hasPrefix("http://") {
+            return false
+        }
 
         let port = URLComponents(string: "http://\(raw)")?.port
         return port == 443 || port == 18443
@@ -72,11 +76,11 @@ public class MoneroNodeManager {
         nodeUpdatedRelay.accept(blockchainType)
     }
 
-    // NOTE: NodePinger reaches these over URLSession, so every plain-HTTP host here needs a
-    // matching NSExceptionDomains entry in the app's Info.plist (the C++ wallet's own sockets
-    // are not subject to ATS). A node missing there syncs fine but always pings "Unreachable".
-    // Plain-HTTP nodes are manual-only: auto-select considers TLS endpoints exclusively
-    // (see fastestNode), so prefer an explicit https:// URL whenever a node supports it.
+    /// NOTE: NodePinger reaches these over URLSession, so every plain-HTTP host here needs a
+    /// matching NSExceptionDomains entry in the app's Info.plist (the C++ wallet's own sockets
+    /// are not subject to ATS). A node missing there syncs fine but always pings "Unreachable".
+    /// Plain-HTTP nodes are manual-only: auto-select considers TLS endpoints exclusively
+    /// (see fastestNode), so prefer an explicit https:// URL whenever a node supports it.
     private func defaultNodes(blockchainType: BlockchainType) -> [MoneroNode] {
         switch blockchainType {
         case .monero:

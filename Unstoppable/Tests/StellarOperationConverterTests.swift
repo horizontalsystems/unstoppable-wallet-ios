@@ -4,8 +4,8 @@ import StellarKit
 import Testing
 @testable import WalletCore
 
-// Android parity (StellarContractMovementTest): a contract call's balance changes, netted per
-// asset, render as a swap, a plain send or a plain receive; anything else stays unsupported.
+/// Android parity (StellarContractMovementTest): a contract call's balance changes, netted per
+/// asset, render as a swap, a plain send or a plain receive; anything else stays unsupported.
 struct StellarOperationConverterTests {
     private static let own = "GOWNACCOUNT"
     private static let other = "GOTHERACCOUNT"
@@ -81,7 +81,7 @@ struct StellarOperationConverterTests {
         #expect(!sentToSelf)
     }
 
-    // A transfer to the issuer is reported as a burn with no recipient
+    /// A transfer to the issuer is reported as a burn with no recipient
     @Test func burnIsSendToEmptyRecipient() throws {
         let type = try convert([change(type: "burn", from: Self.own, to: nil, asset: Self.usdc, amount: 2)])
 
@@ -114,7 +114,7 @@ struct StellarOperationConverterTests {
         }
     }
 
-    // The counterparty is the one of the moved asset, not of the first change
+    /// The counterparty is the one of the moved asset, not of the first change
     @Test func counterpartyIsTakenPerAsset() throws {
         let type = try convert([
             change(from: Self.contract, to: Self.own, asset: Self.eurc, amount: 1),
@@ -130,7 +130,7 @@ struct StellarOperationConverterTests {
         #expect(from == Self.other)
     }
 
-    // As on Android, the first matching change decides even when it carries no counterparty
+    /// As on Android, the first matching change decides even when it carries no counterparty
     @Test func counterpartyOfFirstMatchingChangeIsKeptWhenEmpty() throws {
         let type = try convert([
             change(type: "mint", from: nil, to: Self.own, asset: Self.usdc, amount: 2),

@@ -14,18 +14,22 @@ public class AddressViewModelNew: ObservableObject {
     private let contactBookManager: ContactBookManager = Core.shared.contactManager
     private let showContacts: Bool
 
-    private var expectedTextValue: String? = nil
+    private var expectedTextValue: String?
 
     @Published public var text: String = "" {
         didSet {
-            if text == oldValue { return }
+            if text == oldValue {
+                return
+            }
             sync()
         }
     }
 
     @Published public var result: AddressInput.Result = .idle {
         didSet {
-            if result == oldValue { return }
+            if result == oldValue {
+                return
+            }
             syncCheckingState()
         }
     }
@@ -132,7 +136,7 @@ public class AddressViewModelNew: ObservableObject {
 }
 
 extension AddressViewModelNew {
-    // Shortcut section
+    /// Shortcut section
     var shortcuts: [ShortCutButtonType] {
         let items: [ShortCutButtonType] = showContacts ? [.icon("user")] : []
         return items + [.icon("scan"), .text("button.paste".localized)]

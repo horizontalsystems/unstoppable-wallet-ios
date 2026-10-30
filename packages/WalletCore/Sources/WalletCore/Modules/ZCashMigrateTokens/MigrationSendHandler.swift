@@ -69,7 +69,7 @@ extension MigrationSendHandler {
                 .amount(
                     token: token,
                     appValueType: .regular(appValue: AppValue(token: token, value: amount)),
-                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
+                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) }
                 ),
             ]
 
@@ -91,11 +91,7 @@ extension MigrationSendHandler {
 
 extension MigrationSendHandler {
     static func instance() -> MigrationSendHandler? {
-        guard let token = try? Core.shared.coinManager.token(query: .init(blockchainType: .zcash, tokenType: .native)) else {
-            return nil
-        }
-
-        guard let adapter = Core.shared.adapterManager.adapter(for: token) as? ZcashAdapter else {
+        guard let token = try? Core.shared.coinManager.token(query: .init(blockchainType: .zcash, tokenType: .native)), let adapter = Core.shared.adapterManager.adapter(for: token) as? ZcashAdapter else {
             return nil
         }
 

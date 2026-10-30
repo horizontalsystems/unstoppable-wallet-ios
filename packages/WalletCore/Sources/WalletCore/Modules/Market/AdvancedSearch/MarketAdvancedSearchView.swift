@@ -111,7 +111,7 @@ struct MarketAdvancedSearchView: View {
         }
     }
 
-    @ViewBuilder private func topRow() -> some View {
+    private func topRow() -> some View {
         dropdownRow(title: "market.advanced_search.choose_set".localized, value: viewModel.top.title) {
             Coordinator.shared.present(type: .bottomSheet) { isPresented in
                 ListSection {
@@ -136,7 +136,7 @@ struct MarketAdvancedSearchView: View {
         }
     }
 
-    @ViewBuilder private func volumeRow() -> some View {
+    private func volumeRow() -> some View {
         dropdownRow(title: "market.advanced_search.volume".localized, value: viewModel.volume.title, colorStyle: colorStyle(valueFilter: viewModel.volume)) {
             Coordinator.shared.present(type: .bottomSheet) { isPresented in
                 ListSection {
@@ -153,7 +153,7 @@ struct MarketAdvancedSearchView: View {
         }
     }
 
-    @ViewBuilder private func categoriesRow() -> some View {
+    private func categoriesRow() -> some View {
         dropdownRow(title: "market.advanced_search.categories".localized, value: viewModel.categories.title, colorStyle: colorStyle(categoriesFilter: viewModel.categories)) {
             Coordinator.shared.presentAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .sectors) { isPresented in
                 MarketAdvancedSearchCategoriesView(viewModel: viewModel, isPresented: isPresented)
@@ -193,7 +193,7 @@ struct MarketAdvancedSearchView: View {
         }
     }
 
-    @ViewBuilder private func signalRow() -> some View {
+    private func signalRow() -> some View {
         dropdownRow(
             title: "market.advanced_search.signal".localized,
             value: viewModel.signal?.title ?? "selector.any".localized,
@@ -221,7 +221,7 @@ struct MarketAdvancedSearchView: View {
         }
     }
 
-    @ViewBuilder private func priceChangeRow() -> some View {
+    private func priceChangeRow() -> some View {
         dropdownRow(title: "market.advanced_search.price_change".localized, value: viewModel.priceChange.title, colorStyle: colorStyle(priceChangeFilter: viewModel.priceChange)) {
             Coordinator.shared.performAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .priceChange) {
                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
@@ -240,7 +240,7 @@ struct MarketAdvancedSearchView: View {
         }
     }
 
-    @ViewBuilder private func pricePeriodRow() -> some View {
+    private func pricePeriodRow() -> some View {
         dropdownRow(title: "market.advanced_search.price_period".localized, value: viewModel.priceChangePeriod.title) {
             Coordinator.shared.performAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .pricePeriod) {
                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
@@ -259,7 +259,7 @@ struct MarketAdvancedSearchView: View {
         }
     }
 
-    @ViewBuilder private func priceCloseToRow() -> some View {
+    private func priceCloseToRow() -> some View {
         dropdownRow(title: "market.advanced_search.price_close_to".localized, value: viewModel.priceCloseTo.title, colorStyle: colorStyle(closeToFilter: viewModel.priceCloseTo)) {
             Coordinator.shared.performAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .priceCloseTo) {
                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
@@ -278,7 +278,7 @@ struct MarketAdvancedSearchView: View {
         }
     }
 
-    @ViewBuilder private func dropdownRow(title: String, value: String, colorStyle: ColorStyle = .primary, action: @escaping () -> Void) -> some View {
+    private func dropdownRow(title: String, value: String, colorStyle: ColorStyle = .primary, action: @escaping () -> Void) -> some View {
         Cell(
             middle: { ThemeText(title, style: .headline2) },
             right: {
@@ -289,7 +289,7 @@ struct MarketAdvancedSearchView: View {
         )
     }
 
-    @ViewBuilder private func optionRow(title: String, colorStyle: ColorStyle = .primary, selected: Bool, action: @escaping () -> Void) -> some View {
+    private func optionRow(title: String, colorStyle: ColorStyle = .primary, selected: Bool, action: @escaping () -> Void) -> some View {
         Cell(
             middle: { ThemeText(title, style: .headline2, colorStyle: colorStyle) },
             right: {

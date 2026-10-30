@@ -61,6 +61,8 @@ extension ReceiveCoinListViewModel {
         let title: String
         let description: String
 
-        var id: String { uid }
+        var id: String {
+            uid
+        }
     }
 }

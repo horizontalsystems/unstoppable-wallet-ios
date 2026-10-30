@@ -180,7 +180,7 @@ extension TonSendHandler {
                 .amount(
                     token: token,
                     appValueType: .regular(appValue: AppValue(token: token, value: amount)),
-                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
+                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) }
                 ),
                 .address(
                     value: address.toString(),
@@ -235,15 +235,7 @@ extension TonSendHandler {
 
 extension TonSendHandler {
     static func instance(token: Token, amount: Decimal, address: FriendlyAddress, memo: String?) -> TonSendHandler? {
-        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .ton, tokenType: .native)) else {
-            return nil
-        }
-
-        guard let adapter = Core.shared.adapterManager.adapter(for: token) as? ISendTonAdapter & IBalanceAdapter else {
-            return nil
-        }
-
-        guard let tonKit = Core.shared.tonKitManager.tonKit else {
+        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .ton, tokenType: .native)), let adapter = Core.shared.adapterManager.adapter(for: token) as? ISendTonAdapter & IBalanceAdapter, let tonKit = Core.shared.tonKitManager.tonKit else {
             return nil
         }
 

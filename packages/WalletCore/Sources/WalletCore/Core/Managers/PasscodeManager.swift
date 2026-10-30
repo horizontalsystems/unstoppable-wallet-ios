@@ -78,11 +78,7 @@ extension PasscodeManager {
     }
 
     func set(currentPasscode: String) {
-        guard let level = passcodes.firstIndex(of: currentPasscode) else {
-            return
-        }
-
-        guard currentPasscodeLevel != level else {
+        guard let level = passcodes.firstIndex(of: currentPasscode), currentPasscodeLevel != level else {
             return
         }
 

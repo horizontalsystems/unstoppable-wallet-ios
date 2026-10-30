@@ -14,7 +14,7 @@ class AddNearTokenBlockchainService {
         self.rpcUrls = rpcUrls
     }
 
-    // https://nearblocks.io/token/usdt.tether-token.near?tab=holders -> usdt.tether-token.near
+    /// https://nearblocks.io/token/usdt.tether-token.near?tab=holders -> usdt.tether-token.near
     static func contractId(reference: String) -> String? {
         var text = reference.trimmingCharacters(in: .whitespacesAndNewlines)
 

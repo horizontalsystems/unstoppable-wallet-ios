@@ -74,7 +74,7 @@ extension SolanaSendHandler: ISendHandler {
 }
 
 extension SolanaSendHandler: ISendHandlerRefCapturing {
-    // Same broadcast path as `send`, returning the on-chain tx hash.
+    /// Same broadcast path as `send`, returning the on-chain tx hash.
     func sendCapturingRef(data: ISendData) async throws -> String {
         guard let data = data as? SendData else {
             throw SendError.invalidData
@@ -234,19 +234,8 @@ extension SolanaSendHandler {
 
 extension SolanaSendHandler {
     static func instance(token: Token, amount: Decimal, address: String, memo: String?) -> SolanaSendHandler? {
-        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .solana, tokenType: .native)) else {
-            return nil
-        }
-
-        guard let adapter = Core.shared.adapterManager.adapter(for: token) as? ISendSolanaAdapter & IBalanceAdapter else {
-            return nil
-        }
-
-        guard let solanaKit = Core.shared.solanaKitManager.solanaKit else {
-            return nil
-        }
-
-        guard let account = Core.shared.accountManager.activeAccount,
+        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .solana, tokenType: .native)), let adapter = Core.shared.adapterManager.adapter(for: token) as? ISendSolanaAdapter & IBalanceAdapter, let solanaKit = Core.shared.solanaKitManager.solanaKit,
+              let account = Core.shared.accountManager.activeAccount,
               let signer = try? SolanaKitManager.signer(accountType: account.type)
         else {
             return nil

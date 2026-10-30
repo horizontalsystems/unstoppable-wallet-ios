@@ -22,7 +22,9 @@ class ZanoAdapter {
     let transactionRecordsSubject = PublishSubject<[ZanoTransactionRecord]>()
     private let depositAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
 
-    var balanceState: AdapterState { balanceStateRelay.value }
+    var balanceState: AdapterState {
+        balanceStateRelay.value
+    }
 
     let token: Token
     let baseToken: Token // same as token for native ZANO; native ZANO token for confidential assets
@@ -30,7 +32,9 @@ class ZanoAdapter {
     let coinRate: Decimal
     private let transactionSource: TransactionSource
 
-    var isNative: Bool { assetId == ZanoAssetId }
+    var isNative: Bool {
+        assetId == ZanoAssetId
+    }
 
     // MARK: – Designated init
 
@@ -184,25 +188,36 @@ class ZanoAdapter {
         }
     }
 
-    var explorerTitle: String { "Zano Explorer" }
+    var explorerTitle: String {
+        "Zano Explorer"
+    }
 
     func explorerUrl(transactionHash: String) -> String? {
         "https://explorer.zano.org/transaction/\(transactionHash)"
     }
 
-    func explorerUrl(address _: String) -> String? { "" }
+    func explorerUrl(address _: String) -> String? {
+        ""
+    }
 }
 
 extension ZanoAdapter: IAdapter {
-    var isMainNet: Bool { true }
-    var debugInfo: String { "" }
+    var isMainNet: Bool {
+        true
+    }
+
+    var debugInfo: String {
+        ""
+    }
 
     func start() { /* started by ZanoKitManager */ }
     func stop() { /* lifecycle managed via deallocation of the kit */ }
     func refresh() { /* called in AdapterManager */ }
     func restart() { /* called in AdapterManager */ }
 
-    var statusInfo: [(String, Any)] { kit.statusInfo }
+    var statusInfo: [(String, Any)] {
+        kit.statusInfo
+    }
 }
 
 extension ZanoAdapter: IBalanceAdapter {
@@ -220,9 +235,13 @@ extension ZanoAdapter: IBalanceAdapter {
 }
 
 extension ZanoAdapter: ITransactionsAdapter {
-    func rawTransaction(hash _: String) -> String? { nil }
+    func rawTransaction(hash _: String) -> String? {
+        nil
+    }
 
-    var syncing: Bool { balanceState.syncing }
+    var syncing: Bool {
+        balanceState.syncing
+    }
 
     var lastBlockInfo: LastBlockInfo? {
         LastBlockInfo(height: Int(kit.lastBlockInfo), timestamp: nil)
@@ -236,7 +255,9 @@ extension ZanoAdapter: ITransactionsAdapter {
         balanceStateRelay.asObservable().map { _ in () }
     }
 
-    var additionalTokenQueries: [TokenQuery] { [] }
+    var additionalTokenQueries: [TokenQuery] {
+        []
+    }
 
     func transactionsObservable(token _: Token?, filter: TransactionTypeFilter, address _: String?) -> Observable<[TransactionRecord]> {
         transactionRecordsSubject.asObservable()
@@ -284,14 +305,18 @@ extension ZanoAdapter: IDepositAdapter {
         depositAddressSubject.eraseToAnyPublisher()
     }
 
-    var usedAddresses: [UsedAddress] { [] }
+    var usedAddresses: [UsedAddress] {
+        []
+    }
 }
 
 extension ZanoAdapter {
-    var minimumSendAmount: Decimal { 0.0 }
+    var minimumSendAmount: Decimal {
+        0.0
+    }
 
-    // Fees are always paid in native ZANO, even when this adapter serves a confidential
-    // asset — send validation needs the native balance regardless of assetId.
+    /// Fees are always paid in native ZANO, even when this adapter serves a confidential
+    /// asset — send validation needs the native balance regardless of assetId.
     var availableZanoBalance: Decimal {
         Decimal(kit.nativeBalance.unlocked) / Self.zanoRate
     }

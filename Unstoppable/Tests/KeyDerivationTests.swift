@@ -4,8 +4,8 @@ import HdWalletKit
 import Testing
 @testable import WalletCore
 
-// Pins the key derivation behind the Private Keys / Public Keys screens. Vectors: BIP32/BIP44/BIP84 for the
-// "abandon ... about" mnemonic, the Ethereum m/44'/60'/0'/0/0 key for the same mnemonic, and SEP-0005 test case 1.
+/// Pins the key derivation behind the Private Keys / Public Keys screens. Vectors: BIP32/BIP44/BIP84 for the
+/// "abandon ... about" mnemonic, the Ethereum m/44'/60'/0'/0/0 key for the same mnemonic, and SEP-0005 test case 1.
 struct KeyDerivationTests {
     private static let mnemonic = AccountType.mnemonic(words: Array(repeating: "abandon", count: 11) + ["about"], salt: "", bip39Compliant: true)
 
@@ -25,9 +25,9 @@ struct KeyDerivationTests {
         #expect(viewModel.item.keyIsPrivate)
     }
 
-    @Test func bip84AccountExtendedPublicKey() {
+    @Test func bip84AccountExtendedPublicKey() throws {
         let viewModel = ExtendedKeyViewModel(mode: .accountExtendedPublicKey, accountType: Self.mnemonic)
-        viewModel.onSelectDerivation(index: MnemonicDerivation.allCases.firstIndex(of: .bip84)!)
+        try viewModel.onSelectDerivation(index: #require(MnemonicDerivation.allCases.firstIndex(of: .bip84)))
 
         #expect(viewModel.item.blockchain == .bitcoin)
         #expect(viewModel.item.account == 0)
@@ -63,21 +63,21 @@ struct KeyDerivationTests {
         #expect(viewModel.item.key == Self.bip44AccountPublicKey)
     }
 
-    @Test func supportedBlockchainsFollowDerivation() {
+    @Test func supportedBlockchainsFollowDerivation() throws {
         let viewModel = ExtendedKeyViewModel(mode: .accountExtendedPublicKey, accountType: Self.mnemonic)
         #expect(viewModel.supportedBlockchains == [.bitcoin, .bitcoinCash, .litecoin, .dash])
 
-        viewModel.onSelectDerivation(index: MnemonicDerivation.allCases.firstIndex(of: .bip84)!)
+        try viewModel.onSelectDerivation(index: #require(MnemonicDerivation.allCases.firstIndex(of: .bip84)))
         #expect(viewModel.supportedBlockchains == [.bitcoin, .litecoin])
     }
 
-    @Test func unsupportedBlockchainFallsBackOnDerivationChange() {
+    @Test func unsupportedBlockchainFallsBackOnDerivationChange() throws {
         let viewModel = ExtendedKeyViewModel(mode: .accountExtendedPublicKey, accountType: Self.mnemonic)
 
-        viewModel.onSelectBlockchain(index: viewModel.supportedBlockchains.firstIndex(of: .dash)!)
+        try viewModel.onSelectBlockchain(index: #require(viewModel.supportedBlockchains.firstIndex(of: .dash)))
         #expect(viewModel.item.blockchain == .dash)
 
-        viewModel.onSelectDerivation(index: MnemonicDerivation.allCases.firstIndex(of: .bip84)!)
+        try viewModel.onSelectDerivation(index: #require(MnemonicDerivation.allCases.firstIndex(of: .bip84)))
         #expect(viewModel.item.blockchain == .bitcoin)
     }
 

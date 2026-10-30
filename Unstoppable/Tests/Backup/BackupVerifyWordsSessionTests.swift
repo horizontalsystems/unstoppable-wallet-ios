@@ -5,7 +5,9 @@ struct BackupVerifyWordsSessionTests {
     private typealias Session = BackupVerifyWordsSession
 
     private let words24 = (1 ... 24).map { "w\($0)" }
-    private var words12: [String] { Array(words24.prefix(12)) }
+    private var words12: [String] {
+        Array(words24.prefix(12))
+    }
 
     private let identity: ([Session.Word]) -> [Session.Word] = { $0 }
 

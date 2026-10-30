@@ -88,7 +88,9 @@ struct WCStellarTransactionSummary {
                 ("set_flags", options.setFlags), ("clear_flags", options.clearFlags),
             ]
             for (key, value) in values {
-                if let value { fields.append(Field(titleKey: prefix + key, value: String(value))) }
+                if let value {
+                    fields.append(Field(titleKey: prefix + key, value: String(value)))
+                }
             }
             if let destination = options.inflationDestination {
                 fields.append(Field(titleKey: prefix + "inflation_destination", value: destination.accountId, style: .address))
@@ -166,7 +168,9 @@ struct WCStellarTransactionSummary {
 
         var fields = [Field(titleKey: "wallet_connect.stellar.signer_type", value: type),
                       Field(titleKey: "wallet_connect.stellar.signer", value: value, style: style)]
-        if let payload { fields.append(Field(titleKey: "wallet_connect.stellar.signer_payload", value: hex(payload), style: .hex)) }
+        if let payload {
+            fields.append(Field(titleKey: "wallet_connect.stellar.signer_payload", value: hex(payload), style: .hex))
+        }
         return fields
     }
 

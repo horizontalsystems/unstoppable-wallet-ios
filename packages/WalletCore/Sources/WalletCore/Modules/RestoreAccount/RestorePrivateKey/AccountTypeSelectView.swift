@@ -43,7 +43,11 @@ struct AccountTypeSelectView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: Binding(
             get: { selectCoinsAccountType != nil },
-            set: { if !$0 { selectCoinsAccountType = nil } }
+            set: {
+                if !$0 {
+                    selectCoinsAccountType = nil
+                }
+            }
         )) {
             if let accountType = selectCoinsAccountType {
                 RestoreCoinsView(accountName: accountName, accountType: accountType, isParentPresented: $isParentPresented)

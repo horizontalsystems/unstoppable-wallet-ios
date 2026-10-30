@@ -42,10 +42,21 @@ public extension Color {
     static let themeNina = Color("Nina")
     static let themeRaina = Color("Raina")
 
-    static var themeBackgroundFromGradient: Color { .themeTyler }
-    static var themeBackgroundToGradient: Color { .themeHelsing }
-    static var themeNavigationBarBackground: Color { .themeTyler96 }
-    static var themeInputFieldTintColor: Color { .themeLeah }
+    static var themeBackgroundFromGradient: Color {
+        .themeTyler
+    }
+
+    static var themeBackgroundToGradient: Color {
+        .themeHelsing
+    }
+
+    static var themeNavigationBarBackground: Color {
+        .themeTyler96
+    }
+
+    static var themeInputFieldTintColor: Color {
+        .themeLeah
+    }
 }
 
 public extension UIColor {
@@ -96,31 +107,93 @@ public extension UIColor {
 }
 
 public extension UIColor {
-    static var themeTyler: UIColor { color(dark: .black, light: .themeBright) }
-    static var themeTyler96: UIColor { color(dark: .black, light: .themeBright) }
-    static var themeLawrence: UIColor { color(dark: .themeDark, light: .themeWhite) }
-    static var themeBlade: UIColor { color(dark: .themeCarbon, light: .themeLight) }
-    static var themeAndy: UIColor { color(dark: .themeSmoke, light: .themeSteel) }
-    static var themeLeah: UIColor { color(dark: .themeBright, light: .themeDark) }
+    static var themeTyler: UIColor {
+        color(dark: .black, light: .themeBright)
+    }
 
-    static var themeJacob: UIColor { color(dark: .themeYellowD, light: .themeYellowL) }
-    static var themeRemus: UIColor { color(dark: .themeGreenD, light: .themeGreenL) }
-    static var themeLucian: UIColor { color(dark: .themeRedD, light: .themeRedL) }
+    static var themeTyler96: UIColor {
+        color(dark: .black, light: .themeBright)
+    }
 
-    static var themeJeremy: UIColor { color(dark: .themeBlade, light: .themeSteelLight) }
-    static var themeElena: UIColor { color(dark: .themeBlade, light: .themeLightGray) }
-    static var themeLawrencePressed: UIColor { color(dark: .themeLawrence.pressed, light: .themeLawrence.pressed) }
-    static var themeClaude: UIColor { color(dark: .themeDark, light: .themeWhite) }
-    static var themeNina: UIColor { color(dark: .themeWhite50, light: .themeBlack50) }
-    static var themeHelsing: UIColor { color(dark: .themeDark, light: .themeSteelLight) }
-    static var themeCassandra: UIColor { color(dark: .themeDark, light: .themeLightGray) }
-    static var themeRaina: UIColor { color(dark: .themeBlade, light: .themeWhite50) }
-    static var themeBran: UIColor { color(dark: .themeLightGray, light: .themeDark) }
-    static var themeBlake: UIColor { color(dark: .themeSteelDark10, light: .themeSteelLight10) }
-    static var themeLaguna: UIColor { color(dark: .themeLagunaD, light: .themeLagunaL) }
-    static var themeBlackTenTwenty: UIColor { color(dark: .themeBlack10, light: .themeBlack20) }
+    static var themeLawrence: UIColor {
+        color(dark: .themeDark, light: .themeWhite)
+    }
 
-    var pressed: UIColor { withAlphaComponent(0.5) }
+    static var themeBlade: UIColor {
+        color(dark: .themeCarbon, light: .themeLight)
+    }
+
+    static var themeAndy: UIColor {
+        color(dark: .themeSmoke, light: .themeSteel)
+    }
+
+    static var themeLeah: UIColor {
+        color(dark: .themeBright, light: .themeDark)
+    }
+
+    static var themeJacob: UIColor {
+        color(dark: .themeYellowD, light: .themeYellowL)
+    }
+
+    static var themeRemus: UIColor {
+        color(dark: .themeGreenD, light: .themeGreenL)
+    }
+
+    static var themeLucian: UIColor {
+        color(dark: .themeRedD, light: .themeRedL)
+    }
+
+    static var themeJeremy: UIColor {
+        color(dark: .themeBlade, light: .themeSteelLight)
+    }
+
+    static var themeElena: UIColor {
+        color(dark: .themeBlade, light: .themeLightGray)
+    }
+
+    static var themeLawrencePressed: UIColor {
+        color(dark: .themeLawrence.pressed, light: .themeLawrence.pressed)
+    }
+
+    static var themeClaude: UIColor {
+        color(dark: .themeDark, light: .themeWhite)
+    }
+
+    static var themeNina: UIColor {
+        color(dark: .themeWhite50, light: .themeBlack50)
+    }
+
+    static var themeHelsing: UIColor {
+        color(dark: .themeDark, light: .themeSteelLight)
+    }
+
+    static var themeCassandra: UIColor {
+        color(dark: .themeDark, light: .themeLightGray)
+    }
+
+    static var themeRaina: UIColor {
+        color(dark: .themeBlade, light: .themeWhite50)
+    }
+
+    static var themeBran: UIColor {
+        color(dark: .themeLightGray, light: .themeDark)
+    }
+
+    static var themeBlake: UIColor {
+        color(dark: .themeSteelDark10, light: .themeSteelLight10)
+    }
+
+    static var themeLaguna: UIColor {
+        color(dark: .themeLagunaD, light: .themeLagunaL)
+    }
+
+    static var themeBlackTenTwenty: UIColor {
+        color(dark: .themeBlack10, light: .themeBlack20)
+    }
+
+    var pressed: UIColor {
+        withAlphaComponent(0.5)
+    }
 
     private static func color(dark: UIColor, light: UIColor) -> UIColor {
         UIColor { traits in
@@ -134,10 +207,23 @@ public extension UIColor {
 }
 
 public extension UIColor {
-    static var themeBackgroundFromGradient: UIColor { .themeTyler }
-    static var themeBackgroundToGradient: UIColor { .themeHelsing }
+    static var themeBackgroundFromGradient: UIColor {
+        .themeTyler
+    }
 
-    static var themeInputFieldTintColor: UIColor { .themeLeah }
-    static var themeNavigationBarBackground: UIColor { UIColor.themeTyler96 }
-    static var themeTabBarBackground: UIColor { UIColor.themeBlade }
+    static var themeBackgroundToGradient: UIColor {
+        .themeHelsing
+    }
+
+    static var themeInputFieldTintColor: UIColor {
+        .themeLeah
+    }
+
+    static var themeNavigationBarBackground: UIColor {
+        UIColor.themeTyler96
+    }
+
+    static var themeTabBarBackground: UIColor {
+        UIColor.themeBlade
+    }
 }

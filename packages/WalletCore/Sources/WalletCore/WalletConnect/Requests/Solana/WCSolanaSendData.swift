@@ -16,9 +16,17 @@ class WCSolanaSendData: ISendData {
         summaries = payload.rawTransactions.map { WCSolanaTransactionSummary(rawTransaction: $0) }
     }
 
-    var feeData: FeeData? { nil }
-    var canSend: Bool { transactionError == nil }
-    var rateCoins: [Coin] { [token.coin] }
+    var feeData: FeeData? {
+        nil
+    }
+
+    var canSend: Bool {
+        transactionError == nil
+    }
+
+    var rateCoins: [Coin] {
+        [token.coin]
+    }
 
     func cautions(baseToken: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
         var cautions = [CautionNew]()

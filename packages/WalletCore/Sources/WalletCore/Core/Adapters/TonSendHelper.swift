@@ -96,9 +96,9 @@ class TonSendHelper {
         return boc
     }
 
-    // Broadcasts and returns the TEP-467 normalized message hash the backend tracks the inbound by.
-    // The hash is derived BEFORE the send: once the boc is out, nothing may throw and report a
-    // broadcast transfer as failed.
+    /// Broadcasts and returns the TEP-467 normalized message hash the backend tracks the inbound by.
+    /// The hash is derived BEFORE the send: once the boc is out, nothing may throw and report a
+    /// broadcast transfer as failed.
     static func sendReturningHash(
         transferData: TransferData,
         contract: WalletContract,

@@ -13,8 +13,7 @@ public enum TonConnectResponseBuilder {
                     network: TonConnect.Network.mainnet,
                     publicKey: keyPair.publicKey,
                     walletStateInit: contract.stateInit
-                )
-                )
+                ))
             case let .tonProof(payload):
                 return TonConnect.ConnectItemReply.tonProof(.success(.init(
                     address: address,

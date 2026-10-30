@@ -114,7 +114,9 @@ struct BitcoinResendTests {
         var rateRequests = 0
         let service = BitcoinResendTransactionService(originalSize: 200, feeRange: 100 ..< 10000) {
             rateRequests += 1
-            if rateRequests == 1 { throw CancellationError() }
+            if rateRequests == 1 {
+                throw CancellationError()
+            }
             return 3
         }
 

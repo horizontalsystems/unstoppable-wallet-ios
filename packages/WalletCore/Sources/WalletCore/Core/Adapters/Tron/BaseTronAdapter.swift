@@ -35,11 +35,7 @@ public class BaseTronAdapter {
     }
 
     func balanceDecimal(kitBalance: BigUInt?, decimals: Int) -> Decimal {
-        guard let kitBalance else {
-            return 0
-        }
-
-        guard let significand = Decimal(string: kitBalance.description) else {
+        guard let kitBalance, let significand = Decimal(string: kitBalance.description) else {
             return 0
         }
 
@@ -75,7 +71,7 @@ public class BaseTronAdapter {
     }
 }
 
-// IAdapter
+/// IAdapter
 public extension BaseTronAdapter {
     var statusInfo: [(String, Any)] {
         []
@@ -86,7 +82,7 @@ public extension BaseTronAdapter {
     }
 }
 
-// ITransactionsAdapter
+/// ITransactionsAdapter
 public extension BaseTronAdapter {
     var lastBlockInfo: LastBlockInfo? {
         tronKit.lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }

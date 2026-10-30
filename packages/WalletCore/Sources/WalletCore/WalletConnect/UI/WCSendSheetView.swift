@@ -1,13 +1,13 @@
 import SwiftUI
 
-// Transaction request as a bottom sheet: the SendNew data rendered as BSModule blocks, sized by the coordinator
+/// Transaction request as a bottom sheet: the SendNew data rendered as BSModule blocks, sized by the coordinator
 struct WCSendSheetView: View {
     private let item: WCRequestItem
     @StateObject private var sendViewModel: SendViewModel
     @StateObject private var expirationViewModel: WCRequestExpirationViewModel
     @Binding private var isPresented: Bool
     @State private var finished = false
-    // decoded rows shown immediately while the fee is estimated, so the sheet opens full (Android parity)
+    /// decoded rows shown immediately while the fee is estimated, so the sheet opens full (Android parity)
     @State private var previewData: ISendData?
 
     init(item: WCRequestItem, sendData: SendData, isPresented: Binding<Bool>) {
@@ -40,7 +40,9 @@ struct WCSendSheetView: View {
         }
         .onDisappear {
             // a blocked request is answered with an error as soon as the sheet goes away
-            if !finished, item.request?.isBlocked == true { reject() }
+            if !finished, item.request?.isBlocked == true {
+                reject()
+            }
         }
         .interactiveDismissDisabled(sendViewModel.sending)
     }
@@ -87,7 +89,7 @@ struct WCSendSheetView: View {
         }
     }
 
-    @ViewBuilder private var buttons: some View {
+    private var buttons: some View {
         HStack(spacing: .margin8) {
             ThemeButton(text: "button.reject".localized, style: .secondary) {
                 reject()

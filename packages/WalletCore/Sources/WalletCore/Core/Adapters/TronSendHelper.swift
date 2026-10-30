@@ -62,7 +62,7 @@ class TronSendHelper {
     }
 }
 
-// UI Part
+/// UI Part
 extension TronSendHelper {
     static func caution(transactionError: Error, feeToken: Token) -> CautionNew {
         let title: String

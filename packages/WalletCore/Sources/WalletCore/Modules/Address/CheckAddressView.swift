@@ -111,7 +111,7 @@ struct CheckAddressView: View {
         }
     }
 
-    @ViewBuilder private func checkView(title: String, state: CheckAddressViewModel.CheckState) -> some View {
+    private func checkView(title: String, state: CheckAddressViewModel.CheckState) -> some View {
         HStack(spacing: .margin8) {
             Text(title).textSubhead2()
 

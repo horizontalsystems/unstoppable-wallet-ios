@@ -246,7 +246,7 @@ struct PasskeyTermsView: View {
         }
     }
 
-    @ViewBuilder private func row(term: Term, checked: Bool) -> some View {
+    private func row(term: Term, checked: Bool) -> some View {
         Cell(
             left: {
                 Image.checkbox(active: checked)
@@ -275,7 +275,9 @@ extension PasskeyTermsView {
         case crossPlatform
         case responsibility
 
-        var id: String { rawValue }
+        var id: String {
+            rawValue
+        }
 
         var title: String {
             switch self {

@@ -135,7 +135,7 @@ class SecuritySettingsViewModel: ObservableObject {
     }
 }
 
-// Premium Features
+/// Premium Features
 extension SecuritySettingsViewModel {
     func isEnabled(_ feature: PremiumFeature) -> Bool {
         featureEnabled[feature] ?? false

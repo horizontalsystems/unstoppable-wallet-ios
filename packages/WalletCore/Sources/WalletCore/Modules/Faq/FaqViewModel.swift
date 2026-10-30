@@ -62,7 +62,7 @@ final class FaqViewModel: ObservableObject {
         .store(in: &tasks)
     }
 
-    // Runs off the main actor: network fetch, JSON decoding and section building
+    /// Runs off the main actor: network fetch, JSON decoding and section building
     private nonisolated static func loadSections(networkManager: NetworkManager, language: String, fallbackLanguage: String) async throws -> [Section] {
         let faqSections: [FaqSection] = try await networkManager.fetch(url: AppConfig.faqIndexUrl)
 

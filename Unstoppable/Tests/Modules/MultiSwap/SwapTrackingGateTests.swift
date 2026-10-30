@@ -4,9 +4,9 @@ import Testing
 @testable import Unstoppable
 @testable import WalletCore
 
-// track-gate matrix: only mechanism-pending swaps (handle set, no txHash yet) are
-// skipped; nil-txHash swaps WITHOUT a handle keep today's tracking (deposit-based
-// providers track by providerSwapId alone)
+/// track-gate matrix: only mechanism-pending swaps (handle set, no txHash yet) are
+/// skipped; nil-txHash swaps WITHOUT a handle keep today's tracking (deposit-based
+/// providers track by providerSwapId alone)
 struct SwapTrackingGateTests {
     private static func swap(txHash: String?, trackingHandle: String?) -> Swap {
         let token = Token(

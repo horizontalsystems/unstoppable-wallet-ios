@@ -17,7 +17,10 @@ public class HUDProgressView: UIView, HUDAnimatedViewInterface, HUDTappableViewI
     private var progress: Float?
     private var duration: TimeInterval
 
-    public var centerPoint: CGFloat { radius + strokeLineWidth / 2 }
+    public var centerPoint: CGFloat {
+        radius + strokeLineWidth / 2
+    }
+
     public var clockwise = true
     public var isAnimating = false
 

@@ -19,7 +19,7 @@ class ZcashHistoryService {
     private let sentShieldingLock = NSLock()
     private var sentShieldingHash: String?
 
-    // queue-confined tail of the serialized operation chain
+    /// queue-confined tail of the serialized operation chain
     private var chainedTask: Task<Void, Never>?
 
     init(synchronizer: Synchronizer, queue: DispatchQueue, logger: HsToolKit.Logger?) {
@@ -32,8 +32,8 @@ class ZcashHistoryService {
         transactionSubject.asObservable()
     }
 
-    // Serializes pool work: every operation starts only after the previous one has finished,
-    // so events are processed and published in arrival order without concurrent pool mutation.
+    /// Serializes pool work: every operation starts only after the previous one has finished,
+    /// so events are processed and published in arrival order without concurrent pool mutation.
     private func enqueue(_ operation: @escaping () async -> Void) {
         queue.async { [weak self] in
             guard let self else { return }

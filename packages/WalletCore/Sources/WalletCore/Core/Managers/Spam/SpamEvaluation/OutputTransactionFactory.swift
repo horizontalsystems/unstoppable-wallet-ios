@@ -64,9 +64,9 @@ class OutputTransactionFactory {
         }
     }
 
-    // Counterparties of every other record: the recipient of a sent leg, otherwise the sender
-    // of a received one. Poisoning routinely mimics whoever just paid the user, and a watch-only
-    // wallet has no outgoing history at all, so senders are correlation context too.
+    /// Counterparties of every other record: the recipient of a sent leg, otherwise the sender
+    /// of a received one. Poisoning routinely mimics whoever just paid the user, and a watch-only
+    /// wallet has no outgoing history at all, so senders are correlation context too.
     static func counterpartyAddresses(from record: TransactionRecord) -> [String] {
         switch record {
         case let r as EvmIncomingTransactionRecord:

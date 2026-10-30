@@ -3,7 +3,7 @@ import Foundation
 import HsCryptoKit
 import MarketKit
 
-// Type A: signs RLP locally, returns hex; OCP server broadcasts.
+/// Type A: signs RLP locally, returns hex; OCP server broadcasts.
 class EvmHexBroadcaster: IOpenCryptoPayBroadcaster {
     private let blockchainType: BlockchainType
 

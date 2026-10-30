@@ -10,11 +10,7 @@ class ThorChainSwapBroadcaster: ISwapBroadcaster {
     }
 
     func prepare(_ executable: ISwapExecutable) async throws -> IPrepared {
-        guard let executable = executable as? ThorChainExecutable else {
-            throw SwapBroadcasterError.dataMismatch
-        }
-
-        guard let adapter = Core.shared.adapterManager.adapter(for: executable.token) as? ThorChainAdapter else {
+        guard let executable = executable as? ThorChainExecutable, let adapter = Core.shared.adapterManager.adapter(for: executable.token) as? ThorChainAdapter else {
             throw SwapBroadcasterError.dataMismatch
         }
 

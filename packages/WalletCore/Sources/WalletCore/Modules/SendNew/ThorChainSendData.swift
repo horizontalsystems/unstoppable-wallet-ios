@@ -17,8 +17,13 @@ final class ThorChainSendData: ISendData {
         rateCoins = token.coin == baseToken.coin ? [token.coin] : [token.coin, baseToken.coin]
     }
 
-    var feeData: FeeData? { nil }
-    var customSendButtonTitle: String? { nil }
+    var feeData: FeeData? {
+        nil
+    }
+
+    var customSendButtonTitle: String? {
+        nil
+    }
 
     var canSend: Bool {
         quote != nil && transactionError == nil

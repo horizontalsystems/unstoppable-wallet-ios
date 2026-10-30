@@ -14,9 +14,15 @@ struct AppVersion: Codable {
     }
 
     func change(_ old: AppVersion) -> Change {
-        if version == old.version, build == old.build { return .none }
-        if major > old.major || (major == old.major && minor > old.minor) { return .version }
-        if version == old.version, build ?? "0" > old.build ?? "0" { return .build }
+        if version == old.version, build == old.build {
+            return .none
+        }
+        if major > old.major || (major == old.major && minor > old.minor) {
+            return .version
+        }
+        if version == old.version, build ?? "0" > old.build ?? "0" {
+            return .build
+        }
         return .downgrade
     }
 }

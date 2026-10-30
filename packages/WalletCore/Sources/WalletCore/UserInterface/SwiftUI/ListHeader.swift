@@ -24,7 +24,7 @@ public struct ListHeader<Content: View>: View {
         .background(Color.themeLawrence)
     }
 
-    @ViewBuilder func stack() -> some View {
+    func stack() -> some View {
         HStack(spacing: .margin12) {
             content
         }

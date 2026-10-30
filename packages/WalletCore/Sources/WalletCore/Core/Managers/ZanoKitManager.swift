@@ -61,11 +61,7 @@ public class ZanoKitManager {
     }
 
     private func handle(assets: [AssetInfo]) {
-        guard Core.shared.config.autoEnableTokensOnReceive else {
-            return
-        }
-
-        guard let currentAccount else { return }
+        guard Core.shared.config.autoEnableTokensOnReceive, let currentAccount else { return }
 
         // Whitelisted assets all report through getbalance, including ones the wallet never
         // held - mirror EVM token auto-detection and only enable assets with a balance.

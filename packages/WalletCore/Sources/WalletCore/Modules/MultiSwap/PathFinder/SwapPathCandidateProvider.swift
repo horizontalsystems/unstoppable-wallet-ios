@@ -76,8 +76,8 @@ struct CoinListSwapPathCandidateProvider: ISwapPathCandidateProvider {
         }
     }
 
-    // Within one coin: the deployment on tokenOut's chain first (for `ETH -> SPL` the USDT that
-    // helps is USDT-on-Solana), then tokenIn's chain, then the rest in MarketKit order.
+    /// Within one coin: the deployment on tokenOut's chain first (for `ETH -> SPL` the USDT that
+    /// helps is USDT-on-Solana), then tokenIn's chain, then the rest in MarketKit order.
     private func sorted(tokens: [Token], tokenIn: Token, tokenOut: Token) -> [Token] {
         var outChain = [Token]()
         var inChain = [Token]()

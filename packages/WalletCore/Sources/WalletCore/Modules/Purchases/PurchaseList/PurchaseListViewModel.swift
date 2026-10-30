@@ -104,6 +104,8 @@ extension PurchaseListViewModel {
         let title: String
         let value: String
 
-        var id: String { title }
+        var id: String {
+            title
+        }
     }
 }

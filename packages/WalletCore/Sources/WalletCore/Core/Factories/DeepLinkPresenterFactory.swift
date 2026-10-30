@@ -1,6 +1,6 @@
 import MarketKit
 
-// Resolved payload of a transfer deep link / scanned transfer uri, handed to the app-registered presenter.
+/// Resolved payload of a transfer deep link / scanned transfer uri, handed to the app-registered presenter.
 public struct SendDeepLink {
     public let blockchainTypes: [BlockchainType]?
     public let tokenTypes: [TokenType]?
@@ -10,14 +10,14 @@ public struct SendDeepLink {
     public let destinationTag: String?
 }
 
-// Presentation seam for the view layer each app owns (its Coordinator / send flow):
-// DeepLinkViewManager hands resolved transfer links to the registered presenter.
-// Empty by default — every app that registers the .address handler kind must also register
-// its presenter (checked by assertCoherence at assembly time).
+/// Presentation seam for the view layer each app owns (its Coordinator / send flow):
+/// DeepLinkViewManager hands resolved transfer links to the registered presenter.
+/// Empty by default — every app that registers the .address handler kind must also register
+/// its presenter (checked by assertCoherence at assembly time).
 public enum DeepLinkPresenterFactory {
     private static var registeredSendPresenter: ((SendDeepLink) -> Void)?
 
-    // Default presentation: token list of the shared send flow.
+    /// Default presentation: token list of the shared send flow.
     public static let sendPresenter: (SendDeepLink) -> Void = { link in
         Coordinator.shared.present { isPresented in
             SendTokenListView(

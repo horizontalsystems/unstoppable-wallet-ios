@@ -1,6 +1,6 @@
 import Combine
 
-// Slice of AccountManager the module depends on
+/// Slice of AccountManager the module depends on
 protocol IWCAccountProvider: AnyObject {
     var activeAccount: Account? { get }
     var activeAccountIdPublisher: AnyPublisher<String?, Never> { get }
@@ -8,7 +8,9 @@ protocol IWCAccountProvider: AnyObject {
 }
 
 extension IWCAccountProvider {
-    var activeAccountId: String? { activeAccount?.id }
+    var activeAccountId: String? {
+        activeAccount?.id
+    }
 }
 
 extension AccountManager: IWCAccountProvider {

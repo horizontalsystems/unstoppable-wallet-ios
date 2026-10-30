@@ -48,9 +48,17 @@ struct SwapProviderFactoryTests {
 private struct StubProvider: IMultiSwapProvider {
     let id: String
 
-    var name: String { id }
-    var type: SwapProviderType? { .good }
-    var icon: String { "stub" }
+    var name: String {
+        id
+    }
+
+    var type: SwapProviderType? {
+        .good
+    }
+
+    var icon: String {
+        "stub"
+    }
 
     func supports(tokenIn _: Token, tokenOut _: Token) -> Bool {
         false

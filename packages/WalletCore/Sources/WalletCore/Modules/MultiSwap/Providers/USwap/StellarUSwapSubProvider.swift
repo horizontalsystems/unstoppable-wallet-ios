@@ -1,8 +1,8 @@
 import MarketKit
 
-// Stellar-native DEX routes (server-built XDR). These providers publish no token list, so assets are
-// encoded directly: native XLM → `XLM.XLM`, classic asset → `XLM.<CODE>-<ISSUER>` with the code
-// verbatim (case-sensitive). Soroban-only contract tokens (`C…`) are not supported by the server.
+/// Stellar-native DEX routes (server-built XDR). These providers publish no token list, so assets are
+/// encoded directly: native XLM → `XLM.XLM`, classic asset → `XLM.<CODE>-<ISSUER>` with the code
+/// verbatim (case-sensitive). Soroban-only contract tokens (`C…`) are not supported by the server.
 public final class StellarUSwapSubProvider: DefaultUSwapSubProvider {
     override public func supports(tokenIn: Token, tokenOut: Token) -> Bool {
         tokenIn.blockchainType == .stellar

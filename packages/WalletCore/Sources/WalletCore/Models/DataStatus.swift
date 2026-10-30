@@ -14,7 +14,9 @@ public enum DataStatus<T> {
         }
     }
 
-    var isLoading: Bool { self == .loading }
+    var isLoading: Bool {
+        self == .loading
+    }
 
     func handle<S>(loadingRelay: BehaviorRelay<Bool>?, completedRelay: PublishRelay<S?>?, failedRelay: PublishRelay<Error?>?, mapper: (T) -> S?) {
         if case .loading = self {

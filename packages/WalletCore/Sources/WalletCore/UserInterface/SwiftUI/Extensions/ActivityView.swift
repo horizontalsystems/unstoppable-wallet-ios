@@ -3,8 +3,8 @@ import UIKit
 
 public struct ActivityView: View {
     let activityItems: [Any]
-    var applicationActivities: [UIActivity]? = nil
-    var completionWithItemsHandler: UIActivityViewController.CompletionWithItemsHandler? = nil
+    var applicationActivities: [UIActivity]?
+    var completionWithItemsHandler: UIActivityViewController.CompletionWithItemsHandler?
 
     public init(activityItems: [Any], applicationActivities: [UIActivity]? = nil, completionWithItemsHandler: UIActivityViewController.CompletionWithItemsHandler? = nil) {
         self.activityItems = activityItems
@@ -20,8 +20,8 @@ public struct ActivityView: View {
 
 struct ActivityViewInternal: UIViewControllerRepresentable {
     var activityItems: [Any]
-    var applicationActivities: [UIActivity]? = nil
-    var completionWithItemsHandler: UIActivityViewController.CompletionWithItemsHandler? = nil
+    var applicationActivities: [UIActivity]?
+    var completionWithItemsHandler: UIActivityViewController.CompletionWithItemsHandler?
 
     func makeUIViewController(context _: UIViewControllerRepresentableContext<ActivityViewInternal>) -> UIActivityViewController {
         let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)

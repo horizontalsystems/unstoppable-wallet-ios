@@ -148,7 +148,7 @@ extension XrpTokenAdapter: ISendXrpAdapter {
         try await xrpKit.requiresDestinationTag(address: address)
     }
 
-    // an issued token is rejected by the ledger unless the recipient holds a trust line for it
+    /// an issued token is rejected by the ledger unless the recipient holds a trust line for it
     func canReceive(address: String) async throws -> Bool {
         try await xrpKit.isTrustLineSet(currency: currency, issuer: issuer, address: address)
     }

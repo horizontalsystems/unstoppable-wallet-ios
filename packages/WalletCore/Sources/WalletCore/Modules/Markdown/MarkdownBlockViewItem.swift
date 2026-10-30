@@ -14,7 +14,7 @@ enum MarkdownImageType: Hashable {
     case portrait
     case square
 
-    // width / height
+    /// width / height
     var aspectRatio: CGFloat {
         switch self {
         case .landscape: return 4 / 3

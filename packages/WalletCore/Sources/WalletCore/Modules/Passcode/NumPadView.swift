@@ -7,7 +7,7 @@ struct NumPadView: View {
 
     let onTapDigit: (Int) -> Void
     let onTapBackspace: () -> Void
-    var onTapBiometry: (() -> Void)? = nil
+    var onTapBiometry: (() -> Void)?
 
     var body: some View {
         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: .margin16) {

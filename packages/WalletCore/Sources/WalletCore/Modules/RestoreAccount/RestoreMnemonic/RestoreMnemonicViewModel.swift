@@ -219,7 +219,9 @@ class RestoreMnemonicViewModel: ObservableObject {
 // MARK: - Public interface
 
 extension RestoreMnemonicViewModel {
-    var proceedPublisher: AnyPublisher<(String, AccountType), Never> { proceedSubject.eraseToAnyPublisher() }
+    var proceedPublisher: AnyPublisher<(String, AccountType), Never> {
+        proceedSubject.eraseToAnyPublisher()
+    }
 
     var wordListViewItems: [AlertViewItem] {
         Mnemonic.Language.allCases.map { language in

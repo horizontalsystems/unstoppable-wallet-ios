@@ -1,11 +1,11 @@
 import Foundation
 
-// One USwapAssetRepository per provider id, memoised.
-//
-// Required, not an optimisation: USwapAssetRepository.init calls sync(), so building a fresh
-// instance per lookup would refetch GET /v3/tokens continuously. Both apps wire the private send
-// stack through `repository(providerId:)`, so the token manager and the service share instances
-// rather than duplicating the per-provider traffic.
+/// One USwapAssetRepository per provider id, memoised.
+///
+/// Required, not an optimisation: USwapAssetRepository.init calls sync(), so building a fresh
+/// instance per lookup would refetch GET /v3/tokens continuously. Both apps wire the private send
+/// stack through `repository(providerId:)`, so the token manager and the service share instances
+/// rather than duplicating the per-provider traffic.
 public final class USwapAssetRepositoryCache {
     private let makeRepository: (String) -> USwapAssetRepository
     private let lock = NSLock()

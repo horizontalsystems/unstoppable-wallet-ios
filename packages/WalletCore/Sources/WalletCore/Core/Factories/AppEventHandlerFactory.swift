@@ -1,8 +1,8 @@
 import MarketKit
 
 public class AppEventHandlerFactory {
-    // Empty by default: every app registers its own set before Core.initApp.
-    // Registration after Core.initApp has no effect.
+    /// Empty by default: every app registers its own set before Core.initApp.
+    /// Registration after Core.initApp has no effect.
     private static var kinds = Set<AppEventHandlerKind>()
 
     public static func register(_ kind: AppEventHandlerKind) {
@@ -33,8 +33,8 @@ public class AppEventHandlerFactory {
         self.lockManager = lockManager
     }
 
-    // Builds handlers for the registered kinds. Chain order is fixed here and does not depend
-    // on registration order: it is the fallback-resolution order of EventHandler.
+    /// Builds handlers for the registered kinds. Chain order is fixed here and does not depend
+    /// on registration order: it is the fallback-resolution order of EventHandler.
     func handlers() -> [IEventHandler] {
         let kinds = Self.kinds
         var handlers = [IEventHandler]()

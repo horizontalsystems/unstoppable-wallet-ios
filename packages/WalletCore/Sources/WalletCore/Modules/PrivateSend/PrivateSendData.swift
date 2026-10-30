@@ -1,21 +1,21 @@
 import Foundation
 import MarketKit
 
-// `open`, not `final`: every veto below is identical on both platforms and is written once here,
-// while `sections(...)` is the seam each app re-authors in its own SendField idiom.
+/// `open`, not `final`: every veto below is identical on both platforms and is written once here,
+/// while `sections(...)` is the seam each app re-authors in its own SendField idiom.
 open class PrivateSendData: ISendData {
-    // How long a preview is shown before it is silently re-requested. The preview has no side
-    // effects, so a refresh costs nothing; the order is created only when the user slides.
+    /// How long a preview is shown before it is silently re-requested. The preview has no side
+    /// effects, so a refresh costs nothing; the order is created only when the user slides.
     public static let quoteLifetime: TimeInterval = 15
 
     public let preview: PrivateSendPreview
-    // The inner send estimated against the preview's stub deposit address: it supplies the network
-    // fee rows and the balance vetoes. The one that is broadcast is rebuilt at send time against the
-    // committed deposit address, with the same `transactionSettings`.
+    /// The inner send estimated against the preview's stub deposit address: it supplies the network
+    /// fee rows and the balance vetoes. The one that is broadcast is rebuilt at send time against the
+    /// committed deposit address, with the same `transactionSettings`.
     public let inner: ISendData
-    // The settings the inner send was estimated with, captured so the send-time rebuild against the
-    // real deposit address is priced exactly as the user confirmed it. The handler that produced
-    // `inner` is not carried: the one that broadcasts is resolved afresh at send time.
+    /// The settings the inner send was estimated with, captured so the send-time rebuild against the
+    /// real deposit address is priced exactly as the user confirmed it. The handler that produced
+    /// `inner` is not carried: the one that broadcasts is resolved afresh at send time.
     public let transactionSettings: TransactionSettings?
 
     public init(preview: PrivateSendPreview, inner: ISendData, transactionSettings: TransactionSettings?) {
@@ -102,7 +102,7 @@ open class PrivateSendData: ISendData {
         return [.init([amount, to], isFlow: true), .init(fields, isMain: false)]
     }
 
-    // Amounts open in the coin, fees in fiat; a tap flips either
+    /// Amounts open in the coin, fees in fiat; a tap flips either
     private func feeField(title: String, info: InfoDescription, value: Decimal, token: Token, currency: Currency, rate: Decimal?, isAmount: Bool = false) -> SendField {
         SendField(FeeField(
             title: ComponentInformedTitle(title, info: info),

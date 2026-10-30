@@ -54,7 +54,9 @@ private final class StubVerifier: IWCVerifier {
         self.verdict = verdict
     }
 
-    func handles(_: WCVerificationContext) -> Bool { handlesValue }
+    func handles(_: WCVerificationContext) -> Bool {
+        handlesValue
+    }
 
     func verify(_: WCVerificationContext) -> WCVerificationVerdict {
         verifyCount += 1

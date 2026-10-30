@@ -21,7 +21,15 @@ class ReceiveBitcoinCashCoinTypeViewModel: ReceiveSettingsViewModel {
         }
     }
 
-    override var title: String { "receive_address_format_select.title".localized }
-    override var topDescription: String { "receive_address_format_select.description".localized }
-    override var highlightedBottomDescription: String? { "receive_address_format_select.bitcoin_cash.bottom_description".localized }
+    override var title: String {
+        "receive_address_format_select.title".localized
+    }
+
+    override var topDescription: String {
+        "receive_address_format_select.description".localized
+    }
+
+    override var highlightedBottomDescription: String? {
+        "receive_address_format_select.bitcoin_cash.bottom_description".localized
+    }
 }

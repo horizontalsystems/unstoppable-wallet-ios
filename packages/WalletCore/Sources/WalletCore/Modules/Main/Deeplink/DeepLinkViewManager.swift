@@ -73,7 +73,7 @@ class DeepLinkViewManager {
         }
     }
 
-    // a link or a scanned code can ask for a payment while the active account only watches an address
+    /// a link or a scanned code can ask for a payment while the active account only watches an address
     private var watchAccountActive: Bool {
         Core.shared.accountManager.activeAccount?.watchAccount ?? false
     }

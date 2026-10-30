@@ -2,15 +2,15 @@ import Combine
 import Foundation
 import MarketKit
 
-// The Private tab of PreSendView. Deliberately thin: no quoting, no tasks, nothing to cancel. The
-// `.privateSend` SendData is built synchronously; all network work lives in PrivateSendHandler, on the
-// confirmation screen, where the deposit transfer is built from a snapshot of the shared `handler`'s
-// settings taken here, on the main thread.
+/// The Private tab of PreSendView. Deliberately thin: no quoting, no tasks, nothing to cancel. The
+/// `.privateSend` SendData is built synchronously; all network work lives in PrivateSendHandler, on the
+/// confirmation screen, where the deposit transfer is built from a snapshot of the shared `handler`'s
+/// settings taken here, on the main thread.
 final class PrivatePreSendViewModel: BasePreSendViewModel {
     private let service: PrivateSendService?
 
-    // A synchronous read of the already-background-synced confidential token cache: it never blocks
-    // and never triggers a fetch on the render path.
+    /// A synchronous read of the already-background-synced confidential token cache: it never blocks
+    /// and never triggers a fetch on the render path.
     @Published private(set) var isSupported: Bool
 
     init(wallet: Wallet, handler: IPreSendHandler?, spendStepHandler: ISpendStepHandler?, service: PrivateSendService?, predefinedAddress: ResolvedAddress?, amount: Decimal?) {
@@ -25,8 +25,8 @@ final class PrivatePreSendViewModel: BasePreSendViewModel {
             .store(in: &cancellables)
     }
 
-    // Never calls `handler.set(address:)`: the shared handler's address-dependent state belongs to the
-    // Standard tab, and the private deposit address does not exist until the order is committed.
+    /// Never calls `handler.set(address:)`: the shared handler's address-dependent state belongs to the
+    /// Standard tab, and the private deposit address does not exist until the order is committed.
     override func syncSendData() {
         guard isSupported, let amount, amount != 0, let resolvedAddress else {
             sendData = nil
@@ -57,8 +57,8 @@ final class PrivatePreSendViewModel: BasePreSendViewModel {
         syncSendData()
     }
 
-    // A nil service yields false permanently, so an app that never wires private send is unaffected.
-    // Chains PrivateSendHandlerProvider rejects are not offered by the tab either.
+    /// A nil service yields false permanently, so an app that never wires private send is unaffected.
+    /// Chains PrivateSendHandlerProvider rejects are not offered by the tab either.
     private static func isSupported(token: Token, service: PrivateSendService?) -> Bool {
         guard !PrivateSendHandlerProvider.unsupportedBlockchainTypes.contains(token.blockchainType) else {
             return false

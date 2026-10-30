@@ -5,19 +5,19 @@ import Testing
 
 struct ThorChainSendPreflightTests {
     @Test func exactBaseUnitBoundariesAreLossless() throws {
-        #expect(try ThorChainSendHelper.baseUnits(Decimal(string: "1.00000000")!) == 100_000_000)
-        #expect(try ThorChainSendHelper.baseUnits(Decimal(string: "0.00000001")!) == 1)
-        #expect(try ThorChainSendHelper.baseUnits(Decimal(string: "0.00000010")!) == 10)
-        #expect(try ThorChainSendHelper.baseUnits(Decimal(string: "1.23000000")!) == 123_000_000)
+        #expect(try ThorChainSendHelper.baseUnits(#require(Decimal(string: "1.00000000"))) == 100_000_000)
+        #expect(try ThorChainSendHelper.baseUnits(#require(Decimal(string: "0.00000001"))) == 1)
+        #expect(try ThorChainSendHelper.baseUnits(#require(Decimal(string: "0.00000010"))) == 10)
+        #expect(try ThorChainSendHelper.baseUnits(#require(Decimal(string: "1.23000000"))) == 123_000_000)
     }
 
     @Test func excessivePrecisionRoundsLikeTron() throws {
-        #expect(try ThorChainSendHelper.baseUnits(Decimal(string: "1.000000009")!) == 100_000_001)
+        #expect(try ThorChainSendHelper.baseUnits(#require(Decimal(string: "1.000000009"))) == 100_000_001)
     }
 
-    @Test func subBaseUnitAmountIsStillInvalid() {
+    @Test func subBaseUnitAmountIsStillInvalid() throws {
         #expect(throws: ThorChainSendHelper.Error.invalidAmount) {
-            try ThorChainSendHelper.baseUnits(Decimal(string: "0.000000001")!)
+            try ThorChainSendHelper.baseUnits(#require(Decimal(string: "0.000000001")))
         }
     }
 }

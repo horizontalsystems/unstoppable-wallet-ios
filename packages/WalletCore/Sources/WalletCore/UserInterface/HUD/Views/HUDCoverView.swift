@@ -3,10 +3,12 @@ import UIKit
 open class HUDCoverView: UIView, CoverViewInterface {
     public weak var delegate: CoverViewDelegate?
     public var transparent: Bool = false
-    public var coverBackgroundColor: UIColor? = nil
+    public var coverBackgroundColor: UIColor?
 
-    public var onTapCover: (() -> Void)? = nil
-    public var isVisible: Bool { !isHidden }
+    public var onTapCover: (() -> Void)?
+    public var isVisible: Bool {
+        !isHidden
+    }
 
     public func show(animated _: Bool) {}
 

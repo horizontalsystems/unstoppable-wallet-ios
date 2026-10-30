@@ -142,7 +142,7 @@ extension TonConnectSendHandler {
                                 .amount(
                                     token: token,
                                     appValueType: .regular(appValue: AppValue(token: token, value: value.value)),
-                                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * value.value) },
+                                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * value.value) }
                                 ),
                                 .address(
                                     value: to,
@@ -163,7 +163,7 @@ extension TonConnectSendHandler {
                                 .amount(
                                     token: token,
                                     appValueType: .regular(appValue: AppValue(token: token, value: value.value)),
-                                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * value.value) },
+                                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * value.value) }
                                 ),
                                 .address(
                                     value: from,
@@ -190,12 +190,12 @@ extension TonConnectSendHandler {
                                 .amount(
                                     token: tokenIn,
                                     appValueType: .regular(appValue: AppValue(token: tokenIn, value: valueIn.value)),
-                                    currencyValue: rates[tokenIn.coin.uid].map { CurrencyValue(currency: currency, value: valueIn.value * $0) },
+                                    currencyValue: rates[tokenIn.coin.uid].map { CurrencyValue(currency: currency, value: valueIn.value * $0) }
                                 ),
                                 .amount(
                                     token: tokenOut,
                                     appValueType: .regular(appValue: AppValue(token: tokenOut, value: valueOut.value)),
-                                    currencyValue: rates[tokenOut.coin.uid].map { CurrencyValue(currency: currency, value: valueOut.value * $0) },
+                                    currencyValue: rates[tokenOut.coin.uid].map { CurrencyValue(currency: currency, value: valueOut.value * $0) }
                                 ),
                             ], isFlow: true))
 

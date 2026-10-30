@@ -6,13 +6,22 @@ import MarketKit
 struct BitcoinResendData: ISendData {
     let record: BitcoinOutgoingTransactionRecord
     let type: ResendTransactionType
-    var recommendedFee: Int? = nil
-    var replacement: ReplacementTransaction? = nil
-    var transactionError: Error? = nil
+    var recommendedFee: Int?
+    var replacement: ReplacementTransaction?
+    var transactionError: Error?
 
-    var feeData: FeeData? { nil }
-    var canSend: Bool { transactionError == nil && replacement != nil }
-    var rateCoins: [Coin] { record.value.coin.map { [$0] } ?? [] }
+    var feeData: FeeData? {
+        nil
+    }
+
+    var canSend: Bool {
+        transactionError == nil && replacement != nil
+    }
+
+    var rateCoins: [Coin] {
+        record.value.coin.map { [$0] } ?? []
+    }
+
     var customSendButtonTitle: String? {
         (type == .speedUp ? "send.confirmation.slide_to_resend" : "send.confirmation.slide_to_cancel").localized
     }

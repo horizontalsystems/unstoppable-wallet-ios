@@ -1,7 +1,7 @@
 import MarketKit
 import SwiftUI
 
-// Reusable wallet picker; caller owns the navigation.
+/// Reusable wallet picker; caller owns the navigation.
 struct WalletPickerView: View {
     @ObservedObject var viewModel: SendTokenListViewModel
     @Binding var searchText: String

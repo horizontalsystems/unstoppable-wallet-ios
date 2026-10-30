@@ -97,9 +97,9 @@ enum ThorChainEndpointManagerError: Error {
 }
 
 extension ThorChainEndpointManager {
-    // Android's cross-platform schema — {blockchain_type_id, name}. Endpoint family ids
-    // match Android's source names ("Keplr", "Rorcual", …), so the name is the id itself
-    // and the selected node survives a cross-platform restore.
+    /// Android's cross-platform schema — {blockchain_type_id, name}. Endpoint family ids
+    /// match Android's source names ("Keplr", "Rorcual", …), so the name is the id itself
+    /// and the selected node survives a cross-platform restore.
     struct EndpointBackup: Codable {
         let familyId: String?
 

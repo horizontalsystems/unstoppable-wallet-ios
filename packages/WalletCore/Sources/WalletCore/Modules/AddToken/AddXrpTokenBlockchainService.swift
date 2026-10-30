@@ -45,14 +45,16 @@ class AddXrpTokenBlockchainService {
         return Parsed(currency: currency, issuer: issuer)
     }
 
-    // an issuer is an account: the tag an X-address may carry has no meaning here
+    /// an issuer is an account: the tag an X-address may carry has no meaning here
     private static func isClassicAddress(_ value: String) -> Bool {
         !XAddress.isXAddress(value) && AccountId.isValid(address: value)
     }
 
     /// 3-character and 40-hex codes are kept; a 4..20 character ASCII name becomes its hex form.
     private static func ledgerCurrency(code: String) -> String? {
-        if code.uppercased() == CurrencyCodec.xrp { return nil }
+        if code.uppercased() == CurrencyCodec.xrp {
+            return nil
+        }
         if XrpKit.Kit.isValidCurrencyCode(code) {
             return code.count == 40 ? code.uppercased() : code
         }
@@ -80,7 +82,7 @@ extension AddXrpTokenBlockchainService: IAddTokenBlockchainService {
         return TokenQuery(blockchainType: blockchain.type, tokenType: .xrpAsset(currency: parsed?.currency ?? "", issuer: parsed?.issuer ?? ""))
     }
 
-    // the ledger keeps no metadata for an issued currency: the code is the name and the symbol
+    /// the ledger keeps no metadata for an issued currency: the code is the name and the symbol
     func token(reference: String) async throws -> Token {
         guard let parsed = parse(reference) else {
             throw TokenError.invalidReference

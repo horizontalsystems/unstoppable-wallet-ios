@@ -8,12 +8,12 @@ class SortContext {
 class EnabledSortContext: SortContext {
     var enabledTokens: Set<Token> = []
 
-    // Keyed by a stable string identifier whose meaning depends on the concrete subclass:
-    // - TokenSortContext uses token.tokenQuery.id (per-token concrete fiat value).
-    // - FullCoinSortContext uses coin.uid (fiat value aggregated across all supported tokens).
-    //
-    // Entry presence also doubles as a "price is known" marker: both subclass inits only add
-    // an entry when a coin price was available at build time, which .hasPriceFirst relies on.
+    /// Keyed by a stable string identifier whose meaning depends on the concrete subclass:
+    /// - TokenSortContext uses token.tokenQuery.id (per-token concrete fiat value).
+    /// - FullCoinSortContext uses coin.uid (fiat value aggregated across all supported tokens).
+    ///
+    /// Entry presence also doubles as a "price is known" marker: both subclass inits only add
+    /// an entry when a coin price was available at build time, which .hasPriceFirst relies on.
     var fiatValues: [String: Decimal] = [:]
 }
 
@@ -35,8 +35,8 @@ class TokenSortContext: EnabledSortContext {
         }
     }
 
-    // Callers passing this init must ensure fiatBalances contains entries only for tokens
-    // whose price was known, so that fiatValues presence correctly reflects "has price".
+    /// Callers passing this init must ensure fiatBalances contains entries only for tokens
+    /// whose price was known, so that fiatValues presence correctly reflects "has price".
     convenience init(balances: [Token: Decimal], fiatBalances: [Token: Decimal]) {
         self.init()
         self.balances = balances
@@ -71,8 +71,8 @@ class FullCoinSortContext: EnabledSortContext {
         }
     }
 
-    // Callers passing this init must ensure fullCoinFiatValues contains entries only for coins
-    // whose price was known, so that fiatValues presence correctly reflects "has price".
+    /// Callers passing this init must ensure fullCoinFiatValues contains entries only for coins
+    /// whose price was known, so that fiatValues presence correctly reflects "has price".
     convenience init(fullCoinFiatValues: [String: Decimal], accountType: AccountType? = nil) {
         self.init()
         fiatValues = fullCoinFiatValues

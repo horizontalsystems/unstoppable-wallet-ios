@@ -25,7 +25,7 @@ struct WCManagerTests {
 
     @Test func staysLazyWithoutSessionsAndBuildsOnce() throws {
         let factory = SpyKitFactory()
-        let manager = manager(storage: try WCSessionFixtures.storage(), factory: factory)
+        let manager = try manager(storage: WCSessionFixtures.storage(), factory: factory)
         manager.start()
 
         #expect(factory.makeCount == 0)
@@ -48,9 +48,9 @@ private final class SpyKitFactory: IWCKitFactory {
         let client = WCSpySignClient()
         let accounts = WCStubAccountProvider(activeAccountId: "a1")
         let responder = WCResponder(signClient: client)
-        return WCKit(
+        return try WCKit(
             signClient: client,
-            sessionService: WCSessionService(signClient: client, storage: try WCSessionFixtures.storage(), accountProvider: accounts),
+            sessionService: WCSessionService(signClient: client, storage: WCSessionFixtures.storage(), accountProvider: accounts),
             requestService: WCRequestService(parsers: WCParserRegistry(), verifiers: WCVerifierRegistry(), responder: responder),
             directHandlers: WCDirectHandlerRegistry(),
             responder: responder,
@@ -65,6 +65,11 @@ private final class SpyKitFactory: IWCKitFactory {
 }
 
 private final class NeverLocked: IWCLockProvider {
-    var isLocked: Bool { false }
-    var isLockedPublisher: AnyPublisher<Bool, Never> { Just(false).eraseToAnyPublisher() }
+    var isLocked: Bool {
+        false
+    }
+
+    var isLockedPublisher: AnyPublisher<Bool, Never> {
+        Just(false).eraseToAnyPublisher()
+    }
 }

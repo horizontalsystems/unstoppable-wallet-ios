@@ -31,7 +31,7 @@ struct CoinMarketsView: View {
         }
     }
 
-    @ViewBuilder private func header(disabled: Bool = false) -> some View {
+    private func header(disabled: Bool = false) -> some View {
         ListHeader(scrollable: true) {
             DropdownButton(text: viewModel.marketTypeFilter.title) {
                 Coordinator.shared.present(type: .alert) { isPresented in
@@ -54,7 +54,7 @@ struct CoinMarketsView: View {
         }
     }
 
-    @ViewBuilder private func list(viewItems: [CoinMarketsViewModel.ViewItem]) -> some View {
+    private func list(viewItems: [CoinMarketsViewModel.ViewItem]) -> some View {
         ScrollViewReader { proxy in
             ThemeList(viewItems, bottomSpacing: .margin16) { viewItem in
                 cell(
@@ -85,7 +85,7 @@ struct CoinMarketsView: View {
         }
     }
 
-    @ViewBuilder private func loadingList() -> some View {
+    private func loadingList() -> some View {
         ThemeList(Array(0 ... 10)) { index in
             cell(
                 imageUrl: nil,
@@ -100,7 +100,7 @@ struct CoinMarketsView: View {
         .scrollDisabled(true)
     }
 
-    @ViewBuilder private func cell(imageUrl: URL?, market: String, pair: String, volume: String?, fiatVolume: String?, verified: Bool, action: (() -> Void)? = nil) -> some View {
+    private func cell(imageUrl: URL?, market: String, pair: String, volume: String?, fiatVolume: String?, verified: Bool, action: (() -> Void)? = nil) -> some View {
         Cell(
             left: {
                 KFImage.url(imageUrl)

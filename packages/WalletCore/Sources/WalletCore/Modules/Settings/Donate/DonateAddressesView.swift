@@ -25,7 +25,7 @@ struct DonateAddressesView: View {
         .toolbarRole(.editor)
     }
 
-    @ViewBuilder func content(blockchainType: BlockchainType, address: String) -> some View {
+    func content(blockchainType: BlockchainType, address: String) -> some View {
         Cell(
             left: {
                 KFImage.url(URL(string: blockchainType.imageUrl))

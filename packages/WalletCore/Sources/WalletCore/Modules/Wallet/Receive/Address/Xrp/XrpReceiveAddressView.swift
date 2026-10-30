@@ -2,9 +2,9 @@ import SwiftUI
 
 struct XrpReceiveAddressView: View {
     @StateObject var viewModel: XrpReceiveAddressViewModel
-    private var onDismiss: (() -> Void)? = nil
-    // the warning stays — an incoming transfer to a non-activated asset is rejected — but a watch account
-    // cannot sign the activation, so the row does not open the popup
+    private var onDismiss: (() -> Void)?
+    /// the warning stays — an incoming transfer to a non-activated asset is rejected — but a watch account
+    /// cannot sign the activation, so the row does not open the popup
     private let watchAccount: Bool
 
     @Environment(\.presentationMode) private var presentationMode
@@ -29,7 +29,7 @@ struct XrpReceiveAddressView: View {
         }, onDismiss: onDismiss)
     }
 
-    @ViewBuilder func notActive() -> some View {
+    func notActive() -> some View {
         Cell(
             middle: {
                 MiddleTextIcon(text: "deposit.trustline".localized, icon: "info_filled")

@@ -33,7 +33,7 @@ public struct ThemeList<Content: View>: View {
         }
     }
 
-    @ViewBuilder private func list() -> some View {
+    private func list() -> some View {
         List {
             Color.clear
                 .id(THEME_LIST_TOP_VIEW_ID)
@@ -92,7 +92,7 @@ struct ListForEach<Content: View, Item: Hashable>: View {
         .onMove(perform: onMove)
     }
 
-    @ViewBuilder private func view(_ item: Item) -> some View {
+    private func view(_ item: Item) -> some View {
         VStack(spacing: 0) {
             if items.first == item {
                 HorizontalDivider()
@@ -126,7 +126,7 @@ struct ListForEachIdentifiable<Content: View, Item: Identifiable>: View {
         .onMove(perform: onMove)
     }
 
-    @ViewBuilder private func view(_ item: Item) -> some View {
+    private func view(_ item: Item) -> some View {
         VStack(spacing: 0) {
             if items.first?.id == item.id {
                 HorizontalDivider()

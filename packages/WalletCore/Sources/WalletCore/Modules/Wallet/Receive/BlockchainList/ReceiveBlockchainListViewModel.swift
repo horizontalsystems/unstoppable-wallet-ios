@@ -40,6 +40,8 @@ extension ReceiveBlockchainListViewModel {
         let title: String
         let subtitle: String
 
-        var id: String { uid }
+        var id: String {
+            uid
+        }
     }
 }

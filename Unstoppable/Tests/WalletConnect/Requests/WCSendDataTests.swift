@@ -102,9 +102,17 @@ private final class StubSendData: ISendData {
         sendable = canSend
     }
 
-    var feeData: FeeData? { nil }
-    var canSend: Bool { sendable }
-    var rateCoins: [Coin] { [] }
+    var feeData: FeeData? {
+        nil
+    }
+
+    var canSend: Bool {
+        sendable
+    }
+
+    var rateCoins: [Coin] {
+        []
+    }
 
     func cautions(baseToken _: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
         []

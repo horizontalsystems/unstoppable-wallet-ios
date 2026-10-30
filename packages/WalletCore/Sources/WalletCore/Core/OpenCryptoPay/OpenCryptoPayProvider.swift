@@ -39,12 +39,9 @@ class OpenCryptoPayProvider {
         let _: EmptySubmissionResponse = try await networkManager.fetch(url: txUrl, parameters: parameters)
     }
 
-    // Swap first `/cb/` segment for `/tx/`, keep everything else.
+    /// Swap first `/cb/` segment for `/tx/`, keep everything else.
     static func submissionUrl(from callback: URL) throws -> URL {
-        guard var urlComponents = URLComponents(url: callback, resolvingAgainstBaseURL: false) else {
-            throw OpenCryptoPayManager.Error.malformedTxUri
-        }
-        guard let cbRange = urlComponents.path.range(of: "/cb/") else {
+        guard var urlComponents = URLComponents(url: callback, resolvingAgainstBaseURL: false), let cbRange = urlComponents.path.range(of: "/cb/") else {
             throw OpenCryptoPayManager.Error.malformedTxUri
         }
         urlComponents.path = urlComponents.path.replacingCharacters(in: cbRange, with: "/tx/")

@@ -9,7 +9,7 @@ struct FullBackup {
     let sections: Set<BackupSection>?
     let version: Int
     let timestamp: TimeInterval?
-    // number of wallet entries in the file before unknown types were dropped; not part of the format
+    /// number of wallet entries in the file before unknown types were dropped; not part of the format
     var rawWalletCount: Int = 0
 }
 
@@ -50,11 +50,19 @@ extension FullBackup: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
-        if !wallets.isEmpty { try container.encode(wallets, forKey: .wallets) }
-        if !watchlistIds.isEmpty { try container.encode(watchlistIds, forKey: .watchlistIds) }
-        if let contacts { try container.encode(contacts, forKey: .contacts) }
+        if !wallets.isEmpty {
+            try container.encode(wallets, forKey: .wallets)
+        }
+        if !watchlistIds.isEmpty {
+            try container.encode(watchlistIds, forKey: .watchlistIds)
+        }
+        if let contacts {
+            try container.encode(contacts, forKey: .contacts)
+        }
         try container.encode(settings, forKey: .settings)
-        if let sections { try container.encode(sections, forKey: .sections) }
+        if let sections {
+            try container.encode(sections, forKey: .sections)
+        }
         try container.encode(version, forKey: .version)
         try? container.encode(timestamp, forKey: .timestamp)
     }

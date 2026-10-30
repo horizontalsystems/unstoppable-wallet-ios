@@ -4,9 +4,9 @@ import MarketKit
 import Testing
 @testable import WalletCore
 
-// Cross Pay pays out on the recipient's chain, and some chains are never a supported recipient: the pair
-// is refused before the provider's asset map is read. Pairs the map decides need the real repository
-// and are checked by hand.
+/// Cross Pay pays out on the recipient's chain, and some chains are never a supported recipient: the pair
+/// is refused before the provider's asset map is read. Pairs the map decides need the real repository
+/// and are checked by hand.
 struct CrossPayServiceSupportTests {
     @Test func xrpRecipientIsNotSupported() {
         #expect(!Self.service().supports(tokenIn: Self.token(.bitcoin), tokenOut: Self.token(.xrp)))

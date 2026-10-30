@@ -4,7 +4,7 @@ import HsExtensions
 import MarketKit
 import WalletConnectSign
 
-// Mirrors EvmSendHandler on the same primitives, but honors the dApp's gas limit and never adjusts the value
+/// Mirrors EvmSendHandler on the same primitives, but honors the dApp's gas limit and never adjusts the value
 class WCEvmSendHandler {
     private let payload: WCEvmTransactionPayload
     private let request: WCRequest
@@ -24,7 +24,9 @@ class WCEvmSendHandler {
 }
 
 extension WCEvmSendHandler: ISendHandler {
-    var baseToken: Token { payload.baseToken }
+    var baseToken: Token {
+        payload.baseToken
+    }
 
     var initialTransactionSettings: InitialTransactionSettings? {
         .evm(gasPrice: payload.transaction.initialGasPrice, nonce: payload.transaction.nonce)
@@ -53,8 +55,8 @@ extension WCEvmSendHandler: ISendHandler {
         return makeSendData(gasPrice: gasPrice, evmFeeData: evmFeeData, nonce: transactionSettings?.nonce, transactionError: transactionError)
     }
 
-    // The rows are decoded synchronously from the fixed dApp transaction; only the fee needs the network.
-    // Shared by the async send path (fee estimated) and the sync preview (fee nil) so both render identically.
+    /// The rows are decoded synchronously from the fixed dApp transaction; only the fee needs the network.
+    /// Shared by the async send path (fee estimated) and the sync preview (fee nil) so both render identically.
     private func makeSendData(gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?, transactionError: Error?) -> ISendData {
         let transactionData = payload.transaction.transactionData
 
@@ -141,8 +143,8 @@ extension WCEvmSendHandler: IWCPreviewSendHandler {
         makeSendData(gasPrice: payload.transaction.initialGasPrice, evmFeeData: dAppFixedFeeData(), nonce: payload.transaction.nonce, transactionError: nil)
     }
 
-    // The fee needs no network call only when the dApp fixed both gas price and gas limit; otherwise nil,
-    // so the fee row stays pending (spinner) until sendData() estimates it.
+    /// The fee needs no network call only when the dApp fixed both gas price and gas limit; otherwise nil,
+    /// so the fee row stays pending (spinner) until sendData() estimates it.
     private func dAppFixedFeeData() -> EvmFeeData? {
         guard payload.transaction.initialGasPrice != nil, let gasLimit = payload.transaction.gasLimit else { return nil }
         return EvmFeeData(gasLimit: gasLimit, surchargedGasLimit: gasLimit)

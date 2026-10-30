@@ -26,7 +26,7 @@ struct SwapInfoView: View {
         viewModel.swap.operation == .splitSwap
     }
 
-    // A split the provider closed leaves its unpaid recipients to the provider's support, as a stopped swap does
+    /// A split the provider closed leaves its unpaid recipients to the provider's support, as a stopped swap does
     private var showsContactsButton: Bool {
         viewModel.swap.status == .actionRequired || (isSplitSwap && viewModel.swap.status == .failed)
     }

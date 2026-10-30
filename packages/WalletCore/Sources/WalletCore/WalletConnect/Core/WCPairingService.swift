@@ -20,7 +20,7 @@ class WCPairingService {
             .store(in: &cancellables)
     }
 
-    // pairs and waits for the dApp's proposal; the proposal itself is delivered through the sign client publisher
+    /// pairs and waits for the dApp's proposal; the proposal itself is delivered through the sign client publisher
     func pair(uri uriString: String) async throws {
         let uri: WalletConnectURI
         do {

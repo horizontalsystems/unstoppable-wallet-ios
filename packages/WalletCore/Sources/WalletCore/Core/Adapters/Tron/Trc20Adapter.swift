@@ -36,7 +36,7 @@ public class Trc20Adapter: BaseTronAdapter {
     }
 }
 
-// IAdapter
+/// IAdapter
 extension Trc20Adapter: IAdapter {
     public func start() {
         // started via TronKitManager

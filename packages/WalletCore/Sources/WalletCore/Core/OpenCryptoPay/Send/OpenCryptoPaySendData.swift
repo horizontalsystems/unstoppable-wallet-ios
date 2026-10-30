@@ -1,7 +1,7 @@
 import Foundation
 import MarketKit
 
-// Prepends merchant info to inner SendData. NB: recipient name/website are unauthenticated — display only.
+/// Prepends merchant info to inner SendData. NB: recipient name/website are unauthenticated — display only.
 class OpenCryptoPaySendData: ISendData {
     let inner: ISendData
     let recipient: OpenCryptoPayPayment.Recipient
@@ -15,9 +15,18 @@ class OpenCryptoPaySendData: ISendData {
         self.isExpired = isExpired
     }
 
-    var feeData: FeeData? { inner.feeData }
-    var canSend: Bool { isExpired ? false : inner.canSend }
-    var rateCoins: [Coin] { inner.rateCoins }
+    var feeData: FeeData? {
+        inner.feeData
+    }
+
+    var canSend: Bool {
+        isExpired ? false : inner.canSend
+    }
+
+    var rateCoins: [Coin] {
+        inner.rateCoins
+    }
+
     var customSendButtonTitle: String? {
         isExpired ? "open_crypto_pay.button.expired".localized : inner.customSendButtonTitle
     }

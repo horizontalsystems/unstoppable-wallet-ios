@@ -34,7 +34,7 @@ class NearAccountPickerViewModel: ObservableObject {
         publicKey.implicitAccountId
     }
 
-    // details only inform the choice: an account whose details fail to load is still listed
+    /// details only inform the choice: an account whose details fail to load is still listed
     private func account(accountId: String) async -> Account {
         async let state = try? NearKit.Kit.accountState(accountId: accountId, network: network, rpcUrls: rpcUrls, fastNearApiKey: AppConfig.fastNearApiKey)
         async let keys = try? NearKit.Kit.accessKeys(accountId: accountId, network: network, rpcUrls: rpcUrls, fastNearApiKey: AppConfig.fastNearApiKey)
@@ -172,7 +172,9 @@ extension NearAccountPickerViewModel {
         } catch is CancellationError {
             // no-op
         } catch {
-            if Task.isCancelled { return }
+            if Task.isCancelled {
+                return
+            }
             state = .failed
         }
     }
@@ -229,7 +231,9 @@ extension NearAccountPickerViewModel {
         let subtitle: String
         let warnings: [Warning]
 
-        var id: String { accountId }
+        var id: String {
+            accountId
+        }
     }
 
     enum Warning: Equatable {

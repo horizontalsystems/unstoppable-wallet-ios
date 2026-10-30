@@ -34,7 +34,7 @@ final class USwapTonFinalQuoteBuilder: USwapFinalQuoteBuilder {
         return try await buildTransfer(input: input, account: account, deposit: deposit)
     }
 
-    // server-built transaction: emulate and sign as is
+    /// server-built transaction: emulate and sign as is
     private func buildParam(input: USwapFinalQuoteFactory.Input, account: Account, jsonObject: Any) async throws -> SwapFinalQuote {
         let jsonData = try JSONSerialization.data(withJSONObject: jsonObject)
         let transactionParam = try JSONDecoder().decode(SendTransactionParam.self, from: jsonData)
@@ -70,8 +70,8 @@ final class USwapTonFinalQuoteBuilder: USwapFinalQuoteBuilder {
         )
     }
 
-    // Plain TON / jetton transfer to the deposit (the stub at preview, the real address after commit),
-    // built through the send adapter exactly as the TON send form does; the comment carries the memo.
+    /// Plain TON / jetton transfer to the deposit (the stub at preview, the real address after commit),
+    /// built through the send adapter exactly as the TON send form does; the comment carries the memo.
     private func buildTransfer(input: USwapFinalQuoteFactory.Input, account: Account, deposit: USwapFinalQuoteFactory.Input.Deposit) async throws -> SwapFinalQuote {
         // Thrown, not folded into `transactionError`: only a text memo rides a TON comment; a
         // destination tag or an unknown attachment kind would leave the deposit unmatchable.

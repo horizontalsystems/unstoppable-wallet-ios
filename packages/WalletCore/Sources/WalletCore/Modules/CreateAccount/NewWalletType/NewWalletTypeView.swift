@@ -49,7 +49,7 @@ struct NewWalletTypeView: View {
         }
     }
 
-    @ViewBuilder private func row(icon: String, title: String, description: String, action: @escaping () -> Void) -> some View {
+    private func row(icon: String, title: String, description: String, action: @escaping () -> Void) -> some View {
         Cell(
             left: {
                 ThemeImage(icon, size: 24)

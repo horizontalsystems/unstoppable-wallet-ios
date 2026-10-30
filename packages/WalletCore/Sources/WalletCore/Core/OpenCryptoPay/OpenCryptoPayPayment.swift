@@ -91,10 +91,8 @@ extension OpenCryptoPayPayment {
         }
 
         private static func validateChain(uri: AddressUri, txDetails: OpenCryptoPayProvider.Models.TransactionDetails, wallet: Wallet) throws {
-            if let uid = uri.parameters[.blockchainUid] {
-                if BlockchainType(uid: uid) != wallet.token.blockchainType {
-                    throw OpenCryptoPayManager.Error.chainMismatch
-                }
+            if let uid = uri.parameters[.blockchainUid], BlockchainType(uid: uid) != wallet.token.blockchainType {
+                throw OpenCryptoPayManager.Error.chainMismatch
             }
             guard let blockchain = Core.shared.openCryptoPay.manager.broadcasterFactory.supportedChains[txDetails.blockchain] else {
                 throw OpenCryptoPayManager.Error.chainMismatch
@@ -109,10 +107,8 @@ extension OpenCryptoPayPayment {
                 if !allowedHandledParams.contains(key) {
                     throw OpenCryptoPayManager.Error.unsupportedTxParameter(key.rawValue)
                 }
-                if case .blockchainUid = key {
-                    if BlockchainType(uid: value) != wallet.token.blockchainType {
-                        throw OpenCryptoPayManager.Error.chainMismatch
-                    }
+                if case .blockchainUid = key, BlockchainType(uid: value) != wallet.token.blockchainType {
+                    throw OpenCryptoPayManager.Error.chainMismatch
                 }
             }
         }

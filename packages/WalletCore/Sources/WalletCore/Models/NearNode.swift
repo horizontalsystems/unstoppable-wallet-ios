@@ -7,7 +7,7 @@ struct NearNode: Equatable {
 }
 
 extension NearNode {
-    // Android NearRpcSourceManager names
+    /// Android NearRpcSourceManager names
     private static let names: [String: String] = [
         "free.rpc.fastnear.com": "FastNEAR",
         "rpc.testnet.fastnear.com": "FastNEAR",

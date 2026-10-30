@@ -20,7 +20,9 @@ struct ZcashTerminalResubmission: Equatable, FetchableRecord, PersistableRecord 
         self.expiryHeight = expiryHeight
     }
 
-    static var databaseTableName: String { "zcashTerminalResubmission" }
+    static var databaseTableName: String {
+        "zcashTerminalResubmission"
+    }
 
     enum Columns: String, ColumnExpression, CaseIterable {
         case accountId

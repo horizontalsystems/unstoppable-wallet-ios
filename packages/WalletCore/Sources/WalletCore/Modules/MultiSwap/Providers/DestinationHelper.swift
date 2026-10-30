@@ -7,11 +7,11 @@ public enum DestinationHelper {
     private static var shieldedUnifiedAddresses = [String: String]()
     private static let shieldedUnifiedLock = NSLock()
 
-    // The account's unified address with shielded receivers only (Sapling + Orchard): a route memo or a refund target
-    // then names no transparent receiver. The SDK stores a fresh diversified address on every call, and a confirmation
-    // re-previews every 15 s, so one address is kept per account until the ZEC deposit is sent (the Zcash broadcaster
-    // and send handler forget it): every re-preview of one operation names the same address. No fallback: without
-    // the adapter there is nothing shielded-only to name.
+    /// The account's unified address with shielded receivers only (Sapling + Orchard): a route memo or a refund target
+    /// then names no transparent receiver. The SDK stores a fresh diversified address on every call, and a confirmation
+    /// re-previews every 15 s, so one address is kept per account until the ZEC deposit is sent (the Zcash broadcaster
+    /// and send handler forget it): every re-preview of one operation names the same address. No fallback: without
+    /// the adapter there is nothing shielded-only to name.
     static func shieldedUnifiedAddress(token: Token) async throws -> String {
         guard let account = Core.shared.accountManager.activeAccount else {
             throw SwapError.noActiveAccount

@@ -9,8 +9,8 @@ public protocol IAllowancePolicy {
     static func allowanceState(spenderAddress: Address, token: Token, amount: Decimal) async -> AllowancePolicyState?
 }
 
-// registry of externally-supplied allowance policies; first non-nil verdict wins,
-// otherwise MultiSwapAllowanceHelper falls through to its own on-chain check
+/// registry of externally-supplied allowance policies; first non-nil verdict wins,
+/// otherwise MultiSwapAllowanceHelper falls through to its own on-chain check
 public enum AllowancePolicy {
     private static var policies: [IAllowancePolicy.Type] = []
 
@@ -28,7 +28,7 @@ public enum AllowancePolicy {
         return nil
     }
 
-    // test seam: registry is global mutable state
+    /// test seam: registry is global mutable state
     static func reset() {
         policies = []
     }

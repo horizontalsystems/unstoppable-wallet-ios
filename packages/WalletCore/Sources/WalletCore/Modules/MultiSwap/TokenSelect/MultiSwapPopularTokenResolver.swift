@@ -3,7 +3,7 @@ import MarketKit
 enum MultiSwapPopularTokenResolver {
     private static let baseNativeTypes: [BlockchainType] = [.bitcoin, .ethereum, .monero, .zcash, .tron]
 
-    // priority order: first uid that has a token on a chain becomes that chain's USDT
+    /// priority order: first uid that has a token on a chain becomes that chain's USDT
     private static let usdtUids = [
         "tether",
         "polygon-bridged-usdt-polygon",

@@ -150,7 +150,6 @@ struct SecuritySettingsView: View {
         }
     }
 
-    @ViewBuilder
     private func premiumSection() -> some View {
         VStack(spacing: 0) {
             SectionHeader(image: Image.defenseIcon, text: "purchases.defense_system".localized, horizontalInsets: .margin16)
@@ -196,7 +195,6 @@ struct SecuritySettingsView: View {
         )
     }
 
-    @ViewBuilder
     private func toggledRow(title: CustomStringConvertible, subtitle: CustomStringConvertible, isOn: Binding<Bool>) -> some View {
         Cell(
             middle: {
@@ -208,7 +206,6 @@ struct SecuritySettingsView: View {
         )
     }
 
-    @ViewBuilder
     private func toggledRow(title: CustomStringConvertible, subtitle: CustomStringConvertible, isOn: Bool) -> some View {
         Cell(
             middle: {
@@ -220,7 +217,6 @@ struct SecuritySettingsView: View {
         )
     }
 
-    @ViewBuilder
     private func robberyRow() -> some View {
         Cell(
             middle: {

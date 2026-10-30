@@ -13,7 +13,7 @@ class ZnsResolver {
     /// Full viewing key of the mainnet registry (zcashnames.com/docs/resolver/verifying-state)
     static let mainnetViewingKey = "uview1209ld9y4fr2sel9q87kfjg7xm2sy53e3qf7dvcw3w8jwhhjpldl8z0vk0a6hveg4jk7xcn0rc9mr8yg77djfpc0uxrm5pqzt8q7ul4w0nvs3x5q9vmk9nm2crywtqaealek4mp47ur7ywu7g4g4xcdlwv6gnqzvu5panv5je2ps6rxmx4856unlt5wde8fpz8uhrqchmwhn2j252h3cyx5phad877xezerm6ex8l5kcfjw02ll7m0nspfufamh3ae9ea48395elptspnv6vvc70j2gcjrdze9syt8kpr2kc67flvg8687thdkpha7lpt9r4p9wjty90q2v2yjanqsr2zrecrqs7lfx9cpkmshf7jyh2vvwfqnyzwtpuy7p72hm2mjhperdafvm9u5rwa6s6urcy0uw30f687e3jnmas45qfqtwyz39kf6kxklfrdn7t4hkz56jegmlr8s8hwmt9wa8vz8zlmm76lrmzyj82nzpeqfu572njq"
 
-    // the send screen waits on the lookup; a dead Resolver must not hold it for the session's default minute
+    /// the send screen waits on the lookup; a dead Resolver must not hold it for the session's default minute
     private static let timeoutInterceptor = Adapter { request, _, completion in
         var request = request
         request.timeoutInterval = 5

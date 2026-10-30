@@ -76,7 +76,9 @@ class MetricChartViewModel: ObservableObject {
 }
 
 extension MetricChartViewModel: IChartViewModel {
-    var showAll: Bool { service.intervals.contains(where: \.byStartTime) }
+    var showAll: Bool {
+        service.intervals.contains(where: \.byStartTime)
+    }
 
     var pointSelectedItemDriver: Driver<ChartModule.SelectedPointViewItem?> {
         pointSelectedItemRelay.asDriver()
@@ -102,7 +104,9 @@ extension MetricChartViewModel: IChartViewModel {
         errorRelay.asDriver()
     }
 
-    var intervals: [String] { service.intervals.timePeriods.map { $0.shortTitle.uppercased() } }
+    var intervals: [String] {
+        service.intervals.timePeriods.map { $0.shortTitle.uppercased() }
+    }
 
     func onSelectInterval(at index: Int) {
         let chartTypes = service.intervals
@@ -124,9 +128,9 @@ extension MetricChartViewModel: IChartViewModel {
 }
 
 extension MetricChartViewModel: IChartViewTouchDelegate {
-    public func touchDown() {}
+    func touchDown() {}
 
-    public func select(item: ChartItem, indicators _: [ChartIndicator]) {
+    func select(item: ChartItem, indicators _: [ChartIndicator]) {
         HapticGenerator.instance.notification(.feedback(.soft))
 
         pointSelectedItemRelay.accept(
@@ -138,7 +142,7 @@ extension MetricChartViewModel: IChartViewTouchDelegate {
         )
     }
 
-    public func touchUp() {
+    func touchUp() {
         pointSelectedItemRelay.accept(nil)
     }
 }

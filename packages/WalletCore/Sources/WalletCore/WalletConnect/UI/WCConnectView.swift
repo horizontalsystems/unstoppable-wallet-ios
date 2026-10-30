@@ -1,7 +1,7 @@
 import MarketKit
 import SwiftUI
 
-// Connect proposal as a bottom sheet: no size-changing blocks, so it sizes stably
+/// Connect proposal as a bottom sheet: no size-changing blocks, so it sizes stably
 struct WCConnectView: View {
     // owned by WCPresenter so reject-on-dismiss can go through Coordinator.onDismiss, not the view lifecycle
     @ObservedObject private var viewModel: WCConnectViewModel
@@ -117,7 +117,7 @@ struct WCConnectView: View {
         }
     }
 
-    @ViewBuilder private var buttons: some View {
+    private var buttons: some View {
         HStack(spacing: .margin8) {
             ThemeButton(text: "button.cancel".localized, style: .secondary) {
                 viewModel.reject()

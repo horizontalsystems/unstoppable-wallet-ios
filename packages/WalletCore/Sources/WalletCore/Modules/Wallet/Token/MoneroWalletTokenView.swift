@@ -39,7 +39,7 @@ struct MoneroWalletTokenView: View {
         }
     }
 
-    @ViewBuilder private func accountView() -> some View {
+    private func accountView() -> some View {
         Cell(
             middle: {
                 MiddleTextIcon(text: "monero.account".localized)
@@ -57,7 +57,7 @@ struct MoneroWalletTokenView: View {
         )
     }
 
-    @ViewBuilder private func view(birthdayHeight: Int) -> some View {
+    private func view(birthdayHeight: Int) -> some View {
         Cell(
             middle: {
                 MiddleTextIcon(text: "birthday_height.title".localized)

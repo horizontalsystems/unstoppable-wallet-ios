@@ -20,8 +20,8 @@ final class SwapPathFinder {
     }
 
     func find(tokenIn: Token, tokenOut: Token, providers: [IMultiSwapProvider], suspensions: SwapSuspensionIndex) -> SwapPath? {
-        // Same gate as MultiSwapViewModel.syncValidProviders: a leg we would refuse to quote must
-        // not count, or we would advertise a route through a provider the backend switched off.
+        /// Same gate as MultiSwapViewModel.syncValidProviders: a leg we would refuse to quote must
+        /// not count, or we would advertise a route through a provider the backend switched off.
         func usable(provider: IMultiSwapProvider, from: Token, to: Token) -> Bool {
             guard !suspensions.isSuspended(providerId: provider.id, tokenIn: from, tokenOut: to) else {
                 return false
@@ -43,11 +43,7 @@ final class SwapPathFinder {
                 }
 
                 // No point asking about the second leg with no way in.
-                guard providers.contains(where: { usable(provider: $0, from: tokenIn, to: candidate) }) else {
-                    continue
-                }
-
-                guard providers.contains(where: { usable(provider: $0, from: candidate, to: tokenOut) }) else {
+                guard providers.contains(where: { usable(provider: $0, from: tokenIn, to: candidate) }), providers.contains(where: { usable(provider: $0, from: candidate, to: tokenOut) }) else {
                     continue
                 }
 

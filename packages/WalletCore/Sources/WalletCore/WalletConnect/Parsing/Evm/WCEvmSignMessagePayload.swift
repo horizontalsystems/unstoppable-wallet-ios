@@ -16,7 +16,9 @@ class WCEvmSignMessagePayload: WCRequestPayload, IWCTypedDataRequest {
         super.init(request: request, kind: .signMessage, from: address.eip55)
     }
 
-    override var message: Data? { messageData }
+    override var message: Data? {
+        messageData
+    }
 
     var typedDataDomain: WCTypedDataDomain? {
         guard let domain = typedData?.domain.objectValue else {
@@ -25,7 +27,7 @@ class WCEvmSignMessagePayload: WCRequestPayload, IWCTypedDataRequest {
         return WCTypedDataDomain(chainId: Self.chainId(json: domain["chainId"]), verifyingContract: domain["verifyingContract"]?.stringValue)
     }
 
-    // what the user is asked to sign, rendered for the confirmation screen
+    /// what the user is asked to sign, rendered for the confirmation screen
     var readableMessage: String {
         if let typedData {
             let encoder = JSONEncoder()

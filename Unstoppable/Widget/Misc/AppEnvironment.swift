@@ -4,9 +4,9 @@ enum AppEnvironment: String {
 
     static let current: AppEnvironment = {
         #if DEV
-            return .dev
+            .dev
         #else
-            return .prod
+            .prod
         #endif
     }()
 

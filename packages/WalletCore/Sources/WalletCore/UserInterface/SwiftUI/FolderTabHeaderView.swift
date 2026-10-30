@@ -1,7 +1,7 @@
 import SwiftUI
 
-// Horizontally scrollable tab header where the active tab is drawn as a folder tab that merges into the
-// content below. The header sits on a Tyler background and the content is expected to be Lawrence.
+/// Horizontally scrollable tab header where the active tab is drawn as a folder tab that merges into the
+/// content below. The header sits on a Tyler background and the content is expected to be Lawrence.
 struct FolderTabHeaderView: View {
     private let tabs: [Tab]
 
@@ -53,7 +53,7 @@ struct FolderTabHeaderView: View {
         .background(Color.themeTyler)
     }
 
-    @ViewBuilder private func item(tab: Tab, isActive: Bool) -> some View {
+    private func item(tab: Tab, isActive: Bool) -> some View {
         HStack(spacing: 6) {
             if let icon = tab.icon {
                 ThemeImage(icon, size: 16, colorStyle: isActive ? .primary : .secondary)
@@ -86,7 +86,7 @@ extension FolderTabHeaderView {
     }
 }
 
-// Rounded top-left corner, rounded top-right corner and a slanted right edge running down to the bottom.
+/// Rounded top-left corner, rounded top-right corner and a slanted right edge running down to the bottom.
 private struct FolderTabShape: Shape {
     let slantWidth: CGFloat
     var cornerRadius: CGFloat = 12

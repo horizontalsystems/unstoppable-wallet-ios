@@ -32,7 +32,7 @@ struct AddressSecurityCheckView: View {
         }
     }
 
-    @ViewBuilder private func checkRow(type: AddressSecurityIssueType, state: AddressSecurityCheckViewModel.CheckState) -> some View {
+    private func checkRow(type: AddressSecurityIssueType, state: AddressSecurityCheckViewModel.CheckState) -> some View {
         Cell(
             middle: {
                 MultiText(subtitle: type.checkTitle)

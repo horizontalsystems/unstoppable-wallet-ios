@@ -9,7 +9,9 @@ class MultiSwapSlippageViewModel: ObservableObject {
     @Published var slippageCautionState: CautionState = .none
     @Published var slippageString: String = "" {
         didSet {
-            if slippageString == oldValue { return }
+            if slippageString == oldValue {
+                return
+            }
 
             if let decimal = AmountDecimalParser.parseAnyDecimal(from: slippageString) {
                 slippage = decimal
@@ -21,7 +23,9 @@ class MultiSwapSlippageViewModel: ObservableObject {
 
     var slippage: Decimal {
         didSet {
-            if slippage == oldValue { return }
+            if slippage == oldValue {
+                return
+            }
             slippageString = slippage.description
 
             validateSlippage()
@@ -66,7 +70,10 @@ extension MultiSwapSlippageViewModel {
 
 public enum MultiSwapSlippage {
     public static let `default`: Decimal = 1
-    static var limitBounds: ClosedRange<Decimal> { 0.01 ... 50 }
+    static var limitBounds: ClosedRange<Decimal> {
+        0.01 ... 50
+    }
+
     static let usualHighest: Decimal = 5
 
     enum SlippageError: Error, LocalizedError {
@@ -90,8 +97,7 @@ public enum MultiSwapSlippage {
             return .caution(.init(
                 text: MultiSwapSlippage.SlippageError.invalid.localizedDescription,
                 type: .error
-            )
-            )
+            ))
         }
         if slippage > MultiSwapSlippage.limitBounds.upperBound {
             return .caution(.init(
@@ -99,8 +105,7 @@ public enum MultiSwapSlippage {
                     max: MultiSwapSlippage.limitBounds.upperBound
                 ).localizedDescription,
                 type: .error
-            )
-            )
+            ))
         }
         if slippage < MultiSwapSlippage.limitBounds.lowerBound {
             return .caution(.init(
@@ -108,8 +113,7 @@ public enum MultiSwapSlippage {
                     min: MultiSwapSlippage.limitBounds.lowerBound
                 ).localizedDescription,
                 type: .error
-            )
-            )
+            ))
         }
         if slippage >= MultiSwapSlippage.usualHighest {
             return .caution(.init(text: "swap.advanced_settings.warning.unusual_slippage".localized, type: .warning))

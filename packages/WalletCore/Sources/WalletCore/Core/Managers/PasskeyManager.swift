@@ -3,14 +3,14 @@ import Foundation
 import HdWalletKit
 
 public class PasskeyManager: NSObject {
-    // PRF salt — the credential-bound input that derives the wallet seed. MUST be identical for the
-    // registration-PRF and assertion-PRF paths, else the create-time seed wouldn't match the sign-time
-    // seed and funds derived from it would be unrecoverable.
+    /// PRF salt — the credential-bound input that derives the wallet seed. MUST be identical for the
+    /// registration-PRF and assertion-PRF paths, else the create-time seed wouldn't match the sign-time
+    /// seed and funds derived from it would be unrecoverable.
     private static let prfSalt = Data("wallet".utf8)
 
-    // Relying-party domain (WebAuthn RP ID) the passkey is bound to. No default — every caller passes it
-    // explicitly (from its app's AppConfig), so a forgotten domain is a compile error rather than a silent
-    // wrong-domain credential that can't assert.
+    /// Relying-party domain (WebAuthn RP ID) the passkey is bound to. No default — every caller passes it
+    /// explicitly (from its app's AppConfig), so a forgotten domain is a compile error rather than a silent
+    /// wrong-domain credential that can't assert.
     private let domain: String
 
     public init(domain: String) {
@@ -28,8 +28,8 @@ public class PasskeyManager: NSObject {
         return Data(bytes)
     }
 
-    // Convenience returning just the credentialID, so existing callers are unchanged.
-    // Use `register` when the full registration result (incl. attestation) is needed.
+    /// Convenience returning just the credentialID, so existing callers are unchanged.
+    /// Use `register` when the full registration result (incl. attestation) is needed.
     func create(name: String) async throws -> Data {
         try await register(name: name).credentialID
     }
@@ -61,14 +61,14 @@ public class PasskeyManager: NSObject {
         }
     }
 
-    // One-call create ceremony for a passkey-owned wallet: returns the attestation (it embeds the
-    // credential public key for on-chain validators) AND the wallet mnemonic (from PRF), so the
-    // orchestrator gets both from a single entry point.
-    //
-    // 1 Face ID: PRF is requested during the registration ceremony, so one prompt yields both the
-    // attestation and the seed. If the authenticator declines to evaluate PRF at registration, it falls
-    // back to a PRF assertion on the SAME credential (a second Face ID) — never a second registration,
-    // so it can't strand a credential.
+    /// One-call create ceremony for a passkey-owned wallet: returns the attestation (it embeds the
+    /// credential public key for on-chain validators) AND the wallet mnemonic (from PRF), so the
+    /// orchestrator gets both from a single entry point.
+    ///
+    /// 1 Face ID: PRF is requested during the registration ceremony, so one prompt yields both the
+    /// attestation and the seed. If the authenticator declines to evaluate PRF at registration, it falls
+    /// back to a PRF assertion on the SAME credential (a second Face ID) — never a second registration,
+    /// so it can't strand a credential.
     func registerWithPRF(name: String) async throws -> RegistrationWithSeed {
         guard #available(iOS 18.0, *) else { throw PasskeyError.prfNotSupported }
 
@@ -226,18 +226,18 @@ extension PasskeyManager: ASAuthorizationControllerPresentationContextProviding 
 }
 
 extension PasskeyManager {
-    // Result of a passkey registration: the credentialID plus the raw WebAuthn attestation (it embeds
-    // the credential's public key). `attestationObject` is nil if the authenticator returned none.
+    /// Result of a passkey registration: the credentialID plus the raw WebAuthn attestation (it embeds
+    /// the credential's public key). `attestationObject` is nil if the authenticator returned none.
     struct Registration {
         let credentialID: Data
         let attestationObject: Data?
-        // PRF output evaluated AT registration (iOS 18), when requested and returned by the authenticator;
-        // nil if PRF wasn't requested or the authenticator deferred it to an assertion.
+        /// PRF output evaluated AT registration (iOS 18), when requested and returned by the authenticator;
+        /// nil if PRF wasn't requested or the authenticator deferred it to an assertion.
         let prfOutput: Data?
     }
 
-    // Result of the combined create ceremony (`registerWithPRF`): the attestation (public key) plus the
-    // wallet mnemonic derived from the credential's PRF output.
+    /// Result of the combined create ceremony (`registerWithPRF`): the attestation (public key) plus the
+    /// wallet mnemonic derived from the credential's PRF output.
     struct RegistrationWithSeed {
         let credentialID: Data
         let attestationObject: Data?

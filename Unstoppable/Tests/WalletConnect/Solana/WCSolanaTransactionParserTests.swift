@@ -71,7 +71,7 @@ struct WCSolanaTransactionParserTests {
     }
 
     @Test func signAndSendIsNotSignOnly() throws {
-        let request = try request(method: WCSolanaTransactionPayload.signAndSendMethod, params: ["transaction": try raw([ours]).base64EncodedString(), "sendOptions": ["skipPreflight": true]])
+        let request = try request(method: WCSolanaTransactionPayload.signAndSendMethod, params: ["transaction": raw([ours]).base64EncodedString(), "sendOptions": ["skipPreflight": true]])
         let result = try parser(address: ours).parse(request: request)
         let payload = try #require(result)
         #expect(payload.isSignOnly == false)

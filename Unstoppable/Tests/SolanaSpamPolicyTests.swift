@@ -6,9 +6,9 @@ import Testing
 import TronKit
 @testable import WalletCore
 
-// Android-parity fixtures for the Solana spam decision path:
-// SpamFilterChain (OutgoingPoisoningFilter) + SolanaLowAmountCondition + AddressSimilarity/TimeCorrelation,
-// composed the same way SpamManager.evaluateSpam does. SOL limit 0.0001: spam < 0.00001, risk < 0.0001, danger < 0.0005.
+/// Android-parity fixtures for the Solana spam decision path:
+/// SpamFilterChain (OutgoingPoisoningFilter) + SolanaLowAmountCondition + AddressSimilarity/TimeCorrelation,
+/// composed the same way SpamManager.evaluateSpam does. SOL limit 0.0001: spam < 0.00001, risk < 0.0001, danger < 0.0005.
 struct SolanaSpamPolicyTests {
     // MARK: - Direct incoming
 
@@ -85,7 +85,7 @@ struct SolanaSpamPolicyTests {
         #expect(spam == false)
     }
 
-    // a cent-sized stablecoin leg is ordinary dust, not spam on its own; below a tenth of a cent it would be
+    /// a cent-sized stablecoin leg is ordinary dust, not spam on its own; below a tenth of a cent it would be
     @Test func outgoingStablecoinDustLegIsNotSpamAlone() throws {
         let events = TransferEvents(incoming: [event(usdc: "5")], outgoing: [event(usdc: "-0.05")])
         let spam = try isSpam(events: events)
@@ -118,8 +118,8 @@ struct SolanaSpamPolicyTests {
 
     // MARK: - Counterparty correlation (Android regression: watch address 3VHMK…LH7Q)
 
-    // 100 SOL arrived from realSender, seconds later 0.00001 SOL dust from a look-alike of that sender.
-    // Dust alone is +3 (at the spam threshold, strict <); prefix +4, suffix +4 and time +3 push it over.
+    /// 100 SOL arrived from realSender, seconds later 0.00001 SOL dust from a look-alike of that sender.
+    /// Dust alone is +3 (at the spam threshold, strict <); prefix +4, suffix +4 and time +3 push it over.
     @Test func dustMimicOfIncomingSenderIsSpam() throws {
         let events = TransferEvents(incoming: [event(sol: "0.00001", from: Self.dustMimic)])
         let spam = try isSpam(events: events, timestamp: 1000, counterparties: [(Self.realSender, 900)])
@@ -132,15 +132,15 @@ struct SolanaSpamPolicyTests {
         #expect(spam == false)
     }
 
-    // A Solana counterparty carries no block height, so proximity is worth the time score (+3) only:
-    // dust +3 and time +3 stay below the threshold. A block bonus (+4) would wrongly make this spam.
+    /// A Solana counterparty carries no block height, so proximity is worth the time score (+3) only:
+    /// dust +3 and time +3 stay below the threshold. A block bonus (+4) would wrongly make this spam.
     @Test func timeCorrelationAloneStaysBelowThreshold() throws {
         let events = TransferEvents(incoming: [event(sol: "0.00005", from: Self.dustMimic)])
         let spam = try isSpam(events: events, timestamp: 1000, counterparties: [(Self.address, 900)])
         #expect(spam == false)
     }
 
-    // Correlation is gated to the gray zone: a normal amount scores 0 and exits before any look-alike check
+    /// Correlation is gated to the gray zone: a normal amount scores 0 and exits before any look-alike check
     @Test func normalAmountFromMimicIsNotSpam() throws {
         let events = TransferEvents(incoming: [event(sol: "1", from: Self.dustMimic)])
         let spam = try isSpam(events: events, timestamp: 1000, counterparties: [(Self.realSender, 900)])
@@ -198,7 +198,7 @@ struct SpamCounterpartyFactoryTests {
         #expect(factory.cachedOutputs(from: record).map(\.address) == ["Tsender"])
     }
 
-    // Records that only carry a placeholder height (Solana stores 0 once confirmed) must not feed block correlation
+    /// Records that only carry a placeholder height (Solana stores 0 once confirmed) must not feed block correlation
     @Test func placeholderBlockHeightIsDropped() {
         let token = Self.token(blockchainType: .ethereum, code: "ETH")
         let record = EvmIncomingTransactionRecord(
@@ -265,7 +265,7 @@ extension SolanaSpamPolicyTests {
         TransferEvent(address: Self.address, value: AppValue(value: amount))
     }
 
-    // Seeds the persisted counterparty context the way SpamManager builds it from earlier records
+    /// Seeds the persisted counterparty context the way SpamManager builds it from earlier records
     private func makeCache(counterparties: [(address: String, timestamp: Int)]) throws -> OutputTransactionCache {
         let path = FileManager.default.temporaryDirectory.appendingPathComponent("spam-policy-tests-\(UUID().uuidString).sqlite").path
         let storage = try ScannedTransactionStorage(dbPool: DatabasePool(path: path))

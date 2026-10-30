@@ -67,11 +67,7 @@ public class StellarKitManager {
     private func handle(assets: [StellarKit.Asset], account: Account) {
         // print("HANDLE ASSETS: \(assets.map(\.code))")
 
-        guard Core.shared.config.autoEnableTokensOnReceive else {
-            return
-        }
-
-        guard !assets.isEmpty else {
+        guard Core.shared.config.autoEnableTokensOnReceive, !assets.isEmpty else {
             return
         }
 

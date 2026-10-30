@@ -92,12 +92,16 @@ extension AddTokenViewModel {
     }
 
     var loading: Bool {
-        if case .loading = state { return true }
+        if case .loading = state {
+            return true
+        }
         return false
     }
 
     var buttonEnabled: Bool {
-        if case .fetched = state { return true }
+        if case .fetched = state {
+            return true
+        }
         return false
     }
 

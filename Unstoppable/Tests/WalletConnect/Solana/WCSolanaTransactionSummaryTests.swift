@@ -7,7 +7,7 @@ struct WCSolanaTransactionSummaryTests {
     private let ours = SolanaRawSigningFixtures.oursPublicKey
     private let other = SolanaRawSigningFixtures.other
 
-    // 1000-lamport system transfer from `other` to `ours`
+    /// 1000-lamport system transfer from `other` to `ours`
     @Test func decodesSystemTransfer() {
         let summary = WCSolanaTransactionSummary(rawTransaction: SolanaRawSigningFixtures.partiallySigned)
 
@@ -36,7 +36,7 @@ struct WCSolanaTransactionSummaryTests {
     }
 
     @Test func swapProgramMarksSwapWithoutAmounts() throws {
-        let raw = SolanaRawSigningFixtures.rawTransaction(signerKeys: [ours], programKey: try PublicKey(KnownPrograms.jupiterV6).data)
+        let raw = try SolanaRawSigningFixtures.rawTransaction(signerKeys: [ours], programKey: PublicKey(KnownPrograms.jupiterV6).data)
         let summary = WCSolanaTransactionSummary(rawTransaction: raw)
 
         #expect(summary.method == .swap)
@@ -72,7 +72,7 @@ struct WCSolanaTransactionSummaryTests {
     }
 
     @Test func invalidUnusedIndexIsNotIgnoredByKnownProgram() throws {
-        let raw = SolanaRawSigningFixtures.summaryTransaction(keys: [ours, try PublicKey(KnownPrograms.jupiterV6).data], instructions: [.init(program: 1, accounts: [255], data: Data())])
+        let raw = try SolanaRawSigningFixtures.summaryTransaction(keys: [ours, PublicKey(KnownPrograms.jupiterV6).data], instructions: [.init(program: 1, accounts: [255], data: Data())])
         #expect(WCSolanaTransactionSummary(rawTransaction: raw).warnings == [.unreadable])
     }
 
@@ -138,13 +138,13 @@ struct WCSolanaTransactionSummaryTests {
     }
 
     @Test(arguments: [UInt8(0), 1, 4]) func closeAccountOnlyAcceptsKnownOwnerDestination(destination: UInt8) throws {
-        let raw = SolanaRawSigningFixtures.summaryTransaction(keys: [ours, try PublicKey(other).data, PublicKey.systemProgramId.data, PublicKey.tokenProgramId.data], instructions: [.init(program: 2, accounts: [0, 0], data: SolanaRawSigningFixtures.systemTransferData), .init(program: 3, accounts: [0, destination, 0], data: Data([9]))], version: 0x80, writableLookupIndices: [1])
+        let raw = try SolanaRawSigningFixtures.summaryTransaction(keys: [ours, PublicKey(other).data, PublicKey.systemProgramId.data, PublicKey.tokenProgramId.data], instructions: [.init(program: 2, accounts: [0, 0], data: SolanaRawSigningFixtures.systemTransferData), .init(program: 3, accounts: [0, destination, 0], data: Data([9]))], version: 0x80, writableLookupIndices: [1])
         let summary = WCSolanaTransactionSummary(rawTransaction: raw)
         #expect(summary.warnings == (destination == 0 ? [] : [.unknownInstructions]))
     }
 
     @Test func sourceIsAuthorityNotTokenAccountOrFeePayer() throws {
-        let raw = SolanaRawSigningFixtures.summaryTransaction(keys: [ours, try PublicKey(other).data, PublicKey.tokenProgramId.data], instructions: [.init(program: 2, accounts: [0, 0, 1], data: Data([3, 1, 0, 0, 0, 0, 0, 0, 0]))])
+        let raw = try SolanaRawSigningFixtures.summaryTransaction(keys: [ours, PublicKey(other).data, PublicKey.tokenProgramId.data], instructions: [.init(program: 2, accounts: [0, 0, 1], data: Data([3, 1, 0, 0, 0, 0, 0, 0, 0]))])
         let summary = WCSolanaTransactionSummary(rawTransaction: raw)
         #expect(summary.feePayer == SolanaRawSigningFixtures.ours)
         #expect(summary.transfers.first?.source == .address(other))
@@ -170,7 +170,7 @@ struct WCSolanaTransactionSummaryTests {
     }
 
     @Test func fusionIsRecognizedOnlyWhenInvoked() throws {
-        let keys = [ours, try PublicKey(KnownPrograms.oneInchFusion).data, PublicKey.systemProgramId.data]
+        let keys = try [ours, PublicKey(KnownPrograms.oneInchFusion).data, PublicKey.systemProgramId.data]
         let swap = SolanaRawSigningFixtures.summaryTransaction(keys: keys, instructions: [.init(program: 1, accounts: [0], data: Data())])
         let transfer = SolanaRawSigningFixtures.summaryTransaction(keys: keys, instructions: [.init(program: 2, accounts: [0, 0], data: SolanaRawSigningFixtures.systemTransferData)])
         #expect(KnownPrograms.all.contains(KnownPrograms.oneInchFusion))

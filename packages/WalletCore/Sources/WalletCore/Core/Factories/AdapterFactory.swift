@@ -85,10 +85,7 @@ public class AdapterFactory {
     }
 
     private func evmAdapter(wallet: Wallet) -> IAdapter? {
-        guard let blockchainType = evmBlockchainManager.blockchain(token: wallet.token)?.type else {
-            return nil
-        }
-        guard let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper(account: wallet.account, blockchainType: blockchainType) else {
+        guard let blockchainType = evmBlockchainManager.blockchain(token: wallet.token)?.type, let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper(account: wallet.account, blockchainType: blockchainType) else {
             return nil
         }
 
@@ -96,13 +93,7 @@ public class AdapterFactory {
     }
 
     private func eip20Adapter(address: String, wallet: Wallet) -> IAdapter? {
-        guard let blockchainType = evmBlockchainManager.blockchain(token: wallet.token)?.type else {
-            return nil
-        }
-        guard let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper(account: wallet.account, blockchainType: blockchainType) else {
-            return nil
-        }
-        guard let baseToken = evmBlockchainManager.baseToken(blockchainType: blockchainType) else {
+        guard let blockchainType = evmBlockchainManager.blockchain(token: wallet.token)?.type, let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper(account: wallet.account, blockchainType: blockchainType), let baseToken = evmBlockchainManager.baseToken(blockchainType: blockchainType) else {
             return nil
         }
 
@@ -122,7 +113,7 @@ public class AdapterFactory {
         return TronAdapter(tronKitWrapper: tronKitWrapper)
     }
 
-    // THORChain (RUNE) and Maya (CACAO) share the ThorChainKit; pick the per-chain manager
+    /// THORChain (RUNE) and Maya (CACAO) share the ThorChainKit; pick the per-chain manager
     func thorChainFamilyKitManager(blockchainType: BlockchainType) -> ThorChainKitManager {
         blockchainType == .mayaChain ? mayaChainKitManager : thorChainKitManager
     }
@@ -144,8 +135,7 @@ public class AdapterFactory {
         do {
             // Every denom of an account shares one kit; the wrapper is cached per account
             let wrapper = try thorChainFamilyKitManager(blockchainType: blockchainType).thorChainKitWrapper(account: wallet.account)
-            let adapter = try ThorChainAdapter(thorChainKitWrapper: wrapper, denom: denom)
-            return adapter
+            return try ThorChainAdapter(thorChainKitWrapper: wrapper, denom: denom)
         } catch {
             return nil
         }

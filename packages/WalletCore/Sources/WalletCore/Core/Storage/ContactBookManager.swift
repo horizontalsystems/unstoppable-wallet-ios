@@ -79,7 +79,7 @@ public class ContactBookManager {
         syncLocalFile()
     }
 
-    //  ================================ LOCAL ==================================================== //
+    ///  ================================ LOCAL ==================================================== //
     func syncLocalFile() {
         state = .loading
         guard let localUrl else {
@@ -143,7 +143,7 @@ public class ContactBookManager {
         state = .failed(localError)
     }
 
-    // ================================== REMOTE =================================================== //
+    /// ================================== REMOTE =================================================== //
     private func syncCloudFile(localBook: ContactBook) {
         if let iCloudUrl {
             logger?.debug("=C-MANAGER> Try read remote book")
@@ -298,8 +298,7 @@ public class ContactBookManager {
             throw StorageError.cantParseData
         }
 
-        let book = try Mapper<ContactBook>().map(JSON: json)
-        return book
+        return try Mapper<ContactBook>().map(JSON: json)
     }
 
     private func updatedContacts(contacts: [Contact], by contact: Contact) -> [Contact] {
@@ -457,9 +456,7 @@ extension ContactBookManager {
     static func decrypt(crypto: BackupCrypto, passphrase: String) throws -> [BackupContact] {
         let data = try crypto.decrypt(passphrase: passphrase)
         let decoder = JSONDecoder()
-        let contacts = try decoder.decode([BackupContact].self, from: data)
-
-        return contacts
+        return try decoder.decode([BackupContact].self, from: data)
     }
 }
 

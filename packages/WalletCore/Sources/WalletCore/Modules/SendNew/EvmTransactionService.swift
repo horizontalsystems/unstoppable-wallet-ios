@@ -32,7 +32,9 @@ class EvmTransactionService: TransactionService {
     private let updateSubject = PassthroughSubject<Void, Never>()
 
     private var networkGasPrice: GasPrice?
-    var recommendedGasPrice: GasPrice? { gasPriceData?.recommended }
+    var recommendedGasPrice: GasPrice? {
+        gasPriceData?.recommended
+    }
 
     private var gasPriceData: GasPriceData? {
         networkGasPrice.map { Self.gasPriceData(network: $0, previousTransaction: previousTransaction, custom: gasPrice) }

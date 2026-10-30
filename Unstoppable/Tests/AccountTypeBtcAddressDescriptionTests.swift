@@ -2,7 +2,7 @@ import MarketKit
 import Testing
 @testable import WalletCore
 
-// A watched UTXO address is labelled with its own network's coin, not always BTC
+/// A watched UTXO address is labelled with its own network's coin, not always BTC
 struct AccountTypeBtcAddressDescriptionTests {
     @Test(arguments: [
         (BlockchainType.bitcoin, "BTC"),

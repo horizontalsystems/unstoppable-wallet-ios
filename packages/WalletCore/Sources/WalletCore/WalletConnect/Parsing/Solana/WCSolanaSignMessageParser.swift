@@ -13,10 +13,7 @@ class WCSolanaSignMessageParser: IWCParser {
             return nil
         }
 
-        guard let params = try? request.params.get(Params.self) else {
-            throw ParsingError.malformedParams
-        }
-        guard (try? SolanaKit.PublicKey(params.pubkey)) != nil else {
+        guard let params = try? request.params.get(Params.self), (try? SolanaKit.PublicKey(params.pubkey)) != nil else {
             throw ParsingError.malformedParams
         }
         // bound the message before the O(n²) Base58 decode

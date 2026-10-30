@@ -3,9 +3,9 @@ import RxSwift
 import Testing
 @testable import WalletCore
 
-// Android AddressHandlerNear + NearAddressValidator: which inputs are NEAR accounts, and that only a
-// definite "no" from the node refuses a name. With no RPC endpoint the node never answers, so these
-// run offline; a missing name being refused needs the network (manual checklist, spec §10.4 A3).
+/// Android AddressHandlerNear + NearAddressValidator: which inputs are NEAR accounts, and that only a
+/// definite "no" from the node refuses a name. With no RPC endpoint the node never answers, so these
+/// run offline; a missing name being refused needs the network (manual checklist, spec §10.4 A3).
 struct NearAddressParserItemTests {
     private static let implicit = "98793cd91a3f870fb126f66285808c7e094afcfc4eda8a970f6648cdf0dbd6de"
     private static let ethImplicit = "0xa9e3026b727f15f3c3cdaa931e3c56955086513f"
@@ -25,7 +25,7 @@ struct NearAddressParserItemTests {
         #expect(!bareWord && !deterministic && !malformed)
     }
 
-    // the first transfer creates an implicit account: nothing to ask the node
+    /// the first transfer creates an implicit account: nothing to ask the node
     @Test func implicitAccountIsAccepted() async throws {
         let implicit = try await handle(Self.implicit)
         let ethImplicit = try await handle(Self.ethImplicit)
@@ -34,7 +34,7 @@ struct NearAddressParserItemTests {
         #expect(ethImplicit.raw == Self.ethImplicit)
     }
 
-    // the node did not answer: a blip while typing must not reject a well-formed name
+    /// the node did not answer: a blip while typing must not reject a well-formed name
     @Test func unansweredLookupLetsANameThrough() async throws {
         let named = try await handle("alice.near")
 

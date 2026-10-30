@@ -32,7 +32,7 @@ struct CopyConfirmationWrapperView: View {
                         ),
                     ])
                 ),
-            ],
+            ]
         )
     }
 }

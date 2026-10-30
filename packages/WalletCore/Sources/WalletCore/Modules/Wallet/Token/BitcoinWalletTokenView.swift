@@ -35,7 +35,7 @@ struct BitcoinWalletTokenView: View {
                 info: .init(
                     title: "balance.token.locked.info.title".localized,
                     description: "balance.token.locked.info.description".localized
-                ),
+                )
             )
             .listRowBackground(Color.clear)
             .listRowInsets(EdgeInsets())

@@ -16,8 +16,8 @@ enum SplitSwapError: Error {
     case invalidRoute
 }
 
-// A split swap quote: one output token delivered to several addresses. `expectedBuyAmount` is the
-// sum of the outputs, so the standard quote sorting and the output box work unchanged.
+/// A split swap quote: one output token delivered to several addresses. `expectedBuyAmount` is the
+/// sum of the outputs, so the standard quote sorting and the output box work unchanged.
 public final class SplitMultiSwapQuote: MultiSwapQuote {
     public let percents: [Int]
     public let outputAmounts: [Decimal]
@@ -32,14 +32,14 @@ public final class SplitMultiSwapQuote: MultiSwapQuote {
     }
 }
 
-// The previewed split: the quote of the one deposit transfer, and each output's expected amount in recipient order
+/// The previewed split: the quote of the one deposit transfer, and each output's expected amount in recipient order
 public struct SplitSwapPreview {
     public let quote: SwapFinalQuote
     public let outputAmounts: [Decimal]
 }
 
-// A created split order: the transfer to send (its amount out is the committed total) and the
-// `splitUuid` the split is tracked by as a whole
+/// A created split order: the transfer to send (its amount out is the committed total) and the
+/// `splitUuid` the split is tracked by as a whole
 public struct SplitSwapCommitment {
     public let quote: SwapFinalQuote
     public let splitUuid: String

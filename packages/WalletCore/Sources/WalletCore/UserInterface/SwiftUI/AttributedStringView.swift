@@ -6,7 +6,7 @@ struct AttributedStringView: View {
 
     @State private var height: CGFloat = .zero
 
-    public var body: some View {
+    var body: some View {
         InternalLabelView(attributedString: attributedString, dynamicHeight: $height)
             .frame(minHeight: height)
     }

@@ -4,8 +4,8 @@ import StellarKit
 import Testing
 @testable import WalletCore
 
-// Android send v2 parity on the confirmation: a refusal that needs new input shows a disabled
-// Send (a custom button title); every other error leaves the title empty, so Refresh stays.
+/// Android send v2 parity on the confirmation: a refusal that needs new input shows a disabled
+/// Send (a custom button title); every other error leaves the title empty, so Refresh stays.
 struct StellarXrpSendButtonTests {
     @Test func stellarBelowMinimumFirstDepositDisablesSend() {
         #expect(stellarTitle(StellarSendHelper.TransactionError.belowMinimumFirstDeposit(minimum: 1)) == "button.send".localized)

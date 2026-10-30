@@ -3,8 +3,8 @@ import MarketKit
 import Testing
 @testable import WalletCore
 
-// The NEAR account a restored phrase opens is kept as a restore setting, as Android does
-// (`RestoreSettingType.NearAccountId`, "near_account_id"); its key is shared by the database and the backup.
+/// The NEAR account a restored phrase opens is kept as a restore setting, as Android does
+/// (`RestoreSettingType.NearAccountId`, "near_account_id"); its key is shared by the database and the backup.
 struct NearRestoreSettingsTests {
     @Test func keyMatchesAndroid() {
         #expect(RestoreSettingType(rawValue: "near_account_id") == .nearAccountId)
@@ -17,7 +17,7 @@ struct NearRestoreSettingsTests {
         #expect(settings.nearAccountId == "alice.near")
     }
 
-    // a hand-edited backup must not leave the wallet without an account: the implicit one opens instead
+    /// a hand-edited backup must not leave the wallet without an account: the implicit one opens instead
     @Test func emptyOrInvalidAccountIsIgnored() {
         let empty: RestoreSettings = [.nearAccountId: ""]
         let invalid: RestoreSettings = [.nearAccountId: "Alice..near"]
@@ -28,7 +28,7 @@ struct NearRestoreSettingsTests {
         #expect(none.nearAccountId == nil)
     }
 
-    // a new phrase controls only its implicit account
+    /// a new phrase controls only its implicit account
     @Test func createdAccountHasNoChoice() {
         #expect(RestoreSettingType.nearAccountId.createdAccountValue(blockchainType: .near) == nil)
     }

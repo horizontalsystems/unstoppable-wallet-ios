@@ -26,7 +26,7 @@ class ReceiveAddressViewItemFactory {
             copyValue: uri,
             highlightedDescription: description(item: item),
             qrItem: qrItem,
-            amount: amountString,
+            amount: amountString
         )
     }
 

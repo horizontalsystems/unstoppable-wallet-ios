@@ -11,7 +11,9 @@ class WCSolanaSignMessagePayload: WCRequestPayload {
         super.init(request: request, kind: .signMessage, from: publicKey)
     }
 
-    override var message: Data? { messageData }
+    override var message: Data? {
+        messageData
+    }
 
     var readableMessage: String {
         String(data: messageData, encoding: .utf8) ?? messageData.hs.hexString

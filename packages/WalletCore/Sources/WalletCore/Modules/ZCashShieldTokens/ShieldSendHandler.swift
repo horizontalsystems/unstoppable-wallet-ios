@@ -128,7 +128,7 @@ extension ShieldSendHandler {
             flowFields.append(.amount(
                 token: token,
                 appValueType: .regular(appValue: AppValue(token: token, value: amount)),
-                currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
+                currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) }
             ))
             if let recipient {
                 flowFields.append(
@@ -183,11 +183,7 @@ extension ShieldSendHandler {
 
 extension ShieldSendHandler {
     static func instance(amount: Decimal, recipient: Recipient?, memo: String?) -> ShieldSendHandler? {
-        guard let token = try? Core.shared.coinManager.token(query: .init(blockchainType: .zcash, tokenType: .native)) else {
-            return nil
-        }
-
-        guard let adapter = Core.shared.adapterManager.adapter(for: token) as? ZcashAdapter else {
+        guard let token = try? Core.shared.coinManager.token(query: .init(blockchainType: .zcash, tokenType: .native)), let adapter = Core.shared.adapterManager.adapter(for: token) as? ZcashAdapter else {
             return nil
         }
 

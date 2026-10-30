@@ -54,9 +54,9 @@ enum ZcashFileStore {
         try dataDirectoryUrl().appendingPathComponent(outputParamsFilename)
     }
 
-    // One-time cleanup: promote any pre-existing per-wallet sapling params
-    // ("sapling-{spend,output}_<uniqueId>.params") to the shared, wallet-agnostic
-    // location so existing users don't have to re-download ~51MB.
+    /// One-time cleanup: promote any pre-existing per-wallet sapling params
+    /// ("sapling-{spend,output}_<uniqueId>.params") to the shared, wallet-agnostic
+    /// location so existing users don't have to re-download ~51MB.
     static func migrateSharedSaplingParamsIfNeeded() {
         let fileManager = FileManager.default
         guard let dir = try? dataDirectoryUrl(),

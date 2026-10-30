@@ -172,7 +172,7 @@ struct ThorChainKitManagerTests {
         #expect(!Self.hasSigner(wrapper))
     }
 
-    // a watched address belongs to one network; the other manager cannot derive it and stops before touching endpoints
+    /// a watched address belongs to one network; the other manager cannot derive it and stops before touching endpoints
     @Test func watchAccountOfOtherNetworkFailsBeforeFactoryAccess() {
         let accounts = [
             (ThorChainKitManager(endpointProvider: FailingThorChainEndpointProvider(), network: .mayaMainnet), Self.watchAccount(id: "thor-in-maya", type: .thorChainAddress(address: Self.thorVector))),
@@ -205,10 +205,10 @@ struct ThorChainKitManagerTests {
     }
 
     private static let thorVector = "thor1le9eykyndunax8k24w8fykd8ndx35w2h27c008"
-    // the same key under the Maya hrp
+    /// the same key under the Maya hrp
     private static let mayaVector = "maya1le9eykyndunax8k24w8fykd8ndx35w2h2fxreh"
 
-    // SendQuote has no public initializer, so a send cannot be driven offline; the stored signer is read instead
+    /// SendQuote has no public initializer, so a send cannot be driven offline; the stored signer is read instead
     private static func hasSigner(_ wrapper: ThorChainKitWrapper) -> Bool {
         Mirror(reflecting: wrapper).children.first { $0.label == "signer" }?.value is ThorChainKit.Signer
     }
@@ -258,17 +258,31 @@ struct ThorChainKitManagerTests {
 private struct RegisteredThorAddressProvider: IAccountAddressProvider {
     let address: ThorChainKit.Address
 
-    func evmAddress(account _: Account, blockchainType _: BlockchainType) throws -> EvmKit.Address? { nil }
-    func tronAddress(account _: Account) throws -> TronKit.Address? { nil }
+    func evmAddress(account _: Account, blockchainType _: BlockchainType) throws -> EvmKit.Address? {
+        nil
+    }
+
+    func tronAddress(account _: Account) throws -> TronKit.Address? {
+        nil
+    }
+
     func thorChainAddress(account: Account) throws -> ThorChainKit.Address? {
         account.id == "provider-boundary" ? address : nil
     }
 }
 
 private struct LegacyAddressProvider: IAccountAddressProvider {
-    func evmAddress(account _: Account, blockchainType _: BlockchainType) throws -> EvmKit.Address? { nil }
-    func tronAddress(account _: Account) throws -> TronKit.Address? { nil }
-    func thorChainAddress(account _: Account) throws -> ThorChainKit.Address? { nil }
+    func evmAddress(account _: Account, blockchainType _: BlockchainType) throws -> EvmKit.Address? {
+        nil
+    }
+
+    func tronAddress(account _: Account) throws -> TronKit.Address? {
+        nil
+    }
+
+    func thorChainAddress(account _: Account) throws -> ThorChainKit.Address? {
+        nil
+    }
 }
 
 private struct StaticThorChainEndpointProvider: IThorChainEndpointConfigurationProvider {

@@ -1,5 +1,7 @@
 class MoneroReceiveAddressService: BaseReceiveAddressService {
-    var moneroAdapter: MoneroAdapter? { super.adapter as? MoneroAdapter }
+    var moneroAdapter: MoneroAdapter? {
+        super.adapter as? MoneroAdapter
+    }
 
     override func dataStatus(_ dataStatus: DataStatus<DepositAddress>, isMainNet: Bool) -> DataStatus<ReceiveAddress> {
         let assetReceiveAddress = super.dataStatus(dataStatus, isMainNet: isMainNet)

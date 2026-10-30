@@ -9,7 +9,9 @@ class OpenCryptoPayPaymentManager {
     private var cancellables = Set<AnyCancellable>()
 
     private let updatedSubject = PassthroughSubject<Void, Never>()
-    var updatedPublisher: AnyPublisher<Void, Never> { updatedSubject.eraseToAnyPublisher() }
+    var updatedPublisher: AnyPublisher<Void, Never> {
+        updatedSubject.eraseToAnyPublisher()
+    }
 
     init(storage: OpenCryptoPayPaymentStorage, accountManager: AccountManager, logger: Logger?) {
         self.storage = storage
@@ -46,8 +48,7 @@ extension OpenCryptoPayPaymentManager {
 
     func pending() -> [OpenCryptoPayPaymentRecord] {
         do {
-            let result = try storage.pending()
-            return result
+            return try storage.pending()
         } catch {
             logger?.log(level: .error, message: "OCP pending read failed: \(error)")
             return []
@@ -95,7 +96,7 @@ extension OpenCryptoPayPaymentManager {
 }
 
 extension OpenCryptoPayPaymentManager {
-    // strip leading 0x only; no lowercasing (base58 is case-sensitive, kit hex is already lowercase)
+    /// strip leading 0x only; no lowercasing (base58 is case-sensitive, kit hex is already lowercase)
     static func normalized(_ hash: String) -> String {
         hash.hasPrefix("0x") ? String(hash.dropFirst(2)) : hash
     }

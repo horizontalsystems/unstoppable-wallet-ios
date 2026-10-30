@@ -1,7 +1,7 @@
 import Foundation
 
-// Independent vector generated with python `cryptography` (Ed25519) + SLIP-0010 m/44'/501'/0'/0':
-// legacy transaction with two required signers — fee payer `other` (already signed) and `ours`.
+/// Independent vector generated with python `cryptography` (Ed25519) + SLIP-0010 m/44'/501'/0'/0':
+/// legacy transaction with two required signers — fee payer `other` (already signed) and `ours`.
 enum SolanaRawSigningFixtures {
     static let seed = data(hex: "c914accd10a4a2d9e9103d5f94e903aec5b22f147e7ecc16ef94386e77f9247853dafa966376723826d38c2c082793b84f2462cefb2d2e8a6cbedf0a0718bf6a")
     static let foreignSeed = data(hex: "656771905e1ef731f65cd0a0d9fb061238380a1a012e6abdf846ecc7d2ea36fd656771905e1ef731f65cd0a0d9fb061238380a1a012e6abdf846ecc7d2ea36fd")
@@ -30,11 +30,13 @@ extension SolanaRawSigningFixtures {
         let data: Data
     }
 
-    // Independent wire fixture: deliberately allows malformed indices/versions for negative cases.
+    /// Independent wire fixture: deliberately allows malformed indices/versions for negative cases.
     static func summaryTransaction(keys: [Data], instructions: [Instruction], version: UInt8? = nil, writableLookupIndices: [UInt8] = [], readonlyLookupIndices: [UInt8] = []) -> Data {
         var transaction = Data([1])
         transaction.append(Data(repeating: 0, count: 64))
-        if let version { transaction.append(version) }
+        if let version {
+            transaction.append(version)
+        }
         transaction.append(contentsOf: [1, 0, 0, UInt8(keys.count)])
         keys.forEach { transaction.append($0) }
         transaction.append(Data(repeating: 0x11, count: 32))
@@ -61,7 +63,7 @@ extension SolanaRawSigningFixtures {
 
     static let systemTransferData = Data([2, 0, 0, 0, 0xE8, 3, 0, 0, 0, 0, 0, 0])
 
-    // minimal legacy transaction: given signer keys + one program, one instruction, zero signatures
+    /// minimal legacy transaction: given signer keys + one program, one instruction, zero signatures
     static func rawTransaction(signerKeys: [Data], programKey: Data = Data(repeating: 0, count: 32), accountIndices: [UInt8] = [0], instructionData: Data = Data()) -> Data {
         var message = Data([UInt8(signerKeys.count), 0, 1, UInt8(signerKeys.count + 1)])
         signerKeys.forEach { message.append($0) }

@@ -17,7 +17,7 @@ extension TronAdapter {
     }
 }
 
-// IAdapter
+/// IAdapter
 extension TronAdapter: IAdapter {
     func start() {
         // started via TronKitManager

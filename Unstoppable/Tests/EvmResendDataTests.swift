@@ -88,7 +88,7 @@ struct EvmResendDataTests {
         try expectSwapCard(sections[0], incoming: false, token: baseToken, value: 1, limited: !exactInput)
         try expectSwapCard(sections[1], incoming: true, token: outputToken, value: 2, limited: exactInput)
         let recipient = try #require(sections[2].fields.first?.content as? AddressField)
-        #expect(recipient.value == (try address("3").eip55))
+        #expect(try recipient.value == (address("3").eip55))
         try expectSettings(sections[3])
         #expect(data.rateCoins.map(\.uid) == ["ethereum", "tether"])
         #expect(data.transactionData?.input == Data([0xAB, 0xCD]))
@@ -147,7 +147,7 @@ struct EvmResendDataTests {
         let spender = try #require(sections[1].fields.first?.content as? RecipientField)
         try expectSettings(sections[1])
         #expect(amount.token == outputToken)
-        #expect(spender.value == (try address("3").eip55))
+        #expect(try spender.value == (address("3").eip55))
         #expect(data.customSendButtonTitle == nil)
     }
 
@@ -159,7 +159,7 @@ struct EvmResendDataTests {
         #expect(sections[0].fields.count == 2)
         #expect(sections[0].fields[0].content is AmountField)
         let addressField = try #require(sections[0].fields[1].content as? AddressField)
-        #expect(addressField.value == (try address().eip55))
+        #expect(try addressField.value == (address().eip55))
         try expectSettings(sections[1])
     }
 
@@ -189,8 +189,7 @@ struct EvmResendDataTests {
                 .padding(16)
                 .frame(width: 390)
                 .background(Color.themeTyler)
-                .environment(\.colorScheme, .light)
-            )
+                .environment(\.colorScheme, .light))
             renderer.scale = 2
             let png = try #require(renderer.uiImage?.pngData())
             if #available(iOS 26.0, *) {

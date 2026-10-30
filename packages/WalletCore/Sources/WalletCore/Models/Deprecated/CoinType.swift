@@ -52,24 +52,96 @@ public enum CoinType: Decodable {
         case "polygon": self = .polygon
         case "ethereum-optimism": self = .ethereumOptimism
         case "ethereum-arbitrum-one": self = .ethereumArbitrumOne
-        case "erc20": if let address { self = .erc20(address: address) } else { return nil }
-        case "bep20": if let address { self = .bep20(address: address) } else { return nil }
-        case "polygon-pos": if let address { self = .mrc20(address: address) } else { return nil }
-        case "optimistic-ethereum": if let address { self = .optimismErc20(address: address) } else { return nil }
-        case "arbitrum-one": if let address { self = .arbitrumOneErc20(address: address) } else { return nil }
-        case "bep2": if let symbol { self = .bep2(symbol: symbol) } else { return nil }
-        case "avalanche": if let address { self = .avalanche(address: address) } else { return nil }
-        case "fantom": if let address { self = .fantom(address: address) } else { return nil }
-        case "harmony-shard-0": if let address { self = .harmonyShard0(address: address) } else { return nil }
-        case "huobi-token": if let address { self = .huobiToken(address: address) } else { return nil }
-        case "iotex": if let address { self = .iotex(address: address) } else { return nil }
-        case "moonriver": if let address { self = .moonriver(address: address) } else { return nil }
-        case "okex-chain": if let address { self = .okexChain(address: address) } else { return nil }
-        case "solana": if let address { self = .solana(address: address) } else { return nil }
-        case "sora": if let address { self = .sora(address: address) } else { return nil }
-        case "tomochain": if let address { self = .tomochain(address: address) } else { return nil }
-        case "xdai": if let address { self = .xdai(address: address) } else { return nil }
-        case "trc20": if let address { self = .trc20(address: address) } else { return nil }
+        case "erc20": if let address {
+                self = .erc20(address: address)
+            } else {
+                return nil
+            }
+        case "bep20": if let address {
+                self = .bep20(address: address)
+            } else {
+                return nil
+            }
+        case "polygon-pos": if let address {
+                self = .mrc20(address: address)
+            } else {
+                return nil
+            }
+        case "optimistic-ethereum": if let address {
+                self = .optimismErc20(address: address)
+            } else {
+                return nil
+            }
+        case "arbitrum-one": if let address {
+                self = .arbitrumOneErc20(address: address)
+            } else {
+                return nil
+            }
+        case "bep2": if let symbol {
+                self = .bep2(symbol: symbol)
+            } else {
+                return nil
+            }
+        case "avalanche": if let address {
+                self = .avalanche(address: address)
+            } else {
+                return nil
+            }
+        case "fantom": if let address {
+                self = .fantom(address: address)
+            } else {
+                return nil
+            }
+        case "harmony-shard-0": if let address {
+                self = .harmonyShard0(address: address)
+            } else {
+                return nil
+            }
+        case "huobi-token": if let address {
+                self = .huobiToken(address: address)
+            } else {
+                return nil
+            }
+        case "iotex": if let address {
+                self = .iotex(address: address)
+            } else {
+                return nil
+            }
+        case "moonriver": if let address {
+                self = .moonriver(address: address)
+            } else {
+                return nil
+            }
+        case "okex-chain": if let address {
+                self = .okexChain(address: address)
+            } else {
+                return nil
+            }
+        case "solana": if let address {
+                self = .solana(address: address)
+            } else {
+                return nil
+            }
+        case "sora": if let address {
+                self = .sora(address: address)
+            } else {
+                return nil
+            }
+        case "tomochain": if let address {
+                self = .tomochain(address: address)
+            } else {
+                return nil
+            }
+        case "xdai": if let address {
+                self = .xdai(address: address)
+            } else {
+                return nil
+            }
+        case "trc20": if let address {
+                self = .trc20(address: address)
+            } else {
+                return nil
+            }
         default: self = .unsupported(type: type)
         }
     }

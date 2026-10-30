@@ -68,13 +68,13 @@ extension Font {
         }
     }
 
-    // static let themeTitle1: Font = .manRopeFont(size: 38, weight: .semibold)
-    // static let themeTitle2: Font = .manRopeFont(size: 36, weight: .medium)
-    // static let themeTitle2R: Font = .manRopeFont(size: 32, weight: .regular)
-    // static let themeTitle3: Font = .manRopeFont(size: 24, weight: .semibold)
+    /// static let themeTitle1: Font = .manRopeFont(size: 38, weight: .semibold)
+    /// static let themeTitle2: Font = .manRopeFont(size: 36, weight: .medium)
+    /// static let themeTitle2R: Font = .manRopeFont(size: 32, weight: .regular)
+    /// static let themeTitle3: Font = .manRopeFont(size: 24, weight: .semibold)
     static let themeHeadline1: Font = .manRopeFont(size: 20, weight: .semibold)
-    // static let themeHeadline2: Font = .manRopeFont(size: 16, weight: .semibold)
-    // static let themeBody: Font = .manRopeFont(size: 16, weight: .medium)
+    /// static let themeHeadline2: Font = .manRopeFont(size: 16, weight: .semibold)
+    /// static let themeBody: Font = .manRopeFont(size: 16, weight: .medium)
     static let themeSubhead1: Font = .manRopeFont(size: 14, weight: .medium)
     // static let themeSubhead1I: Font = .manRopeFont(size: 14, weight: .medium).italic()
     static let themeSubhead2: Font = .manRopeFont(size: 14, weight: .regular)

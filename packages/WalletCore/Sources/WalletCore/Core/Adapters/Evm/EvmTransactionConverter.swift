@@ -12,7 +12,7 @@ public class EvmTransactionConverter {
     public let evmLabelManager: EvmLabelManager
     public let baseToken: MarketKit.Token
 
-    // EVM token types carry no source meta, so the record TransactionSource is fully defined by the base token.
+    /// EVM token types carry no source meta, so the record TransactionSource is fully defined by the base token.
     public var source: TransactionSource {
         TransactionSource(blockchainType: baseToken.blockchainType, meta: nil)
     }
@@ -173,7 +173,7 @@ public extension EvmTransactionConverter {
                 transaction: transaction,
                 baseToken: baseToken,
                 from: decoration.from.eip55,
-                value: appValue,
+                value: appValue
             )
 
         case let decoration as OutgoingDecoration:

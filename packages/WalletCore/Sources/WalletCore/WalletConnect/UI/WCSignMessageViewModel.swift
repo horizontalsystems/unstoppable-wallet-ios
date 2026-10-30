@@ -6,7 +6,9 @@ class WCSignMessageViewModel: ObservableObject {
         let title: String
         let value: String
         let copyable: Bool
-        var id: String { title }
+        var id: String {
+            title
+        }
     }
 
     private let item: WCRequestItem
@@ -75,15 +77,24 @@ class WCSignMessageViewModel: ObservableObject {
         }
     }
 
-    var finishPublisher: AnyPublisher<Void, Never> { finishSubject.eraseToAnyPublisher() }
-    var errorPublisher: AnyPublisher<String, Never> { errorSubject.eraseToAnyPublisher() }
+    var finishPublisher: AnyPublisher<Void, Never> {
+        finishSubject.eraseToAnyPublisher()
+    }
 
-    var isExpired: Bool { item.request?.isExpired ?? false }
-    var signEnabled: Bool { !isBlocked && !signing && !isExpired }
+    var errorPublisher: AnyPublisher<String, Never> {
+        errorSubject.eraseToAnyPublisher()
+    }
+
+    var isExpired: Bool {
+        item.request?.isExpired ?? false
+    }
+
+    var signEnabled: Bool {
+        !isBlocked && !signing && !isExpired
+    }
 
     func sign() {
-        guard signEnabled else { return }
-        guard let request = item.request, let handler = manager?.signMessageHandlerRegistry.handler(for: request.payload) else { return }
+        guard signEnabled, let request = item.request, let handler = manager?.signMessageHandlerRegistry.handler(for: request.payload) else { return }
         signing = true
 
         Task { [weak self] in
@@ -104,9 +115,11 @@ class WCSignMessageViewModel: ObservableObject {
         }
     }
 
-    // a blocked request is answered with an error as soon as the screen goes away
+    /// a blocked request is answered with an error as soon as the screen goes away
     func rejectIfBlocked() {
-        if isBlocked { reject() }
+        if isBlocked {
+            reject()
+        }
     }
 
     @MainActor private func finish() {

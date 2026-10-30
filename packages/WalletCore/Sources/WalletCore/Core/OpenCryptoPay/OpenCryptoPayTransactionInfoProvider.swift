@@ -5,7 +5,9 @@ class OpenCryptoPayTransactionInfoProvider: ITransactionInfoExtraProvider {
     private let manager: OpenCryptoPayPaymentManager
     private let accountManager: AccountManager
 
-    var updatedPublisher: AnyPublisher<Void, Never> { manager.updatedPublisher }
+    var updatedPublisher: AnyPublisher<Void, Never> {
+        manager.updatedPublisher
+    }
 
     init(manager: OpenCryptoPayPaymentManager, accountManager: AccountManager) {
         self.manager = manager

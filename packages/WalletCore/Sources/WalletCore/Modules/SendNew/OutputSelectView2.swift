@@ -55,7 +55,7 @@ struct OutputSelectorView2: View {
         .interactiveDismissDisabled(viewModel.resetEnabled)
     }
 
-    @ViewBuilder func output(viewItem: OutputSelectorViewModel2.OutputViewItem) -> some View {
+    func output(viewItem: OutputSelectorViewModel2.OutputViewItem) -> some View {
         Cell(
             left: { CheckBoxUiView(checked: .init(get: { viewModel.selectedSet.contains(viewItem.id) }, set: { _ in })) },
             middle: { MultiText(title: viewItem.date, subtitle: viewItem.address) },

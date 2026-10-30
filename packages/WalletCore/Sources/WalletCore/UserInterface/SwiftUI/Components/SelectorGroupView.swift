@@ -73,7 +73,7 @@ struct SelectorGroupView: View {
                     },
                     middle: {
                         MultiText(subtitle: item.description)
-                    },
+                    }
                 )
             } else {
                 Cell(

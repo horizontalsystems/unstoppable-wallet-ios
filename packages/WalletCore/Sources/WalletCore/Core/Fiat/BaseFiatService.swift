@@ -15,7 +15,9 @@ class BaseFiatService {
     private var price: Decimal?
 
     private var appValueKind: AppValue.Kind?
-    var token: Token? { appValueKind?.token }
+    var token: Token? {
+        appValueKind?.token
+    }
 
     private let updatedSubject = PassthroughSubject<Void, Never>()
 
