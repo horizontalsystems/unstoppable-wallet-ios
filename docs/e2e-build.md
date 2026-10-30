@@ -10,6 +10,8 @@ The build sets the flag, and a run never does. No launch argument or environment
 
 ## What the flag changes
 
+Apart from what the flag changes, the E2E build behaves like the real app, because support videos are recorded on it, and a change that would make it differ is weighed against that.
+
 - Sending stops at the confirmation. The confirmation shows as usual, and confirming it is refused before anything is signed. The user sees the error "Broadcasting is disabled in E2E builds": on a send screen as the "Unexpected Error" bottom sheet with its Copy Error button, on the WalletConnect request sheet as an error banner.
 - The automatic rate-app prompt is off. The "Rate us" row in the settings works as in the real app.
 - The restore-phrase field, the backup and restore passphrase fields and the watch field are not prefilled, whatever `DEFAULT_WORDS`, `DEFAULT_PASSPHRASE` and `DEFAULT_WATCH_ADDRESS` hold in `Config.xcconfig`. Development keeps its prefills.
