@@ -3,6 +3,7 @@ import Foundation
 
 class StartScreenAlertManager {
     private var cancellables = Set<AnyCancellable>()
+    private let lostAccountsAlertState = LostAccountsAlertState()
 
     let accountManager: AccountManager
     let jailbreakService: JailbreakService
@@ -44,7 +45,7 @@ class StartScreenAlertManager {
     }
 
     func handleNextAlert() {
-        guard !lockManager.isLocked else {
+        guard !lockManager.isLocked, !lostAccountsAlertState.isPresented else {
             return
         }
 
@@ -55,10 +56,22 @@ class StartScreenAlertManager {
                 self?.handleNextAlert()
             }
         } else if let records = accountManager.lostAccountRecords {
-            Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                AccountsLostView(records: records, isPresented: isPresented)
+            lostAccountsAlertState.beginPresentation()
+            Coordinator.shared.present(type: .bottomSheet) { [accountManager, lostAccountsAlertState] isPresented in
+                AccountsLostView(records: records, isPresented: isPresented) {
+                    try lostAccountsAlertState.remove {
+                        try accountManager.removeLostAccounts(ids: Set(records.map(\.id)))
+                    }
+                }
             } onDismiss: { [weak self] in
-                self?.accountManager.lostAccountRecords = nil
+                guard let self else {
+                    return
+                }
+                lostAccountsAlertState.dismiss {
+                    accountManager.lostAccountRecords = nil
+                } showNextAlert: {
+                    handleNextAlert()
+                }
             }
         } else if jailbreakService.needToShowAlert {
             Coordinator.shared.present { isPresented in
