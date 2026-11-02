@@ -59,7 +59,7 @@ struct TransactionContactSelectView: View {
                         .padding(.bottom, .margin32)
                     }
                 } else {
-                    PlaceholderViewNew(icon: "not_found_48", subtitle: "no suitable contacts".localized)
+                    PlaceholderViewNew(icon: "not_found", subtitle: "no suitable contacts".localized)
                 }
             }
             .navigationTitle("contacts.title".localized)

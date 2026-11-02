@@ -91,7 +91,7 @@ public enum SwapRequestRefundBuilder {
         let websiteFromEmail = email.flatMap { safeHTTPSURL($0)?.absoluteString }
 
         if let email, isValidEmail(email) {
-            links.append(.init(type: .email, label: "Email", value: email, rawValue: email, icon: "mail_24"))
+            links.append(.init(type: .email, label: "Email", value: email, rawValue: email, icon: "mail"))
         }
 
         if let website = contacts?.website?.content ?? websiteFromEmail, safeHTTPSURL(website) != nil {

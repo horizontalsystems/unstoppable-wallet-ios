@@ -236,7 +236,7 @@ struct MainSettingsView: View {
             TonConnectListView()
         }) {
             Cell(
-                left: { Image("ton_connect_24").themeIcon() },
+                left: { ThemeImage("ton_connect", size: .iconSize24) },
                 middle: { ThemeText("TON Connect", style: .headline2) },
                 right: { Image.disclosureIcon }
             )

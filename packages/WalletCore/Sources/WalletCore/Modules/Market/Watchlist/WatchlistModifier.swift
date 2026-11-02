@@ -11,7 +11,7 @@ struct WatchlistModifier: ViewModifier {
                     Button {
                         viewModel.remove(coinUid: coinUid)
                     } label: {
-                        Image("heart_broke_24").renderingMode(.template)
+                        Image("heart_off").renderingMode(.template)
                     }
                     .tint(.themeLucian)
                 } else {

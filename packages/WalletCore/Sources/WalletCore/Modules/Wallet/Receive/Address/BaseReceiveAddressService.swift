@@ -36,7 +36,7 @@ class BaseReceiveAddressService {
     private func sync(adapterData: AdapterManager.AdapterData) {
         guard let adapter = adapterData.adapterMap[wallet] as? IDepositAdapter else {
             if adapter != nil {
-                state = .failed(ReceiveAddressModule.ErrorItem(icon: "not_available_48", text: AdapterError.noAdapter.localizedDescription))
+                state = .failed(ReceiveAddressModule.ErrorItem(icon: "not_available", text: AdapterError.noAdapter.localizedDescription))
             } else {
                 state = .loading
             }

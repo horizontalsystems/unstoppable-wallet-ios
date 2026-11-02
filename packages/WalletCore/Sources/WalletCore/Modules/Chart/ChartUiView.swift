@@ -1,6 +1,7 @@
 import Chart
 import RxSwift
 import SnapKit
+import SwiftUI
 import UIKit
 
 class ChartUiView: UIView {
@@ -27,7 +28,11 @@ class ChartUiView: UIView {
 
     private let chartView: RateChartView
     private let loadingView = HUDActivityView.create(with: .medium24)
-    private let errorView = PlaceholderView()
+    private let errorView = UIHostingConfiguration {
+        PlaceholderViewNew(icon: "sync_error", subtitle: "sync_error".localized)
+    }
+    .margins(.all, 0)
+    .makeContentView()
 
     private var viewItem: ChartModule.ViewItem?
     private var showIndicators: Bool = true {
@@ -195,9 +200,6 @@ class ChartUiView: UIView {
             maker.leading.top.trailing.equalToSuperview()
             maker.bottom.equalTo(chartView)
         }
-
-        errorView.image = UIImage(named: "sync_error_48")
-        errorView.text = "sync_error".localized
     }
 
     @available(*, unavailable)

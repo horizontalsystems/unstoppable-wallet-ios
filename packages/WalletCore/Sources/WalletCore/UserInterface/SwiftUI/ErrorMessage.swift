@@ -10,7 +10,7 @@ struct ErrorMessage<Content: View>: View {
         VStack(spacing: .margin24) {
             VStack(spacing: .margin16) {
                 ZStack {
-                    Image(icon).icon(size: .iconSize72)
+                    ThemeImage(icon, size: .iconSize72)
                 }
                 .padding(.margin16)
 

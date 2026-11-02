@@ -45,7 +45,7 @@ struct ReceiveAddressBodyView<Content: View>: View {
 
                 Spacer()
             case .failed:
-                PlaceholderViewNew(icon: "sync_error_48", subtitle: "sync_error".localized)
+                PlaceholderViewNew(icon: "sync_error", subtitle: "sync_error".localized)
             }
         }
         .textFieldAlert(

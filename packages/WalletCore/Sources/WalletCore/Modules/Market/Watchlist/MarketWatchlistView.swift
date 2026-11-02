@@ -118,7 +118,7 @@ struct MarketWatchlistView: View {
                     Button(role: .destructive) {
                         viewModel.remove(coinUid: coin.uid)
                     } label: {
-                        Image("heart_broke_24").renderingMode(.template)
+                        Image("heart_off").renderingMode(.template)
                     }
                     .tint(.themeLucian)
                 }

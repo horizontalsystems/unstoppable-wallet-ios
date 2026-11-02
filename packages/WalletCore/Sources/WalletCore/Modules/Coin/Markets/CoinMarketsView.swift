@@ -18,7 +18,7 @@ struct CoinMarketsView: View {
                     header()
 
                     if viewItems.isEmpty {
-                        PlaceholderViewNew(icon: "no_data_48", subtitle: "coin_markets.empty".localized)
+                        PlaceholderViewNew(icon: "no_data", subtitle: "coin_markets.empty".localized)
                     } else {
                         list(viewItems: viewItems)
                     }
