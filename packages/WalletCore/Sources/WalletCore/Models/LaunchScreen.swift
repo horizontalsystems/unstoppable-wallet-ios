@@ -10,14 +10,6 @@ enum LaunchScreen: String, CaseIterable {
         case .watchlist: return "appearance.launch_screen.watchlist".localized
         }
     }
-
-    var iconName: String {
-        switch self {
-        case .auto: return "settings_24"
-        case .balance: return "wallet_24"
-        case .watchlist: return "heart_24"
-        }
-    }
 }
 
 extension LaunchScreen: Codable {

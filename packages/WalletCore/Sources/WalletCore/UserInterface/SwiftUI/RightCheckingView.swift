@@ -15,9 +15,7 @@ struct RightChecking: ViewModifier {
             case .idle: EmptyView()
             case .loading: ProgressView()
             case .checked:
-                Image("circle_check_20")
-                    .renderingMode(.template)
-                    .foregroundColor(.themeRemus)
+                ThemeImage("done_e_filled", size: .iconSize20, colorStyle: .green)
             }
         }
     }

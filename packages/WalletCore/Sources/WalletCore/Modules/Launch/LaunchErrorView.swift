@@ -13,7 +13,7 @@ public struct LaunchErrorView: View {
     public var body: some View {
         ThemeView {
             VStack(spacing: .margin32) {
-                Image("attention_48").themeIcon()
+                ThemeImage("warning", size: .iconSize48, colorStyle: .secondary)
 
                 Text("launch.failed_to_launch".localized)
                     .textBody(color: .themeGray)

@@ -64,8 +64,7 @@ struct SwapRequestRefundBottomSheetView: View {
         Cell(
             style: .primary,
             left: {
-                Image(link.icon)
-                    .themeIcon()
+                ThemeImage(link.icon, size: .iconSize24)
             },
             middle: {
                 MultiText(title: link.label, subtitle: link.value)

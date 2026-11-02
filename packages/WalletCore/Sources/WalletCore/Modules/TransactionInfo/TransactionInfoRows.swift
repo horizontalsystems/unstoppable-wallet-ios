@@ -71,7 +71,7 @@ struct TransactionInfoStatusRow: View {
         switch status {
         case .pending: spinner(progress: 0.2)
         case let .processing(progress): spinner(progress: progress * 0.8 + 0.2)
-        case .completed: ThemeImage("done_e_filled_2", size: .iconSize20, colorStyle: .green)
+        case .completed: ThemeImage("done_e_filled_full", size: .iconSize20, colorStyle: .green)
         case .failed: ThemeImage("warning_filled", size: .iconSize20, colorStyle: notProcessed ? .secondary : .red)
         }
     }

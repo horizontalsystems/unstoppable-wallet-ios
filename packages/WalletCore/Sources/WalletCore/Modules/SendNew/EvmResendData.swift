@@ -53,7 +53,7 @@ class EvmResendData: EvmSendData {
         let decimalValue = token.decimalValue(value: value)
         return .init([
             SendField(SimpleValueField(
-                icon: incoming ? "arrow_medium_main_down_left_20" : "arrow_medium_main_up_right_20",
+                icon: incoming ? "arrow_m_down" : "arrow_m_up",
                 title: ComponentText(text: (incoming ? "swap.you_get" : "swap.you_pay").localized, colorStyle: .primary),
                 value: ComponentText(text: token.coin.name, colorStyle: .secondary),
                 isPrimary: true

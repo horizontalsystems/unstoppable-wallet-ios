@@ -451,7 +451,7 @@ struct MainSettingsView: View {
 
     private func donate() -> some View {
         Cell(
-            left: { Image("heart_24").themeIcon() },
+            left: { ThemeImage("heart", size: .iconSize24) },
             middle: { ThemeText("settings.donate.title".localized, style: .headline2) },
             right: { Image.disclosureIcon },
             action: {

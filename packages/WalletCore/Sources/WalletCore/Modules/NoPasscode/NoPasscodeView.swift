@@ -6,7 +6,7 @@ struct NoPasscodeView: View {
     var body: some View {
         ThemeView {
             VStack(spacing: .margin32) {
-                Image("attention_48").themeIcon()
+                ThemeImage("warning", size: .iconSize48, colorStyle: .secondary)
 
                 Text(mode.description)
                     .textBody(color: .themeGray)
@@ -38,7 +38,7 @@ struct JailbreakView: View {
         ThemeView {
             VStack(spacing: .margin32) {
                 VStack(spacing: .margin32) {
-                    Image("attention_48").themeIcon()
+                    ThemeImage("warning", size: .iconSize48, colorStyle: .secondary)
 
                     Text("jailbreak.info_text".localized)
                         .textBody(color: .themeGray)

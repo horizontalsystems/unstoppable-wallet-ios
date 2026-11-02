@@ -17,7 +17,7 @@ struct MarketWatchlistView: View {
                 }
             case let .loaded(marketInfos, signals):
                 if marketInfos.isEmpty {
-                    PlaceholderViewNew(icon: "heart_48", subtitle: "market.watchlist.empty".localized)
+                    PlaceholderViewNew(icon: "heart", subtitle: "market.watchlist.empty".localized)
                 } else {
                     VStack(spacing: 0) {
                         header()

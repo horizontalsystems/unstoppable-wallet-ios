@@ -131,7 +131,7 @@ struct MarketAdvancedSearchView: View {
                     }
                 }
                 .themeListStyle(.bordered)
-                .modifier(AdvancedSearchHeaderModifier(imageName: "circle_coin_24", title: "market.advanced_search.choose_set", isPresented: isPresented))
+                .modifier(AdvancedSearchHeaderModifier(imageName: "circle_coin", title: "market.advanced_search.choose_set", isPresented: isPresented))
             }
         }
     }
@@ -148,7 +148,7 @@ struct MarketAdvancedSearchView: View {
                     }
                 }
                 .themeListStyle(.bordered)
-                .modifier(AdvancedSearchHeaderModifier(imageName: "chart_2_24", title: "market.advanced_search.volume", isPresented: isPresented))
+                .modifier(AdvancedSearchHeaderModifier(imageName: "chart", title: "market.advanced_search.volume", isPresented: isPresented))
             }
         }
     }
@@ -215,7 +215,7 @@ struct MarketAdvancedSearchView: View {
                         }
                     }
                     .themeListStyle(.bordered)
-                    .modifier(AdvancedSearchHeaderModifier(imageName: "bell_ring_24", title: "market.advanced_search.signal", isPresented: isPresented))
+                    .modifier(AdvancedSearchHeaderModifier(imageName: "bell", title: "market.advanced_search.signal", isPresented: isPresented))
                 }
             }
         }
@@ -234,7 +234,7 @@ struct MarketAdvancedSearchView: View {
                         }
                     }
                     .themeListStyle(.bordered)
-                    .modifier(AdvancedSearchHeaderModifier(imageName: "markets_24", title: "market.advanced_search.price_change", isPresented: isPresented))
+                    .modifier(AdvancedSearchHeaderModifier(imageName: "market_filled", title: "market.advanced_search.price_change", isPresented: isPresented))
                 }
             }
         }
@@ -253,7 +253,7 @@ struct MarketAdvancedSearchView: View {
                         }
                     }
                     .themeListStyle(.bordered)
-                    .modifier(AdvancedSearchHeaderModifier(imageName: "circle_clock_24", title: "market.advanced_search.price_period", isPresented: isPresented))
+                    .modifier(AdvancedSearchHeaderModifier(imageName: "clock", title: "market.advanced_search.price_period", isPresented: isPresented))
                 }
             }
         }
@@ -272,7 +272,7 @@ struct MarketAdvancedSearchView: View {
                         }
                     }
                     .themeListStyle(.bordered)
-                    .modifier(AdvancedSearchHeaderModifier(imageName: "arrow_swap_24", title: "market.advanced_search.price_close_to", isPresented: isPresented))
+                    .modifier(AdvancedSearchHeaderModifier(imageName: "swap_e", title: "market.advanced_search.price_close_to", isPresented: isPresented))
                 }
             }
         }
@@ -339,7 +339,7 @@ private struct AdvancedSearchHeaderModifier: ViewModifier {
     func body(content: Content) -> some View {
         VStack(spacing: 0) {
             HStack(spacing: .margin16) {
-                Image(imageName).themeIcon(color: .themeJacob)
+                ThemeImage(imageName, size: .iconSize24, colorStyle: .yellow)
                 Text(title.localized).themeHeadline2()
                 IconButton(icon: "close", style: .secondary, mode: .transparent, size: .small) {
                     isPresented.wrappedValue = false

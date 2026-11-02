@@ -103,8 +103,8 @@ class ZcashShieldingTransactionRecord: BitcoinTransactionRecord {
 
         var txIconName: String {
             switch self {
-            case .shield: return "shield_24"
-            case .unshield: return "shield_off_24"
+            case .shield: return "shield"
+            case .unshield: return "shield_off"
             case .migrate: return "arrow_out"
             }
         }

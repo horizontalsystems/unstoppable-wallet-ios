@@ -16,7 +16,7 @@ struct PurchaseBottomSheetView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: .margin16) {
-                Image("circle_clock_24").themeIcon(color: .themeJacob)
+                ThemeImage("clock", size: .iconSize24, colorStyle: .yellow)
                 Text("purchase.period.title".localized).themeHeadline2()
 
                 IconButton(icon: "close", style: .secondary, mode: .transparent, size: .small) {

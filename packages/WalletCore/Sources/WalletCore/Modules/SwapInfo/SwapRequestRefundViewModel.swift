@@ -80,11 +80,11 @@ public enum SwapRequestRefundBuilder {
         var links = [ContactLink]()
 
         if let telegram = contacts?.telegram?.content {
-            links.append(.init(type: .telegram, label: "Telegram", value: telegram, rawValue: telegram, icon: "telegram_24"))
+            links.append(.init(type: .telegram, label: "Telegram", value: telegram, rawValue: telegram, icon: "telegram_logo"))
         }
 
         if let twitter = contacts?.twitter?.content {
-            links.append(.init(type: .twitter, label: "Twitter", value: twitter, rawValue: twitter, icon: "twitter_24"))
+            links.append(.init(type: .twitter, label: "Twitter", value: twitter, rawValue: twitter, icon: "x_logo"))
         }
 
         let email = contacts?.email?.content
@@ -95,7 +95,7 @@ public enum SwapRequestRefundBuilder {
         }
 
         if let website = contacts?.website?.content ?? websiteFromEmail, safeHTTPSURL(website) != nil {
-            links.append(.init(type: .website, label: "Website", value: website, rawValue: website, icon: "globe_24"))
+            links.append(.init(type: .website, label: "Website", value: website, rawValue: website, icon: "globe"))
         }
 
         return links

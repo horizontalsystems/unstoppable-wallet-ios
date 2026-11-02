@@ -69,7 +69,7 @@ struct EvmResendDataTests {
         let header = try #require(section.fields[0].content as? SimpleValueField)
         #expect(header.title.description == (incoming ? "swap.you_get" : "swap.you_pay").localized)
         #expect(header.value.description == token.coin.name)
-        #expect(header.icon == (incoming ? "arrow_medium_main_down_left_20" : "arrow_medium_main_up_right_20"))
+        #expect(header.icon == (incoming ? "arrow_m_down" : "arrow_m_up"))
         let amount = try #require(section.fields[1].content as? SwapAmountField)
         #expect(amount.token == token)
         #expect(amount.appValue.value == value)

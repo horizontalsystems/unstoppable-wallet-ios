@@ -3,9 +3,7 @@ import SwiftUI
 struct PremiumListSectionHeader: View {
     var body: some View {
         HStack(spacing: .margin6) {
-            Image("star_filled_16")
-                .renderingMode(.template)
-                .foregroundColor(.themeJacob)
+            ThemeImage("star_filled", size: .iconSize16, colorStyle: .yellow)
 
             Text("subscription.premium.label".localized)
                 .themeSubhead1(color: .themeJacob)

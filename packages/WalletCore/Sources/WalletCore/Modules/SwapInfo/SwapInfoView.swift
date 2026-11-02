@@ -136,7 +136,7 @@ struct SwapInfoView: View {
             }
 
             switch leg.status {
-            case .completed, .refunded: ThemeImage("done_e_filled_2", size: 20, colorStyle: .green)
+            case .completed, .refunded: ThemeImage("done_e_filled_full", size: 20, colorStyle: .green)
             case .failed: ThemeImage("close", size: 20, colorStyle: .red)
             case .pending, .swapping: ProgressView(value: 0.55)
                 .progressViewStyle(DeterminiteSpinnerStyle())

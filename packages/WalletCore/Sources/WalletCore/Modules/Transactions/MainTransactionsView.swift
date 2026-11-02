@@ -49,7 +49,7 @@ struct MainTransactionsView: View {
                         }
                         stat(page: .transactions, event: .open(page: .transactionFilter))
                     }) {
-                        Image("manage_2_24")
+                        Image("manage")
                             .modifier(ToolbarBadgeModifier(visible: transactionsViewModel.filterChanged))
                     }
                     .accessibilityIdentifier(TestTags.txFilter)

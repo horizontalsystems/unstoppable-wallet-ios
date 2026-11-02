@@ -58,7 +58,7 @@ struct RestoreTypeView: View {
     private func row(restoreType: RestoreType) -> some View {
         Cell(
             left: {
-                ThemeImage(restoreType.icon, size: 24)
+                ThemeImage(restoreType.icon, size: .iconSize24)
             },
             middle: {
                 MultiText(title: restoreType.title, subtitle: restoreType.description)
@@ -137,7 +137,7 @@ extension RestoreTypeView {
         var icon: String {
             switch self {
             case .recoveryPhrase: return "pen"
-            case .privateKey: return "key_24"
+            case .privateKey: return "key"
             case .passkey: return "face_id"
             case .backup: return "cloud"
             }

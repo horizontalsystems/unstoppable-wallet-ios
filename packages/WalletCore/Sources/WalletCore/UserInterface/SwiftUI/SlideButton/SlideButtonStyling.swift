@@ -11,9 +11,9 @@ public struct SlideButtonStyling {
         success: String = "",
         textColor: Color = .themeGray,
         textFont: Font = .themeHeadline2,
-        indicator: String = "arrow_medium_2_right_24",
-        indicatorSuccess: String = "check_2_24",
-        indicatorDisabled: String = "arrow_medium_2_right_24",
+        indicator: String = "arrow_m_right",
+        indicatorSuccess: String = "check",
+        indicatorDisabled: String = "arrow_m_right",
         textHiddenBehindIndicator: Bool = true,
         textShimmers: Bool = true
     ) {

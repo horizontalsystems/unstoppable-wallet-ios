@@ -29,12 +29,19 @@ struct HighlightedTextView: View {
         VStack(spacing: .margin12) {
             if let title {
                 HStack(spacing: .margin12) {
-                    Image("warning_2_20").themeIcon(color: style.color)
+                    Image("warning")
+                        .renderingMode(.template)
+                        .resizable()
+                        .foregroundColor(style.color)
+                        .frame(size: .iconSize20)
                     Text(title).themeSubhead1(color: style.color)
 
                     if let onClose {
-                        Image("close_1_20")
-                            .themeIcon(color: style.color)
+                        Image("close")
+                            .renderingMode(.template)
+                            .resizable()
+                            .foregroundColor(style.color)
+                            .frame(size: .iconSize20)
                             .padding(.margin4)
                             .onTapGesture(perform: onClose)
                     }

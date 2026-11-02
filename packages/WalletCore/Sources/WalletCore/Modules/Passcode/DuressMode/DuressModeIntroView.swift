@@ -19,20 +19,20 @@ struct DuressModeIntroView: View {
                             ListSection {
                                 if let biometryType = viewModel.biometryType {
                                     InfoRow(
-                                        icon: Image(biometryType.iconName),
+                                        icon: biometryType.iconName,
                                         title: biometryType.title,
                                         description: "enable_duress_mode.intro.biometrics.description".localized(biometryType.title, biometryType.title)
                                     )
                                 }
 
                                 InfoRow(
-                                    icon: Image("dialpad_alt_2_24"),
+                                    icon: "dialpad",
                                     title: "enable_duress_mode.intro.passcode_disabling".localized,
                                     description: "enable_duress_mode.intro.passcode_disabling.description".localized
                                 )
 
                                 InfoRow(
-                                    icon: Image("edit_24"),
+                                    icon: "pen",
                                     title: "enable_duress_mode.intro.passcode_change".localized,
                                     description: "enable_duress_mode.intro.passcode_change.description".localized
                                 )
@@ -68,13 +68,13 @@ struct DuressModeIntroView: View {
     }
 
     private struct InfoRow: View {
-        let icon: Image
+        let icon: String
         let title: String
         let description: String
 
         var body: some View {
             Cell(
-                left: { icon.themeIcon(color: .themeJacob) },
+                left: { ThemeImage(icon, size: .iconSize24, colorStyle: .yellow) },
                 middle: { MultiText(title: title, subtitle: description) }
             )
         }

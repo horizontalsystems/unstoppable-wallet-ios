@@ -18,7 +18,7 @@ struct WatchlistModifier: ViewModifier {
                     Button {
                         viewModel.add(coinUid: coinUid)
                     } label: {
-                        Image("heart_24").renderingMode(.template)
+                        Image("heart").renderingMode(.template)
                     }
                     .tint(.themeJacob)
                 }
@@ -38,10 +38,7 @@ enum WatchlistView {
             Button {
                 viewModel.remove(coinUid: coinUid)
             } label: {
-                Image("heart_fill_20")
-                    .renderingMode(.template)
-                    .foregroundColor(.themeJacob)
-                    .frame(width: .iconSize20, height: .iconSize20)
+                ThemeImage("heart_filled", size: .iconSize20, colorStyle: .yellow)
             }
             .tappablePadding(.margin12, onTap: {
                 viewModel.remove(coinUid: coinUid)
@@ -50,10 +47,7 @@ enum WatchlistView {
             Button {
                 viewModel.add(coinUid: coinUid)
             } label: {
-                Image("heart_20")
-                    .renderingMode(.template)
-                    .foregroundColor(.themeGray)
-                    .frame(width: .iconSize20, height: .iconSize20)
+                ThemeImage("heart", size: .iconSize20, colorStyle: .secondary)
             }
             .tappablePadding(.margin12, onTap: {
                 viewModel.add(coinUid: coinUid)

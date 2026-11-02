@@ -47,7 +47,7 @@ struct BitcoinResendData: ISendData {
         let amount = abs(record.value.value)
         let amountFields: [SendField] = [
             SendField(SimpleValueField(
-                icon: "arrow_medium_main_up_right_20",
+                icon: "arrow_m_up",
                 title: ComponentText(text: "send.confirmation.you_send".localized, colorStyle: .primary),
                 value: ComponentText(text: baseToken.coin.name, colorStyle: .secondary), isPrimary: true
             )),
