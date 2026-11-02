@@ -10,7 +10,7 @@ struct PrivacyPolicyView: View {
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
-                HighlightedTextView(text: viewModel.config.description)
+                AlertCardView(.init(text: viewModel.config.description, type: .caution, style: .inline))
 
                 VStack(spacing: 0) {
                     ListSection {

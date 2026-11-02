@@ -1,4 +1,3 @@
-
 import MarketKit
 import SwiftUI
 
@@ -12,7 +11,7 @@ struct TonConnectErrorView: View {
             ThemeView {
                 BottomGradientWrapper {
                     VStack {
-                        HighlightedTextView(text: "ton_connect.invalid_transaction".localized, style: .alert)
+                        AlertCardView(.init(text: "ton_connect.invalid_transaction".localized, type: .critical, style: .inline))
                         Spacer()
                     }
                     .padding(.top, .margin12)

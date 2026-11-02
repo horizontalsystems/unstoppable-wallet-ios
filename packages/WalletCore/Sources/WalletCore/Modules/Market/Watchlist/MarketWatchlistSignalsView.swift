@@ -30,7 +30,7 @@ struct MarketWatchlistSignalsView: View {
                                 maxBadgeWidth = $0
                             }
 
-                            HighlightedTextView(text: "market.watchlist.signals.warning".localized, style: .warning)
+                            AlertCardView(.init(text: "market.watchlist.signals.warning".localized, type: .caution, style: .inline))
                         }
                         .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                     }

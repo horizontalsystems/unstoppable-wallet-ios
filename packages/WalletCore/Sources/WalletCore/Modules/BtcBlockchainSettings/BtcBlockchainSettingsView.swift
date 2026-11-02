@@ -51,7 +51,7 @@ struct BtcBlockchainSettingsView: View {
                                 }
                             }
 
-                            HighlightedTextView(text: "btc_blockchain_settings.restore_source.alert".localized(viewModel.blockchain.name))
+                            AlertCardView(.init(text: "btc_blockchain_settings.restore_source.alert".localized(viewModel.blockchain.name), type: .caution, style: .inline))
                         }
                         .padding(EdgeInsets(top: 12, leading: 16, bottom: 32, trailing: 16))
                     }

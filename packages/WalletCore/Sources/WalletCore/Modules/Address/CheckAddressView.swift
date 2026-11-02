@@ -33,7 +33,7 @@ struct CheckAddressView: View {
                     case let .invalid(caution):
                         if let caution {
                             VStack(spacing: .margin12) {
-                                HighlightedTextView(caution: caution)
+                                AlertCardView(caution: caution, style: .inline)
                             }
                             .padding(.top, .margin16)
                         }

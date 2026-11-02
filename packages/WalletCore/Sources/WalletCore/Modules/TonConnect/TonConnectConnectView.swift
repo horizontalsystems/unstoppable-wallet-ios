@@ -59,7 +59,7 @@ struct TonConnectConnectView: View {
                                 }
                             }
 
-                            HighlightedTextView(text: "ton_connect.connect.warning".localized)
+                            AlertCardView(.init(text: "ton_connect.connect.warning".localized, type: .caution, style: .inline))
                         }
                         .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                     }

@@ -43,7 +43,7 @@ struct ContactBookAddressView: View {
                                 .id(viewModel.selectedBlockchain.uid)
 
                                 if case let .invalid(caution?) = viewModel.state {
-                                    HighlightedTextView(caution: caution)
+                                    AlertCardView(caution: caution, style: .inline)
                                 }
                             }
 

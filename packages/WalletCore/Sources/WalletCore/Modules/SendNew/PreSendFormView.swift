@@ -247,7 +247,7 @@ struct PreSendFormView<Fields: View, Footer: View>: View {
         if !cautions.isEmpty {
             VStack(spacing: .margin12) {
                 ForEach(cautions.indices, id: \.self) { index in
-                    HighlightedTextView(caution: cautions[index])
+                    AlertCardView(caution: cautions[index], style: .inline)
                 }
             }
             .padding(.top, 12)

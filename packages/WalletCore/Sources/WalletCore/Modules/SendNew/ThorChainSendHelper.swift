@@ -25,14 +25,14 @@ enum ThorChainSendHelper {
         let chainName = feeToken.blockchainType == .mayaChain ? "Maya" : "THORChain"
         let text: String
         switch error as? Error {
-        case .invalidAmount: text = "Invalid amount"
-        case .excessivePrecision: text = "Amount has more than \(feeToken.decimals) decimal places"
+        case .invalidAmount: text = "Invalid \(feeToken.coin.code) amount"
+        case .excessivePrecision: text = "\(feeToken.coin.code) amount has more than \(feeToken.decimals) decimal places"
         case .invalidAddress: text = "Invalid \(chainName) address"
         case .expired: text = "Quote expired; refresh to continue"
         case .adapterUnavailable: text = "\(chainName) is unavailable"
         case .submissionUnknown: text = "Transaction submission is unknown"
         default: text = error.smartDescription
         }
-        return CautionNew(title: feeToken.coin.code, text: text, type: .error)
+        return CautionNew(text: text, type: .error)
     }
 }

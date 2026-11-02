@@ -16,12 +16,12 @@ struct AlertCardView: View {
         style = item.style
     }
 
-    init(caution: CautionNew) {
+    init(caution: CautionNew, style: Style = .structured) {
         iconName = Self.defaultIcon
-        title = caution.title
+        title = style == .inline ? nil : caution.title
         text = .plain(caution.text)
         type = .init(cautionType: caution.type)
-        style = .structured
+        self.style = style
     }
 
     var body: some View {

@@ -1,4 +1,3 @@
-
 import MarketKit
 import SwiftUI
 
@@ -53,7 +52,7 @@ struct AddressView: View {
 
                     if case let .invalid(caution) = viewModel.state, let caution {
                         VStack(spacing: .margin12) {
-                            HighlightedTextView(caution: caution)
+                            AlertCardView(caution: caution, style: .inline)
                                 .accessibilityElement(children: .combine)
                                 .accessibilityIdentifier(TestTags.enterAddressError)
                         }
