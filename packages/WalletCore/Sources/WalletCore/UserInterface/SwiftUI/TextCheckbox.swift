@@ -33,7 +33,7 @@ public struct TextCheckbox: View {
             let textAligment: TextAlignment = leading ? .leading : .trailing
 
             if leading {
-                Image.checkbox(active: checked, size: 20)
+                CheckBoxView(checked: checked)
             }
 
             VStack(alignment: alignment, spacing: 0) {
@@ -68,7 +68,7 @@ public struct TextCheckbox: View {
             }
 
             if alignment != .leading {
-                Image.checkbox(active: checked, size: 20)
+                CheckBoxView(checked: checked)
             }
         }
     }

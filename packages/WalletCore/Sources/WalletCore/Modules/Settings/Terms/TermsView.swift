@@ -55,14 +55,14 @@ struct TermsView: View {
                     ForEach(Array(viewModel.terms.enumerated()), id: \.element.id) { index, term in
                         if readOnly {
                             Cell(
-                                left: { Image.checkbox(active: true) },
+                                left: { CheckBoxView(checked: true) },
                                 middle: { rowTitle(term: term) }
                             )
                             .accessibilityElement(children: .combine)
                             .accessibilityIdentifier(TestTags.termsCheck(index))
                         } else {
                             Cell(
-                                left: { Image.checkbox(active: checkedIds.contains(term.id)) },
+                                left: { CheckBoxView(checked: checkedIds.contains(term.id)) },
                                 middle: { rowTitle(term: term) },
                                 action: {
                                     toggleTerm(term)

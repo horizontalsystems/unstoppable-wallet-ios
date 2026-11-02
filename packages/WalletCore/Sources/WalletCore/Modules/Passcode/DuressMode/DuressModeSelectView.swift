@@ -58,7 +58,7 @@ struct DuressModeSelectView: View {
         var body: some View {
             Cell(
                 middle: { MultiText(title: account.name, subtitle: account.type.detailedDescription) },
-                right: { CheckBoxUiView(checked: .init(get: { selectedAccountIds.contains(account.id) }, set: { _ in })) },
+                right: { CheckBoxView(checked: selectedAccountIds.contains(account.id)) },
                 action: {
                     if selectedAccountIds.contains(account.id) {
                         selectedAccountIds.remove(account.id)

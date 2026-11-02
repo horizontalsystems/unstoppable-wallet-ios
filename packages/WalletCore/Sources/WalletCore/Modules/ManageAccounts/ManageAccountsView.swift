@@ -66,7 +66,7 @@ struct ManageAccountsView: View {
     private func itemView(item: ManageAccountsViewModel.Item, index: Int) -> some View {
         Cell(
             left: {
-                Image.checkbox(active: item.isActive)
+                CheckBoxView(checked: item.isActive)
             },
             middle: {
                 let subtitle = alertSubtitle(item: item) ?? item.account.type.detailedDescription

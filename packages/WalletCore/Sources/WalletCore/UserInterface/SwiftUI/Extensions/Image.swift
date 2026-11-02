@@ -56,14 +56,6 @@ extension Image {
         ThemeImage("warning", size: .iconSize20, colorStyle: .red)
     }
 
-    static func checkbox(active: Bool, size: CGFloat = .iconSize24, colorStyle: ColorStyle = .yellow) -> some View {
-        ThemeImage(
-            active ? "checkbox_circle_on" : "checkbox_circle_off",
-            size: size,
-            colorStyle: active ? colorStyle : .andy
-        )
-    }
-
     static func lock(unlocked: Bool = false, size: CGFloat = .iconSize24) -> some View {
         ThemeImage(unlocked ? "unlock_filled" : "lock_filled", size: size)
     }

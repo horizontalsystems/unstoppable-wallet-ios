@@ -251,7 +251,7 @@ struct PasskeyTermsView: View {
     private func row(term: Term, checked: Bool) -> some View {
         Cell(
             left: {
-                Image.checkbox(active: checked)
+                CheckBoxView(checked: checked)
             },
             middle: {
                 MultiText(title: term.title, subtitle: term.description)

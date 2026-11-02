@@ -74,7 +74,7 @@ struct NearAccountPickerView: View {
                         ForEach(rows) { row in
                             Cell(
                                 left: {
-                                    Image.checkbox(active: viewModel.selectedAccountId == row.accountId)
+                                    CheckBoxView(checked: viewModel.selectedAccountId == row.accountId)
                                 },
                                 middle: {
                                     MultiText(title: row.title, subtitle: row.subtitle.isEmpty ? nil : row.subtitle)

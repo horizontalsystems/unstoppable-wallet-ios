@@ -75,7 +75,7 @@ struct SelectorGroupView: View {
                 Cell(
                     style: .secondary,
                     left: {
-                        Image.checkbox(active: isSelected)
+                        CheckBoxView(checked: isSelected)
                     },
                     middle: {
                         MultiText(subtitle: item.description)
@@ -88,7 +88,7 @@ struct SelectorGroupView: View {
                         MultiText(title: item.text, subtitle: item.description)
                     },
                     right: {
-                        Image.checkbox(active: isSelected)
+                        CheckBoxView(checked: isSelected)
                     }
                 )
             }

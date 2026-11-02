@@ -58,7 +58,7 @@ struct BackupContentListView: View {
                 )
             },
             right: {
-                Image.checkbox(active: isSelected)
+                CheckBoxView(checked: isSelected)
             },
             action: {
                 toggleWallet(id: item.accountId)
@@ -75,7 +75,7 @@ struct BackupContentListView: View {
                 MultiText(title: item.title, subtitle: item.subtitle)
             },
             right: {
-                Image.checkbox(active: isSelected)
+                CheckBoxView(checked: isSelected)
             },
             action: {
                 toggleSection(item.section)

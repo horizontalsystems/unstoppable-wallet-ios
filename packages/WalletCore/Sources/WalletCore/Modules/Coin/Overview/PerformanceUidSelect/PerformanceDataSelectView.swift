@@ -44,7 +44,7 @@ struct PerformanceDataSelectView: View {
                                 }
                             },
                             middle: { MultiText(title: item.code, subtitle: item.title) },
-                            right: { CheckBoxUiView(checked: .init(get: { viewModel.selectedCoins.map(\.uid).contains(item.uid) }, set: { _ in })) },
+                            right: { CheckBoxView(checked: viewModel.selectedCoins.map(\.uid).contains(item.uid)) },
                             action: {
                                 Coordinator.shared.performAfterPurchase(premiumFeature: .tokenInsights, page: .performance, trigger: .tokenChange) {
                                     viewModel.switchItem(uid: item.uid, code: item.code)

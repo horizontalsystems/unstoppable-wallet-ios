@@ -47,7 +47,7 @@ struct SwapTermsView: View {
     private func cell(item: Item) -> some View {
         Cell(
             left: {
-                Image.checkbox(active: acceptedItems.contains(item))
+                CheckBoxView(checked: acceptedItems.contains(item))
             },
             middle: {
                 VStack(alignment: .leading, spacing: 0) {

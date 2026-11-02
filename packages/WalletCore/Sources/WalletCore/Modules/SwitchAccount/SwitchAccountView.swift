@@ -48,7 +48,7 @@ struct SwitchAccountView: View {
 
     private func row(viewItem: SwitchAccountViewModel.ViewItem, watch: Bool) -> some View {
         Cell(
-            left: { Image.checkbox(active: viewItem.selected) },
+            left: { CheckBoxView(checked: viewItem.selected) },
             middle: { MultiText(title: viewItem.title, subtitle: viewItem.subtitle) },
             right: {
                 if watch {

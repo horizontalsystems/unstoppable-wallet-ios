@@ -57,7 +57,7 @@ struct OutputSelectorView2: View {
 
     func output(viewItem: OutputSelectorViewModel2.OutputViewItem) -> some View {
         Cell(
-            left: { CheckBoxUiView(checked: .init(get: { viewModel.selectedSet.contains(viewItem.id) }, set: { _ in })) },
+            left: { CheckBoxView(checked: viewModel.selectedSet.contains(viewItem.id)) },
             middle: { MultiText(title: viewItem.date, subtitle: viewItem.address) },
             right: { RightMultiText(title: viewItem.coinValue, subtitle: viewItem.fiatValue) },
             action: {
