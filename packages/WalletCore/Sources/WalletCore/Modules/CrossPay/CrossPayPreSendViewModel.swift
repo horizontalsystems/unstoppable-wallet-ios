@@ -253,8 +253,9 @@ private extension CrossPayPreSendViewModel {
         syncSupported()
 
         // nil too: a token selected before the asset map landed is checked now; an "unsupported" read
-        // before the catalog was complete is re-checked against the loaded one
-        if quoteState == .loading || quoteState == nil || quoteState == .error(.tokenUnsupported) {
+        // before the catalog was complete is re-checked against the loaded one, and so is a "no route":
+        // before the provider list syncs no venue has an execution type, so every route is dropped
+        if quoteState == .loading || quoteState == nil || quoteState == .error(.tokenUnsupported) || quoteState == .error(.noRoute) {
             scheduleQuote()
         }
     }

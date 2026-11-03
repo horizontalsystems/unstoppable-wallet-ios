@@ -1332,9 +1332,7 @@ extension USwapMultiSwapApi {
             minBuyAmount = try? map.value("minBuyAmount", using: USwapMultiSwapApi.decimalTransform)
             buyAsset = try? map.value("buyAsset")
             estimatedTime = try? map.value("estimatedTime.total")
-            // A present execution is parsed strictly, as commit does: a malformed one must fail the
-            // preview rather than read as "no execution" and pass for a transfer awaiting its address.
-            execution = map.JSON["execution"] == nil || map.JSON["execution"] is NSNull ? nil : try map.value("execution")
+            execution = try? map.value("execution")
             approvalSpender = (try? map.value("approvalSpender")) ?? execution?.approvalSpender
             providerId = ((try? map.value("providers") as [String]) ?? []).first ?? ""
             sellAmount = try? map.value("sellAmount", using: USwapMultiSwapApi.decimalTransform)
@@ -1387,7 +1385,9 @@ extension USwapMultiSwapApi {
             minBuyAmount = try? map.value("minBuyAmount", using: USwapMultiSwapApi.decimalTransform)
             buyAsset = try? map.value("buyAsset")
             estimatedTime = try? map.value("estimatedTime.total")
-            execution = try? map.value("execution")
+            // A present execution is parsed strictly, as commit does: a malformed one must fail the
+            // preview rather than read as "no execution" and pass for a transfer awaiting its address.
+            execution = map.JSON["execution"] == nil || map.JSON["execution"] is NSNull ? nil : try map.value("execution")
             uuid = try? map.value("uuid")
             approvalSpender = (try? map.value("approvalSpender")) ?? execution?.approvalSpender
             sellAmount = try? map.value("sellAmount", using: USwapMultiSwapApi.decimalTransform)
