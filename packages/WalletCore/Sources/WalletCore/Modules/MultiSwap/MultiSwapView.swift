@@ -302,11 +302,11 @@ struct MultiSwapView: View {
             return
         }
 
-        // A unified ZEC recipient is accepted while at least one quoted route resolves to a unified
-        // destination (the route's rule after the OP_RETURN memo guard); the confirmation's own recipient
-        // page and the preview then follow the chosen route's rule.
-        let allowsUnifiedZcash = viewModel.tokenIn.map { tokenIn in
-            viewModel.quotes.contains { item in
+        // A unified ZEC recipient is accepted when the route the confirmation opens on resolves to a
+        // unified destination (its rule after the OP_RETURN memo guard), so an address the preview
+        // would refuse is refused here. `confirmationQuote` is set by `showSwap` before this runs.
+        let allowsUnifiedZcash = vm.tokenIn.flatMap { tokenIn in
+            vm.confirmationQuote.map { item in
                 USwapMultiSwapProvider.destinationKind(quote: item.quote, rules: item.quote.zcashAddressRules, tokenIn: tokenIn) != .transparent
             }
         } ?? false

@@ -100,9 +100,10 @@ public final class CrossPayService {
         }
 
         // Only a plain-transfer venue can be paid by the locally built deposit; every such route
-        // delivers the identical requested output, so the cheapest deposit wins.
+        // delivers the identical requested output, so the cheapest deposit wins. A route without a
+        // positive deposit amount has nothing to pay and would otherwise win the minimum.
         let transferRoutes = result.quotes.filter { route in
-            route.sellAmount != nil && !route.providerId.isEmpty && executionType(route.providerId) == MultiSwapProviderManager.transferExecutionType
+            (route.sellAmount ?? 0) > 0 && !route.providerId.isEmpty && executionType(route.providerId) == MultiSwapProviderManager.transferExecutionType
         }
 
         // A typed ZEC recipient narrows the choice to the routes whose destination rule takes it, so the
@@ -529,7 +530,9 @@ public extension CrossPayService {
                     return false
                 }
 
-                return now().timeIntervalSince(date) < Self.maxAge
+                // A negative age (the clock moved back) is a miss too, so the check runs again
+                let age = now().timeIntervalSince(date)
+                return age >= 0 && age < Self.maxAge
             }
         }
 

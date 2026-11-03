@@ -4,7 +4,8 @@ import MarketKit
 /// Drops the `/v3/rate` routes this app cannot execute, judged from the venue's `executionType` (a rate
 /// route carries no `execution` yet): a vault deposit (`thorchain_deposit`) sold from a chain whose
 /// deposit cannot carry the route memo, and `stellar_broker` routes (an interactive WebSocket session
-/// this app does not run). An unknown execution type is kept; the preview decides.
+/// this app does not run). A route naming no provider is dropped too: it has no venue to preview
+/// against. An unknown execution type is kept; the preview decides.
 enum USwapRouteFilter {
     static let vaultExecutionType = "thorchain_deposit"
     static let stellarBrokerExecutionType = "stellar_broker"
@@ -14,7 +15,7 @@ enum USwapRouteFilter {
         tokenIn: Token,
         executionType: (String) -> String?
     ) -> [USwapMultiSwapApi.RateQuote] {
-        routes.filter { isExecutable(executionType: executionType($0.providerId), tokenIn: tokenIn) }
+        routes.filter { !$0.providerId.isEmpty && isExecutable(executionType: executionType($0.providerId), tokenIn: tokenIn) }
     }
 
     static func isExecutable(executionType: String?, tokenIn: Token) -> Bool {

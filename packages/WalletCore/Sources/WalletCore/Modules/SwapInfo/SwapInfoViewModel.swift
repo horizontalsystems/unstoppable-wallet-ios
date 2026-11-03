@@ -25,6 +25,13 @@ class SwapInfoViewModel: ObservableObject {
         subscribe(&cancellables, manager.swapUpdatePublisher) { [weak self] in self?.handleUpdated(swap: $0) }
         subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
 
+        // The venue name comes from the synced provider list: a screen opened before the first sync
+        // shows the humanized id until the list arrives.
+        Core.shared.swapProviderManager.$syncVersion
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.syncSections() }
+            .store(in: &cancellables)
+
         for token in [swap.tokenIn, swap.tokenOut] {
             let rateKey = RateKey(token: token, date: swap.date)
             if let currencyValue = rateService.rate(key: rateKey) {

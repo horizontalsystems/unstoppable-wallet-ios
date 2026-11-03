@@ -343,8 +343,10 @@ private extension PrivateSendService {
         let candidates = result.quotes.filter { $0.sellAmount != nil && providerIds.contains($0.providerId) }
 
         guard let best = candidates.min(by: { ($0.sellAmount ?? 0) < ($1.sellAmount ?? 0) }), let sellAmount = best.sellAmount else {
-            // No routes and nothing recognisable in providerErrors still means no route.
-            throw Self.reason(providerErrors: result.providerErrors) ?? .noRoute
+            // No routes and nothing recognisable in providerErrors still means no route. Only the
+            // eligible venues' errors count: a limit from a venue the gate excludes is not this token's.
+            let eligibleErrors = result.providerErrors.filter { providerIds.contains($0.providerId) }
+            throw Self.reason(providerErrors: eligibleErrors) ?? .noRoute
         }
 
         if let minBuyAmount = best.minBuyAmount, minBuyAmount != best.expectedBuyAmount {

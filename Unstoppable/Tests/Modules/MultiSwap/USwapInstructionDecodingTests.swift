@@ -146,6 +146,13 @@ struct USwapInstructionDecodingTests {
         #expect(fromEthereum.map(\.providerId) == ["THORCHAIN", "EXOLIX", "JUPITER", "NEWCOMER"])
     }
 
+    @Test func routeFilterDropsRoutesNamingNoProvider() {
+        let routes = ["EXOLIX", ""].map(Self.route)
+
+        let filtered = USwapRouteFilter.filter(routes, tokenIn: Self.token(.bitcoin)) { _ in "transfer" }
+        #expect(filtered.map(\.providerId) == ["EXOLIX"])
+    }
+
     @Test func vaultDepositSupportFollowsTheMemoChannel() {
         #expect(USwapRouteFilter.supportsVaultDeposit(blockchainType: .bitcoin))
         #expect(USwapRouteFilter.supportsVaultDeposit(blockchainType: .ethereum))

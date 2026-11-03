@@ -384,8 +384,13 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
                 throw SwapError.invalidTransactionData
             }
 
-            // The transfer always moves the amount the user saw: the commit's `sellAmount` /
-            // `execution.amount` are not consulted.
+            // The transfer always moves the amount the user saw. An order asking for MORE than that
+            // would be left underfunded and expire, so it is refused here (the user previews again); a
+            // lower or equal figure is accepted, as the venue settles what it receives.
+            if let committedSellAmount = commit.sellAmount, committedSellAmount > context.amountIn {
+                throw SwapError.invalidTransactionData
+            }
+
             let response = context.response.merging(commit: commit)
             let instruction = execution.depositInstruction()
 
