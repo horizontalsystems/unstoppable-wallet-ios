@@ -34,9 +34,16 @@ public final class USwapMultiSwapApi {
         }
     )
 
+    /// `/rate` fans out to every eligible provider; the server's own budget is 12 s per provider / 15 s
+    /// overall, so the request waits a little longer than that before giving up.
+    static let rateTimeout: TimeInterval = 30
+
     private let baseURL: URL
     let headers: HTTPHeaders?
     let networkManager: NetworkManager
+
+    private let sessionLock = NSLock()
+    private var _sessionId: String?
 
     public init(baseURL: URL, apiKey: String?, networkManager: NetworkManager) {
         self.baseURL = baseURL
@@ -44,14 +51,58 @@ public final class USwapMultiSwapApi {
         headers = apiKey.map { HTTPHeaders([HTTPHeader(name: "x-api-key", value: $0)]) }
     }
 
-    public func tokens(providerId: String) async throws -> [Token] {
-        let response: TokensResponse = try await networkManager.fetch(
-            url: endpoint("tokens"),
-            parameters: ["provider": providerId],
-            headers: headers
-        )
+    /// The `X-Session-Id` sent on rate / preview / commit / signed / track: a UUID generated when the swap
+    /// screen opens and replaced after a swap, so support can line up the quotes the user compared with
+    /// the swap made. Never changes a response. Written from the main thread, read from request tasks.
+    public var sessionId: String? {
+        get { sessionLock.withLock { _sessionId } }
+        set { sessionLock.withLock { _sessionId = newValue } }
+    }
 
-        return response.tokens.map(\.token)
+    /// The API-key headers plus the session header when a session is open.
+    var sessionHeaders: HTTPHeaders? {
+        guard let sessionId else {
+            return headers
+        }
+
+        var result = headers ?? HTTPHeaders()
+        result.add(name: "X-Session-Id", value: sessionId)
+        return result
+    }
+
+    /// `GET /v3/tokens/all` with `If-None-Match`: the body is several hundred KB and changes only on a
+    /// server restart, so a matching ETag answers 304 and the stored catalog stands. The only call in
+    /// this class that goes to the Alamofire session directly: `NetworkManager.fetch` exposes neither
+    /// response headers nor a 304.
+    public func allTokens(etag: String?) async throws -> CatalogResponse {
+        var requestHeaders = headers ?? HTTPHeaders()
+        if let etag {
+            requestHeaders.add(name: "If-None-Match", value: etag)
+        }
+
+        let response = await networkManager.session
+            .request(endpoint("tokens/all"), method: .get, headers: requestHeaders) { request in
+                // our own conditional request: the URL cache must not answer it, or the 304 never reaches us
+                request.cachePolicy = .reloadIgnoringLocalCacheData
+            }
+            .validate(statusCode: Array(200 ..< 300) + [304])
+            .serializingData(automaticallyCancelling: true, emptyResponseCodes: [204, 205, 304])
+            .response
+
+        switch response.result {
+        case let .success(data):
+            if response.response?.statusCode == 304 {
+                return .notModified
+            }
+
+            let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+            let tokens = try Mapper<CatalogTokenResponse>().mapArray(JSONObject: json)
+            let newEtag = response.response?.headers.value(for: "ETag")
+
+            return .tokens(tokens.map(\.token), etag: newEtag)
+        case let .failure(error):
+            throw error
+        }
     }
 
     public func checkAddresses(_ request: CheckAddressesRequest) async throws -> Bool? {
@@ -64,24 +115,16 @@ public final class USwapMultiSwapApi {
         return response.passedAmlCheck
     }
 
-    /// GET /v3/providers answers with a top-level array, one entry per provider.
-    public func providers() async throws -> [ProviderDescriptor] {
-        let responses: [ProviderDescriptorResponse] = try await networkManager.fetch(
-            url: endpoint("providers"),
-            headers: headers
-        )
-
-        return responses.map(\.descriptor)
-    }
-
     public func rate(_ request: RateRequest) async throws -> RateResult {
-        let response: RateResponse = try await networkManager.fetch(
+        let json = try await networkManager.fetchJson(
             url: endpoint("rate"),
             method: .post,
             parameters: request.parameters,
             encoding: JSONEncoding.default,
-            headers: headers
+            headers: sessionHeaders,
+            timeout: Self.rateTimeout
         )
+        let response = try RateResponse(JSONObject: json)
 
         return RateResult(
             quotes: response.routes.map(\.quote),
@@ -97,7 +140,7 @@ public final class USwapMultiSwapApi {
             method: .post,
             parameters: request.parameters,
             encoding: JSONEncoding.default,
-            headers: headers
+            headers: sessionHeaders
         )
 
         return response.response
@@ -113,7 +156,7 @@ public final class USwapMultiSwapApi {
             method: .post,
             parameters: request.parameters,
             encoding: JSONEncoding.default,
-            headers: headers
+            headers: sessionHeaders
         )
 
         let commit = response.response
@@ -133,7 +176,7 @@ public final class USwapMultiSwapApi {
             method: .post,
             parameters: request.parameters,
             encoding: JSONEncoding.default,
-            headers: headers
+            headers: sessionHeaders
         )
 
         return response.response
@@ -145,7 +188,7 @@ public final class USwapMultiSwapApi {
             method: .post,
             parameters: request.parameters,
             encoding: JSONEncoding.default,
-            headers: headers
+            headers: sessionHeaders
         )
 
         return response.response
@@ -157,32 +200,68 @@ public final class USwapMultiSwapApi {
 }
 
 public extension USwapMultiSwapApi {
+    /// `GET /v3/check-addresses?addresses=<csv>&amlProviderId=<id>`: the route's `amlProviderId` is
+    /// passed verbatim; which AML provider a route gets is the server's decision.
     struct CheckAddressesRequest {
         public let addresses: [String]
+        public let amlProviderId: String
 
-        public init(addresses: [String]) {
+        public init(addresses: [String], amlProviderId: String) {
             self.addresses = addresses
+            self.amlProviderId = amlProviderId
         }
 
-        fileprivate var parameters: Parameters {
-            ["addresses": addresses.joined(separator: ",")]
+        var parameters: Parameters {
+            ["addresses": addresses.joined(separator: ","), "amlProviderId": amlProviderId]
         }
     }
 
-    struct Token {
+    /// One `GET /v3/tokens/all` row. `address` is nil on a native coin; `providerIds` names the providers
+    /// with a token list that quote the asset (absent -> `[]`).
+    struct CatalogToken: Equatable {
+        public let identifier: String
+        public let address: String?
         public let chain: String
         public let chainId: String
-        public let address: String?
-        public let identifier: String
-        public let ticker: String?
+        public let coingeckoId: String?
+        public let decimals: Int
+        public let logoURI: String?
+        public let name: String
+        public let shortCode: String?
+        public let ticker: String
+        public let providerIds: [String]
 
-        public init(chain: String, chainId: String, address: String?, identifier: String, ticker: String? = nil) {
+        public init(
+            identifier: String,
+            address: String?,
+            chain: String,
+            chainId: String,
+            coingeckoId: String? = nil,
+            decimals: Int = 0,
+            logoURI: String? = nil,
+            name: String = "",
+            shortCode: String? = nil,
+            ticker: String = "",
+            providerIds: [String] = []
+        ) {
+            self.identifier = identifier
+            self.address = address
             self.chain = chain
             self.chainId = chainId
-            self.address = address
-            self.identifier = identifier
+            self.coingeckoId = coingeckoId
+            self.decimals = decimals
+            self.logoURI = logoURI
+            self.name = name
+            self.shortCode = shortCode
             self.ticker = ticker
+            self.providerIds = providerIds
         }
+    }
+
+    /// `GET /v3/tokens/all` answered 304 (the stored catalog stands) or 200 with the list and its ETag.
+    enum CatalogResponse {
+        case notModified
+        case tokens([CatalogToken], etag: String?)
     }
 
     /// /v3/rate and /v3/preview take exactly one of sellAmount / buyAmount — neither or both is a 400.
@@ -211,12 +290,9 @@ public extension USwapMultiSwapApi {
         }
     }
 
-    enum Privacy: String {
-        case exclude
-        case only
-        case include
-    }
-
+    /// `/v3/rate`. `providers` narrows the fan-out and is sent only when non-empty; without it the server
+    /// picks every provider that can serve the pair. `privacy` is the list of privacy levels to include
+    /// (`none`, `basic`, ...); nil leaves every level in. `chainId` is always sent when known.
     struct RateRequest {
         public let sellAsset: String
         public let buyAsset: String
@@ -224,7 +300,7 @@ public extension USwapMultiSwapApi {
         public let slippage: Decimal
         public let chainId: String?
         public let providerIds: [String]
-        public let privacy: Privacy
+        public let privacy: [String]?
 
         public init(
             sellAsset: String,
@@ -232,8 +308,8 @@ public extension USwapMultiSwapApi {
             amount: AmountSpec,
             slippage: Decimal,
             chainId: String?,
-            providerIds: [String],
-            privacy: Privacy = .exclude
+            providerIds: [String] = [],
+            privacy: [String]? = nil
         ) {
             self.sellAsset = sellAsset
             self.buyAsset = buyAsset
@@ -250,8 +326,8 @@ public extension USwapMultiSwapApi {
             sellAmount: Decimal,
             slippage: Decimal,
             chainId: String?,
-            providerIds: [String],
-            privacy: Privacy = .exclude
+            providerIds: [String] = [],
+            privacy: [String]? = nil
         ) {
             self.init(
                 sellAsset: sellAsset,
@@ -264,7 +340,7 @@ public extension USwapMultiSwapApi {
             )
         }
 
-        fileprivate var parameters: Parameters {
+        var parameters: Parameters {
             var parameters: Parameters = [
                 "sellAsset": sellAsset,
                 "buyAsset": buyAsset,
@@ -273,14 +349,12 @@ public extension USwapMultiSwapApi {
 
             parameters.merge(amount.parameters) { _, new in new }
 
-            // An explicit provider list overrides the privacy filter server-side, so only one of
-            // the two is ever sent.
-            if providerIds.isEmpty {
-                parameters["privacy"] = privacy.rawValue
-            } else {
+            if !providerIds.isEmpty {
                 parameters["providers"] = providerIds
             }
-
+            if let privacy {
+                parameters["privacy"] = privacy
+            }
             if let chainId {
                 parameters["chainId"] = chainId
             }
@@ -294,12 +368,21 @@ public extension USwapMultiSwapApi {
         public let buyAsset: String?
         public let estimatedTime: TimeInterval?
         public let approvalSpender: String?
+        /// The venue (`providers[0]`); a `/v3` route carries exactly one.
         public let providerId: String
         // In exact-output mode this is the answer: the amount to deposit, carrying the slippage
         // buffer over `minSellAmount`.
         public let sellAmount: Decimal?
         public let minSellAmount: Decimal?
         public let exactOutput: Bool
+        /// Present on a route with `ZEC.ZEC` on either side: which Zcash addresses the route takes.
+        public let addressRules: ZcashAddressRules?
+        /// `excellent` | `good` | `fair` for this route; `MultiSwapProviderManager` carries the same per provider.
+        public let amlPolicy: String?
+        /// Present only when the route has an address precheck (`GET /v3/check-addresses`).
+        public let amlProviderId: String?
+        /// P2P rate lock id, unused today.
+        public let rateId: String?
 
         public init(
             expectedBuyAmount: Decimal,
@@ -310,7 +393,11 @@ public extension USwapMultiSwapApi {
             providerId: String = "",
             sellAmount: Decimal? = nil,
             minSellAmount: Decimal? = nil,
-            exactOutput: Bool = false
+            exactOutput: Bool = false,
+            addressRules: ZcashAddressRules? = nil,
+            amlPolicy: String? = nil,
+            amlProviderId: String? = nil,
+            rateId: String? = nil
         ) {
             self.expectedBuyAmount = expectedBuyAmount
             self.minBuyAmount = minBuyAmount
@@ -321,7 +408,91 @@ public extension USwapMultiSwapApi {
             self.sellAmount = sellAmount
             self.minSellAmount = minSellAmount
             self.exactOutput = exactOutput
+            self.addressRules = addressRules
+            self.amlPolicy = amlPolicy
+            self.amlProviderId = amlProviderId
+            self.rateId = rateId
         }
+    }
+
+    /// Which Zcash addresses a route takes, per address it needs (`destination` when the buy side is ZEC,
+    /// `refund` and `source` when the sell side is). The rule for each: `unified` present -> send a
+    /// unified address built from `receivers` (carrying at least one of `requiresOneOf`); otherwise a
+    /// transparent one. `source.sameAsRefund` -> `sourceAddress` must equal `refundAddress` or be omitted.
+    struct ZcashAddressRules: Equatable {
+        public struct Unified: Equatable {
+            public let receivers: [String]
+            public let requiresOneOf: [String]
+
+            public init(receivers: [String], requiresOneOf: [String]) {
+                self.receivers = receivers
+                self.requiresOneOf = requiresOneOf
+            }
+        }
+
+        public struct Rule: Equatable {
+            public let unified: Unified?
+            public let transparent: Bool
+            public let tex: Bool
+            public let sameAsRefund: Bool
+
+            public init(unified: Unified?, transparent: Bool = true, tex: Bool = false, sameAsRefund: Bool = false) {
+                self.unified = unified
+                self.transparent = transparent
+                self.tex = tex
+                self.sameAsRefund = sameAsRefund
+            }
+        }
+
+        public let destination: Rule?
+        public let refund: Rule?
+        public let source: Rule?
+
+        public init(destination: Rule?, refund: Rule?, source: Rule?) {
+            self.destination = destination
+            self.refund = refund
+            self.source = source
+        }
+    }
+
+    /// A `/v3/preview` `400 { message, field, addressRules }`: a Zcash address the route does not take.
+    /// `addressRules` lets the caller re-preview once with the addresses the rules point to.
+    struct PreviewAddressError: Error {
+        public let message: String
+        public let field: String
+        public let addressRules: ZcashAddressRules?
+
+        public init(message: String, field: String, addressRules: ZcashAddressRules?) {
+            self.message = message
+            self.field = field
+            self.addressRules = addressRules
+        }
+    }
+
+    /// Reads a preview address rejection out of a failed `/v3/preview`; nil for any other failure
+    /// (including an ordinary provider error, which carries no `field`).
+    static func previewAddressError(networkError: Error) -> PreviewAddressError? {
+        guard let responseError = networkError as? NetworkManager.ResponseError else {
+            return nil
+        }
+
+        return previewAddressError(statusCode: responseError.statusCode, json: responseError.json)
+    }
+
+    /// The body-level rule: a `400` whose body names a `field` is an address rejection; an ordinary
+    /// provider error (`{ error, provider, errorCode }`) carries no `field` and is not.
+    static func previewAddressError(statusCode: Int?, json: Any?) -> PreviewAddressError? {
+        guard statusCode == 400,
+              let json = json as? [String: Any],
+              let field = json["field"] as? String, !field.isEmpty
+        else {
+            return nil
+        }
+
+        let message = (json["message"] as? String) ?? (json["error"] as? String) ?? field
+        let addressRules = (json["addressRules"] as? [String: Any]).flatMap { Mapper<ZcashAddressRulesResponse>().map(JSON: $0) }?.rules
+
+        return PreviewAddressError(message: message, field: field, addressRules: addressRules)
     }
 
     struct ProviderError {
@@ -339,6 +510,14 @@ public extension USwapMultiSwapApi {
             self.minimumAmount = minimumAmount
             self.maximumAmount = maximumAmount
         }
+
+        /// `403 { errorCode: "addressBlacklisted" }` on `/preview` or `/commit`: a source, destination or
+        /// refund address is blacklisted. The server's `message` is the one surface shown to the user.
+        public var isAddressBlacklisted: Bool {
+            errorCode == Self.addressBlacklistedCode
+        }
+
+        static let addressBlacklistedCode = "addressBlacklisted"
     }
 
     struct RateResult {
@@ -401,6 +580,11 @@ public extension USwapMultiSwapApi {
             self.status = status
             self.reason = reason
             self.providerError = providerError
+        }
+
+        /// A `403 addressBlacklisted` commit: the server's text (`reason`) is shown, nothing is signed.
+        public var isAddressBlacklisted: Bool {
+            providerError?.isAddressBlacklisted ?? false
         }
     }
 
@@ -526,27 +710,6 @@ public extension USwapMultiSwapApi {
             self.uuid = uuid
             self.status = status
             self.hash = hash
-        }
-    }
-
-    struct ProviderDescriptor {
-        public let id: String
-        public let executionType: String
-        // "none" | "basic" | "split"
-        public let privacy: String
-        public let confidential: Bool
-        public let suspended: Bool
-        public let amlPolicy: String?
-        public let supportedChainIds: [String]
-
-        public init(id: String, executionType: String, privacy: String, confidential: Bool, suspended: Bool, amlPolicy: String?, supportedChainIds: [String]) {
-            self.id = id
-            self.executionType = executionType
-            self.privacy = privacy
-            self.confidential = confidential
-            self.suspended = suspended
-            self.amlPolicy = amlPolicy
-            self.supportedChainIds = supportedChainIds
         }
     }
 
@@ -691,6 +854,10 @@ public extension USwapMultiSwapApi {
         // network fee against. Never a destination to send to.
         public let stubDepositAddress: String?
         public let expiresAt: Date?
+        /// The same object a `/v3/rate` route carries, on a preview with `ZEC.ZEC` on either side.
+        public let addressRules: ZcashAddressRules?
+        /// Present only when the route has an address precheck.
+        public let amlProviderId: String?
 
         public init(
             expectedBuyAmount: Decimal,
@@ -705,7 +872,9 @@ public extension USwapMultiSwapApi {
             exactOutput: Bool = false,
             previewToken: String? = nil,
             stubDepositAddress: String? = nil,
-            expiresAt: Date? = nil
+            expiresAt: Date? = nil,
+            addressRules: ZcashAddressRules? = nil,
+            amlProviderId: String? = nil
         ) {
             self.expectedBuyAmount = expectedBuyAmount
             self.minBuyAmount = minBuyAmount
@@ -720,6 +889,8 @@ public extension USwapMultiSwapApi {
             self.previewToken = previewToken
             self.stubDepositAddress = stubDepositAddress
             self.expiresAt = expiresAt
+            self.addressRules = addressRules
+            self.amlProviderId = amlProviderId
         }
 
         /// The previewed route completed by its commit: the order's `uuid`, and for transfer providers
@@ -740,7 +911,9 @@ public extension USwapMultiSwapApi {
                 // the execution carries the real one
                 previewToken: nil,
                 stubDepositAddress: nil,
-                expiresAt: commit.expiresAt ?? expiresAt
+                expiresAt: commit.expiresAt ?? expiresAt,
+                addressRules: addressRules,
+                amlProviderId: amlProviderId
             )
         }
     }
@@ -825,9 +998,34 @@ public extension USwapMultiSwapApi {
         /// RUNE / CACAO / a secured asset, `delivery.kind == "cosmos_memo"`): it is then a MsgDeposit
         /// carrying the memo, with no deposit address to display or send to.
         case thorchainDeposit(chain: String, inboundAddress: String, memo: String, delivery: Delivery)
+        /// A `method` this app has no builder for (e.g. `stellar_broker`, or one the server adds later):
+        /// kept so the route fails with a caution instead of being mistaken for a transfer without an
+        /// execution. Nothing is ever signed or sent from it.
+        case unsupported(method: String, chain: String?)
+
+        static let signedTransactionMethod = "signed_transaction"
+        static let transferMethod = "transfer"
+        static let thorchainDepositMethod = "thorchain_deposit"
+
+        /// The wire `method`.
+        var method: String {
+            switch self {
+            case .signedTransaction: Self.signedTransactionMethod
+            case .transfer: Self.transferMethod
+            case .thorchainDeposit: Self.thorchainDepositMethod
+            case let .unsupported(method, _): method
+            }
+        }
 
         var isTransfer: Bool {
             if case .transfer = self {
+                return true
+            }
+            return false
+        }
+
+        var isUnsupported: Bool {
+            if case .unsupported = self {
                 return true
             }
             return false
@@ -839,12 +1037,13 @@ public extension USwapMultiSwapApi {
             // a transfer is always built locally from `depositAddress` + `attachment`; the server's `unsignedTx` is never signed
             case .transfer: nil
             case let .thorchainDeposit(_, _, _, delivery): delivery.unsignedTx
+            case .unsupported: nil
             }
         }
 
         public var depositAddress: String? {
             switch self {
-            case .signedTransaction: nil
+            case .signedTransaction, .unsupported: nil
             case let .transfer(_, depositAddress, _, _, _): depositAddress
             case let .thorchainDeposit(_, inboundAddress, _, _): inboundAddress.isEmpty ? nil : inboundAddress
             }
@@ -855,6 +1054,7 @@ public extension USwapMultiSwapApi {
             case let .signedTransaction(chain, _, _): return chain
             case let .transfer(chain, _, _, _, _): return chain
             case let .thorchainDeposit(chain, _, _, _): return chain
+            case let .unsupported(_, chain): return chain
             }
         }
 
@@ -865,7 +1065,7 @@ public extension USwapMultiSwapApi {
             case let .thorchainDeposit(_, inboundAddress, memo, _):
                 // no vault: a MsgDeposit has no deposit address
                 return inboundAddress.isEmpty ? nil : (inboundAddress, .text(memo))
-            case .signedTransaction:
+            case .signedTransaction, .unsupported:
                 return nil
             }
         }
@@ -1011,36 +1211,55 @@ public extension USwapMultiSwapApi {
 }
 
 extension USwapMultiSwapApi {
-    struct TokensResponse: ImmutableMappable {
-        let tokens: [TokenResponse]
+    /// One `GET /v3/tokens/all` row. `address` is null on a native coin; `providers` may be absent.
+    struct CatalogTokenResponse: ImmutableMappable {
+        let token: CatalogToken
 
         init(map: Map) throws {
-            tokens = try map.value("tokens")
+            token = try CatalogToken(
+                identifier: map.value("identifier"),
+                address: try? map.value("address"),
+                chain: map.value("chain"),
+                chainId: map.value("chainId"),
+                coingeckoId: try? map.value("coingeckoId"),
+                decimals: (try? map.value("decimals")) ?? 0,
+                logoURI: try? map.value("logoURI"),
+                name: (try? map.value("name")) ?? "",
+                shortCode: try? map.value("shortCode"),
+                ticker: (try? map.value("ticker")) ?? "",
+                providerIds: (try? map.value("providers")) ?? []
+            )
         }
     }
 
-    struct TokenResponse: ImmutableMappable {
-        let chain: String
-        let chainId: String
-        let address: String?
-        let identifier: String
-        let ticker: String?
+    struct ZcashAddressRulesResponse: ImmutableMappable {
+        let rules: ZcashAddressRules
 
         init(map: Map) throws {
-            chain = try map.value("chain")
-            chainId = try map.value("chainId")
-            address = try? map.value("address")
-            identifier = try map.value("identifier")
-            ticker = try? map.value("ticker")
+            rules = ZcashAddressRules(
+                destination: Self.rule(map, key: "destination"),
+                refund: Self.rule(map, key: "refund"),
+                source: Self.rule(map, key: "source")
+            )
         }
 
-        var token: Token {
-            Token(
-                chain: chain,
-                chainId: chainId,
-                address: address,
-                identifier: identifier,
-                ticker: ticker
+        private static func rule(_ map: Map, key: String) -> ZcashAddressRules.Rule? {
+            guard let json = map.JSON[key] as? [String: Any] else {
+                return nil
+            }
+
+            let unified = (json["unified"] as? [String: Any]).map { unified in
+                ZcashAddressRules.Unified(
+                    receivers: (unified["receivers"] as? [String]) ?? [],
+                    requiresOneOf: (unified["requiresOneOf"] as? [String]) ?? []
+                )
+            }
+
+            return ZcashAddressRules.Rule(
+                unified: unified,
+                transparent: (json["transparent"] as? Bool) ?? true,
+                tex: (json["tex"] as? Bool) ?? false,
+                sameAsRefund: (json["sameAsRefund"] as? Bool) ?? false
             )
         }
     }
@@ -1050,41 +1269,6 @@ extension USwapMultiSwapApi {
 
         init(map: Map) throws {
             passedAmlCheck = try? map.value("passedAmlCheck")
-        }
-    }
-
-    struct ProviderDescriptorResponse: ImmutableMappable {
-        private static let confidentialPrivacyValues: Set<String> = ["basic", "split"]
-
-        let id: String
-        let executionType: String
-        let privacy: String
-        let confidential: Bool
-        let suspended: Bool
-        let amlPolicy: String?
-        let supportedChainIds: [String]
-
-        init(map: Map) throws {
-            id = try map.value("provider")
-            // Absent on `quotes: false` entries (ALLBRIDGE, PANCAKESWAP)
-            executionType = (try? map.value("executionType")) ?? ""
-            privacy = (try? map.value("privacy")) ?? "none"
-            confidential = Self.confidentialPrivacyValues.contains(privacy)
-            suspended = (try? map.value("suspended")) ?? false
-            amlPolicy = try? map.value("amlPolicy")
-            supportedChainIds = (try? map.value("supportedChainIds")) ?? []
-        }
-
-        var descriptor: ProviderDescriptor {
-            ProviderDescriptor(
-                id: id,
-                executionType: executionType,
-                privacy: privacy,
-                confidential: confidential,
-                suspended: suspended,
-                amlPolicy: amlPolicy,
-                supportedChainIds: supportedChainIds
-            )
         }
     }
 
@@ -1138,6 +1322,10 @@ extension USwapMultiSwapApi {
         let sellAmount: Decimal?
         let minSellAmount: Decimal?
         let exactOutput: Bool
+        let addressRules: ZcashAddressRulesResponse?
+        let amlPolicy: String?
+        let amlProviderId: String?
+        let rateId: String?
 
         init(map: Map) throws {
             expectedBuyAmount = try map.value("expectedBuyAmount", using: USwapMultiSwapApi.decimalTransform)
@@ -1150,6 +1338,10 @@ extension USwapMultiSwapApi {
             sellAmount = try? map.value("sellAmount", using: USwapMultiSwapApi.decimalTransform)
             minSellAmount = try? map.value("meta.near.minSellAmount", using: USwapMultiSwapApi.decimalTransform)
             exactOutput = (try? map.value("meta.near.exactOutput")) ?? false
+            addressRules = try? map.value("addressRules")
+            amlPolicy = try? map.value("amlPolicy")
+            amlProviderId = try? map.value("amlProviderId")
+            rateId = try? map.value("rate.id")
         }
 
         var quote: RateQuote {
@@ -1162,7 +1354,11 @@ extension USwapMultiSwapApi {
                 providerId: providerId,
                 sellAmount: sellAmount,
                 minSellAmount: minSellAmount,
-                exactOutput: exactOutput
+                exactOutput: exactOutput,
+                addressRules: addressRules?.rules,
+                amlPolicy: amlPolicy,
+                amlProviderId: amlProviderId,
+                rateId: rateId
             )
         }
     }
@@ -1181,6 +1377,8 @@ extension USwapMultiSwapApi {
         let previewToken: String?
         let stubDepositAddress: String?
         let expiresAt: Date?
+        let addressRules: ZcashAddressRulesResponse?
+        let amlProviderId: String?
 
         init(map: Map) throws {
             expectedBuyAmount = try map.value("expectedBuyAmount", using: USwapMultiSwapApi.decimalTransform)
@@ -1196,6 +1394,8 @@ extension USwapMultiSwapApi {
             previewToken = try? map.value("previewToken")
             stubDepositAddress = try? map.value("stubDepositAddress")
             expiresAt = try? map.value("expiresAt", using: USwapMultiSwapApi.millisecondsDateTransform)
+            addressRules = try? map.value("addressRules")
+            amlProviderId = try? map.value("amlProviderId")
         }
 
         var response: SwapResponse {
@@ -1212,7 +1412,9 @@ extension USwapMultiSwapApi {
                 exactOutput: exactOutput,
                 previewToken: previewToken,
                 stubDepositAddress: stubDepositAddress,
-                expiresAt: expiresAt
+                expiresAt: expiresAt,
+                addressRules: addressRules?.rules,
+                amlProviderId: amlProviderId
             )
         }
     }
@@ -1420,17 +1622,20 @@ extension USwapMultiSwapApi {
         case signedTransaction(chain: String, transactions: [SignableTxResponse], approval: ApprovalResponse?)
         case transfer(chain: String, depositAddress: String, amount: Decimal?, attachment: Attachment?, unsignedTx: SignableTxResponse?)
         case thorchainDeposit(chain: String, inboundAddress: String, memo: String, delivery: DeliveryResponse)
+        /// A method this app cannot execute. Parsed, not thrown: a thrown execution would read as "no
+        /// execution" and the route would be mistaken for a transfer awaiting its deposit address.
+        case unsupported(method: String, chain: String?)
 
         init(map: Map) throws {
             let method: String = try map.value("method")
             switch method {
-            case "signed_transaction":
+            case Execution.signedTransactionMethod:
                 self = try .signedTransaction(
                     chain: map.value("chain"),
                     transactions: (try? map.value("transactions")) ?? [],
                     approval: try? map.value("approval")
                 )
-            case "transfer":
+            case Execution.transferMethod:
                 let attachmentJson: [String: Any]? = try? map.value("attachment")
 
                 self = try .transfer(
@@ -1440,7 +1645,7 @@ extension USwapMultiSwapApi {
                     attachment: Attachment(json: attachmentJson),
                     unsignedTx: try? map.value("unsignedTx")
                 )
-            case "thorchain_deposit":
+            case Execution.thorchainDepositMethod:
                 self = try .thorchainDeposit(
                     chain: map.value("chain"),
                     // absent for a settlement-native sell (`delivery.kind == "cosmos_memo"`)
@@ -1449,7 +1654,7 @@ extension USwapMultiSwapApi {
                     delivery: map.value("delivery")
                 )
             default:
-                throw MapError(key: "method", currentValue: method, reason: "Unsupported execution method")
+                self = .unsupported(method: method, chain: try? map.value("chain"))
             }
         }
 
@@ -1457,7 +1662,7 @@ extension USwapMultiSwapApi {
             switch self {
             case let .signedTransaction(_, _, approval):
                 approval?.spender
-            case .transfer:
+            case .transfer, .unsupported:
                 nil
             case let .thorchainDeposit(_, _, _, delivery):
                 delivery.approval?.spender
@@ -1487,6 +1692,8 @@ extension USwapMultiSwapApi {
                     memo: memo,
                     delivery: delivery.delivery
                 )
+            case let .unsupported(method, chain):
+                .unsupported(method: method, chain: chain)
             }
         }
     }

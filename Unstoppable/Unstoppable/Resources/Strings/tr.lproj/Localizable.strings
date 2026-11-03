@@ -806,6 +806,7 @@
 "swap.aml.risk.description" = "Bu işlem için potansiyel riskler tespit edildi. İşlem sırasında fonlarınız reddedilebilir veya kısıtlanabilir. Lütfen başka bir sağlayıcı seçin.";
 "swap.aml.risk.button" = "Başka Sağlayıcı Seç";
 "swap.aml.undefined.description" = "Bu işlem için risk kontrolü tamamlanamadı. Devam ederseniz, bu takas işlemi sırasında gecikmeler, ret veya kısıtlamalarla karşılaşabilir.";
+"swap.aml.inconclusive" = "Bu rota için risk kontrolü tamamlanamadı. Başka bir rota seçip tekrar deneyin.";
 "swap.aml.undefined.button" = "Riski Kabul Ederek Devam Et";
 "swap.aml.connection.title" = "Bağlantı Sorunu";
 "swap.aml.connection.description" = "Şu anda yanıt alınamıyor. Lütfen tekrar deneyin.";
@@ -815,15 +816,6 @@
 
 "swap_options.title" = "Swap Seçenekleri";
 "swap_options.description" = "Apple App Store politikaları artık wallet uygulaması içinde swap hizmetlerine erişim sunmamıza izin vermiyor. Bu nedenle, swap işlemi yapmak için aşağıdaki seçenekleri kullanabilirsiniz:";
-
-// Swap Terms
-
-"swap.terms.title" = "Swap Koşulları";
-"swap.terms.description" = "Devam etmek için lütfen her maddeye onayınızı verin.";
-"swap.terms.risk_of_restrictions" = "Kısıtlama riski";
-"swap.terms.risk_of_restrictions.description" = "Bazı rotalar takasları reddedebilir veya fonlarınıza erişimi kısıtlayabilir. Bir rota seçmeden önce %@ kontrol edin.";
-"swap.terms.user_responsibility" = "Kullanıcı sorumluluğu";
-"swap.terms.user_responsibility.description" = "Olası riskleri inceledim ve rota seçimimin sorumluluğunu kabul ediyorum.";
 
 // Swap Advanced Settings
 
@@ -869,6 +861,9 @@
 "swap.confirmation.commit.rate_changed" = "Fiyat değişti. Güncellenen alıntıyı inceleyip tekrar deneyin.";
 "swap.confirmation.commit.refresh_required" = "Alıntı süresi doldu. Yeni bir alıntı yüklendi.";
 "swap.confirmation.commit.failed" = "Swap başlatılamadı. Yeni bir alıntı yüklendi.";
+"swap.confirmation.unsupported_instruction" = "Bu rota, uygulamanın oluşturamadığı bir işlem türü kullanıyor. Başka bir rota seçin.";
+"swap.confirmation.recipient_not_accepted" = "Bu rota, alıcının adres türünü kabul etmiyor. Alıcıyı değiştirip tekrar deneyin.";
+"swap.confirmation.destination_not_deliverable" = "Bu rota, bu zincirden korumalı bir Zcash adresine teslimat yapamaz. Başka bir rota seçin veya şeffaf bir alıcı adresi girin.";
 "swap.confirmation.impact_high" = "Bu swap işleminde fonlarınızın büyük bir kısmını (%@) kaybedeceksiniz.";
 "swap.confirmation.impact_too_high" = "Bu takas, çok düşük likidite nedeniyle büyük bir kayba (%@) yol açar.";
 "swap.confirmation.impact_warning" = "Önemli! Son derece olumsuz bir fiyat alıyorsunuz. Bunun nedeni son derece düşük likiditedir.";

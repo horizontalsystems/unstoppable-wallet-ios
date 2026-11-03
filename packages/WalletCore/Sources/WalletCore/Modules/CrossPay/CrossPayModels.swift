@@ -29,6 +29,7 @@ public struct CrossPayRequest {
 public struct CrossPayPreview {
     public let request: CrossPayRequest
     public let previewToken: String
+    public let providerId: String // the venue the route was previewed with; tracking only
     public let depositAmount: Decimal // the preview's sellAmount in tokenIn — what the user confirms and what is transferred
     public let minSellAmount: Decimal? // below it the deposit is refunded and no swap happens
     public let amountOut: Decimal // what the recipient gets; == request.amount by the exactness check
@@ -40,6 +41,7 @@ public struct CrossPayPreview {
     public init(
         request: CrossPayRequest,
         previewToken: String,
+        providerId: String,
         depositAmount: Decimal,
         minSellAmount: Decimal?,
         amountOut: Decimal,
@@ -50,6 +52,7 @@ public struct CrossPayPreview {
     ) {
         self.request = request
         self.previewToken = previewToken
+        self.providerId = providerId
         self.depositAmount = depositAmount
         self.minSellAmount = minSellAmount
         self.amountOut = amountOut
@@ -116,7 +119,7 @@ public struct CrossPayOrder {
             depositAmount: depositAmount,
             minSellAmount: preview.minSellAmount,
             amountOut: amountOut,
-            providerId: CrossPayService.providerId,
+            providerId: preview.providerId,
             depositAddress: depositAddress,
             attachment: attachment,
             providerSwapId: providerSwapId,
@@ -136,6 +139,8 @@ public enum CrossPayError: Error {
     case providerSuspended
     case networkError(Error)
     case commitFailed
+    /// The typed recipient does not fit any (or the chosen) route's destination rule; the user must change it.
+    case recipientNotAccepted
     // /v3/commit refusals, by the server's discriminator. Toasted by the handler on a refused commit
     // (the screen re-previews). `previewExpired` is also thrown out of sendData(...) when two preview
     // passes in a row come back stale, in which case it is the confirmation screen's error view.
@@ -165,6 +170,8 @@ extension CrossPayError: UserFacingError {
         case .commitFailed:
             // One message for the whole commit-side taxonomy — internals would not help the user act.
             return "cross_pay.error.commit_failed".localized
+        case .recipientNotAccepted:
+            return "swap.confirmation.recipient_not_accepted".localized
         case .rateChanged:
             return "swap.confirmation.commit.rate_changed".localized
         case .previewExpired:

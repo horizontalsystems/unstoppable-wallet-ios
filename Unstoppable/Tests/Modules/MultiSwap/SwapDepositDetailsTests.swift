@@ -67,6 +67,18 @@ struct SwapDepositDetailsTests {
         #expect(quote.depositMemo == nil)
     }
 
+    /// An instruction the sell chain's builder cannot follow is refused before the builder runs.
+    @Test func refusesUnsupportedInstructionBeforeCallingBuilder() async {
+        do {
+            _ = try await Self.confirmation(execution: .unsupported(method: "stellar_broker", chain: "bitcoin"), rejectBuild: true)
+            Issue.record("Unsupported instruction reached a final quote")
+        } catch let USwapMultiSwapProvider.SwapError.unsupportedInstruction(method) {
+            #expect(method == "stellar_broker")
+        } catch {
+            Issue.record("Unexpected error: \(error)")
+        }
+    }
+
     private static let destination = "0x1234567890abcdef1234567890abcdef12345678"
 
     private static func token(_ type: BlockchainType) -> Token {
@@ -87,49 +99,30 @@ struct SwapDepositDetailsTests {
 
     private static func confirmation(execution: USwapMultiSwapApi.Execution, rejectBuild: Bool = false) async throws -> SwapFinalQuote {
         let response = USwapMultiSwapApi.SwapResponse(expectedBuyAmount: 1, minBuyAmount: nil, buyAsset: nil, estimatedTime: nil, execution: execution, uuid: nil, approvalSpender: nil, previewToken: "preview-token")
-        let provider = USwapMultiSwapProvider(subProvider: StubSubProvider(response: response), rateQuoteFactory: USwapRateQuoteFactory(builders: []), finalQuoteFactory: USwapFinalQuoteFactory(builders: [StubBuilder(rejectBuild: rejectBuild)]))
-        return try await provider.confirmationQuote(multiSwapQuote: MultiSwapQuote(expectedBuyAmount: 1), tokenIn: token(.bitcoin), tokenOut: token(.ethereum), amountIn: 1, slippage: 1, recipient: destination, transactionSettings: nil)
-    }
+        let request = USwapMultiSwapApi.SwapRequest(
+            sellAsset: "BTC.BTC",
+            buyAsset: "ETH.ETH",
+            sellAmount: 1,
+            slippage: 1,
+            chainId: "bitcoin",
+            providerId: "THORCHAIN",
+            destinationAddress: destination,
+            sourceAddress: nil,
+            refundAddress: nil
+        )
 
-    private struct StubSubProvider: USwapSubProvider {
-        let response: USwapMultiSwapApi.SwapResponse
-        var info: USwapProviderInfo {
-            .quickEx
-        }
-
-        var syncPublisher: AnyPublisher<Void, Never>? {
-            nil
-        }
-
-        func slippageSupported(tokenIn _: Token, tokenOut _: Token) -> Bool {
-            true
-        }
-
-        func supports(tokenIn _: Token, tokenOut _: Token) -> Bool {
-            true
-        }
-
-        func rate(input _: USwapRateInput) async throws -> USwapRateResult {
-            throw USwapMultiSwapProvider.SwapError.noRoutes
-        }
-
-        func preview(input _: USwapPreviewInput) async throws -> USwapPreviewResult {
-            USwapPreviewResult(response: response, refundAddress: nil, destinationAddress: SwapDepositDetailsTests.destination)
-        }
-
-        func commit(previewToken _: String) async throws -> USwapMultiSwapApi.CommitResponse {
-            USwapMultiSwapApi.CommitResponse(status: "ok", uuid: "uuid", sellAmount: nil, expectedBuyAmount: nil, minBuyAmount: nil, expiresAt: nil, replayed: false, execution: nil)
-        }
-
-        func reportSigned(uuid _: String, inboundTxHash _: String) async throws {}
-
-        func validateTrustedProvider(tokenIn _: Token, amountIn _: Decimal) async throws -> Bool? {
-            nil
-        }
-
-        func track(swap: Swap) async throws -> Swap {
-            swap
-        }
+        return try await USwapMultiSwapProvider.assembleFinalQuote(
+            response: response,
+            request: request,
+            venueId: "THORCHAIN",
+            tokenIn: token(.bitcoin),
+            tokenOut: token(.ethereum),
+            amountIn: 1,
+            slippage: 1,
+            recipient: destination,
+            transactionSettings: nil,
+            finalQuoteFactory: USwapFinalQuoteFactory(builders: [StubBuilder(rejectBuild: rejectBuild)])
+        )
     }
 
     private struct StubBuilder: USwapFinalQuoteBuilder {

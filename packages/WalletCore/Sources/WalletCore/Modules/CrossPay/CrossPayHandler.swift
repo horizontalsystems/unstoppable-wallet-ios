@@ -37,6 +37,8 @@ final class CrossPayHandler {
     /// Re-entrancy guard: rejects a second concurrent broadcast (double-tap / overlapping send) so
     /// the same deposit is never sent twice.
     private var isSending = false
+    /// The AML prechecks passed during this confirmation: its silent re-previews do not repeat them.
+    private let amlPasses = CrossPayService.AmlPasses()
 
     private let refreshSubject = PassthroughSubject<Void, Never>()
 
@@ -397,7 +399,8 @@ private extension CrossPayHandler {
                 let generation = self.previewGeneration
                 let request = self.request
                 let service = self.service
-                let task = Task { try await service.preview(request: request) }
+                let amlPasses = self.amlPasses
+                let task = Task { try await service.preview(request: request, amlPasses: amlPasses) }
                 self.previewTask = task
 
                 return (task, generation)

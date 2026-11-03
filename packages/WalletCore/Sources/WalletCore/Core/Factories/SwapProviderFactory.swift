@@ -2,15 +2,13 @@ import Foundation
 import HsToolKit
 import MarketKit
 
+/// Resolves the quote sources. Today there is one, `Core.shared.swapProvider`; the registry stays so a
+/// test can swap it for a stub and an app can prepend its own.
 public protocol ISwapProviderResolver {
-    static func providerInfo(id: String) -> USwapProviderInfo?
-    static func provider(id: String) -> IMultiSwapProvider?
-}
-
-public extension ISwapProviderResolver {
-    static func providerInfo(id _: String) -> USwapProviderInfo? {
-        nil
-    }
+    static var providers: [IMultiSwapProvider] { get }
+    /// The provider that tracks a stored swap row. Every row ever saved is tracked by the single USwap
+    /// provider, whatever venue id it carries.
+    static func provider(trackingProviderId: String) -> IMultiSwapProvider?
 }
 
 public class SwapProviderFactory {
@@ -24,53 +22,23 @@ public class SwapProviderFactory {
         resolvers.insert(resolver, at: 0)
     }
 
-    public static func provider(id: String) -> IMultiSwapProvider? {
+    /// Every registered provider, in resolver order, one per id (the first resolver naming an id wins).
+    public static var providers: [IMultiSwapProvider] {
+        var seen = Set<String>()
+
+        // an explicit closure: a key path over the protocol metatype crashes swift-frontend 6.4 at SIL lowering
+        // swiftformat:disable:next preferKeyPath
+        return resolvers.flatMap { $0.providers }.filter { seen.insert($0.id).inserted }
+    }
+
+    public static func provider(trackingProviderId: String) -> IMultiSwapProvider? {
         for resolver in resolvers {
-            if let provider = resolver.provider(id: id) {
+            if let provider = resolver.provider(trackingProviderId: trackingProviderId) {
                 return provider
             }
         }
 
         return nil
-    }
-
-    public static func providerInfo(id: String) -> USwapProviderInfo? {
-        for resolver in resolvers {
-            if let info = resolver.providerInfo(id: id) {
-                return info
-            }
-        }
-
-        return nil
-    }
-
-    /// Covers only the Stellar history-only entry (STELLARBROKER). It stays registered and resolves
-    /// through `provider(id:)` for tracking, but is never quoted; the server may still list the id.
-    private static let retiredProviderIds: Set<String> = [USwapProviderInfo.stellarBroker.id]
-
-    /// History only: swaps made through the former client-quoted providers. These ids resolve to no
-    /// provider, so they are never quoted and never tracked; the name keeps old records readable.
-    private static let retiredProviderNames: [String: String] = [
-        "UNISWAP_V3": "Uniswap",
-        "PANCAKESWAP": "PancakeSwap",
-        "ALLBRIDGE": "AllBridge",
-        "uniswap": "Uniswap",
-        "pancake": "PancakeSwap",
-        "quickswap": "QuickSwap",
-    ]
-
-    /// The ordinary swap screen must never offer a retired provider. Not automatic: a registered
-    /// entry resolves through `provider(id:)` (which tracking needs). Split-only providers that do
-    /// not serve /v3/rate (`quotes: false`, e.g. SWAPUZ_SPLIT) are kept off the Standard tab by
-    /// `MultiSwapProviderManager.providers`, not here.
-    public static func swappableProviders(ids: [String]) -> [IMultiSwapProvider] {
-        ids
-            .filter { !retiredProviderIds.contains($0) }
-            .compactMap { provider(id: $0) }
-    }
-
-    public static func providerName(id: String) -> String? {
-        providerInfo(id: id)?.name ?? retiredProviderNames[id]
     }
 
     /// test seam: registry is global mutable state
@@ -80,50 +48,13 @@ public class SwapProviderFactory {
 }
 
 public enum SwapProviderResolver: ISwapProviderResolver {
-    public struct Entry {
-        public let info: USwapProviderInfo
-        public let makeProvider: () -> IMultiSwapProvider
-
-        public init(info: USwapProviderInfo, makeProvider: @escaping () -> IMultiSwapProvider) {
-            self.info = info
-            self.makeProvider = makeProvider
-        }
+    public static var providers: [IMultiSwapProvider] {
+        [Core.shared.swapProvider]
     }
 
-    private static let entries: [String: Entry] = Dictionary(
-        uniqueKeysWithValues: [
-            defaultUSwapEntry(info: .near),
-            // Also resolves private send rows for tracking — without this entry
-            // SwapHistoryManager._sync() skips the row and a private send never leaves pending.
-            defaultUSwapEntry(info: .nearConfidential),
-            quickExUSwapEntry(info: .quickEx),
-            defaultUSwapEntry(info: .letsExchange),
-            defaultUSwapEntry(info: .stealthex),
-            defaultUSwapEntry(info: .swapuz),
-            defaultUSwapEntry(info: .swapuzSplit),
-            exolixUSwapEntry(info: .exolix),
-            defaultUSwapEntry(info: .cce),
-            barterUSwapEntry(info: .barter),
-            stellarUSwapEntry(info: .soroswap),
-            stellarUSwapEntry(info: .aquarius),
-            stellarUSwapEntry(info: .stellarDex),
-            historyUSwapEntry(info: .stellarBroker),
-            oneInchUSwapEntry(info: .oneInch),
-            uniswapUSwapEntry(info: .uniswap),
-            thorChainUSwapEntry(info: .thorChain),
-            thorChainUSwapEntry(info: .maya),
-            defaultUSwapEntry(info: .pegasus),
-            defaultUSwapEntry(info: .circle),
-            jupiterUSwapEntry(info: .jupiter),
-            lifiUSwapEntry(info: .lifi),
-            axelarUSwapEntry(info: .axelarIts),
-            defaultUSwapEntry(info: .lizex),
-            defaultUSwapEntry(info: .bitania),
-            defaultUSwapEntry(info: .xswap),
-        ].map { entry in
-            (entry.info.id, entry)
-        }
-    )
+    public static func provider(trackingProviderId _: String) -> IMultiSwapProvider? {
+        Core.shared.swapProvider
+    }
 
     /// Accessible so the app can build the same USwap API instance for the private send stack
     /// instead of duplicating the base URL / api key construction.
@@ -137,324 +68,5 @@ public enum SwapProviderResolver: ISwapProviderResolver {
             apiKey: AppConfig.uswapApiKey,
             networkManager: networkManager
         )
-    }
-
-    private static func defaultUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, makeProvider: { defaultUSwapProvider(info: info) })
-    }
-
-    private static func quickExUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, makeProvider: { quickExUSwapProvider(info: info) })
-    }
-
-    private static func jupiterUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, makeProvider: { jupiterUSwapProvider(info: info) })
-    }
-
-    private static func barterUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, makeProvider: { barterUSwapProvider(info: info) })
-    }
-
-    private static func stellarUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, makeProvider: { stellarUSwapProvider(info: info) })
-    }
-
-    private static func historyUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, makeProvider: { historyUSwapProvider(info: info) })
-    }
-
-    private static func oneInchUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, makeProvider: { oneInchUSwapProvider(info: info) })
-    }
-
-    private static func uniswapUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, makeProvider: { uniswapUSwapProvider(info: info) })
-    }
-
-    private static func lifiUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, makeProvider: { lifiUSwapProvider(info: info) })
-    }
-
-    private static func exolixUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, makeProvider: { exolixUSwapProvider(info: info) })
-    }
-
-    private static func axelarUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, makeProvider: { axelarUSwapProvider(info: info) })
-    }
-
-    private static func thorChainUSwapEntry(info: USwapProviderInfo) -> Entry {
-        Entry(info: info, makeProvider: { thorChainUSwapProvider(info: info) })
-    }
-
-    private static func defaultUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
-        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
-        let subProvider = defaultUSwapSubProvider(info: info, api: api)
-
-        return uSwapProvider(subProvider: subProvider)
-    }
-
-    private static func quickExUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
-        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
-        let subProvider = QuickExUSwapSubProvider(
-            info: info,
-            api: api,
-            assetRepository: USwapAssetRepository(
-                providerId: info.id,
-                api: api,
-                storage: Core.shared.swapAssetStorage
-            ),
-            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
-            tracker: uSwapTracker(api: api)
-        )
-
-        return uSwapProvider(subProvider: subProvider)
-    }
-
-    private static func jupiterUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
-        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
-        let subProvider = JupiterUSwapSubProvider(
-            info: info,
-            api: api,
-            assetRepository: nil,
-            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
-            tracker: uSwapTracker(api: api)
-        )
-
-        return uSwapProvider(subProvider: subProvider)
-    }
-
-    private static func barterUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
-        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
-        let subProvider = BarterUSwapSubProvider(
-            info: info,
-            api: api,
-            assetRepository: nil,
-            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
-            tracker: uSwapTracker(api: api)
-        )
-
-        return uSwapProvider(subProvider: subProvider)
-    }
-
-    private static func stellarUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
-        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
-        let subProvider = StellarUSwapSubProvider(
-            info: info,
-            api: api,
-            assetRepository: nil,
-            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
-            tracker: uSwapTracker(api: api)
-        )
-
-        return uSwapProvider(subProvider: subProvider)
-    }
-
-    /// Resolves a retired provider for history and tracking only: with no asset repository it
-    /// supports no pair, so it can never be quoted.
-    private static func historyUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
-        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
-        let subProvider = DefaultUSwapSubProvider(
-            info: info,
-            api: api,
-            assetRepository: nil,
-            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
-            tracker: uSwapTracker(api: api)
-        )
-
-        return uSwapProvider(subProvider: subProvider)
-    }
-
-    private static func oneInchUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
-        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
-        let subProvider = OneInchUSwapSubProvider(
-            info: info,
-            api: api,
-            assetRepository: nil,
-            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
-            tracker: uSwapTracker(api: api)
-        )
-
-        return uSwapProvider(subProvider: subProvider)
-    }
-
-    private static func uniswapUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
-        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
-        let subProvider = UniswapUSwapSubProvider(
-            info: info,
-            api: api,
-            assetRepository: nil,
-            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
-            tracker: uSwapTracker(api: api)
-        )
-
-        return uSwapProvider(subProvider: subProvider)
-    }
-
-    private static func lifiUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
-        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
-        let subProvider = LifiUSwapSubProvider(
-            info: info,
-            api: api,
-            assetRepository: nil,
-            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
-            tracker: uSwapTracker(api: api)
-        )
-
-        return uSwapProvider(subProvider: subProvider)
-    }
-
-    private static func exolixUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
-        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
-        let subProvider = ExolixUSwapSubProvider(
-            info: info,
-            api: api,
-            assetRepository: USwapAssetRepository(
-                providerId: info.id,
-                api: api,
-                storage: Core.shared.swapAssetStorage,
-                includeAsset: { identifier in
-                    ExolixUSwapSubProvider.includesInAssetMap(identifier: identifier)
-                }
-            ),
-            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
-            tracker: uSwapTracker(api: api),
-            accountManager: Core.shared.accountManager,
-            adapterManager: Core.shared.adapterManager
-        )
-
-        return uSwapProvider(subProvider: subProvider)
-    }
-
-    private static func axelarUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
-        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
-        let subProvider = DefaultUSwapSubProvider(
-            info: info,
-            api: api,
-            assetRepository: USwapAssetRepository(
-                providerId: info.id,
-                api: api,
-                storage: Core.shared.swapAssetStorage
-            ),
-            commitRequestBuilder: USwapCommitRequestBuilder(
-                providerId: info.id,
-                shouldIncludeSourceAddress: { token in
-                    token.blockchain.type.isEvm ||
-                        token.blockchainType == .tron ||
-                        token.blockchainType == .ton ||
-                        token.blockchainType == .solana ||
-                        token.blockchainType == .stellar
-                }
-            ),
-            tracker: uSwapTracker(api: api)
-        )
-
-        return uSwapProvider(subProvider: subProvider)
-    }
-
-    /// Shared by every vault-deposit (thorchain_deposit) provider: the token list served for the
-    /// provider id, not the code, tells them apart.
-    private static func thorChainUSwapProvider(info: USwapProviderInfo) -> IMultiSwapProvider {
-        let api = uSwapApi(networkManager: NetworkManager(logger: nil))
-        let subProvider = DefaultUSwapSubProvider(
-            info: info,
-            api: api,
-            assetRepository: USwapAssetRepository(
-                providerId: info.id,
-                api: api,
-                storage: Core.shared.swapAssetStorage
-            ),
-            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
-            tracker: uSwapTracker(api: api),
-            supportsSourceToken: supportsThorChainDeposit
-        )
-
-        return uSwapProvider(subProvider: subProvider)
-    }
-
-    /// A vault deposit needs the swap memo to reach the vault. The app can carry it on chains
-    /// whose memo is public on-chain (UTXO OP_RETURN, THORChain/Maya memo), inside a server-built
-    /// EVM transaction (calldata / router call), or through a vault's shielded memo address on
-    /// Zcash. Solana, Tron and XRP deposits built here carry no text memo, so they are not offered
-    /// as a sell side even though the server lists them.
-    private static func supportsThorChainDeposit(token: Token) -> Bool {
-        let blockchainType = token.blockchainType
-        return blockchainType.isEvm || blockchainType == .zcash || blockchainType.memoType == .onChainPublic
-    }
-
-    private static func defaultUSwapSubProvider(info: USwapProviderInfo, api: USwapMultiSwapApi) -> DefaultUSwapSubProvider {
-        DefaultUSwapSubProvider(
-            info: info,
-            api: api,
-            assetRepository: USwapAssetRepository(
-                providerId: info.id,
-                api: api,
-                storage: Core.shared.swapAssetStorage
-            ),
-            commitRequestBuilder: USwapCommitRequestBuilder(providerId: info.id),
-            tracker: uSwapTracker(api: api)
-        )
-    }
-
-    private static func uSwapProvider(subProvider: USwapSubProvider) -> IMultiSwapProvider {
-        USwapMultiSwapProvider(
-            subProvider: subProvider,
-            rateQuoteFactory: uSwapRateQuoteFactory(),
-            finalQuoteFactory: uSwapFinalQuoteFactory()
-        )
-    }
-
-    private static func uSwapRateQuoteFactory() -> USwapRateQuoteFactory {
-        USwapRateQuoteFactory(
-            builders: [
-                USwapAllowanceRateQuoteBuilder(allowanceHelper: MultiSwapAllowanceHelper()),
-                USwapPlainRateQuoteBuilder(),
-            ]
-        )
-    }
-
-    private static func uSwapFinalQuoteFactory() -> USwapFinalQuoteFactory {
-        let adapterManager = Core.shared.adapterManager
-
-        return USwapFinalQuoteFactory(
-            builders: [
-                USwapEvmFinalQuoteBuilder(
-                    evmBlockchainManager: Core.shared.evmBlockchainManager,
-                    evmFeeEstimator: EvmFeeEstimator(),
-                    adapterManager: adapterManager
-                ),
-                USwapUtxoFinalQuoteBuilder(adapterManager: adapterManager),
-                USwapTronFinalQuoteBuilder(
-                    tronKitManager: Core.shared.tronAccountManager.tronKitManager,
-                    adapterManager: adapterManager
-                ),
-                USwapZcashFinalQuoteBuilder(adapterManager: adapterManager),
-                USwapTonFinalQuoteBuilder(accountManager: Core.shared.accountManager, adapterManager: adapterManager),
-                USwapStellarFinalQuoteBuilder(adapterManager: adapterManager),
-                USwapMoneroFinalQuoteBuilder(adapterManager: adapterManager),
-                USwapZanoFinalQuoteBuilder(adapterManager: adapterManager),
-                USwapSolanaFinalQuoteBuilder(adapterManager: adapterManager, solanaKitManager: Core.shared.solanaKitManager),
-                USwapXrpFinalQuoteBuilder(adapterManager: adapterManager),
-                USwapThorChainFinalQuoteBuilder(adapterManager: adapterManager),
-                USwapNearFinalQuoteBuilder(adapterManager: adapterManager),
-            ]
-        )
-    }
-
-    private static func uSwapTracker(api: USwapMultiSwapApi) -> USwapTracker {
-        USwapTracker(
-            api: api,
-            shouldSimulateFailure: {
-                AppConfig.showDevTools && Core.shared.localStorage.simulateFailSwap == .server
-            }
-        )
-    }
-
-    public static func providerInfo(id: String) -> USwapProviderInfo? {
-        entries[id]?.info
-    }
-
-    public static func provider(id: String) -> IMultiSwapProvider? {
-        entries[id]?.makeProvider()
     }
 }

@@ -58,9 +58,11 @@ final class SplitSwapViewModel: MultiSwapViewModel {
             .store(in: &splitCancellables)
     }
 
+    /// The split-capable providers; the tab shows only while the synced list has a provider with
+    /// `splitSwaps` (wholly suspended ones are dropped at sync).
     override func resolveProviders() -> [IMultiSwapProvider] {
-        let resolved = SwapProviderFactory.swappableProviders(ids: swapProviderManager.splitProviders).filter { $0 is ISplitSwapProvider }
-        splitAvailable = !resolved.isEmpty
+        let resolved = SwapProviderFactory.providers.filter { $0 is ISplitSwapProvider }
+        splitAvailable = !resolved.isEmpty && !swapProviderManager.splitProviders.isEmpty
         return resolved
     }
 
@@ -72,7 +74,7 @@ final class SplitSwapViewModel: MultiSwapViewModel {
                 throw SplitSwapError.notSupported
             }
 
-            return try await provider.splitQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, percents: percents)
+            return try await provider.splitQuotes(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, percents: percents)
         }
     }
 
@@ -211,7 +213,7 @@ extension SplitSwapViewModel {
 
         let splitRecipients = zip(addresses, quote.percents).map { SplitRecipient(address: $0, percent: $1) }
 
-        return .splitSwap(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider, recipients: splitRecipients)
+        return .splitSwap(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider, quote: quote, recipients: splitRecipients)
     }
 
     func set(splitPercent: Int) {

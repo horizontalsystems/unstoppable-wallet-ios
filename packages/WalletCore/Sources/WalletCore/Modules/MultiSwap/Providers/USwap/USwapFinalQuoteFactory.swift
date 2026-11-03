@@ -82,6 +82,14 @@ public final class USwapFinalQuoteFactory {
     }
 
     public func build(input: Input) async throws -> SwapFinalQuote {
+        // An instruction no builder for the sell chain can follow is refused before any builder runs:
+        // nothing is ever signed or sent from a method the app does not know.
+        if let execution = input.response.execution,
+           execution.isUnsupported || !USwapInstructionSupport.supports(method: execution.method, blockchainType: input.tokenIn.blockchainType)
+        {
+            throw USwapMultiSwapProvider.SwapError.unsupportedInstruction(method: execution.method)
+        }
+
         let matchingBuilders = builders.filter { $0.supports(input: input) }
 
         guard matchingBuilders.count == 1 else {

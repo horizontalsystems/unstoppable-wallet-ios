@@ -2,6 +2,8 @@ import EvmKit
 import Foundation
 import MarketKit
 
+/// Builds the `/v3/preview` body: the addresses the route needs, resolved from the account, with the
+/// Zcash ones following the route's `addressRules` (`USwapZcashAddressPolicy`).
 public final class USwapCommitRequestBuilder {
     private struct DestinationCacheKey: Hashable {
         let accountId: String
@@ -9,12 +11,11 @@ public final class USwapCommitRequestBuilder {
         let shielded: Bool
     }
 
-    private let providerId: String
     private let shouldIncludeSourceAddress: (Token) -> Bool
+    private let cacheLock = NSLock()
     private var temporaryDestinationAddresses = [DestinationCacheKey: String]()
 
     public init(
-        providerId: String,
         shouldIncludeSourceAddress: @escaping (Token) -> Bool = { token in
             token.blockchain.type.isEvm ||
                 token.blockchainType == .tron ||
@@ -24,11 +25,15 @@ public final class USwapCommitRequestBuilder {
                 token.blockchainType == .stellar
         }
     ) {
-        self.providerId = providerId
         self.shouldIncludeSourceAddress = shouldIncludeSourceAddress
     }
 
+    /// `destinationKind` is resolved by the caller (the route's rule plus the OP_RETURN memo guard) so the
+    /// same kind drives the recipient check, the recipient parser filter and this request.
     func build(
+        venueId: String,
+        addressRules: USwapMultiSwapApi.ZcashAddressRules?,
+        destinationKind: ZcashAddressKind,
         sellAsset: String,
         buyAsset: String,
         sellAmount: Decimal,
@@ -38,9 +43,18 @@ public final class USwapCommitRequestBuilder {
         recipient: String?,
         transactionSettings: TransactionSettings?
     ) async throws -> USwapMultiSwapApi.SwapRequest {
-        let destinationAddress = try await destinationAddress(recipient: recipient, tokenIn: tokenIn, tokenOut: tokenOut)
-        let sourceAddress = try await sourceAddress(token: tokenIn)
-        let refundAddress = try await refundAddress(token: tokenIn)
+        let destinationAddress = try await destinationAddress(
+            recipient: recipient,
+            tokenIn: tokenIn,
+            tokenOut: tokenOut,
+            kind: destinationKind
+        )
+        let refundAddress = try await refundAddress(token: tokenIn, kind: USwapZcashAddressPolicy.refundKind(rules: addressRules))
+        let sourceAddress = try await sourceAddress(
+            token: tokenIn,
+            policy: USwapZcashAddressPolicy.sourcePolicy(rules: addressRules),
+            refundAddress: refundAddress
+        )
 
         return USwapMultiSwapApi.SwapRequest(
             sellAsset: sellAsset,
@@ -48,7 +62,7 @@ public final class USwapCommitRequestBuilder {
             sellAmount: sellAmount,
             slippage: slippage,
             chainId: chainId(token: tokenIn),
-            providerId: providerId,
+            providerId: venueId,
             destinationAddress: destinationAddress,
             sourceAddress: sourceAddress,
             refundAddress: refundAddress,
@@ -58,8 +72,8 @@ public final class USwapCommitRequestBuilder {
 
     /// The user's fee setting as the server expects it. The `kind` must match the sell chain (a mismatch
     /// is a 400), so only the settings the server names are mapped: EVM gas price and the UTXO rate on
-    /// bitcoin / litecoin / bitcoinCash / dash (eCash is not in the server's list). Everything else —
-    /// account-abstraction, Monero, Zcash, bitcoin resend, Solana — sends nothing and the server prices
+    /// bitcoin / litecoin / bitcoinCash / dash / zcash (eCash is not in the server's list). Everything
+    /// else — account-abstraction, Monero, bitcoin resend, Solana — sends nothing and the server prices
     /// the transaction itself.
     static func networkFee(tokenIn: Token, transactionSettings: TransactionSettings?) -> USwapMultiSwapApi.NetworkFee? {
         switch transactionSettings {
@@ -76,7 +90,7 @@ public final class USwapCommitRequestBuilder {
             }
         case let .bitcoin(satoshiPerByte):
             switch tokenIn.blockchainType {
-            case .bitcoin, .litecoin, .bitcoinCash, .dash:
+            case .bitcoin, .litecoin, .bitcoinCash, .dash, .zcash:
                 return .utxo(feeRate: satoshiPerByte)
             default:
                 return nil
@@ -86,68 +100,80 @@ public final class USwapCommitRequestBuilder {
         }
     }
 
-    func destinationAddress(recipient: String?, tokenIn: Token, tokenOut: Token) async throws -> String {
+    /// The buy-side address: the typed recipient, else the account's own. A ZEC output follows the route's
+    /// destination rule: the unified address built from its receivers, or the transparent one. A generated
+    /// address (no wallet for the buy token yet) is cached per account, chain and kind so every re-preview
+    /// of one operation names the same address.
+    func destinationAddress(recipient: String?, tokenIn _: Token, tokenOut: Token, kind: ZcashAddressKind) async throws -> String {
         if let recipient {
             return recipient
         }
 
-        // A ZEC output goes to the wallet's unified address when the provider can deliver to a
-        // shielded receiver (published per provider by /v3/providers) and the sell chain's memo can
-        // name it (an OP_RETURN cannot); transparent otherwise.
-        let shielded = tokenOut.blockchainType == .zcash && Core.shared.swapProviderManager.deliversShieldedZcash(providerId: providerId, tokenIn: tokenIn)
+        let shielded = tokenOut.blockchainType == .zcash && kind != .transparent
 
         let cacheKey = Core.shared.accountManager.activeAccount.map {
             DestinationCacheKey(accountId: $0.id, blockchainType: tokenOut.blockchainType, shielded: shielded)
         }
-        let temporary = cacheKey.flatMap { temporaryDestinationAddresses[$0] }
+        let temporary = cacheKey.flatMap { key in cacheLock.withLock { temporaryDestinationAddresses[key] } }
             .map { DestinationHelper.Destination(address: $0, type: .nonExisting) }
         let resolved = if shielded {
-            try await DestinationHelper.resolveDestinationUnified(token: tokenOut, temporary: temporary)
+            try await DestinationHelper.resolveDestinationUnified(
+                token: tokenOut,
+                receivers: USwapZcashAddressPolicy.receiversToBuild(kind: kind),
+                temporary: temporary
+            )
         } else {
             try await DestinationHelper.resolveDestination(token: tokenOut, temporary: temporary)
         }
 
         if resolved.type == .nonExisting, let cacheKey {
-            temporaryDestinationAddresses[cacheKey] = resolved.address
+            cacheLock.withLock { temporaryDestinationAddresses[cacheKey] = resolved.address }
         }
 
         return resolved.address
     }
 
-    func sourceAddress(token: Token) async throws -> String? {
+    /// The sender named to the provider. On a ZEC sell it follows the route's `source` rule: omitted
+    /// without one (a transfer venue builds nothing from it), the refund address under `sameAsRefund`
+    /// (the provider refunds to the sender), or an address of the rule's own kind.
+    func sourceAddress(token: Token, policy: ZcashSourcePolicy, refundAddress: String?) async throws -> String? {
+        if token.blockchainType == .zcash {
+            switch policy {
+            case .omit:
+                return nil
+            case .sameAsRefund:
+                return refundAddress
+            case let .own(kind):
+                return try await zcashAddress(token: token, kind: kind)
+            }
+        }
+
         guard shouldIncludeSourceAddress(token) else {
             return nil
         }
 
-        // A ZEC sell names its source only to a provider that takes a unified refund, and then the source IS the
-        // refund address (the same cached shielded-only address): mayanode sizes the route memo from `from_address`
-        // and the server marks the spend as shielded by it, while StealthEX / Exolix refuse a source that differs
-        // from the refund address and a transfer venue builds nothing from it in v3.
+        return try await DestinationHelper.resolveDestination(token: token).address
+    }
+
+    /// Where a failed swap is refunded: the account's own address, following the route's `refund` rule on ZEC.
+    func refundAddress(token: Token, kind: ZcashAddressKind) async throws -> String? {
         if token.blockchainType == .zcash {
-            guard acceptsUnifiedZcashRefund else {
-                return nil
-            }
-            return try await refundAddress(token: token)
+            return try await zcashAddress(token: token, kind: kind)
         }
 
         return try await DestinationHelper.resolveDestination(token: token).address
     }
 
-    func refundAddress(token: Token) async throws -> String? {
-        // Transparent unless the provider is declared to take a unified refund (USwapProviderInfo); then the
-        // shielded-only unified address, so the refund lands in the shielded pool and the memo names no t-address.
-        if token.blockchainType == .zcash, acceptsUnifiedZcashRefund {
-            return try await DestinationHelper.shieldedUnifiedAddress(token: token)
+    private func zcashAddress(token: Token, kind: ZcashAddressKind) async throws -> String {
+        switch kind {
+        case .transparent:
+            return try await DestinationHelper.resolveDestination(token: token).address
+        case .unified:
+            return try await DestinationHelper.unifiedAddress(token: token, receivers: USwapZcashAddressPolicy.receiversToBuild(kind: kind))
         }
-
-        return try await DestinationHelper.resolveDestination(token: token).address
-    }
-
-    private var acceptsUnifiedZcashRefund: Bool {
-        SwapProviderFactory.providerInfo(id: providerId)?.acceptsUnifiedZcashRefund ?? false
     }
 
     func chainId(token: Token) -> String? {
-        USwapAssetRepository.blockchainTypeMap.first(where: { $0.value == token.blockchainType })?.key
+        USwapAssetMapping.chainId(blockchainType: token.blockchainType)
     }
 }

@@ -11,20 +11,21 @@ struct MultiSwapQuotesView: View {
                     Section {
                         let isDebug = AppConfig.showDevTools
 
-                        ForEach(viewModel.sortedQuotes, id: \.provider.id) { (quote: MultiSwapViewModel.Quote) in
+                        ForEach(viewModel.sortedQuotes, id: \.key) { (quote: MultiSwapViewModel.Quote) in
                             VStack(spacing: 0) {
-                                if quote.provider.id == viewModel.sortedQuotes.first?.provider.id {
+                                if quote.key == viewModel.sortedQuotes.first?.key {
                                     HorizontalDivider()
                                 }
 
                                 Cell(
                                     middle: {
                                         TextCheckbox(
-                                            title: isDebug ? quote.provider.name : nil,
+                                            // venue names are a debugging aid, never shown in a release build
+                                            title: isDebug ? quote.venue.name : nil,
                                             subhead: quoteCoinValue(quote: quote).map { ComponentText(text: $0, colorStyle: .primary) },
                                             description: quoteCurrencyValue(quote: quote),
                                             description2: priceImpact(quote: quote).map { ComponentText(text: "(\($0.0.rounded(decimal: 2).description)%)", colorStyle: $0.1.colorStyle) },
-                                            checked: quote.provider.id == viewModel.currentQuote?.provider.id,
+                                            checked: quote.key == viewModel.currentQuote?.key,
                                             alignment: .leading
                                         )
                                     },
@@ -32,7 +33,7 @@ struct MultiSwapQuotesView: View {
                                         providerDescriptionView(quote: quote)
                                     },
                                     action: {
-                                        viewModel.userSelectedProviderId = quote.provider.id
+                                        viewModel.userSelectedQuoteId = quote.key
                                         isPresented = false
                                     }
                                 )
@@ -106,7 +107,7 @@ struct MultiSwapQuotesView: View {
 
     private func providerDescriptionView(quote: MultiSwapViewModel.Quote) -> some View {
         VStack(alignment: .trailing, spacing: 1) {
-            if let type = quote.provider.type {
+            if let type = quote.venue.type {
                 Button(action: onTapProviderInfo) {
                     Self.view(type: type, style: .subheadSB, iconFirst: false)
                 }
@@ -180,26 +181,16 @@ extension MultiSwapQuotesView {
         }
     }
 
-    /// Android-parity formatting: range bounds rounded to whole minutes (floor 1m); a range
-    /// that collapses after rounding renders as a single approximate value.
+    /// Every estimate is a single approximate value: `~` followed by the formatted duration.
     static func string(time: MultiSwapViewModel.SwapTimeValue) -> String {
         switch time {
         case let .approximate(time):
             return "~" + formatted(time)
-        case let .range(min, max):
-            let minRounded = roundedToMinutes(min)
-            let maxRounded = roundedToMinutes(max)
-            guard minRounded != maxRounded else { return "~" + formatted(minRounded) }
-            return formatted(minRounded) + "-" + formatted(maxRounded)
         }
     }
 
     private static func formatted(_ time: TimeInterval) -> String {
         Duration.seconds(time).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
-    }
-
-    private static func roundedToMinutes(_ seconds: TimeInterval) -> TimeInterval {
-        max(1, (seconds / 60).rounded()) * 60
     }
 
     static func view(type: SwapProviderType, style: Style = .subheadSB, iconFirst: Bool = false) -> some View {

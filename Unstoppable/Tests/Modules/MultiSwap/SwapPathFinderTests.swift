@@ -1,25 +1,22 @@
 import Foundation
 import MarketKit
-import ObjectMapper
-import SwiftUI
 import Testing
 @testable import Unstoppable
 @testable import WalletCore
 
 /// Tier order (native first, then the hardcoded coin list) IS the ranking — the finder returns on
-/// the first hit.
+/// the first catalogued hit.
 struct SwapPathFinderTests {
     @Test func noCandidatesReturnsNil() {
         let finder = SwapPathFinder(candidateProviders: [])
 
-        #expect(finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, providers: [Self.provider(edges: [])], suspensions: SwapSuspensionIndex()) == nil)
+        #expect(finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, isKnown: { _ in true }) == nil)
     }
 
     @Test func findsIntermediateViaNativeTier() throws {
-        let providers = [Self.provider(id: "a", edges: [Self.edge(Self.eth, Self.sol), Self.edge(Self.sol, Self.bonk)])]
         let finder = SwapPathFinder(candidateProviders: [Self.candidates([Self.sol])])
 
-        let path = try #require(finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, providers: providers, suspensions: SwapSuspensionIndex()))
+        let path = try #require(finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, isKnown: Self.known([Self.sol])))
 
         #expect(path.intermediateToken.tokenQuery.id == Self.sol.tokenQuery.id)
         #expect(path.tokenIn.tokenQuery.id == Self.eth.tokenQuery.id)
@@ -27,116 +24,61 @@ struct SwapPathFinderTests {
     }
 
     @Test func nativeTierWinsOverCoinListTier() throws {
-        let providers = [Self.provider(id: "a", edges: [
-            Self.edge(Self.eth, Self.sol), Self.edge(Self.sol, Self.bonk),
-            Self.edge(Self.eth, Self.usdtSol), Self.edge(Self.usdtSol, Self.bonk),
-        ])]
         let finder = SwapPathFinder(candidateProviders: [
             Self.candidates([Self.sol]),
             Self.candidates([Self.usdtSol]),
         ])
 
-        let path = try #require(finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, providers: providers, suspensions: SwapSuspensionIndex()))
+        let path = try #require(finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, isKnown: Self.known([Self.sol, Self.usdtSol])))
 
         #expect(path.intermediateToken.tokenQuery.id == Self.sol.tokenQuery.id)
     }
 
     @Test func tokenOutNativeTriedBeforeTokenInNative() throws {
-        // Both natives link the pair; tokenOut's chain is the binding constraint, so SOL wins.
-        let providers = [Self.provider(id: "a", edges: [
-            Self.edge(Self.eth, Self.sol), Self.edge(Self.sol, Self.bonk),
-            Self.edge(Self.eth, Self.trx), Self.edge(Self.trx, Self.bonk),
-        ])]
+        // Both natives are catalogued; tokenOut's chain is the binding constraint, so SOL wins.
         let finder = SwapPathFinder(candidateProviders: [Self.candidates([Self.sol, Self.trx])])
 
-        let path = try #require(finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, providers: providers, suspensions: SwapSuspensionIndex()))
+        let path = try #require(finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, isKnown: Self.known([Self.sol, Self.trx])))
 
         #expect(path.intermediateToken.tokenQuery.id == Self.sol.tokenQuery.id)
     }
 
-    @Test func legsMayUseDifferentProviders() {
-        let providers = [
-            Self.provider(id: "a", edges: [Self.edge(Self.eth, Self.sol)]),
-            Self.provider(id: "b", edges: [Self.edge(Self.sol, Self.bonk)]),
-        ]
+    @Test func rejectsUncataloguedCandidate() {
         let finder = SwapPathFinder(candidateProviders: [Self.candidates([Self.sol])])
 
-        #expect(finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, providers: providers, suspensions: SwapSuspensionIndex()) != nil)
-    }
-
-    @Test func rejectsCandidateWithNoSecondLeg() {
-        let providers = [Self.provider(id: "a", edges: [Self.edge(Self.eth, Self.sol)])]
-        let finder = SwapPathFinder(candidateProviders: [Self.candidates([Self.sol])])
-
-        #expect(finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, providers: providers, suspensions: SwapSuspensionIndex()) == nil)
+        #expect(finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, isKnown: Self.known([])) == nil)
     }
 
     @Test func continuesToNextCandidateAfterRejectedOne() throws {
-        // SOL has an inbound leg but no outbound one; the coin-list tier must still be reached.
-        let providers = [Self.provider(id: "a", edges: [
-            Self.edge(Self.eth, Self.sol),
-            Self.edge(Self.eth, Self.usdtSol), Self.edge(Self.usdtSol, Self.bonk),
-        ])]
+        // SOL is not catalogued; the coin-list tier must still be reached.
         let finder = SwapPathFinder(candidateProviders: [
             Self.candidates([Self.sol]),
             Self.candidates([Self.usdtSol]),
         ])
 
-        let path = try #require(finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, providers: providers, suspensions: SwapSuspensionIndex()))
+        let path = try #require(finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, isKnown: Self.known([Self.usdtSol])))
 
         #expect(path.intermediateToken.tokenQuery.id == Self.usdtSol.tokenQuery.id)
     }
 
-    @Test func skipsSecondLegWhenFirstLegEmpty() {
-        let log = CallLog()
-        let providers = [Self.provider(id: "a", edges: [Self.edge(Self.sol, Self.bonk)], log: log)]
-        let finder = SwapPathFinder(candidateProviders: [Self.candidates([Self.sol])])
-
-        _ = finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, providers: providers, suspensions: SwapSuspensionIndex())
-
-        #expect(log.calls == [Self.edge(Self.eth, Self.sol)])
-    }
-
-    @Test func respectsSuspensions() {
-        // The one provider that could serve leg two is suspended for exactly that directed pair.
-        let providers = [Self.provider(id: "a", edges: [Self.edge(Self.eth, Self.sol), Self.edge(Self.sol, Self.bonk)])]
-        let finder = SwapPathFinder(candidateProviders: [Self.candidates([Self.sol])])
-        let suspensions = Self.suspensions(providerId: "a", sell: Self.sol, buy: Self.bonk)
-
-        #expect(finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, providers: providers, suspensions: suspensions) == nil)
-    }
-
-    @Test func suspendedProviderDoesNotCountTowardLeg() {
-        let providers = [
-            Self.provider(id: "a", edges: [Self.edge(Self.eth, Self.sol), Self.edge(Self.sol, Self.bonk)]),
-            Self.provider(id: "b", edges: [Self.edge(Self.sol, Self.bonk)]),
-        ]
-        let finder = SwapPathFinder(candidateProviders: [Self.candidates([Self.sol])])
-        let suspensions = Self.suspensions(providerId: "a", sell: Self.sol, buy: Self.bonk)
-
-        #expect(finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, providers: providers, suspensions: suspensions) != nil)
-    }
-
     @Test func skipsEndpointsAsCandidates() {
-        let log = CallLog()
-        let providers = [Self.provider(id: "a", edges: [Self.edge(Self.eth, Self.bonk)], log: log)]
+        var asked = [String]()
         let finder = SwapPathFinder(candidateProviders: [Self.candidates([Self.eth, Self.bonk])])
 
-        #expect(finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, providers: providers, suspensions: SwapSuspensionIndex()) == nil)
-        #expect(log.calls.isEmpty)
+        #expect(finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, isKnown: { asked.append($0.tokenQuery.id); return true }) == nil)
+        #expect(asked.isEmpty)
     }
 
     @Test func deduplicatesAcrossTiers() {
-        let log = CallLog()
-        let providers = [Self.provider(id: "a", edges: [], log: log)]
+        var asked = [String]()
         let finder = SwapPathFinder(candidateProviders: [
             Self.candidates([Self.sol]),
             Self.candidates([Self.sol]),
         ])
 
-        _ = finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, providers: providers, suspensions: SwapSuspensionIndex())
+        _ = finder.find(tokenIn: Self.eth, tokenOut: Self.bonk, isKnown: { asked.append($0.tokenQuery.id); return false })
 
-        #expect(log.calls == [Self.edge(Self.eth, Self.sol)])
+        #expect(asked == [Self.sol.tokenQuery.id])
     }
 }
 
@@ -231,30 +173,14 @@ extension SwapPathFinderTests {
         Blockchain(type: type, name: type.uid, explorerUrl: nil)
     }
 
-    static func edge(_ from: Token, _ to: Token) -> String {
-        "\(from.tokenQuery.id)>\(to.tokenQuery.id)"
-    }
-
-    static func provider(id: String = "stub", edges: [String], log: CallLog? = nil) -> IMultiSwapProvider {
-        StubProvider(id: id, edges: Set(edges), log: log)
-    }
-
     static func candidates(_ tokens: [Token]) -> ISwapPathCandidateProvider {
         StubCandidateProvider(tokens: tokens)
     }
 
-    static func suspensions(providerId: String, sell: Token, buy: Token) -> SwapSuspensionIndex {
-        let json: [String: Any] = [
-            "kind": "pair",
-            "sellAsset": CanonicalAssetId.of(token: sell) ?? "",
-            "buyAsset": CanonicalAssetId.of(token: buy) ?? "",
-        ]
-
-        guard let suspension = try? SwapSuspension(JSON: json) else {
-            return SwapSuspensionIndex()
-        }
-
-        return SwapSuspensionIndex(byProvider: [providerId: [suspension]])
+    /// Catalog membership as a set of token query ids
+    static func known(_ tokens: [Token]) -> (Token) -> Bool {
+        let ids = Set(tokens.map(\.tokenQuery.id))
+        return { ids.contains($0.tokenQuery.id) }
     }
 
     static func stubMarketKit() -> StubMarketKit {
@@ -270,14 +196,6 @@ extension SwapPathFinderTests {
         ]
 
         return stub
-    }
-
-    final class CallLog {
-        private(set) var calls = [String]()
-
-        func record(_ edge: String) {
-            calls.append(edge)
-        }
     }
 
     struct StubMarketKit: IMarketKit {
@@ -309,46 +227,6 @@ extension SwapPathFinderTests {
 
         func candidates(tokenIn _: Token, tokenOut _: Token) -> [Token] {
             tokens
-        }
-    }
-
-    private struct StubProvider: IMultiSwapProvider {
-        let id: String
-        let edges: Set<String>
-        let log: CallLog?
-
-        var name: String {
-            id
-        }
-
-        var type: SwapProviderType? {
-            .good
-        }
-
-        var icon: String {
-            "stub"
-        }
-
-        func supports(tokenIn: Token, tokenOut: Token) -> Bool {
-            let edge = SwapPathFinderTests.edge(tokenIn, tokenOut)
-            log?.record(edge)
-            return edges.contains(edge)
-        }
-
-        func quote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal) async throws -> MultiSwapQuote {
-            fatalError("not used")
-        }
-
-        func confirmationQuote(multiSwapQuote _: MultiSwapQuote, tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, slippage _: Decimal, recipient _: String?, transactionSettings _: TransactionSettings?) async throws -> SwapFinalQuote {
-            fatalError("not used")
-        }
-
-        func preSwapView(step _: MultiSwapPreSwapStep, tokenIn _: Token, tokenOut _: Token, amount _: Decimal, isPresented _: Binding<Bool>, onSuccess _: @escaping () -> Void) -> AnyView {
-            AnyView(EmptyView())
-        }
-
-        func track(swap: Swap) async throws -> Swap {
-            swap
         }
     }
 }

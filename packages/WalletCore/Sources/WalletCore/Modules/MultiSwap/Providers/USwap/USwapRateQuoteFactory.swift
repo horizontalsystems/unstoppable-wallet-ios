@@ -32,20 +32,25 @@ public final class USwapRateQuoteFactory {
         public let tokenOut: Token
         public let amountIn: Decimal
         public let response: USwapMultiSwapApi.RateQuote
-        public let replay: (any USwapRateResult.Replay)?
+        /// The venue the route is served by; its id becomes the quote id
+        public let venue: SwapVenue
 
         public init(
             tokenIn: Token,
             tokenOut: Token,
             amountIn: Decimal,
             response: USwapMultiSwapApi.RateQuote,
-            replay: (any USwapRateResult.Replay)? = nil
+            venue: SwapVenue
         ) {
             self.tokenIn = tokenIn
             self.tokenOut = tokenOut
             self.amountIn = amountIn
             self.response = response
-            self.replay = replay
+            self.venue = venue
+        }
+
+        var estimatedTime: TimeInterval? {
+            response.estimatedTime ?? MultiSwapHelpers.estimate(tokenIn: tokenIn, tokenOut: tokenOut)
         }
     }
 

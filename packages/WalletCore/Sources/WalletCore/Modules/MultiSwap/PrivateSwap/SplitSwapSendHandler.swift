@@ -4,11 +4,11 @@ import MarketKit
 
 class SplitSwapSendHandler: SendHandler {
     override class func instance(sendData: WalletCore.SendData) -> ISendHandler? {
-        guard case let .splitSwap(tokenIn, tokenOut, amountIn, provider, recipients) = sendData, let baseToken = MultiSwapSendHandler.baseToken(tokenIn: tokenIn) else {
+        guard case let .splitSwap(tokenIn, tokenOut, amountIn, provider, quote, recipients) = sendData, let baseToken = MultiSwapSendHandler.baseToken(tokenIn: tokenIn) else {
             return nil
         }
 
-        return SplitSwapSendHandler(baseToken: baseToken, tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider, recipients: recipients)
+        return SplitSwapSendHandler(baseToken: baseToken, tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider, quote: quote, recipients: recipients)
     }
 
     private let accountManager = Core.shared.accountManager
@@ -21,6 +21,8 @@ class SplitSwapSendHandler: SendHandler {
     let tokenOut: Token
     let amountIn: Decimal
     let provider: ISplitSwapProvider
+    /// The split quote the user picked, handed back to `splitPreview(quote:)`; its `id` names the venue
+    let quote: SplitMultiSwapQuote
     let recipients: [SplitRecipient]
 
     /// resolved once per confirmation: the mechanism is fixed by (chain, account)
@@ -30,12 +32,13 @@ class SplitSwapSendHandler: SendHandler {
 
     private let refreshSubject = PassthroughSubject<Void, Never>()
 
-    init(baseToken: Token, tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: ISplitSwapProvider, recipients: [SplitRecipient]) {
+    init(baseToken: Token, tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: ISplitSwapProvider, quote: SplitMultiSwapQuote, recipients: [SplitRecipient]) {
         self.baseToken = baseToken
         self.tokenIn = tokenIn
         self.tokenOut = tokenOut
         self.amountIn = amountIn
         self.provider = provider
+        self.quote = quote
         self.recipients = recipients
     }
 }
@@ -74,6 +77,7 @@ extension SplitSwapSendHandler: ISendHandler {
         }
 
         let preview = try await provider.splitPreview(
+            quote: quote,
             tokenIn: tokenIn,
             tokenOut: tokenOut,
             amountIn: amountIn,
@@ -81,7 +85,6 @@ extension SplitSwapSendHandler: ISendHandler {
             slippage: MultiSwapSlippage.default,
             transactionSettings: transactionSettings
         )
-        preview.quote.preciseEstimateTime = provider.preciseEstimateTime
 
         guard let broadcaster else {
             throw SwapBroadcasterError.noBroadcaster
@@ -177,7 +180,7 @@ extension SplitSwapSendHandler: ISendHandler {
             txHash: txHash,
             trackingHandle: trackingHandle,
             accountId: account.id,
-            providerId: provider.id,
+            providerId: self.quote.venue.id,
             status: .pending,
             operation: .splitSwap,
             tokenIn: tokenIn,

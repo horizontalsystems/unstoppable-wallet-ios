@@ -132,6 +132,13 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
 
     /// Never calls `handler.set(address:)`: the shared handler's address-dependent state belongs to the
     /// Standard tab, and the deposit address does not exist until the order is committed.
+    /// A ZEC recipient narrows the usable routes, so a changed one re-quotes; other chains have one address kind.
+    override func didChangeAddress() {
+        if tokenOut?.blockchainType == .zcash {
+            scheduleQuote()
+        }
+    }
+
     override func syncSendData() {
         if case let .error(error) = quoteState {
             cautions = [CautionNew(text: error.errorDescription ?? "cross_pay.error.commit_failed".localized, type: .error)]
@@ -217,7 +224,9 @@ final class CrossPayPreSendViewModel: BasePreSendViewModel {
             return false
         }
 
-        return service.supports(token: token)
+        // Before the catalog lands every token would read unsupported (or, for a bare-address EVM token,
+        // supported without the catalog's identifier), so the tab waits for it.
+        return service.isCatalogLoaded && service.supports(token: token)
     }
 }
 
@@ -243,8 +252,9 @@ private extension CrossPayPreSendViewModel {
     func onAssetsSync() {
         syncSupported()
 
-        // nil too: a token selected before the asset map landed is checked now
-        if quoteState == .loading || quoteState == nil {
+        // nil too: a token selected before the asset map landed is checked now; an "unsupported" read
+        // before the catalog was complete is re-checked against the loaded one
+        if quoteState == .loading || quoteState == nil || quoteState == .error(.tokenUnsupported) {
             scheduleQuote()
         }
     }
@@ -301,7 +311,7 @@ private extension CrossPayPreSendViewModel {
 
         // A pair the provider cannot route is known without an amount, so it shows on selecting the
         // token. Only once the asset map has landed: before that every token would read unsupported.
-        if let service, service.supports(token: tokenIn), !service.supports(tokenIn: tokenIn, tokenOut: tokenOut) {
+        if let service, service.isCatalogLoaded, !service.supports(tokenIn: tokenIn, tokenOut: tokenOut) {
             quoteState = .error(.tokenUnsupported)
             return
         }
@@ -317,6 +327,9 @@ private extension CrossPayPreSendViewModel {
         }
 
         let tokenIn = tokenIn
+        // A ZEC recipient decides which routes are usable, so it is part of a ZEC quote. Other chains have
+        // one address kind and do not re-quote on an address change, so their recipient stays out of it.
+        let recipient = tokenOut.blockchainType == .zcash ? resolvedAddress?.address : nil
 
         guard tokenOut != tokenIn else {
             quoteState = .error(.tokenUnsupported)
@@ -329,9 +342,9 @@ private extension CrossPayPreSendViewModel {
             try? await Task.sleep(nanoseconds: UInt64(Self.quoteDebounce * 1_000_000_000))
             guard !Task.isCancelled else { return }
 
-            // Asset map not landed yet: re-kick the sync (deduped and expiration-guarded in the
-            // repository, so a failed fetch gets retried) and stay in Loading until it publishes.
-            guard service.supports(token: tokenIn) else {
+            // Catalog not landed yet: re-kick the sync (deduped and expiration-guarded in the catalog,
+            // so a failed fetch gets retried) and stay in Loading until it publishes.
+            guard service.isCatalogLoaded else {
                 service.syncAssets()
                 return
             }
@@ -342,7 +355,7 @@ private extension CrossPayPreSendViewModel {
                 state = .error(.tokenUnsupported)
             } else {
                 do {
-                    let payAmount = try await service.quote(tokenIn: tokenIn, tokenOut: tokenOut, amountOut: amount)
+                    let payAmount = try await service.quote(tokenIn: tokenIn, tokenOut: tokenOut, amountOut: amount, recipient: recipient)
                     state = .success(payAmount: payAmount)
                 } catch let error as CrossPayError {
                     state = .error(error)
@@ -355,7 +368,9 @@ private extension CrossPayPreSendViewModel {
 
             await MainActor.run { [weak self] in
                 // The token or amount changed while quoting: this result is stale.
-                guard !Task.isCancelled, let self, self.tokenOut == tokenOut, self.amount == amount else {
+                guard !Task.isCancelled, let self, self.tokenOut == tokenOut, self.amount == amount,
+                      (tokenOut.blockchainType == .zcash ? resolvedAddress?.address : nil) == recipient
+                else {
                     return
                 }
 

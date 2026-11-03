@@ -806,6 +806,7 @@
 "swap.aml.risk.description" = "此交易已识别出潜在风险。在处理过程中，您的资金可能会被拒绝或受到限制。请选择其他提供商。";
 "swap.aml.risk.button" = "选择其他提供商";
 "swap.aml.undefined.description" = "无法完成此交易的风险检查。如果您继续，此兑换在处理过程中可能会遇到延迟、拒绝或限制。";
+"swap.aml.inconclusive" = "无法完成此路由的风险检查。请选择其他路由后重试。";
 "swap.aml.undefined.button" = "继续并承担风险";
 "swap.aml.connection.title" = "连接问题";
 "swap.aml.connection.description" = "目前无法获取响应，请重试。";
@@ -815,15 +816,6 @@
 
 "swap_options.title" = "兑换选项";
 "swap_options.description" = "根据 Apple App Store 政策，我们已无法在钱包应用内提供兑换服务。因此，如需进行兑换，您可以使用以下选项：";
-
-// Swap Terms
-
-"swap.terms.title" = "兑换条款";
-"swap.terms.description" = "要继续，请确认您同意每一项条款。";
-"swap.terms.risk_of_restrictions" = "限制风险";
-"swap.terms.risk_of_restrictions.description" = "某些路由可能会拒绝兑换或限制您的资金访问。请在选择路由前查看 %@。";
-"swap.terms.user_responsibility" = "用户责任";
-"swap.terms.user_responsibility.description" = "我已审阅可能的风险，并对我的路由选择承担责任。";
 
 // Swap Advanced Settings
 
@@ -869,6 +861,9 @@
 "swap.confirmation.commit.rate_changed" = "价格已变动。请查看更新后的报价并重试。";
 "swap.confirmation.commit.refresh_required" = "报价已过期。已加载新的报价。";
 "swap.confirmation.commit.failed" = "无法开始兑换。已加载新的报价。";
+"swap.confirmation.unsupported_instruction" = "此路由使用的交易类型无法由应用构建。请选择其他路由。";
+"swap.confirmation.recipient_not_accepted" = "此路由不接受该接收方地址类型。请更改接收方后重试。";
+"swap.confirmation.destination_not_deliverable" = "此路由无法从此链交付到隐匿 Zcash 地址。请选择其他路由或输入透明地址作为接收方。";
 "swap.confirmation.impact_high" = "在此次兑换交易中，您将损失您资金中的很大一部分（%@）。";
 "swap.confirmation.impact_too_high" = "由于流动性极低，此兑换将造成重大损失（%@）。";
 "swap.confirmation.impact_warning" = "重要提示！您正在以极其不利的价格进行交易。这是因为流动性非常低。";

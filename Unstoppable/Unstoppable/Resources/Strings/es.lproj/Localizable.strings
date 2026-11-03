@@ -806,6 +806,7 @@
 "swap.aml.risk.description" = "Se identificaron riesgos potenciales para esta transacción. Durante el procesamiento, sus fondos pueden ser rechazados o restringidos. Por favor, elija otro proveedor.";
 "swap.aml.risk.button" = "Elegir otro proveedor";
 "swap.aml.undefined.description" = "No pudimos completar la verificación de riesgos para esta transacción. Si continúa, este swap puede experimentar demoras, rechazo o restricciones durante el procesamiento.";
+"swap.aml.inconclusive" = "No se pudo completar la verificación de riesgo para esta ruta. Elige otra ruta e inténtalo de nuevo.";
 "swap.aml.undefined.button" = "Continuar con riesgo";
 "swap.aml.connection.title" = "Problema de conexión";
 "swap.aml.connection.description" = "No se puede obtener una respuesta en este momento. Por favor, inténtelo de nuevo.";
@@ -815,15 +816,6 @@
 
 "swap_options.title" = "Opciones de swap";
 "swap_options.description" = "Las políticas de Apple App Store ya no nos permiten ofrecer acceso a servicios de swap dentro de la app wallet. Por lo tanto, para realizar un swap, puedes utilizar las siguientes opciones:";
-
-// Swap Terms
-
-"swap.terms.title" = "Términos de swap";
-"swap.terms.description" = "Para continuar, confirme su acuerdo con cada punto.";
-"swap.terms.risk_of_restrictions" = "Riesgo de restricciones";
-"swap.terms.risk_of_restrictions.description" = "Algunas rutas pueden rechazar swaps o restringir el acceso a sus fondos. Consulte la %@ antes de elegir una ruta.";
-"swap.terms.user_responsibility" = "Responsabilidad del usuario";
-"swap.terms.user_responsibility.description" = "He revisado los posibles riesgos y acepto la responsabilidad de mi elección de ruta.";
 
 // Swap Advanced Settings
 
@@ -869,6 +861,9 @@
 "swap.confirmation.commit.rate_changed" = "El precio ha cambiado. Revisa la cotización actualizada e inténtalo de nuevo.";
 "swap.confirmation.commit.refresh_required" = "La cotización ha expirado. Se ha cargado una nueva cotización.";
 "swap.confirmation.commit.failed" = "No se pudo iniciar el swap. Se ha cargado una nueva cotización.";
+"swap.confirmation.unsupported_instruction" = "Esta ruta usa un tipo de transacción que la app no puede construir. Elige otra ruta.";
+"swap.confirmation.recipient_not_accepted" = "Esta ruta no acepta el tipo de dirección del destinatario. Cambia el destinatario e inténtalo de nuevo.";
+"swap.confirmation.destination_not_deliverable" = "Esta ruta no puede entregar a una dirección de Zcash protegida desde esta cadena. Elige otra ruta o introduce un destinatario transparente.";
 "swap.confirmation.impact_high" = "Perderás una gran parte (%@) de tus fondos en este swap.";
 "swap.confirmation.impact_too_high" = "Este intercambio supondría una gran pérdida (%@) debido a una liquidez muy baja.";
 "swap.confirmation.impact_warning" = "¡Importante! Has obtenido un precio extremadamente desfavorable debido a la baja liquidez del mercado.";

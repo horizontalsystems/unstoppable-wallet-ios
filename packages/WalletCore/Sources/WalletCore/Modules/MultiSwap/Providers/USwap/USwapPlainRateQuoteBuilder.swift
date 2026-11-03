@@ -22,13 +22,13 @@ public final class USwapPlainRateQuoteBuilder: USwapRateQuoteBuilder {
     }
 
     public func build(input: USwapRateQuoteFactory.Input) async throws -> MultiSwapQuote {
-        let estimatedTime = input.response.estimatedTime
-            ?? MultiSwapHelpers.estimate(tokenIn: input.tokenIn, tokenOut: input.tokenOut)
-
-        return USwapMultiSwapQuote(
+        MultiSwapQuote(
+            id: input.venue.id,
+            venue: input.venue,
             expectedBuyAmount: input.response.expectedBuyAmount,
-            estimatedTime: estimatedTime,
-            replay: input.replay
+            estimatedTime: input.estimatedTime,
+            zcashAddressRules: input.response.addressRules,
+            amlProviderId: input.response.amlProviderId
         )
     }
 }

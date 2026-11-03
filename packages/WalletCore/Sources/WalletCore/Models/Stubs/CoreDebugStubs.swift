@@ -4,8 +4,8 @@ enum CoreDebugStubs {
     static func trackActionRequiredSwap(from swap: Swap) -> Swap {
         let fromAsset = swap.fromAsset ?? "\(swap.tokenIn.coin.code).\(swap.tokenIn.coin.code)"
         let toAsset = swap.toAsset ?? "\(swap.tokenOut.coin.code).\(swap.tokenOut.coin.code)"
-        let inputChainId = USwapAssetRepository.blockchainTypeMap.first { $0.value == swap.tokenIn.blockchainType }?.key ?? "1"
-        let outputChainId = USwapAssetRepository.blockchainTypeMap.first { $0.value == swap.tokenOut.blockchainType }?.key ?? "zcash"
+        let inputChainId = USwapAssetMapping.blockchainTypeMap.first { $0.value == swap.tokenIn.blockchainType }?.key ?? "1"
+        let outputChainId = USwapAssetMapping.blockchainTypeMap.first { $0.value == swap.tokenOut.blockchainType }?.key ?? "zcash"
 
         return Swap(
             uid: swap.uid,

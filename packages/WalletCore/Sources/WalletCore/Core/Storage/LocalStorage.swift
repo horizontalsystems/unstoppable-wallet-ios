@@ -28,7 +28,7 @@ public class LocalStorage {
     private let keyScamProtection = "scam-protection"
     private let keySpamFilterEnabled = "spam-filter"
     private let keyContactsSpamCleared = "contacts-spam-cleared"
-    private let keySwapTermsAccepted = "swap-terms-accepted"
+    private let keySwapCatalogEtag = "swap-catalog-etag"
     private let keySwapRecentTokenQueryIds = "swap-recent-token-query-ids"
     private let keySwapEnabled = "swap_enabled"
     private let keyAppStateLastSyncTimestamp = "app-state-last-sync-timestamp"
@@ -192,9 +192,10 @@ extension LocalStorage {
         set { userDefaultsStorage.set(value: newValue, for: keySpamFilterEnabled) }
     }
 
-    var swapTermsAccepted: Bool {
-        get { userDefaultsStorage.value(for: keySwapTermsAccepted) ?? false }
-        set { userDefaultsStorage.set(value: newValue, for: keySwapTermsAccepted) }
+    /// The `ETag` of the last `GET /v3/tokens/all` whose rows are stored, sent back as `If-None-Match`.
+    var swapCatalogEtag: String? {
+        get { userDefaultsStorage.value(for: keySwapCatalogEtag) }
+        set { userDefaultsStorage.set(value: newValue, for: keySwapCatalogEtag) }
     }
 
     var swapRecentTokenQueryIds: [String] {

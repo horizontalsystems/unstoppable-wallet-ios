@@ -970,10 +970,11 @@ public enum StorageMigrator {
         }
 
         migrator.registerMigration("Create ConfidentialProviderRecord") { db in
-            try db.create(table: ConfidentialProviderRecord.databaseTableName) { t in
-                t.column(ConfidentialProviderRecord.Columns.providerId.name, .text).notNull().primaryKey(onConflict: .replace)
-                t.column(ConfidentialProviderRecord.Columns.executionType.name, .text).notNull()
-                t.column(ConfidentialProviderRecord.Columns.lastSyncTimestamp.name, .double).notNull()
+            // The record type is gone (dropped by a later migration); the historical schema stays as literals.
+            try db.create(table: "ConfidentialProviderRecord") { t in
+                t.column("providerId", .text).notNull().primaryKey(onConflict: .replace)
+                t.column("executionType", .text).notNull()
+                t.column("lastSyncTimestamp", .double).notNull()
             }
         }
 
@@ -995,8 +996,8 @@ public enum StorageMigrator {
                 t.column(SwapProviderRecord.Columns.position.name, .integer).notNull()
                 t.column(SwapProviderRecord.Columns.executionType.name, .text)
                 t.column(SwapProviderRecord.Columns.amlPolicy.name, .text)
-                t.column(SwapProviderRecord.Columns.split.name, .boolean).notNull()
-                t.column(SwapProviderRecord.Columns.suspensions.name, .text)
+                t.column("split", .boolean).notNull()
+                t.column("suspensions", .text)
                 t.column(SwapProviderRecord.Columns.lastSyncTimestamp.name, .double).notNull()
             }
         }
@@ -1011,12 +1012,42 @@ public enum StorageMigrator {
 
         migrator.registerMigration("Add quotes to SwapProviderRecord") { db in
             try db.alter(table: SwapProviderRecord.databaseTableName) { t in
-                t.add(column: SwapProviderRecord.Columns.quotes.name, .boolean).notNull().defaults(to: true)
+                t.add(column: "quotes", .boolean).notNull().defaults(to: true)
             }
 
             // A new column empties the table so stale rows are not trusted until the next sync (see
             // MultiSwapProviderManager.init): an empty table has no sync timestamp, so it syncs at once.
             try SwapProviderRecord.deleteAll(db)
+        }
+
+        migrator.registerMigration("Recreate SwapProviderRecord v3") { db in
+            // `name`, `privacy` and `splitSwaps` replace `split`, `quotes` and `suspensions`; the table is
+            // recreated empty so the first launch syncs at once rather than trusting the old rows.
+            if try db.tableExists(SwapProviderRecord.databaseTableName) {
+                try db.drop(table: SwapProviderRecord.databaseTableName)
+            }
+
+            try db.create(table: SwapProviderRecord.databaseTableName) { t in
+                t.column(SwapProviderRecord.Columns.providerId.name, .text).notNull().primaryKey(onConflict: .replace)
+                t.column(SwapProviderRecord.Columns.position.name, .integer).notNull()
+                t.column(SwapProviderRecord.Columns.name.name, .text).notNull()
+                t.column(SwapProviderRecord.Columns.executionType.name, .text)
+                t.column(SwapProviderRecord.Columns.amlPolicy.name, .text)
+                t.column(SwapProviderRecord.Columns.privacy.name, .text).notNull().defaults(to: SwapVenue.noPrivacy)
+                t.column(SwapProviderRecord.Columns.splitSwaps.name, .boolean).notNull()
+                t.column(SwapProviderRecord.Columns.lastSyncTimestamp.name, .double).notNull()
+            }
+        }
+
+        migrator.registerMigration("Drop ConfidentialProviderRecord and per-provider SwapAsset rows") { db in
+            // The confidential provider list lives in SwapProviderRecord.privacy now, and the per-provider
+            // token lists in the single catalog under `USwapAssetCatalog.storageKey`.
+            if try db.tableExists("ConfidentialProviderRecord") {
+                try db.drop(table: "ConfidentialProviderRecord")
+            }
+
+            try SwapAsset.filter(SwapAsset.Columns.provider != USwapAssetCatalog.storageKey).deleteAll(db)
+            try SwapAssetSyncInfo.filter(SwapAssetSyncInfo.Columns.provider != USwapAssetCatalog.storageKey).deleteAll(db)
         }
 
         try migrator.migrate(dbPool)

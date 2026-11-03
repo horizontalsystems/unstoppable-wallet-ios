@@ -40,7 +40,7 @@ public class SwapHistoryManager {
                 continue
             }
 
-            guard let provider = SwapProviderFactory.provider(id: swap.providerId) else {
+            guard let provider = SwapProviderFactory.provider(trackingProviderId: swap.providerId) else {
                 continue
             }
 

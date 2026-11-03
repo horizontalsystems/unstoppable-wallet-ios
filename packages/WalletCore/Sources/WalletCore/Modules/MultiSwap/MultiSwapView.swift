@@ -194,8 +194,8 @@ struct MultiSwapView: View {
             }
         } else {
             vm.validateAndProceed(
-                onSuccess: { showSwap(vm: vm) },
-                onRiskDetected: { result in showRiskBottomSheet(result, vm: vm) }
+                onSuccess: { quote in showSwap(vm: vm, quote: quote) },
+                onRiskDetected: { result, quote in showRiskBottomSheet(result, vm: vm, quote: quote) }
             )
         }
     }
@@ -229,7 +229,7 @@ struct MultiSwapView: View {
                 }
             )
 
-            if let type = quote.provider.type {
+            if let type = quote.venue.type {
                 Cell(
                     style: .secondary,
                     middle: {
@@ -279,22 +279,11 @@ struct MultiSwapView: View {
         }
     }
 
-    private func showSwap(vm: MultiSwapViewModel) {
-        if vm.shouldShowTerms {
-            Coordinator.shared.present { isPresented in
-                SwapTermsView(isPresented: isPresented) {
-                    vm.onAcceptTerms()
-
-                    DispatchQueue.main.async {
-                        proceedToConfirmation(vm: vm)
-                    }
-                }
-            } onDismiss: {
-                activeViewModel.autoQuoteIfRequired()
-            }
-        } else {
-            proceedToConfirmation(vm: vm)
-        }
+    /// `quote` is the quote the AML precheck validated: the confirmation opens on exactly that route, even
+    /// when an auto-refresh replaced `currentQuote` while the check was running.
+    private func showSwap(vm: MultiSwapViewModel, quote: MultiSwapViewModel.Quote) {
+        vm.confirmationQuote = quote
+        proceedToConfirmation(vm: vm)
     }
 
     /// tokenOut the account can't hold: ask for the external delivery address first,
@@ -313,10 +302,20 @@ struct MultiSwapView: View {
             return
         }
 
+        // A unified ZEC recipient is accepted while at least one quoted route resolves to a unified
+        // destination (the route's rule after the OP_RETURN memo guard); the confirmation's own recipient
+        // page and the preview then follow the chosen route's rule.
+        let allowsUnifiedZcash = viewModel.tokenIn.map { tokenIn in
+            viewModel.quotes.contains { item in
+                USwapMultiSwapProvider.destinationKind(quote: item.quote, rules: item.quote.zcashAddressRules, tokenIn: tokenIn) != .transparent
+            }
+        } ?? false
+
         Coordinator.shared.present { isPresented in
             MultiSwapExternalRecipientView(
                 token: tokenOut,
                 initialAddress: viewModel.externalRecipient,
+                allowsUnifiedZcash: allowsUnifiedZcash,
                 isPresented: isPresented
             ) { address in
                 viewModel.setExternalRecipient(address: address)
@@ -330,7 +329,7 @@ struct MultiSwapView: View {
         }
     }
 
-    private func showRiskBottomSheet(_ result: MultiSwapViewModel.AmlRiskResult, vm: MultiSwapViewModel) {
+    private func showRiskBottomSheet(_ result: MultiSwapViewModel.AmlRiskResult, vm: MultiSwapViewModel, quote: MultiSwapViewModel.Quote) {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
             BottomSheetView(
                 items: [
@@ -340,7 +339,7 @@ struct MultiSwapView: View {
                         .init(style: .secondary, title: result.buttonTitle) {
                             isPresented.wrappedValue = false
 
-                            onTapResult(result, vm: vm)
+                            onTapResult(result, vm: vm, quote: quote)
                         },
                     ])),
                 ]
@@ -350,14 +349,14 @@ struct MultiSwapView: View {
         }
     }
 
-    private func onTapResult(_ result: MultiSwapViewModel.AmlRiskResult, vm: MultiSwapViewModel) {
+    private func onTapResult(_ result: MultiSwapViewModel.AmlRiskResult, vm: MultiSwapViewModel, quote: MultiSwapViewModel.Quote) {
         switch result {
-        case .dirty: showSelectProvider()
-        case .unprocessed: showSwap(vm: vm)
+        case .dirty, .inconclusive: showSelectProvider()
+        case .unprocessed: showSwap(vm: vm, quote: quote)
         case .networkError:
             vm.validateAndProceed(
-                onSuccess: { showSwap(vm: vm) },
-                onRiskDetected: { result in showRiskBottomSheet(result, vm: vm) }
+                onSuccess: { quote in showSwap(vm: vm, quote: quote) },
+                onRiskDetected: { result, quote in showRiskBottomSheet(result, vm: vm, quote: quote) }
             )
         }
     }
@@ -484,14 +483,14 @@ struct MultiSwapSendDestinationView: View {
         if let tokenIn = viewModel.tokenIn,
            let tokenOut = viewModel.tokenOut,
            let amountIn = viewModel.amountIn,
-           let currentQuote = viewModel.currentQuote
+           let quote = viewModel.confirmationQuote
         {
             MultiSwapSendView(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 amountIn: amountIn,
-                provider: currentQuote.provider,
-                multiSwapQuote: currentQuote.quote,
+                provider: quote.provider,
+                multiSwapQuote: quote.quote,
                 recipientHolder: viewModel.externalRecipientHolder,
                 onFinish: onFinish
             )

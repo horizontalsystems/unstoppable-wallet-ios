@@ -5,24 +5,41 @@ import MarketKit
 
 public final class PrivateSendService {
     private let api: USwapMultiSwapApi
-    private let assetRepository: (String) -> USwapAssetRepository
-    private let commitRequestBuilder: (String) -> USwapCommitRequestBuilder
+    private let assetCatalog: USwapAssetCatalog
+    private let commitRequestBuilder: USwapCommitRequestBuilder
     private let tokenManager: PrivateSendTokenManager
+    private let swapProviderManager: MultiSwapProviderManager
 
     /// The token manager is injected, not built here: it is the single source of truth for "can this
-    /// token be sent privately", and a second instance would mean a second repository dictionary and a
-    /// second subscription to the same registry.syncPublisher. The confidential provider registry is
-    /// reached only through it — this service never consults the registry directly.
-    public init(
+    /// token be sent privately". The provider directory is read only for the privacy levels a private
+    /// send asks `/v3/rate` for.
+    init(
         api: USwapMultiSwapApi,
         tokenManager: PrivateSendTokenManager,
-        assetRepository: @escaping (String) -> USwapAssetRepository,
-        commitRequestBuilder: @escaping (String) -> USwapCommitRequestBuilder
+        assetCatalog: USwapAssetCatalog,
+        commitRequestBuilder: USwapCommitRequestBuilder,
+        swapProviderManager: MultiSwapProviderManager
     ) {
         self.api = api
         self.tokenManager = tokenManager
-        self.assetRepository = assetRepository
+        self.assetCatalog = assetCatalog
         self.commitRequestBuilder = commitRequestBuilder
+        self.swapProviderManager = swapProviderManager
+    }
+
+    public convenience init(
+        api: USwapMultiSwapApi,
+        tokenManager: PrivateSendTokenManager,
+        assetCatalog: USwapAssetCatalog,
+        commitRequestBuilder: USwapCommitRequestBuilder
+    ) {
+        self.init(
+            api: api,
+            tokenManager: tokenManager,
+            assetCatalog: assetCatalog,
+            commitRequestBuilder: commitRequestBuilder,
+            swapProviderManager: Core.shared.swapProviderManager
+        )
     }
 
     /// Synchronous by contract: called from the pre-send render path, it reads only already-synced
@@ -73,16 +90,17 @@ public final class PrivateSendService {
         }
 
         let providerId = route?.quote.providerId ?? providerIds[0]
-        let builder = commitRequestBuilder(providerId)
+        let builder = commitRequestBuilder
 
-        // The provider's own identifier for the token, in case two confidential providers name it
-        // differently. Without a rate response there is no second source for it, and no identifier at
-        // all is exactly what `isSupported(token:)` gates the toggle on, so the reason matches.
-        guard let asset = assetRepository(providerId).asset(token: token) ?? route?.asset else {
+        // The catalog identifier (one for every provider). Without one there is no second source for
+        // it, and no identifier at all is exactly what `isSupported(token:)` gates the toggle on, so
+        // the reason matches.
+        guard let asset = assetCatalog.asset(token: token) ?? route?.asset else {
             throw PrivateSendUnavailableReason.tokenUnsupported
         }
 
-        guard let refundAddress = try await builder.refundAddress(token: token), !refundAddress.isEmpty else {
+        // Private routes carry no `addressRules` (ZEC is excluded from private send), so a refund is transparent.
+        guard let refundAddress = try await builder.refundAddress(token: token, kind: .transparent), !refundAddress.isEmpty else {
             // Omitting it forfeits the buffer refund, which lands on the success path too.
             throw PrivateSendError.missingRefundAddress
         }
@@ -222,7 +240,7 @@ public final class PrivateSendService {
         // `execution.chain` is sometimes a chain id ("56") and sometimes a name ("bsc"), so only a
         // recognised chain that resolves to a *different* blockchain is treated as a mismatch. An
         // unrecognised string is not evidence of disagreement.
-        if let executionBlockchainType = USwapAssetRepository.blockchainTypeMap[chain], executionBlockchainType != preview.request.token.blockchainType {
+        if let executionBlockchainType = USwapAssetMapping.blockchainTypeMap[chain], executionBlockchainType != preview.request.token.blockchainType {
             throw PrivateSendError.chainMismatch
         }
 
@@ -297,22 +315,20 @@ private extension PrivateSendService {
             throw PrivateSendUnavailableReason.tokenUnsupported
         }
 
-        // Same token both sides, so one asset lookup suffices — and naming the confidential
-        // providers explicitly is what keeps exact-output providerErrors noise-free, since every
-        // non-NEAR provider would otherwise decline to price backwards.
-        guard let asset = providerIds.compactMap({ assetRepository($0).asset(token: token) }).first else {
+        // Same token both sides, so one asset lookup suffices. No `providers`: the server picks the
+        // confidential providers from the privacy levels (every synced level other than `none`), and
+        // only a route served by a provider the gate admits is kept.
+        guard let asset = assetCatalog.asset(token: token) else {
             throw PrivateSendUnavailableReason.tokenUnsupported
         }
-
-        let builder = commitRequestBuilder(providerIds[0])
 
         let request = USwapMultiSwapApi.RateRequest(
             sellAsset: asset,
             buyAsset: asset,
             amount: .buy(amount),
             slippage: MultiSwapSlippage.default,
-            chainId: builder.chainId(token: token),
-            providerIds: providerIds
+            chainId: commitRequestBuilder.chainId(token: token),
+            privacy: swapProviderManager.privacyLevelsExcludingNone
         )
 
         let result: USwapMultiSwapApi.RateResult
@@ -324,7 +340,7 @@ private extension PrivateSendService {
         }
 
         // Every route delivers the identical requested output, so the cheapest deposit wins.
-        let candidates = result.quotes.filter { $0.sellAmount != nil }
+        let candidates = result.quotes.filter { $0.sellAmount != nil && providerIds.contains($0.providerId) }
 
         guard let best = candidates.min(by: { ($0.sellAmount ?? 0) < ($1.sellAmount ?? 0) }), let sellAmount = best.sellAmount else {
             // No routes and nothing recognisable in providerErrors still means no route.

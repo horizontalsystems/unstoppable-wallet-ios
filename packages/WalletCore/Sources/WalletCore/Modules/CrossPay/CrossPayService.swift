@@ -5,67 +5,90 @@ import MarketKit
 
 /// /v3/preview + /v3/commit in cross-asset exact-output mode; execution is a plain transfer to a
 /// deposit address. The preview has no side effects (the confirmation screen re-runs it silently);
-/// only /v3/commit creates a REAL order, so the entry screen's rate is display-only.
+/// only /v3/commit creates a REAL order, so the entry screen's rate is display-only. The venue is the
+/// cheapest `transfer` route of an unfiltered `/v3/rate`, remembered from the quote for the preview.
 public final class CrossPayService {
-    public static let providerId = "NEAR"
-
     private let api: USwapMultiSwapApi
-    // A factory, as in PrivateSendService: the repository (and its first /v3/tokens fetch) is only
-    // created when the CrossPay screen actually asks for it.
-    private let assetRepository: (String) -> USwapAssetRepository
+    private let assetCatalog: USwapAssetCatalog
     private let commitRequestBuilder: USwapCommitRequestBuilder
+    private let executionType: (String) -> String?
 
-    public init(
+    /// What the last quote learned about the chosen route, keyed by the pair it was quoted for.
+    private var lastRoutes = [RouteKey: RouteContext]()
+    private let routesLock = NSLock()
+
+    init(
         api: USwapMultiSwapApi,
-        assetRepository: @escaping (String) -> USwapAssetRepository,
-        commitRequestBuilder: USwapCommitRequestBuilder
+        assetCatalog: USwapAssetCatalog,
+        commitRequestBuilder: USwapCommitRequestBuilder,
+        executionType: @escaping (String) -> String?
     ) {
         self.api = api
-        self.assetRepository = assetRepository
+        self.assetCatalog = assetCatalog
         self.commitRequestBuilder = commitRequestBuilder
+        self.executionType = executionType
     }
 
-    /// Reads only the already-synced asset map, never triggers a fetch: unsynced = "not supported yet".
+    public convenience init(
+        api: USwapMultiSwapApi,
+        assetCatalog: USwapAssetCatalog,
+        commitRequestBuilder: USwapCommitRequestBuilder
+    ) {
+        let providerManager = Core.shared.swapProviderManager
+        self.init(api: api, assetCatalog: assetCatalog, commitRequestBuilder: commitRequestBuilder, executionType: providerManager.executionType(providerId:))
+    }
+
+    /// Reads only the already-synced catalog, never triggers a fetch: unsynced = "not supported yet".
     /// A recipient on an unsupported chain shows "not supported".
     public func supports(tokenIn: Token, tokenOut: Token) -> Bool {
-        guard !PrivateSendHandlerProvider.unsupportedBlockchainTypes.contains(tokenOut.blockchainType) else {
+        guard Self.supportsRecipientChain(tokenOut.blockchainType) else {
             return false
         }
 
         return supports(token: tokenIn) && supports(token: tokenOut)
     }
 
-    /// Also the entry screen's "has the asset map landed" probe: ZEC is always in the provider's map.
+    /// Cross Pay pays out on the recipient's chain, and some chains are never a supported recipient: the
+    /// pair is refused before the catalog is read.
+    static func supportsRecipientChain(_ blockchainType: BlockchainType) -> Bool {
+        !PrivateSendHandlerProvider.unsupportedBlockchainTypes.contains(blockchainType)
+    }
+
     public func supports(token: Token) -> Bool {
-        assetRepository(Self.providerId).asset(token: token) != nil
+        assetCatalog.asset(token: token) != nil
+    }
+
+    /// Whether the catalog (stored rows or a fetch) has landed: before that every token would read
+    /// unsupported, so the entry screen waits instead of showing "not supported".
+    public var isCatalogLoaded: Bool {
+        assetCatalog.isLoaded
     }
 
     public func syncAssets() {
-        assetRepository(Self.providerId).sync()
+        assetCatalog.sync()
     }
 
     public var assetsSyncPublisher: AnyPublisher<Void, Never> {
-        assetRepository(Self.providerId).syncPublisher
+        assetCatalog.syncPublisher
     }
 
     // Display-only: what the sender pays in tokenIn for the entered exact output. Never funded —
-    // the confirmation previews and commits its own order.
-    public func quote(tokenIn: Token, tokenOut: Token, amountOut: Decimal) async throws -> Decimal {
-        let repository = assetRepository(Self.providerId)
-
-        guard let sellAsset = repository.asset(token: tokenIn),
-              let buyAsset = repository.asset(token: tokenOut)
+    // the confirmation previews and commits its own order. Remembers the chosen route (venue, Zcash
+    // address rules, AML precheck id) for the preview of the same pair.
+    public func quote(tokenIn: Token, tokenOut: Token, amountOut: Decimal, recipient: String?) async throws -> Decimal {
+        guard let sellAsset = assetCatalog.asset(token: tokenIn),
+              let buyAsset = assetCatalog.asset(token: tokenOut)
         else {
             throw CrossPayError.tokenUnsupported
         }
 
+        // No `providers`, no `privacy`: every venue that can price an exact output answers.
         let request = USwapMultiSwapApi.RateRequest(
             sellAsset: sellAsset,
             buyAsset: buyAsset,
             amount: .buy(amountOut),
             slippage: MultiSwapSlippage.default,
-            chainId: commitRequestBuilder.chainId(token: tokenIn),
-            providerIds: [Self.providerId]
+            chainId: commitRequestBuilder.chainId(token: tokenIn)
         )
 
         let result: USwapMultiSwapApi.RateResult
@@ -76,11 +99,34 @@ public final class CrossPayService {
             throw Self.error(rateNetworkError: error, tokenOut: tokenOut)
         }
 
-        // Every route delivers the identical requested output, so the cheapest deposit wins.
-        let sellAmounts = result.quotes.compactMap(\.sellAmount)
+        // Only a plain-transfer venue can be paid by the locally built deposit; every such route
+        // delivers the identical requested output, so the cheapest deposit wins.
+        let transferRoutes = result.quotes.filter { route in
+            route.sellAmount != nil && !route.providerId.isEmpty && executionType(route.providerId) == MultiSwapProviderManager.transferExecutionType
+        }
 
-        guard let sellAmount = sellAmounts.min() else {
+        // A typed ZEC recipient narrows the choice to the routes whose destination rule takes it, so the
+        // cheapest COMPATIBLE venue wins rather than one that would refuse the address at preview.
+        let candidates = transferRoutes.filter { route in
+            Self.accepts(recipient: recipient, tokenIn: tokenIn, tokenOut: tokenOut, rules: route.addressRules)
+        }
+
+        guard let best = candidates.min(by: { ($0.sellAmount ?? 0) < ($1.sellAmount ?? 0) }), let sellAmount = best.sellAmount else {
+            if !transferRoutes.isEmpty {
+                throw CrossPayError.recipientNotAccepted
+            }
             throw Self.error(providerErrors: result.providerErrors, tokenOut: tokenOut) ?? .noRoute
+        }
+
+        // A cancelled quote (a newer one superseded it) must not overwrite the route the next preview reads.
+        try Task.checkCancellation()
+
+        routesLock.withLock {
+            lastRoutes[RouteKey(tokenIn: tokenIn, tokenOut: tokenOut)] = RouteContext(
+                providerId: best.providerId,
+                addressRules: best.addressRules,
+                amlProviderId: best.amlProviderId
+            )
         }
 
         return sellAmount
@@ -89,21 +135,35 @@ public final class CrossPayService {
     /// No side effects: prices the route for the confirmation screen (re-run silently every
     /// `CrossPayData.quoteLifetime`). The order is created by `commit(preview:)` when the user
     /// slides. Throws CrossPayError only. NO rate-quote fallbacks: minSellAmount and amountOut come
-    /// from the /v3/preview response alone.
-    public func preview(request: CrossPayRequest) async throws -> CrossPayPreview {
-        let repository = assetRepository(Self.providerId)
-
-        guard let sellAsset = repository.asset(token: request.tokenIn),
-              let buyAsset = repository.asset(token: request.tokenOut)
+    /// from the /v3/preview response alone. `amlPasses` is owned by the confirmation (`CrossPayHandler`)
+    /// so its silent re-previews do not repeat a passed AML precheck.
+    public func preview(request: CrossPayRequest, amlPasses: AmlPasses = AmlPasses()) async throws -> CrossPayPreview {
+        guard let sellAsset = assetCatalog.asset(token: request.tokenIn),
+              let buyAsset = assetCatalog.asset(token: request.tokenOut)
         else {
             throw CrossPayError.tokenUnsupported
         }
 
-        // The buffer refund lands on the success path too, so a missing address fails the preview. For ZEC the
-        // builder names the shielded-only unified address (NEAR takes a unified refund).
+        // The venue the entry screen quoted; without one (the screen was opened without a quote) no
+        // route is known to preview against.
+        guard let route = routesLock.withLock({ lastRoutes[RouteKey(tokenIn: request.tokenIn, tokenOut: request.tokenOut)] }) else {
+            throw CrossPayError.noRoute
+        }
+
+        // Defence in depth: the quote picked a route compatible with the recipient, but the recipient
+        // or the remembered route may have changed since.
+        guard Self.accepts(recipient: request.recipient, tokenIn: request.tokenIn, tokenOut: request.tokenOut, rules: route.addressRules) else {
+            throw CrossPayError.recipientNotAccepted
+        }
+
+        // The buffer refund lands on the success path too, so a missing address fails the preview. A
+        // ZEC refund follows the route's `refund` rule.
         let refundAddress: String?
         do {
-            refundAddress = try await commitRequestBuilder.refundAddress(token: request.tokenIn)
+            refundAddress = try await commitRequestBuilder.refundAddress(
+                token: request.tokenIn,
+                kind: USwapZcashAddressPolicy.refundKind(rules: route.addressRules)
+            )
         } catch {
             throw CrossPayError.commitFailed
         }
@@ -118,7 +178,7 @@ public final class CrossPayService {
             amount: .buy(request.amount),
             slippage: MultiSwapSlippage.default,
             chainId: commitRequestBuilder.chainId(token: request.tokenIn),
-            providerId: Self.providerId,
+            providerId: route.providerId,
             destinationAddress: request.recipient,
             // Omitted: the app builds the transfer itself, the provider has no use for it.
             sourceAddress: nil,
@@ -171,9 +231,18 @@ public final class CrossPayService {
             throw CrossPayError.commitFailed
         }
 
+        // Last, once the preview is known to be usable: the route's AML precheck (the preview's id wins
+        // over the rate route's), on the SENDER addresses only.
+        try await precheck(
+            amlProviderId: response.amlProviderId ?? route.amlProviderId,
+            tokenIn: request.tokenIn,
+            amlPasses: amlPasses
+        )
+
         return CrossPayPreview(
             request: request,
             previewToken: previewToken,
+            providerId: route.providerId,
             depositAmount: depositAmount,
             minSellAmount: minSellAmount,
             amountOut: amountOut,
@@ -182,6 +251,64 @@ public final class CrossPayService {
             estimatedTime: response.estimatedTime,
             previewedAt: Date()
         )
+    }
+
+    /// The AML precheck on the sender addresses (every address holding a spendable UTXO, or the account),
+    /// never the recipient. A failed or inconclusive check, or a sender set that cannot be determined,
+    /// refuses the preview: the user never funds a route that would freeze the deposit. A pass is
+    /// remembered per (id, sender set) in `amlPasses` for the rest of the confirmation.
+    private func precheck(amlProviderId: String?, tokenIn: Token, amlPasses: AmlPasses) async throws {
+        guard USwapAmlPrecheck.isRequired(amlProviderId: amlProviderId), let amlProviderId else {
+            return
+        }
+
+        let sender = await DestinationHelper.sourceAddresses(token: tokenIn)
+        try Task.checkCancellation()
+
+        let addresses = USwapAmlPrecheck.addresses(sender: sender)
+
+        guard !addresses.isEmpty else {
+            throw CrossPayError.commitFailed
+        }
+
+        let key = AmlPasses.Key(amlProviderId: amlProviderId, addresses: Set(addresses))
+
+        if amlPasses.contains(key) {
+            return
+        }
+
+        let passed: Bool?
+        do {
+            passed = try await api.checkAddresses(.init(addresses: addresses, amlProviderId: amlProviderId))
+        } catch is CancellationError {
+            throw CancellationError()
+        } catch {
+            throw CrossPayError.networkError(error)
+        }
+
+        guard passed == true else {
+            throw CrossPayError.commitFailed
+        }
+
+        amlPasses.insert(key)
+    }
+
+    /// Whether the typed recipient fits the route's destination rule. Only a ZEC recipient is checked:
+    /// every other chain has one address kind. A CrossPay route is always a `transfer`, so the OP_RETURN
+    /// memo guard never applies here.
+    static func accepts(recipient: String?, tokenIn: Token, tokenOut: Token, rules: USwapMultiSwapApi.ZcashAddressRules?) -> Bool {
+        guard tokenOut.blockchainType == .zcash, let recipient else {
+            return true
+        }
+
+        let executionType = MultiSwapProviderManager.transferExecutionType
+
+        return (try? USwapZcashAddressPolicy.validateRecipient(
+            recipient,
+            kind: USwapZcashAddressPolicy.destinationKind(rules: rules, sellBlockchainType: tokenIn.blockchainType, executionType: executionType),
+            acceptsTex: USwapZcashAddressPolicy.destinationAcceptsTex(rules: rules),
+            acceptsTransparent: USwapZcashAddressPolicy.destinationAcceptsTransparent(rules: rules, sellBlockchainType: tokenIn.blockchainType, executionType: executionType)
+        )) != nil
     }
 
     /// The only call with side effects: creates the order for a previewed route. Every failure is an
@@ -216,7 +343,7 @@ public final class CrossPayService {
 
         // `execution.chain` is a chain id ("56") or name ("bsc"): only a recognised chain that
         // resolves to a DIFFERENT blockchain is a mismatch.
-        if let executionBlockchainType = USwapAssetRepository.blockchainTypeMap[chain], executionBlockchainType != request.tokenIn.blockchainType {
+        if let executionBlockchainType = USwapAssetMapping.blockchainTypeMap[chain], executionBlockchainType != request.tokenIn.blockchainType {
             throw CrossPayError.commitFailed
         }
 
@@ -276,6 +403,17 @@ public final class CrossPayService {
 }
 
 private extension CrossPayService {
+    struct RouteKey: Hashable {
+        let tokenIn: Token
+        let tokenOut: Token
+    }
+
+    struct RouteContext {
+        let providerId: String
+        let addressRules: USwapMultiSwapApi.ZcashAddressRules?
+        let amlProviderId: String?
+    }
+
     static func error(providerErrors: [USwapMultiSwapApi.ProviderError], tokenOut: Token) -> CrossPayError? {
         let outOfRange = providerErrors.filter { $0.errorCode == "amountOutOfRange" }
 
@@ -357,5 +495,46 @@ private extension CrossPayService {
         }
 
         return .networkError(networkError)
+    }
+}
+
+public extension CrossPayService {
+    /// The AML prechecks that passed during one confirmation, keyed by AML provider id and sender set.
+    /// Owned by `CrossPayHandler`, so the silent re-previews of one confirmation do not repeat a passed
+    /// `GET /v3/check-addresses`; a new confirmation starts empty, and a pass older than `maxAge` is a
+    /// miss, so a confirmation left open re-checks. Lock-guarded: previews run off-main.
+    final class AmlPasses {
+        static let maxAge: TimeInterval = 5 * 60
+
+        struct Key: Hashable {
+            let amlProviderId: String
+            let addresses: Set<String>
+        }
+
+        private let lock = NSLock()
+        private var passedAt = [Key: Date]()
+        private let now: () -> Date
+
+        public convenience init() {
+            self.init(now: Date.init)
+        }
+
+        init(now: @escaping () -> Date) {
+            self.now = now
+        }
+
+        func contains(_ key: Key) -> Bool {
+            lock.withLock {
+                guard let date = passedAt[key] else {
+                    return false
+                }
+
+                return now().timeIntervalSince(date) < Self.maxAge
+            }
+        }
+
+        func insert(_ key: Key) {
+            lock.withLock { passedAt[key] = now() }
+        }
     }
 }

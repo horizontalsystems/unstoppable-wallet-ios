@@ -19,7 +19,7 @@ extension USwapMultiSwapApi {
                 method: .post,
                 parameters: request.parameters,
                 encoding: JSONEncoding.default,
-                headers: headers
+                headers: sessionHeaders
             )
         } catch let error as NetworkManager.ResponseError {
             let providerErrors = Self.rateProviderErrors(json: error.json)
@@ -45,7 +45,7 @@ extension USwapMultiSwapApi {
             method: .post,
             parameters: request.parameters,
             encoding: JSONEncoding.default,
-            headers: headers
+            headers: sessionHeaders
         )
 
         return response.route
@@ -59,7 +59,7 @@ extension USwapMultiSwapApi {
             method: .post,
             parameters: ["previewToken": request.previewToken],
             encoding: JSONEncoding.default,
-            headers: headers
+            headers: sessionHeaders
         )
 
         let commit = response.response
@@ -80,7 +80,7 @@ extension USwapMultiSwapApi {
             method: .post,
             parameters: ["splitUuid": splitUuid, "inboundTxHash": inboundTxHash],
             encoding: JSONEncoding.default,
-            headers: headers
+            headers: sessionHeaders
         )
 
         return response.response

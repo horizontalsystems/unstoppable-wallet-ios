@@ -21,9 +21,8 @@ class MultiSwapSendHandler: SendHandler {
     let tokenOut: Token
     let amountIn: Decimal
     let provider: IMultiSwapProvider
-    // The dry-quote `MultiSwapQuote` the caller picked on the quotes screen. Passed back to
-    // `provider.confirmationQuote(...)` so the provider can replay any per-quote routing state
-    // (today: USwap's alternate-route selection for Exolix ZEC).
+    /// The dry quote the caller picked on the quotes screen, handed back to `provider.confirmationQuote(quote:)`:
+    /// its `id` names the venue, its `zcashAddressRules` decide which ZEC recipient is accepted.
     let multiSwapQuote: MultiSwapQuote
 
     private var slippage = MultiSwapSlippage.default
@@ -105,13 +104,19 @@ extension MultiSwapSendHandler: ISendHandler {
                     return
                 }
 
-                // Only vault-settled providers (per their /v3/providers executionType) deliver ZEC to
-                // shielded/unified receivers, and only when the sell chain's memo can name one (an
-                // OP_RETURN cannot) — every other route needs a transparent recipient (CEX routes
-                // reject shielded ones at order creation), matching the restriction on the
-                // pre-confirmation recipient page.
-                let deliversShielded = Core.shared.swapProviderManager.deliversShieldedZcash(providerId: provider.id, tokenIn: tokenIn)
-                let parserFilter: AddressParserFactory.ParserFilter? = tokenOut.blockchainType == .zcash && !deliversShielded ? .zCashTransparentOnly : nil
+                // A ZEC recipient follows the route's own `addressRules.destination` (forced to transparent
+                // for a vault deposit from an OP_RETURN-memo chain): the same kind the preview request names.
+                let rules = multiSwapQuote.zcashAddressRules
+                let parserFilter: AddressParserFactory.ParserFilter? = tokenOut.blockchainType == .zcash
+                    ? USwapZcashAddressPolicy.recipientParserFilter(
+                        kind: USwapMultiSwapProvider.destinationKind(quote: multiSwapQuote, rules: rules, tokenIn: tokenIn),
+                        acceptsTransparent: USwapZcashAddressPolicy.destinationAcceptsTransparent(
+                            rules: rules,
+                            sellBlockchainType: tokenIn.blockchainType,
+                            executionType: multiSwapQuote.venue.executionType
+                        )
+                    )
+                    : nil
 
                 Coordinator.shared.present { _ in
                     MultiSwapRecipientView(address: self.recipient, token: self.tokenOut, allowRemoval: !self.recipientRequired, parserFilter: parserFilter) { [weak self] recipient in
@@ -148,7 +153,7 @@ extension MultiSwapSendHandler: ISendHandler {
         }
 
         let quote = try await provider.confirmationQuote(
-            multiSwapQuote: multiSwapQuote,
+            quote: multiSwapQuote,
             tokenIn: tokenIn,
             tokenOut: tokenOut,
             amountIn: amountIn,
@@ -156,7 +161,6 @@ extension MultiSwapSendHandler: ISendHandler {
             recipient: recipient,
             transactionSettings: transactionSettings
         )
-        quote.preciseEstimateTime = provider.preciseEstimateTime
 
         guard let broadcaster else {
             throw SwapBroadcasterError.noBroadcaster
@@ -238,7 +242,8 @@ extension MultiSwapSendHandler: ISendHandler {
             txHash: txHash,
             trackingHandle: trackingHandle,
             accountId: account.id,
-            providerId: provider.id,
+            // the venue, not the provider instance: history names it and tracking goes through the single provider anyway
+            providerId: multiSwapQuote.venue.id,
             status: .pending,
             tokenIn: tokenIn,
             tokenOut: tokenOut,
@@ -262,15 +267,23 @@ extension MultiSwapSendHandler: ISendHandler {
     }
 
     /// What the toast says when the order could not be created: the server's discriminator when it
-    /// names one, a generic line otherwise (server-supplied text is never shown verbatim).
+    /// names one, the server's own text for a blacklisted or refused address, a generic line otherwise.
     static func commitFailureMessage(_ error: Error) -> String {
+        switch error {
+        case let USwapMultiSwapProvider.SwapError.addressBlacklisted(message),
+             let USwapMultiSwapProvider.SwapError.previewAddressRejected(message):
+            return message.isEmpty ? "swap.confirmation.commit.failed".localized : message
+        default:
+            break
+        }
+
         switch (error as? USwapMultiSwapApi.CommitError)?.status {
         case "rate_changed":
-            "swap.confirmation.commit.rate_changed".localized
+            return "swap.confirmation.commit.rate_changed".localized
         case "refresh_required":
-            "swap.confirmation.commit.refresh_required".localized
+            return "swap.confirmation.commit.refresh_required".localized
         default:
-            "swap.confirmation.commit.failed".localized
+            return "swap.confirmation.commit.failed".localized
         }
     }
 }

@@ -806,6 +806,7 @@
 "swap.aml.risk.description" = "Potential risks were identified for this transaction. During processing, your funds may be rejected or restricted. Please choose another provider.";
 "swap.aml.risk.button" = "Choose Another Provider";
 "swap.aml.undefined.description" = "We couldn’t complete the risk check for this transaction. If you continue, this swap may encounter delays, rejection, or restrictions during processing.";
+"swap.aml.inconclusive" = "The risk check for this route could not be completed. Pick another route and try again.";
 "swap.aml.undefined.button" = "Continue with Risk";
 "swap.aml.connection.title" = "Connection Issue";
 "swap.aml.connection.description" = "Unable to get a response right now. Please try again.";
@@ -815,15 +816,6 @@
 
 "swap_options.title" = "Swap Options";
 "swap_options.description" = "Apple App Store policies no longer allow us to provide access to swap services inside wallet app. So, to swap you may use following options:";
-
-// Swap Terms
-
-"swap.terms.title" = "Swap Terms";
-"swap.terms.description" = "To continue, please confirm your agreement with each item.";
-"swap.terms.risk_of_restrictions" = "Risk of restrictions";
-"swap.terms.risk_of_restrictions.description" = "Some routes may reject swaps or restrict access to your funds. Check the %@ before choosing a route.";
-"swap.terms.user_responsibility" = "User responsibility";
-"swap.terms.user_responsibility.description" = "I have reviewed the possible risks and accept responsibility for my choice of route.";
 
 // Swap Advanced Settings
 
@@ -869,6 +861,9 @@
 "swap.confirmation.commit.rate_changed" = "The price moved. Review the updated quote and try again.";
 "swap.confirmation.commit.refresh_required" = "The quote expired. A new quote has been loaded.";
 "swap.confirmation.commit.failed" = "The swap could not be started. A new quote has been loaded.";
+"swap.confirmation.unsupported_instruction" = "This route uses a transaction type the app cannot build. Pick another route.";
+"swap.confirmation.recipient_not_accepted" = "This route does not accept the recipient address type. Change the recipient and try again.";
+"swap.confirmation.destination_not_deliverable" = "This route cannot deliver to a shielded Zcash address from this chain. Pick another route or enter a transparent recipient.";
 "swap.confirmation.impact_high" = "You’ll lose a big part (%@) of your funds on this swap.";
 "swap.confirmation.impact_too_high" = "This swap would result in a major loss (%@) due to very low liquidity.";
 "swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";

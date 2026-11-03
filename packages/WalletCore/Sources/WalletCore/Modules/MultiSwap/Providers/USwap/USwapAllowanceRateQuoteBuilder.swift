@@ -25,14 +25,14 @@ final class USwapAllowanceRateQuoteBuilder: USwapRateQuoteBuilder {
             )
         }
 
-        let estimatedTime = input.response.estimatedTime
-            ?? MultiSwapHelpers.estimate(tokenIn: input.tokenIn, tokenOut: input.tokenOut)
-
-        return USwapEvmMultiSwapQuote(
+        return EvmMultiSwapQuote(
+            id: input.venue.id,
+            venue: input.venue,
             expectedBuyAmount: input.response.expectedBuyAmount,
             allowanceState: allowanceState,
-            estimatedTime: estimatedTime,
-            replay: input.replay
+            estimatedTime: input.estimatedTime,
+            zcashAddressRules: input.response.addressRules,
+            amlProviderId: input.response.amlProviderId
         )
     }
 

@@ -3,8 +3,8 @@ import MarketKit
 
 /// Finds a 1-hop route for a pair that can't be swapped directly.
 ///
-/// Pure matching over injected candidate tiers: the only I/O is whatever the candidate providers do,
-/// and the only `Core.shared` touch is the `make` factory.
+/// Pure matching over injected candidate tiers and an injected "is this token quotable" predicate (the
+/// asset catalog's membership): the only `Core.shared` touch is the `make` factory.
 final class SwapPathFinder {
     private let candidateProviders: [ISwapPathCandidateProvider]
 
@@ -19,17 +19,8 @@ final class SwapPathFinder {
         ])
     }
 
-    func find(tokenIn: Token, tokenOut: Token, providers: [IMultiSwapProvider], suspensions: SwapSuspensionIndex) -> SwapPath? {
-        /// Same gate as MultiSwapViewModel.syncValidProviders: a leg we would refuse to quote must
-        /// not count, or we would advertise a route through a provider the backend switched off.
-        func usable(provider: IMultiSwapProvider, from: Token, to: Token) -> Bool {
-            guard !suspensions.isSuspended(providerId: provider.id, tokenIn: from, tokenOut: to) else {
-                return false
-            }
-
-            return provider.supports(tokenIn: from, tokenOut: to)
-        }
-
+    /// `isKnown` is catalog membership: an intermediate token no venue lists cannot carry either leg.
+    func find(tokenIn: Token, tokenOut: Token, isKnown: (Token) -> Bool) -> SwapPath? {
         let endpointIds: Set<String> = [tokenIn.tokenQuery.id, tokenOut.tokenQuery.id]
         var triedIds = Set<String>()
 
@@ -38,12 +29,7 @@ final class SwapPathFinder {
             for candidate in candidateProvider.candidates(tokenIn: tokenIn, tokenOut: tokenOut) {
                 let id = candidate.tokenQuery.id
 
-                guard !endpointIds.contains(id), triedIds.insert(id).inserted else {
-                    continue
-                }
-
-                // No point asking about the second leg with no way in.
-                guard providers.contains(where: { usable(provider: $0, from: tokenIn, to: candidate) }), providers.contains(where: { usable(provider: $0, from: candidate, to: tokenOut) }) else {
+                guard !endpointIds.contains(id), triedIds.insert(id).inserted, isKnown(candidate) else {
                     continue
                 }
 

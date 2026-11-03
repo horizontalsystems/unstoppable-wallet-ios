@@ -196,11 +196,16 @@ class ZcashAdapter {
     }
 
     func getCustomUnifiedAddress() async throws -> UnifiedAddress? {
+        try await getCustomUnifiedAddress(receivers: [.orchard, .sapling])
+    }
+
+    /// A unified address with exactly these receivers (the SDK stores a fresh diversified address on every call).
+    func getCustomUnifiedAddress(receivers: Set<ReceiverType>) async throws -> UnifiedAddress? {
         guard let account = try await synchronizer.listAccounts().first else {
             throw AppError.ZcashError.noReceiveAddress
         }
 
-        return try await synchronizer.getCustomUnifiedAddress(accountUUID: account.id, receivers: [.orchard, .sapling])
+        return try await synchronizer.getCustomUnifiedAddress(accountUUID: account.id, receivers: receivers)
     }
 
     /// Used by AdapterManager to revert the stored selection on switch failure.

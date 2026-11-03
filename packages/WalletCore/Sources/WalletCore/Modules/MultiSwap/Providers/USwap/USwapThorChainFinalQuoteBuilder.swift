@@ -70,7 +70,7 @@ final class USwapThorChainFinalQuoteBuilder: USwapFinalQuoteBuilder {
     }
 
     /// The sold token's asset notation: the settlement coin for the native token, otherwise the
-    /// asset its bank denom names (the inverse of USwapAssetRepository's notation -> denom mapping).
+    /// asset its bank denom names (the inverse of USwapAssetMapping's notation -> denom mapping).
     /// The kit builds the MsgDeposit coin from the token's denom; the asset only labels it.
     private static func asset(token: Token, network: ThorChainKit.Network) throws -> ThorChainKit.Asset {
         switch token.type {

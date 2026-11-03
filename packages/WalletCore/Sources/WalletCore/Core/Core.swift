@@ -175,8 +175,11 @@ public class Core {
     let valueFormatter: CurrencyValueFormatter
 
     public let swapAssetStorage: SwapAssetStorage
-    public let confidentialProviderStorage: ConfidentialProviderStorage
     let swapProviderManager: MultiSwapProviderManager
+    /// The one token catalog (`GET /v3/tokens/all`), shared by the swap screen, Private Send and CrossPay.
+    public let swapAssetCatalog: USwapAssetCatalog
+    /// The one swap provider: every route the backend quotes is served through it.
+    public let swapProvider: USwapMultiSwapProvider
     public let swapProviderInfoManager: SwapProviderInfoManager
     public let swapHistoryManager: SwapHistoryManager
 
@@ -545,8 +548,24 @@ public class Core {
         )
 
         swapAssetStorage = SwapAssetStorage(dbPool: dbPool)
-        confidentialProviderStorage = ConfidentialProviderStorage(dbPool: dbPool)
+        // The provider directory first: the catalog's private-send gate and the provider's venue lookups read it.
         swapProviderManager = MultiSwapProviderManager(storage: SwapProviderStorage(dbPool: dbPool), networkManager: networkManager, apiKey: AppConfig.uswapApiKey)
+
+        let uSwapApi = SwapProviderResolver.uSwapApi(networkManager: networkManager)
+        swapAssetCatalog = USwapAssetCatalog(api: uSwapApi, storage: swapAssetStorage, localStorage: localStorage, providerManager: swapProviderManager)
+        swapProvider = USwapProviderBuilder.make(
+            api: uSwapApi,
+            assetCatalog: swapAssetCatalog,
+            providerManager: swapProviderManager,
+            dependencies: .init(
+                adapterManager: adapterManager,
+                evmBlockchainManager: evmBlockchainManager,
+                tronKitManager: tronAccountManager.tronKitManager,
+                accountManager: accountManager,
+                solanaKitManager: solanaKitManager,
+                localStorage: localStorage
+            )
+        )
         swapProviderInfoManager = SwapProviderInfoManager(networkManager: networkManager, apiKey: AppConfig.uswapApiKey)
 
         createPasskeyAccountService = CreatePasskeyAccountService(

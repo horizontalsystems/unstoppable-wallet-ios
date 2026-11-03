@@ -4,7 +4,12 @@ import MarketKit
 import SwiftUI
 
 class MultiSwapAllowanceHelper {
-    private let adapterManager = Core.shared.adapterManager
+    private let adapterManager: AdapterManager
+
+    /// Injected: the helper is built while `Core` is still initialising, when `Core.shared` is not yet set.
+    init(adapterManager: AdapterManager) {
+        self.adapterManager = adapterManager
+    }
 
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
         switch step {

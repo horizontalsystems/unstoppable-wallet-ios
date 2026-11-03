@@ -23,9 +23,6 @@ public class SwapFinalQuote {
     /// payload targets an address that must never receive funds, so `executable(tokenIn:)` refuses
     /// to hand it out. `canSwap` stays true — the slide button shows and commit rebuilds the quote.
     var isEstimateOnly = false
-    /// Set by the send handler from the provider; a deposit-based exchanger's estimate
-    /// renders as a (X−25%)–(X+25%) range instead of ~X.
-    public var preciseEstimateTime = true
 
     public init(
         expectedBuyAmount: Decimal,
@@ -131,7 +128,7 @@ public class SwapFinalQuote {
         }
 
         // Single route on the confirm screen: no baseline, absolute threshold only.
-        if let timeState = MultiSwapViewModel.timeState(for: estimatedTime, precise: preciseEstimateTime, baseline: nil) {
+        if let timeState = MultiSwapViewModel.timeState(for: estimatedTime, baseline: nil) {
             fields.append(.simpleValue(
                 title: ComponentInformedTitle("swap.swapped_time".localized, info: .swapTime),
                 value: ComponentText(text: MultiSwapQuotesView.string(time: timeState.value), colorStyle: timeState.colorStyle)

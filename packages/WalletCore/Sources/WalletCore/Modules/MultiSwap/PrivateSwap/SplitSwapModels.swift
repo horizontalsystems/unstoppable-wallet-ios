@@ -23,12 +23,12 @@ public final class SplitMultiSwapQuote: MultiSwapQuote {
     public let outputAmounts: [Decimal]
     public let guaranteedAmountOut: Decimal?
 
-    init(percents: [Int], outputAmounts: [Decimal], guaranteedAmountOut: Decimal?, estimatedTime: TimeInterval?) {
+    init(id: String, venue: SwapVenue, percents: [Int], outputAmounts: [Decimal], guaranteedAmountOut: Decimal?, estimatedTime: TimeInterval?) {
         self.percents = percents
         self.outputAmounts = outputAmounts
         self.guaranteedAmountOut = guaranteedAmountOut
 
-        super.init(expectedBuyAmount: outputAmounts.reduce(0, +), estimatedTime: estimatedTime)
+        super.init(id: id, venue: venue, expectedBuyAmount: outputAmounts.reduce(0, +), estimatedTime: estimatedTime)
     }
 }
 

@@ -3,20 +3,20 @@ import Foundation
 import MarketKit
 import SwiftUI
 
+/// A quote source. One `/v3/rate` call answers with every venue's route, so a provider returns several
+/// quotes per round; the selected quote (its venue id, Zcash address rules and AML precheck id) is
+/// handed back to the same instance for the preview, the AML precheck and the commit.
 public protocol IMultiSwapProvider {
     var id: String { get }
-    var name: String { get }
-    // The AML policy published by the backend; nil when it has not rated the provider.
-    var type: SwapProviderType? { get }
-    var requireTerms: Bool { get }
-    var preciseEstimateTime: Bool { get }
-    var icon: String { get }
     var syncPublisher: AnyPublisher<Void, Never>? { get }
     func slippageSupported(tokenIn: Token, tokenOut: Token) -> Bool
-    func supports(tokenIn: Token, tokenOut: Token) -> Bool
-    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote
-    func confirmationQuote(multiSwapQuote: MultiSwapQuote, tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote
-    func validateTrustedProvider(tokenIn: Token, amountIn: Decimal) async throws -> Bool?
+    func quotes(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> [MultiSwapQuote]
+    func confirmationQuote(quote: MultiSwapQuote, tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote
+    /// The route's AML address precheck, when it has one, on the sender addresses only. `true` passed,
+    /// `false` failed (do not send), `nil` the backend could not process the check. Throws
+    /// `SwapError.amlCheckInconclusive` when the sender cannot be determined; any other thrown error is a
+    /// network failure.
+    func validateTrustedProvider(quote: MultiSwapQuote, tokenIn: Token, amountIn: Decimal) async throws -> Bool?
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView
     func track(swap: Swap) async throws -> Swap
     // Creates the order for a previewed quote when the user confirms. Resolves to a `SwapCommitment`:
@@ -27,17 +27,11 @@ public protocol IMultiSwapProvider {
     func commit(finalQuote: SwapFinalQuote) async throws -> SwapCommitment
     // Reports the broadcast hash to the backend after a successful submit. Best-effort.
     func reportInboundTxHash(providerSwapId: String, txHash: String) async throws
+    /// A new `X-Session-Id` for the next swap: called when the swap screen opens and after a swap completes.
+    func startSession()
 }
 
 public extension IMultiSwapProvider {
-    var requireTerms: Bool {
-        false
-    }
-
-    var preciseEstimateTime: Bool {
-        true
-    }
-
     var syncPublisher: AnyPublisher<Void, Never>? {
         nil
     }
@@ -46,7 +40,7 @@ public extension IMultiSwapProvider {
         true
     }
 
-    func validateTrustedProvider(tokenIn _: Token, amountIn _: Decimal) async -> Bool? {
+    func validateTrustedProvider(quote _: MultiSwapQuote, tokenIn _: Token, amountIn _: Decimal) async -> Bool? {
         if let result = Core.instance?.localStorage.debuggingAmlCheckResult {
             return result == .dirty ? false : nil
         }
@@ -58,6 +52,8 @@ public extension IMultiSwapProvider {
     }
 
     func reportInboundTxHash(providerSwapId _: String, txHash _: String) async throws {}
+
+    func startSession() {}
 }
 
 /// What a confirmed order resolves to: the quote whose executable is broadcast and the order id the

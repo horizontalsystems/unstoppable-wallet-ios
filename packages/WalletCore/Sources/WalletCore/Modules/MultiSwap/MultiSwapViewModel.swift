@@ -146,7 +146,7 @@ public class MultiSwapViewModel: ObservableObject {
             }
 
             priceFlipped = false
-            internalUserSelectedProviderId = nil
+            internalUserSelectedQuoteId = nil
 
             syncQuotes()
         }
@@ -206,7 +206,7 @@ public class MultiSwapViewModel: ObservableObject {
             }
 
             priceFlipped = false
-            internalUserSelectedProviderId = nil
+            internalUserSelectedQuoteId = nil
 
             syncQuotes()
         }
@@ -241,7 +241,7 @@ public class MultiSwapViewModel: ObservableObject {
 
     public var amountIn: Decimal? {
         didSet {
-            internalUserSelectedProviderId = nil
+            internalUserSelectedQuoteId = nil
 
             syncQuotes()
             syncFiatAmountIn()
@@ -308,32 +308,38 @@ public class MultiSwapViewModel: ObservableObject {
 
     @Published var bestQuote: Quote?
 
-    private var internalUserSelectedProviderId: String? {
+    /// The quote the confirmation was opened for: the one the AML precheck validated, set by the view
+    /// right before presenting the send screen, which reads it instead of `currentQuote`.
+    var confirmationQuote: Quote?
+
+    private var internalUserSelectedQuoteId: String? {
         didSet {
-            guard internalUserSelectedProviderId != oldValue else {
+            guard internalUserSelectedQuoteId != oldValue else {
                 return
             }
 
-            if internalUserSelectedProviderId != userSelectedProviderId {
-                userSelectedProviderId = internalUserSelectedProviderId
+            if internalUserSelectedQuoteId != userSelectedQuoteId {
+                userSelectedQuoteId = internalUserSelectedQuoteId
             }
         }
     }
 
-    @Published public var userSelectedProviderId: String? {
+    /// The `Quote.key` the user picked on the quotes sheet; cleared when the pair or the amount changes.
+    /// A key no longer quoted after a refresh falls back to the best quote.
+    @Published public var userSelectedQuoteId: String? {
         didSet {
-            guard userSelectedProviderId != internalUserSelectedProviderId else {
+            guard userSelectedQuoteId != internalUserSelectedQuoteId else {
                 return
             }
 
-            internalUserSelectedProviderId = userSelectedProviderId
+            internalUserSelectedQuoteId = userSelectedQuoteId
             syncCurrentQuote()
         }
     }
 
     @Published var quotes: [Quote] = [] {
         didSet {
-            bestQuote = quotes.max { $0.quote.expectedBuyAmount < $1.quote.expectedBuyAmount }
+            bestQuote = MultiSwapQuoteSelector.best(quotes)
 
             syncCurrentQuote()
 
@@ -397,14 +403,10 @@ public class MultiSwapViewModel: ObservableObject {
             .sink { [weak self] in self?.currency = $0 }
             .store(in: &cancellables)
 
-        // Fires on EVERY successful sync, not only when the id list actually changes —
-        // `@PostPublished` is a plain PassthroughSubject with no equality check (that is the
-        // separate `DistinctPublished`). That is what lets this one subscription cover suspensions
-        // too: the manager assigns them just before `providers`, so a sync that only changes which
-        // PAIRS a provider may serve still refreshes here. A second subscription on `$suspensions`
-        // would fire from the same response and cancel this refresh mid-flight, wasting a full
-        // round of provider requests.
-        swapProviderManager.$providers
+        // Fires on EVERY applied provider list — `@PostPublished` is a plain PassthroughSubject with
+        // no equality check. Venue names, AML badges and the split tab's availability all come from
+        // that list, so a sync re-resolves the providers and re-quotes (which re-decorates the quotes).
+        swapProviderManager.$syncVersion
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self else {
@@ -447,6 +449,14 @@ public class MultiSwapViewModel: ObservableObject {
         syncFiatAmountOut()
 
         swapProviderManager.sync()
+        startSession()
+    }
+
+    /// A fresh `X-Session-Id` for the quotes about to be compared: on open and after a completed swap.
+    func startSession() {
+        for provider in providers {
+            provider.startSession()
+        }
     }
 
     /// account switched -> full re-resolve; enabled source disappeared (spec rule 1.3) -> re-resolve
@@ -594,7 +604,7 @@ public class MultiSwapViewModel: ObservableObject {
         internalTokenOut = tokenOut
 
         priceFlipped = false
-        internalUserSelectedProviderId = nil
+        internalUserSelectedQuoteId = nil
 
         if enteringFiat {
             fiatAmountIn = nil
@@ -703,20 +713,11 @@ public class MultiSwapViewModel: ObservableObject {
         syncQuotes(silent: true)
     }
 
+    /// The backend answers only with routes that can serve the pair, so every provider is asked once
+    /// both tokens are set; a pair no venue serves simply yields no quotes.
     private func syncValidProviders() {
-        if let internalTokenIn, let internalTokenOut {
-            let suspensions = swapProviderManager.suspensions
-
-            validProviders = providers.filter { provider in
-                // Scoped suspension from uswap-server (asset / chain / directed pair), checked here,
-                // in the one place every provider passes through, so a card the server would refuse
-                // is never shown.
-                guard !suspensions.isSuspended(providerId: provider.id, tokenIn: internalTokenIn, tokenOut: internalTokenOut) else {
-                    return false
-                }
-
-                return provider.supports(tokenIn: internalTokenIn, tokenOut: internalTokenOut)
-            }
+        if internalTokenIn != nil, internalTokenOut != nil {
+            validProviders = providers
         } else {
             validProviders = []
         }
@@ -743,11 +744,12 @@ public class MultiSwapViewModel: ObservableObject {
         var path: SwapPath?
 
         if suggestedPathEnabled, let internalTokenIn, let internalTokenOut, validProviders.isEmpty || quotesUnavailable {
+            let catalog = Core.shared.swapAssetCatalog
+
             path = pathFinder.find(
                 tokenIn: internalTokenIn,
                 tokenOut: internalTokenOut,
-                providers: providers,
-                suspensions: swapProviderManager.suspensions
+                isKnown: { catalog.contains(token: $0) }
             )
         }
 
@@ -757,11 +759,7 @@ public class MultiSwapViewModel: ObservableObject {
     }
 
     private func syncCurrentQuote() {
-        if let internalUserSelectedProviderId {
-            currentQuote = quotes.first { $0.provider.id == internalUserSelectedProviderId } ?? bestQuote
-        } else {
-            currentQuote = bestQuote
-        }
+        currentQuote = MultiSwapQuoteSelector.current(quotes: quotes, userSelectedKey: internalUserSelectedQuoteId, best: bestQuote)
     }
 
     private func syncAmountIn() {
@@ -832,7 +830,7 @@ public class MultiSwapViewModel: ObservableObject {
         let fetchQuote = quoteFetcher()
 
         quotesTask = Task { [weak self, validProviders] in
-            let optionalQuotes: [Quote?] = await withTaskGroup(of: Quote?.self) { group in
+            let providerQuotes: [[Quote]] = await withTaskGroup(of: [Quote].self) { group in
                 for provider in validProviders {
                     group.addTask {
                         do {
@@ -840,42 +838,40 @@ public class MultiSwapViewModel: ObservableObject {
                                 try await fetchQuote(provider, internalTokenIn, internalTokenOut, amountIn)
                             }
 
-                            // Per-provider quote timeout. Must exceed uswap-server's own budget
-                            // (12s per provider / 15s overall) or slow-but-valid cross-chain
-                            // aggregators — LI.FI, Jupiter — get cancelled mid-quote and surface as
-                            // `explicitlyCancelled` (e.g. an ETH→Tron TRC-20 route that legitimately
-                            // takes several seconds). 5s was cutting those off.
+                            // Per-provider quote timeout. One `/v3/rate` fans out to every venue, so it
+                            // must exceed uswap-server's own budget (12s per provider / 15s overall)
+                            // or slow-but-valid cross-chain aggregators get cancelled mid-quote.
                             let timeoutTask = Task {
-                                try await Task.sleep(seconds: 15)
+                                try await Task.sleep(seconds: Self.quoteTimeout)
                                 quoteTask.cancel()
                             }
 
                             return try await withTaskCancellationHandler {
-                                let quote = try await quoteTask.value
+                                let quotes = try await quoteTask.value
                                 timeoutTask.cancel()
 
-                                return Quote(provider: provider, quote: quote)
+                                return quotes.map { Quote(provider: provider, quote: $0) }
                             } onCancel: {
                                 quoteTask.cancel()
                                 timeoutTask.cancel()
                             }
                         } catch {
                             print("QUOTE ERROR: \(provider.id): \(error)")
-                            return nil
+                            return []
                         }
                     }
                 }
 
-                var quotes = [Quote?]()
+                var quotes = [[Quote]]()
 
-                for await quote in group {
-                    quotes.append(quote)
+                for await providerQuotes in group {
+                    quotes.append(providerQuotes)
                 }
 
                 return quotes
             }
 
-            let quotes = optionalQuotes.compactMap { $0 }.sorted { $0.quote.expectedBuyAmount > $1.quote.expectedBuyAmount }
+            let quotes = MultiSwapQuoteSelector.sorted(MultiSwapQuoteSelector.dedupe(providerQuotes.flatMap { $0 }), by: .bestRate)
             let decorated = Self.decorated(quotes: quotes)
 
             if !Task.isCancelled {
@@ -902,7 +898,7 @@ public class MultiSwapViewModel: ObservableObject {
 
     // MARK: Subclass hooks (SplitSwapViewModel)
 
-    typealias QuoteFetcher = (IMultiSwapProvider, Token, Token, Decimal) async throws -> MultiSwapQuote
+    typealias QuoteFetcher = (IMultiSwapProvider, Token, Token, Decimal) async throws -> [MultiSwapQuote]
 
     /// Called at the end of every `quotes` assignment, after the dependent state is synced
     func didUpdateQuotes() {}
@@ -910,15 +906,15 @@ public class MultiSwapViewModel: ObservableObject {
     /// Providers this view model quotes. Called from init and on every provider list sync, so an
     /// override must not rely on state set after `super.init`.
     func resolveProviders() -> [IMultiSwapProvider] {
-        SwapProviderFactory.swappableProviders(ids: swapProviderManager.providers)
+        SwapProviderFactory.providers
     }
 
-    /// The per-provider quote call of a quote round. Built once per round on the main thread, so an
-    /// override can snapshot its own inputs; the closure runs off the main thread and must not
-    /// capture the view model.
+    /// The per-provider quote call of a quote round (one call, every route). Built once per round on
+    /// the main thread, so an override can snapshot its own inputs; the closure runs off the main
+    /// thread and must not capture the view model.
     func quoteFetcher() -> QuoteFetcher {
         { provider, tokenIn, tokenOut, amountIn in
-            try await provider.quote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
+            try await provider.quotes(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
         }
     }
 
@@ -926,8 +922,10 @@ public class MultiSwapViewModel: ObservableObject {
         true
     }
 
+    /// After a completed swap: the next quotes belong to a new session.
     public func reset() {
         amountIn = nil
+        startSession()
     }
 
     private func syncPrice() {
@@ -952,18 +950,6 @@ public class MultiSwapViewModel: ObservableObject {
 }
 
 public extension MultiSwapViewModel {
-    internal var shouldShowTerms: Bool {
-        guard let currentQuote else {
-            return false
-        }
-
-        return currentQuote.provider.requireTerms && !localStorage.swapTermsAccepted
-    }
-
-    internal func onAcceptTerms() {
-        localStorage.swapTermsAccepted = true
-    }
-
     func interchange() {
         // an externally-delivered tokenOut can't become the sell side — the account
         // can't sign transactions for it
@@ -1052,29 +1038,46 @@ public extension MultiSwapViewModel {
         }
     }
 
-    internal func validateAndProceed(onSuccess: @escaping () -> Void, onRiskDetected: @escaping (AmlRiskResult) -> Void) {
+    /// Both callbacks receive the quote that was validated, so the confirmation opens on that route and
+    /// never on a `currentQuote` an auto-refresh replaced while the check was running.
+    internal func validateAndProceed(onSuccess: @escaping (Quote) -> Void, onRiskDetected: @escaping (AmlRiskResult, Quote) -> Void) {
         guard let currentQuote, let tokenIn = internalTokenIn else {
             return
         }
 
+        let validatedQuote = currentQuote
+        // The inputs stay editable during the network check: a result for inputs the user has since
+        // changed is dropped (the user taps again on the fresh quote).
+        let validatedInputs = (tokenIn: internalTokenIn, tokenOut: internalTokenOut, amountIn: amountIn, key: currentQuote.key)
+
         if let debuggingResult = localStorage.debuggingAmlCheckResult {
-            onRiskDetected(debuggingResult)
+            onRiskDetected(debuggingResult, validatedQuote)
             return
         }
 
         validatingProvider = true
         let amountIn = amountIn ?? 0
+        let quote = currentQuote.quote
 
         Task { [weak self, provider = currentQuote.provider] in
             let hasNetworkError: Bool
+            let inconclusive: Bool
             let trusted: Bool?
 
             do {
-                trusted = try await provider.validateTrustedProvider(tokenIn: tokenIn, amountIn: amountIn)
+                // sender addresses only: the recipient is never part of the AML precheck
+                trusted = try await provider.validateTrustedProvider(quote: quote, tokenIn: tokenIn, amountIn: amountIn)
                 hasNetworkError = false
+                inconclusive = false
+            } catch USwapMultiSwapProvider.SwapError.amlCheckInconclusive {
+                // the sender could not be determined: fails closed, unlike the backend's own "unprocessed"
+                trusted = nil
+                hasNetworkError = false
+                inconclusive = true
             } catch {
                 trusted = nil
                 hasNetworkError = true
+                inconclusive = false
             }
 
             guard let self else { return }
@@ -1082,39 +1085,40 @@ public extension MultiSwapViewModel {
             await MainActor.run {
                 self.validatingProvider = false
 
+                let currentInputs = (tokenIn: self.internalTokenIn, tokenOut: self.internalTokenOut, amountIn: self.amountIn, key: self.currentQuote?.key)
+
+                guard currentInputs.tokenIn == validatedInputs.tokenIn, currentInputs.tokenOut == validatedInputs.tokenOut,
+                      currentInputs.amountIn == validatedInputs.amountIn, currentInputs.key == validatedInputs.key
+                else {
+                    return
+                }
+
+                guard !inconclusive else {
+                    onRiskDetected(.inconclusive, validatedQuote)
+                    return
+                }
+
                 guard !hasNetworkError else {
-                    onRiskDetected(.networkError)
+                    onRiskDetected(.networkError, validatedQuote)
                     return
                 }
 
                 guard let trusted else {
-                    onRiskDetected(.unprocessed)
+                    onRiskDetected(.unprocessed, validatedQuote)
                     return
                 }
 
                 if trusted {
-                    onSuccess()
+                    onSuccess(validatedQuote)
                 } else {
-                    onRiskDetected(.dirty)
+                    onRiskDetected(.dirty, validatedQuote)
                 }
             }
         }
     }
 
     var sortedQuotes: [Quote] {
-        switch quoteSortType {
-        case .bestRate:
-            return quotes.sorted { $0.quote.expectedBuyAmount > $1.quote.expectedBuyAmount }
-        case .bestTime:
-            return quotes.sorted {
-                let t0 = $0.quote.estimatedTime ?? .infinity
-                let t1 = $1.quote.estimatedTime ?? .infinity
-                if t0 != t1 {
-                    return t0 < t1
-                }
-                return $0.quote.expectedBuyAmount > $1.quote.expectedBuyAmount
-            }
-        }
+        MultiSwapQuoteSelector.sorted(quotes, by: quoteSortType)
     }
 }
 
@@ -1189,15 +1193,32 @@ extension MultiSwapViewModel {
         let providerIds: Set<String>
     }
 
-    public struct Quote {
+    public struct Quote: QuoteLike {
         public let provider: IMultiSwapProvider
         public let quote: MultiSwapQuote
         let timeState: SwapTimeState?
+
+        /// The quote's identity on the screen: the provider and the venue the route is served by.
+        public var key: String {
+            "\(provider.id):\(quote.id)"
+        }
+
+        public var venue: SwapVenue {
+            quote.venue
+        }
+
+        var expectedBuyAmount: Decimal {
+            quote.expectedBuyAmount
+        }
+
+        var estimatedTime: TimeInterval? {
+            quote.estimatedTime
+        }
     }
 
+    /// Always a single approximate value: the backend publishes no precision per venue.
     enum SwapTimeValue: Equatable {
         case approximate(TimeInterval)
-        case range(min: TimeInterval, max: TimeInterval)
     }
 
     enum SwapTimeState: Equatable {
@@ -1265,10 +1286,12 @@ extension MultiSwapViewModel {
         case dirty
         case unprocessed
         case networkError
+        /// The sender could not be determined, so nothing was checked: fails closed like `dirty`.
+        case inconclusive
 
         var title: String {
             switch self {
-            case .dirty, .unprocessed: return "swap.aml.risk.title".localized
+            case .dirty, .unprocessed, .inconclusive: return "swap.aml.risk.title".localized
             case .networkError: return "swap.aml.connection.title".localized
             }
         }
@@ -1278,12 +1301,13 @@ extension MultiSwapViewModel {
             case .dirty: return "swap.aml.risk.description".localized
             case .unprocessed: return "swap.aml.undefined.description".localized
             case .networkError: return "swap.aml.connection.description".localized
+            case .inconclusive: return "swap.aml.inconclusive".localized
             }
         }
 
         var buttonTitle: String {
             switch self {
-            case .dirty: return "swap.aml.risk.button".localized
+            case .dirty, .inconclusive: return "swap.aml.risk.button".localized
             case .unprocessed: return "swap.aml.undefined.button".localized
             case .networkError: return "swap.aml.connection.button".localized
             }
@@ -1291,7 +1315,7 @@ extension MultiSwapViewModel {
 
         var icon: ComponentImage {
             switch self {
-            case .dirty, .networkError: return ThemeImage.error
+            case .dirty, .networkError, .inconclusive: return ThemeImage.error
             case .unprocessed: return ThemeImage.warning
             }
         }
@@ -1311,6 +1335,8 @@ extension MultiSwapViewModel.Quote {
 }
 
 extension MultiSwapViewModel {
+    /// Per-provider quote timeout; the `/v3/rate` request itself is cut at `USwapMultiSwapApi.rateTimeout`.
+    static let quoteTimeout: TimeInterval = 30
     private static let timeWarningThreshold: TimeInterval = 30 * 60
     private static let timeWarningRatio: Double = 2
 
@@ -1325,18 +1351,16 @@ extension MultiSwapViewModel {
             Quote(
                 provider: item.provider,
                 quote: item.quote,
-                timeState: timeState(for: item.quote.estimatedTime, precise: item.provider.preciseEstimateTime, baseline: baseline)
+                timeState: timeState(for: item.quote.estimatedTime, baseline: baseline)
             )
         }
     }
 
     /// internal visibility intentional: pure function covered by unit tests via @testable import.
-    static func timeState(for time: TimeInterval?, precise: Bool, baseline: TimeInterval?) -> SwapTimeState? {
+    static func timeState(for time: TimeInterval?, baseline: TimeInterval?) -> SwapTimeState? {
         guard let time, time > 0 else { return nil }
-        // An imprecise estimate renders as (X−25%)–(X+25%); the warning rule judges its upper bound.
-        let value: SwapTimeValue = precise ? .approximate(time) : .range(min: time * 0.75, max: time * 1.25)
-        let comparisonTime = precise ? time : time * 1.25
-        if warningTime(for: comparisonTime, baseline: baseline) != nil {
+        let value: SwapTimeValue = .approximate(time)
+        if warningTime(for: time, baseline: baseline) != nil {
             return .attention(value)
         }
         return .neutral(value)

@@ -806,6 +806,7 @@
 "swap.aml.risk.description" = "이 거래에서 잠재적 위험이 확인되었습니다. 처리 중 자금이 거부되거나 제한될 수 있습니다. 다른 제공업체를 선택해 주세요.";
 "swap.aml.risk.button" = "다른 제공업체 선택";
 "swap.aml.undefined.description" = "이 거래에 대한 위험 검사를 완료할 수 없었습니다. 계속 진행하면 이 스왑이 처리 중 지연, 거부 또는 제한이 발생할 수 있습니다.";
+"swap.aml.inconclusive" = "이 경로의 리스크 검사를 완료할 수 없습니다. 다른 경로를 선택한 후 다시 시도하세요.";
 "swap.aml.undefined.button" = "위험을 감수하고 계속";
 "swap.aml.connection.title" = "연결 문제";
 "swap.aml.connection.description" = "현재 응답을 받을 수 없습니다. 다시 시도해 주세요.";
@@ -815,15 +816,6 @@
 
 "swap_options.title" = "스왑 옵션";
 "swap_options.description" = "Apple App Store 정책에 따라 더 이상 wallet 앱 내에서 스왑 서비스에 대한 접근을 제공할 수 없습니다. 따라서 스왑을 진행하려면 다음 옵션을 사용할 수 있습니다:";
-
-// Swap Terms
-
-"swap.terms.title" = "스왑 약관";
-"swap.terms.description" = "계속하려면 각 항목에 대한 동의를 확인해 주세요.";
-"swap.terms.risk_of_restrictions" = "제한 위험";
-"swap.terms.risk_of_restrictions.description" = "일부 경로는 스왑을 거부하거나 자금 접근을 제한할 수 있습니다. 경로를 선택하기 전에 %@을(를) 확인하세요.";
-"swap.terms.user_responsibility" = "사용자 책임";
-"swap.terms.user_responsibility.description" = "가능한 위험을 검토했으며 경로 선택에 대한 책임을 수락합니다.";
 
 // Swap Advanced Settings
 
@@ -869,6 +861,9 @@
 "swap.confirmation.commit.rate_changed" = "가격이 변동되었습니다. 업데이트된 견적을 확인하고 다시 시도하세요.";
 "swap.confirmation.commit.refresh_required" = "견적이 만료되었습니다. 새 견적을 불러왔습니다.";
 "swap.confirmation.commit.failed" = "스왑을 시작할 수 없습니다. 새 견적을 불러왔습니다.";
+"swap.confirmation.unsupported_instruction" = "이 경로는 앱에서 생성할 수 없는 거래 유형을 사용합니다. 다른 경로를 선택하세요.";
+"swap.confirmation.recipient_not_accepted" = "이 경로는 해당 수신자 주소 유형을 지원하지 않습니다. 수신자를 변경한 후 다시 시도하세요.";
+"swap.confirmation.destination_not_deliverable" = "이 경로는 이 체인에서 보호된 Zcash 주소로 전송할 수 없습니다. 다른 경로를 선택하거나 투명 주소를 수신자로 입력하세요.";
 "swap.confirmation.impact_high" = "이 스왑으로 인해 자금의 상당 부분(%@)을 잃게 됩니다.";
 "swap.confirmation.impact_too_high" = "유동성이 매우 낮아 이 스왑은 큰 손실(%@)을 초래합니다.";
 "swap.confirmation.impact_warning" = "중요한 사항입니다! 매우 불리한 가격을 받고 있습니다. 이는 유동성이 극도로 낮기 때문입니다.";

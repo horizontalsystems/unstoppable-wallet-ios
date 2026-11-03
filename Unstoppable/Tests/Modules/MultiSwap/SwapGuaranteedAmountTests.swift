@@ -7,7 +7,7 @@ import Testing
 @testable import WalletCore
 
 /// the "Guaranteed" row must prefer the server-enforced minBuyAmount over the
-/// client-side slippage estimate, and USwap providers must wire it through
+/// client-side slippage estimate, and the USwap provider must wire it through
 struct SwapGuaranteedAmountTests {
     private static func finalQuote(slippage: Decimal?, minAmountOut: Decimal? = nil) -> SwapFinalQuote {
         SwapFinalQuote(
@@ -97,63 +97,30 @@ extension SwapGuaranteedAmountTests {
     }
 
     private static func confirmationQuote(response: USwapMultiSwapApi.SwapResponse) async throws -> SwapFinalQuote {
-        let provider = USwapMultiSwapProvider(
-            subProvider: StubSubProvider(response: response),
-            rateQuoteFactory: USwapRateQuoteFactory(builders: []),
-            finalQuoteFactory: USwapFinalQuoteFactory(builders: [StubFinalQuoteBuilder()])
+        let request = USwapMultiSwapApi.SwapRequest(
+            sellAsset: "ETH.ETH",
+            buyAsset: "ETH.USDC",
+            sellAmount: 1,
+            slippage: 2,
+            chainId: "1",
+            providerId: "QUICKEX",
+            destinationAddress: "destination",
+            sourceAddress: nil,
+            refundAddress: nil
         )
 
-        return try await provider.confirmationQuote(
-            multiSwapQuote: MultiSwapQuote(expectedBuyAmount: 100),
+        return try await USwapMultiSwapProvider.assembleFinalQuote(
+            response: response,
+            request: request,
+            venueId: "QUICKEX",
             tokenIn: token(),
             tokenOut: token(),
             amountIn: 1,
             slippage: 2,
             recipient: nil,
-            transactionSettings: nil
+            transactionSettings: nil,
+            finalQuoteFactory: USwapFinalQuoteFactory(builders: [StubFinalQuoteBuilder()])
         )
-    }
-
-    private struct StubSubProvider: USwapSubProvider {
-        let response: USwapMultiSwapApi.SwapResponse
-
-        var info: USwapProviderInfo {
-            .quickEx
-        }
-
-        var syncPublisher: AnyPublisher<Void, Never>? {
-            nil
-        }
-
-        func slippageSupported(tokenIn _: Token, tokenOut _: Token) -> Bool {
-            true
-        }
-
-        func supports(tokenIn _: Token, tokenOut _: Token) -> Bool {
-            true
-        }
-
-        func rate(input _: USwapRateInput) async throws -> USwapRateResult {
-            throw USwapMultiSwapProvider.SwapError.noRoutes
-        }
-
-        func preview(input _: USwapPreviewInput) async throws -> USwapPreviewResult {
-            USwapPreviewResult(response: response, refundAddress: nil, destinationAddress: "destination")
-        }
-
-        func commit(previewToken _: String) async throws -> USwapMultiSwapApi.CommitResponse {
-            USwapMultiSwapApi.CommitResponse(status: "ok", uuid: "uuid", sellAmount: nil, expectedBuyAmount: nil, minBuyAmount: nil, expiresAt: nil, replayed: false, execution: nil)
-        }
-
-        func reportSigned(uuid _: String, inboundTxHash _: String) async throws {}
-
-        func validateTrustedProvider(tokenIn _: Token, amountIn _: Decimal) async throws -> Bool? {
-            nil
-        }
-
-        func track(swap: Swap) async throws -> Swap {
-            swap
-        }
     }
 
     private struct StubFinalQuoteBuilder: USwapFinalQuoteBuilder {

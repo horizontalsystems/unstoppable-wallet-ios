@@ -7,6 +7,9 @@ import SwiftUI
 struct MultiSwapExternalRecipientView: View {
     let token: Token
     let initialAddress: String?
+    /// Whether any quoted route takes a unified ZEC address (`addressRules.destination.unified`);
+    /// otherwise an external ZEC recipient is restricted to transparent addresses, which every route takes.
+    let allowsUnifiedZcash: Bool
     @Binding var isPresented: Bool
     let onProceed: (String) -> Void
 
@@ -33,11 +36,7 @@ struct MultiSwapExternalRecipientView: View {
                         onProceed(resolvedAddress.address)
                         isPresented = false
                     }
-                    // The provider is not chosen yet at this step, and only vault-settled
-                    // (thorchain_deposit) providers deliver ZEC to shielded/unified receivers —
-                    // every provider accepts transparent, so an external ZEC recipient is
-                    // restricted to transparent addresses.
-                    .environment(\.addressParserFilter, token.blockchainType == .zcash ? .zCashTransparentOnly : nil)
+                    .environment(\.addressParserFilter, parserFilter)
                 }
             }
             .navigationTitle("swap.recipient".localized)
@@ -52,5 +51,13 @@ struct MultiSwapExternalRecipientView: View {
                 }
             }
         }
+    }
+
+    private var parserFilter: AddressParserFactory.ParserFilter? {
+        guard token.blockchainType == .zcash, !allowsUnifiedZcash else {
+            return nil
+        }
+
+        return .zCashTransparentOnly
     }
 }
