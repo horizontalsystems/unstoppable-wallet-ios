@@ -16,7 +16,7 @@ Apart from what the flag changes, the E2E build behaves like the real app, becau
 - The automatic rate-app prompt is off. The "Rate us" row in the settings works as in the real app.
 - The restore-phrase field, the backup and restore passphrase fields and the watch field are not prefilled, whatever `DEFAULT_WORDS`, `DEFAULT_PASSPHRASE` and `DEFAULT_WATCH_ADDRESS` hold in `Config.xcconfig`. Development keeps its prefills.
 
-The flag leaves the device-passcode gate alone, and a simulator with Face ID enrolled satisfies it. It leaves [test identifiers](test-identifiers.md) alone too, which are on in every build.
+The flag leaves the device-passcode gate alone, and a simulator as it comes satisfies it. It leaves [test identifiers](test-identifiers.md) alone too, which are on in every build.
 
 The flag's effects grow with the stations that need them, deterministic screens for screenshot comparison among them, and no second flag is made.
 
@@ -37,6 +37,8 @@ xcodebuild -workspace Wallet.xcworkspace -scheme E2E -configuration Debug-E2E -d
 ```
 
 ## Running it
+
+A run's simulator is a regular iPhone, as the script's own `--requirements` names it, with the locale and region set to English (US), because the flows assert English text and formats such as `€0`. `maestro/scripts/device-prepare.sh` prepares it, and the station's call is stated in uw-testlab's `docs/device-lifecycle.md`, "iOS preparation hook".
 
 A funded test account is restored by the flow from an environment variable; Android's is `MAESTRO_E2E_DUST_MNEMONIC`. Its mnemonic stays out of every repository, spec, doc, plan, report and flow, and out of a command's arguments, and it is never printed to the console. Every secret reaches a run through an environment variable. The phrase variable is set only for a run of the flows that restore the funded account, and it is not kept in the shell's environment for other runs. Maestro writes every `MAESTRO_*` environment variable into each flow's `commands.json`, so a run with the phrase set holds it in plain text in its output. That run's `commands.json` and `maestro.log` are deleted after it. The simulator's logs and the restored wallet on the test simulator are a local by-product and need no sweep, filter or wipe, like the debug words in `Config.xcconfig`. The on-chain tests, which need that account and the network, are a class of their own beside the journey and the feature tests.
 
