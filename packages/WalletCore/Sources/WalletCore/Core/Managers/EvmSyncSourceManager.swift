@@ -151,6 +151,11 @@ extension EvmSyncSourceManager {
         case .optimism:
             return [
                 EvmSyncSource(
+                    name: "Unstoppable",
+                    rpcSource: .http(urls: [URL(string: "https://optimism-rpc.unstoppable.money")!], auth: nil),
+                    transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+                EvmSyncSource(
                     name: "Optimism",
                     rpcSource: .optimismRpcHttp(),
                     transactionSource: defaultTransactionSource(blockchainType: blockchainType)
@@ -207,6 +212,11 @@ extension EvmSyncSourceManager {
             ]
         case .base:
             return [
+                EvmSyncSource(
+                    name: "Unstoppable",
+                    rpcSource: .http(urls: [URL(string: "https://base-rpc.unstoppable.money")!], auth: nil),
+                    transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
                 EvmSyncSource(
                     name: "dRPC",
                     rpcSource: .http(urls: [URL(string: "https://base.drpc.org")!], auth: nil),
@@ -281,13 +291,13 @@ extension EvmSyncSourceManager {
             } else {
                 return [
                     EvmSyncSource(
-                        name: "TronGrid",
-                        rpcSource: .http(urls: [URL(string: "https://api.trongrid.io/")!], auth: AppConfig.tronGridApiKeys.first),
+                        name: "Unstoppable",
+                        rpcSource: .http(urls: [URL(string: "https://tron-rpc.unstoppable.money")!], auth: nil),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                     ),
                     EvmSyncSource(
-                        name: "Pocket Network",
-                        rpcSource: .http(urls: [URL(string: "https://tron.api.pocket.network")!], auth: AppConfig.tronGridApiKeys.first),
+                        name: "Public node",
+                        rpcSource: .http(urls: [URL(string: "https://tron-rpc.publicnode.com")!], auth: nil),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                     ),
                 ]
