@@ -91,6 +91,46 @@ struct SwapStorageOperationTests {
         #expect(leg.toAddress == nil)
         #expect(leg.toAmount == nil)
     }
+
+    @Test func swapsFilterByOperation() throws {
+        let (storage, _) = try Self.storage()
+        try Self.saveOneOfEachOperation(storage: storage)
+
+        let privateSends = try storage.swaps(accountId: Self.accountId, operation: .privateSend, limit: 10)
+        let swaps = try storage.swaps(accountId: Self.accountId, operation: .swap, limit: 10)
+
+        #expect(privateSends.map(\.uid) == ["private"])
+        #expect(swaps.map(\.uid) == ["swap"])
+    }
+
+    @Test func nilOperationReturnsAll() throws {
+        let (storage, _) = try Self.storage()
+        try Self.saveOneOfEachOperation(storage: storage)
+
+        let swaps = try storage.swaps(accountId: Self.accountId, operation: nil, limit: 10)
+
+        #expect(Set(swaps.map(\.uid)) == ["swap", "private", "cross", "split"])
+    }
+
+    @Test func operationFilterPaginates() throws {
+        let (storage, _) = try Self.storage()
+        let now = Date()
+
+        // Newest first: private-1, swap-1, private-2, swap-2, private-3, swap-3
+        for index in 0 ..< 3 {
+            let privateDate = now.addingTimeInterval(-Double(index * 2) * 60)
+            let swapDate = now.addingTimeInterval(-Double(index * 2 + 1) * 60)
+            try storage.save(swap: Self.swap(uid: "private-\(index + 1)", operation: .privateSend, date: privateDate))
+            try storage.save(swap: Self.swap(uid: "swap-\(index + 1)", operation: .swap, date: swapDate))
+        }
+
+        let firstPage = try storage.swaps(accountId: Self.accountId, operation: .privateSend, limit: 2)
+        #expect(firstPage.map(\.uid) == ["private-1", "private-2"])
+
+        let cursor = try #require(firstPage.last?.date)
+        let secondPage = try storage.swaps(accountId: Self.accountId, from: cursor, operation: .privateSend, limit: 2)
+        #expect(secondPage.map(\.uid) == ["private-3"])
+    }
 }
 
 extension SwapStorageOperationTests {
@@ -98,7 +138,14 @@ extension SwapStorageOperationTests {
     private static let token = Token(coin: Coin(uid: "bitcoin", name: "Bitcoin", code: "BTC"),
                                      blockchain: Blockchain(type: .bitcoin, name: "Bitcoin", explorerUrl: nil), type: .native, decimals: 8)
 
-    private static func swap(uid: String, operation: Swap.Operation, trackingHandle: String? = nil) -> Swap {
+    private static func saveOneOfEachOperation(storage: SwapStorage) throws {
+        try storage.save(swap: swap(uid: "swap", operation: .swap))
+        try storage.save(swap: swap(uid: "private", operation: .privateSend))
+        try storage.save(swap: swap(uid: "cross", operation: .crossPay))
+        try storage.save(swap: swap(uid: "split", operation: .splitSwap))
+    }
+
+    private static func swap(uid: String, operation: Swap.Operation, trackingHandle: String? = nil, date: Date = Date()) -> Swap {
         Swap(
             uid: uid,
             txHash: nil,
@@ -117,7 +164,7 @@ extension SwapStorageOperationTests {
             providerSwapId: uid,
             sourceAddress: nil,
             refundAddress: nil,
-            date: Date()
+            date: date
         )
     }
 

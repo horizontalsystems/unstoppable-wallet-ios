@@ -151,7 +151,7 @@ extension SwapStorage {
         return try swaps(records: [record]).first
     }
 
-    func swaps(accountId: String, token: Token? = nil, from: Date? = nil, limit: Int) throws -> [Swap] {
+    func swaps(accountId: String, token: Token? = nil, from: Date? = nil, operation: Swap.Operation? = nil, limit: Int) throws -> [Swap] {
         let records = try dbPool.read { db in
             var request = SwapRecord
                 .filter(SwapRecord.Columns.accountId == accountId)
@@ -167,6 +167,10 @@ extension SwapStorage {
 
             if let from {
                 request = request.filter(SwapRecord.Columns.date < from)
+            }
+
+            if let operation {
+                request = request.filter(SwapRecord.Columns.operation == operation.rawValue)
             }
 
             return try request
