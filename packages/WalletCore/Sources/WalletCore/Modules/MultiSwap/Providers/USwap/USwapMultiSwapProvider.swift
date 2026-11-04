@@ -38,6 +38,8 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
 
     /// For an app that executes swaps with its own quote builders: the token catalog and the provider
     /// directory are the ones `Core` already syncs. Reads `Core.shared`, so call it after `Core.initApp`.
+    /// `api` must target the same backend as `Core`: the catalog's asset identifiers and the directory's
+    /// venue ids are sent to it.
     public convenience init(
         api: USwapMultiSwapApi,
         commitRequestBuilder: USwapCommitRequestBuilder,
