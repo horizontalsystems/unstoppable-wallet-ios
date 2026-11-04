@@ -36,6 +36,26 @@ public final class USwapMultiSwapProvider: IMultiSwapProvider {
         self.providerManager = providerManager
     }
 
+    /// For an app that executes swaps with its own quote builders: the token catalog and the provider
+    /// directory are the ones `Core` already syncs. Reads `Core.shared`, so call it after `Core.initApp`.
+    public convenience init(
+        api: USwapMultiSwapApi,
+        commitRequestBuilder: USwapCommitRequestBuilder,
+        tracker: USwapTracker,
+        rateQuoteFactory: USwapRateQuoteFactory,
+        finalQuoteFactory: USwapFinalQuoteFactory
+    ) {
+        self.init(
+            api: api,
+            assetCatalog: Core.shared.swapAssetCatalog,
+            commitRequestBuilder: commitRequestBuilder,
+            tracker: tracker,
+            rateQuoteFactory: rateQuoteFactory,
+            finalQuoteFactory: finalQuoteFactory,
+            providerManager: Core.shared.swapProviderManager
+        )
+    }
+
     public var syncPublisher: AnyPublisher<Void, Never>? {
         assetCatalog.syncPublisher
     }
