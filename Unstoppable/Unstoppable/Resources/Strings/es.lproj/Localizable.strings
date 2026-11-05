@@ -375,6 +375,15 @@
 "balance.token.transparent.detected.description" = "Tienes un saldo de ZEC en una dirección transparente. Para usarlo en Unstoppable, debe ser protegido (shielded) para garantizar total privacidad.";
 "balance.token.shield" = "Proteger";
 "balance.token.migration.required" = "Migración requerida";
+"activity.title" = "Actividad";
+"activity.tab.transfer" = "Transferencias";
+"activity.tab.swap" = "Swaps";
+"activity.tab.private_send" = "Privados";
+"activity.tab.cross_pay" = "CrossPay";
+"activity.empty.transfer" = "Aún no tienes transferencias pendientes o anteriores.";
+"activity.empty.swap" = "Aún no tienes swaps pendientes o anteriores.";
+"activity.empty.private_send" = "Aún no tienes envíos privados pendientes o anteriores.";
+"activity.empty.cross_pay" = "Aún no tienes pagos CrossPay pendientes o anteriores.";
 "transactions.migrate" = "Migrar";
 "transactions.migrate.to_ironwood" = "a Ironwood";
 "balance.token.migration.detected.title" = "Migración de pool ZEC";
@@ -879,9 +888,6 @@
 
 // Swap History
 
-"swap_history.title" = "Historial de Swaps";
-"swap_history.all" = "Todos";
-"swap_history.empty" = "Aún no tienes swaps pendientes o anteriores.";
 "swap_history.status.depositing" = "Depositando…";
 "swap_history.status.swapping" = "Intercambiando…";
 
@@ -1488,7 +1494,6 @@
 
 "transactions.title" = "Transacciones";
 "transactions.tab_bar_item" = "Transacciones";
-"transactions.filter_all" = "Todo";
 "transactions.syncing_placeholder" = "Por favor, espere a que termine la sincronización.";
 "transactions.empty_text" = "Todavía no tienes transacciones pendientes o pasadas";
 "transactions.pending" = "Pendiente";
@@ -1523,12 +1528,6 @@
 
 "transactions.today" = "Hoy";
 "transactions.yesterday" = "Ayer";
-
-"transactions.types.all" = "Todo";
-"transactions.types.incoming" = "Recibir";
-"transactions.types.outgoing" = "Enviado";
-"transactions.types.swap" = "Intercambio";
-"transactions.types.approve" = "Aprobaciones";
 
 "transactions.unknown_transaction.title" = "Transacción desconocida";
 "transactions.unknown_transaction.description" = "La transacción no se puede analizar";

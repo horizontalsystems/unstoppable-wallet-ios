@@ -375,6 +375,15 @@
 "balance.token.transparent.detected.description" = "Sie besitzen ein ZEC-Guthaben auf einer transparenten Adresse. Um es in Unstoppable zu verwenden, muss es für vollständige Privatsphäre abgeschirmt werden.";
 "balance.token.shield" = "Abschirmen";
 "balance.token.migration.required" = "Migration erforderlich";
+"activity.title" = "Aktivität";
+"activity.tab.transfer" = "Überweisungen";
+"activity.tab.swap" = "Swaps";
+"activity.tab.private_send" = "Private";
+"activity.tab.cross_pay" = "CrossPay";
+"activity.empty.transfer" = "Sie haben noch keine ausstehenden oder vergangenen Überweisungen.";
+"activity.empty.swap" = "Sie haben noch keine ausstehenden oder vergangenen Swaps.";
+"activity.empty.private_send" = "Sie haben noch keine ausstehenden oder vergangenen privaten Sendungen.";
+"activity.empty.cross_pay" = "Sie haben noch keine ausstehenden oder vergangenen CrossPay-Zahlungen.";
 "transactions.migrate" = "Migrieren";
 "transactions.migrate.to_ironwood" = "nach Ironwood";
 "balance.token.migration.detected.title" = "ZEC-Pool-Migration";
@@ -879,9 +888,6 @@
 
 // Swap History
 
-"swap_history.title" = "Swap-Verlauf";
-"swap_history.all" = "Alle";
-"swap_history.empty" = "Sie haben noch keine ausstehenden oder vergangenen Swaps.";
 "swap_history.status.depositing" = "Einzahlung läuft…";
 "swap_history.status.swapping" = "Tausch läuft…";
 
@@ -1488,7 +1494,6 @@
 
 "transactions.title" = "Transaktionen";
 "transactions.tab_bar_item" = "Transaktionen";
-"transactions.filter_all" = "Alle";
 "transactions.syncing_placeholder" = "Bitte warten, bis die Synchronisation abgeschlossen ist.";
 "transactions.empty_text" = "Sie haben noch keine offenen oder früheren Transaktionen";
 "transactions.pending" = "In Bearbeitung";
@@ -1523,12 +1528,6 @@
 
 "transactions.today" = "Heute";
 "transactions.yesterday" = "Gestern";
-
-"transactions.types.all" = "Alle";
-"transactions.types.incoming" = "Empfangen";
-"transactions.types.outgoing" = "Gesendet";
-"transactions.types.swap" = "Swaps";
-"transactions.types.approve" = "Genehmigungen";
 
 "transactions.unknown_transaction.title" = "Unbekannte Transaktion";
 "transactions.unknown_transaction.description" = "Transaktion kann nicht analysiert werden";

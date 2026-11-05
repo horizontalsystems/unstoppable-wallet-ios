@@ -375,6 +375,15 @@
 "balance.token.transparent.detected.description" = "Şeffaf bir adreste tutulan ZEC bakiyeniz var. Unstoppable’da kullanmak için tam gizlilik amacıyla shield edilmesi gerekir.";
 "balance.token.shield" = "Shield";
 "balance.token.migration.required" = "Geçiş Gerekli";
+"activity.title" = "Etkinlik";
+"activity.tab.transfer" = "Transferler";
+"activity.tab.swap" = "Swaplar";
+"activity.tab.private_send" = "Gizliler";
+"activity.tab.cross_pay" = "CrossPay";
+"activity.empty.transfer" = "Henüz bekleyen veya geçmiş bir transferiniz yok.";
+"activity.empty.swap" = "Henüz bekleyen veya geçmiş bir swap işleminiz yok.";
+"activity.empty.private_send" = "Henüz bekleyen veya geçmiş bir gizli gönderiminiz yok.";
+"activity.empty.cross_pay" = "Henüz bekleyen veya geçmiş bir CrossPay ödemeniz yok.";
 "transactions.migrate" = "Geçiş Yap";
 "transactions.migrate.to_ironwood" = "Ironwood'a";
 "balance.token.migration.detected.title" = "ZEC Havuz Geçişi";
@@ -879,9 +888,6 @@
 
 // Swap History
 
-"swap_history.title" = "Swap Geçmişi";
-"swap_history.all" = "Tümü";
-"swap_history.empty" = "Henüz bekleyen veya geçmiş bir swap işleminiz yok.";
 "swap_history.status.depositing" = "Para yatırılıyor…";
 "swap_history.status.swapping" = "Takas yapılıyor…";
 
@@ -1488,7 +1494,6 @@
 
 "transactions.title" = "Hesap işlemleri";
 "transactions.tab_bar_item" = "Hesap işlemleri";
-"transactions.filter_all" = "Hepsi";
 "transactions.syncing_placeholder" = "Lütfen güncellemenin bitmesini bekleyin.";
 "transactions.empty_text" = "Henüz herhangi bir bekleyen veya geçmiş işlem yok";
 "transactions.pending" = "Bekleyen";
@@ -1523,12 +1528,6 @@
 
 "transactions.today" = "Bugün";
 "transactions.yesterday" = "Dün";
-
-"transactions.types.all" = "Hepsi";
-"transactions.types.incoming" = "Al";
-"transactions.types.outgoing" = "Gönderildi";
-"transactions.types.swap" = "Swap";
-"transactions.types.approve" = "Onaylar";
 
 "transactions.unknown_transaction.title" = "Bilinmeyen İşlem";
 "transactions.unknown_transaction.description" = "İşlem çözümlenemiyor";

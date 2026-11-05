@@ -47,12 +47,13 @@ extension MarketModule.Tab {
     }
 }
 
-extension TransactionTypeFilter {
+extension ActivityTab {
     var statTab: StatTab {
         switch self {
-        case .all: return .all
-        case .incoming: return .incoming
-        case .outgoing: return .outgoing
+        case .transfer: return .all
+        case .swap: return .swap
+        case .privateSend: return .privateSend
+        case .crossPay: return .crossPay
         }
     }
 }

@@ -131,12 +131,91 @@ struct SwapStorageOperationTests {
         let secondPage = try storage.swaps(accountId: Self.accountId, from: cursor, operation: .privateSend, limit: 2)
         #expect(secondPage.map(\.uid) == ["private-3"])
     }
+
+    @Test func operationsFilterReturnsSwapAndSplitSwapOnly() throws {
+        let (storage, _) = try Self.storage()
+        let now = Date()
+        try storage.save(swap: Self.swap(uid: "swap", operation: .swap, date: now.addingTimeInterval(-60)))
+        try storage.save(swap: Self.swap(uid: "private", operation: .privateSend, date: now.addingTimeInterval(-120)))
+        try storage.save(swap: Self.swap(uid: "split", operation: .splitSwap, date: now.addingTimeInterval(-180)))
+        try storage.save(swap: Self.swap(uid: "cross", operation: .crossPay, date: now.addingTimeInterval(-240)))
+
+        let swaps = try storage.swaps(accountId: Self.accountId, operations: [.swap, .splitSwap], limit: 10)
+
+        #expect(swaps.map(\.uid) == ["swap", "split"])
+    }
+
+    @Test func blockchainTypeFilterMatchesEitherSide() throws {
+        let (storage, _) = try Self.storage()
+        try storage.save(swap: Self.swap(uid: "eth-btc", operation: .swap, tokenIn: Self.ethereumToken, tokenOut: Self.token))
+        try storage.save(swap: Self.swap(uid: "tron-tron", operation: .swap, tokenIn: Self.tronToken, tokenOut: Self.tronToken))
+
+        let ethereum = try storage.swaps(accountId: Self.accountId, blockchainType: .ethereum, limit: 10)
+        let bitcoin = try storage.swaps(accountId: Self.accountId, blockchainType: .bitcoin, limit: 10)
+        let tron = try storage.swaps(accountId: Self.accountId, blockchainType: .tron, limit: 10)
+
+        #expect(ethereum.map(\.uid) == ["eth-btc"])
+        #expect(bitcoin.map(\.uid) == ["eth-btc"])
+        #expect(tron.map(\.uid) == ["tron-tron"])
+    }
+
+    @Test func tokenFilterTakesPrecedenceOverBlockchainType() throws {
+        let (storage, _) = try Self.storage()
+        try storage.save(swap: Self.swap(uid: "btc", operation: .swap))
+        try storage.save(swap: Self.swap(uid: "tron", operation: .swap, tokenIn: Self.tronToken, tokenOut: Self.tronToken))
+
+        let swaps = try storage.swaps(accountId: Self.accountId, token: Self.token, blockchainType: .tron, limit: 10)
+
+        #expect(swaps.map(\.uid) == ["btc"])
+    }
+
+    @Test func addressesFilterMatchesRecipientToAddressOrSourceCaseInsensitively() throws {
+        let (storage, _) = try Self.storage()
+        let now = Date()
+        try storage.save(swap: Self.swap(uid: "recipient", operation: .swap, recipient: "0xAbCdEf01", toAddress: "0xdeposit", date: now.addingTimeInterval(-60)))
+        try storage.save(swap: Self.swap(uid: "to", operation: .swap, recipient: nil, toAddress: "0xABCDEF02", date: now.addingTimeInterval(-120)))
+        try storage.save(swap: Self.swap(uid: "source", operation: .swap, recipient: nil, toAddress: "0xdeposit", sourceAddress: "0xabcdef03", date: now.addingTimeInterval(-180)))
+        try storage.save(swap: Self.swap(uid: "other", operation: .swap, recipient: "0xother", toAddress: "0xother", sourceAddress: "0xother", date: now.addingTimeInterval(-240)))
+
+        let matched = try storage.swaps(accountId: Self.accountId, addresses: ["0xabcdef01", "0xAbCdEf02", "0xABCDEF03"], limit: 10)
+        let empty = try storage.swaps(accountId: Self.accountId, addresses: [], limit: 10)
+        let all = try storage.swaps(accountId: Self.accountId, addresses: nil, limit: 10)
+
+        #expect(matched.map(\.uid) == ["recipient", "to", "source"])
+        #expect(empty.isEmpty)
+        #expect(all.map(\.uid) == ["recipient", "to", "source", "other"])
+    }
+
+    @Test func combinedFiltersWithPagination() throws {
+        let (storage, _) = try Self.storage()
+        let now = Date()
+        let address = "bc1qcontact"
+
+        // Newest first: match-1, other-op, match-2, other-address, match-3
+        try storage.save(swap: Self.swap(uid: "match-1", operation: .privateSend, recipient: address, date: now.addingTimeInterval(-60)))
+        try storage.save(swap: Self.swap(uid: "other-op", operation: .swap, recipient: address, date: now.addingTimeInterval(-120)))
+        try storage.save(swap: Self.swap(uid: "match-2", operation: .privateSend, recipient: address, date: now.addingTimeInterval(-180)))
+        try storage.save(swap: Self.swap(uid: "other-address", operation: .privateSend, date: now.addingTimeInterval(-240)))
+        try storage.save(swap: Self.swap(uid: "match-3", operation: .privateSend, recipient: address, date: now.addingTimeInterval(-300)))
+
+        let firstPage = try storage.swaps(accountId: Self.accountId, addresses: [address], operations: [.privateSend], limit: 2)
+        #expect(firstPage.map(\.uid) == ["match-1", "match-2"])
+
+        let cursor = try #require(firstPage.last?.date)
+        let secondPage = try storage.swaps(accountId: Self.accountId, addresses: [address], from: cursor, operations: [.privateSend], limit: 2)
+        #expect(secondPage.map(\.uid) == ["match-3"])
+    }
 }
 
 extension SwapStorageOperationTests {
     private static let accountId = "account"
     private static let token = Token(coin: Coin(uid: "bitcoin", name: "Bitcoin", code: "BTC"),
                                      blockchain: Blockchain(type: .bitcoin, name: "Bitcoin", explorerUrl: nil), type: .native, decimals: 8)
+    private static let ethereumToken = Token(coin: Coin(uid: "ethereum", name: "Ethereum", code: "ETH"),
+                                             blockchain: Blockchain(type: .ethereum, name: "Ethereum", explorerUrl: nil), type: .native, decimals: 18)
+    private static let tronToken = Token(coin: Coin(uid: "tron", name: "Tron", code: "TRX"),
+                                         blockchain: Blockchain(type: .tron, name: "Tron", explorerUrl: nil), type: .native, decimals: 6)
+    private static let knownTokens = [token, ethereumToken, tronToken]
 
     private static func saveOneOfEachOperation(storage: SwapStorage) throws {
         try storage.save(swap: swap(uid: "swap", operation: .swap))
@@ -145,7 +224,17 @@ extension SwapStorageOperationTests {
         try storage.save(swap: swap(uid: "split", operation: .splitSwap))
     }
 
-    private static func swap(uid: String, operation: Swap.Operation, trackingHandle: String? = nil, date: Date = Date()) -> Swap {
+    private static func swap(
+        uid: String,
+        operation: Swap.Operation,
+        trackingHandle: String? = nil,
+        tokenIn: Token = token,
+        tokenOut: Token = token,
+        recipient: String? = "bc1qrecipient",
+        toAddress: String = "bc1qrecipient",
+        sourceAddress: String? = nil,
+        date: Date = Date()
+    ) -> Swap {
         Swap(
             uid: uid,
             txHash: nil,
@@ -154,15 +243,15 @@ extension SwapStorageOperationTests {
             providerId: "NEAR",
             status: .notStarted,
             operation: operation,
-            tokenIn: token,
-            tokenOut: token,
+            tokenIn: tokenIn,
+            tokenOut: tokenOut,
             amountIn: 1,
             amountOut: 1,
-            recipient: "bc1qrecipient",
-            toAddress: "bc1qrecipient",
+            recipient: recipient,
+            toAddress: toAddress,
             depositAddress: "bc1qdeposit",
             providerSwapId: uid,
-            sourceAddress: nil,
+            sourceAddress: sourceAddress,
             refundAddress: nil,
             date: date
         )
@@ -215,7 +304,8 @@ extension SwapStorageOperationTests {
         }
 
         func tokens(queries: [TokenQuery]) throws -> [Token] {
-            queries.map(\.id).contains(SwapStorageOperationTests.token.tokenQuery.id) ? [SwapStorageOperationTests.token] : []
+            let ids = Set(queries.map(\.id))
+            return SwapStorageOperationTests.knownTokens.filter { ids.contains($0.tokenQuery.id) }
         }
     }
 }

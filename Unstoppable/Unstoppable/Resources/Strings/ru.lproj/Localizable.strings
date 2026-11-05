@@ -375,6 +375,15 @@
 "balance.token.transparent.detected.description" = "У вас есть ZEC, находящийся на transparent адресе. Чтобы использовать его в Unstoppable, необходимо выполнить shielding для полной приватности.";
 "balance.token.shield" = "Shield";
 "balance.token.migration.required" = "Требуется миграция";
+"activity.title" = "Активность";
+"activity.tab.transfer" = "Переводы";
+"activity.tab.swap" = "Свопы";
+"activity.tab.private_send" = "Приватные";
+"activity.tab.cross_pay" = "CrossPay";
+"activity.empty.transfer" = "У вас пока нет ожидающих или завершённых переводов.";
+"activity.empty.swap" = "У вас пока нет ожидающих или завершённых свопов.";
+"activity.empty.private_send" = "У вас пока нет ожидающих или завершённых приватных отправок.";
+"activity.empty.cross_pay" = "У вас пока нет ожидающих или завершённых платежей CrossPay.";
 "transactions.migrate" = "Мигрировать";
 "transactions.migrate.to_ironwood" = "в Ironwood";
 "balance.token.migration.detected.title" = "Миграция пула ZEC";
@@ -879,9 +888,6 @@
 
 // Swap History
 
-"swap_history.title" = "История свопов";
-"swap_history.all" = "Все";
-"swap_history.empty" = "У вас пока нет ожидающих или завершённых свопов.";
 "swap_history.status.depositing" = "Пополнение…";
 "swap_history.status.swapping" = "Обмен…";
 
@@ -1488,7 +1494,6 @@
 
 "transactions.title" = "Транзакции";
 "transactions.tab_bar_item" = "Транзакции";
-"transactions.filter_all" = "Все";
 "transactions.syncing_placeholder" = "Пожалуйста, дождитесь завершение синхронизации.";
 "transactions.empty_text" = "У вас ещё нет незавершенных или прошлых транзакций";
 "transactions.pending" = "В обработке";
@@ -1523,12 +1528,6 @@
 
 "transactions.today" = "Сегодня";
 "transactions.yesterday" = "Вчера";
-
-"transactions.types.all" = "Все";
-"transactions.types.incoming" = "Получено";
-"transactions.types.outgoing" = "Отправлено";
-"transactions.types.swap" = "Обмены";
-"transactions.types.approve" = "Разрешения";
 
 "transactions.unknown_transaction.title" = "Неизвестная транзакция";
 "transactions.unknown_transaction.description" = "Транзакция не может быть обработана";

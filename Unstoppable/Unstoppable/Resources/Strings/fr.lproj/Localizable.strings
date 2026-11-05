@@ -375,6 +375,15 @@
 "balance.token.transparent.detected.description" = "Vous détenez un solde ZEC sur une adresse transparente. Pour l’utiliser dans Unstoppable, il doit être protégé (shielded) afin de garantir une confidentialité totale.";
 "balance.token.shield" = "Shield";
 "balance.token.migration.required" = "Migration requise";
+"activity.title" = "Activité";
+"activity.tab.transfer" = "Transferts";
+"activity.tab.swap" = "Swaps";
+"activity.tab.private_send" = "Privés";
+"activity.tab.cross_pay" = "CrossPay";
+"activity.empty.transfer" = "Vous n'avez encore aucun transfert en cours ou passé.";
+"activity.empty.swap" = "Vous n'avez encore aucun swap en cours ou passé.";
+"activity.empty.private_send" = "Vous n'avez encore aucun envoi privé en cours ou passé.";
+"activity.empty.cross_pay" = "Vous n'avez encore aucun paiement CrossPay en cours ou passé.";
 "transactions.migrate" = "Migrer";
 "transactions.migrate.to_ironwood" = "vers Ironwood";
 "balance.token.migration.detected.title" = "Migration du pool ZEC";
@@ -879,9 +888,6 @@
 
 // Swap History
 
-"swap_history.title" = "Historique des Swaps";
-"swap_history.all" = "Tous";
-"swap_history.empty" = "Vous n'avez encore aucun swap en cours ou passé.";
 "swap_history.status.depositing" = "Dépôt en cours…";
 "swap_history.status.swapping" = "Échange en cours…";
 
@@ -1488,7 +1494,6 @@
 
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";
-"transactions.filter_all" = "Tout";
 "transactions.syncing_placeholder" = "Veuillez attendre la fin de la synchronisation.";
 "transactions.empty_text" = "Vous n'avez encore aucune transaction en cours ou passée";
 "transactions.pending" = "En attente";
@@ -1523,12 +1528,6 @@
 
 "transactions.today" = "Aujourd'hui";
 "transactions.yesterday" = "Hier";
-
-"transactions.types.all" = "Tout";
-"transactions.types.incoming" = "Recevoir";
-"transactions.types.outgoing" = "Envoyée";
-"transactions.types.swap" = "Echanger";
-"transactions.types.approve" = "Approbations";
 
 "transactions.unknown_transaction.title" = "Transaction inconnue";
 "transactions.unknown_transaction.description" = "La transaction ne peut pas être analysée";

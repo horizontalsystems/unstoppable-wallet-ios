@@ -567,7 +567,8 @@ enum StatTab: String {
     case markets, balance, transactions, settings
     case coins, overview, news, pairs, platforms, watchlist, sectors, vaults
     case analytics
-    case all, incoming, outgoing, swap, approve
+    case all, swap
+    case privateSend = "private_send", crossPay = "cross_pay"
 }
 
 enum StatSortType: String {

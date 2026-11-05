@@ -133,6 +133,15 @@ class SwapStorage {
             refund: leg.refund
         )
     }
+
+    private static let likeEscape = "\\"
+
+    private static func likeEscaped(_ value: String) -> String {
+        value
+            .replacingOccurrences(of: likeEscape, with: likeEscape + likeEscape)
+            .replacingOccurrences(of: "%", with: likeEscape + "%")
+            .replacingOccurrences(of: "_", with: likeEscape + "_")
+    }
 }
 
 extension SwapStorage {
@@ -151,17 +160,44 @@ extension SwapStorage {
         return try swaps(records: [record]).first
     }
 
-    func swaps(accountId: String, token: Token? = nil, from: Date? = nil, operation: Swap.Operation? = nil, limit: Int) throws -> [Swap] {
+    func swaps(
+        accountId: String,
+        token: Token? = nil,
+        blockchainType: BlockchainType? = nil,
+        addresses: [String]? = nil,
+        from: Date? = nil,
+        operation: Swap.Operation? = nil,
+        operations: [Swap.Operation]? = nil,
+        limit: Int
+    ) throws -> [Swap] {
+        if let addresses, addresses.isEmpty {
+            return []
+        }
+
         let records = try dbPool.read { db in
             var request = SwapRecord
                 .filter(SwapRecord.Columns.accountId == accountId)
                 .order(SwapRecord.Columns.date.desc)
-                .limit(limit)
 
             if let tokenQueryId = token?.tokenQuery.id {
                 request = request.filter(
                     SwapRecord.Columns.tokenQueryIdIn == tokenQueryId
                         || SwapRecord.Columns.tokenQueryIdOut == tokenQueryId
+                )
+            } else if let blockchainType {
+                let pattern = Self.likeEscaped(blockchainType.uid) + "|%"
+                request = request.filter(
+                    SwapRecord.Columns.tokenQueryIdIn.like(pattern, escape: Self.likeEscape)
+                        || SwapRecord.Columns.tokenQueryIdOut.like(pattern, escape: Self.likeEscape)
+                )
+            }
+
+            if let addresses {
+                let lowercased = addresses.map { $0.lowercased() }
+                request = request.filter(
+                    lowercased.contains(SwapRecord.Columns.recipient.lowercased)
+                        || lowercased.contains(SwapRecord.Columns.toAddress.lowercased)
+                        || lowercased.contains(SwapRecord.Columns.sourceAddress.lowercased)
                 )
             }
 
@@ -169,7 +205,9 @@ extension SwapStorage {
                 request = request.filter(SwapRecord.Columns.date < from)
             }
 
-            if let operation {
+            if let operations {
+                request = request.filter(operations.map(\.rawValue).contains(SwapRecord.Columns.operation))
+            } else if let operation {
                 request = request.filter(SwapRecord.Columns.operation == operation.rawValue)
             }
 

@@ -375,6 +375,15 @@
 "balance.token.transparent.detected.description" = "투명 주소에 보유 중인 ZEC 잔액이 있습니다. Unstoppable에서 사용하려면 완전한 프라이버시 보호를 위해 보호(Shield) 처리해야 합니다.";
 "balance.token.shield" = "차폐(Shield)";
 "balance.token.migration.required" = "마이그레이션 필요";
+"activity.title" = "활동";
+"activity.tab.transfer" = "전송";
+"activity.tab.swap" = "스왑";
+"activity.tab.private_send" = "프라이빗";
+"activity.tab.cross_pay" = "CrossPay";
+"activity.empty.transfer" = "대기 중이거나 완료된 전송이 없습니다.";
+"activity.empty.swap" = "대기 중이거나 완료된 스왑이 없습니다.";
+"activity.empty.private_send" = "대기 중이거나 완료된 프라이빗 전송이 없습니다.";
+"activity.empty.cross_pay" = "대기 중이거나 완료된 CrossPay 결제가 없습니다.";
 "transactions.migrate" = "마이그레이션";
 "transactions.migrate.to_ironwood" = "Ironwood로";
 "balance.token.migration.detected.title" = "ZEC 풀 마이그레이션";
@@ -879,9 +888,6 @@
 
 // Swap History
 
-"swap_history.title" = "스왑 내역";
-"swap_history.all" = "전체";
-"swap_history.empty" = "대기 중이거나 완료된 스왑이 없습니다.";
 "swap_history.status.depositing" = "입금 중…";
 "swap_history.status.swapping" = "스왑 중…";
 
@@ -1488,7 +1494,6 @@
 
 "transactions.title" = "거래기록";
 "transactions.tab_bar_item" = "거래기록";
-"transactions.filter_all" = "전체";
 "transactions.syncing_placeholder" = "동기화가 끝날 때까지 기다려 주십시오.";
 "transactions.empty_text" = "당신은 아직 보류 중 또는 과거에 완료된 거래가 없습니다";
 "transactions.pending" = "보류 중";
@@ -1523,12 +1528,6 @@
 
 "transactions.today" = "오늘";
 "transactions.yesterday" = "어제";
-
-"transactions.types.all" = "전체";
-"transactions.types.incoming" = "수령";
-"transactions.types.outgoing" = "전송됨";
-"transactions.types.swap" = "스왑";
-"transactions.types.approve" = "승인";
 
 "transactions.unknown_transaction.title" = "알 수 없는 트랜잭션";
 "transactions.unknown_transaction.description" = "트랜잭션을 구문 분석할 수 없습니다";

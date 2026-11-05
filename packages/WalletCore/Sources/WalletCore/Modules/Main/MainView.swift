@@ -4,7 +4,7 @@ struct MainView: View {
     @StateObject var viewModel = MainViewModel()
     @StateObject var badgeViewModel = MainBadgeViewModel()
     @StateObject var walletViewModel = WalletViewModel()
-    @StateObject var transactionsViewModel = TransactionsViewModel()
+    @StateObject private var activityViewModel = ActivityViewModel()
     @StateObject var multiSwapViewModel = MultiSwapViewModel()
     @StateObject var splitSwapViewModel = SplitSwapViewModel()
 
@@ -118,7 +118,13 @@ struct MainView: View {
                         Image("clock")
                     }
                     .accessibilityIdentifier(TestTags.balanceTransactions)
+                }
 
+                if #available(iOS 26, *) {
+                    ToolbarSpacer(.fixed, placement: .primaryAction)
+                }
+
+                ToolbarItemGroup(placement: .primaryAction) {
                     Button(action: {
                         Coordinator.shared.present { isPresented in
                             ManageAccountsView(parentPresented: isPresented)
@@ -130,38 +136,7 @@ struct MainView: View {
                     .accessibilityIdentifier(TestTags.balanceManageAccounts)
                 }
             }
-        case .swap:
-            ToolbarItem(placement: .primaryAction) {
-                Button(action: {
-                    Coordinator.shared.present { isPresented in
-                        SwapHistoryView(isPresented: isPresented)
-                    }
-                }) {
-                    Image("clock")
-                }
-            }
-        case .transactions:
-            ToolbarItem(placement: .primaryAction) {
-                Button(action: {
-                    Coordinator.shared.present { isPresented in
-                        TransactionFilterView(transactionsViewModel: transactionsViewModel, isPresented: isPresented)
-                    }
-                    stat(page: .transactions, event: .open(page: .transactionFilter))
-                }) {
-                    Image("manage")
-                        .modifier(ToolbarBadgeModifier(visible: transactionsViewModel.filterChanged))
-                }
-            }
-
-            ToolbarItem(placement: .navigationBarLeading) {
-                if transactionsViewModel.syncing {
-                    ProgressView(value: 0.55)
-                        .progressViewStyle(DeterminiteSpinnerStyle())
-                        .frame(size: 24)
-                        .spinning()
-                }
-            }
-        case .settings:
+        case .swap, .transactions, .settings:
             ToolbarItem {}
         }
     }
@@ -177,8 +152,10 @@ struct MainView: View {
     }
 
     private func onTapHistory() {
+        let activityViewModel = activityViewModel
+
         Coordinator.shared.present { isPresented in
-            MainTransactionsView(transactionsViewModel: transactionsViewModel, isPresented: isPresented)
+            MainActivityView(viewModel: activityViewModel, isPresented: isPresented)
         }
         stat(page: .transactions, event: .open(page: .transactions))
     }

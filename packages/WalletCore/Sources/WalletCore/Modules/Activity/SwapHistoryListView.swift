@@ -1,70 +1,49 @@
 import SwiftUI
 
-struct SwapHistoryView: View {
-    @StateObject var viewModel = SwapHistoryViewModel()
-    @Binding var isPresented: Bool
-
-    @State private var path = NavigationPath()
+struct SwapHistoryListView: View {
+    @ObservedObject var viewModel: SwapHistoryViewModel
+    let emptyText: String
 
     var body: some View {
-        ThemeNavigationStack(path: $path) {
-            ThemeView(style: .list) {
-                VStack(spacing: 0) {
-                    if viewModel.sections.isEmpty {
-                        PlaceholderViewNew(icon: "outgoingraw", subtitle: "swap_history.empty".localized)
-                    } else {
-                        ThemeList(bottomSpacing: 16) {
-                            ForEach(viewModel.sections) { section in
-                                Section {
-                                    ListForEachIdentifiable(section.viewItems) { viewItem in
-                                        Button(action: {
-                                            path.append(viewModel.correctedSwap(viewItem.swap))
-                                        }) {
-                                            switch viewItem.swap.operation {
-                                            case .swap, .splitSwap: ItemView(viewItem: viewItem)
-                                            case .privateSend, .crossPay: OperationItemView(viewItem: viewItem)
-                                            }
-                                        }
-                                        .buttonStyle(CellButtonStyle())
-                                        .onAppear {
-                                            viewModel.onDisplay(section: section, viewItem: viewItem)
-                                        }
-                                    }
-                                } header: {
-                                    ThemeListSectionHeader(text: section.title)
+        if viewModel.sections.isEmpty {
+            PlaceholderViewNew(icon: "outgoingraw", subtitle: emptyText)
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier(TestTags.activityEmpty)
+        } else {
+            ThemeList(bottomSpacing: .margin16) {
+                ForEach(viewModel.sections) { section in
+                    Section {
+                        ListForEachIdentifiable(section.viewItems) { viewItem in
+                            Button(action: {
+                                let swap = viewModel.correctedSwap(viewItem.swap)
+
+                                Coordinator.shared.present { isPresented in
+                                    SwapInfoView(swap: swap)
+                                        .closeNavigation(isPresented: isPresented)
+                                }
+                            }) {
+                                switch viewItem.swap.operation {
+                                case .swap, .splitSwap: ItemView(viewItem: viewItem)
+                                case .privateSend, .crossPay: OperationItemView(viewItem: viewItem)
                                 }
                             }
+                            .buttonStyle(CellButtonStyle())
+                            .accessibilityIdentifier(TestTags.activityItem(viewItem.swap.uid))
+                            .onAppear {
+                                viewModel.onDisplay(section: section, viewItem: viewItem)
+                            }
                         }
-                        .frame(maxHeight: .infinity)
+                    } header: {
+                        ThemeListSectionHeader(text: section.title)
                     }
                 }
             }
-            .navigationTitle("swap_history.title".localized)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(action: {
-                        isPresented = false
-                    }) {
-                        Image("close")
-                    }
-                }
-
-                ToolbarItem(placement: .primaryAction) {
-                    Button(action: {
-                        viewModel.refresh()
-                    }) {
-                        Image("reset")
-                    }
-                }
-            }
-            .navigationDestination(for: Swap.self) { swap in
-                SwapInfoView(swap: swap)
-            }
+            .frame(maxHeight: .infinity)
         }
     }
 }
 
-extension SwapHistoryView {
+extension SwapHistoryListView {
     struct ItemView: View {
         let viewItem: SwapHistoryViewModel.ViewItem
 

@@ -42,16 +42,6 @@ struct RegularMultiSwapView: View {
             }
             .navigationTitle("swap.title".localized)
             .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button(action: {
-                        Coordinator.shared.present { isPresented in
-                            SwapHistoryView(isPresented: isPresented)
-                        }
-                    }) {
-                        Image("clock")
-                    }
-                }
-
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {
                         presentationMode.wrappedValue.dismiss()

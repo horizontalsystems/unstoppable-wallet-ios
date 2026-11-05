@@ -13,12 +13,24 @@ class SwapHistoryViewModel: ObservableObject {
     private let queue = DispatchQueue(label: "\(AppConfig.label).swap-history-view-model", qos: .userInitiated)
     private var cancellables = Set<AnyCancellable>()
     private let disposeBag = DisposeBag()
+    private let operations: [Swap.Operation]
 
+    private var __filter: Filter
+    private var __accountId: String?
     private var __items = [Item]()
-    private var __loading = false
     private var __allLoaded = false
 
     @Published var sections = [Section]()
+
+    var transactionFilter: TransactionFilter {
+        didSet {
+            guard transactionFilter != oldValue else {
+                return
+            }
+
+            reload(filter: Filter(transactionFilter: transactionFilter))
+        }
+    }
 
     private var __sections: [Section] = [] {
         didSet {
@@ -28,24 +40,69 @@ class SwapHistoryViewModel: ObservableObject {
         }
     }
 
-    init() {
-        __load()
+    init(operations: [Swap.Operation], transactionFilter: TransactionFilter = .init()) {
+        self.operations = operations
+        self.transactionFilter = transactionFilter
+        __filter = Filter(transactionFilter: transactionFilter)
+
+        queue.async {
+            self.__reload()
+        }
 
         subscribe(&cancellables, manager.swapUpdatePublisher) { [weak self] in self?.handleUpdated(swap: $0) }
+
+        accountManager.activeAccountPublisher
+            .map { $0?.id }
+            .removeDuplicates()
+            .receive(on: queue)
+            .sink { [weak self] _ in self?.__handleActiveAccountChanged() }
+            .store(in: &cancellables)
+
         subscribe(disposeBag, rateService.ratesChangedObservable) { [weak self] in self?.handleRatesChanged() }
         subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
     }
 
     private func handleUpdated(swap: Swap) {
         queue.async {
-            for item in self.__items {
-                if item.swap.uid == swap.uid {
-                    item.swap = swap
-                    item.currencyValueOut = self.currencyValue(amount: swap.amountOut, token: swap.tokenOut, rate: self.rate(token: swap.tokenOut, date: swap.date))
-                    self.__reportItem(item: item)
-                    break
-                }
+            if let item = self.__items.first(where: { $0.swap.uid == swap.uid }) {
+                item.swap = swap
+                item.currencyValueOut = self.currencyValue(amount: swap.amountOut, token: swap.tokenOut, rate: self.rate(token: swap.tokenOut, date: swap.date))
+                self.__reportItem(item: item)
+                return
             }
+
+            // records of another account or of other operations never enter this list
+            guard swap.accountId == self.__accountId, self.operations.contains(swap.operation) else {
+                return
+            }
+
+            // a swap outside the active filter never enters the list; pending swaps are re-sent on every sync tick
+            guard self.__filter.matches(swap: swap) else {
+                return
+            }
+
+            // a swap older than the loaded range arrives with the next page, reloading would reset the scroll
+            if !self.__allLoaded, let lastDate = self.__items.last?.swap.date, swap.date < lastDate {
+                return
+            }
+
+            self.__reload()
+        }
+    }
+
+    private func __handleActiveAccountChanged() {
+        // the list already shows this account: the first emission after init, or a switch that came back before this ran
+        guard accountManager.activeAccount?.id != __accountId else {
+            return
+        }
+
+        __reload()
+    }
+
+    private func reload(filter: Filter) {
+        queue.async {
+            self.__filter = filter
+            self.__reload()
         }
     }
 
@@ -86,11 +143,25 @@ class SwapHistoryViewModel: ObservableObject {
     }
 
     private func __load() {
-        guard let account = accountManager.activeAccount else {
+        guard let accountId = __accountId else {
             return
         }
 
-        let swaps = manager.swaps(accountId: account.id, from: __items.last?.swap.date, limit: Self.pageLimit)
+        // the active account changed since the list was loaded: start over instead of appending another account's page
+        guard accountManager.activeAccount?.id == accountId else {
+            __reload()
+            return
+        }
+
+        let swaps = manager.swaps(
+            accountId: accountId,
+            token: __filter.token,
+            blockchainType: __filter.blockchainType,
+            addresses: __filter.addresses,
+            from: __items.last?.swap.date,
+            operations: operations,
+            limit: Self.pageLimit
+        )
         let newItems = swaps.map { swap in
             Item(
                 swap: swap,
@@ -108,12 +179,23 @@ class SwapHistoryViewModel: ObservableObject {
         }
     }
 
+    private func __reload() {
+        __items = []
+        __allLoaded = false
+        __accountId = accountManager.activeAccount?.id
+
+        guard __accountId != nil else {
+            __reportItemData()
+            return
+        }
+
+        __load()
+    }
+
     private func __loadMoreIfRequired(index: Int) {
         guard !__allLoaded, index > __items.count - 5 else {
             return
         }
-
-        // print("load more: \(index) --- \(__items.count)")
 
         __load()
     }
@@ -212,10 +294,6 @@ class SwapHistoryViewModel: ObservableObject {
 }
 
 extension SwapHistoryViewModel {
-    func refresh() {
-        manager.sync()
-    }
-
     func correctedSwap(_ swap: Swap) -> Swap {
         guard AppConfig.showDevTools, Core.shared.localStorage.simulateFailSwap == .local else {
             return swap
@@ -238,8 +316,6 @@ extension SwapHistoryViewModel {
                 itemIndex += self.__sections[i].viewItems.count
             }
 
-            // print("display: \(sectionIndex) - \(index) --- \(itemIndex)")
-
             self.__loadMoreIfRequired(index: itemIndex)
             self.__fetchRate(index: itemIndex)
         }
@@ -247,6 +323,53 @@ extension SwapHistoryViewModel {
 }
 
 extension SwapHistoryViewModel {
+    private struct Filter {
+        let token: Token?
+        let blockchainType: BlockchainType?
+        let addresses: [String]?
+
+        init(transactionFilter: TransactionFilter) {
+            token = transactionFilter.token
+            blockchainType = transactionFilter.blockchain?.type
+
+            if let contact = transactionFilter.contact {
+                let contactAddresses = blockchainType.map { type in contact.addresses.filter { $0.blockchainUid == type.uid } } ?? contact.addresses
+                addresses = contactAddresses.map(\.address)
+            } else {
+                addresses = nil
+            }
+        }
+
+        /// mirrors the token, blockchain and address conditions of `SwapStorage.swaps`
+        func matches(swap: Swap) -> Bool {
+            let tokenQueryIdIn = swap.tokenIn.tokenQuery.id
+            let tokenQueryIdOut = swap.tokenOut.tokenQuery.id
+
+            if let tokenQueryId = token?.tokenQuery.id {
+                guard tokenQueryIdIn == tokenQueryId || tokenQueryIdOut == tokenQueryId else {
+                    return false
+                }
+            } else if let blockchainType {
+                let prefix = "\(blockchainType.uid)|"
+
+                guard tokenQueryIdIn.hasPrefix(prefix) || tokenQueryIdOut.hasPrefix(prefix) else {
+                    return false
+                }
+            }
+
+            if let addresses {
+                let lowercased = Set(addresses.map { $0.lowercased() })
+                let swapAddresses = [swap.recipient, swap.toAddress, swap.sourceAddress].compactMap { $0?.lowercased() }
+
+                guard swapAddresses.contains(where: { lowercased.contains($0) }) else {
+                    return false
+                }
+            }
+
+            return true
+        }
+    }
+
     class Item {
         var swap: Swap
         var currencyValueIn: CurrencyValue?

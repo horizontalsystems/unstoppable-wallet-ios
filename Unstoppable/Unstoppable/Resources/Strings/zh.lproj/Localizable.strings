@@ -375,6 +375,15 @@
 "balance.token.transparent.detected.description" = "您在透明地址中持有 ZEC 余额。要在 Unstoppable 中使用，必须将其屏蔽（shield）以实现完全隐私。";
 "balance.token.shield" = "屏蔽";
 "balance.token.migration.required" = "需要迁移";
+"activity.title" = "活动";
+"activity.tab.transfer" = "转账";
+"activity.tab.swap" = "兑换";
+"activity.tab.private_send" = "隐私";
+"activity.tab.cross_pay" = "CrossPay";
+"activity.empty.transfer" = "您还没有任何待处理或已完成的转账记录。";
+"activity.empty.swap" = "您还没有任何待处理或已完成的兑换记录。";
+"activity.empty.private_send" = "您还没有任何待处理或已完成的隐私发送记录。";
+"activity.empty.cross_pay" = "您还没有任何待处理或已完成的 CrossPay 付款记录。";
 "transactions.migrate" = "迁移";
 "transactions.migrate.to_ironwood" = "至 Ironwood";
 "balance.token.migration.detected.title" = "ZEC 池迁移";
@@ -879,9 +888,6 @@
 
 // Swap History
 
-"swap_history.title" = "兑换记录";
-"swap_history.all" = "全部";
-"swap_history.empty" = "您还没有任何待处理或已完成的兑换记录。";
 "swap_history.status.depositing" = "充值中…";
 "swap_history.status.swapping" = "兑换中…";
 
@@ -1488,7 +1494,6 @@
 
 "transactions.title" = "交易";
 "transactions.tab_bar_item" = "交易";
-"transactions.filter_all" = "所有";
 "transactions.syncing_placeholder" = "请等待同步完成。";
 "transactions.empty_text" = "您还没有任何待定或成功的交易";
 "transactions.pending" = "待处理";
@@ -1523,12 +1528,6 @@
 
 "transactions.today" = "今天";
 "transactions.yesterday" = "昨天";
-
-"transactions.types.all" = "所有";
-"transactions.types.incoming" = "接收";
-"transactions.types.outgoing" = "已发送";
-"transactions.types.swap" = "掉期交易";
-"transactions.types.approve" = "批准";
 
 "transactions.unknown_transaction.title" = "未知交易";
 "transactions.unknown_transaction.description" = "无法解析交易";

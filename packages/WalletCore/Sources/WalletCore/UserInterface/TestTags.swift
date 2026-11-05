@@ -148,6 +148,16 @@ enum TestTags {
         "tx_info_hash_\(hash.prefix(8))"
     }
 
+    static func activityTab(_ tab: String) -> String {
+        "activity_tab_\(tab)"
+    }
+
+    static let activityEmpty = "activity_empty"
+
+    static func activityItem(_ uid: String) -> String {
+        "activity_item_\(uid.prefix(8))"
+    }
+
     static let swapTokenIn = "swap_token_in"
     static let swapTokenOut = "swap_token_out"
     static let swapAmountIn = "swap_amount_in"

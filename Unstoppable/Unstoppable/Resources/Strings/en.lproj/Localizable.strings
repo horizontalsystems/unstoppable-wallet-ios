@@ -375,6 +375,15 @@
 "balance.token.transparent.detected.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
 "balance.token.shield" = "Shield";
 "balance.token.migration.required" = "Migration Required";
+"activity.title" = "Activity";
+"activity.tab.transfer" = "Transfers";
+"activity.tab.swap" = "Swaps";
+"activity.tab.private_send" = "Privates";
+"activity.tab.cross_pay" = "CrossPay";
+"activity.empty.transfer" = "You don’t have any pending or past transfers yet.";
+"activity.empty.swap" = "You don’t have any pending or past swaps yet.";
+"activity.empty.private_send" = "You don’t have any pending or past private sends yet.";
+"activity.empty.cross_pay" = "You don’t have any pending or past CrossPay payments yet.";
 "transactions.migrate" = "Migrate";
 "transactions.migrate.to_ironwood" = "to Ironwood";
 "balance.token.migration.detected.title" = "ZEC Pool Migration";
@@ -879,9 +888,6 @@
 
 // Swap History
 
-"swap_history.title" = "Swap History";
-"swap_history.all" = "All";
-"swap_history.empty" = "You don’t have any pending or past swaps yet.";
 "swap_history.status.depositing" = "Depositing…";
 "swap_history.status.swapping" = "Swapping…";
 
@@ -1488,7 +1494,6 @@
 
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";
-"transactions.filter_all" = "All";
 "transactions.syncing_placeholder" = "Please wait for the sync to finish.";
 "transactions.empty_text" = "No pending or past transactions yet.";
 "transactions.pending" = "Pending";
@@ -1523,12 +1528,6 @@
 
 "transactions.today" = "Today";
 "transactions.yesterday" = "Yesterday";
-
-"transactions.types.all" = "All";
-"transactions.types.incoming" = "Received";
-"transactions.types.outgoing" = "Sent";
-"transactions.types.swap" = "Swaps";
-"transactions.types.approve" = "Approvals";
 
 "transactions.unknown_transaction.title" = "Unknown Transaction";
 "transactions.unknown_transaction.description" = "Transaction can not be parsed";
