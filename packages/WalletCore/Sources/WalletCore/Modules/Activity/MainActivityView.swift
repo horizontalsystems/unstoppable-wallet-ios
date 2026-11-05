@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MainActivityView: View {
-    let viewModel: ActivityViewModel
+    @StateObject private var viewModel = ActivityViewModel()
     @Binding var isPresented: Bool
 
     var body: some View {
@@ -55,6 +55,8 @@ extension MainActivityView {
         @ViewBuilder private func content(tab: ActivityTab) -> some View {
             if let swapHistoryViewModel = viewModel.swapHistoryViewModel(for: tab) {
                 SwapHistoryListView(viewModel: swapHistoryViewModel, emptyText: tab.emptyText)
+            } else if !transactionsViewModel.isLoaded {
+                Color.clear
             } else if transactionsViewModel.sections.isEmpty {
                 PlaceholderViewNew(icon: "outgoingraw", subtitle: tab.emptyText)
                     .accessibilityElement(children: .combine)

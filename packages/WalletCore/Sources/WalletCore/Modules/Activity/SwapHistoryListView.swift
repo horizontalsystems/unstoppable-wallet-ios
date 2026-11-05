@@ -5,7 +5,9 @@ struct SwapHistoryListView: View {
     let emptyText: String
 
     var body: some View {
-        if viewModel.sections.isEmpty {
+        if !viewModel.isLoaded {
+            Color.clear
+        } else if viewModel.sections.isEmpty {
             PlaceholderViewNew(icon: "outgoingraw", subtitle: emptyText)
                 .accessibilityElement(children: .combine)
                 .accessibilityIdentifier(TestTags.activityEmpty)

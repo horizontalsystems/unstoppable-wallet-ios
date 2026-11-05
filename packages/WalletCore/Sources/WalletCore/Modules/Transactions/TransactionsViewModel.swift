@@ -24,6 +24,8 @@ class TransactionsViewModel: ObservableObject {
     @Published private(set) var syncing: Bool = false
     @Published private(set) var isReachable: Bool = true
     @Published private(set) var sections: [Section] = []
+    /// false until the first page is published, so the view does not show the empty placeholder while loading
+    @Published private(set) var isLoaded = false
 
     @Published var typeFilter: TransactionTypeFilter = .all {
         didSet {
@@ -51,6 +53,19 @@ class TransactionsViewModel: ObservableObject {
         didSet {
             DispatchQueue.main.async { [__sections] in
                 self.sections = __sections
+            }
+        }
+    }
+
+    /// set after `__sections`, so on main the first page is published before `isLoaded` turns true
+    private var __isLoaded = false {
+        didSet {
+            guard __isLoaded != oldValue else {
+                return
+            }
+
+            DispatchQueue.main.async { [__isLoaded] in
+                self.isLoaded = __isLoaded
             }
         }
     }
@@ -190,6 +205,8 @@ class TransactionsViewModel: ObservableObject {
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onSuccess: { [weak self] transactionItems in
                 self?.handle(transactionItems: transactionItems, loadedMore: loadingMore)
+            }, onError: { [weak self] _ in
+                self?.handleLoadError()
             })
             .disposed(by: __poolGroupDisposeBag)
     }
@@ -256,6 +273,15 @@ class TransactionsViewModel: ObservableObject {
         }
     }
 
+    private func handleLoadError() {
+        queue.async {
+            // __load() is deliberately not called again: a failing adapter would retry in a loop; the next pool update retries
+            self.__loading = false
+            self.__reportItemData()
+            self.__isLoaded = true
+        }
+    }
+
     private func handle(transactionItems: [TransactionItem], loadedMore: Bool) {
         queue.async {
             self.__items = transactionItems.map { transactionItem in
@@ -266,6 +292,7 @@ class TransactionsViewModel: ObservableObject {
             }
 
             self.__reportItemData()
+            self.__isLoaded = true
 
             if loadedMore {
                 self.__loadMoreRequested = false

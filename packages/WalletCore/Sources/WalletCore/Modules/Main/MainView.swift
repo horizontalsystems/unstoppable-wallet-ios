@@ -4,7 +4,6 @@ struct MainView: View {
     @StateObject var viewModel = MainViewModel()
     @StateObject var badgeViewModel = MainBadgeViewModel()
     @StateObject var walletViewModel = WalletViewModel()
-    @StateObject private var activityViewModel = ActivityViewModel()
     @StateObject var multiSwapViewModel = MultiSwapViewModel()
     @StateObject var splitSwapViewModel = SplitSwapViewModel()
 
@@ -152,10 +151,8 @@ struct MainView: View {
     }
 
     private func onTapHistory() {
-        let activityViewModel = activityViewModel
-
         Coordinator.shared.present { isPresented in
-            MainActivityView(viewModel: activityViewModel, isPresented: isPresented)
+            MainActivityView(isPresented: isPresented)
         }
         stat(page: .transactions, event: .open(page: .transactions))
     }

@@ -21,6 +21,8 @@ class SwapHistoryViewModel: ObservableObject {
     private var __allLoaded = false
 
     @Published var sections = [Section]()
+    /// false until the first page is published, so the view does not show the empty placeholder while loading
+    @Published private(set) var isLoaded = false
 
     var transactionFilter: TransactionFilter {
         didSet {
@@ -36,6 +38,19 @@ class SwapHistoryViewModel: ObservableObject {
         didSet {
             DispatchQueue.main.async { [__sections] in
                 self.sections = __sections
+            }
+        }
+    }
+
+    /// set after `__sections`, so on main the first page is published before `isLoaded` turns true
+    private var __isLoaded = false {
+        didSet {
+            guard __isLoaded != oldValue else {
+                return
+            }
+
+            DispatchQueue.main.async { [__isLoaded] in
+                self.isLoaded = __isLoaded
             }
         }
     }
@@ -173,6 +188,7 @@ class SwapHistoryViewModel: ObservableObject {
         __items.append(contentsOf: newItems)
 
         __reportItemData()
+        __isLoaded = true
 
         if newItems.count < Self.pageLimit {
             __allLoaded = true
@@ -186,6 +202,7 @@ class SwapHistoryViewModel: ObservableObject {
 
         guard __accountId != nil else {
             __reportItemData()
+            __isLoaded = true
             return
         }
 
