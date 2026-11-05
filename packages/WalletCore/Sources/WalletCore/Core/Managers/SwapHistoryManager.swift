@@ -8,6 +8,7 @@ public class SwapHistoryManager {
     private var cancellables = Set<AnyCancellable>()
     private var syncTimer: AnyCancellable?
     private var isSyncing = false
+    private var syncRequested = false
 
     private let swapUpdateSubject = PassthroughSubject<Swap, Never>()
 
@@ -96,6 +97,8 @@ public extension SwapHistoryManager {
 
     func sync() {
         guard !isSyncing else {
+            // the running sync may be for a previous account or miss a just-saved swap, so it is re-run once it ends
+            syncRequested = true
             return
         }
 
@@ -110,7 +113,16 @@ public extension SwapHistoryManager {
                 print(error)
             }
 
-            self?.isSyncing = false
+            guard let self else {
+                return
+            }
+
+            isSyncing = false
+
+            if syncRequested {
+                syncRequested = false
+                sync()
+            }
         }
     }
 
