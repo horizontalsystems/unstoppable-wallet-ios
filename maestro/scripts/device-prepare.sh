@@ -13,7 +13,7 @@
 set -euo pipefail
 
 DEVICE_TYPE="com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro"
-RUNTIME="com.apple.CoreSimulator.SimRuntime.iOS-26-5"
+RUNTIME="com.apple.CoreSimulator.SimRuntime.iOS-27-2"
 LOCALE="en_US"
 LANGUAGE="en-US"
 
