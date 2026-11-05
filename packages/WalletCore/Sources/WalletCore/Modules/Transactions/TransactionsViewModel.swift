@@ -160,6 +160,8 @@ class TransactionsViewModel: ObservableObject {
     private func __initPoolGroup() {
         __poolGroupDisposeBag = DisposeBag()
 
+        // not reported: the new load replaces the rows, and a failed one must not show the previous filter's rows
+        __items = []
         __lastRequestedCount = Self.pageLimit
         __loading = false
         __loadMoreRequested = true
