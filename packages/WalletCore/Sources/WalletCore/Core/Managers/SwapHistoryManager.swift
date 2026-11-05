@@ -16,6 +16,14 @@ public class SwapHistoryManager {
     init(accountManager: AccountManager, storage: SwapStorage) {
         self.accountManager = accountManager
         self.storage = storage
+
+        // only the active account's pending swaps are polled, so a newly active account needs its own sync
+        accountManager.activeAccountPublisher
+            .map { $0?.id }
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.sync() }
+            .store(in: &cancellables)
     }
 
     private func _sync() async throws {
