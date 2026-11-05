@@ -57,7 +57,7 @@ public extension CGFloat {
     static let iconSize48: CGFloat = 48
     static let iconSize72: CGFloat = 72
 
-    static let buttonSize56: CGFloat = 56
+    static let buttonSize64: CGFloat = 64
     static let buttonSize32: CGFloat = 32
 }
 

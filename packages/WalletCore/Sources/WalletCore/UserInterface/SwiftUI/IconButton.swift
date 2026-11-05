@@ -28,6 +28,7 @@ struct IconButton: View {
                 .foregroundColor(ThemeButton.foregroundColor(style: style, mode: mode, size: size, isEnabled: isEnabled))
                 .background(ThemeButton.backgroundColor(style: style, mode: mode, size: size, isEnabled: isEnabled))
                 .clipShape(Circle())
+                .themeButtonBorder(Circle(), style: style, mode: mode, isEnabled: isEnabled)
                 .opacity(configuration.isPressed ? 0.6 : 1)
                 .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
         }

@@ -32,8 +32,8 @@ struct ThemeButton: View {
                     .font(size.textStyle.font)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
+                    .offset(x: 0, y: size.textOffset)
             }
-            .offset(x: 0, y: size == .small ? -1 : 0)
         }
         .buttonStyle(ThemeButtonStyle(style: style, mode: mode, size: size))
     }
@@ -48,11 +48,12 @@ struct ThemeButton: View {
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
                 .frame(maxWidth: size == .medium ? .infinity : nil)
-                .padding(.horizontal, .margin16)
+                .padding(.horizontal, size.horizontalPadding)
                 .frame(height: size.size)
                 .foregroundColor(ThemeButton.foregroundColor(style: style, mode: mode, size: size, isEnabled: isEnabled))
                 .background(ThemeButton.backgroundColor(style: style, mode: mode, size: size, isEnabled: isEnabled))
                 .clipShape(Capsule(style: .continuous))
+                .themeButtonBorder(Capsule(style: .continuous), style: style, mode: mode, isEnabled: isEnabled)
                 .opacity(configuration.isPressed ? 0.6 : 1)
                 .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
         }
@@ -76,15 +77,30 @@ extension ThemeButton {
 
         var textStyle: TextStyle {
             switch self {
-            case .medium: return .headline2
+            case .medium: return .headlineB
             case .small: return .captionSB
             }
         }
 
         var size: CGFloat {
             switch self {
-            case .medium: return .buttonSize56
+            case .medium: return .buttonSize64
             case .small: return .buttonSize32
+            }
+        }
+
+        var horizontalPadding: CGFloat {
+            switch self {
+            case .medium: return .margin40
+            case .small: return .margin16
+            }
+        }
+
+        /// the small text sits 1pt above center (7pt top, 9pt bottom), its icon stays centered
+        var textOffset: CGFloat {
+            switch self {
+            case .medium: return 0
+            case .small: return -1
             }
         }
 
@@ -111,16 +127,17 @@ extension ThemeButton {
             }
 
             switch (style, size) {
+            case (.primary, _): return .themeWhite
+            case (.secondary, .medium): return .themeLawrence
             case (.secondary, .small): return .themeLeah
-            default: return .themeLawrence
             }
         case .transparent:
             guard isEnabled else {
-                return .themeGray
+                return .themeAndy
             }
 
             switch style {
-            case .primary: return .themeJacob
+            case .primary: return .themeOrange
             case .secondary: return .themeLeah
             }
         }
@@ -134,7 +151,7 @@ extension ThemeButton {
             }
 
             switch style {
-            case .primary: return .themeJacob
+            case .primary: return .themeOrange
             case .secondary:
                 switch size {
                 case .medium: return .themeLeah
@@ -142,6 +159,31 @@ extension ThemeButton {
                 }
             }
         case .transparent: return .clear
+        }
+    }
+
+    static func borderColor(style: Style, mode: Mode, isEnabled: Bool) -> Color? {
+        switch mode {
+        case .solid: return nil
+        case .transparent:
+            guard isEnabled else {
+                return .themeAndy
+            }
+
+            switch style {
+            case .primary: return .themeOrange
+            case .secondary: return .themeAndy
+            }
+        }
+    }
+}
+
+extension View {
+    func themeButtonBorder(_ shape: some InsettableShape, style: ThemeButton.Style, mode: ThemeButton.Mode, isEnabled: Bool) -> some View {
+        overlay {
+            if let borderColor = ThemeButton.borderColor(style: style, mode: mode, isEnabled: isEnabled) {
+                shape.strokeBorder(borderColor, lineWidth: .heightOneDp)
+            }
         }
     }
 }

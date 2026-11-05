@@ -41,6 +41,8 @@ public extension Color {
     static let themeOcean = Color("Ocean")
     static let themeNina = Color("Nina")
     static let themeRaina = Color("Raina")
+    static let themeOrange = Color("Orange")
+    static let themeWhite = Color.white
 
     static var themeBackgroundFromGradient: Color {
         .themeTyler

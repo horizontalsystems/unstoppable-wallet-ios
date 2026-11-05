@@ -8,6 +8,7 @@ public enum TextStyle {
     case subheadI
     case headline1
     case headline2
+    case headlineB
     case caption
     case captionSB
     case title2
@@ -23,6 +24,7 @@ public enum TextStyle {
         case .subheadI: return .manRopeFont(size: 14, weight: .medium).italic()
         case .headline1: return .manRopeFont(size: 20, weight: .semibold)
         case .headline2: return .manRopeFont(size: 16, weight: .semibold)
+        case .headlineB: return .manRopeFont(size: 16, weight: .bold)
         case .caption: return .manRopeFont(size: 12, weight: .regular)
         case .captionSB: return .manRopeFont(size: 12, weight: .semibold)
         case .title2: return .manRopeFont(size: 36, weight: .medium)
@@ -33,7 +35,7 @@ public enum TextStyle {
 
     var defaultColorStyle: ColorStyle {
         switch self {
-        case .body, .headline1, .headline2, .title2, .title3, .subheadSB, .microSB: return .primary
+        case .body, .headline1, .headline2, .headlineB, .title2, .title3, .subheadSB, .microSB: return .primary
         case .subhead, .subheadR, .subheadI, .caption, .captionSB: return .secondary
         }
     }

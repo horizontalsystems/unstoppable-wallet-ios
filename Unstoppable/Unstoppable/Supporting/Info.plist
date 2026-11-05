@@ -214,6 +214,7 @@
 	<string>${TWITTER_BEARER_TOKEN}</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Manrope-Bold.ttf</string>
 		<string>Manrope-Medium.ttf</string>
 		<string>Manrope-Regular.ttf</string>
 		<string>Manrope-SemiBold.ttf</string>

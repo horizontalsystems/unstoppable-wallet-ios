@@ -33,6 +33,7 @@ struct DropdownButton: View {
                 .foregroundColor(ThemeButton.foregroundColor(style: style, mode: mode, size: .small, isEnabled: isEnabled))
                 .background(ThemeButton.backgroundColor(style: style, mode: mode, size: .small, isEnabled: isEnabled))
                 .clipShape(Capsule(style: .continuous))
+                .themeButtonBorder(Capsule(style: .continuous), style: style, mode: mode, isEnabled: isEnabled)
                 .opacity(configuration.isPressed ? 0.6 : 1)
                 .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
         }

@@ -7,6 +7,7 @@ public extension Font {
         case .regular: return Font.custom("Manrope-Regular", size: size)
         case .medium: return Font.custom("Manrope-Medium", size: size)
         case .semibold: return Font.custom("Manrope-SemiBold", size: size)
+        case .bold: return Font.custom("Manrope-Bold", size: size)
         default: fatalError("Can't provide other weight for Manrope!")
         }
     }
@@ -17,6 +18,7 @@ public extension Font {
     static let themeTitle3: Font = .manRopeFont(size: 24, weight: .semibold)
     static let themeHeadline1: Font = .manRopeFont(size: 20, weight: .semibold)
     static let themeHeadline2: Font = .manRopeFont(size: 16, weight: .semibold)
+    static let themeHeadlineB: Font = .manRopeFont(size: 16, weight: .bold)
     static let themeBody: Font = .manRopeFont(size: 16, weight: .medium)
     static let themeSubhead1: Font = .manRopeFont(size: 14, weight: .medium)
     static let themeSubhead1I: Font = .manRopeFont(size: 14, weight: .medium).italic()
@@ -33,6 +35,7 @@ public extension UIFont {
         case .regular: return UIFont(name: "Manrope-Regular", size: size)!
         case .medium: return UIFont(name: "Manrope-Medium", size: size)!
         case .semibold: return UIFont(name: "Manrope-SemiBold", size: size)!
+        case .bold: return UIFont(name: "Manrope-Bold", size: size)!
         default: fatalError("Can't provide other weight for Manrope!")
         }
     }
@@ -43,6 +46,7 @@ public extension UIFont {
     static let title3: UIFont = .manRopeFont(ofSize: 24, weight: .semibold)
     static let headline1: UIFont = .manRopeFont(ofSize: 20, weight: .semibold)
     static let headline2: UIFont = .manRopeFont(ofSize: 16, weight: .semibold)
+    static let headlineB: UIFont = .manRopeFont(ofSize: 16, weight: .bold)
     static let body: UIFont = .manRopeFont(ofSize: 16, weight: .medium)
     static let subhead1: UIFont = .manRopeFont(ofSize: 14, weight: .medium)
     static let subhead1I: UIFont = .manRopeFont(ofSize: 14, weight: .medium).with(traits: .traitItalic)
