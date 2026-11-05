@@ -44,16 +44,7 @@ struct ScrollableTabHeaderView: View {
         .animation(.spring().speed(1.5), value: currentTabIndex)
     }
 
-    @ViewBuilder private func item(tab: Tab, isActive: Bool, namespace: Namespace.ID) -> some View {
-        if let accessibilityIdentifier = tab.accessibilityIdentifier {
-            itemContent(tab: tab, isActive: isActive, namespace: namespace)
-                .accessibilityIdentifier(accessibilityIdentifier)
-        } else {
-            itemContent(tab: tab, isActive: isActive, namespace: namespace)
-        }
-    }
-
-    private func itemContent(tab: Tab, isActive: Bool, namespace: Namespace.ID) -> some View {
+    private func item(tab: Tab, isActive: Bool, namespace: Namespace.ID) -> some View {
         ThemeText(
             tab.title,
             style: isActive || tab.highlighted ? .subheadSB : .subhead,
@@ -77,13 +68,6 @@ extension ScrollableTabHeaderView {
     struct Tab {
         let title: String
         let highlighted: Bool
-        let accessibilityIdentifier: String?
-
-        init(title: String, highlighted: Bool, accessibilityIdentifier: String? = nil) {
-            self.title = title
-            self.highlighted = highlighted
-            self.accessibilityIdentifier = accessibilityIdentifier
-        }
     }
 }
 

@@ -33,11 +33,8 @@ struct FolderTabHeaderView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 0) {
                     ForEach(tabs.indices, id: \.self) { index in
-                        item(tab: tabs[index], isActive: index == currentTabIndex)
+                        tabItem(index: index)
                             .id(index)
-                            .onTapGesture {
-                                currentTabIndex = index
-                            }
                     }
                 }
                 .padding(.horizontal, 16)
@@ -51,6 +48,22 @@ struct FolderTabHeaderView: View {
         }
         .padding(.top, 8)
         .background(Color.themeTyler)
+    }
+
+    @ViewBuilder private func tabItem(index: Int) -> some View {
+        let tab = tabs[index]
+        let content = item(tab: tab, isActive: index == currentTabIndex)
+            .onTapGesture {
+                currentTabIndex = index
+            }
+
+        if let accessibilityIdentifier = tab.accessibilityIdentifier {
+            content
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier(accessibilityIdentifier)
+        } else {
+            content
+        }
     }
 
     private func item(tab: Tab, isActive: Bool) -> some View {
@@ -78,10 +91,12 @@ extension FolderTabHeaderView {
     struct Tab {
         let title: String
         let icon: String?
+        let accessibilityIdentifier: String?
 
-        init(title: String, icon: String? = nil) {
+        init(title: String, icon: String? = nil, accessibilityIdentifier: String? = nil) {
             self.title = title
             self.icon = icon
+            self.accessibilityIdentifier = accessibilityIdentifier
         }
     }
 }

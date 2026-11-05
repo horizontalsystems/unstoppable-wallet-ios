@@ -19,19 +19,9 @@ extension MainActivityView {
             ThemeNavigationStack {
                 ThemeView(style: .list) {
                     VStack(spacing: 0) {
-                        ScrollableTabHeaderView(
-                            tabs: ActivityTab.allCases.map {
-                                .init(title: $0.title, highlighted: false, accessibilityIdentifier: TestTags.activityTab($0.rawValue))
-                            },
-                            currentTabIndex: Binding(
-                                get: {
-                                    ActivityTab.allCases.firstIndex(of: viewModel.selectedTab) ?? 0
-                                },
-                                set: { index in
-                                    viewModel.selectedTab = ActivityTab.allCases[index]
-                                }
-                            )
-                        )
+                        FolderTabHeaderView(items: ActivityTab.allCases, currentItem: $viewModel.selectedTab) {
+                            FolderTabHeaderView.Tab(title: $0.title, accessibilityIdentifier: TestTags.activityTab($0.rawValue))
+                        }
 
                         content(tab: viewModel.selectedTab)
                     }
