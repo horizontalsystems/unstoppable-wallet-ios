@@ -6,6 +6,8 @@ public class SwapHistoryManager {
     private let accountManager: AccountManager
     private let storage: SwapStorage
     private var cancellables = Set<AnyCancellable>()
+
+    // sync state, only touched on the main queue
     private var syncTimer: AnyCancellable?
     private var isSyncing = false
     private var syncRequested = false
@@ -27,15 +29,16 @@ public class SwapHistoryManager {
             .store(in: &cancellables)
     }
 
-    private func _sync() async throws {
+    /// Returns whether any swap is still pending and needs another sync
+    private func _sync() async throws -> Bool {
         guard let account = accountManager.activeAccount else {
-            return
+            return false
         }
 
         let pendingSwaps = try storage.pendingSwaps(accountId: account.id)
 
         guard !pendingSwaps.isEmpty else {
-            return
+            return false
         }
 
         var hasStillPendingSwaps = false
@@ -67,7 +70,42 @@ public class SwapHistoryManager {
             }
         }
 
-        if hasStillPendingSwaps {
+        return hasStillPendingSwaps
+    }
+
+    private func startSync() {
+        guard !isSyncing else {
+            // the running sync may be for a previous account or miss a just-saved swap, so it is re-run once it ends
+            syncRequested = true
+            return
+        }
+
+        syncTimer?.cancel()
+        syncTimer = nil
+        isSyncing = true
+
+        Task { [weak self] in
+            var hasPendingSwaps = false
+
+            do {
+                hasPendingSwaps = try await self?._sync() ?? false
+            } catch {
+                print(error)
+            }
+
+            DispatchQueue.main.async {
+                self?.handleSyncFinished(hasPendingSwaps: hasPendingSwaps)
+            }
+        }
+    }
+
+    private func handleSyncFinished(hasPendingSwaps: Bool) {
+        isSyncing = false
+
+        if syncRequested {
+            syncRequested = false
+            startSync()
+        } else if hasPendingSwaps {
             scheduleTimer()
         }
     }
@@ -96,33 +134,8 @@ public extension SwapHistoryManager {
     }
 
     func sync() {
-        guard !isSyncing else {
-            // the running sync may be for a previous account or miss a just-saved swap, so it is re-run once it ends
-            syncRequested = true
-            return
-        }
-
-        syncTimer?.cancel()
-        syncTimer = nil
-        isSyncing = true
-
-        Task { [weak self] in
-            do {
-                try await self?._sync()
-            } catch {
-                print(error)
-            }
-
-            guard let self else {
-                return
-            }
-
-            isSyncing = false
-
-            if syncRequested {
-                syncRequested = false
-                sync()
-            }
+        DispatchQueue.main.async { [weak self] in
+            self?.startSync()
         }
     }
 
