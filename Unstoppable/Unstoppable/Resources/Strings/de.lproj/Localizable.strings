@@ -886,11 +886,6 @@
 "swap.dex_info.header_price_impact" = "Preisauswirkungen";
 "swap.dex_info.content_price_impact" = "Erwartete Preisabweichung von einem angezeigten Preis, steigt normalerweise mit dem Tauschbetrag.";
 
-// Swap History
-
-"swap_history.status.depositing" = "Einzahlung läuft…";
-"swap_history.status.swapping" = "Tausch läuft…";
-
 // Swap Info
 
 "swap_info.title" = "Swap-Info";
@@ -904,6 +899,7 @@
 "swap_info.receive" = "Empfangen %@";
 "swap_info.refund" = "Rückerstattung %@";
 "swap_info.unknown" = "Unbekannt";
+"swap_info.pending_step" = "%@...";
 "swap_info.request_refund" = "Rückerstattung anfordern";
 "swap_info.request_refund.description" = "Kopieren Sie die Details des Rückerstattungsantrags und kontaktieren Sie die Swap-Route, um eine Rückerstattung anzufordern.";
 "swap_info.swap_id" = "Swap-ID";
@@ -1504,8 +1500,8 @@
 
 "transactions.receive" = "Empfangen";
 "transactions.send" = "Gesendet";
-"transactions.burn" = "Burn";
-"transactions.mint" = "Mint";
+"transactions.burn" = "Verbrannt";
+"transactions.mint" = "Geprägt";
 "transactions.approve" = "Bestätigt";
 "transactions.swap" = "Swapped";
 "transactions.shield" = "Proteger";
@@ -1517,14 +1513,14 @@
 "transactions.contract_deploy" = "Vertragsvergabe";
 "transactions.account_created" = "Account erstellt";
 
-"transactions.to" = "An %@";
-"transactions.from" = "Von %@";
-"transactions.funder" = "Finanzierer: %@";
-"transactions.account" = "Konto: %@";
+"transactions.to" = "an %@";
+"transactions.from" = "von %@";
+"transactions.to_unknown" = "an unbekannt";
+"transactions.from_unknown" = "von unbekannt";
 
 "transactions.multiple" = "Mehrere";
 
-"transactions.value.unlimited" = "unbegrenzt";
+"transactions.value.unlimited" = "Unbegrenzt";
 
 "transactions.today" = "Heute";
 "transactions.yesterday" = "Gestern";
@@ -1536,6 +1532,23 @@
 "transactions.stellar_transaction.title" = "Stellar-Transaktion";
 "transactions.xrp_transaction.title" = "XRP Ledger-Transaktion";
 "transactions.trust_set" = "Vertrauenslinie";
+"transactions.change_trust" = "Trust ändern";
+"transactions.pending.receiving" = "Empfangen...";
+"transactions.pending.sending" = "Senden...";
+"transactions.pending.approving" = "Genehmigen...";
+"transactions.pending.shielding" = "Abschirmen...";
+"transactions.pending.unshielding" = "Abschirmung aufheben...";
+"transactions.pending.swapping" = "Tauschen...";
+"transactions.pending.generic" = "Ausstehend...";
+"transactions.failed.transfer" = "Überweisung fehlgeschlagen";
+"transactions.failed.approval" = "Genehmigung fehlgeschlagen";
+"transactions.failed.swap" = "Tausch fehlgeschlagen";
+"transactions.failed.transaction" = "Transaktion fehlgeschlagen";
+"transactions.failed.shielding" = "Abschirmung fehlgeschlagen";
+"transactions.failed.unshielding" = "Aufhebung der Abschirmung fehlgeschlagen";
+"transactions.to_yourself" = "An dich selbst";
+"transactions.shielded" = "Abgeschirmt";
+"transactions.unshielded" = "Abschirmung aufgehoben";
 "tx_info.operation_type" = "Operationstyp";
 "transactions.contract" = "Vertrag";
 

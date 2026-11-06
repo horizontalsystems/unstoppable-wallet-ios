@@ -9,6 +9,9 @@ class SwapHistoryViewModel: ObservableObject {
     private let manager = Core.shared.swapHistoryManager
     private let marketKit = Core.shared.marketKit
     private let accountManager = Core.shared.accountManager
+    private let balanceHiddenManager = Core.shared.balanceHiddenManager
+    private let evmLabelManager = Core.shared.evmLabelManager
+    private let contactLabelService = TransactionsContactLabelService(contactManager: Core.shared.contactManager)
     private let rateService = HistoricalRateService(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager)
     private let queue = DispatchQueue(label: "\(AppConfig.label).swap-history-view-model", qos: .userInitiated)
     private var cancellables = Set<AnyCancellable>()
@@ -60,6 +63,17 @@ class SwapHistoryViewModel: ObservableObject {
         self.transactionFilter = transactionFilter
         __filter = Filter(transactionFilter: transactionFilter)
 
+        // set up before the first load is queued, so no change to what it reads (balance hidden, contacts) is missed once it starts
+        subscribe(disposeBag, balanceHiddenManager.balanceHiddenObservable) { [weak self] _ in self?.reportItemData() }
+
+        // a recipient added to or renamed in the contact book shows under its new name;
+        // `dropFirst` skips the replayed current state, which the load reads anyway
+        contactLabelService.statePublisher
+            .dropFirst()
+            .receive(on: queue)
+            .sink { [weak self] _ in self?.__reportItemData() }
+            .store(in: &cancellables)
+
         queue.async {
             self.__reload()
         }
@@ -77,12 +91,19 @@ class SwapHistoryViewModel: ObservableObject {
         subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
     }
 
+    private func reportItemData() {
+        queue.async {
+            self.__reportItemData()
+        }
+    }
+
     private func handleUpdated(swap: Swap) {
         queue.async {
             if let item = self.__items.first(where: { $0.swap.uid == swap.uid }) {
                 item.swap = swap
+                item.currencyValueIn = self.currencyValue(amount: swap.amountIn, token: swap.tokenIn, rate: self.rate(token: swap.tokenIn, date: swap.date))
                 item.currencyValueOut = self.currencyValue(amount: swap.amountOut, token: swap.tokenOut, rate: self.rate(token: swap.tokenOut, date: swap.date))
-                self.__reportItem(item: item)
+                self.__reportItems([item])
                 return
             }
 
@@ -135,25 +156,29 @@ class SwapHistoryViewModel: ObservableObject {
 
     private func handle(rate: (RateKey, CurrencyValue)) {
         queue.async {
+            // every swap of the coin and day takes the rate; the rows are published together
+            var updatedItems = [Item]()
+
             for item in self.__items {
                 let swap = item.swap
+                var updated = false
 
-                if rate.0 == RateKey(token: swap.tokenIn, date: swap.date) {
-                    if item.currencyValueIn == nil {
-                        item.currencyValueIn = self.currencyValue(amount: swap.amountIn, token: swap.tokenIn, rate: rate.1)
-                        self.__reportItem(item: item)
-                    }
-                    break
+                if rate.0 == RateKey(token: swap.tokenIn, date: swap.date), item.currencyValueIn == nil {
+                    item.currencyValueIn = self.currencyValue(amount: swap.amountIn, token: swap.tokenIn, rate: rate.1)
+                    updated = true
                 }
 
-                if rate.0 == RateKey(token: swap.tokenOut, date: swap.date) {
-                    if item.currencyValueOut == nil {
-                        item.currencyValueOut = self.currencyValue(amount: swap.amountOut, token: swap.tokenOut, rate: rate.1)
-                        self.__reportItem(item: item)
-                    }
-                    break
+                if rate.0 == RateKey(token: swap.tokenOut, date: swap.date), item.currencyValueOut == nil {
+                    item.currencyValueOut = self.currencyValue(amount: swap.amountOut, token: swap.tokenOut, rate: rate.1)
+                    updated = true
+                }
+
+                if updated {
+                    updatedItems.append(item)
                 }
             }
+
+            self.__reportItems(updatedItems)
         }
     }
 
@@ -234,12 +259,28 @@ class SwapHistoryViewModel: ObservableObject {
         __sections = sectionViewItems(viewItems: viewItems)
     }
 
-    private func __reportItem(item: Item) {
-        for (sectionIndex, section) in __sections.enumerated() {
-            if let rowIndex = section.viewItems.firstIndex(where: { $0.swap.uid == item.swap.uid }) {
-                __sections[sectionIndex].viewItems[rowIndex] = __viewItem(item: item)
-                break
+    /// Rebuilds the rows of `items` in a copy of the sections and publishes it once
+    private func __reportItems(_ items: [Item]) {
+        guard !items.isEmpty else {
+            return
+        }
+
+        var sections = __sections
+        var replaced = false
+
+        for item in items {
+            for (sectionIndex, section) in sections.enumerated() {
+                if let rowIndex = section.viewItems.firstIndex(where: { $0.swap.uid == item.swap.uid }) {
+                    sections[sectionIndex].viewItems[rowIndex] = __viewItem(item: item)
+                    replaced = true
+                    break
+                }
             }
+        }
+
+        // publish only when a row changed
+        if replaced {
+            __sections = sections
         }
     }
 
@@ -261,25 +302,50 @@ class SwapHistoryViewModel: ObservableObject {
     }
 
     private func __viewItem(item: Item) -> ViewItem {
-        ViewItem(
-            swap: item.swap,
-            amountIn: ValueFormatter.instance.formatShort(value: item.swap.amountIn),
-            amountOut: ValueFormatter.instance.formatShort(value: item.swap.amountOut),
-            fiatIn: item.currencyValueIn?.formattedShort,
-            fiatOut: item.currencyValueOut?.formattedShort
+        let swap = item.swap
+        let amountIn = ValueFormatter.instance.formatShort(value: swap.amountIn)
+        let amountOut = ValueFormatter.instance.formatShort(value: swap.amountOut)
+        let fiatIn = item.currencyValueIn?.formattedShort
+        // the steps only give the subtitle of a pending swap
+        let legs = SwapCellViewItemFactory.state(status: swap.status) == .pending ? SwapLegsBuilder.withoutUrls.legs(swap: swap) : []
+
+        return ViewItem(
+            swap: swap,
+            cell: SwapCellViewItemFactory.viewItem(
+                swap: swap,
+                legs: legs,
+                amountIn: amountIn,
+                amountOut: amountOut,
+                fiatIn: fiatIn,
+                recipientName: recipientName(swap: swap),
+                balanceHidden: balanceHiddenManager.balanceHidden
+            )
         )
+    }
+
+    /// The contact name or label of the address a Private Send or CrossPay delivers to, else the shortened address
+    private func recipientName(swap: Swap) -> String? {
+        switch swap.operation {
+        case .privateSend, .crossPay:
+            let address = SwapCellViewItemFactory.recipientAddress(swap: swap)
+            let blockchainType = swap.tokenOut.blockchainType
+            return contactLabelService.contactData(for: address, blockchainType: blockchainType).name ?? evmLabelManager.mapped(address: address)
+        case .swap, .splitSwap:
+            return nil
+        }
     }
 
     private func sectionViewItems(viewItems: [ViewItem]) -> [Section] {
         var sectionViewItems = [Section]()
-        var lastDaysAgo = -1
+        // nil before the first row: a row dated after today (-1 days ago) still opens a section
+        var lastDaysAgo: Int?
 
         for viewItem in viewItems {
             let daysAgo = daysFrom(date: viewItem.swap.date)
 
             if daysAgo != lastDaysAgo {
                 sectionViewItems.append(Section(id: viewItem.swap.date, title: dateHeaderTitle(daysAgo: daysAgo), viewItems: [viewItem]))
-            } else if !sectionViewItems.isEmpty {
+            } else {
                 sectionViewItems[sectionViewItems.count - 1].viewItems.append(viewItem)
             }
 
@@ -319,22 +385,20 @@ extension SwapHistoryViewModel {
         return CoreDebugStubs.trackActionRequiredSwap(from: swap)
     }
 
-    func onDisplay(section: Section, viewItem: ViewItem) {
+    /// Finds the row by its swap across every section, so a row whose section moved still loads more and fetches its rate
+    func onDisplay(viewItem: ViewItem) {
         queue.async {
-            guard let sectionIndex = self.__sections.firstIndex(where: { $0.id == section.id }),
-                  let index = self.__sections[sectionIndex].viewItems.firstIndex(where: { $0.swap.uid == viewItem.swap.uid })
-            else {
-                return
+            var offset = 0
+
+            for section in self.__sections {
+                if let index = section.viewItems.firstIndex(where: { $0.swap.uid == viewItem.swap.uid }) {
+                    self.__loadMoreIfRequired(index: offset + index)
+                    self.__fetchRate(index: offset + index)
+                    return
+                }
+
+                offset += section.viewItems.count
             }
-
-            var itemIndex = index
-
-            for i in 0 ..< sectionIndex {
-                itemIndex += self.__sections[i].viewItems.count
-            }
-
-            self.__loadMoreIfRequired(index: itemIndex)
-            self.__fetchRate(index: itemIndex)
         }
     }
 }
@@ -407,10 +471,7 @@ extension SwapHistoryViewModel {
 
     struct ViewItem: Identifiable {
         var swap: Swap
-        let amountIn: String?
-        let amountOut: String?
-        var fiatIn: String?
-        var fiatOut: String?
+        let cell: ActivityCellViewItem
 
         var id: String {
             swap.uid

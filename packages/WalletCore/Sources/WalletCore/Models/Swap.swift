@@ -1,7 +1,6 @@
 import Foundation
 import GRDB
 import MarketKit
-import SwiftUI
 
 public struct Swap: Hashable {
     public let uid: String
@@ -85,31 +84,10 @@ public struct Swap: Hashable {
             "swap_info.status.\(rawValue)".localized
         }
 
-        var historyTitle: String {
-            switch self {
-            case .notStarted, .signed: "swap_history.status.depositing".localized
-            case .pending, .swapping: "swap_history.status.swapping".localized
-            default: title
-            }
-        }
-
         public var isExpected: Bool {
             switch self {
             case .notStarted, .signed, .pending, .swapping, .completed: true
             default: false
-            }
-        }
-
-        @ViewBuilder var view: some View {
-            switch self {
-            case .completed: ThemeImage("done_e_filled", size: 20, colorStyle: .green)
-            case .failed, .actionRequired: ThemeImage("warning_filled", size: 20, colorStyle: .red)
-            case .refunded: ThemeImage("arrow_return", size: 20, colorStyle: .secondary)
-            case .expired: ThemeImage("warning_filled", size: 20, colorStyle: .secondary)
-            default: ProgressView(value: 0.55)
-                .progressViewStyle(DeterminiteSpinnerStyle())
-                .frame(width: 20, height: 20)
-                .spinning()
             }
         }
     }

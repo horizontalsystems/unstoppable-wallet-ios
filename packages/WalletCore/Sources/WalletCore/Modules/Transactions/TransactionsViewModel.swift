@@ -218,13 +218,28 @@ class TransactionsViewModel: ObservableObject {
         __sections = sectionViewItems(viewItems: viewItems)
     }
 
-    private func __reportItem(item: Item) {
-        for (sectionIndex, section) in __sections.enumerated() {
-            if let rowIndex = section.viewItems.firstIndex(where: { $0.id == item.record.id }) {
-                let viewItem = viewItemFactory.viewItem(item: item, balanceHidden: balanceHiddenManager.balanceHidden)
-                __sections[sectionIndex].viewItems[rowIndex] = viewItem
-                break
+    /// Rebuilds the rows of `items` in a copy of the sections and publishes it once
+    private func __reportItems(_ items: [Item]) {
+        guard !items.isEmpty else {
+            return
+        }
+
+        var sections = __sections
+        var replaced = false
+
+        for item in items {
+            for (sectionIndex, section) in sections.enumerated() {
+                if let rowIndex = section.viewItems.firstIndex(where: { $0.id == item.viewItemId }) {
+                    sections[sectionIndex].viewItems[rowIndex] = viewItemFactory.viewItem(item: item, balanceHidden: balanceHiddenManager.balanceHidden)
+                    replaced = true
+                    break
+                }
             }
+        }
+
+        // publish only when a row changed
+        if replaced {
+            __sections = sections
         }
     }
 
@@ -307,16 +322,23 @@ class TransactionsViewModel: ObservableObject {
 
     private func handleUpdated(transactionItems: [TransactionItem]) {
         queue.async {
+            var updatedItems = [Item]()
+
             for transactionItem in transactionItems {
+                // by source and uid: the same transaction can reach the list from two sources
+                let viewItemId = Self.viewItemId(record: transactionItem.record)
+
                 for item in self.__items {
-                    if item.record == transactionItem.record {
+                    if item.viewItemId == viewItemId {
                         item.transactionItem = transactionItem
                         item.currencyValue = self.currencyValue(record: transactionItem.record, rate: self.rate(record: transactionItem.record))
-                        self.__reportItem(item: item)
+                        updatedItems.append(item)
                         break
                     }
                 }
             }
+
+            self.__reportItems(updatedItems)
         }
     }
 
@@ -338,13 +360,17 @@ class TransactionsViewModel: ObservableObject {
 
     private func handle(rate: (RateKey, CurrencyValue)) {
         queue.async {
-            for item in self.__items {
+            // every row of the coin and day still without fiat takes the rate; the rows are published together
+            var updatedItems = [Item]()
+
+            for item in self.__items where item.currencyValue == nil {
                 if let rateKey = self.rateKey(record: item.record), rateKey == rate.0 {
                     item.currencyValue = self.currencyValue(record: item.record, rate: rate.1)
-                    self.__reportItem(item: item)
-                    break
+                    updatedItems.append(item)
                 }
             }
+
+            self.__reportItems(updatedItems)
         }
     }
 
@@ -386,14 +412,15 @@ class TransactionsViewModel: ObservableObject {
 
     private func sectionViewItems(viewItems: [ViewItem]) -> [Section] {
         var sectionViewItems = [Section]()
-        var lastDaysAgo = -1
+        // nil before the first row: a row dated after today (-1 days ago) still opens a section
+        var lastDaysAgo: Int?
 
         for viewItem in viewItems {
             let daysAgo = daysFrom(date: viewItem.date)
 
             if daysAgo != lastDaysAgo {
                 sectionViewItems.append(Section(id: viewItem.date, title: dateHeaderTitle(daysAgo: daysAgo), viewItems: [viewItem]))
-            } else if !sectionViewItems.isEmpty {
+            } else {
                 sectionViewItems[sectionViewItems.count - 1].viewItems.append(viewItem)
             }
 
@@ -443,28 +470,24 @@ extension TransactionsViewModel {
 
     func record(id: String) -> TransactionRecord? {
         queue.sync {
-            __items.first(where: { $0.record.uid == id })?.record
+            __items.first(where: { $0.viewItemId == id })?.record
         }
     }
 
-    func onDisplay(section: Section, viewItem: ViewItem) {
+    /// Finds the row by its id across every section, so a row whose section moved still loads more and fetches its rate
+    func onDisplay(viewItem: ViewItem) {
         queue.async {
-            guard let sectionIndex = self.__sections.firstIndex(where: { $0.id == section.id }),
-                  let index = self.__sections[sectionIndex].viewItems.firstIndex(where: { $0.id == viewItem.id })
-            else {
-                return
+            var offset = 0
+
+            for section in self.__sections {
+                if let index = section.viewItems.firstIndex(where: { $0.id == viewItem.id }) {
+                    self.__loadMoreIfRequired(index: offset + index)
+                    self.__fetchRate(index: offset + index)
+                    return
+                }
+
+                offset += section.viewItems.count
             }
-
-            var itemIndex = index
-
-            for i in 0 ..< sectionIndex {
-                itemIndex += self.__sections[i].viewItems.count
-            }
-
-            // print("ON DISPLAY: \(sectionIndex) - \(index) --- \(itemIndex)")
-
-            self.__loadMoreIfRequired(index: itemIndex)
-            self.__fetchRate(index: itemIndex)
         }
     }
 }
@@ -473,6 +496,8 @@ extension TransactionsViewModel {
     class Item {
         var transactionItem: TransactionItem
         var currencyValue: CurrencyValue?
+        /// `viewItemId(record:)`, made once: later updates keep the record's source and uid
+        let viewItemId: String
 
         var record: TransactionRecord {
             transactionItem.record
@@ -481,6 +506,7 @@ extension TransactionsViewModel {
         init(transactionItem: TransactionItem, currencyValue: CurrencyValue?) {
             self.transactionItem = transactionItem
             self.currencyValue = currencyValue
+            viewItemId = TransactionsViewModel.viewItemId(record: transactionItem.record)
         }
     }
 
@@ -490,38 +516,19 @@ extension TransactionsViewModel {
         var viewItems: [ViewItem]
     }
 
-    struct ViewItem: Hashable {
-        var id: String
+    /// Unique within the list: one transaction can reach it from two sources of a blockchain, such as
+    /// a transfer between two Bitcoin derivations of a wallet, with the same `uid` in each
+    static func viewItemId(record: TransactionRecord) -> String {
+        "\(record.source.blockchainType.uid)|\(record.source.meta ?? "")|\(record.uid)"
+    }
+
+    struct ViewItem: Identifiable, Equatable {
+        /// `viewItemId(record:)`: the row's identity and the key `record(id:)` looks it up by
+        let id: String
+        /// the record's own uid, which the row's test tag is made from
+        let uid: String
         let date: Date
-        let iconType: IconType
-        var progress: Float?
-        var title: String
-        let subTitle: String
-        let primaryValue: Value?
-        let secondaryValue: Value?
-        let doubleSpend: Bool
-        let sentToSelf: Bool
-        let locked: Bool?
-        let spam: Bool
-    }
-
-    enum IconType: Hashable {
-        case icon(url: String?, alternativeUrl: String?, placeholderImageName: String, type: IconView.IconType)
-        case doubleIcon(frontType: IconView.IconType, frontUrl: String?, frontAlternativeUrl: String?, frontPlaceholder: String, backType: IconView.IconType, backUrl: String?, backAlternativeUrl: String?, backPlaceholder: String)
-        case localIcon(imageName: String?)
-        case failedIcon
-    }
-
-    struct Value: Hashable {
-        let text: String
-        let type: ValueType
-    }
-
-    enum ValueType {
-        case incoming
-        case outgoing
-        case neutral
-        case secondary
+        let cell: ActivityCellViewItem
     }
 }
 

@@ -886,11 +886,6 @@
 "swap.dex_info.header_price_impact" = "Fiyat Etkisi";
 "swap.dex_info.content_price_impact" = "Gösterilen bir fiyattan beklenen fiyat sapması tipik olarak takas tutarı ile artar.";
 
-// Swap History
-
-"swap_history.status.depositing" = "Para yatırılıyor…";
-"swap_history.status.swapping" = "Takas yapılıyor…";
-
 // Swap Info
 
 "swap_info.title" = "Swap Bilgisi";
@@ -904,6 +899,7 @@
 "swap_info.receive" = "Al %@";
 "swap_info.refund" = "İade %@";
 "swap_info.unknown" = "Bilinmiyor";
+"swap_info.pending_step" = "%@...";
 "swap_info.request_refund" = "İade Talep Et";
 "swap_info.request_refund.description" = "İade talebi ayrıntılarını kopyalayın ve iade talep etmek için takas rotasıyla iletişime geçin.";
 "swap_info.swap_id" = "Swap ID";
@@ -1504,8 +1500,8 @@
 
 "transactions.receive" = "Al";
 "transactions.send" = "Gönderildi";
-"transactions.burn" = "Burn";
-"transactions.mint" = "Mint";
+"transactions.burn" = "Yakıldı";
+"transactions.mint" = "Basıldı";
 "transactions.approve" = "Onayla";
 "transactions.swap" = "Takas Edildi";
 "transactions.shield" = "Shield";
@@ -1519,12 +1515,12 @@
 
 "transactions.to" = "%@ kişisine";
 "transactions.from" = "%@ kişisinden";
-"transactions.funder" = "Fonlayan: %@";
-"transactions.account" = "Hesap: %@";
+"transactions.to_unknown" = "bilinmeyen kişiye";
+"transactions.from_unknown" = "bilinmeyen kişiden";
 
 "transactions.multiple" = "Çoklu";
 
-"transactions.value.unlimited" = "sınırsız";
+"transactions.value.unlimited" = "Sınırsız";
 
 "transactions.today" = "Bugün";
 "transactions.yesterday" = "Dün";
@@ -1536,6 +1532,23 @@
 "transactions.stellar_transaction.title" = "Stellar İşlemi";
 "transactions.xrp_transaction.title" = "XRP Ledger İşlemi";
 "transactions.trust_set" = "Güven Satırı";
+"transactions.change_trust" = "Güveni Değiştir";
+"transactions.pending.receiving" = "Alınıyor...";
+"transactions.pending.sending" = "Gönderiliyor...";
+"transactions.pending.approving" = "Onaylanıyor...";
+"transactions.pending.shielding" = "Korumaya alınıyor...";
+"transactions.pending.unshielding" = "Koruma kaldırılıyor...";
+"transactions.pending.swapping" = "Takas ediliyor...";
+"transactions.pending.generic" = "Beklemede...";
+"transactions.failed.transfer" = "Transfer başarısız";
+"transactions.failed.approval" = "Onay başarısız";
+"transactions.failed.swap" = "Takas başarısız";
+"transactions.failed.transaction" = "İşlem başarısız";
+"transactions.failed.shielding" = "Koruma başarısız";
+"transactions.failed.unshielding" = "Koruma kaldırma başarısız";
+"transactions.to_yourself" = "Kendinize";
+"transactions.shielded" = "Korumaya alındı";
+"transactions.unshielded" = "Koruma kaldırıldı";
 "tx_info.operation_type" = "İşlem Türü";
 "transactions.contract" = "Sözleşme";
 

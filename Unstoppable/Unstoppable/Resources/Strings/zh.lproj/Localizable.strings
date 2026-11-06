@@ -886,11 +886,6 @@
 "swap.dex_info.header_price_impact" = "价格影响";
 "swap.dex_info.content_price_impact" = "预期价格和显示价格的偏差通常会增加互兑金额。";
 
-// Swap History
-
-"swap_history.status.depositing" = "充值中…";
-"swap_history.status.swapping" = "兑换中…";
-
 // Swap Info
 
 "swap_info.title" = "兑换详情";
@@ -904,6 +899,7 @@
 "swap_info.receive" = "接收 %@";
 "swap_info.refund" = "退款 %@";
 "swap_info.unknown" = "未知";
+"swap_info.pending_step" = "%@...";
 "swap_info.request_refund" = "申请退款";
 "swap_info.request_refund.description" = "复制退款请求详情并联系兑换路由以申请退款。";
 "swap_info.swap_id" = "兑换 ID";
@@ -1504,8 +1500,8 @@
 
 "transactions.receive" = "接收";
 "transactions.send" = "已发送";
-"transactions.burn" = "燃烧";
-"transactions.mint" = "薄荷绿";
+"transactions.burn" = "已销毁";
+"transactions.mint" = "已铸造";
 "transactions.approve" = "批准";
 "transactions.swap" = "已交换";
 "transactions.shield" = "屏蔽";
@@ -1519,8 +1515,8 @@
 
 "transactions.to" = "接收人%@";
 "transactions.from" = "发送人%@";
-"transactions.funder" = "資助者：%@";
-"transactions.account" = "账户 %@";
+"transactions.to_unknown" = "接收人未知";
+"transactions.from_unknown" = "发送人未知";
 
 "transactions.multiple" = "多种";
 
@@ -1536,6 +1532,23 @@
 "transactions.stellar_transaction.title" = "Stellar 交易";
 "transactions.xrp_transaction.title" = "XRP账本交易";
 "transactions.trust_set" = "信任线";
+"transactions.change_trust" = "更改信任";
+"transactions.pending.receiving" = "接收中...";
+"transactions.pending.sending" = "发送中...";
+"transactions.pending.approving" = "授权中...";
+"transactions.pending.shielding" = "屏蔽中...";
+"transactions.pending.unshielding" = "取消屏蔽中...";
+"transactions.pending.swapping" = "兑换中...";
+"transactions.pending.generic" = "待处理...";
+"transactions.failed.transfer" = "转账失败";
+"transactions.failed.approval" = "授权失败";
+"transactions.failed.swap" = "兑换失败";
+"transactions.failed.transaction" = "交易失败";
+"transactions.failed.shielding" = "屏蔽失败";
+"transactions.failed.unshielding" = "取消屏蔽失败";
+"transactions.to_yourself" = "转给自己";
+"transactions.shielded" = "已屏蔽";
+"transactions.unshielded" = "已取消屏蔽";
 "tx_info.operation_type" = "操作类型";
 "transactions.contract" = "合同";
 

@@ -886,11 +886,6 @@
 "swap.dex_info.header_price_impact" = "Price Impact";
 "swap.dex_info.content_price_impact" = "The expected price deviation from a shown price typically increases with the swap amount.";
 
-// Swap History
-
-"swap_history.status.depositing" = "Depositing…";
-"swap_history.status.swapping" = "Swapping…";
-
 // Swap Info
 
 "swap_info.title" = "Swap Info";
@@ -904,6 +899,7 @@
 "swap_info.receive" = "Receive %@";
 "swap_info.refund" = "Refund %@";
 "swap_info.unknown" = "Unknown";
+"swap_info.pending_step" = "%@...";
 "swap_info.request_refund" = "Request Refund";
 "swap_info.request_refund.description" = "Copy the refund request details and contact the swap route to request a refund.";
 "swap_info.swap_id" = "Swap ID";
@@ -1517,14 +1513,14 @@
 "transactions.contract_deploy" = "Contract Deploy";
 "transactions.account_created" = "Account Created";
 
-"transactions.to" = "To %@";
-"transactions.from" = "From %@";
-"transactions.funder" = "Funder: %@";
-"transactions.account" = "Account: %@";
+"transactions.to" = "to %@";
+"transactions.from" = "from %@";
+"transactions.to_unknown" = "to unknown";
+"transactions.from_unknown" = "from unknown";
 
 "transactions.multiple" = "Multiple";
 
-"transactions.value.unlimited" = "unlimited";
+"transactions.value.unlimited" = "Unlimited";
 
 "transactions.today" = "Today";
 "transactions.yesterday" = "Yesterday";
@@ -1536,6 +1532,23 @@
 "transactions.stellar_transaction.title" = "Stellar Transaction";
 "transactions.xrp_transaction.title" = "XRP Ledger Transaction";
 "transactions.trust_set" = "Trust Line";
+"transactions.change_trust" = "Change Trust";
+"transactions.pending.receiving" = "Receiving...";
+"transactions.pending.sending" = "Sending...";
+"transactions.pending.approving" = "Approving...";
+"transactions.pending.shielding" = "Shielding...";
+"transactions.pending.unshielding" = "Unshielding...";
+"transactions.pending.swapping" = "Swapping...";
+"transactions.pending.generic" = "Pending...";
+"transactions.failed.transfer" = "Transfer failed";
+"transactions.failed.approval" = "Approval failed";
+"transactions.failed.swap" = "Swap failed";
+"transactions.failed.transaction" = "Transaction failed";
+"transactions.failed.shielding" = "Shielding failed";
+"transactions.failed.unshielding" = "Unshielding failed";
+"transactions.to_yourself" = "To yourself";
+"transactions.shielded" = "Shielded";
+"transactions.unshielded" = "Unshielded";
 "tx_info.operation_type" = "Operation Type";
 "transactions.contract" = "Contract";
 

@@ -886,11 +886,6 @@
 "swap.dex_info.header_price_impact" = "가격 영향";
 "swap.dex_info.content_price_impact" = "표시된 가격과의 예상 가격 편차는 일반적으로 스왑 금액에 따라 증가합니다.";
 
-// Swap History
-
-"swap_history.status.depositing" = "입금 중…";
-"swap_history.status.swapping" = "스왑 중…";
-
 // Swap Info
 
 "swap_info.title" = "스왑 정보";
@@ -904,6 +899,7 @@
 "swap_info.receive" = "수신 %@";
 "swap_info.refund" = "환불 %@";
 "swap_info.unknown" = "알 수 없음";
+"swap_info.pending_step" = "%@...";
 "swap_info.request_refund" = "환불 요청";
 "swap_info.request_refund.description" = "환불 요청 세부 정보를 복사하고 스왑 경로에 연락하여 환불을 요청하세요.";
 "swap_info.swap_id" = "스왑 ID";
@@ -1504,8 +1500,8 @@
 
 "transactions.receive" = "수령";
 "transactions.send" = "전송됨";
-"transactions.burn" = "번";
-"transactions.mint" = "민트";
+"transactions.burn" = "소각됨";
+"transactions.mint" = "발행됨";
 "transactions.approve" = "승인됨";
 "transactions.swap" = "스왑됨";
 "transactions.shield" = "차폐(Shield)";
@@ -1519,8 +1515,8 @@
 
 "transactions.to" = "%@에게";
 "transactions.from" = "%@부터";
-"transactions.funder" = "자금 제공자: %@";
-"transactions.account" = "계정: %@";
+"transactions.to_unknown" = "알 수 없는 수신자";
+"transactions.from_unknown" = "알 수 없는 발신자";
 
 "transactions.multiple" = "다수";
 
@@ -1536,6 +1532,23 @@
 "transactions.stellar_transaction.title" = "Stellar 트랜잭션";
 "transactions.xrp_transaction.title" = "XRP 원장 거래";
 "transactions.trust_set" = "신뢰선";
+"transactions.change_trust" = "신뢰 변경";
+"transactions.pending.receiving" = "수신 중...";
+"transactions.pending.sending" = "전송 중...";
+"transactions.pending.approving" = "승인 중...";
+"transactions.pending.shielding" = "차폐 중...";
+"transactions.pending.unshielding" = "차폐 해제 중...";
+"transactions.pending.swapping" = "스왑 중...";
+"transactions.pending.generic" = "대기 중...";
+"transactions.failed.transfer" = "전송 실패";
+"transactions.failed.approval" = "승인 실패";
+"transactions.failed.swap" = "스왑 실패";
+"transactions.failed.transaction" = "거래 실패";
+"transactions.failed.shielding" = "차폐 실패";
+"transactions.failed.unshielding" = "차폐 해제 실패";
+"transactions.to_yourself" = "본인에게";
+"transactions.shielded" = "차폐됨";
+"transactions.unshielded" = "차폐 해제됨";
 "tx_info.operation_type" = "작업 유형";
 "transactions.contract" = "계약";
 

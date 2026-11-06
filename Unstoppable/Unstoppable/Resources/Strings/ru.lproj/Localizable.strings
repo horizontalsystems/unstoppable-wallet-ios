@@ -886,11 +886,6 @@
 "swap.dex_info.header_price_impact" = "Отклонение от рын. цены";
 "swap.dex_info.content_price_impact" = "Ожидаемое отклонение цены от указанной цены, обычно увеличивается при увеличении суммы обмена.";
 
-// Swap History
-
-"swap_history.status.depositing" = "Пополнение…";
-"swap_history.status.swapping" = "Обмен…";
-
 // Swap Info
 
 "swap_info.title" = "Информация о свопе";
@@ -904,6 +899,7 @@
 "swap_info.receive" = "Получение %@";
 "swap_info.refund" = "Возврат %@";
 "swap_info.unknown" = "Неизвестно";
+"swap_info.pending_step" = "%@...";
 "swap_info.request_refund" = "Запросить возврат";
 "swap_info.request_refund.description" = "Скопируйте данные запроса на возврат и свяжитесь с маршрутом свопа для запроса возврата средств.";
 "swap_info.swap_id" = "ID обмена";
@@ -1504,8 +1500,8 @@
 
 "transactions.receive" = "Получено";
 "transactions.send" = "Отправлено";
-"transactions.burn" = "Сжечь";
-"transactions.mint" = "Минт";
+"transactions.burn" = "Сожжено";
+"transactions.mint" = "Выпущено";
 "transactions.approve" = "Разрешено";
 "transactions.swap" = "Обмен выполнен";
 "transactions.shield" = "Shield";
@@ -1517,14 +1513,14 @@
 "transactions.contract_deploy" = "Развертывание контракта";
 "transactions.account_created" = "Аккаунт создан";
 
-"transactions.to" = "Кому %@";
-"transactions.from" = "От %@";
-"transactions.funder" = "Источник средств: %@";
-"transactions.account" = "Аккаунт: %@";
+"transactions.to" = "кому %@";
+"transactions.from" = "от %@";
+"transactions.to_unknown" = "неизвестному";
+"transactions.from_unknown" = "от неизвестного";
 
 "transactions.multiple" = "Множество";
 
-"transactions.value.unlimited" = "безлимитный";
+"transactions.value.unlimited" = "Безлимитный";
 
 "transactions.today" = "Сегодня";
 "transactions.yesterday" = "Вчера";
@@ -1536,6 +1532,23 @@
 "transactions.stellar_transaction.title" = "Транзакция Stellar";
 "transactions.xrp_transaction.title" = "Транзакция XRP Ledger";
 "transactions.trust_set" = "Доверительная линия";
+"transactions.change_trust" = "Изменить доверие";
+"transactions.pending.receiving" = "Получение...";
+"transactions.pending.sending" = "Отправка...";
+"transactions.pending.approving" = "Одобрение...";
+"transactions.pending.shielding" = "Экранирование...";
+"transactions.pending.unshielding" = "Снятие экранирования...";
+"transactions.pending.swapping" = "Обмен...";
+"transactions.pending.generic" = "В ожидании...";
+"transactions.failed.transfer" = "Перевод не выполнен";
+"transactions.failed.approval" = "Одобрение не выполнено";
+"transactions.failed.swap" = "Обмен не выполнен";
+"transactions.failed.transaction" = "Транзакция не выполнена";
+"transactions.failed.shielding" = "Экранирование не выполнено";
+"transactions.failed.unshielding" = "Снятие экранирования не выполнено";
+"transactions.to_yourself" = "Самому себе";
+"transactions.shielded" = "Экранировано";
+"transactions.unshielded" = "Экранирование снято";
 "tx_info.operation_type" = "Тип операции";
 "transactions.contract" = "Контракт";
 
