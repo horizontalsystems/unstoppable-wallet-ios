@@ -10,7 +10,7 @@ class TransactionBlockchainSelectViewModel: ObservableObject {
     init(transactionFilterViewModel: TransactionFilterViewModel) {
         self.transactionFilterViewModel = transactionFilterViewModel
 
-        blockchains = Array(Set(walletManager.activeWallets.map(\.token.blockchain)))
+        blockchains = Array(Set(walletManager.activeWallets.map(\.token.blockchain))).sorted { $0.type.order < $1.type.order }
     }
 
     var currentBlockchain: Blockchain? {
