@@ -78,7 +78,7 @@ struct SwapLegsBuilder {
                 Leg(
                     title: "swap_info.deposit".localized(swap.tokenIn.coin.code),
                     status: status,
-                    url: swap.txHash.flatMap { explorerUrl(blockchainType: swap.tokenIn.blockchainType, hash: $0) }
+                    url: depositUrl(swap: swap)
                 ),
             ]
         }
@@ -131,11 +131,14 @@ struct SwapLegsBuilder {
 
     private func actionRequiredLegs(swap: Swap, existingLegs: [Swap.Leg]) -> [Leg] {
         if isSingleChain(swap: swap) {
+            // the swap's own leg when the track reports one with a hash, else the one transaction of a direct swap
+            let swapLeg = existingLegs.first { $0.type == USwapMultiSwapProvider.legTypeSwap && !$0.txHash.isEmpty }
+
             return [
                 Leg(
                     title: "swap_info.swap".localized,
                     status: .failed,
-                    url: existingLegs.first.flatMap(explorerUrl(leg:))
+                    url: (swapLeg ?? existingLegs.first).flatMap(explorerUrl(leg:))
                 ),
             ]
         }
@@ -147,7 +150,8 @@ struct SwapLegsBuilder {
             Leg(
                 title: "swap_info.deposit".localized(swap.tokenIn.coin.code),
                 status: .completed,
-                url: depositLeg.flatMap(explorerUrl(leg:))
+                // the wallet broadcast the deposit itself: its hash stands in for a leg the track reports without one
+                url: depositLeg.flatMap(explorerUrl(leg:)) ?? depositUrl(swap: swap)
             ),
             Leg(
                 title: "swap_info.swap".localized,
@@ -159,6 +163,11 @@ struct SwapLegsBuilder {
 
     private func isSingleChain(swap: Swap) -> Bool {
         swap.tokenIn.blockchainType == swap.tokenOut.blockchainType
+    }
+
+    /// The deposit the wallet broadcast, on the chain of `tokenIn`
+    private func depositUrl(swap: Swap) -> String? {
+        swap.txHash.flatMap { $0.isEmpty ? nil : explorerUrl(blockchainType: swap.tokenIn.blockchainType, hash: $0) }
     }
 
     /// None for a leg the track reports without a hash

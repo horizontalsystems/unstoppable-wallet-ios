@@ -226,6 +226,29 @@ struct SwapCellViewItemFactoryTests {
         #expect(builder.legs(swap: crossChain).map(\.url) == [nil, "https://thorchain-1/0xswap"])
     }
 
+    @Test func actionRequiredDepositFallsBackToBroadcastHash() {
+        let swap = Self.swap(status: .actionRequired, legs: [
+            Self.depositLeg(status: .completed),
+            Self.swapLeg(status: .swapping, txHash: "0xswap"),
+        ], txHash: "0xbroadcast")
+
+        #expect(Self.builder.legs(swap: swap).map(\.url) == ["https://chain/0xbroadcast", "https://thorchain-1/0xswap"])
+    }
+
+    @Test func actionRequiredSingleChainPrefersSwapLeg() {
+        let withSwapHash = Self.swap(status: .actionRequired, legs: [
+            Self.depositLeg(status: .completed, txHash: "0xdeposit"),
+            Self.swapLeg(status: .swapping, txHash: "0xswap"),
+        ], tokenOut: Self.sameChainTokenOut)
+        let withoutSwapHash = Self.swap(status: .actionRequired, legs: [
+            Self.depositLeg(status: .completed, txHash: "0xdeposit"),
+            Self.swapLeg(status: .swapping),
+        ], tokenOut: Self.sameChainTokenOut)
+
+        #expect(Self.builder.legs(swap: withSwapHash).map(\.url) == ["https://thorchain-1/0xswap"])
+        #expect(Self.builder.legs(swap: withoutSwapHash).map(\.url) == ["https://monero/0xdeposit"])
+    }
+
     @Test func builderWithUrlsMatchesBuilderWithout() {
         let swap = Self.swap(status: .swapping, legs: [
             Self.depositLeg(status: .completed, txHash: "0xdeposit"),
@@ -276,6 +299,12 @@ extension SwapCellViewItemFactoryTests {
         decimals: 12
     )
 
+    /// a builder that writes each URL from its chain and hash
+    private static let builder = SwapLegsBuilder(
+        chainExplorerUrl: { chainId, hash in "https://\(chainId)/\(hash)" },
+        blockchainExplorerUrl: { _, hash in "https://chain/\(hash)" }
+    )
+
     private static let fromAsset = "XMR.XMR"
     private static let toAsset = "ETH.USDT"
 
@@ -285,11 +314,12 @@ extension SwapCellViewItemFactoryTests {
         legs: [Swap.Leg]? = [],
         tokenOut: Token = tokenOut,
         recipient: String? = nil,
-        depositAddress: String? = nil
+        depositAddress: String? = nil,
+        txHash: String? = nil
     ) -> Swap {
         Swap(
             uid: "swap",
-            txHash: nil,
+            txHash: txHash,
             trackingHandle: nil,
             accountId: "account",
             providerId: "NEAR",
