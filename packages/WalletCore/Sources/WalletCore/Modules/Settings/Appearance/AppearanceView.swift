@@ -192,7 +192,7 @@ struct AppearanceView: View {
                 VStack(spacing: 0) {
                     ListSectionHeader(text: "appearance.app_icon".localized, uppercased: false)
                     ListSection {
-                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: .margin16) {
+                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: .margin16) {
                             ForEach(AppIconManager.allAppIcons, id: \.self) { appIcon in
                                 Button(action: {
                                     viewModel.appIcon = appIcon

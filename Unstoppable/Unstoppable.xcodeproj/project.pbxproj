@@ -104,6 +104,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Configuration/App/App-Dev.xcconfig",
+				"Configuration/App/App-Icons.xcconfig",
 				"Configuration/App/App-Prod.xcconfig",
 				"Configuration/App/Intent-Dev.xcconfig",
 				"Configuration/App/Intent-Prod.xcconfig",
@@ -522,7 +523,6 @@
 		D33D63B52F98DE0800E16ADA /* Debug-Dev */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconDark AppIconMono AppIconPunk AppIcon1874 AppIcon8ball AppIconPepe AppIconIvfun AppIconDoge AppIconGigaChad AppIconPlFlag AppIconYesChad AppIconYS AppIconZcash AppIconMonero";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -651,7 +651,6 @@
 		D33D63BF2F98DE1200E16ADA /* Release-Dev */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconDark AppIconMono AppIconPunk AppIcon1874 AppIcon8ball AppIconPepe AppIconIvfun AppIconDoge AppIconGigaChad AppIconPlFlag AppIconYesChad AppIconYS AppIconZcash AppIconMonero";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -773,7 +772,6 @@
 		D33D63DD2F98DE6800E16ADA /* Debug-Prod */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconDark AppIconMono AppIconPunk AppIcon1874 AppIcon8ball AppIconPepe AppIconIvfun AppIconDoge AppIconGigaChad AppIconPlFlag AppIconYesChad AppIconYS AppIconZcash AppIconMonero";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -902,7 +900,6 @@
 		D33D63E72F98DE6E00E16ADA /* Release-Prod */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconDark AppIconMono AppIconPunk AppIcon1874 AppIcon8ball AppIconPepe AppIconIvfun AppIconDoge AppIconGigaChad AppIconPlFlag AppIconYesChad AppIconYS AppIconZcash AppIconMonero";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1348,7 +1345,6 @@
 		E2E000000000000000000001 /* Debug-E2E */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconDark AppIconMono AppIconPunk AppIcon1874 AppIcon8ball AppIconPepe AppIconIvfun AppIconDoge AppIconGigaChad AppIconPlFlag AppIconYesChad AppIconYS AppIconZcash AppIconMonero";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;

@@ -5,12 +5,12 @@
       "scale" : "1x"
     },
     {
-      "filename" : "DOGE@2x.png",
+      "filename" : "app_icon_doge@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "DOGE@3x.png",
+      "filename" : "app_icon_doge@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

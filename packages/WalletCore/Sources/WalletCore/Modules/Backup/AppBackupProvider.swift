@@ -322,7 +322,7 @@ extension AppBackupProvider {
             walletButtonHiddenManager.buttonHidden = raw.settings.balanceHideButtons
             balanceConversionManager.set(tokenQueryId: raw.settings.conversionTokenQueryId)
             balanceHiddenManager.set(balanceAutoHide: raw.settings.balanceAutoHide)
-            let appIcon = AppIconManager.allAppIcons.first { $0.title == raw.settings.appIcon } ?? .main
+            let appIcon = AppIconManager.appIcon(title: raw.settings.appIcon)
             if appIconManager.appIcon != appIcon {
                 appIconManager.appIcon = appIcon
             }

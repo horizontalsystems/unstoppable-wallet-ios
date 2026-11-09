@@ -5,7 +5,7 @@ import UIKit
 class AppIconManager {
     static let allAppIcons: [AppIcon] = [
         .main,
-        .alternate(name: "AppIconDark", imageName: "app_icon_dark", title: "Dark"),
+        .alternate(name: "AppIconOrange", imageName: "app_icon_orange", title: "Orange"),
         .alternate(name: "AppIconMono", imageName: "app_icon_mono", title: "Mono"),
         .alternate(name: "AppIcon8ball", imageName: "app_icon_8ball", title: "8ball"),
         .alternate(name: "AppIconMonero", imageName: "app_icon_monero", title: "Monero"),
@@ -19,6 +19,9 @@ class AppIconManager {
         .alternate(name: "AppIconYesChad", imageName: "app_icon_yes_chad", title: "Yeschad"),
         .alternate(name: "AppIconGigaChad", imageName: "app_icon_giga_chad", title: "Gigachad"),
     ]
+
+    private static let legacyNames = ["AppIconDark": "AppIconOrange"]
+    private static let legacyTitles = ["Dark": "Orange"]
 
     private let appIconRelay = PublishRelay<AppIcon>()
     var appIcon: AppIcon {
@@ -39,10 +42,16 @@ extension AppIconManager {
     }
 
     static var currentAppIcon: AppIcon {
-        if let alternateIconName: String = UIApplication.shared.alternateIconName, let appIcon = allAppIcons.first(where: { $0.name == alternateIconName }) {
-            return appIcon
-        } else {
+        guard let alternateIconName = UIApplication.shared.alternateIconName else {
             return .main
         }
+
+        let name = legacyNames[alternateIconName] ?? alternateIconName
+        return allAppIcons.first { $0.name == name } ?? .main
+    }
+
+    static func appIcon(title: String) -> AppIcon {
+        let title = legacyTitles[title] ?? title
+        return allAppIcons.first { $0.title == title } ?? .main
     }
 }

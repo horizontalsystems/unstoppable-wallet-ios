@@ -1,0 +1,2 @@
+// Alternate app icons, shared by every App configuration. Must list the same names as AppIconManager.allAppIcons (order does not matter to actool).
+ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = AppIconOrange AppIconMono AppIcon8ball AppIconMonero AppIconZcash AppIconPepe AppIconDoge AppIconPunk AppIcon1874 AppIconPlFlag AppIconYS AppIconYesChad AppIconGigaChad
