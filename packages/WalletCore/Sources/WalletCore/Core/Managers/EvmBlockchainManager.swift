@@ -82,12 +82,7 @@ extension EvmBlockchainManager {
         switch blockchainType {
         case .ethereum:
             if testNetManager.testNetEnabled {
-                return Chain(
-                    id: 11_155_111,
-                    coinType: 1,
-                    syncInterval: 15,
-                    isEIP1559Supported: true
-                )
+                return .ethereumSepolia
             } else {
                 return .ethereum
             }

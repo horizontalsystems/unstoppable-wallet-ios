@@ -1,5 +1,5 @@
 {
-  "originHash" : "ca743e3e2b1f2ff36e765388106a1073dee9ccd8815a8406aa8d814fae89d969",
+  "originHash" : "8fa43d25a3231c9ab6c1424fa41832794e536ff394489d4241baff1e88c064a4",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -141,8 +141,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/EvmKit.Swift",
       "state" : {
-        "revision" : "481a2161710f713098c6831749e58b3db1f242e0",
-        "version" : "2.7.0"
+        "revision" : "0d31c0a77eddecad543fecc25b25435e8aa130f0",
+        "version" : "2.7.1"
       }
     },
     {
@@ -618,8 +618,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/TronKit.Swift.git",
       "state" : {
-        "revision" : "aa691bcd8c79d57a554d72a4996bec4d7e1afce5",
-        "version" : "1.5.2"
+        "revision" : "ebc55591a23aeac1c9fb58c90a77c15828728d7d",
+        "version" : "1.6.0"
       }
     },
     {

@@ -59,12 +59,14 @@ extension EvmSyncSourceManager {
             if testNetManager.testNetEnabled {
                 return [
                     EvmSyncSource(
+                        name: "Public node",
+                        rpcSource: .http(urls: [URL(string: "https://ethereum-sepolia-rpc.publicnode.com")!], auth: nil),
+                        transactionSource: .sepoliaEtherscan(apiKeys: AppConfig.etherscanKeys)
+                    ),
+                    EvmSyncSource(
                         name: "BlocksDecoded Sepolia",
                         rpcSource: .http(urls: [URL(string: "\(AppConfig.marketApiUrl)/v1/ethereum-rpc/sepolia")!], auth: nil),
-                        transactionSource: EvmKit.TransactionSource(
-                            name: "sepolia.etherscan.io",
-                            type: .etherscan(apiBaseUrl: "https://api-sepolia.etherscan.io", txBaseUrl: "https://sepiloa.etherscan.io", apiKeys: AppConfig.etherscanKeys)
-                        )
+                        transactionSource: .sepoliaEtherscan(apiKeys: AppConfig.etherscanKeys)
                     ),
                 ]
             } else {
