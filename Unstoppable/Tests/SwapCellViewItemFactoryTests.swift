@@ -249,6 +249,39 @@ struct SwapCellViewItemFactoryTests {
         #expect(Self.builder.legs(swap: withoutSwapHash).map(\.url) == ["https://monero/0xdeposit"])
     }
 
+    @Test func actionRequiredSingleChainFallsBackToHashedLegThenBroadcastHash() {
+        let unhashedSwapFirst = Self.swap(status: .actionRequired, legs: [
+            Self.swapLeg(status: .swapping),
+            Self.refundLeg(txHash: "0xrefund"),
+            Self.depositLeg(status: .completed, txHash: "0xdeposit"),
+        ], tokenOut: Self.sameChainTokenOut)
+        let noHashes = Self.swap(status: .actionRequired, legs: [
+            Self.swapLeg(status: .swapping),
+        ], tokenOut: Self.sameChainTokenOut, txHash: "0xbroadcast")
+
+        #expect(Self.builder.legs(swap: unhashedSwapFirst).map(\.url) == ["https://monero/0xdeposit"])
+        #expect(Self.builder.legs(swap: noHashes).map(\.url) == ["https://chain/0xbroadcast"])
+    }
+
+    @Test func actionRequiredDepositSkipsRefund() {
+        let swap = Self.swap(status: .actionRequired, legs: [
+            Self.refundLeg(txHash: "0xrefund"),
+            Self.depositLeg(status: .completed, txHash: "0xdeposit"),
+            Self.swapLeg(status: .swapping, txHash: "0xswap"),
+        ])
+
+        #expect(Self.builder.legs(swap: swap).map(\.url) == ["https://monero/0xdeposit", "https://thorchain-1/0xswap"])
+    }
+
+    @Test func splitDepositWithoutHashFallsBackToBroadcastHash() {
+        var swap = Self.swap(status: .swapping, operation: .splitSwap, legs: [Self.depositLeg(status: .completed)], txHash: "0xbroadcast")
+        swap.outputs = [
+            Swap.Output(index: 0, status: .pending, toAddress: "0xfirst", fromAmount: nil, toAmount: nil, legs: [Self.payoutLeg(status: .pending, outputIndex: 0)]),
+        ]
+
+        #expect(Self.builder.legs(swap: swap).first?.url == "https://chain/0xbroadcast")
+    }
+
     @Test func builderWithUrlsMatchesBuilderWithout() {
         let swap = Self.swap(status: .swapping, legs: [
             Self.depositLeg(status: .completed, txHash: "0xdeposit"),
@@ -352,6 +385,10 @@ extension SwapCellViewItemFactoryTests {
 
     private static func receiveLeg(status: Swap.Status, txHash: String = "") -> Swap.Leg {
         Swap.Leg(status: status, type: USwapMultiSwapProvider.legTypeNativeSend, chainId: "eip155:1", txHash: txHash, fromAsset: "THOR.RUNE", toAsset: toAsset)
+    }
+
+    private static func refundLeg(txHash: String) -> Swap.Leg {
+        Swap.Leg(status: .completed, type: USwapMultiSwapProvider.legTypeNativeSend, chainId: "monero", txHash: txHash, fromAsset: fromAsset, toAsset: fromAsset, refund: true)
     }
 
     private static func payoutLeg(status: Swap.Status, outputIndex: Int) -> Swap.Leg {

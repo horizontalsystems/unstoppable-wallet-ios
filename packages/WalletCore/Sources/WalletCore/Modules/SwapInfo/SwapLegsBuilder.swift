@@ -63,7 +63,8 @@ struct SwapLegsBuilder {
             return Leg(
                 title: "swap_info.deposit".localized(swap.tokenIn.coin.code),
                 status: group.legs.first(where: { $0.status != .completed })?.status ?? .completed,
-                url: group.txHash.isEmpty ? nil : explorerUrl(chainId: first.chainId, hash: group.txHash)
+                // the broadcast deposit stands in for a group the track reports without a hash
+                url: group.txHash.isEmpty ? depositUrl(swap: swap) : explorerUrl(chainId: first.chainId, hash: group.txHash)
             )
         }
 
@@ -131,19 +132,21 @@ struct SwapLegsBuilder {
 
     private func actionRequiredLegs(swap: Swap, existingLegs: [Swap.Leg]) -> [Leg] {
         if isSingleChain(swap: swap) {
-            // the swap's own leg when the track reports one with a hash, else the one transaction of a direct swap
-            let swapLeg = existingLegs.first { $0.type == USwapMultiSwapProvider.legTypeSwap && !$0.txHash.isEmpty }
+            // the swap's own leg when the track reports one with a hash, else any other leg with one but a refund,
+            // else the one transaction of a direct swap, as the wallet broadcast it
+            let hashedLegs = existingLegs.filter { !$0.txHash.isEmpty && !$0.refund }
+            let swapLeg = hashedLegs.first { $0.type == USwapMultiSwapProvider.legTypeSwap }
 
             return [
                 Leg(
                     title: "swap_info.swap".localized,
                     status: .failed,
-                    url: (swapLeg ?? existingLegs.first).flatMap(explorerUrl(leg:))
+                    url: (swapLeg ?? hashedLegs.first).flatMap(explorerUrl(leg:)) ?? depositUrl(swap: swap)
                 ),
             ]
         }
 
-        let depositLeg = existingLegs.first { $0.type == USwapMultiSwapProvider.legTypeNativeSend && $0.fromAsset == swap.fromAsset }
+        let depositLeg = existingLegs.first { $0.type == USwapMultiSwapProvider.legTypeNativeSend && !$0.refund && $0.fromAsset == swap.fromAsset }
         let swapLeg = existingLegs.first { $0.type == USwapMultiSwapProvider.legTypeSwap }
 
         return [
