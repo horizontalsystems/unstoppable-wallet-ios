@@ -20,7 +20,7 @@ public class EvmSyncSourceManager {
 
     private func defaultTransactionSource(blockchainType: BlockchainType) -> EvmKit.TransactionSource {
         switch blockchainType {
-        case .ethereum: return .ethereumEtherscan(apiKeys: AppConfig.etherscanKeys)
+        case .ethereum: return testNetManager.testNetEnabled ? .sepoliaEtherscan(apiKeys: AppConfig.etherscanKeys) : .ethereumEtherscan(apiKeys: AppConfig.etherscanKeys)
         case .binanceSmartChain: return .bscscan(apiKeys: AppConfig.bscscanKeys)
         case .polygon: return .polygonscan(apiKeys: AppConfig.polygonscanKeys)
         case .avalanche: return .snowtrace(apiKeys: AppConfig.snowtraceKeys)
@@ -61,12 +61,12 @@ extension EvmSyncSourceManager {
                     EvmSyncSource(
                         name: "Public node",
                         rpcSource: .http(urls: [URL(string: "https://ethereum-sepolia-rpc.publicnode.com")!], auth: nil),
-                        transactionSource: .sepoliaEtherscan(apiKeys: AppConfig.etherscanKeys)
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                     ),
                     EvmSyncSource(
                         name: "BlocksDecoded Sepolia",
                         rpcSource: .http(urls: [URL(string: "\(AppConfig.marketApiUrl)/v1/ethereum-rpc/sepolia")!], auth: nil),
-                        transactionSource: .sepoliaEtherscan(apiKeys: AppConfig.etherscanKeys)
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                     ),
                 ]
             } else {
