@@ -125,7 +125,7 @@ struct SwapLegsBuilder {
         return Leg(
             title: title,
             status: leg.status,
-            url: leg.txHash.isEmpty ? nil : explorerUrl(chainId: leg.chainId, hash: leg.txHash)
+            url: explorerUrl(leg: leg)
         )
     }
 
@@ -135,7 +135,7 @@ struct SwapLegsBuilder {
                 Leg(
                     title: "swap_info.swap".localized,
                     status: .failed,
-                    url: existingLegs.first.map { explorerUrl(chainId: $0.chainId, hash: $0.txHash) } ?? nil
+                    url: existingLegs.first.flatMap(explorerUrl(leg:))
                 ),
             ]
         }
@@ -147,18 +147,23 @@ struct SwapLegsBuilder {
             Leg(
                 title: "swap_info.deposit".localized(swap.tokenIn.coin.code),
                 status: .completed,
-                url: depositLeg.map { explorerUrl(chainId: $0.chainId, hash: $0.txHash) } ?? nil
+                url: depositLeg.flatMap(explorerUrl(leg:))
             ),
             Leg(
                 title: "swap_info.swap".localized,
                 status: .failed,
-                url: swapLeg.map { explorerUrl(chainId: $0.chainId, hash: $0.txHash) } ?? nil
+                url: swapLeg.flatMap(explorerUrl(leg:))
             ),
         ]
     }
 
     private func isSingleChain(swap: Swap) -> Bool {
         swap.tokenIn.blockchainType == swap.tokenOut.blockchainType
+    }
+
+    /// None for a leg the track reports without a hash
+    private func explorerUrl(leg: Swap.Leg) -> String? {
+        leg.txHash.isEmpty ? nil : explorerUrl(chainId: leg.chainId, hash: leg.txHash)
     }
 
     private func explorerUrl(chainId: String, hash: String) -> String? {

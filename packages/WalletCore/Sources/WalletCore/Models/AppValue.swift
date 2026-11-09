@@ -129,7 +129,7 @@ public struct AppValue {
         case let .unknownToken(_, _, tokenDecimals): return ValueFormatter.instance.formatFull(value: value, decimalCount: tokenDecimals, symbol: showCode ? code : nil, signType: signType)
         case let .jetton(jetton): return ValueFormatter.instance.formatFull(value: value, decimalCount: jetton.decimals, symbol: showCode ? code : nil, signType: signType)
         case .stellar: return ValueFormatter.instance.formatFull(value: value, decimalCount: 7, symbol: showCode ? code : nil, signType: signType)
-        case .nft: return "\(value.sign == .plus ? "+" : "")\(value) \(code)"
+        case .nft: return "\(value.sign == .plus ? "+" : "")\(value)\(showCode ? " \(code)" : "")"
         case .raw: return nil
         }
     }
@@ -141,7 +141,7 @@ public struct AppValue {
         case let .unknownToken(_, _, tokenDecimals): return ValueFormatter.instance.formatShort(value: value, decimalCount: tokenDecimals, symbol: showCode ? code : nil, signType: signType)
         case let .jetton(jetton): return ValueFormatter.instance.formatShort(value: value, decimalCount: jetton.decimals, symbol: showCode ? code : nil, signType: signType)
         case .stellar: return ValueFormatter.instance.formatShort(value: value, decimalCount: 7, symbol: showCode ? code : nil, signType: signType)
-        case .nft: return "\(value.sign == .plus ? "+" : "")\(value) \(code)"
+        case .nft: return "\(value.sign == .plus ? "+" : "")\(value)\(showCode ? " \(code)" : "")"
         case .raw: return nil
         }
     }

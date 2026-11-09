@@ -20,12 +20,7 @@ class TransactionsViewItemFactory {
 
     /// The amount alone: the row's title already names the coin. Nil when it can't be formatted, as a `.raw` value.
     private func formattedCoin(_ appValue: AppValue, signType: ValueFormatter.SignType = .always) -> String? {
-        if case .nft = appValue.kind {
-            // as `AppValue.formattedFull` writes an NFT count, without the code
-            return "\(appValue.value.sign == .plus ? "+" : "")\(appValue.value)"
-        }
-
-        return appValue.formattedWith(rounding: amountRoundingManager.useAmountRounding, signType: signType, showCode: false)
+        appValue.formattedWith(rounding: amountRoundingManager.useAmountRounding, signType: signType, showCode: false)
     }
 
     /// The amount alone, or the unknown text when it can't be formatted

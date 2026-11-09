@@ -24,7 +24,7 @@ enum SwapCellViewItemFactory {
 
     /// The step a pending swap is at, as Swap Info shows it: the last step in progress; before any step starts,
     /// the first one not done (the last one when the steps are done ahead of the swap's status); without steps,
-    /// the deposit Swap Info would show first.
+    /// the swap itself for a direct one, else the deposit Swap Info would show first.
     private static func pendingSubtitle(swap: Swap, legs: [SwapLegsBuilder.Leg]) -> String {
         let title: String
 
@@ -32,11 +32,18 @@ enum SwapCellViewItemFactory {
             title = leg.title
         } else if let leg = legs.first(where: { !$0.isDone }) ?? legs.last {
             title = leg.title
+        } else if isDirect(swap: swap) {
+            title = "swap_info.swap".localized
         } else {
             title = "swap_info.deposit".localized(swap.tokenIn.coin.code)
         }
 
         return "swap_info.pending_step".localized(title)
+    }
+
+    /// A swap the wallet broadcasts itself on one chain, as a DEX swap: there is no deposit to wait for
+    private static func isDirect(swap: Swap) -> Bool {
+        swap.depositAddress == nil && swap.tokenIn.blockchainType == swap.tokenOut.blockchainType
     }
 
     /// The address a Private Send or CrossPay delivers to, shown in its row once done
@@ -83,7 +90,9 @@ enum SwapCellViewItemFactory {
         switch swap.operation {
         case .swap, .splitSwap:
             tokens = [token(swap.tokenIn), token(swap.tokenOut)]
-            primaryValue = .init(text: amountOut.map { "+\($0)" } ?? unknownText, type: .incoming)
+            // a swap paid to another recipient is not received by the wallet, as in the transactions list
+            let outType: ActivityCellViewItem.ValueType = swap.operation == .swap && swap.recipient != nil ? .secondary : .incoming
+            primaryValue = .init(text: amountOut.map { "+\($0)" } ?? unknownText, type: outType)
             secondaryValue = .init(text: amountIn.map { "-\($0)" } ?? unknownText, type: .outgoing)
         case .crossPay:
             tokens = [token(swap.tokenIn), token(swap.tokenOut)]

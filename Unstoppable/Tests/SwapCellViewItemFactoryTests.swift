@@ -59,6 +59,14 @@ struct SwapCellViewItemFactoryTests {
         #expect(cell.subtitle == "transactions.swap".localized)
     }
 
+    @Test func swapToAnotherRecipientShowsGrayOutput() {
+        let cell = Self.viewItem(swap: Self.swap(status: .completed, recipient: "0xother"))
+
+        #expect(cell.primaryValue == .init(text: "+8,345", type: .secondary))
+        #expect(cell.primaryValueColorStyle == .secondary)
+        #expect(cell.secondaryValue == .init(text: "-6.84", type: .outgoing))
+    }
+
     @Test func failedSwapMutesAmounts() {
         let cell = Self.viewItem(swap: Self.swap(status: .failed))
 
@@ -154,6 +162,14 @@ struct SwapCellViewItemFactoryTests {
         #expect(Self.subtitle(swap: withoutAsset) == Self.pending("swap_info.deposit".localized("XMR")))
     }
 
+    @Test func directSwapWithoutLegsShowsSwap() {
+        let direct = Self.swap(status: .pending, legs: nil, tokenOut: Self.sameChainTokenOut)
+        let viaDeposit = Self.swap(status: .pending, legs: nil, tokenOut: Self.sameChainTokenOut, depositAddress: "deposit")
+
+        #expect(Self.subtitle(swap: direct) == Self.pending("swap_info.swap".localized))
+        #expect(Self.subtitle(swap: viaDeposit) == Self.pending("swap_info.deposit".localized("XMR")))
+    }
+
     @Test func splitSwapShowsNumberedRecipient() {
         var swap = Self.swap(status: .swapping, operation: .splitSwap, legs: [Self.depositLeg(status: .completed)])
         swap.outputs = [
@@ -195,6 +211,21 @@ struct SwapCellViewItemFactoryTests {
 
     // MARK: legs builder
 
+    @Test func actionRequiredLegWithoutHashHasNoUrl() {
+        let builder = SwapLegsBuilder(
+            chainExplorerUrl: { chainId, hash in "https://\(chainId)/\(hash)" },
+            blockchainExplorerUrl: { _, hash in "https://chain/\(hash)" }
+        )
+        let singleChain = Self.swap(status: .actionRequired, legs: [Self.swapLeg(status: .swapping)], tokenOut: Self.sameChainTokenOut)
+        let crossChain = Self.swap(status: .actionRequired, legs: [
+            Self.depositLeg(status: .completed),
+            Self.swapLeg(status: .swapping, txHash: "0xswap"),
+        ])
+
+        #expect(builder.legs(swap: singleChain).map(\.url) == [nil])
+        #expect(builder.legs(swap: crossChain).map(\.url) == [nil, "https://thorchain-1/0xswap"])
+    }
+
     @Test func builderWithUrlsMatchesBuilderWithout() {
         let swap = Self.swap(status: .swapping, legs: [
             Self.depositLeg(status: .completed, txHash: "0xdeposit"),
@@ -211,7 +242,11 @@ struct SwapCellViewItemFactoryTests {
 
         #expect(withUrls.map(\.title) == withoutUrls.map(\.title))
         #expect(withUrls.map(\.status) == withoutUrls.map(\.status))
-        #expect(withUrls.allSatisfy { $0.url != nil })
+        #expect(withUrls.map(\.url) == [
+            "https://monero/0xdeposit",
+            "https://thorchain-1/0xswap",
+            "https://eip155:1/0xreceive",
+        ])
         #expect(withoutUrls.allSatisfy { $0.url == nil })
     }
 }
@@ -233,10 +268,25 @@ extension SwapCellViewItemFactoryTests {
         decimals: 6
     )
 
+    /// a second token on the chain of `tokenIn`
+    private static let sameChainTokenOut = Token(
+        coin: Coin(uid: "wrapped-monero", name: "Wrapped Monero", code: "WXMR"),
+        blockchain: Blockchain(type: .monero, name: "Monero", explorerUrl: nil),
+        type: .unsupported(type: "wxmr", reference: "wxmr"),
+        decimals: 12
+    )
+
     private static let fromAsset = "XMR.XMR"
     private static let toAsset = "ETH.USDT"
 
-    private static func swap(status: Swap.Status, operation: Swap.Operation = .swap, legs: [Swap.Leg]? = []) -> Swap {
+    private static func swap(
+        status: Swap.Status,
+        operation: Swap.Operation = .swap,
+        legs: [Swap.Leg]? = [],
+        tokenOut: Token = tokenOut,
+        recipient: String? = nil,
+        depositAddress: String? = nil
+    ) -> Swap {
         Swap(
             uid: "swap",
             txHash: nil,
@@ -249,9 +299,9 @@ extension SwapCellViewItemFactoryTests {
             tokenOut: tokenOut,
             amountIn: 6.84,
             amountOut: 8345,
-            recipient: "0xrecipient",
+            recipient: recipient,
             toAddress: "0xrecipient",
-            depositAddress: nil,
+            depositAddress: depositAddress,
             providerSwapId: nil,
             sourceAddress: nil,
             refundAddress: nil,
