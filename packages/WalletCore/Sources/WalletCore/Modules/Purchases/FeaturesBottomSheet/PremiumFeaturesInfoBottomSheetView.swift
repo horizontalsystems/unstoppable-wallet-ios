@@ -60,7 +60,7 @@ struct PremiumFeaturesInfoBottomSheetView: View {
                 HStack(spacing: .margin4) {
                     ForEach(0 ..< features.count, id: \.self) { index in
                         Capsule()
-                            .fill(currentSlideIndex == index ? Color.themeJacob : Color.themeAndy)
+                            .fill(currentSlideIndex == index ? Color.themeBrand : Color.themeAndy)
                             .frame(width: currentSlideIndex == index ? 20 : 8, height: 4)
                             .animation(.spring(response: 0.7, dampingFraction: 0.7), value: currentSlideIndex)
                     }
@@ -69,7 +69,7 @@ struct PremiumFeaturesInfoBottomSheetView: View {
 
                 BSModule.view(for: .text(text: ComponentText(
                     text: "purchase.bottom_sheet.description".localized,
-                    colorStyle: .yellow
+                    colorStyle: .brand
                 )))
 
                 BSModule.view(for: .buttonGroup(.init(buttons: [

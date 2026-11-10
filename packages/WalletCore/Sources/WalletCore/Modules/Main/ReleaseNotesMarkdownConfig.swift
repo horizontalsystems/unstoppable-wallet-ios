@@ -3,11 +3,13 @@ import Foundation
 import UIKit
 
 enum ReleaseNotesMarkdownConfig {
-    private static let colors = StaticColorCollection(
-        heading1: .themeJacob,
-        heading2: .themeJacob,
-        body: .themeBran
-    )
+    private static func colors(brandColor: BrandColor) -> StaticColorCollection {
+        StaticColorCollection(
+            heading1: brandColor.uiColor,
+            heading2: brandColor.uiColor,
+            body: .themeBran
+        )
+    }
 
     private static let paragraphStyles: StaticParagraphStyleCollection = {
         var paragraphStyles = StaticParagraphStyleCollection()
@@ -24,7 +26,7 @@ enum ReleaseNotesMarkdownConfig {
         return paragraphStyles
     }()
 
-    static var config: DownStylerConfiguration {
+    static func config(brandColor: BrandColor) -> DownStylerConfiguration {
         let fonts = StaticFontCollection(
             heading1: .title3,
             heading2: .headline2,
@@ -33,7 +35,7 @@ enum ReleaseNotesMarkdownConfig {
 
         return DownStylerConfiguration(
             fonts: fonts,
-            colors: colors,
+            colors: colors(brandColor: brandColor),
             paragraphStyles: paragraphStyles
         )
     }

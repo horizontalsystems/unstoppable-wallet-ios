@@ -55,7 +55,7 @@ struct PremiumFeaturesListView: View {
     private func row(title: String, description: String, icon: String, action: @escaping () -> Void) -> some View {
         Cell(
             left: {
-                Image(icon).icon(colorStyle: .yellow)
+                Image(icon).icon(colorStyle: .brand)
             },
             middle: {
                 MultiText(eyebrow: ComponentText(text: title, colorStyle: .primary), description: description)

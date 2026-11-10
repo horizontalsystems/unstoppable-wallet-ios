@@ -34,7 +34,7 @@ struct StellarReceiveAddressView: View {
             middle: {
                 MiddleTextIcon(text: "deposit.trustline".localized, icon: "info_filled")
             }, right: {
-                ThemeText("deposit.trustline.not_activated".localized, style: .subheadSB, colorStyle: .yellow)
+                ThemeText("deposit.trustline.not_activated".localized, style: .subheadSB, colorStyle: .warning)
             },
             action: watchAccount ? nil : { viewModel.showPopup() }
         )

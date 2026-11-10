@@ -28,7 +28,7 @@ struct TabHeaderView: View {
 
             GeometryReader { geo in
                 Rectangle()
-                    .fill(Color.themeJacob)
+                    .fill(Color.themeBrand)
                     .frame(height: 2)
                     .frame(width: geo.size.width / CGFloat(tabs.count))
                     .offset(x: offset, y: 0)

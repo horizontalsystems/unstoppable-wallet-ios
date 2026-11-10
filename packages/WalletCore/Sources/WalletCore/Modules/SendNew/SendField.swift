@@ -116,7 +116,7 @@ public struct SplitOutputField: SendFieldContent {
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(spacing: 4) {
                         ThemeText(token.coin.code, style: .subhead, colorStyle: .primary)
-                        ThemeText("\(percent)%", style: .subhead, colorStyle: .yellow)
+                        ThemeText("\(percent)%", style: .subhead, colorStyle: .brand)
                     }
 
                     MultiText(subtitle: token.fullBadge)

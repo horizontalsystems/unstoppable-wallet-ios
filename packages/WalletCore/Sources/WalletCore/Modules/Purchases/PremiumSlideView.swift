@@ -12,7 +12,7 @@ struct PremiumSlideView: View {
             }
 
             VStack(alignment: .leading, spacing: .margin2) {
-                ThemeText("premium.cell.title".localized, style: .headline1, colorStyle: .yellow)
+                ThemeText("premium.cell.title".localized, style: .headline1, colorStyle: .brand)
                 Spacer(minLength: 0)
 
                 VStack(alignment: .leading, spacing: .margin4) {

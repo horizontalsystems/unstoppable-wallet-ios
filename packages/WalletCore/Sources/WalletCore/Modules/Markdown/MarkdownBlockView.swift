@@ -84,6 +84,6 @@ struct MarkdownBlockView: View {
         ThemeText(attributedString, style: .body, colorStyle: .primary)
             .lineSpacing(6)
             .multilineTextAlignment(.leading)
-            .tint(.themeJacob)
+            .tint(.themeBrand)
     }
 }

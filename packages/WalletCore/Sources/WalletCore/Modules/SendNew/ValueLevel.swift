@@ -6,7 +6,7 @@ public enum ValueLevel {
     var colorStyle: ColorStyle {
         switch self {
         case .regular: return .primary
-        case .warning: return .yellow
+        case .warning: return .warning
         case .error: return .red
         }
     }

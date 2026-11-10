@@ -43,7 +43,7 @@ struct MainSettingsView: View {
                     Spacer().frame(height: .margin24)
 
                     VStack(spacing: 0) {
-                        SectionHeader(image: Image.premiumIcon, text: ComponentText(text: "subscription.premium.label".localized, colorStyle: .yellow), horizontalInsets: .margin16)
+                        SectionHeader(image: Image.premiumIcon, text: ComponentText(text: "subscription.premium.label".localized, colorStyle: .brand), horizontalInsets: .margin16)
 
                         ListSection {
                             vipSupport()
@@ -115,7 +115,7 @@ struct MainSettingsView: View {
                 HStack(spacing: .margin4) {
                     ForEach(0 ..< viewModel.slides.count, id: \.self) { index in
                         Capsule()
-                            .fill(currentSlideIndex == index ? Color.themeJacob : Color.themeBlade)
+                            .fill(currentSlideIndex == index ? Color.themeBrand : Color.themeBlade)
                             .frame(width: 20, height: 4)
                     }
                 }
@@ -313,7 +313,7 @@ struct MainSettingsView: View {
 
     private func vipSupport() -> some View {
         Cell(
-            left: { ThemeImage("support", size: .iconSize24, colorStyle: .yellow) },
+            left: { ThemeImage("support", size: .iconSize24, colorStyle: .brand) },
             middle: { ThemeText("purchases.priority_support".localized, style: .headline2) },
             right: { Image.disclosureIcon },
             action: {
@@ -335,7 +335,7 @@ struct MainSettingsView: View {
 
     private func addressChecker() -> some View {
         Cell(
-            left: { ThemeImage("radar", size: .iconSize24, colorStyle: .yellow) },
+            left: { ThemeImage("radar", size: .iconSize24, colorStyle: .brand) },
             middle: { ThemeText("address_checker.title".localized, style: .headline2) },
             right: { Image.disclosureIcon },
             action: {
@@ -557,6 +557,28 @@ struct MainSettingsView: View {
                     }
                 }
             )
+
+            // Temporary dev switch; replaced by the Appearance brand color picker
+            row(
+                title: "Brand Color",
+                subtitle: BrandColor.allCases.map(\.rawValue).joined(separator: " / "),
+                value: viewModel.brandColor.rawValue,
+                action: {
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: "Brand Color",
+                            viewItems: BrandColor.allCases.map {
+                                AlertViewItem(text: $0.rawValue, selected: viewModel.brandColor == $0)
+                            },
+                            onSelect: { index in
+                                viewModel.brandColor = BrandColor.allCases[index]
+                            },
+                            isPresented: isPresented
+                        )
+                    }
+                }
+            )
+            .accessibilityIdentifier(TestTags.settingsDebugBrandColor)
         }
     }
 

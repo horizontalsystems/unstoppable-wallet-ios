@@ -59,7 +59,7 @@ struct ReceiveAddressBodyView<Content: View>: View {
                 )
             }
         )
-        .alertButtonTint(color: .themeJacob)
+        .alertButtonTint(color: .themeBrand)
     }
 
     private func qrView(item: ReceiveAddressModule.QrItem) -> some View {

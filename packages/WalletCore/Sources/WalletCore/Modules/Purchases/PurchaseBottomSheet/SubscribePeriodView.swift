@@ -20,7 +20,7 @@ struct SubscribePeriodView: View {
                 Spacer()
             }
             HStack(spacing: .margin4) {
-                ThemeText(item.price, style: .subheadR, colorStyle: .yellow)
+                ThemeText(item.price, style: .subheadR, colorStyle: .brand)
 
                 if let priceDescription = item.priceDescription {
                     ThemeText(priceDescription, style: .subheadR, colorStyle: .green)
@@ -33,7 +33,7 @@ struct SubscribePeriodView: View {
         .padding(.vertical, .margin12)
         .overlay(
             RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous)
-                .strokeBorder(isSelected ? Color.themeJacob : Color.themeBlade, lineWidth: 1)
+                .strokeBorder(isSelected ? Color.themeBrand : Color.themeBlade, lineWidth: 1)
         )
         .contentShape(Rectangle())
         .onTapGesture(perform: action)

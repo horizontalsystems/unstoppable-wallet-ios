@@ -68,7 +68,7 @@ struct MarketAdvancedSearchResultsView: View {
                 ThemeButton(
                     text: "market.watchlist.signals".localized,
                     icon: "star_filled",
-                    iconColorStyle: viewModel.showSignals ? nil : .yellow,
+                    iconColorStyle: viewModel.showSignals ? nil : .brand,
                     style: viewModel.showSignals ? .primary : .secondary,
                     size: .small
                 ) {

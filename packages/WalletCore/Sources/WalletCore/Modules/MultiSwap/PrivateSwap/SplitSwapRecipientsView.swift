@@ -107,7 +107,7 @@ struct SplitSwapRecipientsView: View {
                 right: {
                     RightMultiText(
                         eyebrow: amountText(index: index),
-                        subtitle: ComponentText(text: "\(viewModel.percents[index])%", colorStyle: .yellow)
+                        subtitle: ComponentText(text: "\(viewModel.percents[index])%", colorStyle: .brand)
                     )
                 },
                 action: {
@@ -123,7 +123,7 @@ struct SplitSwapRecipientsView: View {
             return .red
         }
 
-        return viewModel.isDuplicateRecipient(at: index) ? .yellow : regular
+        return viewModel.isDuplicateRecipient(at: index) ? .warning : regular
     }
 
     private func contactName(index: Int) -> String? {

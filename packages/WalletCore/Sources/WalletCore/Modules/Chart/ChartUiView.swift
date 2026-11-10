@@ -109,7 +109,7 @@ class ChartUiView: UIView {
 
         currentSecondaryValueStackView.addArrangedSubview(currentSecondaryValueLabel)
         currentSecondaryValueLabel.font = .subhead2
-        currentSecondaryValueLabel.textColor = .themeJacob
+        currentSecondaryValueLabel.textColor = .themeBrand
 
         currentSecondaryValueStackView.addArrangedSubview(currentSecondaryDiffLabel)
         currentSecondaryDiffLabel.font = .subhead2
@@ -255,7 +255,7 @@ class ChartUiView: UIView {
 
                 currentSecondaryTitleLabel.text = "BTC Dominance"
                 currentSecondaryValueLabel.text = value.flatMap { Self.percentFormatter.string(from: ($0 / 100) as NSNumber) }
-                currentSecondaryValueLabel.textColor = .themeJacob
+                currentSecondaryValueLabel.textColor = .themeBrand
 
                 if let diff {
                     currentSecondaryDiffLabel.isHidden = false
@@ -328,7 +328,7 @@ class ChartUiView: UIView {
 
             chartSecondaryTitleLabel.text = "BTC Dominance"
             chartSecondaryValueLabel.text = value.flatMap { Self.percentFormatter.string(from: ($0 / 100) as NSNumber) }
-            chartSecondaryValueLabel.textColor = .themeJacob
+            chartSecondaryValueLabel.textColor = .themeBrand
 
             if let diff {
                 chartSecondaryDiffLabel.isHidden = false

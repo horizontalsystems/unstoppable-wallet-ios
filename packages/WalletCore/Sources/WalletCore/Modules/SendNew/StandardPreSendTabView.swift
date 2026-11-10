@@ -23,7 +23,7 @@ struct StandardPreSendTabView: View {
         let input = viewModel.destinationTag.trimmingCharacters(in: .whitespacesAndNewlines)
         let invalid = !input.isEmpty && XrpDestinationTag.parse(input) == nil
         let infoText = invalid ? "send.xrp.destination_tag.invalid".localized : "send.xrp.destination_tag.info".localized
-        let infoTextColorStyle: ColorStyle = invalid ? .red : (state == .required ? .yellow : .secondary)
+        let infoTextColorStyle: ColorStyle = invalid ? .red : (state == .required ? .warning : .secondary)
 
         let fixedTag: UInt32? = {
             if case let .fixed(tag) = state {

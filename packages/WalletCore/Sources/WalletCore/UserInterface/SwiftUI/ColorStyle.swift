@@ -9,7 +9,8 @@ public enum ColorStyle {
     case dark
     case red
     case green
-    case yellow
+    case brand
+    case warning
     case blue
 
     init(diff: Decimal) {
@@ -30,7 +31,8 @@ public enum ColorStyle {
         case .dark: return .themeDark.opacity(dimmed ? 0.5 : 1)
         case .red: return .themeLucian.opacity(dimmed ? 0.5 : 1)
         case .green: return .themeRemus.opacity(dimmed ? 0.5 : 1)
-        case .yellow: return .themeJacob.opacity(dimmed ? 0.5 : 1)
+        case .brand: return .themeBrand.opacity(dimmed ? 0.5 : 1)
+        case .warning: return .themeJacob.opacity(dimmed ? 0.5 : 1)
         case .blue: return .themeOcean.opacity(dimmed ? 0.5 : 1)
         }
     }

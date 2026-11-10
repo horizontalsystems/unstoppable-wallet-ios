@@ -87,8 +87,7 @@ struct ChartIndicatorsView: View {
                             set: { enabled in
                                 viewModel.set(enabled: enabled, id: item.indicatorId, index: item.index)
                             }
-                        ).animation(),
-                        style: .yellow
+                        ).animation()
                     )
                 }
             }

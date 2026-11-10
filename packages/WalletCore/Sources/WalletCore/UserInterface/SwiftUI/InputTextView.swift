@@ -51,14 +51,14 @@ struct InputTextView: View {
                     text: text,
                     axis: .vertical
                 )
-                .accentColor(.themeYellow)
+                .accentColor(.themeBrand)
                 .foregroundColor(isEnabled ? .themeLeah : .themeAndy)
             } else {
                 TextField(
                     placeholder,
                     text: text
                 )
-                .accentColor(.themeYellow)
+                .accentColor(.themeBrand)
                 .foregroundColor(isEnabled ? .themeLeah : .themeAndy)
                 .frame(height: 20) // TODO: How to remove this? (When change from Secure to TextField it's change height)
             }
@@ -86,7 +86,7 @@ struct ColoredBorder: ViewModifier {
     let cornerRadius: CGFloat
     let color: Color
 
-    init(cornerRadius: CGFloat = .cornerRadius12, color: Color = .themeJacob) {
+    init(cornerRadius: CGFloat = .cornerRadius12, color: Color = .themeBrand) {
         self.cornerRadius = cornerRadius
         self.color = color
     }

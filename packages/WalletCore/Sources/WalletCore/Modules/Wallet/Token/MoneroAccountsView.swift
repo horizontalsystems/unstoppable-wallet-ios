@@ -133,7 +133,7 @@ struct MoneroAccountNameSheet: View {
 
                 InputTextRow(vertical: .margin8) {
                     TextField("monero.accounts.name_placeholder".localized, text: $name)
-                        .accentColor(.themeYellow)
+                        .accentColor(.themeBrand)
                         .autocorrectionDisabled()
                         .font(.themeBody)
                         .onChange(of: name) { _, newValue in

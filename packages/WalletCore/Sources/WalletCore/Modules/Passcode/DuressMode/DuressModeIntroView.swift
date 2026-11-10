@@ -74,7 +74,7 @@ struct DuressModeIntroView: View {
 
         var body: some View {
             Cell(
-                left: { ThemeImage(icon, size: .iconSize24, colorStyle: .yellow) },
+                left: { ThemeImage(icon, size: .iconSize24, colorStyle: .brand) },
                 middle: { MultiText(title: title, subtitle: description) }
             )
         }

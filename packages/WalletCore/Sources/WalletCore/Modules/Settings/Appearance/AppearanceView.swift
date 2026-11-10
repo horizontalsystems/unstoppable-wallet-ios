@@ -80,7 +80,7 @@ struct AppearanceView: View {
                                 MultiText(title: "appearance.hide_markets".localized, subtitle: "appearance.hide_markets.description".localized)
                             },
                             right: {
-                                ThemeToggle(isOn: $viewModel.hideMarkets.animation(), style: .yellow)
+                                ThemeToggle(isOn: $viewModel.hideMarkets.animation())
                             }
                         )
 
@@ -141,7 +141,7 @@ struct AppearanceView: View {
                                 MultiText(title: "appearance.hide_buttons".localized, subtitle: "appearance.hide_buttons.description".localized)
                             },
                             right: {
-                                ThemeToggle(isOn: $viewModel.hideBalanceButtons.animation(), style: .yellow)
+                                ThemeToggle(isOn: $viewModel.hideBalanceButtons.animation())
                             }
                         )
                         Cell(
@@ -149,7 +149,7 @@ struct AppearanceView: View {
                                 MultiText(title: "appearance.amount_rounding".localized, subtitle: "appearance.amount_rounding.description".localized)
                             },
                             right: {
-                                ThemeToggle(isOn: $viewModel.useAmountRounding.animation(), style: .yellow)
+                                ThemeToggle(isOn: $viewModel.useAmountRounding.animation())
                             }
                         )
                         Cell(
@@ -183,7 +183,7 @@ struct AppearanceView: View {
                                 MultiText(title: "appearance.recently_sent".localized, subtitle: "appearance.recently_sent.description".localized)
                             },
                             right: {
-                                ThemeToggle(isOn: $viewModel.showRecentlySent.animation(), style: .yellow)
+                                ThemeToggle(isOn: $viewModel.showRecentlySent.animation())
                             }
                         )
                     }
@@ -203,7 +203,7 @@ struct AppearanceView: View {
                                             .scaledToFit()
                                             .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
                                             .frame(width: 60, height: 60)
-                                        ThemeText(appIcon.title, style: .subhead, colorStyle: viewModel.appIcon == appIcon ? .yellow : .primary)
+                                        ThemeText(appIcon.title, style: .subhead, colorStyle: viewModel.appIcon == appIcon ? .brand : .primary)
                                             .frame(maxWidth: .infinity, alignment: .center)
                                     }
                                 }

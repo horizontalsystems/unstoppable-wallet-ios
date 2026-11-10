@@ -34,7 +34,7 @@ struct ThemeListStyleModifier: ViewModifier {
             content
                 .background(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous).fill(Color.themeLawrence))
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-                .overlay(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous).stroke(selected ? Color.themeJacob : Color.themeBlade, lineWidth: .heightOneDp))
+                .overlay(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous).stroke(selected ? Color.themeBrand : Color.themeBlade, lineWidth: .heightOneDp))
         case .borderedPremium:
             content
                 .background(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous).fill(Color.themeLawrence))
@@ -56,7 +56,7 @@ struct ThemeListStyleModifier: ViewModifier {
         case .bordered, .borderedPlain:
             content
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
-                .overlay(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous).stroke(selected ? Color.themeJacob : Color.themeBlade, lineWidth: .heightOneDp))
+                .overlay(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous).stroke(selected ? Color.themeBrand : Color.themeBlade, lineWidth: .heightOneDp))
         case .transparent, .transparentInline:
             content
         case .blur:

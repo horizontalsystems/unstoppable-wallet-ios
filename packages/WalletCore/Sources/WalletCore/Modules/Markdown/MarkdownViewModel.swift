@@ -32,9 +32,12 @@ final class MarkdownViewModel: ObservableObject {
 
         state = .loading
 
+        // Resolved on the main actor; loadViewItems runs off it and must not read BrandColorManager.shared
+        let brandColor = BrandColorManager.shared.brandColor
+
         Task { [weak self, url, mode, networkManager] in
             do {
-                let viewItems = try await Self.loadViewItems(url: url, mode: mode, networkManager: networkManager)
+                let viewItems = try await Self.loadViewItems(url: url, mode: mode, brandColor: brandColor, networkManager: networkManager)
 
                 guard !Task.isCancelled else {
                     return
@@ -60,7 +63,7 @@ final class MarkdownViewModel: ObservableObject {
     }
 
     /// Runs off the main actor: network fetch, Down parsing and attributed string building
-    private nonisolated static func loadViewItems(url: URL, mode: Mode, networkManager: NetworkManager) async throws -> [MarkdownBlockViewItem] {
+    private nonisolated static func loadViewItems(url: URL, mode: Mode, brandColor: BrandColor, networkManager: NetworkManager) async throws -> [MarkdownBlockViewItem] {
         let content: String
 
         switch mode {
@@ -74,7 +77,7 @@ final class MarkdownViewModel: ObservableObject {
 
         try Task.checkCancellation()
 
-        return MarkdownParser.viewItems(content: content, url: markdownUrl(url: url, mode: mode), configuration: mode.config)
+        return MarkdownParser.viewItems(content: content, url: markdownUrl(url: url, mode: mode), configuration: mode.config(brandColor: brandColor), linkColor: brandColor.uiColor)
     }
 }
 
@@ -99,10 +102,10 @@ extension MarkdownViewModel {
         case article
         case gitRelease
 
-        var config: DownStylerConfiguration {
+        func config(brandColor: BrandColor) -> DownStylerConfiguration {
             switch self {
-            case .article: return AcademyMarkdownConfig.config
-            case .gitRelease: return ReleaseNotesMarkdownConfig.config
+            case .article: return AcademyMarkdownConfig.config(brandColor: brandColor)
+            case .gitRelease: return ReleaseNotesMarkdownConfig.config(brandColor: brandColor)
             }
         }
     }

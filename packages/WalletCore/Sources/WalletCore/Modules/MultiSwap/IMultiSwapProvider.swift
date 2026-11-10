@@ -91,7 +91,7 @@ public enum SwapProviderType: String, CaseIterable, Identifiable {
         switch self {
         case .excellent: return .green
         case .good: return .blue
-        case .fair: return .yellow
+        case .fair: return .warning
         }
     }
 

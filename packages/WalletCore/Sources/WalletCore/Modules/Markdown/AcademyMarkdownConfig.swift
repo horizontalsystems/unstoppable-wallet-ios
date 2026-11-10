@@ -3,12 +3,14 @@ import Foundation
 import UIKit
 
 enum AcademyMarkdownConfig {
-    private static let colors = StaticColorCollection(
-        heading1: .themeLeah,
-        heading2: .themeJacob,
-        heading3: .themeJacob,
-        body: .themeBran
-    )
+    private static func colors(brandColor: BrandColor) -> StaticColorCollection {
+        StaticColorCollection(
+            heading1: .themeLeah,
+            heading2: brandColor.uiColor,
+            heading3: brandColor.uiColor,
+            body: .themeBran
+        )
+    }
 
     private static let paragraphStyles: StaticParagraphStyleCollection = {
         var paragraphStyles = StaticParagraphStyleCollection()
@@ -26,7 +28,7 @@ enum AcademyMarkdownConfig {
         return paragraphStyles
     }()
 
-    static var config: DownStylerConfiguration {
+    static func config(brandColor: BrandColor) -> DownStylerConfiguration {
         let fonts = StaticFontCollection(
             heading1: .title2,
             heading2: .title3,
@@ -36,7 +38,7 @@ enum AcademyMarkdownConfig {
 
         return DownStylerConfiguration(
             fonts: fonts,
-            colors: colors,
+            colors: colors(brandColor: brandColor),
             paragraphStyles: paragraphStyles
         )
     }

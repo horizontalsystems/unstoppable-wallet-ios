@@ -8,7 +8,7 @@ struct TronWalletTokenHeaderStatusView: View {
         if tronViewModel.accountActive {
             WalletTokenHeaderStatusView(viewModel: viewModel)
         } else {
-            Image("warning_filled").icon(size: .iconSize20, colorStyle: .yellow)
+            Image("warning_filled").icon(size: .iconSize20, colorStyle: .warning)
                 .tappablePadding(.margin12) {
                     tronViewModel.showPopup()
                 }

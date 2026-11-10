@@ -83,7 +83,7 @@ extension AlertCardView {
         var colorStyle: ColorStyle {
             switch self {
             case .regular: return .secondary
-            case .caution: return .yellow
+            case .caution: return .warning
             case .critical: return .red
             }
         }

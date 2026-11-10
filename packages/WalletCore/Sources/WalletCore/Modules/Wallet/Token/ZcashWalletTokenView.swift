@@ -50,9 +50,9 @@ struct ZcashWalletTokenView: View {
                 RightTextIcon(
                     text: ComponentText(
                         text: infoAmount(value: transparent).formatted,
-                        colorStyle: .yellow
+                        colorStyle: .warning
                     ),
-                    icon: ComponentImage("warning_filled", colorStyle: .yellow)
+                    icon: ComponentImage("warning_filled", colorStyle: .warning)
                 )
             },
             action: {
@@ -89,15 +89,15 @@ struct ZcashWalletTokenView: View {
     private func view(orchard: Decimal) -> some View {
         Cell(
             middle: {
-                MiddleTextIcon(text: ComponentText(text: "balance.token.migration.required".localized, colorStyle: .yellow))
+                MiddleTextIcon(text: ComponentText(text: "balance.token.migration.required".localized, colorStyle: .warning))
             },
             right: {
                 RightTextIcon(
                     text: ComponentText(
                         text: infoAmount(value: orchard).formatted,
-                        colorStyle: .yellow
+                        colorStyle: .warning
                     ),
-                    icon: ComponentImage("warning_filled", colorStyle: .yellow)
+                    icon: ComponentImage("warning_filled", colorStyle: .warning)
                 )
             },
             action: {

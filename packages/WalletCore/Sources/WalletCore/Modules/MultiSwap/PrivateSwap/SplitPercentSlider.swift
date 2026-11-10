@@ -24,7 +24,7 @@ struct SplitPercentSlider: View {
                         .frame(height: 4)
 
                     Circle()
-                        .fill(Color.themeJacob)
+                        .fill(Color.themeBrand)
                         .frame(width: thumbSize, height: thumbSize)
                         .overlay(
                             Capsule()

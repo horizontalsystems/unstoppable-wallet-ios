@@ -20,7 +20,7 @@ struct SubscriptionView: View {
 
     private func activatedDescription() -> some View {
         Text("purchases.successful_subscription.subscribed".localized)
-            .textSubhead2(color: .themeJacob)
+            .textSubhead2(color: .themeBrand)
             .multilineTextAlignment(.center)
             .padding(.horizontal, .margin32)
             .padding(.top, .margin12)

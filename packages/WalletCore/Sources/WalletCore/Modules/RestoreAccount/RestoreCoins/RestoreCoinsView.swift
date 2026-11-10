@@ -83,8 +83,7 @@ struct RestoreCoinsView: View {
                             set: { isEnabled in
                                 viewModel.toggle(blockchain: item.blockchain, isEnabled: isEnabled)
                             }
-                        ).animation(),
-                        style: .yellow
+                        ).animation()
                     )
                     .accessibilityIdentifier(TestTags.restoreChain(item.blockchain.uid))
                 }

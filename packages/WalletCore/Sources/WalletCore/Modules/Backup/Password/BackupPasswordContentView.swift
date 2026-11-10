@@ -64,7 +64,7 @@ struct KeychainHighlight: ViewModifier {
     func body(content: Content) -> some View {
         content.overlay(
             RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous)
-                .fill(Color.themeJacob.opacity(active ? 0.2 : 0))
+                .fill(Color.themeBrand.opacity(active ? 0.2 : 0))
                 .allowsHitTesting(false)
         )
     }

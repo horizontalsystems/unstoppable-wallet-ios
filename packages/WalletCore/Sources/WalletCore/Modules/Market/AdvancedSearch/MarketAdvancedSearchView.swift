@@ -339,7 +339,7 @@ private struct AdvancedSearchHeaderModifier: ViewModifier {
     func body(content: Content) -> some View {
         VStack(spacing: 0) {
             HStack(spacing: .margin16) {
-                ThemeImage(imageName, size: .iconSize24, colorStyle: .yellow)
+                ThemeImage(imageName, size: .iconSize24, colorStyle: .brand)
                 Text(title.localized).themeHeadline2()
                 IconButton(icon: "close", style: .secondary, mode: .transparent, size: .small) {
                     isPresented.wrappedValue = false

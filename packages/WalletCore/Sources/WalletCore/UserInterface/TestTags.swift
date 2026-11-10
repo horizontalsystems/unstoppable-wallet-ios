@@ -183,6 +183,7 @@ enum TestTags {
     static let settingsBackupManager = "settings_backup_manager"
     static let settingsAbout = "settings_about"
     static let settingsDebugSimulateFailSwap = "settings_debug_simulate_fail_swap"
+    static let settingsDebugBrandColor = "settings_debug_brand_color"
 
     static let appearanceBaseCurrency = "appearance_base_currency"
     static func currency(_ code: String) -> String {

@@ -30,7 +30,7 @@ extension InfoModule.ViewItem {
         case let .header1(text):
             return .header(attributedString: Converter.attributedString(string: text, font: .title2, color: .themeLeah), level: 1)
         case let .header3(text):
-            return .header(attributedString: Converter.attributedString(string: text, font: .headline2, color: .themeJacob), level: 3)
+            return .header(attributedString: Converter.attributedString(string: text, font: .headline2, color: .themeBrand), level: 3)
         case let .text(text):
             return .text(attributedString: Converter.attributedString(string: text, font: .body, color: .themeBran))
         case let .listItem(text):

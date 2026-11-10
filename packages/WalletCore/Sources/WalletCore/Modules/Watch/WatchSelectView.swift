@@ -39,7 +39,7 @@ struct WatchSelectView: View {
                                     }
                                 )) {}
                                     .labelsHidden()
-                                    .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+                                    .toggleStyle(SwitchToggleStyle(tint: .themeBrand))
                                     .accessibilityIdentifier(TestTags.watchChain(uid))
                             }
                         )
@@ -73,7 +73,7 @@ struct WatchSelectView: View {
                                     }
                                 )) {}
                                     .labelsHidden()
-                                    .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+                                    .toggleStyle(SwitchToggleStyle(tint: .themeBrand))
                             }
                         )
                     }

@@ -55,7 +55,7 @@ struct SelectorGroupView: View {
                     )
                 ) {}
                     .labelsHidden()
-                    .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+                    .toggleStyle(SwitchToggleStyle(tint: .themeBrand))
 
                 if let identifier = item.identifier {
                     toggle.accessibilityIdentifier(identifier)

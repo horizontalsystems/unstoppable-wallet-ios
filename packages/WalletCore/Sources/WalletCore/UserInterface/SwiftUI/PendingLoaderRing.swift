@@ -20,8 +20,8 @@ struct PendingLoaderRing: View {
                     // the Figma gradient: Jacob from its 0.2026 stop, transparent from 0.5952, bottom-left to top-right
                     LinearGradient(
                         stops: [
-                            .init(color: .themeJacob, location: 0.2026),
-                            .init(color: .themeJacob.opacity(0), location: 0.5952),
+                            .init(color: .themeBrand, location: 0.2026),
+                            .init(color: .themeBrand.opacity(0), location: 0.5952),
                         ],
                         startPoint: .bottomLeading,
                         endPoint: .topTrailing

@@ -383,7 +383,7 @@ struct PreSendButtonState {
     let disabled: Bool
     let showProgress: Bool
     var progress: Double?
-    /// the wallet's own step (shield ZEC) is secondary like "Enable coin", not the yellow Next
+    /// the wallet's own step (shield ZEC) is secondary like "Enable coin", not the primary Next
     var style: ThemeButton.Style = .primary
     var identifier: String = TestTags.sendNext
 }

@@ -63,10 +63,10 @@ struct MoneroNetworkView: View {
                             ListSection {
                                 Cell(
                                     left: {
-                                        ThemeImage("plus", size: 24, colorStyle: .yellow)
+                                        ThemeImage("plus", size: 24, colorStyle: .brand)
                                     },
                                     middle: {
-                                        ThemeText("monero_network.add_new".localized, style: .body, colorStyle: .yellow)
+                                        ThemeText("monero_network.add_new".localized, style: .body, colorStyle: .brand)
                                     },
                                     action: {
                                         Coordinator.shared.present { isPresented in

@@ -23,7 +23,7 @@ struct BaseReceiveAddressView<Content: View>: View {
         ScrollableThemeView {
             ReceiveAddressBodyView(viewModel: viewModel, content: content)
         }
-        .alertButtonTint(color: .themeJacob)
+        .alertButtonTint(color: .themeBrand)
         .onFirstAppear {
             viewModel.onFirstAppear()
         }

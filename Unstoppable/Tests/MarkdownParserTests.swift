@@ -8,7 +8,14 @@ struct MarkdownParserTests {
     private static let articleUrl = URL(string: "https://host/path/article.md")!
 
     private static func parse(_ content: String, url: URL? = articleUrl) -> [MarkdownBlockViewItem] {
-        MarkdownParser.viewItems(content: content, url: url, configuration: AcademyMarkdownConfig.config)
+        let brandColor = BrandColor.default
+
+        return MarkdownParser.viewItems(
+            content: content,
+            url: url,
+            configuration: AcademyMarkdownConfig.config(brandColor: brandColor),
+            linkColor: brandColor.uiColor
+        )
     }
 
     private static func listItems(_ viewItems: [MarkdownBlockViewItem]) -> [(text: String, prefix: String?, tightTop: Bool, tightBottom: Bool)] {

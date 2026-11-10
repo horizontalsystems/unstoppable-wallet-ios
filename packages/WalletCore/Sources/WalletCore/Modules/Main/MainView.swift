@@ -49,7 +49,7 @@ struct MainView: View {
                         .badge(badgeViewModel.badge.map { _ in "1" })
                         .tint(.themeLeah)
                 }
-                .tint(.themeJacob)
+                .tint(.themeBrand)
             }
             .navigationDestination(item: $selectedWallet) { wallet in
                 WalletTokenModule.view(wallet: wallet)

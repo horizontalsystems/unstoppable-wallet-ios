@@ -14,7 +14,7 @@ struct BackupPromptView: View {
                     AnyView(
                         Cell(
                             left: {
-                                ThemeImage("pen", size: .iconSize24, colorStyle: .yellow)
+                                ThemeImage("pen", size: .iconSize24, colorStyle: .brand)
                             },
                             middle: {
                                 MultiText(title: "backup_prompt.backup_manual".localized, subtitle: "backup_prompt.backup_manual.description".localized)
@@ -38,7 +38,7 @@ struct BackupPromptView: View {
                     AnyView(
                         Cell(
                             left: {
-                                ThemeImage("cloud", size: .iconSize24, colorStyle: .yellow)
+                                ThemeImage("cloud", size: .iconSize24, colorStyle: .brand)
                             },
                             middle: {
                                 MultiText(title: "backup_prompt.backup_cloud".localized, subtitle: "backup_prompt.backup_cloud.description".localized)

@@ -2,7 +2,7 @@ import Down
 import UIKit
 
 enum MarkdownParser {
-    static func viewItems(content: String, url: URL?, configuration: DownStylerConfiguration) -> [MarkdownBlockViewItem] {
+    static func viewItems(content: String, url: URL?, configuration: DownStylerConfiguration, linkColor: UIColor) -> [MarkdownBlockViewItem] {
         let down = Down(markdownString: content)
 
         let styler = DownStyler(configuration: configuration)
@@ -26,11 +26,11 @@ enum MarkdownParser {
 
             for (blockIndex, block) in documentBlock.blocks.enumerated() {
                 if let headingBlock = block as? MarkdownVisitor.HeadingBlock {
-                    viewItems.append(.header(attributedString: convert(headingBlock.attributedString), level: headingBlock.level))
+                    viewItems.append(.header(attributedString: convert(headingBlock.attributedString, linkColor: linkColor), level: headingBlock.level))
                 }
 
                 if let paragraphBlock = block as? MarkdownVisitor.ParagraphBlock {
-                    viewItems.append(.text(attributedString: convert(paragraphBlock.attributedString)))
+                    viewItems.append(.text(attributedString: convert(paragraphBlock.attributedString, linkColor: linkColor)))
                 }
 
                 if let listBlock = block as? MarkdownVisitor.ListBlock {
@@ -46,7 +46,7 @@ enum MarkdownParser {
 
                         for (paragraphIndex, paragraphBlock) in itemBlock.paragraphBlocks.enumerated() {
                             viewItems.append(.listItem(
-                                attributedString: convert(paragraphBlock.attributedString),
+                                attributedString: convert(paragraphBlock.attributedString, linkColor: linkColor),
                                 prefix: paragraphIndex == 0 ? prefixAttributedString : nil,
                                 tightTop: listBlock.tight && itemIndex != 0,
                                 tightBottom: listBlock.tight && itemIndex != listBlock.itemBlocks.count - 1
@@ -60,7 +60,7 @@ enum MarkdownParser {
                 if let blockQuoteBlock = block as? MarkdownVisitor.BlockQuoteBlock {
                     for (paragraphIndex, paragraphBlock) in blockQuoteBlock.paragraphBlocks.enumerated() {
                         viewItems.append(.blockQuote(
-                            attributedString: convert(paragraphBlock.attributedString),
+                            attributedString: convert(paragraphBlock.attributedString, linkColor: linkColor),
                             tightTop: paragraphIndex != 0,
                             tightBottom: paragraphIndex != blockQuoteBlock.paragraphBlocks.count - 1
                         ))
@@ -92,7 +92,7 @@ enum MarkdownParser {
         }
     }
 
-    private static func convert(_ nsAttributedString: NSAttributedString) -> AttributedString {
-        MarkdownAttributedStringConverter.attributedString(from: nsAttributedString)
+    private static func convert(_ nsAttributedString: NSAttributedString, linkColor: UIColor) -> AttributedString {
+        MarkdownAttributedStringConverter.attributedString(from: nsAttributedString, linkColor: linkColor)
     }
 }

@@ -36,7 +36,7 @@ struct ContactBookContactView: View {
                                 Cell(
                                     left: { BlockchainIcon(blockchain: item.blockchain) },
                                     middle: { MultiText(title: item.blockchain.name, subtitle: item.address) },
-                                    right: { ThemeImage("pen", size: .iconSize20, colorStyle: item.edited ? .yellow : .secondary) },
+                                    right: { ThemeImage("pen", size: .iconSize20, colorStyle: item.edited ? .brand : .secondary) },
                                     action: {
                                         openAddress(item: item)
                                     }
@@ -49,8 +49,8 @@ struct ContactBookContactView: View {
                         ListSection {
                             if !viewModel.allBlockchainsUsed {
                                 Cell(
-                                    left: { ThemeImage("plus", size: .iconSize24, colorStyle: .yellow) },
-                                    middle: { ThemeText("contacts.contact.add_address".localized, style: .headline2, colorStyle: .yellow) },
+                                    left: { ThemeImage("plus", size: .iconSize24, colorStyle: .brand) },
+                                    middle: { ThemeText("contacts.contact.add_address".localized, style: .headline2, colorStyle: .brand) },
                                     action: {
                                         openAddress(item: nil)
                                     }

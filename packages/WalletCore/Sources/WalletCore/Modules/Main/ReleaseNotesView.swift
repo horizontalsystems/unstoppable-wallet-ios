@@ -38,7 +38,7 @@ struct ReleaseNotesView: View {
 
                 Spacer()
 
-                ThemeText("release_notes.follow_us".localized, style: .caption, colorStyle: .yellow)
+                ThemeText("release_notes.follow_us".localized, style: .caption, colorStyle: .brand)
                     .padding(.trailing, .margin24)
             }
             .padding(.leading, .margin8)
@@ -54,7 +54,7 @@ struct ReleaseNotesView: View {
                 openURL(url)
             }
         } label: {
-            ThemeImage(icon, size: .iconSize24, colorStyle: .yellow)
+            ThemeImage(icon, size: .iconSize24, colorStyle: .brand)
                 .frame(width: 52, height: 82)
                 .contentShape(Rectangle())
         }

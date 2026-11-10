@@ -46,7 +46,7 @@ extension ActivityCellViewItem {
             case .pending, .inactive: return .secondary
             case .completed: return .primary
             case .failed: return .red
-            case .attention: return .yellow
+            case .attention: return .warning
             }
         }
 
@@ -55,7 +55,7 @@ extension ActivityCellViewItem {
             case .pending: return .andy
             case .completed, .inactive: return .secondary
             case .failed: return .red
-            case .attention: return .yellow
+            case .attention: return .warning
             }
         }
 

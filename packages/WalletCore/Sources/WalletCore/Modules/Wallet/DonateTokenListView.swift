@@ -22,7 +22,7 @@ struct DonateTokenListView: View {
                             Text("donate.support.description".localized)
                                 .textHeadline2()
                                 .multilineTextAlignment(.center)
-                            ThemeImage("heart_filled", size: .iconSize24, colorStyle: .yellow)
+                            ThemeImage("heart_filled", size: .iconSize24, colorStyle: .brand)
                             ThemeButton(text: "donate.list.get_address".localized, style: .secondary) {
                                 addressesPresented = true
                             }

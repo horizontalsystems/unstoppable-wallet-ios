@@ -25,7 +25,7 @@ struct ExpirationTimerCell: View {
 }
 
 class ExpirationTimerViewModel: ObservableObject {
-    @Published var text: ComponentText = .init(text: "", colorStyle: .yellow)
+    @Published var text: ComponentText = .init(text: "", colorStyle: .warning)
 
     private let expirationDate: Date
     private var timer: Timer?
@@ -55,6 +55,6 @@ class ExpirationTimerViewModel: ObservableObject {
 
     static func format(remaining: Int) -> ComponentText {
         let text = Duration.seconds(remaining).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
-        return ComponentText(text: text, colorStyle: remaining == 0 ? .red : .yellow)
+        return ComponentText(text: text, colorStyle: remaining == 0 ? .red : .warning)
     }
 }

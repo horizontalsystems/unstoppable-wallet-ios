@@ -137,7 +137,7 @@ extension ThemeButton {
             }
 
             switch style {
-            case .primary: return .themeOrange
+            case .primary: return .themeBrand
             case .secondary: return .themeLeah
             }
         }
@@ -151,7 +151,7 @@ extension ThemeButton {
             }
 
             switch style {
-            case .primary: return .themeOrange
+            case .primary: return .themeBrand
             case .secondary:
                 switch size {
                 case .medium: return .themeLeah
@@ -171,7 +171,7 @@ extension ThemeButton {
             }
 
             switch style {
-            case .primary: return .themeOrange
+            case .primary: return .themeBrand
             case .secondary: return .themeAndy
             }
         }

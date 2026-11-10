@@ -83,7 +83,7 @@ public enum CautionType: Equatable, Hashable {
     var colorStyle: ColorStyle {
         switch self {
         case .error: return .red
-        case .warning: return .yellow
+        case .warning: return .warning
         case .regular: return .secondary
         }
     }

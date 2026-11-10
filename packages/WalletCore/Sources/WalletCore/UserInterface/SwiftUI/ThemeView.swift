@@ -181,11 +181,11 @@ struct ConfirmationButtonStyle: ViewModifier {
             if #available(iOS 26, *) {
                 content
                     .buttonStyle(.glassProminent)
-                    .tint(.themeJacob)
+                    .tint(.themeBrand)
                     .foregroundStyle(Color.themeLawrence)
             } else {
                 content
-                    .foregroundStyle(Color.themeJacob)
+                    .foregroundStyle(Color.themeBrand)
             }
         } else {
             content

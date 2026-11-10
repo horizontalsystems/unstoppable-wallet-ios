@@ -45,7 +45,7 @@ extension Image {
     }
 
     static var checkIcon: some View {
-        ThemeImage("check", size: .iconSize20, colorStyle: .yellow)
+        ThemeImage("check", size: .iconSize20, colorStyle: .brand)
     }
 
     static var lockIcon: some View {

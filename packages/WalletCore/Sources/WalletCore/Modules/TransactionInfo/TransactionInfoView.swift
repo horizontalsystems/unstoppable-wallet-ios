@@ -216,11 +216,11 @@ struct TransactionInfoView: View {
             let action = { viewModel.resend(type: type) }
 
             switch type {
-            case .speedUp: return ("arrow_m_up", "tx_info.options.speed_up".localized, .yellow, action)
+            case .speedUp: return ("arrow_m_up", "tx_info.options.speed_up".localized, .brand, action)
             case .cancel: return ("outgoingraw", "tx_info.options.cancel".localized, .red, action)
             }
         case .zcashResend:
-            return ("arrow_m_up", "button.resend".localized, .yellow, { viewModel.zcashResend() })
+            return ("arrow_m_up", "button.resend".localized, .brand, { viewModel.zcashResend() })
         }
     }
 

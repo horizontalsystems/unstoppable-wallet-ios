@@ -53,7 +53,7 @@ public struct OptionAlertView: View {
                 let cell = Cell(
                     middle: {
                         VStack(spacing: 1) {
-                            ThemeText(viewItem.text, style: .body, colorStyle: viewItem.selected ? .yellow : .primary, dimmed: viewItem.disabled)
+                            ThemeText(viewItem.text, style: .body, colorStyle: viewItem.selected ? .brand : .primary, dimmed: viewItem.disabled)
 
                             if let description = viewItem.description {
                                 ThemeText(description, style: .subhead, dimmed: viewItem.disabled)

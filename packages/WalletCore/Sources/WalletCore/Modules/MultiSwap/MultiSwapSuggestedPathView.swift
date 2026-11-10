@@ -73,7 +73,7 @@ struct MultiSwapSuggestedPathView: View {
 
         part.link = URL(string: Self.swapFirstHopUrl)
         part.font = TextStyle.captionSB.font
-        part.foregroundColor = ColorStyle.yellow.color
+        part.foregroundColor = ColorStyle.brand.color
         part.underlineStyle = .single
 
         return part

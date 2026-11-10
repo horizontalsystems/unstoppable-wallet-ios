@@ -163,7 +163,7 @@ extension MultiSwapQuotesView {
         }
     }
 
-    @ViewBuilder static func view(time: MultiSwapViewModel.SwapTimeValue, colorStyle: ColorStyle = .yellow, style: Style = .subheadSB, iconFirst: Bool = false, showIcon: Bool = true) -> some View {
+    @ViewBuilder static func view(time: MultiSwapViewModel.SwapTimeValue, colorStyle: ColorStyle = .brand, style: Style = .subheadSB, iconFirst: Bool = false, showIcon: Bool = true) -> some View {
         let timeString = string(time: time)
 
         HStack(spacing: style.hMargin) {

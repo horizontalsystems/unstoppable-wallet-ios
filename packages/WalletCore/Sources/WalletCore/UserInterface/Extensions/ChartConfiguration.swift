@@ -124,7 +124,7 @@ extension ChartConfiguration {
         trendUpColor = UIColor.themeGreenD
         trendDownColor = UIColor.themeRedD
         pressedColor = .themeNina
-        outdatedColor = .themeJacob
+        outdatedColor = .themeBrand
 
         trendUpGradient = [UIColor](repeatElement(UIColor(hex: 0x13D670), count: 3))
         trendDownGradient = [UIColor(hex: 0x7413D6), UIColor(hex: 0x7413D6), UIColor(hex: 0xFF0303)]

@@ -20,6 +20,7 @@
 - **Auto-lock.** Android's `autolock_<raw>` tags the rows of a page that `security_autolock` pushes. iOS opens an option alert over the screen, and the names sit on the alert's rows.
 - **Biometrics.** Android's `security_biometrics` tags a switch. iOS has a choice row of off, manually and on, so the name sits on that row.
 - **Debug fail-swap row.** Android's `settings_debug_simulate_fail_swap` cycles the mode on each tap. iOS opens an alert for it. The name sits on the row.
+- **Debug brand color row.** iOS has a temporary "Brand Color" dev row, `settings_debug_brand_color`, that Android does not. It switches the app's accent color until the Appearance picker replaces it. The name sits on the row.
 - **Debug swap provider name.** Android has a "Show swap provider name" row that iOS does not, so `settings_debug_swap_provider_name` has no iOS element and is not declared.
 - **File backup row.** Android's wallet page has a file-backup row, `account_local_backup`. The iOS wallet page offers iCloud backup rows and no file-backup row, so the name has no iOS element and is not declared.
 - **Currency list.** Android lists `ARS` and no `RON`, and iOS lists `RON` and no `ARS`, so `currency_ARS` has no iOS element and `currency_RON` has no Android one.

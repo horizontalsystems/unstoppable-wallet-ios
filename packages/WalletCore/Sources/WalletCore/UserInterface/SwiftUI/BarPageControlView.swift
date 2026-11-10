@@ -10,7 +10,7 @@ struct BarPageControlView: View {
         HStack(spacing: .margin4) {
             ForEach(0 ..< pageCount, id: \.self) { index in
                 RoundedRectangle(cornerRadius: .cornerRadius2, style: .continuous)
-                    .fill(index == currentPage ? Color.themeJacob : Color.themeBlade)
+                    .fill(index == currentPage ? Color.themeBrand : Color.themeBlade)
                     .frame(width: Self.barSize.width, height: Self.barSize.height)
             }
         }

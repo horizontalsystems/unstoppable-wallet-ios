@@ -1234,7 +1234,7 @@ extension MultiSwapViewModel {
         var colorStyle: ColorStyle {
             switch self {
             case .neutral: return .secondary
-            case .attention: return .yellow
+            case .attention: return .warning
             }
         }
     }

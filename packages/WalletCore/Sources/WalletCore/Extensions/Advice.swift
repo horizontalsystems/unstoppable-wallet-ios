@@ -138,7 +138,7 @@ extension TechnicalAdvice.Advice {
         case .neutral: return .secondary
         case .buy, .strongBuy: return .green
         case .sell, .strongSell: return .red
-        case .overbought, .oversold: return .yellow
+        case .overbought, .oversold: return .warning
         }
     }
 }

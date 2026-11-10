@@ -20,6 +20,7 @@ class MainSettingsViewModel: ObservableObject {
     private let localStorage = Core.shared.localStorage
     private let testNetManager = Core.shared.testNetManager
     private let purchaseManager = Core.shared.purchaseManager
+    private let brandColorManager = Core.shared.brandColorManager
     private let appStateManager = AppStateManager.instance
 
     @Published var manageWalletsAlert: Bool = false
@@ -88,6 +89,13 @@ class MainSettingsViewModel: ObservableObject {
         }
     }
 
+    /// Temporary dev switch; replaced by the Appearance brand color picker
+    @Published var brandColor: BrandColor {
+        didSet {
+            brandColorManager.set(brandColor: brandColor)
+        }
+    }
+
     init() {
         showDevTools = AppConfig.showDevTools
         forceEnableSwap = localStorage.forceEnableSwap
@@ -97,6 +105,7 @@ class MainSettingsViewModel: ObservableObject {
         testNetEnabled = testNetManager.testNetEnabled
         emulateZcashMigration = localStorage.emulateZcashMigration
         debuggingAmlResult = localStorage.debuggingAmlCheckResult
+        brandColor = brandColorManager.brandColor
 
         subscribe(MainScheduler.instance, disposeBag, backupManager.allBackedUpObservable) { [weak self] _ in self?.syncManageWalletsAlert() }
         if let walletConnect {

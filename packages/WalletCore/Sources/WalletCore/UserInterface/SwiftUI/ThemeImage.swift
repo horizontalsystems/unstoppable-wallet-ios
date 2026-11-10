@@ -83,7 +83,7 @@ extension ThemeImage {
 }
 
 extension ThemeImage {
-    static let warning = ComponentImage("warning_filled", size: .iconSize72, colorStyle: .yellow)
+    static let warning = ComponentImage("warning_filled", size: .iconSize72, colorStyle: .warning)
     static let error = ComponentImage("warning_filled", size: .iconSize72, colorStyle: .red)
     static let info = ComponentImage("warning_filled", size: .iconSize72)
     static let book = ComponentImage("book", size: .iconSize72)

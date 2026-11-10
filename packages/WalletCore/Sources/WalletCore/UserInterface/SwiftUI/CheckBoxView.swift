@@ -6,7 +6,7 @@ struct CheckBoxView: View {
     var body: some View {
         ZStack {
             if checked {
-                ThemeImage("done_e_filled_full", size: .iconSize24, colorStyle: .yellow)
+                ThemeImage("done_e_filled_full", size: .iconSize24, colorStyle: .brand)
             } else {
                 Circle()
                     .stroke(Color.themeAndy, lineWidth: 1)

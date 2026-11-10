@@ -8,7 +8,7 @@ struct SwitchAccountView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: .margin16) {
-                ThemeImage("wallet_change", size: .iconSize24, colorStyle: .yellow)
+                ThemeImage("wallet_change", size: .iconSize24, colorStyle: .brand)
 
                 Text("switch_account.title".localized).themeHeadline2()
 

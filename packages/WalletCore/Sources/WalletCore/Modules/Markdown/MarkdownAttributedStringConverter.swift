@@ -2,9 +2,7 @@ import SwiftUI
 import UIKit
 
 enum MarkdownAttributedStringConverter {
-    static let linkColor: UIColor = .themeJacob
-
-    static func attributedString(from nsAttributedString: NSAttributedString) -> AttributedString {
+    static func attributedString(from nsAttributedString: NSAttributedString, linkColor: UIColor) -> AttributedString {
         let source = normalizedLinks(nsAttributedString)
 
         // Conversion only throws on attribute values of unexpected types; `.link` (the one Down emits as String) is normalized to URL above, so this fallback is effectively unreachable

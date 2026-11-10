@@ -48,7 +48,7 @@ struct ScrollableTabHeaderView: View {
         ThemeText(
             tab.title,
             style: isActive || tab.highlighted ? .subheadSB : .subhead,
-            colorStyle: isActive ? .primary : (tab.highlighted ? .yellow : .secondary)
+            colorStyle: isActive ? .primary : (tab.highlighted ? .brand : .secondary)
         )
         .contentShape(Rectangle())
         .padding(.horizontal, .margin12)
@@ -56,7 +56,7 @@ struct ScrollableTabHeaderView: View {
         .overlay(alignment: .bottom) {
             if isActive {
                 Rectangle()
-                    .fill(Color.themeJacob)
+                    .fill(Color.themeBrand)
                     .frame(height: 2)
                     .matchedGeometryEffect(id: "highlightmenuitem", in: namespace)
             }

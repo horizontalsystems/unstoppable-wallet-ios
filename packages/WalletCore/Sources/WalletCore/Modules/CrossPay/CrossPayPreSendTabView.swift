@@ -25,7 +25,7 @@ struct CrossPayPreSendTabView: View {
             if viewModel.quoteState == .loading {
                 ProgressView()
             } else {
-                ThemeText(formatted(amount: payAmount, token: viewModel.tokenIn), style: .subhead, colorStyle: .yellow)
+                ThemeText(formatted(amount: payAmount, token: viewModel.tokenIn), style: .subhead, colorStyle: .brand)
             }
         }
         .padding(.horizontal, 16)

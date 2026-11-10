@@ -71,6 +71,7 @@ public class Core {
     let lockoutManager: LockoutManager
     let keychainManager: KeychainManager
     let themeManager: ThemeManager
+    let brandColorManager: BrandColorManager
     let systemInfoManager: SystemInfoManager
     let testNetManager: TestNetManager
     let deepLinkManager: DeepLinkManager
@@ -221,6 +222,7 @@ public class Core {
         coverManager = CoverManager(lockManager: lockManager)
         keychainManager = KeychainManager(storage: keychainStorage, userDefaultsStorage: userDefaultsStorage)
         themeManager = ThemeManager.shared
+        brandColorManager = BrandColorManager.shared
         systemInfoManager = SystemInfoManager()
         testNetManager = TestNetManager(userDefaultsStorage: userDefaultsStorage)
         deepLinkManager = DeepLinkManager(matchers: DeepLinkRouteFactory.matchers())

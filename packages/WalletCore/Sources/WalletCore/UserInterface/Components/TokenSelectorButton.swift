@@ -26,7 +26,7 @@ struct TokenSelectorButton: View {
                         BadgeViewNew(token.fullBadge)
                     }
                 } else {
-                    Text("token_selector.select".localized).textHeadline2(color: .themeJacob)
+                    Text("token_selector.select".localized).textHeadline2(color: .themeBrand)
                 }
 
                 if action != nil {

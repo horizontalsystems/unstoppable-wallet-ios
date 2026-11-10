@@ -37,7 +37,7 @@ struct ManageWalletListView: View {
                         viewModel.enabledTokens[item.id] ?? false
                     }, set: { isEnabled in
                         viewModel.toggle(item: item, enabled: isEnabled)
-                    }).animation(), style: .yellow)
+                    }).animation())
                         .accessibilityIdentifier(TestTags.manageCoin(item.token.coin.code, item.token.blockchainType.uid))
                 }
             }

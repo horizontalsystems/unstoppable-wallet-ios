@@ -4,12 +4,12 @@ struct ThemeToggle: View {
     let isOn: Binding<Bool>
     let style: ThemeToggleStyle
 
-    init(isOn: Binding<Bool>, style: ThemeToggleStyle = .yellow) {
+    init(isOn: Binding<Bool>, style: ThemeToggleStyle = .brand) {
         self.isOn = isOn
         self.style = style
     }
 
-    init(isOn: Bool, style: ThemeToggleStyle = .yellow, onToggle: @escaping (Bool) -> Void) {
+    init(isOn: Bool, style: ThemeToggleStyle = .brand, onToggle: @escaping (Bool) -> Void) {
         self.isOn = Binding(
             get: { isOn },
             set: { onToggle($0) }
@@ -26,11 +26,11 @@ struct ThemeToggle: View {
 
 extension ThemeToggle {
     enum ThemeToggleStyle: Equatable {
-        case yellow
+        case brand
 
         func makeToggleStyle() -> some ToggleStyle {
             switch self {
-            case .yellow: SwitchToggleStyle(tint: .themeYellow)
+            case .brand: SwitchToggleStyle(tint: .themeBrand)
             }
         }
     }

@@ -20,7 +20,6 @@ public extension Color {
 
     static let themeGray50 = Color.themeGray.opacity(0.5)
     static let themeYellow20 = Color.themeYellow.opacity(0.2)
-    static let themeYellow50 = Color.themeYellow.opacity(0.5)
 
     static let themeTyler = Color("Tyler")
     static let themeTyler96 = Color("Tyler96")
@@ -59,6 +58,10 @@ public extension Color {
     static var themeInputFieldTintColor: Color {
         .themeLeah
     }
+
+    static var themeBrand: Color {
+        BrandColorManager.shared.brandColor.color
+    }
 }
 
 public extension UIColor {
@@ -96,7 +99,6 @@ public extension UIColor {
     static let themeSteel20 = UIColor(hex: 0x73798C, alpha: 0.2)
     static let themeSteel30 = UIColor(hex: 0x73798C, alpha: 0.3)
     static let themeGray50 = UIColor(hex: 0x808085, alpha: 0.5)
-    static let themeYellow50 = UIColor(hex: 0xFFA800, alpha: 0.5)
     static let themeYellow20 = UIColor(hex: 0xFFA800, alpha: 0.2)
     static let themeGreen50 = UIColor(hex: 0x05C46B, alpha: 0.5)
     static let themeLawrencePressedD = UIColor(hex: 0x353842)
@@ -135,6 +137,10 @@ public extension UIColor {
 
     static var themeJacob: UIColor {
         color(dark: .themeYellowD, light: .themeYellowL)
+    }
+
+    static var themeBrand: UIColor {
+        BrandColorManager.shared.brandColor.uiColor
     }
 
     static var themeRemus: UIColor {

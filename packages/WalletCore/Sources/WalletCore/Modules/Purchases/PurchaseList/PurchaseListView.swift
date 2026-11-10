@@ -31,7 +31,7 @@ struct PurchaseListView: View {
         Cell(
             middle: { ThemeText("subscription.plan".localized, style: .headline2) },
             right: {
-                ThemeText(value, style: .subheadSB, colorStyle: .yellow)
+                ThemeText(value, style: .subheadSB, colorStyle: .brand)
                     .arrow(style: .disclosure)
             },
             action: action
@@ -49,7 +49,7 @@ struct PurchaseListView: View {
             )
 
             Cell(
-                middle: { ThemeText("subscription.restore".localized, style: .headline2, colorStyle: .yellow) },
+                middle: { ThemeText("subscription.restore".localized, style: .headline2, colorStyle: .brand) },
                 action: {
                     viewModel.restorePurchases()
                 }

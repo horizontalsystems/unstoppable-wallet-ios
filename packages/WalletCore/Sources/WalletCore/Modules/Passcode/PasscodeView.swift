@@ -48,7 +48,7 @@ struct PasscodeView: View {
                     HStack(spacing: .margin12) {
                         ForEach(0 ..< maxDigits, id: \.self) { index in
                             Circle()
-                                .fill(index < passcode.count ? Color.themeJacob : Color.themeBlade)
+                                .fill(index < passcode.count ? Color.themeBrand : Color.themeBlade)
                                 .frame(width: .margin12, height: .margin12)
                         }
                     }

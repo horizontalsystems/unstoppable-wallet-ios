@@ -86,7 +86,7 @@ extension HudHelper {
 
         var color: UIColor {
             switch self {
-            case .addedToWatchlist, .alreadyAddedToWallet, .notSupportedYet, .sent, .swapped, .approved, .revoked, .attention: return .themeJacob
+            case .addedToWatchlist, .alreadyAddedToWallet, .notSupportedYet, .sent, .swapped, .approved, .revoked, .attention: return .themeBrand
             case .removedFromWallet, .removedFromWatchlist, .deleted, .noInternet, .disconnectedWalletConnect, .error: return .themeLucian
             case .addedToWallet, .copied, .saved, .savedToCloud, .done, .restored, .created, .imported, .walletAdded, .enabled, .success, .connectedWalletConnect, .passwordFromKeychain: return .themeRemus
             case .waitingForSession, .disconnectingWalletConnect, .enabling, .preparing, .sending, .swapping, .approving, .revoking: return .themeGray

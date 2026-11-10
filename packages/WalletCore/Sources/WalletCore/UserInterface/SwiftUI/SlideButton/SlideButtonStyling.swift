@@ -3,7 +3,7 @@ import SwiftUI
 public struct SlideButtonStyling {
     public init(
         indicatorSize: CGFloat = .heightButton,
-        indicatorColor: Color = .themeJacob,
+        indicatorColor: Color = .themeBrand,
         indicatorBrightness: Double = 0.0,
         backgroundColor: Color = .themeBlade,
         start: String = "",
@@ -53,7 +53,10 @@ public struct SlideButtonStyling {
     var textHiddenBehindIndicator: Bool
     var textShimmers: Bool
 
-    public static let `default`: Self = .init()
+    public static var `default`: Self {
+        .init()
+    }
+
     public static func text(start: String, end: String? = nil, success: String? = nil) -> Self {
         .init(start: start, end: end ?? start, success: success ?? end ?? start)
     }

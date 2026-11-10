@@ -62,7 +62,7 @@ struct BackupVerifyWordsView: View {
             .padding(.horizontal, .margin16)
             .overlay(
                 RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous)
-                    .stroke(item.selected ? Color.themeYellow50 : Color.themeBlade, lineWidth: .heightOneDp)
+                    .stroke(item.selected ? Color.themeBrand.opacity(0.5) : Color.themeBlade, lineWidth: .heightOneDp)
             )
     }
 }

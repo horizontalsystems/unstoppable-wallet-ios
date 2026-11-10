@@ -26,7 +26,7 @@ struct PremiumHeaderView: View {
                let upperBound = AttributedString.Index(range.upperBound, within: attributedString)
             {
                 let attrRange = lowerBound ..< upperBound
-                attributedString[attrRange].foregroundColor = .themeJacob
+                attributedString[attrRange].foregroundColor = .themeBrand
             }
         }
 
