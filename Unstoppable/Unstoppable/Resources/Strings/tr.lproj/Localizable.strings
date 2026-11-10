@@ -2329,6 +2329,8 @@
 "public_keys.account_extended_public_key.description" = "Bitcoin ve diğer UTXO tabanlı kriptoları (örneğin Litecoin, Bitcoin Cash, Dash vb.) tutan cüzdanların salt okunur olarak izlenmesine izin verir.";
 "public_keys.monero_public_key" = "Monero Genel Anahtarları";
 "public_keys.monero_public_key.description" = "Monero (XMR) varlıkları içeren cüzdanların yalnızca okuma modunda izlenmesine izin verir; harcama erişimi sağlamaz.";
+"public_keys.zcash_viewing_key" = "Zcash Görüntüleme Anahtarı";
+"public_keys.zcash_viewing_key.description" = "Unified Full Viewing Key (UFVK). Zcash cüzdanının bakiyesini ve tüm işlemlerini gösterir, ancak harcama yapamaz.";
 
 // Manage Account -> Private Keys
 
@@ -2507,7 +2509,7 @@
 "watch_address.error.address_required" = "Devam etmek için lütfen bir adres girin";
 "watch_address.error.non_public_key" = "Özel anahtarla izlemeye izin verilmiyor";
 "watch_address.error.not_supported_derived_type" = "Türetilmiş tür desteklenmiyor";
-"watch_address.watch_data.placeholder" = "Genel adresinizi veya XPUB anahtarınızı yapıştırın";
+"watch_address.watch_data.placeholder" = "Adresinizi yapıştırın (EVM, Tron, TON, Stellar, XRP, NEAR, Monero, BTC, LTC, BCH, Dash) veya XPUB / Zcash UFVK";
 "watch_address.choose_blockchains" = "Blok zincirlerini seç";
 "watch_address.choose_coins" = "Coinleri seç";
 "watch_address.view_key.placeholder" = "Özel Görüntüleme Anahtarı";

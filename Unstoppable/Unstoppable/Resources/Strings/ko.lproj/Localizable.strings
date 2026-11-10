@@ -2329,6 +2329,8 @@
 "public_keys.account_extended_public_key.description" = "Bitcoin 및 기타 UTXO 기반 암호화폐(예: Litecoin, Bitcoin Cash, Dash 등)를 보유한 지갑의 읽기 전용 모니터링을 허용합니다.";
 "public_keys.monero_public_key" = "Monero 공개 키";
 "public_keys.monero_public_key.description" = "Monero(XMR) 자산을 보유한 지갑을 읽기 전용으로 모니터링할 수 있으며, 자금 사용 권한은 부여되지 않습니다.";
+"public_keys.zcash_viewing_key" = "Zcash 조회 키";
+"public_keys.zcash_viewing_key.description" = "Unified Full Viewing Key (UFVK). Zcash 지갑의 잔액과 모든 거래를 보여주지만 자금을 사용할 수는 없습니다.";
 
 // Manage Account -> Private Keys
 
@@ -2507,7 +2509,7 @@
 "watch_address.error.address_required" = "계속하려면 주소를 입력하세요";
 "watch_address.error.non_public_key" = "개인 키로 감시하는 것은 허용되지 않습니다";
 "watch_address.error.not_supported_derived_type" = "파생된 유형은 지원되지 않습니다";
-"watch_address.watch_data.placeholder" = "공개 주소 또는 XPUB를 붙여넣으세요";
+"watch_address.watch_data.placeholder" = "주소(EVM, Tron, TON, Stellar, XRP, NEAR, Monero, BTC, LTC, BCH, Dash) 또는 XPUB / Zcash UFVK를 붙여넣으세요";
 "watch_address.choose_blockchains" = "블록체인 선택";
 "watch_address.choose_coins" = "코인 선택";
 "watch_address.view_key.placeholder" = "개인 조회 키";

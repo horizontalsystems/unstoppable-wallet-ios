@@ -10,11 +10,9 @@ class ZcashTransactionPool {
 
     private let accountId: AccountUUID
     private let synchronizer: Synchronizer
-    private let receiveAddress: SaplingAddress
 
-    init(accountId: AccountUUID, receiveAddress: SaplingAddress, synchronizer: Synchronizer) {
+    init(accountId: AccountUUID, synchronizer: Synchronizer) {
         self.accountId = accountId
-        self.receiveAddress = receiveAddress
         self.synchronizer = synchronizer
     }
 

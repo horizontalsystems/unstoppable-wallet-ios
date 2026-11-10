@@ -39,21 +39,34 @@ struct PublicKeysView: View {
                             .onFirstAppear { stat(page: .privateKeys, event: .open(page: .moneroPublicKeys)) }
                     }
                 }
+
+                if viewModel.showZcashViewingKey {
+                    option(title: "public_keys.zcash_viewing_key".localized, description: "public_keys.zcash_viewing_key.description".localized, identifier: TestTags.publicKeysZcashViewingKey) {
+                        ZcashViewingKeyView(accountType: viewModel.accountType)
+                            .onFirstAppear { stat(page: .publicKeys, event: .open(page: .zcashViewingKey)) }
+                    }
+                }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
         .navigationTitle("public_keys.title".localized)
     }
 
-    private func option(title: String, description: String, @ViewBuilder destination: () -> some View) -> some View {
+    private func option(title: String, description: String, identifier: String? = nil, @ViewBuilder destination: () -> some View) -> some View {
         ListSection(footer: description) {
-            NavigationLink(destination: destination) {
+            let link = NavigationLink(destination: destination) {
                 Cell(
                     middle: { ThemeText(title, style: .headline2) },
                     right: { Image.disclosureIcon }
                 )
             }
             .buttonStyle(CellButtonStyle())
+
+            if let identifier {
+                link.accessibilityIdentifier(identifier)
+            } else {
+                link
+            }
         }
     }
 }

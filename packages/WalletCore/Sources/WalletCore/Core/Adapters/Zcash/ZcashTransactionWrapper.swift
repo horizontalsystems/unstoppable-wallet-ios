@@ -18,6 +18,10 @@ class ZcashTransactionWrapper {
     let fee: Zatoshi?
     let memo: String?
     let failed: Bool
+    /// A ZIP 318 (Orchard to Ironwood) migration transaction, as the SDK classifies it from the transaction itself
+    let isMigration: Bool
+    /// The value a migration transfer moved across pools; nil for any other transaction
+    let poolCrossingValue: Zatoshi?
 
     var recipientAddress: String? {
         recipients
@@ -43,17 +47,23 @@ class ZcashTransactionWrapper {
         totalSpent = tx.totalSpent
         totalReceived = tx.totalReceived
 
-        // if sent tx with all recipients same to accountId and spent&received > 0, it means that we receive money inside account(from shield to unshield or vice versa)
-        let hasSpentAndReceived = ((tx.totalSpent ?? .zero) > .zero) && ((tx.totalReceived ?? .zero) > .zero)
-        let internalTransaction =
-            hasSpentAndReceived &&
-            recipients.count > 0 &&
-            tx.isSentTransaction && recipients.allSatisfy { recipient in
-                if case let .internalAccount(accountUUID) = recipient {
-                    return accountUUID == accountId
-                }
-                return false
+        isMigration = Self.isMigration(kind: tx.zip318Kind)
+        poolCrossingValue = tx.poolCrossingValue
+
+        let recipientsAllInternal = !recipients.isEmpty && recipients.allSatisfy { recipient in
+            if case let .internalAccount(accountUUID) = recipient {
+                return accountUUID == accountId
             }
+            return false
+        }
+        let internalTransaction = Self.isInternalTransfer(
+            isSentTransaction: tx.isSentTransaction,
+            value: tx.value,
+            fee: tx.fee,
+            totalSpent: tx.totalSpent,
+            totalReceived: tx.totalReceived,
+            recipientsAllInternal: recipientsAllInternal
+        )
 
         // if shield or only internal(expect unshield)
         if tx.isShielding || internalTransaction {
@@ -132,6 +142,34 @@ extension ZcashTransactionWrapper: Hashable {
 extension ZcashTransactionWrapper {
     enum Direction {
         case shield, unshield
+    }
+
+    /// Only `preparation` and `transfer` are a migration; `notClassified` is the absence of a decision, not a "no"
+    static func isMigration(kind: ZcashTransaction.Overview.ZIP318Kind) -> Bool {
+        switch kind {
+        case .preparation, .transfer: return true
+        default: return false
+        }
+    }
+
+    /// A move between the account's own pools costs it exactly the fee. A payment out costs more, so a payment made on
+    /// another device — whose external recipient this wallet may not have decrypted yet, leaving only the change in
+    /// sight — stays a payment instead of turning into an unshield whose "fee" is the whole payment.
+    static func isInternalTransfer(
+        isSentTransaction: Bool,
+        value: Zatoshi,
+        fee: Zatoshi?,
+        totalSpent: Zatoshi?,
+        totalReceived: Zatoshi?,
+        recipientsAllInternal: Bool
+    ) -> Bool {
+        guard isSentTransaction, recipientsAllInternal, let fee,
+              (totalSpent ?? .zero) > .zero, (totalReceived ?? .zero) > .zero
+        else {
+            return false
+        }
+
+        return value == Zatoshi(-fee.amount)
     }
 
     var description: String {

@@ -133,6 +133,12 @@ public class AccountStorage {
             }
 
             type = .moneroWatchAccount(address: address, viewKey: viewKey)
+        case .zcashViewingKey:
+            guard let ufvk: String = recover(id: id, typeName: typeName, keyName: .data) else {
+                return nil
+            }
+
+            type = .zcashViewingKey(ufvk: ufvk)
         case .moneroMnemonic:
             guard let words = recoverStringArray(id: id, typeName: typeName, keyName: .words), let passphrase: String = recover(id: id, typeName: typeName, keyName: .salt) else {
                 return nil
@@ -218,6 +224,9 @@ public class AccountStorage {
             typeName = .moneroWatchAccount
             wordsKey = address
             dataKey = try store(viewKey, id: id, typeName: typeName, keyName: .data)
+        case let .zcashViewingKey(ufvk):
+            typeName = .zcashViewingKey
+            dataKey = try store(ufvk, id: id, typeName: typeName, keyName: .data)
         case let .moneroMnemonic(words, passphrase):
             typeName = .moneroMnemonic
             wordsKey = try store(stringArray: words, id: id, typeName: typeName, keyName: .words)
@@ -264,6 +273,8 @@ public class AccountStorage {
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .btcAddress, keyName: .data))
         case .moneroWatchAccount:
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .moneroWatchAccount, keyName: .data))
+        case .zcashViewingKey:
+            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .zcashViewingKey, keyName: .data))
         case .moneroMnemonic:
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .moneroMnemonic, keyName: .words))
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .moneroMnemonic, keyName: .salt))
@@ -363,6 +374,7 @@ extension AccountStorage {
         case hdExtendedKey
         case btcAddress
         case moneroWatchAccount
+        case zcashViewingKey
         case moneroMnemonic
     }
 

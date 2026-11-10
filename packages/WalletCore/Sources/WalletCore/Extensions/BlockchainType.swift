@@ -166,6 +166,8 @@ extension BlockchainType {
             return self == blockchainType
         case .moneroWatchAccount:
             return self == .monero
+        case .zcashViewingKey:
+            return self == .zcash
         case .moneroMnemonic:
             return self == .monero
         }

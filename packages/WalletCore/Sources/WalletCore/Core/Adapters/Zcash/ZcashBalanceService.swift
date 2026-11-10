@@ -8,6 +8,7 @@ class ZcashBalanceService {
     private let uniqueId: String
     private let storage: ZcashAdapterStorage
     private let migrator: ZcashMigrator
+    private let canShield: Bool
     private let logger: HsToolKit.Logger?
 
     private let balanceSubject = PublishSubject<BalanceData>()
@@ -20,10 +21,11 @@ class ZcashBalanceService {
         }
     }
 
-    init(uniqueId: String, storage: ZcashAdapterStorage, migrator: ZcashMigrator, logger: HsToolKit.Logger?) throws {
+    init(uniqueId: String, storage: ZcashAdapterStorage, migrator: ZcashMigrator, canShield: Bool, logger: HsToolKit.Logger?) throws {
         self.uniqueId = uniqueId
         self.storage = storage
         self.migrator = migrator
+        self.canShield = canShield
         self.logger = logger
 
         zCashBalanceData = try storage.balanceData(id: uniqueId) ?? .empty(id: uniqueId)
@@ -87,8 +89,8 @@ class ZcashBalanceService {
     }
 
     private func handleTransparentUpdates(oldBalance _: Decimal, newBalance: Decimal, syncStatus: SyncStatus) {
-        // handle only after syncing adapter
-        guard syncStatus == .upToDate else {
+        // handle only after syncing adapter; a viewing key cannot shield, so its transparent funds are not worth an alert
+        guard canShield, syncStatus == .upToDate else {
             return
         }
 

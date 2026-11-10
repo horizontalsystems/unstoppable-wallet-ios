@@ -56,8 +56,12 @@ struct ZcashReceiveAddressSelectView: View {
         )
     }
 
-    @ViewBuilder
     private func destinationView(for addressType: ZcashAdapter.AddressType) -> some View {
+        Self.addressView(wallet: wallet, addressType: addressType, onDismiss: onDismiss)
+    }
+
+    @ViewBuilder
+    static func addressView(wallet: Wallet, addressType: ZcashAdapter.AddressType, onDismiss: (() -> Void)?) -> some View {
         let service = ZCashReceiveAddressService(wallet: wallet, addressType: addressType)
         let viewModel = BaseReceiveAddressViewModel(
             service: service,

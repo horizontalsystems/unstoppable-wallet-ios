@@ -22,14 +22,32 @@ struct AccountStorageWatchTests {
         #expect(accounts.first { $0.id == thor.id }?.type == thor.type)
         #expect(accounts.first { $0.id == maya.id }?.type == maya.type)
     }
+
+    /// A Zcash viewing key, unlike the address types above, lives in the keychain: it survives a restart and leaves the
+    /// keychain with its account.
+    @Test func zcashViewingKeySurvivesRestartAndLeavesWithItsAccount() throws {
+        let dbPool = try Self.dbPool()
+        let account = Self.account(id: "zcash-watch-\(UUID().uuidString)", type: .zcashViewingKey(ufvk: ZcashViewingKeyAccountTests.ufvk))
+        let keychainKey = "zcashViewingKey_\(account.id)_data"
+
+        Self.storage(dbPool: dbPool).save(account: account)
+
+        let (accounts, lostRecords) = Self.storage(dbPool: dbPool).allAccounts
+        #expect(lostRecords.isEmpty)
+        #expect(accounts.first { $0.id == account.id }?.type == account.type)
+        #expect((Self.keychain.value(for: keychainKey) as String?) == ZcashViewingKeyAccountTests.ufvk)
+
+        Self.storage(dbPool: dbPool).delete(account: account)
+
+        #expect((Self.keychain.value(for: keychainKey) as String?) == nil)
+    }
 }
 
 extension AccountStorageWatchTests {
+    private static let keychain = KeychainStorage(service: "account-storage-watch-tests", logger: Logger(minLogLevel: .error))
+
     private static func storage(dbPool: DatabasePool) -> AccountStorage {
-        AccountStorage(
-            keychainStorage: KeychainStorage(service: "account-storage-watch-tests", logger: Logger(minLogLevel: .error)),
-            storage: AccountRecordStorage(dbPool: dbPool)
-        )
+        AccountStorage(keychainStorage: keychain, storage: AccountRecordStorage(dbPool: dbPool))
     }
 
     /// The table as StorageMigrator leaves it; the migrator itself touches the app keychain, so it is not run here

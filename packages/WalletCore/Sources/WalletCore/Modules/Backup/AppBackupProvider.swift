@@ -266,13 +266,14 @@ extension AppBackupProvider {
                     tokenDecimals: wallet.tokenDecimals
                 )
             }
-            walletManager.save(enabledWallets: wallets)
-
             // written after the per-wallet loop so the value from the account data wins over the
             // plain-text one in `enabled_wallets`, and lands even when that wallet is not enabled
             for (blockchainType, settings) in raw.restoreSettings {
                 restoreSettingsManager.save(settings: settings, account: raw.account, blockchainType: blockchainType)
             }
+
+            // saving wallets starts their adapters, which read the birthday height saved above
+            walletManager.save(enabledWallets: wallets)
         }
     }
 
@@ -428,10 +429,11 @@ extension AppBackupProvider {
             throw CodingError.unsupportedAccountType
         }
 
-        // Android reads a Monero watch account's height from the account data only, so it is written there
-        // as well as in the wallet's restore settings; a disabled XMR wallet has no settings to read from
-        let moneroHeight = restoreSettingsManager.settings(accountId: account.id, blockchainType: .monero).birthdayHeight ?? 0
-        let message = AccountTypeBackupCodec.data(accountType: account.type, moneroHeight: moneroHeight)
+        // Android reads a watch account's height from the account data only, so it is written there
+        // as well as in the wallet's restore settings; a disabled wallet has no settings to read from
+        let watchHeight = account.type.watchBirthdayBlockchainType
+            .flatMap { restoreSettingsManager.settings(accountId: account.id, blockchainType: $0).birthdayHeight } ?? 0
+        let message = AccountTypeBackupCodec.data(accountType: account.type, watchHeight: watchHeight)
         let crypto = try BackupCrypto.encrypt(data: message, passphrase: passphrase)
 
         return WalletBackup(

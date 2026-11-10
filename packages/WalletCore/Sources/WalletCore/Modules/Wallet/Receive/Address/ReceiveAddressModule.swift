@@ -119,7 +119,13 @@ extension ReceiveAddressModule {
         case .stellar: StellarReceiveAddressView(wallet: wallet, onDismiss: onDismiss)
         case .xrp: XrpReceiveAddressView(wallet: wallet, onDismiss: onDismiss)
         case .monero: MoneroReceiveAddressView(wallet: wallet, onDismiss: onDismiss)
-        case .zcash: ZcashReceiveAddressSelectView(wallet: wallet, path: path, onDismiss: onDismiss)
+        case .zcash:
+            if ZcashAdapter.hasTransparentAddress(accountType: wallet.account.type) {
+                ZcashReceiveAddressSelectView(wallet: wallet, path: path, onDismiss: onDismiss)
+            } else {
+                // a viewing key without the transparent component has only the shielded address to show
+                ZcashReceiveAddressSelectView.addressView(wallet: wallet, addressType: .shielded, onDismiss: onDismiss)
+            }
         default:
             let service = BaseReceiveAddressService(wallet: wallet)
             let viewModel = BaseReceiveAddressViewModel(service: service, viewItemFactory: ReceiveAddressViewItemFactory())

@@ -24,6 +24,9 @@ public enum AccountType: Identifiable {
     case hdExtendedKey(key: HDExtendedKey)
     case btcAddress(address: String, blockchainType: BlockchainType, tokenType: TokenType)
     case moneroWatchAccount(address: String, viewKey: String)
+    /// A Zcash Unified Full Viewing Key (ZIP 316): sees every pool's transactions but cannot spend.
+    /// Its birthday height lives in the wallet's Zcash restore settings, as a Monero watch account's does.
+    case zcashViewingKey(ufvk: String)
     /// A raw ed25519 spend key behind a Monero legacy (Electrum-style) 25-word seed; no other
     /// chain can be derived from it. The passphrase is wallet2's seed offset, not a BIP39 salt.
     case moneroMnemonic(words: [String], passphrase: String)
@@ -88,6 +91,8 @@ public enum AccountType: Identifiable {
             privateData = "\(address)&\(blockchainType.uid)|\(tokenType.id)".data(using: .utf8) ?? Data()
         case let .moneroWatchAccount(address, viewKey):
             privateData = "\(address)|\(viewKey)".data(using: .utf8) ?? Data()
+        case let .zcashViewingKey(ufvk):
+            privateData = ufvk.hs.data
         case let .moneroMnemonic(words, passphrase):
             // Must stay byte-identical to Android's BackupLocalModule format so encrypted
             // backups restore across platforms.
@@ -220,6 +225,8 @@ public enum AccountType: Identifiable {
             return token.blockchainType == blockchainType && token.type == tokenType
         case .moneroWatchAccount:
             return token.blockchainType == .monero
+        case .zcashViewingKey:
+            return token.blockchainType == .zcash && token.type == .native
         case .moneroMnemonic:
             return token.blockchainType == .monero && token.type == .native
         }
@@ -288,6 +295,8 @@ public enum AccountType: Identifiable {
             return "\(Self.btcAddressCoinCode(blockchainType)) Address"
         case .moneroWatchAccount:
             return "Monero Watch Account"
+        case .zcashViewingKey:
+            return "Zcash Viewing Key"
         case let .moneroMnemonic(words, passphrase):
             let count = "\(words.count)"
             return passphrase.isEmpty ? "manage_accounts.n_words".localized(count) : "manage_accounts.n_words_with_passphrase".localized(count)
@@ -343,6 +352,8 @@ public enum AccountType: Identifiable {
             return "btc_address"
         case .moneroWatchAccount:
             return "monero_watch_account"
+        case .zcashViewingKey:
+            return "zcash_viewing_key"
         case let .moneroMnemonic(_, passphrase):
             return passphrase.isEmpty ? "monero_mnemonic" : "monero_mnemonic_with_passphrase"
         }
@@ -383,6 +394,17 @@ public enum AccountType: Identifiable {
             return address
         case let .moneroWatchAccount(address, _):
             return address
+        case let .zcashViewingKey(ufvk):
+            return ZcashAdapter.watchAddress(ufvk: ufvk)
+        default: return nil
+        }
+    }
+
+    /// The blockchain whose restore settings hold a watch account's birthday height, asked when it is added
+    var watchBirthdayBlockchainType: BlockchainType? {
+        switch self {
+        case .moneroWatchAccount: return .monero
+        case .zcashViewingKey: return .zcash
         default: return nil
         }
     }
@@ -412,6 +434,7 @@ public enum AccountType: Identifiable {
             }
         case let .btcAddress(_, blockchainType, _): return Self.btcAddressCoinCode(blockchainType)
         case .moneroWatchAccount: return "Monero"
+        case .zcashViewingKey: return "Zcash"
         default: return nil
         }
     }
@@ -447,6 +470,7 @@ public extension AccountType {
         case hdExtendedKey = "hd_extended_key"
         case btcAddress = "bitcoin_address"
         case moneroWatchAccount = "monero_watch_account"
+        case zcashViewingKey = "zcash_viewing_key"
         case moneroMnemonic = "monero_mnemonic"
 
         init(_ type: AccountType) {
@@ -468,6 +492,7 @@ public extension AccountType {
             case .hdExtendedKey: self = .hdExtendedKey
             case .btcAddress: self = .btcAddress
             case .moneroWatchAccount: self = .moneroWatchAccount
+            case .zcashViewingKey: self = .zcashViewingKey
             case .moneroMnemonic: self = .moneroMnemonic
             }
         }
@@ -511,6 +536,8 @@ extension AccountType: Hashable {
             return lhsAddress == rhsAddress && lhsBlockchainType == rhsBlockchainType && lhsTokenType == rhsTokenType
         case let (.moneroWatchAccount(lhsAddress, lhsViewKey), .moneroWatchAccount(rhsAddress, rhsViewKey)):
             return lhsAddress == rhsAddress && lhsViewKey == rhsViewKey
+        case let (.zcashViewingKey(lhsUfvk), .zcashViewingKey(rhsUfvk)):
+            return lhsUfvk == rhsUfvk
         case let (.moneroMnemonic(lhsWords, lhsPassphrase), .moneroMnemonic(rhsWords, rhsPassphrase)):
             return lhsWords == rhsWords && lhsPassphrase == rhsPassphrase
         default: return false
@@ -575,6 +602,9 @@ extension AccountType: Hashable {
             hasher.combine("moneroWatchWallet")
             hasher.combine(address)
             hasher.combine(viewKey)
+        case let .zcashViewingKey(ufvk):
+            hasher.combine("zcashViewingKey")
+            hasher.combine(ufvk)
         case let .moneroMnemonic(words, passphrase):
             hasher.combine("moneroMnemonic")
             hasher.combine(words)

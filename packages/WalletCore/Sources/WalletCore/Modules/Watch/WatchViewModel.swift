@@ -157,6 +157,13 @@ class WatchViewModel: ObservableObject {
         address = nil
         clearRequiredFields()
 
+        // a viewing key is not an address, so it is checked after the address parsers and before the xpub one
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        if ZcashAdapter.isValidViewingKey(trimmed) {
+            state = .ready(accountType: .zcashViewingKey(ufvk: trimmed))
+            return
+        }
+
         do {
             let extendedKey = try HDExtendedKey(extendedKey: text)
 
@@ -293,6 +300,9 @@ class WatchViewModel: ObservableObject {
 
         case .moneroWatchAccount:
             tokenQueries = [TokenQuery(blockchainType: .monero, tokenType: .native)]
+
+        case .zcashViewingKey:
+            tokenQueries = [TokenQuery(blockchainType: .zcash, tokenType: .native)]
         }
 
         guard let tokens = try? marketKit.tokens(queries: tokenQueries) else {
@@ -350,8 +360,10 @@ class WatchViewModel: ObservableObject {
 
 extension WatchViewModel {
     var birthdayHeightBlockchain: Blockchain? {
-        if case let .ready(accountType) = state, case .moneroWatchAccount = accountType, birthdayHeight == nil {
-            return try? marketKit.blockchain(uid: BlockchainType.monero.uid)
+        if case let .ready(accountType) = state, birthdayHeight == nil,
+           let blockchainType = accountType.watchBirthdayBlockchainType
+        {
+            return try? marketKit.blockchain(uid: blockchainType.uid)
         }
 
         return nil
@@ -384,8 +396,8 @@ extension WatchViewModel {
 
         accountManager.save(account: account)
 
-        if case .moneroWatchAccount = accountType, let birthdayHeight {
-            restoreSettingsManager.save(settings: [.birthdayHeight: String(birthdayHeight)], account: account, blockchainType: .monero)
+        if let birthdayHeight, let blockchainType = accountType.watchBirthdayBlockchainType {
+            restoreSettingsManager.save(settings: [.birthdayHeight: String(birthdayHeight)], account: account, blockchainType: blockchainType)
         }
 
         enableWallets(account: account, items: items, enabledUids: enabledUids)

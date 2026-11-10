@@ -35,6 +35,7 @@ struct AccountTypeBackupCodecTests {
             .hdExtendedKey: "hd_extended_key",
             .btcAddress: "bitcoin_address",
             .moneroWatchAccount: "monero_watch_account",
+            .zcashViewingKey: "zcash_viewing_key",
             .moneroMnemonic: "monero_mnemonic",
         ]
 
@@ -106,7 +107,7 @@ struct AccountTypeBackupCodecTests {
 
     @Test func writesBtcInAndroidFormat() {
         let accountType = AccountType.btcAddress(address: "bc1qtest", blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84))
-        let data = AccountTypeBackupCodec.data(accountType: accountType, moneroHeight: 0)
+        let data = AccountTypeBackupCodec.data(accountType: accountType, watchHeight: 0)
 
         #expect(String(decoding: data, as: UTF8.self) == "bc1qtest|bitcoin|derived:bip84")
     }
@@ -148,9 +149,55 @@ struct AccountTypeBackupCodecTests {
 
     @Test func writesMoneroHeightForAndroid() {
         let accountType = AccountType.moneroWatchAccount(address: "4addr", viewKey: "viewkey")
-        let data = AccountTypeBackupCodec.data(accountType: accountType, moneroHeight: 3_200_000)
+        let data = AccountTypeBackupCodec.data(accountType: accountType, watchHeight: 3_200_000)
 
         #expect(String(decoding: data, as: UTF8.self) == "4addr|viewkey|3200000")
+    }
+
+    // MARK: Zcash
+
+    @Test func takesZcashHeightFromAccountData() throws {
+        let result = try decoded("\(ZcashViewingKeyAccountTests.ufvk)|3002501".hs.data, .zcashViewingKey)
+
+        #expect(result.accountType == .zcashViewingKey(ufvk: ZcashViewingKeyAccountTests.ufvk))
+        #expect(result.restoreSettings[.zcash]?.birthdayHeight == 3_002_501)
+    }
+
+    @Test func unusableZcashHeightLandsAsZero() throws {
+        for height in ["-1", "abc", "", "999999999999"] {
+            let result = try decoded("\(ZcashViewingKeyAccountTests.ufvk)|\(height)".hs.data, .zcashViewingKey)
+            #expect(result.restoreSettings[.zcash]?.birthdayHeight == 0, "unusable height \(height) must land as 0")
+        }
+    }
+
+    @Test func zcashHeightBoundsMatchMonero() throws {
+        let ufvk = ZcashViewingKeyAccountTests.ufvk
+        for (height, expected) in [("0", 0), ("100000000", 100_000_000), ("100000001", 0), (" 3002501", 0)] {
+            let result = try decoded("\(ufvk)|\(height)".hs.data, .zcashViewingKey)
+            #expect(result.restoreSettings[.zcash]?.birthdayHeight == expected, "height \(height)")
+        }
+    }
+
+    @Test func zcashRoundTrips() throws {
+        let accountType = AccountType.zcashViewingKey(ufvk: ZcashViewingKeyAccountTests.ufvk)
+        let result = try decoded(AccountTypeBackupCodec.data(accountType: accountType, watchHeight: 3_002_501), .zcashViewingKey)
+
+        #expect(result.accountType == accountType)
+        #expect(result.restoreSettings[.zcash]?.birthdayHeight == 3_002_501)
+    }
+
+    @Test func rejectsZcashDataWithoutAValidKey() {
+        let ufvk = ZcashViewingKeyAccountTests.ufvk
+        for string in [ufvk, "\(ufvk)|1|2", "|3002501", "garbage|3002501", "\(ufvk.dropLast())|3002501"] {
+            #expect(AccountTypeBackupCodec.decode(data: string.hs.data, type: .zcashViewingKey) == nil, "\(string.prefix(24)) was accepted")
+        }
+    }
+
+    @Test func writesZcashHeightForAndroid() {
+        let accountType = AccountType.zcashViewingKey(ufvk: ZcashViewingKeyAccountTests.ufvk)
+        let data = AccountTypeBackupCodec.data(accountType: accountType, watchHeight: 3_002_501)
+
+        #expect(String(decoding: data, as: UTF8.self) == "\(ZcashViewingKeyAccountTests.ufvk)|3002501")
     }
 
     // MARK: XRP, Tron, mnemonic
@@ -183,7 +230,7 @@ struct AccountTypeBackupCodecTests {
             return
         }
 
-        #expect(String(decoding: AccountTypeBackupCodec.data(accountType: accountType, moneroHeight: 0), as: UTF8.self) == base58)
+        #expect(String(decoding: AccountTypeBackupCodec.data(accountType: accountType, watchHeight: 0), as: UTF8.self) == base58)
 
         // the hex form iOS wrote until this change
         guard case let .tronAddress(fromHex) = try decoded(address.hex.hs.data, .tronAddress).accountType else {
@@ -202,7 +249,7 @@ struct AccountTypeBackupCodecTests {
 
         #expect(try decoded(thor.uppercased().hs.data, .thorChainAddress).accountType == .thorChainAddress(address: thor))
         #expect(try decoded(maya.hs.data, .mayaChainAddress).accountType == .mayaChainAddress(address: maya))
-        #expect(String(decoding: AccountTypeBackupCodec.data(accountType: .thorChainAddress(address: thor), moneroHeight: 0), as: UTF8.self) == thor)
+        #expect(String(decoding: AccountTypeBackupCodec.data(accountType: .thorChainAddress(address: thor), watchHeight: 0), as: UTF8.self) == thor)
 
         #expect(AccountTypeBackupCodec.decode(data: maya.hs.data, type: .thorChainAddress) == nil)
         #expect(AccountTypeBackupCodec.decode(data: thor.hs.data, type: .mayaChainAddress) == nil)
@@ -216,7 +263,7 @@ struct AccountTypeBackupCodecTests {
 
         for address in [implicit, named] {
             let accountType = AccountType.nearAddress(address: address)
-            let data = AccountTypeBackupCodec.data(accountType: accountType, moneroHeight: 0)
+            let data = AccountTypeBackupCodec.data(accountType: accountType, watchHeight: 0)
 
             #expect(String(decoding: data, as: UTF8.self) == address)
             #expect(try decoded(data, .nearAddress).accountType == accountType)
@@ -227,10 +274,10 @@ struct AccountTypeBackupCodecTests {
 
     @Test func writesPlainStringTypesAsIs() {
         let ton = AccountType.tonAddress(address: "UQtest")
-        #expect(String(decoding: AccountTypeBackupCodec.data(accountType: ton, moneroHeight: 0), as: UTF8.self) == "UQtest")
+        #expect(String(decoding: AccountTypeBackupCodec.data(accountType: ton, watchHeight: 0), as: UTF8.self) == "UQtest")
 
         let stellar = AccountType.stellarAccount(accountId: "GTEST")
-        #expect(String(decoding: AccountTypeBackupCodec.data(accountType: stellar, moneroHeight: 0), as: UTF8.self) == "GTEST")
+        #expect(String(decoding: AccountTypeBackupCodec.data(accountType: stellar, watchHeight: 0), as: UTF8.self) == "GTEST")
     }
 
     @Test func skipsPasskey() {

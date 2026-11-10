@@ -2329,6 +2329,8 @@
 "public_keys.account_extended_public_key.description" = "Ermöglicht die schreibgeschützte Überwachung von Brieftaschen mit Bitcoin und anderen auf UTXO basierenden Verschlüsselungen (z.B. Litecoin, Bitcoin Cash, Dash, etc.).";
 "public_keys.monero_public_key" = "Monero-Public-Keys";
 "public_keys.monero_public_key.description" = "Ermöglicht die reine Ansicht von Wallets mit Monero (XMR)-Vermögenswerten, ohne Ausgaberechte zu gewähren.";
+"public_keys.zcash_viewing_key" = "Zcash-Viewing-Key";
+"public_keys.zcash_viewing_key.description" = "Unified Full Viewing Key (UFVK). Zeigt das Guthaben und alle Transaktionen der Zcash-Wallet an, kann aber keine Gelder ausgeben.";
 
 // Manage Account -> Private Keys
 
@@ -2507,7 +2509,7 @@
 "watch_address.error.address_required" = "Bitte geben Sie eine Adresse ein, um fortzufahren.";
 "watch_address.error.non_public_key" = "Das Beobachten mit privatem Schlüssel ist nicht erlaubt";
 "watch_address.error.not_supported_derived_type" = "Abgeleiteter Typ wird nicht unterstützt";
-"watch_address.watch_data.placeholder" = "Fügen Sie Ihre öffentliche Adresse oder Ihren XPUB ein";
+"watch_address.watch_data.placeholder" = "Fügen Sie Ihre Adresse ein (EVM, Tron, TON, Stellar, XRP, NEAR, Monero, BTC, LTC, BCH, Dash) oder XPUB / Zcash UFVK";
 "watch_address.choose_blockchains" = "Blockchains auswählen";
 "watch_address.choose_coins" = "Coins auswählen";
 "watch_address.view_key.placeholder" = "Privater View-Key";

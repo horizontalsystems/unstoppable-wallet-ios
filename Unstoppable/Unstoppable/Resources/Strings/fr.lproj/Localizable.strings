@@ -2329,6 +2329,8 @@
 "public_keys.account_extended_public_key.description" = "Permet de contrôler en lecture seule les portefeuilles contenant du Bitcoin et d'autres crypto-monnaies basées sur l'UTXO (c'est-à-dire Litecoin, Bitcoin Cash, Dash, etc.).";
 "public_keys.monero_public_key" = "Clés publiques Monero";
 "public_keys.monero_public_key.description" = "Permet la surveillance en lecture seule des portefeuilles détenant des actifs Monero (XMR), sans donner d’accès aux dépenses.";
+"public_keys.zcash_viewing_key" = "Clé de visualisation Zcash";
+"public_keys.zcash_viewing_key.description" = "Unified Full Viewing Key (UFVK). Affiche le solde et toutes les transactions du portefeuille Zcash, mais ne permet pas de dépenser.";
 
 // Manage Account -> Private Keys
 
@@ -2507,7 +2509,7 @@
 "watch_address.error.address_required" = "Veuillez saisir une adresse pour continuer";
 "watch_address.error.non_public_key" = "La surveillance par clé privée n'est pas autorisée";
 "watch_address.error.not_supported_derived_type" = "Le type dérivé n'est pas pris en charge";
-"watch_address.watch_data.placeholder" = "Collez votre adresse publique ou votre clé XPUB";
+"watch_address.watch_data.placeholder" = "Collez votre adresse (EVM, Tron, TON, Stellar, XRP, NEAR, Monero, BTC, LTC, BCH, Dash) ou XPUB / Zcash UFVK";
 "watch_address.choose_blockchains" = "Choisir les blockchains";
 "watch_address.choose_coins" = "Choisir les coins";
 "watch_address.view_key.placeholder" = "Clé de visualisation privée";

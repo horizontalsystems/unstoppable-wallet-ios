@@ -4,6 +4,7 @@ struct PublicKeysViewModel {
     let showTronAddress: Bool
     let showAccountExtendedPublicKey: Bool
     let showMoneroPublicKey: Bool
+    let showZcashViewingKey: Bool
 
     init(account: Account) {
         self.account = account
@@ -27,6 +28,11 @@ struct PublicKeysViewModel {
         switch account.type {
         case .mnemonic: showMoneroPublicKey = true
         default: showMoneroPublicKey = false
+        }
+
+        switch account.type {
+        case .mnemonic, .zcashViewingKey: showZcashViewingKey = true
+        default: showZcashViewingKey = false
         }
     }
 

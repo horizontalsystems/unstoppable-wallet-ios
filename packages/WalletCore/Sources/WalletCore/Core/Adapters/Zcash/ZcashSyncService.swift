@@ -4,11 +4,37 @@ import HsToolKit
 import RxSwift
 import ZODLSwiftWalletSDK
 
+/// What the wallet's single Zcash account is opened from: a seed syncs and spends, a viewing key only syncs
+enum ZcashAccountKeys {
+    case seed([UInt8])
+    case viewingKey(String)
+
+    /// Only a seed holds a spending key: a viewing key never builds, signs or rebroadcasts a transaction
+    var canSpend: Bool {
+        if case .seed = self {
+            return true
+        }
+        return false
+    }
+
+    /// ZIP-32 account 0 of a seed: the one account the adapter syncs, and the one Public Keys shows
+    static func accountZeroKeys(seed: [UInt8], networkType: NetworkType) -> (spending: UnifiedSpendingKey, viewing: UnifiedFullViewingKey)? {
+        let tool = DerivationTool(networkType: networkType)
+        guard let spendingKey = try? tool.deriveUnifiedSpendingKey(seed: seed, accountIndex: .zero),
+              let viewingKey = try? tool.deriveUnifiedFullViewingKey(from: spendingKey)
+        else {
+            return nil
+        }
+
+        return (spendingKey, viewingKey)
+    }
+}
+
 class ZcashSyncService {
     private let synchronizer: Synchronizer
     private let initializer: Initializer
     private let network: ZcashNetwork
-    private let seedData: [UInt8]
+    private let keys: ZcashAccountKeys
     private(set) var birthday: BlockHeight
     private let initMode: ZcashInitMode
     private let queue: DispatchQueue
@@ -75,7 +101,7 @@ class ZcashSyncService {
         synchronizer: Synchronizer,
         initializer: Initializer,
         network: ZcashNetwork,
-        seedData: [UInt8],
+        keys: ZcashAccountKeys,
         birthday: BlockHeight,
         initMode: ZcashInitMode,
         queue: DispatchQueue,
@@ -88,7 +114,7 @@ class ZcashSyncService {
         self.synchronizer = synchronizer
         self.initializer = initializer
         self.network = network
-        self.seedData = seedData
+        self.keys = keys
         self.birthday = birthday
         self.initMode = initMode
         self.queue = queue
@@ -158,8 +184,11 @@ class ZcashSyncService {
 
     func start() {
         cancelDeferredStop()
-        warmUpSaplingParams()
-        prepare(seedData: seedData, walletBirthday: birthday, initMode: initMode)
+        // the params only build transactions, which a viewing key never does
+        if keys.canSpend {
+            warmUpSaplingParams()
+        }
+        prepare(keys: keys, walletBirthday: birthday, initMode: initMode)
     }
 
     func stop() {
@@ -206,7 +235,7 @@ class ZcashSyncService {
         }
     }
 
-    private func prepare(seedData: [UInt8], walletBirthday: BlockHeight, initMode: ZcashInitMode) {
+    private func prepare(keys: ZcashAccountKeys, walletBirthday: BlockHeight, initMode: ZcashInitMode) {
         queue.async { [weak self] in
             guard let self, !state.isPrepairing else {
                 return
@@ -218,11 +247,23 @@ class ZcashSyncService {
             let queue = queue
             Task { [weak self, synchronizer] in
                 do {
-                    let tool = DerivationTool(networkType: networkType)
-                    guard let unifiedSpendingKey = try? tool.deriveUnifiedSpendingKey(seed: seedData, accountIndex: .zero),
-                          let unifiedViewingKey = try? tool.deriveUnifiedFullViewingKey(from: unifiedSpendingKey)
-                    else {
-                        throw AppError.ZcashError.cantCreateKeys
+                    let seedData: [UInt8]?
+                    let unifiedSpendingKey: UnifiedSpendingKey?
+                    let unifiedViewingKey: UnifiedFullViewingKey
+
+                    switch keys {
+                    case let .seed(seed):
+                        guard let derived = ZcashAccountKeys.accountZeroKeys(seed: seed, networkType: networkType) else {
+                            throw AppError.ZcashError.cantCreateKeys
+                        }
+
+                        (seedData, unifiedSpendingKey, unifiedViewingKey) = (seed, derived.spending, derived.viewing)
+                    case let .viewingKey(ufvk):
+                        guard let viewingKey = try? UnifiedFullViewingKey(encoding: ufvk, network: networkType) else {
+                            throw AppError.ZcashError.cantCreateKeys
+                        }
+
+                        (seedData, unifiedSpendingKey, unifiedViewingKey) = (nil, nil, viewingKey)
                     }
 
                     queue.async { [weak self] in
@@ -231,6 +272,7 @@ class ZcashSyncService {
                     }
 
                     let sdkBirthday: BlockHeight? = initMode == .newWallet ? nil : walletBirthday
+                    // without a seed the SDK opens the database with no account; the viewing key is imported below
                     let result = try await synchronizer.prepare(with: seedData, walletBirthday: sdkBirthday, name: "", keySource: nil)
                     switch result {
                     case .seedRequired, .seedNotRelevant:
@@ -239,15 +281,34 @@ class ZcashSyncService {
                         break
                     }
 
-                    guard let account = try await synchronizer.listAccounts().first else {
+                    var account = try await synchronizer.listAccounts().first
+                    if account == nil, seedData == nil {
+                        // first open of a view-only wallet: the import must happen before start() so the
+                        // first sync scans from its birthday
+                        _ = try await synchronizer.importAccount(
+                            ufvk: unifiedViewingKey.stringEncoded,
+                            seedFingerprint: nil,
+                            zip32AccountIndex: nil,
+                            purpose: .viewOnly,
+                            name: "",
+                            keySource: nil,
+                            birthday: walletBirthday
+                        )
+                        account = try await synchronizer.listAccounts().first
+                    }
+
+                    guard let account else {
                         throw AppError.ZcashError.noReceiveAddress
                     }
 
                     self?.logger?.log(level: .debug, message: "Successful prepared!")
-                    guard let uAddress = try? await synchronizer.getUnifiedAddress(accountUUID: account.id),
-                          let tAddress = try? await synchronizer.getTransparentAddress(accountUUID: account.id),
-                          let saplingAddress = try? uAddress.saplingReceiver()
-                    else {
+                    guard let uAddress = try? await synchronizer.getUnifiedAddress(accountUUID: account.id) else {
+                        throw AppError.ZcashError.noReceiveAddress
+                    }
+
+                    // a viewing key may leave out the transparent component, and then has no transparent address
+                    let tAddress = try? await synchronizer.getTransparentAddress(accountUUID: account.id)
+                    if tAddress == nil, keys.canSpend {
                         throw AppError.ZcashError.noReceiveAddress
                     }
 
@@ -255,14 +316,17 @@ class ZcashSyncService {
                         self?.accountId = account.id
                         self?.uAddress = uAddress
                         self?.tAddress = tAddress
-                        self?.migrator.engine = ZcashMigrationEngine(synchronizer: synchronizer, accountUUID: account.id, spendingKey: unifiedSpendingKey, endpointService: self?.endpointService)
+                        // a view-only account cannot sign the migration
+                        self?.migrator.engine = unifiedSpendingKey.map {
+                            ZcashMigrationEngine(synchronizer: synchronizer, accountUUID: account.id, spendingKey: $0, endpointService: self?.endpointService)
+                        }
 
                         self?.depositAddressSubject.send(.completed(DepositAddress(uAddress.stringEncoded)))
                     }
 
-                    self?.logger?.log(level: .debug, message: "Successful get address for 0 account! \(saplingAddress.stringEncoded)")
+                    self?.logger?.log(level: .debug, message: "Successful get address for 0 account! \(uAddress.stringEncoded)")
 
-                    let transactionPool = ZcashTransactionPool(accountId: account.id, receiveAddress: saplingAddress, synchronizer: synchronizer)
+                    let transactionPool = ZcashTransactionPool(accountId: account.id, synchronizer: synchronizer)
                     await self?.historyService.initialize(transactionPool: transactionPool)
 
                     let height = try await synchronizer.latestHeight()
@@ -314,7 +378,7 @@ class ZcashSyncService {
         // pull-to-refresh and foregrounding recover the wallet without an app restart.
         if uAddress == nil || synchronizer.latestState.syncStatus == .unprepared {
             logger?.log(level: .debug, message: "Not prepared, try to prepare kit again!")
-            prepare(seedData: seedData, walletBirthday: birthday, initMode: initMode)
+            prepare(keys: keys, walletBirthday: birthday, initMode: initMode)
 
             return
         }
@@ -328,6 +392,11 @@ class ZcashSyncService {
     }
 
     private func schedulePendingResubmission() {
+        // a viewing key also sees the owner's unmined spends; rebroadcasting them would tie this device to that wallet
+        guard keys.canSpend else {
+            return
+        }
+
         DispatchQueue.main.async { [weak self] in
             guard let self, resubmitTask == nil else { return }
 
@@ -437,6 +506,13 @@ class ZcashSyncService {
         }
         if case let .syncing(progress, _) = state.syncStatus {
             lastSyncProgress = progress
+        }
+
+        // prepare owns the state until it finishes or fails: the SDK publishes a snapshot from inside
+        // prepare, and ending `.preparing` there would let a refresh start a second prepare (and a
+        // second viewing-key import) while the first is still running
+        guard !self.state.isPrepairing else {
+            return
         }
 
         let mapped = Self.mapState(Snapshot(state: state), started: started, birthday: birthday, lastBlockHeight: lastBlockHeight, stallTerminal: stallState == .terminal)

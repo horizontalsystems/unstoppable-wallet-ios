@@ -13,7 +13,7 @@ import XrpKit
 /// getDataForEncryption) and keeps reading every format iOS wrote before; both are pinned by the
 /// golden vectors in AccountTypeBackupCodecTests.
 enum AccountTypeBackupCodec {
-    /// what a parsed account brings besides its type; restore settings only exist for Monero today
+    /// what a parsed account brings besides its type; restore settings only exist for the Monero and Zcash watch accounts today
     struct Decoded {
         let accountType: AccountType
         let restoreSettings: [BlockchainType: RestoreSettings]
@@ -28,7 +28,7 @@ enum AccountTypeBackupCodec {
     /// because secp256k1 reads 32 bytes whatever it is given and never reports a bad key
     static let secp256k1Order = BigUInt("fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141", radix: 16)!
 
-    /// Monero heights are bounded so a tampered plain-text value cannot send a wallet syncing into the future
+    /// Watch-account heights are bounded so a tampered plain-text value cannot send a wallet syncing into the future
     static let maxRestoreHeight = 100_000_000
 
     static func normalizedPrivateKey(_ data: Data) -> Data? {
@@ -58,16 +58,18 @@ enum AccountTypeBackupCodec {
 }
 
 extension AccountTypeBackupCodec {
-    /// Android writes the height as the third part of the account data and ignores the wallet's
-    /// restore settings for a watch account, so it has to be there for a file to restore on Android
-    static func data(accountType: AccountType, moneroHeight: Int) -> Data {
+    /// Android writes a watch account's height into the account data and ignores the wallet's
+    /// restore settings for it, so it has to be there for a file to restore on Android
+    static func data(accountType: AccountType, watchHeight: Int) -> Data {
         switch accountType {
         case let .btcAddress(address, blockchainType, tokenType):
             return "\(address)|\(blockchainType.uid)|\(tokenType.id)".hs.data
         case let .tronAddress(address):
             return address.base58.hs.data
         case let .moneroWatchAccount(address, viewKey):
-            return "\(address)|\(viewKey)|\(moneroHeight)".hs.data
+            return "\(address)|\(viewKey)|\(watchHeight)".hs.data
+        case let .zcashViewingKey(ufvk):
+            return "\(ufvk)|\(watchHeight)".hs.data
         default:
             return accountType.uniqueId(hashed: false)
         }
@@ -118,6 +120,8 @@ extension AccountTypeBackupCodec {
             return (try? ThorChainKit.Address(string, network: .mayaMainnet)).map { Decoded(.mayaChainAddress(address: $0.raw)) }
         case .moneroWatchAccount:
             return moneroWatchAccount(string: string)
+        case .zcashViewingKey:
+            return zcashViewingKey(string: string)
         case .moneroMnemonic:
             let (wordList, passphrase) = split(string, separator: "@")
             let words = wordList.split(separator: " ").map(String.init)
@@ -196,6 +200,22 @@ extension AccountTypeBackupCodec {
         let height = restoreHeight(components[2]) ?? 0
 
         return Decoded(accountType, restoreSettings: [.monero: [.birthdayHeight: String(height)]])
+    }
+
+    private static func zcashViewingKey(string: String) -> Decoded? {
+        let components = string.components(separatedBy: "|")
+
+        // a key the SDK cannot decode would restore an account that never syncs
+        guard components.count == 2, !components[0].isEmpty,
+              ZcashAdapter.isValidViewingKey(components[0])
+        else {
+            return nil
+        }
+
+        // an unusable height restores from 0, which the adapter raises to Sapling activation
+        let height = restoreHeight(components[1]) ?? 0
+
+        return Decoded(.zcashViewingKey(ufvk: components[0]), restoreSettings: [.zcash: [.birthdayHeight: String(height)]])
     }
 
     private static func split(_ string: String, separator: String) -> (String, String) {

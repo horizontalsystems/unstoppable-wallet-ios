@@ -2329,6 +2329,8 @@
 "public_keys.account_extended_public_key.description" = "Permite monitoramento somente leitura das carteiras segurando Bitcoin e outras cripto baseadas em UTXO (ou seja, Litecoin, Bitcoin Cash, Dash etc.).";
 "public_keys.monero_public_key" = "Chaves Públicas do Monero";
 "public_keys.monero_public_key.description" = "Permite o monitoramento em modo somente leitura de carteiras com ativos Monero (XMR), sem conceder acesso para gastos.";
+"public_keys.zcash_viewing_key" = "Chave de visualização Zcash";
+"public_keys.zcash_viewing_key.description" = "Unified Full Viewing Key (UFVK). Mostra o saldo e todas as transações da carteira Zcash, mas não pode gastar fundos.";
 
 // Manage Account -> Private Keys
 
@@ -2507,7 +2509,7 @@
 "watch_address.error.address_required" = "Insira um endereço para continuar";
 "watch_address.error.non_public_key" = "Não é permitido observar por chave privada";
 "watch_address.error.not_supported_derived_type" = "Tipo derivado não suportado";
-"watch_address.watch_data.placeholder" = "Cole seu endereço público ou chave XPUB";
+"watch_address.watch_data.placeholder" = "Cole seu endereço (EVM, Tron, TON, Stellar, XRP, NEAR, Monero, BTC, LTC, BCH, Dash) ou XPUB / Zcash UFVK";
 "watch_address.choose_blockchains" = "Escolher blockchains";
 "watch_address.choose_coins" = "Escolher moedas";
 "watch_address.view_key.placeholder" = "Chave de Visualização Privada";

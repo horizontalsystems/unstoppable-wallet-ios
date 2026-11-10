@@ -56,7 +56,17 @@ class ZcashAdapter {
         logger = Core.shared.logger.scoped(with: "ZCashKit")
 //        logger = HsToolKit.Logger(minLogLevel: .debug)
 
-        guard let seed = wallet.account.type.mnemonicSeed else {
+        // a mnemonic account syncs and spends; a viewing-key account only syncs
+        let keys: ZcashAccountKeys
+        switch wallet.account.type {
+        case .mnemonic:
+            guard let seed = wallet.account.type.mnemonicSeed else {
+                throw AdapterError.unsupportedAccount
+            }
+            keys = .seed([UInt8](seed))
+        case let .zcashViewingKey(ufvk):
+            keys = .viewingKey(ufvk)
+        default:
             throw AdapterError.unsupportedAccount
         }
 
@@ -100,8 +110,6 @@ class ZcashAdapter {
             initMode = existingMode ?? .restoreWallet
         }
 
-        let seedData = [UInt8](seed)
-
         // initialize DB and get cached balances
         let databaseURL = try FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -113,7 +121,7 @@ class ZcashAdapter {
         let initializer = try ZcashAdapter.initializer(network: network, uniqueId: uniqueId, endpoint: endpoint)
         synchronizer = SlipstreamSynchronizer(initializer: initializer)
 
-        balanceService = try ZcashBalanceService(uniqueId: uniqueId, storage: zCashAdapterStorage, migrator: migrator, logger: logger)
+        balanceService = try ZcashBalanceService(uniqueId: uniqueId, storage: zCashAdapterStorage, migrator: migrator, canShield: keys.canSpend, logger: logger)
         historyService = ZcashHistoryService(synchronizer: synchronizer, queue: queue, logger: logger)
         let terminalStore = ZcashTerminalResubmissionStore(uniqueId: uniqueId, network: network.networkType.chainName, storage: zCashAdapterStorage)
         sendService = ZcashSendService(synchronizer: synchronizer, migrator: migrator, terminalStore: terminalStore, logger: logger)
@@ -124,7 +132,7 @@ class ZcashAdapter {
             synchronizer: synchronizer,
             initializer: initializer,
             network: network,
-            seedData: seedData,
+            keys: keys,
             birthday: birthday,
             initMode: initMode,
             queue: queue,
@@ -275,6 +283,70 @@ extension ZcashAdapter {
         synchronizer.stop()
 
         return (uAddress, tAddress)
+    }
+
+    /// A Unified Full Viewing Key of the network the app runs on; the only key a Zcash watch account accepts
+    static func isValidViewingKey(_ ufvk: String) -> Bool {
+        DerivationTool(networkType: networkType).isValidUnifiedFullViewingKey(ufvk)
+    }
+
+    private static let watchAddressLock = NSLock()
+    private static var watchAddresses = [String: String]()
+
+    /// What a viewing-key account shows where other watch accounts show their address: the default Sapling address the
+    /// key derives, or its default unified address when the key has no Sapling part. Never the key itself, which hands
+    /// the whole history to whoever it is pasted to. Cached, since the balance screens read it on every render
+    static func watchAddress(ufvk: String) -> String? {
+        let network = networkType
+        let cacheKey = network.chainName + ufvk
+
+        watchAddressLock.lock()
+        defer { watchAddressLock.unlock() }
+
+        if let address = watchAddresses[cacheKey] {
+            return address
+        }
+
+        let tool = DerivationTool(networkType: network)
+        guard let unifiedAddress = try? tool.deriveUnifiedAddressFrom(ufvk: ufvk) else {
+            return nil
+        }
+
+        let address = (try? tool.saplingReceiver(from: unifiedAddress).stringEncoded) ?? unifiedAddress.stringEncoded
+        watchAddresses[cacheKey] = address
+        return address
+    }
+
+    /// Known from the key alone, before the adapter has prepared: a viewing key may leave out the transparent component
+    static func hasTransparentAddress(accountType: AccountType) -> Bool {
+        guard case let .zcashViewingKey(ufvk) = accountType else {
+            return true
+        }
+
+        let tool = DerivationTool(networkType: networkType)
+        guard let key = try? UnifiedFullViewingKey(encoding: ufvk, network: networkType),
+              let components = try? tool.describeUnifiedFullViewingKey(key)
+        else {
+            return false
+        }
+
+        return components.hasP2pkh
+    }
+
+    /// The UFVK of the wallet's account: kept as is for a viewing key, derived from ZIP-32 account 0 for a seed
+    static func unifiedFullViewingKey(accountType: AccountType) -> String? {
+        switch accountType {
+        case let .zcashViewingKey(ufvk):
+            return ufvk
+        case .mnemonic:
+            guard let seed = accountType.mnemonicSeed else {
+                return nil
+            }
+
+            return ZcashAccountKeys.accountZeroKeys(seed: [UInt8](seed), networkType: networkType)?.viewing.stringEncoded
+        default:
+            return nil
+        }
     }
 
     static func firstAddress(accountType: AccountType, addressType: AddressType) async throws -> String {

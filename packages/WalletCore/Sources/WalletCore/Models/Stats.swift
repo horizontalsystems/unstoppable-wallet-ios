@@ -159,6 +159,7 @@ enum StatPage: String {
     case watchWallet = "watch_wallet"
     case whatsNews = "whats_news"
     case widget
+    case zcashViewingKey = "zcash_viewing_key"
 }
 
 enum StatSection: String {
@@ -653,4 +654,5 @@ enum StatEntity: String {
     case walletName = "wallet_name"
     case moneroKey = "monero_key"
     case moneroKeyType = "monero_key_type"
+    case zcashViewingKey = "zcash_viewing_key"
 }

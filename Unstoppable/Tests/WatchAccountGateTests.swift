@@ -17,6 +17,7 @@ struct WatchAccountGateTests {
         #expect(account(type: .thorChainAddress(address: "thor1...")).watchAccount)
         #expect(account(type: .mayaChainAddress(address: "maya1...")).watchAccount)
         #expect(account(type: .moneroWatchAccount(address: "4...", viewKey: "key")).watchAccount)
+        #expect(account(type: .zcashViewingKey(ufvk: "uview1...")).watchAccount)
         #expect(account(type: .btcAddress(address: "bc1...", blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84))).watchAccount)
     }
 

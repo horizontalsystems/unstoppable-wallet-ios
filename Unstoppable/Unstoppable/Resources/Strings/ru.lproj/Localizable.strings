@@ -2329,6 +2329,8 @@
 "public_keys.account_extended_public_key.description" = "Позволяет осуществлять мониторинг кошельков, содержащих Bitcoin и другие криптовалюты на основе UTXO (например, Litecoin, Bitcoin Cash, Dash и т.д.), только для чтения.";
 "public_keys.monero_public_key" = "Публичные ключи Monero";
 "public_keys.monero_public_key.description" = "Позволяет в режиме «только для чтения» отслеживать кошельки с активами Monero (XMR), без возможности их тратить.";
+"public_keys.zcash_viewing_key" = "Ключ просмотра Zcash";
+"public_keys.zcash_viewing_key.description" = "Unified Full Viewing Key (UFVK). Показывает баланс и все транзакции кошелька Zcash, но не позволяет тратить средства.";
 
 // Manage Account -> Private Keys
 
@@ -2507,7 +2509,7 @@
 "watch_address.error.address_required" = "Введите адрес, чтобы продолжить";
 "watch_address.error.non_public_key" = "Просмотр по приватному ключу не разрешён";
 "watch_address.error.not_supported_derived_type" = "Неподдерживаемый тип";
-"watch_address.watch_data.placeholder" = "Вставьте свой публичный адрес или XPUB";
+"watch_address.watch_data.placeholder" = "Вставьте ваш адрес (EVM, Tron, TON, Stellar, XRP, NEAR, Monero, BTC, LTC, BCH, Dash) или XPUB / Zcash UFVK";
 "watch_address.choose_blockchains" = "Выбрать блокчейны";
 "watch_address.choose_coins" = "Выбрать монеты";
 "watch_address.view_key.placeholder" = "Приватный ключ просмотра";

@@ -32,14 +32,18 @@ class ZcashTransactionRecordFactory {
     func transactionRecord(fromTransaction transaction: ZcashTransactionWrapper) -> TransactionRecord {
         let showRawTransaction = transaction.minedHeight == nil || transaction.failed
 
-        // a migration tx is an internal fully-shielded self-send: without the txId match
-        // it would fall into the internal branch below and display as Unshield
-        if migrator.isMigrationTx(hash: transaction.transactionHash) {
+        // a migration tx is an internal fully-shielded self-send: without this it would fall into the internal branch
+        // below and display as Unshield. The SDK's ZIP 318 class covers one made on any device; the local txId list
+        // covers rows the SDK has not classified yet
+        if transaction.isMigration || migrator.isMigrationTx(hash: transaction.transactionHash) {
             // the SDK records the migration PCZT without recipients, so the wrapper's internal-branch
             // math (value = received, fee = spent − received) never triggers; raw tx.value is just −fee
             let migratedAmount: Decimal
             let migrationFee: Decimal?
-            if let spent = transaction.totalSpent, let received = transaction.totalReceived, received > .zero {
+            if let crossed = transaction.poolCrossingValue, crossed > .zero {
+                migratedAmount = crossed.decimalValue.decimalValue
+                migrationFee = transaction.fee?.decimalValue.decimalValue
+            } else if let spent = transaction.totalSpent, let received = transaction.totalReceived, received > .zero {
                 migratedAmount = received.decimalValue.decimalValue
                 migrationFee = (spent - received).decimalValue.decimalValue
             } else {

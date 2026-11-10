@@ -72,7 +72,8 @@ class ZcashMigrator {
         // Only the active account's adapter may surface the global migration alert. An adapter from a
         // previously-selected account can outlive the switch (async synchronizer teardown) and fire a
         // late balance/state update — it must not present the sheet over the now-active account.
-        guard Core.shared.accountManager.activeAccount?.id == uniqueId, let syncStatus, Self.isMigrationSuggestionNeeded(
+        // A view-only account has no engine: it cannot sign the migration, so it is never offered.
+        guard engine != nil, Core.shared.accountManager.activeAccount?.id == uniqueId, let syncStatus, Self.isMigrationSuggestionNeeded(
             migrationEnabled: Self.migrationEnabled,
             ironwoodActive: ironwoodActive(latestHeight: latestHeight),
             syncStatus: syncStatus,

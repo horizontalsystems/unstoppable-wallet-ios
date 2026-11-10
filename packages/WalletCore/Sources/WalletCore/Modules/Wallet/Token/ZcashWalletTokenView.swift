@@ -18,13 +18,14 @@ struct ZcashWalletTokenView: View {
                         view(birthdayHeight: viewModel.birthdayHeight)
                         HorizontalDivider()
 
-                        // spend actions stay hidden while the SDK is not willing to state a spendable value (mask, recovery)
-                        if viewModel.fundsSpendable, viewModel.zCashBalanceData.transparent > ZcashAdapter.minimalThreshold {
+                        // spend actions stay hidden while the SDK is not willing to state a spendable value (mask, recovery);
+                        // a viewing key can neither shield nor migrate, so a watch account never shows them
+                        if !viewModel.wallet.account.watchAccount, viewModel.fundsSpendable, viewModel.zCashBalanceData.transparent > ZcashAdapter.minimalThreshold {
                             view(transparent: viewModel.zCashBalanceData.transparent)
                             HorizontalDivider()
                         }
 
-                        if viewModel.fundsSpendable, ZcashMigrator.migrationEnabled, viewModel.ironwoodActive, viewModel.zCashBalanceData.orchard > ZcashAdapter.minimalThreshold {
+                        if !viewModel.wallet.account.watchAccount, viewModel.fundsSpendable, ZcashMigrator.migrationEnabled, viewModel.ironwoodActive, viewModel.zCashBalanceData.orchard > ZcashAdapter.minimalThreshold {
                             view(orchard: viewModel.zCashBalanceData.orchard)
                             HorizontalDivider()
                         }

@@ -116,6 +116,10 @@ enum TestTags {
     static let receiveShare = "receive_share"
     static let receiveCopy = "receive_copy"
 
+    static let publicKeysZcashViewingKey = "public_keys_zcash_viewing_key"
+    static let zcashViewingKeyValue = "zcash_viewing_key_value"
+    static let zcashViewingKeyCopy = "zcash_viewing_key_copy"
+
     static func manageCoin(_ coinCode: String, _ blockchainUid: String) -> String {
         "manage_coin_\(coinCode)_\(blockchainUid)"
     }
