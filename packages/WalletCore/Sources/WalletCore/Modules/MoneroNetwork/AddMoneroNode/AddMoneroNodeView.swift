@@ -6,6 +6,9 @@ struct AddMoneroNodeView: View {
     @Binding private var isPresented: Bool
 
     @FocusState private var focusedField: Field?
+    @State private var passwordSecureLock = true
+    /// the masked field is a UIKit text field that @FocusState does not track
+    @State private var passwordFocused = false
 
     init(blockchainType: BlockchainType, isPresented: Binding<Bool>) {
         _viewModel = .init(wrappedValue: AddMoneroNodeViewModel(blockchainType: blockchainType))
@@ -20,104 +23,92 @@ struct AddMoneroNodeView: View {
                         VStack(spacing: 0) {
                             ListSectionHeader(text: "add_monero_node.node_url".localized)
 
-                            InputTextRow {
-                                PrimarySizedHStack {
-                                    InputTextView(
-                                        placeholder: "add_monero_node.node_url".localized,
-                                        text: $viewModel.url
-                                    )
-                                    .textInputAutocapitalization(.never)
-                                    .autocorrectionDisabled()
-                                    .keyboardType(.URL)
-                                    .focused($focusedField, equals: .url)
-                                } trailing: {
-                                    ShortcutButtonsView(
-                                        showDelete: .init(get: { !viewModel.url.isEmpty }, set: { _ in }),
-                                        items: [.icon("scan"), .text("button.paste".localized)],
-                                        onTap: { index in
-                                            switch index {
-                                            case 0:
-                                                Coordinator.shared.present { isScanPresented in
-                                                    ScanQrView(isPresented: isScanPresented) { text in
-                                                        viewModel.url = text.trimmingCharacters(in: .whitespacesAndNewlines)
-                                                    }
-                                                    .ignoresSafeArea()
-                                                }
-                                            case 1:
-                                                if let string = UIPasteboard.general.string {
-                                                    viewModel.url = string.pastedSingleLine
-                                                }
-                                            default: ()
-                                            }
+                            ThemeInput(
+                                caution: viewModel.urlCautionState,
+                                buttons: ThemeInputButton.shortcuts(
+                                    isEmpty: viewModel.url.isEmpty,
+                                    whenEmpty: [
+                                        .scan(identifier: TestTags.moneroNodeUrlScan) { text in
+                                            viewModel.url = text.trimmingCharacters(in: .whitespacesAndNewlines)
                                         },
-                                        onTapDelete: {
-                                            viewModel.url = ""
-                                        }
-                                    )
-                                }
+                                        .paste(identifier: TestTags.moneroNodeUrlPaste) { string in
+                                            viewModel.url = string.pastedSingleLine
+                                        },
+                                    ],
+                                    deleteIdentifier: TestTags.moneroNodeUrlClear,
+                                    onDelete: {
+                                        viewModel.url = ""
+                                    }
+                                )
+                            ) {
+                                InputTextView(
+                                    placeholder: "add_monero_node.node_url".localized,
+                                    text: $viewModel.url
+                                )
+                                .textInputAutocapitalization(.never)
+                                .autocorrectionDisabled()
+                                .keyboardType(.URL)
+                                .focused($focusedField, equals: .url)
+                                .accessibilityIdentifier(TestTags.moneroNodeUrlInput)
                             }
-                            .modifier(CautionBorder(cautionState: $viewModel.urlCautionState))
-                            .modifier(CautionPrompt(cautionState: $viewModel.urlCautionState))
 
                             ListSectionHeader(text: "add_monero_node.login".localized)
                                 .padding(.top, .margin24)
 
-                            InputTextRow {
-                                PrimarySizedHStack {
-                                    InputTextView(
-                                        placeholder: "add_monero_node.login".localized,
-                                        text: $viewModel.login
-                                    )
-                                    .textInputAutocapitalization(.never)
-                                    .autocorrectionDisabled()
-                                    .focused($focusedField, equals: .login)
-                                } trailing: {
-                                    ShortcutButtonsView(
-                                        showDelete: .init(get: { !viewModel.login.isEmpty }, set: { _ in }),
-                                        items: [.text("button.paste".localized)],
-                                        onTap: { _ in
-                                            if let string = UIPasteboard.general.string {
-                                                viewModel.login = string.pastedSingleLine
-                                            }
+                            ThemeInput(
+                                buttons: ThemeInputButton.shortcuts(
+                                    isEmpty: viewModel.login.isEmpty,
+                                    whenEmpty: [
+                                        .paste(identifier: TestTags.moneroNodeLoginPaste) { string in
+                                            viewModel.login = string.pastedSingleLine
                                         },
-                                        onTapDelete: {
-                                            viewModel.login = ""
-                                        }
-                                    )
-                                }
+                                    ],
+                                    deleteIdentifier: TestTags.moneroNodeLoginClear,
+                                    onDelete: {
+                                        viewModel.login = ""
+                                    }
+                                )
+                            ) {
+                                InputTextView(
+                                    placeholder: "add_monero_node.login".localized,
+                                    text: $viewModel.login
+                                )
+                                .textInputAutocapitalization(.never)
+                                .autocorrectionDisabled()
+                                .focused($focusedField, equals: .login)
+                                .accessibilityIdentifier(TestTags.moneroNodeLoginInput)
                             }
 
                             ListSectionHeader(text: "add_monero_node.password".localized)
                                 .padding(.top, .margin32)
 
-                            InputTextRow {
-                                PrimarySizedHStack {
-                                    InputTextView(
-                                        placeholder: "add_monero_node.password".localized,
-                                        text: $viewModel.password
-                                    )
-                                    .textInputAutocapitalization(.never)
-                                    .autocorrectionDisabled()
-                                    .focused($focusedField, equals: .password)
-                                } trailing: {
-                                    ShortcutButtonsView(
-                                        showDelete: .init(get: { !viewModel.password.isEmpty }, set: { _ in }),
-                                        items: [.text("button.paste".localized)],
-                                        onTap: { _ in
-                                            if let string = UIPasteboard.general.string {
-                                                viewModel.password = string.pastedSingleLine
-                                            }
+                            ThemeInput(
+                                buttons: ThemeInputButton.shortcuts(
+                                    isEmpty: viewModel.password.isEmpty,
+                                    whenEmpty: [
+                                        .paste(identifier: TestTags.moneroNodePasswordPaste) { string in
+                                            viewModel.password = string.pastedSingleLine
                                         },
-                                        onTapDelete: {
-                                            viewModel.password = ""
-                                        }
-                                    )
-                                }
+                                    ],
+                                    deleteIdentifier: TestTags.moneroNodePasswordClear,
+                                    onDelete: {
+                                        viewModel.password = ""
+                                    }
+                                ) + [.secureToggle($passwordSecureLock, identifier: TestTags.moneroNodePasswordEye)]
+                            ) {
+                                InputTextView(
+                                    placeholder: "add_monero_node.password".localized,
+                                    text: $viewModel.password
+                                )
+                                .secure($passwordSecureLock, identifier: TestTags.moneroNodePasswordInput, isFocused: $passwordFocused)
                             }
                         }
                         .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                     }
-                    .onTapGesture { focusedField = nil }
+                    .onTapGesture {
+                        focusedField = nil
+                        passwordFocused = false
+                    }
                 } bottomContent: {
                     ThemeButton(text: "button.add".localized) {
                         viewModel.onTapAdd()
@@ -145,6 +136,5 @@ extension AddMoneroNodeView {
     private enum Field {
         case url
         case login
-        case password
     }
 }

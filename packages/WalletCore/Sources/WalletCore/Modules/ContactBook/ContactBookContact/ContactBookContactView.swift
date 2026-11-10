@@ -19,7 +19,7 @@ struct ContactBookContactView: View {
         ThemeNavigationStack {
             ScrollableThemeView {
                 VStack(spacing: .margin24) {
-                    InputTextRow(borderColor: Binding(get: { nameBorderColor }, set: { _ in })) {
+                    ThemeInput(caution: nameCautionState) {
                         InputTextView(
                             placeholder: "contacts.contact.name.placeholder".localized,
                             text: $viewModel.name
@@ -27,8 +27,8 @@ struct ContactBookContactView: View {
                         .autocapitalization(.words)
                         .autocorrectionDisabled()
                         .focused($isNameFocused)
+                        .accessibilityIdentifier(TestTags.contactNameInput)
                     }
-                    .modifier(CautionPrompt(cautionState: Binding(get: { nameCautionState }, set: { _ in })))
 
                     if !viewModel.addressItems.isEmpty {
                         ListSection {
@@ -97,10 +97,6 @@ struct ContactBookContactView: View {
             }
         }
         .interactiveDismissDisabled(viewModel.hasChanges)
-    }
-
-    private var nameBorderColor: Color {
-        viewModel.state == .nameExists ? .themeLucian : .themeBlade
     }
 
     private var nameCautionState: CautionState {

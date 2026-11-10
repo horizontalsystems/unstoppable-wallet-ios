@@ -78,40 +78,56 @@ struct RestorePrivateKeyView: View {
         VStack(spacing: 0) {
             ListSectionHeader(text: "create_wallet.name".localized, uppercased: false)
 
-            InputTextRow {
-                PrimarySizedHStack {
-                    InputTextView(text: $viewModel.name)
-                        .autocapitalization(.words)
-                        .autocorrectionDisabled()
-                        .focused($focusedField, equals: .name)
-                } trailing: {
-                    ShortcutButtonsView(
-                        showDelete: .constant(false),
-                        items: [.icon("swap_e")],
-                        onTap: { _ in
-                            viewModel.refreshName()
-                        },
-                        onTapDelete: {}
-                    )
-                }
+            ThemeInput(
+                buttons: [
+                    .icon("swap_e", identifier: TestTags.restoreKeyNameRandom) {
+                        viewModel.refreshName()
+                    },
+                ]
+            ) {
+                InputTextView(text: $viewModel.name)
+                    .autocapitalization(.words)
+                    .autocorrectionDisabled()
+                    .focused($focusedField, equals: .name)
+                    .accessibilityIdentifier(TestTags.restoreKeyNameInput)
             }
         }
     }
 
     private var privateKeySection: some View {
-        VStack(spacing: 0) {
-            LargeTextField(
-                placeholder: "restore.private_key.placeholder".localized,
-                text: $privateKeyText,
-                statPage: .importWalletFromKey,
-                statEntity: .key
+        ThemeInput(
+            kind: .area,
+            caution: viewModel.privateKeyCaution,
+            buttons: ThemeInputButton.shortcuts(
+                isEmpty: privateKeyText.isEmpty,
+                whenEmpty: [
+                    .scan(options: [.picker], identifier: TestTags.restoreKeyScan) { text in
+                        privateKeyText = text
+                        stat(page: .importWalletFromKey, event: .scanQr(entity: .key))
+                    },
+                    .paste(identifier: TestTags.restoreKeyPaste) { string in
+                        privateKeyText = string
+                        stat(page: .importWalletFromKey, event: .paste(entity: .key))
+                    },
+                ],
+                deleteIdentifier: TestTags.restoreKeyClear,
+                onDelete: {
+                    privateKeyText = ""
+                }
             )
-            .onChange(of: privateKeyText) {
-                viewModel.onChange(privateKey: $0)
-            }
+        ) {
+            InputTextView(
+                placeholder: "restore.private_key.placeholder".localized,
+                multiline: true,
+                text: $privateKeyText
+            )
+            .textInputAutocapitalization(.never)
+            .autocorrectionDisabled()
             .focused($focusedField, equals: .key)
-            .modifier(CautionBorder(cautionState: $viewModel.privateKeyCaution))
-            .modifier(CautionPrompt(cautionState: $viewModel.privateKeyCaution))
+            .accessibilityIdentifier(TestTags.restoreKeyInput)
+        }
+        .onChange(of: privateKeyText) { _, newValue in
+            viewModel.onChange(privateKey: newValue)
         }
     }
 

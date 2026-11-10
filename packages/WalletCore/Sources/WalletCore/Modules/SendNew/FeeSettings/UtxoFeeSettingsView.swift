@@ -52,6 +52,7 @@ struct UtxoFeeSettingsView: View {
                                     placeholder: "",
                                     text: viewModel.satoshiPerByteValue,
                                     cautionState: $viewModel.satoshiPerByteCautionState,
+                                    identifiers: FeeSettingsViewHelper.StepIdentifiers(input: TestTags.feeSettingsFeeRateInput, minus: TestTags.feeSettingsFeeRateMinus, plus: TestTags.feeSettingsFeeRatePlus),
                                     onTap: viewModel.stepChangesatoshiPerByte
                                 )
                             }

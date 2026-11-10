@@ -19,54 +19,90 @@ struct WatchView: View {
                         VStack(spacing: 0) {
                             ListSectionHeader(text: "watch_address.name".localized, uppercased: false)
 
-                            InputTextRow {
-                                PrimarySizedHStack {
-                                    InputTextView(text: $viewModel.name)
-                                        .autocapitalization(.words)
-                                        .autocorrectionDisabled()
-                                        .focused($focusedField, equals: .name)
-                                } trailing: {
-                                    ShortcutButtonsView(
-                                        showDelete: .constant(false),
-                                        items: [.icon("swap_e")],
-                                        onTap: { _ in
-                                            viewModel.refreshName()
-                                        },
-                                        onTapDelete: {}
-                                    )
-                                }
+                            ThemeInput(
+                                buttons: [
+                                    .icon("swap_e", identifier: TestTags.watchNameRandom) {
+                                        viewModel.refreshName()
+                                    },
+                                ]
+                            ) {
+                                InputTextView(text: $viewModel.name)
+                                    .autocapitalization(.words)
+                                    .autocorrectionDisabled()
+                                    .focused($focusedField, equals: .name)
+                                    .accessibilityIdentifier(TestTags.watchNameInput)
                             }
                         }
 
-                        VStack(spacing: 0) {
-                            LargeTextField(
-                                placeholder: "watch_address.watch_data.placeholder".localized,
-                                text: $viewModel.text,
-                                statPage: .watchWallet,
-                                statEntity: .key,
-                                onButtonTap: { focusedField = nil },
-                                identifier: TestTags.watchInput
+                        ThemeInput(
+                            kind: .area,
+                            caution: viewModel.textCaution,
+                            buttons: ThemeInputButton.shortcuts(
+                                isEmpty: viewModel.text.isEmpty,
+                                whenEmpty: [
+                                    .scan(options: [.picker], identifier: TestTags.watchScan) { text in
+                                        viewModel.text = text
+                                        focusedField = nil
+                                        stat(page: .watchWallet, event: .scanQr(entity: .key))
+                                    },
+                                    .paste(identifier: TestTags.watchPaste) { string in
+                                        viewModel.text = string
+                                        focusedField = nil
+                                        stat(page: .watchWallet, event: .paste(entity: .key))
+                                    },
+                                ],
+                                deleteIdentifier: TestTags.watchClear,
+                                onDelete: {
+                                    viewModel.text = ""
+                                    focusedField = nil
+                                }
                             )
+                        ) {
+                            InputTextView(
+                                placeholder: "watch_address.watch_data.placeholder".localized,
+                                multiline: true,
+                                text: $viewModel.text
+                            )
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled()
                             .focused($focusedField, equals: .text)
-                            .modifier(CautionBorder(cautionState: $viewModel.textCaution))
-                            .modifier(CautionPrompt(cautionState: $viewModel.textCaution))
+                            .accessibilityIdentifier(TestTags.watchInput)
                         }
 
                         ForEach(viewModel.requiredFields, id: \.self) { field in
                             VStack(spacing: 0) {
                                 switch field {
                                 case .viewKey:
-                                    SingleLineLargeTextField(
-                                        placeholder: "watch_address.view_key.placeholder".localized,
-                                        text: $viewModel.viewKey,
-                                        statPage: .watchWallet,
-                                        statEntity: .viewKey,
-                                        keyboardType: UIKeyboardType.asciiCapableNumberPad,
-                                        onButtonTap: { focusedField = nil }
-                                    )
-                                    .focused($focusedField, equals: .viewKey)
-                                    .modifier(CautionBorder(cautionState: $viewModel.viewKeyCaution))
-                                    .modifier(CautionPrompt(cautionState: $viewModel.viewKeyCaution))
+                                    ThemeInput(
+                                        caution: viewModel.viewKeyCaution,
+                                        buttons: ThemeInputButton.shortcuts(
+                                            isEmpty: viewModel.viewKey.isEmpty,
+                                            whenEmpty: [
+                                                .paste(identifier: TestTags.watchViewKeyPaste) { string in
+                                                    viewModel.viewKey = string
+                                                    focusedField = nil
+                                                    stat(page: .watchWallet, event: .paste(entity: .viewKey))
+                                                },
+                                            ],
+                                            deleteIdentifier: TestTags.watchViewKeyClear,
+                                            onDelete: {
+                                                viewModel.viewKey = ""
+                                                focusedField = nil
+                                            }
+                                        )
+                                    ) {
+                                        InputTextView(
+                                            placeholder: "watch_address.view_key.placeholder".localized,
+                                            multiline: true,
+                                            text: $viewModel.viewKey
+                                        )
+                                        .lineLimit(1 ... 3)
+                                        .keyboardType(.asciiCapableNumberPad)
+                                        .textInputAutocapitalization(.never)
+                                        .autocorrectionDisabled()
+                                        .focused($focusedField, equals: .viewKey)
+                                        .accessibilityIdentifier(TestTags.watchViewKeyInput)
+                                    }
                                 }
                             }
                         }

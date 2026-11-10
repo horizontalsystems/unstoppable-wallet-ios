@@ -2,7 +2,6 @@ import SwiftUI
 import UIKit
 
 struct MnemonicTextView: UIViewRepresentable {
-    private static let minimumLines = 3
     private static let baseAttributes: [NSAttributedString.Key: Any] = [
         .font: UIFont.body,
         .foregroundColor: UIColor.themeLeah,
@@ -12,6 +11,7 @@ struct MnemonicTextView: UIViewRepresentable {
     let invalidRanges: [NSRange]
     @Binding var isFocused: Bool
     var identifier: String?
+    var minLines: Int = 1
 
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
@@ -53,7 +53,7 @@ struct MnemonicTextView: UIViewRepresentable {
     }
 
     func sizeThatFits(_ proposal: ProposedViewSize, uiView: UITextView, context _: Context) -> CGSize? {
-        let minHeight = ceil(UIFont.body.lineHeight * CGFloat(Self.minimumLines))
+        let minHeight = ceil(UIFont.body.lineHeight * CGFloat(minLines))
 
         guard let width = proposal.width, width.isFinite else {
             let fitting = uiView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: .greatestFiniteMagnitude))

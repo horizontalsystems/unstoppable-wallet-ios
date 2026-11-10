@@ -23,7 +23,7 @@ struct ManageAccountView: View {
                     VStack(spacing: 0) {
                         ListSectionHeader(text: "manage_account.name".localized)
 
-                        InputTextRow {
+                        ThemeInput {
                             InputTextView(
                                 placeholder: viewModel.account.name,
                                 text: $viewModel.name

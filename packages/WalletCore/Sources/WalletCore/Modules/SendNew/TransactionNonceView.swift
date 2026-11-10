@@ -27,6 +27,7 @@ struct TransactionNonceView: View {
                                 placeholder: "",
                                 text: viewModel.nonce,
                                 cautionState: $viewModel.nonceCautionState,
+                                identifiers: FeeSettingsViewHelper.StepIdentifiers(input: TestTags.nonceInput, minus: TestTags.nonceMinus, plus: TestTags.noncePlus),
                                 onTap: viewModel.stepChangeNonce
                             )
                             .focused($isFocused)

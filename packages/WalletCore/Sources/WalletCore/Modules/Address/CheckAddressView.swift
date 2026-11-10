@@ -7,11 +7,12 @@ struct CheckAddressView: View {
 
     @Environment(\.addressParserFilter) private var parserFilter
 
-    var borderColor: Color {
-        switch viewModel.addressResult {
-        case .invalid: return .themeLucian
-        default: return .themeBlade
+    private var isInvalid: Bool {
+        if case .invalid = viewModel.addressResult {
+            return true
         }
+
+        return false
     }
 
     var body: some View {
@@ -23,7 +24,14 @@ struct CheckAddressView: View {
                         text: $viewModel.address,
                         result: $viewModel.addressResult,
                         parserFilter: parserFilter,
-                        borderColor: Binding(get: { borderColor }, set: { _ in })
+                        isInvalid: isInvalid,
+                        identifier: TestTags.checkAddressInput,
+                        buttonIdentifiers: .init(
+                            scan: TestTags.checkAddressScan,
+                            paste: TestTags.checkAddressPaste,
+                            contacts: nil,
+                            clear: TestTags.checkAddressClear
+                        )
                     )
                     .padding(.bottom, .margin12)
 

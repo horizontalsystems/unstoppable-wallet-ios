@@ -50,6 +50,7 @@ struct ZcashFeeSettingsView: View {
                                 helper.inputNumberWithSteps(
                                     text: viewModel.marginalFeeValue,
                                     cautionState: $viewModel.marginalFeeCautionState,
+                                    identifiers: FeeSettingsViewHelper.StepIdentifiers(input: TestTags.feeSettingsMarginalFeeInput, minus: TestTags.feeSettingsMarginalFeeMinus, plus: TestTags.feeSettingsMarginalFeePlus),
                                     onTap: viewModel.stepChangeMarginalFee
                                 )
                             }

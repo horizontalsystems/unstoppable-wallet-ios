@@ -4,14 +4,37 @@ struct MnemonicInputView: View {
     let placeholder: String
     @Binding var value: CaretText
     let invalidRanges: [NSRange]
-    var borderColor: Color = .themeBlade
+    var caution: CautionState = .none
+    var cautionIdentifier: String?
     @Binding var isFocused: Bool
     let statPage: StatPage
     let statEntity: StatEntity
     var identifier: String?
+    var buttonIdentifiers: ButtonIdentifiers?
 
     var body: some View {
-        VStack(spacing: .margin8) {
+        ThemeInput(
+            kind: .area,
+            caution: caution,
+            descriptionIdentifier: cautionIdentifier,
+            buttons: ThemeInputButton.shortcuts(
+                isEmpty: value.text.isEmpty,
+                whenEmpty: [
+                    .scan(options: [.picker], identifier: buttonIdentifiers?.scan) { text in
+                        value = .end(text)
+                        stat(page: statPage, event: .scanQr(entity: statEntity))
+                    },
+                    .paste(identifier: buttonIdentifiers?.paste) { string in
+                        value = .end(string)
+                        stat(page: statPage, event: .paste(entity: statEntity))
+                    },
+                ],
+                deleteIdentifier: buttonIdentifiers?.clear,
+                onDelete: {
+                    value = .end("")
+                }
+            )
+        ) {
             ZStack(alignment: .topLeading) {
                 if value.text.isEmpty {
                     ThemeText(placeholder, style: .body, colorStyle: .andy)
@@ -19,37 +42,15 @@ struct MnemonicInputView: View {
 
                 MnemonicTextView(value: $value, invalidRanges: invalidRanges, isFocused: $isFocused, identifier: identifier)
             }
-
-            HStack(spacing: .margin8) {
-                Spacer()
-
-                if value.text.isEmpty {
-                    IconButton(icon: "scan", style: .secondary, size: .small) {
-                        Coordinator.shared.present { isPresented in
-                            ScanQrView(options: [.picker], isPresented: isPresented) { text in
-                                value = .end(text)
-                                stat(page: statPage, event: .scanQr(entity: statEntity))
-                            }
-                            .ignoresSafeArea()
-                        }
-                    }
-
-                    ThemeButton(text: "button.paste".localized, style: .secondary, size: .small) {
-                        if let string = UIPasteboard.general.string {
-                            value = .end(string)
-                            stat(page: statPage, event: .paste(entity: statEntity))
-                        }
-                    }
-                } else {
-                    IconButton(icon: "trash", style: .secondary, size: .small) {
-                        value = .end("")
-                    }
-                }
-            }
-            .animation(.default, value: value.text.isEmpty)
         }
-        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
-        .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(Color.themeLawrence))
-        .overlay(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).stroke(borderColor, lineWidth: .heightOneDp))
+        .animation(.default, value: value.text.isEmpty)
+    }
+}
+
+extension MnemonicInputView {
+    struct ButtonIdentifiers {
+        let scan: String?
+        let paste: String?
+        let clear: String?
     }
 }

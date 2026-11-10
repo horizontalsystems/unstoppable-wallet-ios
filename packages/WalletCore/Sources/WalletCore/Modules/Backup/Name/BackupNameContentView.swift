@@ -7,32 +7,30 @@ struct BackupNameContentView: View {
         VStack(spacing: 0) {
             ListSectionHeader(text: "backup_app.backup.name.title".localized, uppercased: false, insets: .zero)
 
-            InputTextRow {
-                PrimarySizedHStack {
-                    InputTextView(
-                        placeholder: "backup.cloud.name.placeholder".localized,
-                        text: $viewModel.name,
-                        isValidText: { BackupFilenameValidator.isValidFilename($0) }
-                    )
-                    .autocapitalization(.words)
-                    .autocorrectionDisabled()
-                } trailing: {
-                    ShortcutButtonsView(
-                        showDelete: .init(get: { !viewModel.name.isEmpty }, set: { _ in }),
-                        items: [.text("button.paste".localized)],
-                        onTap: { _ in
-                            if let text = UIPasteboard.general.string {
-                                viewModel.name = text
-                            }
+            ThemeInput(
+                caution: viewModel.cautionState,
+                buttons: ThemeInputButton.shortcuts(
+                    isEmpty: viewModel.name.isEmpty,
+                    whenEmpty: [
+                        .paste(identifier: TestTags.backupNamePaste) { text in
+                            viewModel.name = text
                         },
-                        onTapDelete: {
-                            viewModel.name = ""
-                        }
-                    )
-                }
+                    ],
+                    deleteIdentifier: TestTags.backupNameClear,
+                    onDelete: {
+                        viewModel.name = ""
+                    }
+                )
+            ) {
+                InputTextView(
+                    placeholder: "backup.cloud.name.placeholder".localized,
+                    text: $viewModel.name,
+                    isValidText: { BackupFilenameValidator.isValidFilename($0) }
+                )
+                .autocapitalization(.words)
+                .autocorrectionDisabled()
+                .accessibilityIdentifier(TestTags.backupNameInput)
             }
-            .modifier(CautionBorder(cautionState: $viewModel.cautionState))
-            .modifier(CautionPrompt(cautionState: $viewModel.cautionState))
         }
         .animation(.default, value: viewModel.cautionState)
     }

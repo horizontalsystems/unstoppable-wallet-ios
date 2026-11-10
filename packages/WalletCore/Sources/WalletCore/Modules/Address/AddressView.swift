@@ -16,11 +16,12 @@ struct AddressView: View {
 
     @FocusState var isInputActive: Bool
 
-    var borderColor: Color {
-        switch viewModel.addressResult {
-        case .invalid: return .themeLucian
-        default: return .themeBlade
+    private var isInvalid: Bool {
+        if case .invalid = viewModel.addressResult {
+            return true
         }
+
+        return false
     }
 
     init(token: Token, buttonTitle: String, destination: AddressViewModel.Destination, address: String? = nil, mustChangeAddress: Bool = false, allowRemoval: Bool = true, onFinish: @escaping (ResolvedAddress?) -> Void) {
@@ -43,9 +44,15 @@ struct AddressView: View {
                         text: $viewModel.address,
                         result: $viewModel.addressResult,
                         parserFilter: parserFilter,
-                        borderColor: Binding(get: { borderColor }, set: { _ in }),
+                        isInvalid: isInvalid,
                         foregroundColor: $foregroundColor,
-                        identifier: TestTags.enterAddressInput
+                        identifier: TestTags.enterAddressInput,
+                        buttonIdentifiers: .init(
+                            scan: TestTags.enterAddressScan,
+                            paste: TestTags.enterAddressPaste,
+                            contacts: TestTags.enterAddressContacts,
+                            clear: TestTags.enterAddressClear
+                        )
                     )
                     .focused($isInputActive)
                     .padding(.bottom, .margin12)

@@ -9,75 +9,81 @@ struct AddressViewNew: View {
 
     @Binding var text: String
     @Binding var result: AddressInput.Result
-    @Binding var borderColor: Color
     @Binding var foregroundColor: Color
+    private let isInvalid: Bool
     private let identifier: String?
+    private let buttonIdentifiers: ButtonIdentifiers?
 
     @State private var fieldText = ""
 
-    init(initial: AddressInput.Initial, text: Binding<String>, result: Binding<AddressInput.Result>, parserFilter: AddressParserFactory.ParserFilter?, borderColor: Binding<Color>, foregroundColor: Binding<Color> = .constant(.themeLeah), identifier: String? = nil) {
+    init(initial: AddressInput.Initial, text: Binding<String>, result: Binding<AddressInput.Result>, parserFilter: AddressParserFactory.ParserFilter?, isInvalid: Bool, foregroundColor: Binding<Color> = .constant(.themeLeah), identifier: String? = nil, buttonIdentifiers: ButtonIdentifiers? = nil) {
         _viewModel = StateObject(wrappedValue: AddressViewModelNew(initial: initial, parserFilter: parserFilter))
 
         _text = text
         _result = result
-        _borderColor = borderColor
         _foregroundColor = foregroundColor
+        self.isInvalid = isInvalid
         self.identifier = identifier
+        self.buttonIdentifiers = buttonIdentifiers
     }
 
     var body: some View {
-        InputTextRow(borderColor: $borderColor) {
-            PrimarySizedHStack {
-                textField(
-                    placeholder: placeholder,
-                    text: $fieldText
-                )
-                .onAppear {
-                    viewModel.text = text
-                    fieldText = text
+        ThemeInput(kind: .field, state: isInvalid ? .error : .normal, buttons: buttons) {
+            textField(
+                placeholder: placeholder,
+                text: $fieldText
+            )
+            .onAppear {
+                viewModel.text = text
+                fieldText = text
+            }
+            .onChange(of: fieldText) { _, fieldText in
+                if viewModel.text != fieldText {
+                    viewModel.text = fieldText
                 }
-                .onChange(of: fieldText) { _, fieldText in
-                    if viewModel.text != fieldText {
-                        viewModel.text = fieldText
-                    }
+            }
+            .onChange(of: text) { _, newText in
+                if newText != viewModel.text {
+                    viewModel.text = newText
                 }
-                .onChange(of: text) { newText in
-                    if newText != viewModel.text {
-                        viewModel.text = newText
-                    }
+            }
+            .onChange(of: viewModel.text) { _, newText in
+                if newText != text {
+                    text = newText
                 }
-                .onChange(of: viewModel.text) { newText in
-                    if newText != text {
-                        text = newText
-                    }
 
-                    // A vertical TextField keeps a stale height if its text and width change in the same
-                    // layout pass (iOS 27), so external text is applied after the buttons have been laid out
-                    DispatchQueue.main.async {
-                        if fieldText != viewModel.text {
-                            fieldText = viewModel.text
-                        }
+                // A vertical TextField keeps a stale height if its text and width change in the same
+                // layout pass (iOS 27), so external text is applied after the buttons have been laid out
+                DispatchQueue.main.async {
+                    if fieldText != viewModel.text {
+                        fieldText = viewModel.text
                     }
                 }
-                .onChange(of: viewModel.result) { newResult in
-                    if newResult != result {
-                        result = newResult
-                    }
+            }
+            .onChange(of: viewModel.result) { _, newResult in
+                if newResult != result {
+                    result = newResult
                 }
-                .font(.themeBody)
-                .foregroundStyle(foregroundColor)
-                .autocorrectionDisabled()
-                .autocapitalization(.none)
-            } trailing: {
-                ShortcutButtonsView(
-                    showDelete: .init(get: { !viewModel.text.isEmpty }, set: { _ in }),
-                    items: viewModel.shortcuts,
-                    onTap: {
-                        viewModel.onTap(index: $0)
-                    }, onTapDelete: {
-                        viewModel.onTapDelete()
-                    }
-                )
+            }
+            .font(.themeBody)
+            .foregroundStyle(foregroundColor)
+            .tint(.themeInputFieldTintColor)
+            .autocorrectionDisabled()
+            .autocapitalization(.none)
+        }
+    }
+
+    private var buttons: [ThemeInputButton] {
+        guard viewModel.text.isEmpty else {
+            return [.delete(identifier: buttonIdentifiers?.clear) { viewModel.onTapDelete() }]
+        }
+
+        return viewModel.shortcuts.enumerated().map { index, shortcut in
+            switch shortcut {
+            case let .icon(name):
+                return .icon(name, identifier: buttonIdentifiers?.identifier(icon: name)) { viewModel.onTap(index: index) }
+            case let .text(title):
+                return .text(title, identifier: buttonIdentifiers?.paste) { viewModel.onTap(index: index) }
             }
         }
     }
@@ -92,21 +98,31 @@ struct AddressViewNew: View {
         }
     }
 
-    @ViewBuilder private func baseTextField(placeholder: String, text: Binding<String>) -> some View {
-        if #available(iOS 16, *) {
-            TextField(
-                placeholder,
-                text: text,
-                axis: .vertical
-            )
-            .lineLimit(1 ... maxLineLimit)
-            .accentColor(.themeBrand)
-        } else {
-            TextField(
-                placeholder,
-                text: text
-            )
-            .accentColor(.themeBrand)
+    private func baseTextField(placeholder: String, text: Binding<String>) -> some View {
+        TextField(
+            placeholder,
+            text: text,
+            prompt: Text(placeholder).foregroundColor(.themeAndy),
+            axis: .vertical
+        )
+        .lineLimit(1 ... maxLineLimit)
+    }
+}
+
+extension AddressViewNew {
+    struct ButtonIdentifiers {
+        let scan: String?
+        let paste: String?
+        let contacts: String?
+        let clear: String?
+
+        /// the icon names come from AddressViewModelNew.shortcuts
+        func identifier(icon: String) -> String? {
+            switch icon {
+            case "scan": return scan
+            case "user": return contacts
+            default: return nil
+            }
         }
     }
 }

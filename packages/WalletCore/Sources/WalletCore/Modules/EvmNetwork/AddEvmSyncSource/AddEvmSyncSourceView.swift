@@ -6,6 +6,9 @@ struct AddEvmSyncSourceView: View {
     @Binding private var isPresented: Bool
 
     @FocusState private var focusedField: Field?
+    @State private var basicAuthSecureLock = true
+    /// the masked field is a UIKit text field that @FocusState does not track
+    @State private var basicAuthFocused = false
 
     init(blockchainType: BlockchainType, isPresented: Binding<Bool>) {
         _viewModel = .init(wrappedValue: AddEvmSyncSourceViewModel(blockchainType: blockchainType))
@@ -20,76 +23,65 @@ struct AddEvmSyncSourceView: View {
                         VStack(spacing: 0) {
                             ListSectionHeader(text: "add_evm_sync_source.rpc_url".localized)
 
-                            InputTextRow {
-                                PrimarySizedHStack {
-                                    InputTextView(
-                                        placeholder: "add_evm_sync_source.rpc_url".localized,
-                                        text: $viewModel.url
-                                    )
-                                    .textInputAutocapitalization(.never)
-                                    .autocorrectionDisabled()
-                                    .keyboardType(.URL)
-                                    .focused($focusedField, equals: .url)
-                                } trailing: {
-                                    ShortcutButtonsView(
-                                        showDelete: .init(get: { !viewModel.url.isEmpty }, set: { _ in }),
-                                        items: [.icon("scan"), .text("button.paste".localized)],
-                                        onTap: { index in
-                                            switch index {
-                                            case 0:
-                                                Coordinator.shared.present { isScanPresented in
-                                                    ScanQrView(isPresented: isScanPresented) { text in
-                                                        viewModel.url = text.trimmingCharacters(in: .whitespacesAndNewlines)
-                                                    }
-                                                    .ignoresSafeArea()
-                                                }
-                                            case 1:
-                                                if let string = UIPasteboard.general.string {
-                                                    viewModel.url = string.pastedSingleLine
-                                                }
-                                            default: ()
-                                            }
+                            ThemeInput(
+                                caution: viewModel.urlCautionState,
+                                buttons: ThemeInputButton.shortcuts(
+                                    isEmpty: viewModel.url.isEmpty,
+                                    whenEmpty: [
+                                        .scan(identifier: TestTags.evmSourceUrlScan) { text in
+                                            viewModel.url = text.trimmingCharacters(in: .whitespacesAndNewlines)
                                         },
-                                        onTapDelete: {
-                                            viewModel.url = ""
-                                        }
-                                    )
-                                }
+                                        .paste(identifier: TestTags.evmSourceUrlPaste) { string in
+                                            viewModel.url = string.pastedSingleLine
+                                        },
+                                    ],
+                                    deleteIdentifier: TestTags.evmSourceUrlClear,
+                                    onDelete: {
+                                        viewModel.url = ""
+                                    }
+                                )
+                            ) {
+                                InputTextView(
+                                    placeholder: "add_evm_sync_source.rpc_url".localized,
+                                    text: $viewModel.url
+                                )
+                                .textInputAutocapitalization(.never)
+                                .autocorrectionDisabled()
+                                .keyboardType(.URL)
+                                .focused($focusedField, equals: .url)
+                                .accessibilityIdentifier(TestTags.evmSourceUrlInput)
                             }
-                            .modifier(CautionBorder(cautionState: $viewModel.urlCautionState))
-                            .modifier(CautionPrompt(cautionState: $viewModel.urlCautionState))
 
                             ListSectionHeader(text: "add_evm_sync_source.basic_auth".localized)
                                 .padding(.top, .margin24)
 
-                            InputTextRow {
-                                PrimarySizedHStack {
-                                    InputTextView(
-                                        placeholder: "add_evm_sync_source.basic_auth".localized,
-                                        text: $viewModel.basicAuth
-                                    )
-                                    .textInputAutocapitalization(.never)
-                                    .autocorrectionDisabled()
-                                    .focused($focusedField, equals: .basicAuth)
-                                } trailing: {
-                                    ShortcutButtonsView(
-                                        showDelete: .init(get: { !viewModel.basicAuth.isEmpty }, set: { _ in }),
-                                        items: [.text("button.paste".localized)],
-                                        onTap: { _ in
-                                            if let string = UIPasteboard.general.string {
-                                                viewModel.basicAuth = string.pastedSingleLine
-                                            }
+                            ThemeInput(
+                                buttons: ThemeInputButton.shortcuts(
+                                    isEmpty: viewModel.basicAuth.isEmpty,
+                                    whenEmpty: [
+                                        .paste(identifier: TestTags.evmSourceAuthPaste) { string in
+                                            viewModel.basicAuth = string.pastedSingleLine
                                         },
-                                        onTapDelete: {
-                                            viewModel.basicAuth = ""
-                                        }
-                                    )
-                                }
+                                    ],
+                                    deleteIdentifier: TestTags.evmSourceAuthClear,
+                                    onDelete: {
+                                        viewModel.basicAuth = ""
+                                    }
+                                ) + [.secureToggle($basicAuthSecureLock, identifier: TestTags.evmSourceAuthEye)]
+                            ) {
+                                InputTextView(
+                                    placeholder: "add_evm_sync_source.basic_auth".localized,
+                                    text: $viewModel.basicAuth
+                                )
+                                .secure($basicAuthSecureLock, identifier: TestTags.evmSourceAuthInput, isFocused: $basicAuthFocused)
                             }
                         }
                         .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                     }
-                    .onTapGesture { focusedField = nil }
+                    .onTapGesture {
+                        focusedField = nil
+                        basicAuthFocused = false
+                    }
                 } bottomContent: {
                     ThemeButton(text: "button.add".localized) {
                         viewModel.onTapAdd()
@@ -116,6 +108,5 @@ struct AddEvmSyncSourceView: View {
 extension AddEvmSyncSourceView {
     private enum Field {
         case url
-        case basicAuth
     }
 }

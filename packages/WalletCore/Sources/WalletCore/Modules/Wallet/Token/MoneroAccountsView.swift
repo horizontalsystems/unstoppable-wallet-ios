@@ -131,11 +131,10 @@ struct MoneroAccountNameSheet: View {
             VStack(spacing: 0) {
                 BSModule.view(for: .title(title: title))
 
-                InputTextRow(vertical: .margin8) {
-                    TextField("monero.accounts.name_placeholder".localized, text: $name)
-                        .accentColor(.themeBrand)
+                ThemeInput {
+                    InputTextView(placeholder: "monero.accounts.name_placeholder".localized, text: $name)
                         .autocorrectionDisabled()
-                        .font(.themeBody)
+                        .accessibilityIdentifier(TestTags.moneroAccountNameInput)
                         .onChange(of: name) { _, newValue in
                             if newValue.count > Self.maxNameLength {
                                 name = String(newValue.prefix(Self.maxNameLength))

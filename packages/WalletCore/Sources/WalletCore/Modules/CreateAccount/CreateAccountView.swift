@@ -12,6 +12,9 @@ struct CreateAccountView: View {
     @State private var passphraseConfirmationCaution: CautionState = .none
 
     @FocusState private var focusedField: Field?
+    // the masked passphrase fields are UIKit text fields that @FocusState does not track
+    @State private var passphraseFocused = false
+    @State private var passphraseConfirmationFocused = false
 
     init(walletType: CreateAccountViewModel.WalletType, isPresented: Binding<Bool>, onCreate: (() -> Void)? = nil) {
         _viewModel = StateObject(wrappedValue: CreateAccountViewModel(walletType: walletType))
@@ -27,23 +30,18 @@ struct CreateAccountView: View {
                         VStack(spacing: 0) {
                             ListSectionHeader(text: "create_wallet.name".localized, uppercased: false)
 
-                            InputTextRow {
-                                PrimarySizedHStack {
-                                    InputTextView(text: $viewModel.name)
-                                        .autocapitalization(.words)
-                                        .autocorrectionDisabled()
-                                        .focused($focusedField, equals: .name)
-                                        .accessibilityIdentifier(TestTags.createNameInput)
-                                } trailing: {
-                                    ShortcutButtonsView(
-                                        showDelete: .constant(false),
-                                        items: [.icon("swap_e")],
-                                        onTap: { _ in
-                                            viewModel.refreshName()
-                                        },
-                                        onTapDelete: {}
-                                    )
-                                }
+                            ThemeInput(
+                                buttons: [
+                                    .icon("swap_e", identifier: TestTags.createNameRandom) {
+                                        viewModel.refreshName()
+                                    },
+                                ]
+                            ) {
+                                InputTextView(text: $viewModel.name)
+                                    .autocapitalization(.words)
+                                    .autocorrectionDisabled()
+                                    .focused($focusedField, equals: .name)
+                                    .accessibilityIdentifier(TestTags.createNameInput)
                             }
                         }
 
@@ -89,33 +87,33 @@ struct CreateAccountView: View {
                                     ListSectionHeader(text: "create_wallet.passphrase_optional".localized, uppercased: false)
 
                                     VStack(spacing: 16) {
-                                        InputTextRow {
+                                        ThemeInput(
+                                            caution: passphraseCaution,
+                                            buttons: [.secureToggle($secureLock, identifier: TestTags.createPassphraseEye)]
+                                        ) {
                                             InputTextView(
                                                 placeholder: "create_wallet.input.passphrase".localized,
                                                 text: $viewModel.passphrase,
                                                 isValidText: { text in PassphraseValidator.validate(text: text) }
                                             )
-                                            .secure($secureLock)
+                                            .secure($secureLock, identifier: TestTags.createPassphraseInput, isFocused: $passphraseFocused)
                                             .autocapitalization(.none)
                                             .autocorrectionDisabled()
-                                            .focused($focusedField, equals: .passphrase)
                                         }
-                                        .modifier(CautionBorder(cautionState: $passphraseCaution))
-                                        .modifier(CautionPrompt(cautionState: $passphraseCaution))
 
-                                        InputTextRow {
+                                        ThemeInput(
+                                            caution: passphraseConfirmationCaution,
+                                            buttons: [.secureToggle($secureLock, identifier: TestTags.createPassphraseConfirmEye)]
+                                        ) {
                                             InputTextView(
                                                 placeholder: "create_wallet.input.confirm".localized,
                                                 text: $viewModel.passphraseConfirmation,
                                                 isValidText: { text in PassphraseValidator.validate(text: text) }
                                             )
-                                            .secure($secureLock)
+                                            .secure($secureLock, identifier: TestTags.createPassphraseConfirmInput, isFocused: $passphraseConfirmationFocused)
                                             .autocapitalization(.none)
                                             .autocorrectionDisabled()
-                                            .focused($focusedField, equals: .passphraseConfirmation)
                                         }
-                                        .modifier(CautionBorder(cautionState: $passphraseConfirmationCaution))
-                                        .modifier(CautionPrompt(cautionState: $passphraseConfirmationCaution))
                                     }
                                     .animation(.default, value: secureLock)
 
@@ -132,7 +130,7 @@ struct CreateAccountView: View {
                     .padding(EdgeInsets(top: 24, leading: 16, bottom: 32, trailing: 16))
                 }
                 .onTapGesture {
-                    focusedField = nil
+                    dismissKeyboard()
                 }
             } bottomContent: {
                 ThemeButton(text: "create_wallet.create".localized) {
@@ -142,8 +140,8 @@ struct CreateAccountView: View {
                 .accessibilityIdentifier(TestTags.createSubmit)
             }
         }
-        .onChange(of: viewModel.passphrase) { _ in clearCautions() }
-        .onChange(of: viewModel.passphraseConfirmation) { _ in clearCautions() }
+        .onChange(of: viewModel.passphrase) { _, _ in clearCautions() }
+        .onChange(of: viewModel.passphraseConfirmation) { _, _ in clearCautions() }
         .navigationTitle("create_wallet.title".localized)
     }
 
@@ -159,8 +157,14 @@ struct CreateAccountView: View {
         passphraseConfirmationCaution = .none
     }
 
-    private func createAccount() {
+    private func dismissKeyboard() {
         focusedField = nil
+        passphraseFocused = false
+        passphraseConfirmationFocused = false
+    }
+
+    private func createAccount() {
+        dismissKeyboard()
 
         switch viewModel.walletType {
         case .regular:
@@ -208,8 +212,6 @@ struct CreateAccountView: View {
 extension CreateAccountView {
     enum Field {
         case name
-        case passphrase
-        case passphraseConfirmation
     }
 }
 

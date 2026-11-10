@@ -8,8 +8,11 @@ struct InputTextView: View {
     var text: Binding<String>
 
     @Environment(\.isEnabled) private var isEnabled
+    @Environment(\.isInsideThemeInput) private var isInsideThemeInput
     @Binding var secured: Bool
     var secureToggleEnabled = false
+    var secureIdentifier: String?
+    var secureFocused: Binding<Bool>?
 
     @State var shake = false
     var shakeOnInvalid = true
@@ -27,11 +30,16 @@ struct InputTextView: View {
     }
 
     var body: some View {
-        editView()
+        let view = editView()
             .font(font)
             .tint(.themeInputFieldTintColor)
             .accentColor(.themeLeah)
-            .modifier(Validated(text: text, isValidText: isValidText))
+
+        if let isValidText {
+            view.modifier(Validated(text: text, isValidText: isValidText))
+        } else {
+            view
+        }
     }
 
     @ViewBuilder
@@ -41,9 +49,30 @@ struct InputTextView: View {
                 placeholder: placeholder,
                 text: text,
                 secured: $secured,
-                isEnabled: isEnabled
+                isEnabled: isEnabled,
+                placeholderColor: isInsideThemeInput ? .themeAndy : .themeGray50,
+                identifier: secureIdentifier,
+                isFocused: secureFocused
             )
             .frame(height: 20) // TODO: How to remove this? (When change from Secure to TextField it's change height)
+        } else if isInsideThemeInput {
+            if multiline {
+                TextField(
+                    placeholder,
+                    text: text,
+                    prompt: prompt,
+                    axis: .vertical
+                )
+                .foregroundColor(isEnabled ? .themeLeah : .themeAndy)
+            } else {
+                TextField(
+                    placeholder,
+                    text: text,
+                    prompt: prompt
+                )
+                .foregroundColor(isEnabled ? .themeLeah : .themeAndy)
+                .frame(height: 20) // TODO: How to remove this? (When change from Secure to TextField it's change height)
+            }
         } else {
             if #available(iOS 16.0, *), multiline {
                 TextField(
@@ -64,21 +93,21 @@ struct InputTextView: View {
             }
         }
     }
+
+    private var prompt: Text {
+        Text(placeholder).foregroundColor(.themeAndy)
+    }
 }
 
 extension InputTextView {
-    func secure(_ secured: Binding<Bool>) -> some View {
+    /// `isFocused` replaces `.focused(...)` for the masked field, which `@FocusState` cannot track
+    func secure(_ secured: Binding<Bool>, identifier: String? = nil, isFocused: Binding<Bool>? = nil) -> InputTextView {
         var selfView = self
         selfView._secured = secured
         selfView.secureToggleEnabled = true
-
-        return HStack(spacing: .margin16) {
-            selfView
-
-            IconButton(icon: secured.wrappedValue ? "eye_off" : "eye_on", style: .secondary, mode: .transparent, size: .small) {
-                secured.wrappedValue.toggle()
-            }
-        }
+        selfView.secureIdentifier = identifier
+        selfView.secureFocused = isFocused
+        return selfView
     }
 }
 
@@ -97,62 +126,6 @@ struct ColoredBorder: ViewModifier {
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
                     .stroke(color, lineWidth: .heightOneDp)
             )
-    }
-}
-
-public struct CautionBorder: ViewModifier {
-    let cornerRadius: CGFloat
-    @Binding var cautionState: CautionState
-
-    public init(cornerRadius: CGFloat = .cornerRadius12, cautionState: Binding<CautionState>) {
-        self.cornerRadius = cornerRadius
-        _cautionState = cautionState
-    }
-
-    public func body(content: Content) -> some View {
-        content
-            .overlay(
-                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .stroke(cautionState.color, lineWidth: .heightOneDp)
-            )
-    }
-}
-
-struct FieldCautionBorder: ViewModifier {
-    let cornerRadius: CGFloat
-    @Binding var cautionState: FieldCautionState
-
-    init(cornerRadius: CGFloat = .cornerRadius12, cautionState: Binding<FieldCautionState>) {
-        self.cornerRadius = cornerRadius
-        _cautionState = cautionState
-    }
-
-    func body(content: Content) -> some View {
-        content
-            .overlay(
-                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .stroke(cautionState.color, lineWidth: .heightOneDp)
-            )
-    }
-}
-
-public struct CautionPrompt: ViewModifier {
-    @Binding var cautionState: CautionState
-
-    public init(cautionState: Binding<CautionState>) {
-        _cautionState = cautionState
-    }
-
-    public func body(content: Content) -> some View {
-        VStack(spacing: 8) {
-            content
-
-            if let caution = cautionState.caution {
-                Text(caution.text)
-                    .themeCaption(color: cautionState.color)
-                    .padding(.horizontal, 16)
-            }
-        }
     }
 }
 

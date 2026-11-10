@@ -10,18 +10,6 @@ public enum CautionState: Equatable {
         default: return nil
         }
     }
-
-    public var color: Color {
-        switch self {
-        case .none: return Color.clear
-        case let .caution(caution):
-            switch caution.type {
-            case .warning: return .themeJacob
-            case .error: return .themeLucian
-            case .regular: return .themeGray
-            }
-        }
-    }
 }
 
 enum TitledCautionState: Equatable {
@@ -39,18 +27,6 @@ enum TitledCautionState: Equatable {
 enum FieldCautionState: Equatable {
     case none
     case caution(CautionType)
-
-    var color: Color {
-        switch self {
-        case .none: return Color.clear
-        case let .caution(type):
-            switch type {
-            case .warning: return .themeJacob
-            case .error: return .themeLucian
-            case .regular: return .themeGray
-            }
-        }
-    }
 }
 
 public struct Caution: Equatable, Hashable {

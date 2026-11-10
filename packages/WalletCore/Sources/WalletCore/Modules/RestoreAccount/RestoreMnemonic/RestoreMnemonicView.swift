@@ -13,6 +13,8 @@ struct RestoreMnemonicView: View {
     @State private var restoreCoinsData: RestoreCoinsData?
 
     @FocusState private var focusedField: Field?
+    /// the masked passphrase field is a UIKit text field that @FocusState does not track
+    @State private var passphraseFocused = false
 
     init(isParentPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: RestoreMnemonicViewModel())
@@ -77,22 +79,18 @@ struct RestoreMnemonicView: View {
         VStack(spacing: 0) {
             ListSectionHeader(text: "create_wallet.name".localized, uppercased: false)
 
-            InputTextRow {
-                PrimarySizedHStack {
-                    InputTextView(text: $viewModel.name)
-                        .autocapitalization(.words)
-                        .autocorrectionDisabled()
-                        .focused($focusedField, equals: .name)
-                } trailing: {
-                    ShortcutButtonsView(
-                        showDelete: .constant(false),
-                        items: [.icon("swap_e")],
-                        onTap: { _ in
-                            viewModel.refreshName()
-                        },
-                        onTapDelete: {}
-                    )
-                }
+            ThemeInput(
+                buttons: [
+                    .icon("swap_e", identifier: TestTags.restoreNameRandom) {
+                        viewModel.refreshName()
+                    },
+                ]
+            ) {
+                InputTextView(text: $viewModel.name)
+                    .autocapitalization(.words)
+                    .autocorrectionDisabled()
+                    .focused($focusedField, equals: .name)
+                    .accessibilityIdentifier(TestTags.restoreNameInput)
             }
         }
     }
@@ -100,30 +98,18 @@ struct RestoreMnemonicView: View {
     // MARK: - Mnemonic Section
 
     private var mnemonicSection: some View {
-        VStack(spacing: 0) {
-            MnemonicInputView(
-                placeholder: "restore.mnemonic.placeholder".localized,
-                value: $viewModel.input,
-                invalidRanges: viewModel.invalidRanges,
-                borderColor: mnemonicBorderColor,
-                isFocused: $isMnemonicFocused,
-                statPage: viewModel.advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey,
-                statEntity: .recoveryPhrase,
-                identifier: TestTags.restorePhraseInput
-            )
-
-            if let caution = viewModel.mnemonicCaution.caution {
-                Text(caution.text)
-                    .themeCaption(color: viewModel.mnemonicCaution.color)
-                    .padding(.top, 12)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .accessibilityIdentifier(TestTags.restoreError)
-            }
-        }
-    }
-
-    private var mnemonicBorderColor: Color {
-        viewModel.mnemonicCaution.caution == nil ? .themeBlade : viewModel.mnemonicCaution.color
+        MnemonicInputView(
+            placeholder: "restore.mnemonic.placeholder".localized,
+            value: $viewModel.input,
+            invalidRanges: viewModel.invalidRanges,
+            caution: viewModel.mnemonicCaution,
+            cautionIdentifier: TestTags.restoreError,
+            isFocused: $isMnemonicFocused,
+            statPage: viewModel.advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey,
+            statEntity: .recoveryPhrase,
+            identifier: TestTags.restorePhraseInput,
+            buttonIdentifiers: .init(scan: TestTags.restorePhraseScan, paste: TestTags.restorePhrasePaste, clear: TestTags.restorePhraseClear)
+        )
     }
 
     // MARK: - Advanced Toggle
@@ -172,19 +158,20 @@ struct RestoreMnemonicView: View {
             }
 
             VStack(spacing: 0) {
-                InputTextRow {
+                ThemeInput(
+                    buttons: [.secureToggle($passphraseSecureLock, identifier: TestTags.restorePassphraseEye)]
+                ) {
                     InputTextView(
                         placeholder: "restore.input.passphrase".localized,
                         text: $passphrase,
                         isValidText: { PassphraseValidator.validate(text: $0) }
                     )
-                    .secure($passphraseSecureLock)
+                    .secure($passphraseSecureLock, identifier: TestTags.restorePassphraseInput, isFocused: $passphraseFocused)
                     .autocapitalization(.none)
                     .autocorrectionDisabled()
-                    .focused($focusedField, equals: .passphrase)
                 }
-                .onChange(of: passphrase) {
-                    viewModel.onChange(passphrase: $0)
+                .onChange(of: passphrase) { _, newValue in
+                    viewModel.onChange(passphrase: newValue)
                 }
 
                 ListSectionFooter(text: "restore.wallet.passphrase_description".localized)
@@ -221,6 +208,7 @@ struct RestoreMnemonicView: View {
     private func dismissKeyboard() {
         focusedField = nil
         isMnemonicFocused = false
+        passphraseFocused = false
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 
@@ -246,7 +234,6 @@ struct RestoreMnemonicView: View {
 extension RestoreMnemonicView {
     enum Field {
         case name
-        case passphrase
     }
 
     struct RestoreCoinsData {

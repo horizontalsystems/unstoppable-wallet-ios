@@ -24,26 +24,21 @@ public struct MultiSwapSlippageView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.horizontal, 16)
 
-                            InputTextRow {
-                                StepChangeButtonsView(
-                                    content: {
-                                        InputTextView(
-                                            placeholder: MultiSwapSlippage.default.description,
-                                            text: $viewModel.slippageString
-                                        )
-                                        .font(.themeBody)
-                                        .tint(.themeInputFieldTintColor)
-                                        .keyboardType(.decimalPad)
-                                        .autocorrectionDisabled()
-                                        .focused($isFocused)
-                                    },
-                                    onTap: {
-                                        viewModel.stepSlippage(direction: $0)
-                                    }
+                            ThemeInput(
+                                caution: viewModel.slippageCautionState,
+                                buttons: ThemeInputButton.steps(minusIdentifier: TestTags.slippageMinus, plusIdentifier: TestTags.slippagePlus) {
+                                    viewModel.stepSlippage(direction: $0)
+                                }
+                            ) {
+                                InputTextView(
+                                    placeholder: MultiSwapSlippage.default.description,
+                                    text: $viewModel.slippageString
                                 )
+                                .keyboardType(.decimalPad)
+                                .autocorrectionDisabled()
+                                .focused($isFocused)
+                                .accessibilityIdentifier(TestTags.slippageInput)
                             }
-                            .modifier(CautionBorder(cautionState: $viewModel.slippageCautionState))
-                            .modifier(CautionPrompt(cautionState: $viewModel.slippageCautionState))
                         }
                         .padding(EdgeInsets(top: 12, leading: 16, bottom: 32, trailing: 16))
                     }

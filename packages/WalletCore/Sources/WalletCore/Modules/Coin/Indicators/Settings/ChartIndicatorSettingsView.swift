@@ -88,7 +88,7 @@ struct ChartIndicatorSettingsView: View {
         VStack(spacing: 0) {
             ListSectionHeader(text: viewModel.form.header(for: field))
 
-            InputTextRow {
+            ThemeInput(caution: cautionState) {
                 InputTextView(
                     placeholder: viewModel.form.placeholder(for: field),
                     text: viewModel.binding(for: field),
@@ -97,9 +97,19 @@ struct ChartIndicatorSettingsView: View {
                 .keyboardType(.numberPad)
                 .autocorrectionDisabled()
                 .focused($focusedField, equals: field)
+                .accessibilityIdentifier(TestTags.indicatorSettingInput(field.testTagName))
             }
-            .modifier(CautionBorder(cautionState: .constant(cautionState)))
-            .modifier(CautionPrompt(cautionState: .constant(cautionState)))
+        }
+    }
+}
+
+private extension ChartIndicatorSettingsForm.Field {
+    var testTagName: String {
+        switch self {
+        case .period: return "period"
+        case .fast: return "fast"
+        case .slow: return "slow"
+        case .signal: return "signal"
         }
     }
 }

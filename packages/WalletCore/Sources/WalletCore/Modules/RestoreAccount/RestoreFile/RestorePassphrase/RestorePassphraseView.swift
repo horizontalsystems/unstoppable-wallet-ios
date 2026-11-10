@@ -5,7 +5,8 @@ struct RestorePassphraseView: View {
     @Binding private var isParentPresented: Bool
 
     @State private var secureLock = true
-    @FocusState private var focused: Bool
+    /// the masked password field is a UIKit text field that @FocusState does not track
+    @State private var focused = false
 
     @State private var restoreSelectAccount: Account?
     @State private var restoreSelectPresented = false
@@ -31,19 +32,19 @@ struct RestorePassphraseView: View {
                         }
                         .padding(.horizontal, .margin16)
 
-                        InputTextRow {
+                        ThemeInput(
+                            caution: viewModel.passphraseCautionState,
+                            buttons: [.secureToggle($secureLock, identifier: TestTags.restoreFilePasswordEye)]
+                        ) {
                             InputTextView(
                                 placeholder: "restore.cloud.password.placeholder".localized,
                                 text: $viewModel.passphrase,
                                 isValidText: { PassphraseValidator.validate(text: $0) }
                             )
-                            .secure($secureLock)
+                            .secure($secureLock, identifier: TestTags.restoreFilePasswordInput, isFocused: $focused)
                             .autocapitalization(.none)
                             .autocorrectionDisabled()
-                            .focused($focused)
                         }
-                        .modifier(CautionBorder(cautionState: $viewModel.passphraseCautionState))
-                        .modifier(CautionPrompt(cautionState: $viewModel.passphraseCautionState))
                     }
                     .animation(.default, value: viewModel.passphraseCautionState)
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))

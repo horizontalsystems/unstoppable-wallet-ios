@@ -9,6 +9,10 @@ struct MaskedInputTextFieldView: UIViewRepresentable {
     let text: Binding<String>
     @Binding var secured: Bool
     let isEnabled: Bool
+    var placeholderColor: UIColor = .themeGray50
+    var identifier: String?
+    /// Mirrors the text field's first-responder state; `@FocusState` does not track a representable's UITextField
+    var isFocused: Binding<Bool>?
 
     func makeCoordinator() -> Coordinator {
         Coordinator(text: text.wrappedValue)
@@ -22,9 +26,10 @@ struct MaskedInputTextFieldView: UIViewRepresentable {
         textField.textColor = .themeLeah
         textField.font = .body
         textField.backgroundColor = .clear
+        textField.accessibilityIdentifier = identifier
         textField.attributedPlaceholder = NSAttributedString(
             string: placeholder,
-            attributes: [.foregroundColor: UIColor.themeGray50]
+            attributes: [.foregroundColor: placeholderColor]
         )
         textField.textContentType = .oneTimeCode
         textField.isSecureTextEntry = false
@@ -36,6 +41,7 @@ struct MaskedInputTextFieldView: UIViewRepresentable {
         textField.smartInsertDeleteType = .no
 
         context.coordinator.onChangeText = { text.wrappedValue = $0 }
+        context.coordinator.onChangeFocus = focusHandler()
         context.coordinator.apply(textField: textField, text: text.wrappedValue, secured: secured)
 
         return textField
@@ -44,17 +50,92 @@ struct MaskedInputTextFieldView: UIViewRepresentable {
     func updateUIView(_ textField: UITextField, context: Context) {
         textField.attributedPlaceholder = NSAttributedString(
             string: placeholder,
-            attributes: [.foregroundColor: UIColor.themeGray50]
+            attributes: [.foregroundColor: placeholderColor]
         )
         textField.isEnabled = isEnabled
+        textField.accessibilityIdentifier = identifier
         textField.textColor = isEnabled ? .themeLeah : .themeAndy
 
         context.coordinator.onChangeText = { text.wrappedValue = $0 }
+        context.coordinator.onChangeFocus = focusHandler()
         context.coordinator.apply(textField: textField, text: text.wrappedValue, secured: secured)
+
+        reconcileFocus(textField: textField, coordinator: context.coordinator)
+    }
+
+    static func dismantleUIView(_ textField: UITextField, coordinator: Coordinator) {
+        let onChangeFocus = coordinator.onChangeFocus
+        let hadFocus = textField.isFirstResponder || coordinator.isFocusSyncPending
+        coordinator.onChangeFocus = nil
+
+        // a field removed while focused (e.g. Advanced toggled off) must not leave its binding true,
+        // or the field would grab focus when it is shown again
+        if hadFocus {
+            DispatchQueue.main.async {
+                onChangeFocus?(false)
+            }
+        }
+    }
+
+    /// Pushes the binding into UIKit. Skipped while a delegate focus report is pending: until it lands the binding
+    /// still holds the old value, and acting on it would undo the user's own tap into or out of the field.
+    private func reconcileFocus(textField: UITextField, coordinator: Coordinator) {
+        guard let isFocused, !coordinator.isFocusSyncPending else {
+            return
+        }
+
+        if isFocused.wrappedValue, !textField.isFirstResponder {
+            if textField.window != nil {
+                if !textField.becomeFirstResponder() {
+                    // refused: report the real state, so the binding reads false and a later request tries again
+                    coordinator.syncFocus(textField)
+                }
+            } else if !coordinator.isFocusRetryScheduled {
+                // requested before the field is in a window, e.g. from onAppear: one retry once it is attached
+                coordinator.isFocusRetryScheduled = true
+
+                DispatchQueue.main.async { [weak textField, weak coordinator] in
+                    guard let coordinator, let textField else {
+                        return
+                    }
+
+                    coordinator.isFocusRetryScheduled = false
+
+                    guard isFocused.wrappedValue, !textField.isFirstResponder else {
+                        return
+                    }
+
+                    if textField.window == nil || !textField.becomeFirstResponder() {
+                        coordinator.syncFocus(textField)
+                    }
+                }
+            }
+        } else if !isFocused.wrappedValue, textField.isFirstResponder {
+            textField.resignFirstResponder()
+        }
+    }
+
+    private func focusHandler() -> ((Bool) -> Void)? {
+        guard let isFocused else {
+            return nil
+        }
+
+        return { focused in
+            if isFocused.wrappedValue != focused {
+                isFocused.wrappedValue = focused
+            }
+        }
     }
 
     final class Coordinator: NSObject, UITextFieldDelegate {
         var onChangeText: ((String) -> Void)?
+        var onChangeFocus: ((Bool) -> Void)?
+        var isFocusRetryScheduled = false
+        private var pendingFocusSyncs = 0
+
+        var isFocusSyncPending: Bool {
+            pendingFocusSyncs > 0
+        }
 
         private var text: String
         private var secured = false
@@ -77,6 +158,29 @@ struct MaskedInputTextFieldView: UIViewRepresentable {
                 textField.offset(from: textField.beginningOfDocument, to: $0.start)
             }
             updateDisplayedText(textField: textField, cursorOffset: cursorOffset)
+        }
+
+        func textFieldDidBeginEditing(_ textField: UITextField) {
+            syncFocus(textField)
+        }
+
+        func textFieldDidEndEditing(_ textField: UITextField) {
+            syncFocus(textField)
+        }
+
+        /// Reports UIKit's real first-responder state to the binding after the current pass, so the write
+        /// never lands inside another view's update
+        func syncFocus(_ textField: UITextField) {
+            pendingFocusSyncs += 1
+
+            DispatchQueue.main.async { [weak self, weak textField] in
+                guard let self else {
+                    return
+                }
+
+                pendingFocusSyncs -= 1
+                onChangeFocus?(textField?.isFirstResponder ?? false)
+            }
         }
 
         func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

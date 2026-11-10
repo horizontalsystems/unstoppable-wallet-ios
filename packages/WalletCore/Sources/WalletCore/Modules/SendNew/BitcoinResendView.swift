@@ -56,6 +56,7 @@ struct BitcoinResendFeeView: View {
             helper.inputNumberWithSteps(
                 text: Binding(get: { service.minFeeText }, set: { service.set(minFeeText: $0) }),
                 cautionState: .constant((cautionType ?? service.cautions.first?.type).map { .caution($0) } ?? .none),
+                identifiers: FeeSettingsViewHelper.StepIdentifiers(input: TestTags.resendFeeInput, minus: TestTags.resendFeeMinus, plus: TestTags.resendFeePlus),
                 onTap: service.step
             )
         }

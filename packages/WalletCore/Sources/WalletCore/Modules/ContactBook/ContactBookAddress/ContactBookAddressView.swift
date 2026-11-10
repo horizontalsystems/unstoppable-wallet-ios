@@ -38,7 +38,14 @@ struct ContactBookAddressView: View {
                                     text: $viewModel.text,
                                     result: $viewModel.addressResult,
                                     parserFilter: nil,
-                                    borderColor: Binding(get: { borderColor }, set: { _ in })
+                                    isInvalid: isInvalid,
+                                    identifier: TestTags.contactAddressInput,
+                                    buttonIdentifiers: .init(
+                                        scan: TestTags.contactAddressScan,
+                                        paste: TestTags.contactAddressPaste,
+                                        contacts: nil,
+                                        clear: TestTags.contactAddressClear
+                                    )
                                 )
                                 .id(viewModel.selectedBlockchain.uid)
 
@@ -111,12 +118,12 @@ struct ContactBookAddressView: View {
         )
     }
 
-    private var borderColor: Color {
+    private var isInvalid: Bool {
         if case .invalid = viewModel.state {
-            return .themeLucian
+            return true
         }
 
-        return .themeBlade
+        return false
     }
 
     private func presentBlockchainSelect() {

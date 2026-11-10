@@ -20,44 +20,34 @@ struct AddZanoNodeView: View {
                         VStack(spacing: 0) {
                             ListSectionHeader(text: "add_zano_node.node_url".localized)
 
-                            InputTextRow {
-                                PrimarySizedHStack {
-                                    InputTextView(
-                                        placeholder: "add_zano_node.node_url".localized,
-                                        text: $viewModel.url
-                                    )
-                                    .textInputAutocapitalization(.never)
-                                    .autocorrectionDisabled()
-                                    .keyboardType(.URL)
-                                    .focused($focused)
-                                } trailing: {
-                                    ShortcutButtonsView(
-                                        showDelete: .init(get: { !viewModel.url.isEmpty }, set: { _ in }),
-                                        items: [.icon("scan"), .text("button.paste".localized)],
-                                        onTap: { index in
-                                            switch index {
-                                            case 0:
-                                                Coordinator.shared.present { isScanPresented in
-                                                    ScanQrView(isPresented: isScanPresented) { text in
-                                                        viewModel.url = text.trimmingCharacters(in: .whitespacesAndNewlines)
-                                                    }
-                                                    .ignoresSafeArea()
-                                                }
-                                            case 1:
-                                                if let string = UIPasteboard.general.string {
-                                                    viewModel.url = string.pastedSingleLine
-                                                }
-                                            default: ()
-                                            }
+                            ThemeInput(
+                                caution: viewModel.cautionState,
+                                buttons: ThemeInputButton.shortcuts(
+                                    isEmpty: viewModel.url.isEmpty,
+                                    whenEmpty: [
+                                        .scan(identifier: TestTags.zanoNodeUrlScan) { text in
+                                            viewModel.url = text.trimmingCharacters(in: .whitespacesAndNewlines)
                                         },
-                                        onTapDelete: {
-                                            viewModel.url = ""
-                                        }
-                                    )
-                                }
+                                        .paste(identifier: TestTags.zanoNodeUrlPaste) { string in
+                                            viewModel.url = string.pastedSingleLine
+                                        },
+                                    ],
+                                    deleteIdentifier: TestTags.zanoNodeUrlClear,
+                                    onDelete: {
+                                        viewModel.url = ""
+                                    }
+                                )
+                            ) {
+                                InputTextView(
+                                    placeholder: "add_zano_node.node_url".localized,
+                                    text: $viewModel.url
+                                )
+                                .textInputAutocapitalization(.never)
+                                .autocorrectionDisabled()
+                                .keyboardType(.URL)
+                                .focused($focused)
+                                .accessibilityIdentifier(TestTags.zanoNodeUrlInput)
                             }
-                            .modifier(CautionBorder(cautionState: $viewModel.cautionState))
-                            .modifier(CautionPrompt(cautionState: $viewModel.cautionState))
                         }
                         .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                     }

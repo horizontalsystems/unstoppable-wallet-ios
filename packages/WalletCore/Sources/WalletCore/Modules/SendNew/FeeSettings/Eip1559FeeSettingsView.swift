@@ -80,6 +80,7 @@ struct Eip1559FeeSettingsView: View {
                                     placeholder: "",
                                     text: viewModel.maxFee,
                                     cautionState: $viewModel.maxFeeCautionState,
+                                    identifiers: FeeSettingsViewHelper.StepIdentifiers(input: TestTags.feeSettingsMaxFeeInput, minus: TestTags.feeSettingsMaxFeeMinus, plus: TestTags.feeSettingsMaxFeePlus),
                                     onTap: viewModel.stepChangeMaxFee
                                 )
                                 .focused($focusField, equals: .maxFeeRate)
@@ -98,6 +99,7 @@ struct Eip1559FeeSettingsView: View {
                                     placeholder: "",
                                     text: viewModel.maxTips,
                                     cautionState: $viewModel.maxTipsCautionState,
+                                    identifiers: FeeSettingsViewHelper.StepIdentifiers(input: TestTags.feeSettingsTipsInput, minus: TestTags.feeSettingsTipsMinus, plus: TestTags.feeSettingsTipsPlus),
                                     onTap: viewModel.stepChangeMaxTips
                                 )
                                 .focused($focusField, equals: .maxPriorityFee)

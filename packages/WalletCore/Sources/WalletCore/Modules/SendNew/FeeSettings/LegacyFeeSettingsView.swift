@@ -71,6 +71,7 @@ struct LegacyFeeSettingsView: View {
                                     placeholder: "",
                                     text: viewModel.gasPriceValue,
                                     cautionState: $viewModel.gasPriceCautionState,
+                                    identifiers: FeeSettingsViewHelper.StepIdentifiers(input: TestTags.feeSettingsGasPriceInput, minus: TestTags.feeSettingsGasPriceMinus, plus: TestTags.feeSettingsGasPricePlus),
                                     onTap: viewModel.stepChangeGasPrice
                                 )
                                 .focused($isFocused)

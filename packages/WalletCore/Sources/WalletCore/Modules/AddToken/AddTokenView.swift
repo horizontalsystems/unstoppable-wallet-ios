@@ -1,5 +1,4 @@
 import SwiftUI
-import UIKit
 
 struct AddTokenView: View {
     @StateObject private var viewModel: AddTokenViewModel
@@ -68,51 +67,36 @@ struct AddTokenView: View {
     }
 
     private var inputSection: some View {
-        VStack(spacing: 0) {
-            InputTextRow {
-                PrimarySizedHStack {
-                    TextField(
-                        viewModel.placeholder,
-                        text: $viewModel.reference,
-                        axis: .vertical
-                    )
-                    .lineLimit(1 ... 3)
-                    .font(.themeBody)
-                    .tint(.themeInputFieldTintColor)
-                    .autocorrectionDisabled()
-                    .autocapitalization(.none)
-                    .modifier(RightChecking(state: checkingStateBinding))
-                } trailing: {
-                    ShortcutButtonsView(
-                        showDelete: .init(get: { !viewModel.reference.isEmpty }, set: { _ in }),
-                        items: [.icon("scan"), .text("button.paste".localized)],
-                        onTap: onTap,
-                        onTapDelete: {
-                            viewModel.reference = ""
-                        }
-                    )
+        ThemeInput(
+            caution: viewModel.cautionState,
+            buttons: ThemeInputButton.shortcuts(
+                isEmpty: viewModel.reference.isEmpty,
+                whenEmpty: [
+                    .scan(options: [.picker], identifier: TestTags.addTokenScan) { text in
+                        viewModel.reference = text
+                        stat(page: .addToken, event: .scanQr(entity: .token))
+                    },
+                    .paste(identifier: TestTags.addTokenPaste) { string in
+                        viewModel.reference = string.pastedSingleLine
+                        stat(page: .addToken, event: .paste(entity: .token))
+                    },
+                ],
+                deleteIdentifier: TestTags.addTokenClear,
+                onDelete: {
+                    viewModel.reference = ""
                 }
-            }
-            .modifier(CautionBorder(cautionState: cautionStateBinding))
-            .modifier(CautionPrompt(cautionState: cautionStateBinding))
-        }
-    }
-
-    private func onTap(_ index: Int) {
-        switch index {
-        case 0:
-            Coordinator.shared.present { isPresented in
-                ScanQrView(options: [.picker], isPresented: isPresented) { text in
-                    viewModel.reference = text
-                    stat(page: .addToken, event: .scanQr(entity: .token))
-                }
-                .ignoresSafeArea()
-            }
-        default:
-            if let string = UIPasteboard.general.string?.pastedSingleLine {
-                viewModel.reference = string
-                stat(page: .addToken, event: .paste(entity: .token))
-            }
+            )
+        ) {
+            InputTextView(
+                placeholder: viewModel.placeholder,
+                multiline: true,
+                text: $viewModel.reference
+            )
+            .lineLimit(1 ... 3)
+            .autocorrectionDisabled()
+            .autocapitalization(.none)
+            .accessibilityIdentifier(TestTags.addTokenInput)
+            .modifier(RightChecking(state: checkingStateBinding))
         }
     }
 
@@ -132,13 +116,6 @@ struct AddTokenView: View {
                 }
             }
         }
-    }
-
-    private var cautionStateBinding: Binding<CautionState> {
-        Binding(
-            get: { viewModel.cautionState },
-            set: { _ in }
-        )
     }
 
     private var checkingStateBinding: Binding<RightChecking.State> {

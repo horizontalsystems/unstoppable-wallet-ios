@@ -6,7 +6,8 @@ struct BackupFormView: View {
     @StateObject private var passwordViewModel: BackupPasswordViewModel
     @Binding var path: NavigationPath
 
-    @FocusState private var passwordFocused: Bool
+    /// the masked password field is a UIKit text field that @FocusState does not track
+    @State private var passwordFocused = false
 
     init(viewModel: BackupViewModel, path: Binding<NavigationPath>) {
         let destination = viewModel.destination ?? .files

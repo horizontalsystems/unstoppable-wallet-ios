@@ -20,44 +20,34 @@ struct AddZcashNodeView: View {
                         VStack(spacing: 0) {
                             ListSectionHeader(text: "add_zcash_node.node_url".localized)
 
-                            InputTextRow {
-                                PrimarySizedHStack {
-                                    InputTextView(
-                                        placeholder: "add_zcash_node.node_url".localized,
-                                        text: $viewModel.address
-                                    )
-                                    .textInputAutocapitalization(.never)
-                                    .autocorrectionDisabled()
-                                    .keyboardType(.URL)
-                                    .focused($focused)
-                                } trailing: {
-                                    ShortcutButtonsView(
-                                        showDelete: .init(get: { !viewModel.address.isEmpty }, set: { _ in }),
-                                        items: [.icon("scan"), .text("button.paste".localized)],
-                                        onTap: { index in
-                                            switch index {
-                                            case 0:
-                                                Coordinator.shared.present { isPresented in
-                                                    ScanQrView(isPresented: isPresented) { text in
-                                                        viewModel.address = text.trimmingCharacters(in: .whitespacesAndNewlines)
-                                                    }
-                                                    .ignoresSafeArea()
-                                                }
-                                            case 1:
-                                                if let string = UIPasteboard.general.string {
-                                                    viewModel.address = string.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: .whitespacesAndNewlines)
-                                                }
-                                            default: ()
-                                            }
+                            ThemeInput(
+                                caution: viewModel.cautionState,
+                                buttons: ThemeInputButton.shortcuts(
+                                    isEmpty: viewModel.address.isEmpty,
+                                    whenEmpty: [
+                                        .scan(identifier: TestTags.zcashNodeUrlScan) { text in
+                                            viewModel.address = text.trimmingCharacters(in: .whitespacesAndNewlines)
                                         },
-                                        onTapDelete: {
-                                            viewModel.address = ""
-                                        }
-                                    )
-                                }
+                                        .paste(identifier: TestTags.zcashNodeUrlPaste) { string in
+                                            viewModel.address = string.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: .whitespacesAndNewlines)
+                                        },
+                                    ],
+                                    deleteIdentifier: TestTags.zcashNodeUrlClear,
+                                    onDelete: {
+                                        viewModel.address = ""
+                                    }
+                                )
+                            ) {
+                                InputTextView(
+                                    placeholder: "add_zcash_node.node_url".localized,
+                                    text: $viewModel.address
+                                )
+                                .textInputAutocapitalization(.never)
+                                .autocorrectionDisabled()
+                                .keyboardType(.URL)
+                                .focused($focused)
+                                .accessibilityIdentifier(TestTags.zcashNodeUrlInput)
                             }
-                            .modifier(CautionBorder(cautionState: $viewModel.cautionState))
-                            .modifier(CautionPrompt(cautionState: $viewModel.cautionState))
                         }
                         .padding(EdgeInsets(top: 12, leading: 16, bottom: 32, trailing: 16))
                     }

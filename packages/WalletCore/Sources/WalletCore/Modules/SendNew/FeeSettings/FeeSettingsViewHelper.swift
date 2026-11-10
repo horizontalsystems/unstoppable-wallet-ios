@@ -74,18 +74,32 @@ class FeeSettingsViewHelper {
         .padding(.bottom, 12)
     }
 
-    func inputNumberWithSteps(placeholder: String = "", text: Binding<String>, cautionState: Binding<FieldCautionState>, onTap: @escaping (StepChangeButtonsViewDirection) -> Void) -> some View {
-        InputTextRow {
-            StepChangeButtonsView(content: {
-                InputTextView(
-                    placeholder: placeholder,
-                    text: text
-                )
-                .font(.themeBody)
-                .keyboardType(.numberPad)
-                .autocorrectionDisabled()
-            }, onTap: onTap)
+    @MainActor
+    func inputNumberWithSteps(placeholder: String = "", text: Binding<String>, cautionState: Binding<FieldCautionState>, identifiers: StepIdentifiers? = nil, onTap: @escaping (StepChangeButtonsViewDirection) -> Void) -> some View {
+        ThemeInput(
+            state: .init(cautionState.wrappedValue),
+            buttons: ThemeInputButton.steps(minusIdentifier: identifiers?.minus, plusIdentifier: identifiers?.plus, onTap: onTap)
+        ) {
+            let field = InputTextView(
+                placeholder: placeholder,
+                text: text
+            )
+            .keyboardType(.numberPad)
+            .autocorrectionDisabled()
+
+            if let identifiers {
+                field.accessibilityIdentifier(identifiers.input)
+            } else {
+                field
+            }
         }
-        .modifier(FieldCautionBorder(cautionState: cautionState))
+    }
+}
+
+extension FeeSettingsViewHelper {
+    struct StepIdentifiers {
+        let input: String
+        let minus: String
+        let plus: String
     }
 }
