@@ -87,7 +87,8 @@ struct WCKitTests {
         let cancellable = collect(kit.requestPublisher, into: box)
         defer { cancellable.cancel() }
 
-        let foreign = try Request(topic: "unknown-topic", method: "eth_sendTransaction", params: AnyCodable([String]()), chainId: #require(WalletConnectUtils.Blockchain("eip155:1")))
+        let mainnet = WalletConnectUtils.Blockchain("eip155:1")
+        let foreign = try Request(topic: "unknown-topic", method: "eth_sendTransaction", params: AnyCodable([String]()), chainId: #require(mainnet))
         client.sessionRequestSubject.send((request: foreign, context: nil))
         try await Task.sleep(nanoseconds: 150_000_000)
 
@@ -532,7 +533,8 @@ struct WCKitTests {
         parsers.register(StubParser())
         try WCSessionService(signClient: client, storage: storage, accountProvider: accounts).store(session: session, accountId: "a1")
         let request = try WCTestFixtures.request()
-        let foreign = try Request(topic: "other", method: "eth_sendTransaction", params: AnyCodable([String]()), chainId: #require(WalletConnectUtils.Blockchain("eip155:1")))
+        let mainnet = WalletConnectUtils.Blockchain("eip155:1")
+        let foreign = try Request(topic: "other", method: "eth_sendTransaction", params: AnyCodable([String]()), chainId: #require(mainnet))
         client.pendingRequests = [(request: request, context: nil), (request: foreign, context: nil)]
         let kit = makeKit(storage: storage)
         kit.start()
