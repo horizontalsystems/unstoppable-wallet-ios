@@ -2,7 +2,9 @@
 /// the same strings, in snake_case on purpose. Renaming or removing one breaks the flows that select by it.
 /// The flows live in appkb. The rules for naming and adding a control are in `docs/test-identifiers.md`.
 enum TestTags {
-    static let introNext = "intro_next"
+    static let introCreateWallet = "intro_create_wallet"
+    static let introAddExistingWallet = "intro_add_existing_wallet"
+    static let introAgreement = "intro_agreement"
 
     static let onboardingNewWallet = "onboarding_new_wallet"
     static let onboardingExistingWallet = "onboarding_existing_wallet"

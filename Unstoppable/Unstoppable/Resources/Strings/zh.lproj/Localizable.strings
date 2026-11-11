@@ -2052,12 +2052,16 @@
 
 // Intro
 
-"intro.unchain_assets.title" = "解除资产";
-"intro.unchain_assets.description" = "请勿锁定您自己，也不要让别人对您这样做";
-"intro.go_borderless.title" = "进入无国界";
-"intro.go_borderless.description" = "避开有条件障碍，进入全球市场";
-"intro.stay_private.title" = "保持私密";
-"intro.stay_private.description" = "不要向外界泄漏您的私密和财务数据";
+"intro.unwatched" = "Unwatched";
+"intro.unrestricted" = "Unrestricted";
+"intro.uncompromised" = "Uncompromised";
+"intro.be_unstoppable" = "Be Unstoppable!";
+"intro.caption" = "Private by principle. Independent by design";
+"intro.create_new_wallet" = "Create New Wallet";
+"intro.add_existing_wallet" = "Add Existing Wallet";
+"intro.agreement" = "By continuing, I agree to the %@ and consent to the %@";
+"intro.agreement.terms_of_use" = "Terms of Use";
+"intro.agreement.privacy_policy" = "Privacy Policy";
 
 // Add Token
 

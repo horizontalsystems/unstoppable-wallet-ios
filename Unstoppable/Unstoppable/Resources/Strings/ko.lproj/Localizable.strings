@@ -2052,12 +2052,16 @@
 
 // Intro
 
-"intro.unchain_assets.title" = "풀린 자산";
-"intro.unchain_assets.description" = "자신을 잠금하지 말고 다른 사람들이 귀하에게 그렇게 하도록 두지 마십시오.";
-"intro.go_borderless.title" = "무경계로";
-"intro.go_borderless.description" = "조건부 장벽을 우회하고 전 세계적으로 시장에 접근";
-"intro.stay_private.title" = "개인 정보 유지";
-"intro.stay_private.description" = "개인 및 금융 데이터를 세상에 유출하지 마십시오.";
+"intro.unwatched" = "Unwatched";
+"intro.unrestricted" = "Unrestricted";
+"intro.uncompromised" = "Uncompromised";
+"intro.be_unstoppable" = "Be Unstoppable!";
+"intro.caption" = "Private by principle. Independent by design";
+"intro.create_new_wallet" = "Create New Wallet";
+"intro.add_existing_wallet" = "Add Existing Wallet";
+"intro.agreement" = "By continuing, I agree to the %@ and consent to the %@";
+"intro.agreement.terms_of_use" = "Terms of Use";
+"intro.agreement.privacy_policy" = "Privacy Policy";
 
 // Add Token
 

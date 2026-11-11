@@ -1,244 +1,262 @@
 import SwiftUI
 
 struct WelcomeScreenView: View {
-    private let onFinish: () -> Void
+    private let onCreateWallet: () -> Void
+    private let onAddExistingWallet: () -> Void
 
-    @State private var scrollPositionId: Int? = 0
-    @State private var splashVisible = true
-    @State private var logoOpacity: Double = 0
-    @State private var splashOpacity: Double = 1
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    @State private var start: Date?
+    @State private var step: WelcomeTimeline.Step = .initial
     @State private var isFinishing = false
-    @State private var contentOpacity: Double = 1
+    @State private var screenOpacity: Double = 1
 
-    init(onFinish: @escaping () -> Void) {
-        self.onFinish = onFinish
+    init(onCreateWallet: @escaping () -> Void, onAddExistingWallet: @escaping () -> Void) {
+        self.onCreateWallet = onCreateWallet
+        self.onAddExistingWallet = onAddExistingWallet
     }
 
     var body: some View {
         ZStack {
-            Color.themeTyler.ignoresSafeArea()
+            WelcomeGlowView(start: start)
 
-            background
+            logo
 
-            GeometryReader { geo in
-                let metrics = Metrics(size: geo.size)
-
-                ZStack(alignment: .top) {
-                    content(metrics: metrics)
-
-                    overlay(metrics: metrics)
-                        .allowsHitTesting(false)
-                }
-            }
-
-            if splashVisible {
-                splash
-            }
+            content
         }
-        .opacity(contentOpacity)
+        .opacity(screenOpacity)
         .allowsHitTesting(!isFinishing)
         .task {
-            await runSplashTimeline()
+            await runTimeline()
         }
     }
 
-    private var currentPage: Int {
-        scrollPositionId ?? 0
-    }
-
-    private var background: some View {
-        GeometryReader { geo in
-            ThemeImage(ComponentImage(image: "Intro - Background", contentMode: .fill), size: geo.size)
-                .clipped()
+    private var logoPhase: LogoPhase {
+        switch step {
+        case .initial: return .hidden
+        case .logoShown: return .shown
+        default: return .gone
         }
-        .ignoresSafeArea()
     }
 
-    private func content(metrics: Metrics) -> some View {
-        VStack(spacing: 0) {
-            ScrollView(.horizontal) {
-                HStack(spacing: 0) {
-                    ForEach(Self.slides) { slide in
-                        VStack(spacing: 0) {
-                            Spacer().frame(height: metrics.spacerHeight)
+    private var logo: some View {
+        WelcomeLogoView()
+            .opacity(logoPhase == .shown ? 1 : 0)
+            .animation(logoAnimation(appearDuration: Self.logoFadeDuration), value: logoPhase)
+            .scaleEffect(logoScale)
+            .offset(y: logoPhase == .gone ? Self.logoGoneOffset : 0)
+            .animation(logoAnimation(appearDuration: Self.logoScaleDuration), value: logoPhase)
+            .accessibilityHidden(true)
+    }
 
-                            ThemeImage(
-                                ComponentImage(image: slide.image, contentMode: .fit),
-                                size: CGSize(width: metrics.width, height: metrics.imageHeight)
-                            )
+    private var logoScale: CGFloat {
+        switch logoPhase {
+        case .hidden: return Self.logoHiddenScale
+        case .shown: return 1
+        case .gone: return Self.logoGoneScale
+        }
+    }
 
-                            Spacer().frame(height: 0.5 * metrics.spacerHeight)
+    private func logoAnimation(appearDuration: Double) -> Animation? {
+        guard !reduceMotion else {
+            return nil
+        }
 
-                            Color.clear.frame(height: Self.pageControlHeight)
+        if logoPhase == .gone {
+            return .timingCurve(0.4, 0, 1, 1, duration: Self.logoLeaveDuration)
+        }
 
-                            Spacer().frame(height: 0.5 * metrics.spacerHeight)
+        return WelcomeReveal.curve(duration: appearDuration)
+    }
 
-                            textBlock(for: slide, metrics: metrics)
+    private var content: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Spacer(minLength: 0)
 
-                            Spacer(minLength: 0)
-                        }
-                        .containerRelativeFrame(.horizontal)
-                        .frame(height: metrics.scrollHeight, alignment: .top)
-                        .id(slide.id)
-                    }
+            VStack(alignment: .leading, spacing: .margin24) {
+                VStack(alignment: .leading, spacing: Self.headlineLineSpacing) {
+                    headline("intro.unwatched".localized, step: .line1)
+                    headline("intro.unrestricted".localized, step: .line2)
+                    headline("intro.uncompromised".localized, step: .line3)
                 }
-                .scrollTargetLayout()
-            }
-            .scrollTargetBehavior(.paging)
-            .scrollIndicators(.hidden)
-            .scrollPosition(id: $scrollPositionId)
-            .scrollClipDisabled()
-            .frame(height: metrics.scrollHeight)
 
-            ThemeButton(text: "button.next".localized) {
-                onTapNext()
+                ThemeText("intro.be_unstoppable".localized, style: .title3)
+                    .modifier(WelcomeReveal(isRevealed: step >= .tail, animated: !reduceMotion))
             }
-            .accessibilityIdentifier(TestTags.introNext)
             .padding(.horizontal, .margin32)
-            .padding(.bottom, .margin32)
+            .padding(.top, .margin24)
+
+            ThemeText("intro.caption".localized, style: .bodyR)
+                .opacity(Self.captionOpacity)
+                .padding(.horizontal, .margin32)
+                .padding(.vertical, .margin16)
+                .modifier(WelcomeReveal(isRevealed: step >= .tail, animated: !reduceMotion))
+
+            Spacer().frame(height: Self.textToButtonsSpacing)
+
+            buttons
         }
     }
 
-    private func textBlock(for slide: Slide, metrics: Metrics) -> some View {
-        VStack(spacing: .margin16) {
-            ThemeText(slide.title, style: .title3)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
-
-            ThemeText(slide.description, style: .body, colorStyle: .secondary)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .padding(.horizontal, .margin48)
-        .frame(width: metrics.width)
-        .frame(minHeight: Self.textBlockHeight, alignment: .top)
-        .visualEffect { content, proxy in
-            let minX = proxy.frame(in: .scrollView).minX
-            let width = max(proxy.size.width, 1)
-
-            return content
-                .offset(x: -minX)
-                .opacity(max(0, 1 - abs(minX) / width))
-        }
+    private func headline(_ text: String, step lineStep: WelcomeTimeline.Step) -> some View {
+        ThemeText(text, style: .title2)
+            .lineLimit(1)
+            .minimumScaleFactor(0.5)
+            .modifier(WelcomeReveal(isRevealed: step >= lineStep, animated: !reduceMotion))
     }
 
-    private func overlay(metrics: Metrics) -> some View {
+    private var buttons: some View {
         VStack(spacing: 0) {
-            Spacer().frame(height: metrics.spacerHeight + metrics.imageHeight + 0.5 * metrics.spacerHeight)
+            VStack(spacing: .margin12) {
+                ThemeButton(text: "intro.create_new_wallet".localized) {
+                    finish(onCreateWallet)
+                }
+                .accessibilityIdentifier(TestTags.introCreateWallet)
+                .modifier(WelcomeReveal(isRevealed: step >= .tail, dy: Self.buttonRevealOffset, blur: 0, animated: !reduceMotion))
 
-            BarPageControlView(pageCount: Self.slides.count, currentPage: currentPage)
-
-            Spacer()
-        }
-    }
-
-    private var splash: some View {
-        ZStack {
-            Color.themeTyler
-
-            VStack(spacing: Self.logoTitleSpacing) {
-                ThemeImage(
-                    ComponentImage(image: AppIcon.main.imageName, contentMode: .fill),
-                    size: .size72
-                )
-                .clipShape(RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous))
-
-                ThemeText(AppConfig.appName, style: .title2)
-                    .multilineTextAlignment(.center)
+                ThemeButton(text: "intro.add_existing_wallet".localized, style: .secondary) {
+                    finish(onAddExistingWallet)
+                }
+                .accessibilityIdentifier(TestTags.introAddExistingWallet)
+                .modifier(WelcomeReveal(isRevealed: step >= .secondButton, dy: Self.buttonRevealOffset, blur: 0, animated: !reduceMotion))
             }
-            .opacity(logoOpacity)
+            .padding(.horizontal, .margin24)
+            .padding(.top, .margin24)
+            .padding(.bottom, .margin16)
+
+            ThemeText(agreementText(), style: .caption, colorStyle: .primary)
+                .tint(.themeLeah)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, .margin32)
+                .padding(.vertical, .margin8)
+                .accessibilityIdentifier(TestTags.introAgreement)
+                .modifier(WelcomeReveal(isRevealed: step >= .legal, dy: 0, blur: 0, animated: !reduceMotion))
         }
-        .ignoresSafeArea()
-        .opacity(splashOpacity)
-        .allowsHitTesting(splashOpacity > 0)
+        .opacity(step >= .tail ? 1 : 0)
+        .animation(reduceMotion ? nil : .easeInOut(duration: Self.buttonsFadeDuration), value: step >= .tail)
+        .allowsHitTesting(step >= .tail)
     }
 
-    private func onTapNext() {
-        if currentPage < Self.slides.count - 1 {
-            withAnimation(.easeInOut) {
-                scrollPositionId = currentPage + 1
+    private func agreementText() -> AttributedString {
+        let string = "intro.agreement".localized
+        let components = string.components(separatedBy: "%@")
+
+        guard components.count == 3 else {
+            return AttributedString(string)
+        }
+
+        var result = AttributedString("")
+
+        if !components[0].isEmpty {
+            result.append(agreementTextPart(string: components[0]))
+        }
+        result.append(agreementTextPart(string: "intro.agreement.terms_of_use".localized, url: AppConfig.appleTermsOfServiceLink))
+        if !components[1].isEmpty {
+            result.append(agreementTextPart(string: components[1]))
+        }
+        result.append(agreementTextPart(string: "intro.agreement.privacy_policy".localized, url: AppConfig.privacyPolicyLink))
+        if !components[2].isEmpty {
+            result.append(agreementTextPart(string: components[2]))
+        }
+
+        return result
+    }
+
+    private func agreementTextPart(string: String, url: String? = nil) -> AttributedString {
+        var part = AttributedString(string)
+
+        if let url {
+            part.link = URL(string: url)
+            part.font = TextStyle.captionSB.font
+            part.foregroundColor = .themeLeah
+            part.underlineStyle = .single
+        }
+
+        return part
+    }
+
+    private func runTimeline() async {
+        guard step < WelcomeTimeline.final else {
+            return
+        }
+
+        if reduceMotion {
+            step = WelcomeTimeline.final
+            return
+        }
+
+        let begin = start ?? Date()
+        start = begin
+
+        let current = step
+
+        for nextStep in WelcomeTimeline.Step.allCases where nextStep > current {
+            let wait = nextStep.time - Date().timeIntervalSince(begin)
+
+            if wait > 0 {
+                try? await Task.sleep(for: .seconds(wait))
             }
-        } else {
-            finish()
+
+            guard !Task.isCancelled else {
+                return
+            }
+
+            step = nextStep
         }
     }
 
-    private func finish() {
+    private func finish(_ action: @escaping () -> Void) {
         guard !isFinishing else { return }
         isFinishing = true
 
         withAnimation(.easeInOut(duration: Self.finishDuration)) {
-            contentOpacity = 0
+            screenOpacity = 0
         } completion: {
-            onFinish()
+            action()
         }
-    }
-
-    private func runSplashTimeline() async {
-        try? await Task.sleep(for: .seconds(0.5))
-        guard !Task.isCancelled else { return }
-
-        withAnimation(.easeInOut(duration: 0.5)) {
-            logoOpacity = 1
-        }
-
-        try? await Task.sleep(for: .seconds(1.5))
-        guard !Task.isCancelled else { return }
-
-        withAnimation(.easeInOut(duration: 0.5)) {
-            splashOpacity = 0
-        }
-
-        try? await Task.sleep(for: .seconds(0.5))
-        guard !Task.isCancelled else { return }
-
-        splashVisible = false
     }
 }
 
 extension WelcomeScreenView {
-    private struct Slide: Identifiable {
-        let id: Int
-        let title: String
-        let description: String
-        let image: String
-
-        init(page: Int, title: String, description: String, image: String) {
-            id = page
-            self.title = title
-            self.description = description
-            self.image = image
-        }
+    private enum LogoPhase {
+        case hidden
+        case shown
+        case gone
     }
 
-    private struct Metrics {
-        let width: CGFloat
-        let imageHeight: CGFloat
-        let spacerHeight: CGFloat
-        let scrollHeight: CGFloat
+    private static let logoHiddenScale: CGFloat = 0.86
+    private static let logoGoneScale: CGFloat = 0.92
+    private static let logoGoneOffset: CGFloat = -14
+    private static let logoFadeDuration: Double = 0.7
+    private static let logoScaleDuration: Double = 0.9
+    private static let logoLeaveDuration: Double = 0.45
 
-        init(size: CGSize) {
-            width = size.width
-            imageHeight = width / WelcomeScreenView.imageAspect
+    private static let headlineLineSpacing: CGFloat = -4
+    private static let captionOpacity: Double = 0.5
+    private static let textToButtonsSpacing: CGFloat = 20
+    private static let buttonRevealOffset: CGFloat = 40
+    private static let buttonsFadeDuration: Double = 0.5
+    private static let finishDuration: Double = 0.3
+}
 
-            let fixed = imageHeight + WelcomeScreenView.pageControlHeight + WelcomeScreenView.textBlockHeight + .heightButton + .margin32
-            spacerHeight = max(0, (size.height - fixed) / 3)
-            scrollHeight = 3 * spacerHeight + imageHeight + WelcomeScreenView.pageControlHeight + WelcomeScreenView.textBlockHeight
-        }
+/// Fade 0.7 s, rise 0.9 s and optional de-blur 0.7 s, all on cubic-bezier(0.22, 1, 0.36, 1).
+private struct WelcomeReveal: ViewModifier {
+    let isRevealed: Bool
+    var dy: CGFloat = 28
+    var blur: CGFloat = 8
+    let animated: Bool
+
+    static func curve(duration: Double) -> Animation {
+        .timingCurve(0.22, 1, 0.36, 1, duration: duration)
     }
 
-    private static let slides = [
-        ("intro.unchain_assets", "Intro - Unchain Assets"),
-        ("intro.go_borderless", "Intro - Go Borderless"),
-        ("intro.stay_private", "Intro - Stay Private"),
-    ].enumerated().map { page, slide in
-        Slide(page: page, title: "\(slide.0).title".localized, description: "\(slide.0).description".localized, image: slide.1)
+    func body(content: Content) -> some View {
+        content
+            .blur(radius: isRevealed ? 0 : blur)
+            .opacity(isRevealed ? 1 : 0)
+            .animation(animated ? Self.curve(duration: 0.7) : nil, value: isRevealed)
+            .offset(y: isRevealed ? 0 : dy)
+            .animation(animated ? Self.curve(duration: 0.9) : nil, value: isRevealed)
     }
-
-    private static let pageControlHeight = BarPageControlView.barSize.height
-    private static let textBlockHeight: CGFloat = 82
-    private static let logoTitleSpacing: CGFloat = 28
-    private static let finishDuration: TimeInterval = 0.3
-
-    private static let imageAspect: CGFloat = 1125 / 1056
 }

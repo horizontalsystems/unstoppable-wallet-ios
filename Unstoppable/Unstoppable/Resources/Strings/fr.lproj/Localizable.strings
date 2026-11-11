@@ -2052,12 +2052,16 @@
 
 // Intro
 
-"intro.unchain_assets.title" = "Désenchaînez les actifs";
-"intro.unchain_assets.description" = "Ne vous enfermez pas et ne laissez pas les autres vous le faire";
-"intro.go_borderless.title" = "Sans frontières";
-"intro.go_borderless.description" = "Contournement des barrières conditionnelles et accès aux marchés à l'échelle mondiale";
-"intro.stay_private.title" = "Maintenez la confidentialité";
-"intro.stay_private.description" = "Ne divulguez pas vos données privées et financières au monde entier";
+"intro.unwatched" = "Unwatched";
+"intro.unrestricted" = "Unrestricted";
+"intro.uncompromised" = "Uncompromised";
+"intro.be_unstoppable" = "Be Unstoppable!";
+"intro.caption" = "Private by principle. Independent by design";
+"intro.create_new_wallet" = "Create New Wallet";
+"intro.add_existing_wallet" = "Add Existing Wallet";
+"intro.agreement" = "By continuing, I agree to the %@ and consent to the %@";
+"intro.agreement.terms_of_use" = "Terms of Use";
+"intro.agreement.privacy_policy" = "Privacy Policy";
 
 // Add Token
 

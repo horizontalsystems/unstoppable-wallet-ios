@@ -2,6 +2,7 @@ import SwiftUI
 
 public enum TextStyle {
     case body
+    case bodyR
     case subhead
     case subheadSB
     case subheadR
@@ -18,6 +19,7 @@ public enum TextStyle {
     var font: Font {
         switch self {
         case .body: return .manRopeFont(size: 16, weight: .medium)
+        case .bodyR: return .manRopeFont(size: 16, weight: .regular)
         case .subhead: return .manRopeFont(size: 14, weight: .medium)
         case .subheadSB: return .manRopeFont(size: 14, weight: .semibold)
         case .subheadR: return .manRopeFont(size: 14, weight: .regular)
@@ -35,7 +37,7 @@ public enum TextStyle {
 
     var defaultColorStyle: ColorStyle {
         switch self {
-        case .body, .headline1, .headline2, .headlineB, .title2, .title3, .subheadSB, .microSB: return .primary
+        case .body, .bodyR, .headline1, .headline2, .headlineB, .title2, .title3, .subheadSB, .microSB: return .primary
         case .subhead, .subheadR, .subheadI, .caption, .captionSB: return .secondary
         }
     }
