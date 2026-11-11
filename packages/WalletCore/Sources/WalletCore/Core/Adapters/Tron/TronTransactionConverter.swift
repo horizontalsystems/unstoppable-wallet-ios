@@ -171,7 +171,9 @@ extension TronTransactionConverter {
                     incomingEvents: incomingEvents,
                     outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + outgoingEvents
                 )
-            } else if decoration.fromAddress != address, decoration.toAddress != address {
+            } else if decoration.fromAddress != address, decoration.toAddress != address || !incomingEvents.isEmpty || !outgoingEvents.isEmpty {
+                // Someone else's call: to another contract, or to this account itself when it is a contract wallet
+                // (a relayer executing its signed operation) — a plain address runs no code, so its call has no events.
                 return TronExternalContractCallTransactionRecord(
                     source: source,
                     transaction: transaction,
