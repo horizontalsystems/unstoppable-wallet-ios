@@ -2059,6 +2059,7 @@
 "intro.caption" = "Privé par principe. Indépendant par conception";
 "intro.create_new_wallet" = "Créer un nouveau porte-monnaie";
 "intro.add_existing_wallet" = "Ajouter un porte-monnaie existant";
+"intro.create_wallet.title" = "Créer un porte-monnaie";
 "intro.agreement" = "En continuant, j'accepte les %@ et je consens à la %@";
 "intro.agreement.terms_of_use" = "Conditions d'utilisation";
 "intro.agreement.privacy_policy" = "Politique de confidentialité";
@@ -2715,7 +2716,7 @@
 "add_wallet.existing_wallet" = "Wallet existant";
 "add_wallet.existing_wallet.description" = "Importez votre wallet si vous en avez déjà un pour continuer à l'utiliser.";
 "add_wallet.watch_wallet" = "Wallet en lecture seule";
-"add_wallet.watch_wallet.description" = "Consulter un wallet par adresse sans accès aux fonds.";
+"add_wallet.watch_wallet.description" = "Ajoutez un wallet pour suivre les soldes et l'activité sans accès aux fonds.";
 
 // New Wallet
 
@@ -2723,7 +2724,7 @@
 "new_wallet.standard" = "Standard";
 "new_wallet.standard.description" = "Un portefeuille avec une phrase de récupération nécessitant une sauvegarde manuelle.";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "Un portefeuille avec une phrase de récupération enregistrée et protégée par votre appareil et iCloud.";
+"new_wallet.passkey.description" = "Un portefeuille avec une phrase de récupération enregistrée et protégée par votre iCloud.";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Portefeuille sécurisé par passkey avec sponsoring des frais de gas.";
 

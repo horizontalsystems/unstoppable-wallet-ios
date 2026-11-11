@@ -6,6 +6,8 @@ enum TestTags {
     static let introAddExistingWallet = "intro_add_existing_wallet"
     static let introAgreement = "intro_agreement"
 
+    static let sheetClose = "sheet_close"
+
     static let onboardingNewWallet = "onboarding_new_wallet"
     static let onboardingExistingWallet = "onboarding_existing_wallet"
     static let onboardingWatchWallet = "onboarding_watch_wallet"

@@ -4,8 +4,8 @@ import SwiftUI
 enum BSModule {
     @ViewBuilder static func view(for item: Item) -> some View {
         switch item {
-        case let .title(showGrabber, icon, title, isPresented):
-            BSTitleView(showGrabber: showGrabber, icon: icon, title: title, isPresented: isPresented)
+        case let .title(showGrabber, icon, title, isPresented, showClose):
+            BSTitleView(showGrabber: showGrabber, icon: icon, title: title, isPresented: isPresented, showClose: showClose)
         case let .imagedTitle(image, title, isPresented):
             BSTitleView(showGrabber: false, topImage: image, title: title, isPresented: isPresented)
         case let .title2(text):
@@ -95,7 +95,7 @@ enum BSModule {
 
 extension BSModule {
     enum Item {
-        case title(showGrabber: Bool, icon: CustomStringConvertible?, title: CustomStringConvertible, isPresented: Binding<Bool>?)
+        case title(showGrabber: Bool, icon: CustomStringConvertible?, title: CustomStringConvertible, isPresented: Binding<Bool>?, showClose: Bool = false)
         case imagedTitle(image: CustomStringConvertible?, title: CustomStringConvertible?, isPresented: Binding<Bool>?)
         case title2(text: CustomStringConvertible)
         case subtitle(text: CustomStringConvertible)
@@ -110,6 +110,10 @@ extension BSModule {
 
         static func title(icon: CustomStringConvertible? = nil, title: CustomStringConvertible) -> Self {
             .title(showGrabber: true, icon: icon, title: title, isPresented: nil)
+        }
+
+        static func title(title: CustomStringConvertible, isPresented: Binding<Bool>) -> Self {
+            .title(showGrabber: true, icon: nil, title: title, isPresented: isPresented, showClose: true)
         }
 
         static func error(text: String) -> Self {

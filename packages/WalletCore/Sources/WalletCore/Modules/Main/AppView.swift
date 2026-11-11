@@ -14,10 +14,7 @@ public struct AppView: View {
                         .modifier(CoordinatorViewModifier())
 
                     if viewModel.introVisible {
-                        WelcomeScreenView(
-                            onCreateWallet: { viewModel.handleIntroFinish() },
-                            onAddExistingWallet: { viewModel.handleIntroFinish() }
-                        )
+                        WelcomeScreenView(onFinish: { viewModel.handleIntroFinish() })
                     }
                 }
             case .passcodeNotSet:

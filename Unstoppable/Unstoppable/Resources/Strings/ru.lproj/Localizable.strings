@@ -2059,6 +2059,7 @@
 "intro.caption" = "Приватность как принцип. Независимость по замыслу";
 "intro.create_new_wallet" = "Создать новый кошелек";
 "intro.add_existing_wallet" = "Добавить существующий кошелек";
+"intro.create_wallet.title" = "Создать кошелек";
 "intro.agreement" = "Продолжая, я принимаю %@ и соглашаюсь с %@";
 "intro.agreement.terms_of_use" = "Условия использования";
 "intro.agreement.privacy_policy" = "Политикой конфиденциальности";
@@ -2715,7 +2716,7 @@
 "add_wallet.existing_wallet" = "Существующий кошелёк";
 "add_wallet.existing_wallet.description" = "Импортируйте кошелёк, если он у вас уже есть, чтобы продолжить его использование.";
 "add_wallet.watch_wallet" = "Кошелёк только для просмотра";
-"add_wallet.watch_wallet.description" = "Просмотр кошелька по адресу без доступа к средствам.";
+"add_wallet.watch_wallet.description" = "Добавьте кошелёк, чтобы отслеживать балансы и активность без доступа к средствам.";
 
 // New Wallet
 
@@ -2723,7 +2724,7 @@
 "new_wallet.standard" = "Стандартный";
 "new_wallet.standard.description" = "Кошелёк с фразой восстановления, требующей ручного резервного копирования.";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "Кошелёк с фразой восстановления, сохранённой и защищённой вашим устройством и iCloud.";
+"new_wallet.passkey.description" = "Кошелёк с фразой восстановления, сохранённой и защищённой вашим iCloud.";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Кошелёк на основе passkey со спонсированием газа.";
 

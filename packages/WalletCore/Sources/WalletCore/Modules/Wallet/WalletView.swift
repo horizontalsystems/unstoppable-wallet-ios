@@ -22,21 +22,21 @@ struct WalletView: View {
 
                             AddWalletRowsView(
                                 onNewWallet: {
-                                    Coordinator.shared.presentAfterAcceptTerms { isPresented in
+                                    Coordinator.shared.present { isPresented in
                                         ThemeNavigationStack {
                                             NewWalletTypeView(isPresented: isPresented, showClose: true)
                                         }
                                     }
                                 },
                                 onExistingWallet: {
-                                    Coordinator.shared.presentAfterAcceptTerms { isPresented in
+                                    Coordinator.shared.present { isPresented in
                                         ThemeNavigationStack {
                                             RestoreTypeView(isPresented: isPresented, showClose: true)
                                         }
                                     }
                                 },
                                 onWatchWallet: {
-                                    Coordinator.shared.presentAfterAcceptTerms { isPresented in
+                                    Coordinator.shared.present { isPresented in
                                         ThemeNavigationStack {
                                             WatchView(isPresented: isPresented, showClose: true)
                                         }

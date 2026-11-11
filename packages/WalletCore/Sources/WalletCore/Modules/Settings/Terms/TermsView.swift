@@ -4,14 +4,8 @@ struct TermsView: View {
     @StateObject private var viewModel = TermsViewModel()
 
     @Binding var isPresented: Bool
-    let onAccept: (() -> Void)?
 
     @State private var checkedIds = Set<String>()
-
-    init(isPresented: Binding<Bool>, onAccept: (() -> Void)? = nil) {
-        _isPresented = isPresented
-        self.onAccept = onAccept
-    }
 
     var body: some View {
         ThemeNavigationStack {
@@ -25,7 +19,6 @@ struct TermsView: View {
                         ThemeButton(text: "terms.i_agree".localized) {
                             viewModel.setTermsAccepted()
                             isPresented = false
-                            onAccept?()
                         }
                         .disabled(checkedIds.count < viewModel.terms.count)
                         .accessibilityIdentifier(TestTags.termsNext)

@@ -2059,6 +2059,7 @@
 "intro.caption" = "Privat aus Prinzip. Unabhängig durch Design";
 "intro.create_new_wallet" = "Neues Wallet erstellen";
 "intro.add_existing_wallet" = "Vorhandenes Wallet hinzufügen";
+"intro.create_wallet.title" = "Wallet erstellen";
 "intro.agreement" = "Indem ich fortfahre, stimme ich den %@ zu und willige in die %@ ein";
 "intro.agreement.terms_of_use" = "Nutzungsbedingungen";
 "intro.agreement.privacy_policy" = "Datenschutzerklärung";
@@ -2715,7 +2716,7 @@
 "add_wallet.existing_wallet" = "Vorhandene Wallet";
 "add_wallet.existing_wallet.description" = "Importiere deine Wallet, wenn du bereits eine hast, um sie weiter zu nutzen.";
 "add_wallet.watch_wallet" = "Nur-Ansicht-Wallet";
-"add_wallet.watch_wallet.description" = "Eine Wallet per Adresse anzeigen, ohne Zugriff auf das Guthaben.";
+"add_wallet.watch_wallet.description" = "Eine Wallet hinzufügen, um Kontostände und Aktivitäten zu verfolgen, ohne Zugriff auf das Guthaben.";
 
 // New Wallet
 
@@ -2723,7 +2724,7 @@
 "new_wallet.standard" = "Standard";
 "new_wallet.standard.description" = "Ein Wallet mit einer Wiederherstellungsphrase, die manuell gesichert werden muss.";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "Ein Wallet mit einer Wiederherstellungsphrase, die von Ihrem Gerät und iCloud gespeichert und geschützt wird.";
+"new_wallet.passkey.description" = "Ein Wallet mit einer Wiederherstellungsphrase, die in Ihrer iCloud gespeichert und geschützt wird.";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Passkey-gesichertes Wallet mit Gas-Sponsoring.";
 

@@ -2059,6 +2059,7 @@
 "intro.caption" = "İlke gereği gizli. Tasarım gereği bağımsız";
 "intro.create_new_wallet" = "Yeni Cüzdan Oluştur";
 "intro.add_existing_wallet" = "Mevcut Cüzdanı Ekle";
+"intro.create_wallet.title" = "Cüzdan Oluştur";
 "intro.agreement" = "Devam ederek %@ ile %@ metinlerini kabul ediyorum";
 "intro.agreement.terms_of_use" = "Kullanım Koşulları";
 "intro.agreement.privacy_policy" = "Gizlilik Politikası";
@@ -2715,7 +2716,7 @@
 "add_wallet.existing_wallet" = "Mevcut Cüzdan";
 "add_wallet.existing_wallet.description" = "Zaten bir cüzdanınız varsa kullanmaya devam etmek için içe aktarın.";
 "add_wallet.watch_wallet" = "Salt Okunur Cüzdan";
-"add_wallet.watch_wallet.description" = "Fonlara erişim olmadan bir cüzdanı adresle görüntüleyin.";
+"add_wallet.watch_wallet.description" = "Fonlara erişim olmadan bakiyeleri ve etkinliği takip etmek için bir cüzdan ekleyin.";
 
 // New Wallet
 
@@ -2723,7 +2724,7 @@
 "new_wallet.standard" = "Standart";
 "new_wallet.standard.description" = "Manuel yedekleme gerektiren bir kurtarma ifadesine sahip cüzdan.";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "Kurtarma ifadesi cihazınız ve iCloud tarafından kaydedilen ve korunan bir cüzdan.";
+"new_wallet.passkey.description" = "Kurtarma ifadesi iCloud'unuz tarafından kaydedilen ve korunan bir cüzdan.";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Gas sponsorluğu ile passkey destekli cüzdan.";
 

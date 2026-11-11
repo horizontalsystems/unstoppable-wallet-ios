@@ -41,7 +41,7 @@ struct AboutView: View {
                     Cell(
                         left: { ThemeImage("list", size: .iconSize24) },
                         middle: { ThemeText("terms.title".localized, style: .headline2) },
-                        right: { Image.disclosure(alert: viewModel.termsAlert) },
+                        right: { Image.disclosureIcon },
                         action: {
                             Coordinator.shared.present { isPresented in
                                 TermsView(isPresented: isPresented)

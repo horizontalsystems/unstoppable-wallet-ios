@@ -2059,6 +2059,7 @@
 "intro.caption" = "Privado por principio. Independiente por diseño";
 "intro.create_new_wallet" = "Crear cartera nueva";
 "intro.add_existing_wallet" = "Añadir cartera existente";
+"intro.create_wallet.title" = "Crear cartera";
 "intro.agreement" = "Al continuar, acepto los %@ y doy mi consentimiento a la %@";
 "intro.agreement.terms_of_use" = "Términos de uso";
 "intro.agreement.privacy_policy" = "Política de privacidad";
@@ -2715,7 +2716,7 @@
 "add_wallet.existing_wallet" = "Wallet existente";
 "add_wallet.existing_wallet.description" = "Importa tu wallet si ya tienes una para seguir usándola.";
 "add_wallet.watch_wallet" = "Wallet de solo lectura";
-"add_wallet.watch_wallet.description" = "Ver una wallet por dirección sin acceso a los fondos.";
+"add_wallet.watch_wallet.description" = "Añade una wallet para seguir saldos y actividad sin acceso a los fondos.";
 
 // New Wallet
 
@@ -2723,7 +2724,7 @@
 "new_wallet.standard" = "Estándar";
 "new_wallet.standard.description" = "Una wallet con una frase de recuperación que requiere una copia de seguridad manual.";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "Una wallet con una frase de recuperación guardada y protegida por tu dispositivo e iCloud.";
+"new_wallet.passkey.description" = "Una wallet con una frase de recuperación guardada y protegida por tu iCloud.";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Wallet respaldada por passkey con patrocinio de gas.";
 

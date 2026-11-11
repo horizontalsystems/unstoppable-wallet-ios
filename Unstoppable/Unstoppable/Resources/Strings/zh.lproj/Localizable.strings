@@ -2059,6 +2059,7 @@
 "intro.caption" = "以隐私为原则，以独立为设计";
 "intro.create_new_wallet" = "创建新钱包";
 "intro.add_existing_wallet" = "添加已有钱包";
+"intro.create_wallet.title" = "创建钱包";
 "intro.agreement" = "继续即表示我同意%@并接受%@";
 "intro.agreement.terms_of_use" = "使用条款";
 "intro.agreement.privacy_policy" = "隐私政策";
@@ -2715,7 +2716,7 @@
 "add_wallet.existing_wallet" = "已有钱包";
 "add_wallet.existing_wallet.description" = "如果您已有钱包，请导入以继续使用。";
 "add_wallet.watch_wallet" = "仅观察钱包";
-"add_wallet.watch_wallet.description" = "通过地址查看钱包，无法访问资金。";
+"add_wallet.watch_wallet.description" = "添加钱包以跟踪余额和活动，无法访问资金。";
 
 // New Wallet
 
@@ -2723,7 +2724,7 @@
 "new_wallet.standard" = "标准";
 "new_wallet.standard.description" = "带有恢复短语的钱包，需要手动备份。";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "带有恢复短语的钱包，由您的设备和 iCloud 保存并保护。";
+"new_wallet.passkey.description" = "带有恢复短语的钱包，由您的 iCloud 保存并保护。";
 "new_wallet.smart_account" = "智能账户";
 "new_wallet.smart_account.description" = "基于 Passkey 的钱包，支持 Gas 赞助。";
 

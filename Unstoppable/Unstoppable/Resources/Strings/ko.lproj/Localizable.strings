@@ -2059,6 +2059,7 @@
 "intro.caption" = "원칙으로 지키는 프라이버시. 설계로 지키는 독립성";
 "intro.create_new_wallet" = "새 지갑 만들기";
 "intro.add_existing_wallet" = "기존 지갑 추가";
+"intro.create_wallet.title" = "지갑 만들기";
 "intro.agreement" = "계속하면 %@ 및 %@에 동의하게 됩니다";
 "intro.agreement.terms_of_use" = "이용약관";
 "intro.agreement.privacy_policy" = "개인정보 처리방침";
@@ -2715,7 +2716,7 @@
 "add_wallet.existing_wallet" = "기존 지갑";
 "add_wallet.existing_wallet.description" = "이미 지갑이 있다면 가져와서 계속 사용하세요.";
 "add_wallet.watch_wallet" = "조회 전용 지갑";
-"add_wallet.watch_wallet.description" = "자금에 대한 접근 없이 주소로 지갑을 조회합니다.";
+"add_wallet.watch_wallet.description" = "자금에 대한 접근 없이 잔액과 활동을 추적할 지갑을 추가합니다.";
 
 // New Wallet
 
@@ -2723,7 +2724,7 @@
 "new_wallet.standard" = "표준";
 "new_wallet.standard.description" = "수동 백업이 필요한 복구 문구가 포함된 지갑입니다.";
 "new_wallet.passkey" = "패스키";
-"new_wallet.passkey.description" = "복구 문구가 기기 및 iCloud에 의해 저장되고 보호되는 지갑입니다.";
+"new_wallet.passkey.description" = "복구 문구가 iCloud에 의해 저장되고 보호되는 지갑입니다.";
 "new_wallet.smart_account" = "스마트 계정";
 "new_wallet.smart_account.description" = "가스 스폰서십을 지원하는 패스키 기반 지갑.";
 

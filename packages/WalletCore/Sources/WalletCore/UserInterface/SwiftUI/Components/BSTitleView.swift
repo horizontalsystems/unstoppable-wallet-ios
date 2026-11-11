@@ -7,21 +7,37 @@ struct BSTitleView: View {
     private let topImage: CustomStringConvertible?
     private let title: CustomStringConvertible?
 
-    private let showDismiss: Bool
+    private let showClose: Bool
     @Binding var isPresented: Bool
 
-    init(showGrabber: Bool = true, icon: CustomStringConvertible? = nil, topImage: CustomStringConvertible? = nil, title: CustomStringConvertible?, subtitle _: CustomStringConvertible? = nil, isPresented: Binding<Bool>? = nil) {
+    init(showGrabber: Bool = true, icon: CustomStringConvertible? = nil, topImage: CustomStringConvertible? = nil, title: CustomStringConvertible?, subtitle _: CustomStringConvertible? = nil, isPresented: Binding<Bool>? = nil, showClose: Bool = false) {
         self.showGrabber = showGrabber
         self.topImage = topImage
         self.icon = icon
         self.title = title
+        self.showClose = showClose
 
-        // TODO: use if needed
-        showDismiss = isPresented != nil
         _isPresented = isPresented ?? .constant(true)
     }
 
     var body: some View {
+        if showClose {
+            header
+                .frame(maxWidth: .infinity)
+                .overlay(alignment: .topTrailing) {
+                    IconButton(icon: "close", style: .secondary, size: .small) {
+                        isPresented = false
+                    }
+                    .accessibilityIdentifier(TestTags.sheetClose)
+                    .padding(.top, .margin16)
+                    .padding(.trailing, .margin16)
+                }
+        } else {
+            header
+        }
+    }
+
+    private var header: some View {
         VStack(spacing: 0) {
             if showGrabber {
                 Rectangle()

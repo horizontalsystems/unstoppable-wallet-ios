@@ -361,7 +361,7 @@ struct MainSettingsView: View {
             Cell(
                 left: { ThemeImage("information", size: .iconSize24) },
                 middle: { ThemeText("settings.about_app.title".localized, style: .headline2) },
-                right: { Image.disclosure(alert: viewModel.aboutAlert) }
+                right: { Image.disclosureIcon }
             )
         }
         .buttonStyle(CellButtonStyle())

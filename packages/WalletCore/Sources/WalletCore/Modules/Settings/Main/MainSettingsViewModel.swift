@@ -13,7 +13,6 @@ class MainSettingsViewModel: ObservableObject {
     private let accountManager = Core.shared.accountManager
     private let contactManager = Core.shared.contactManager
     private let passcodeManager = Core.shared.passcodeManager
-    private let termsManager = Core.shared.termsManager
     private let systemInfoManager = Core.shared.systemInfoManager
     private let walletConnect = Core.shared.walletConnect
     private let rateAppManager = Core.shared.rateAppManager
@@ -27,7 +26,6 @@ class MainSettingsViewModel: ObservableObject {
     @Published var walletConnectSessionCount: Int = 0
     @Published var walletConnectPendingRequestCount: Int = 0
     @Published var securityAlert: Bool = false
-    @Published var aboutAlert: Bool = false
     @Published var iCloudUnavailable: Bool = false
     @Published var slides: [Slide] = [.premium]
     @Published var introductoryOffer: String?
@@ -122,7 +120,6 @@ class MainSettingsViewModel: ObservableObject {
 
         subscribe(&cancellables, accountRestoreWarningManager.hasNonStandardPublisher) { [weak self] _ in self?.syncManageWalletsAlert() }
         subscribe(&cancellables, passcodeManager.$isPasscodeSet) { [weak self] _ in self?.syncSecurityAlert() }
-        subscribe(&cancellables, termsManager.$state) { [weak self] _ in self?.syncAboutAlert() }
 
         Publishers.Merge3(
             purchaseManager.$purchaseData.map { _ in () },
@@ -142,7 +139,6 @@ class MainSettingsViewModel: ObservableObject {
         syncWalletConnectSessionCount()
         syncWalletConnectPendingRequestCount()
         syncSecurityAlert()
-        syncAboutAlert()
     }
 
     private func syncSlides() {
@@ -173,10 +169,6 @@ class MainSettingsViewModel: ObservableObject {
 
     private func syncSecurityAlert() {
         securityAlert = !passcodeManager.isPasscodeSet
-    }
-
-    private func syncAboutAlert() {
-        aboutAlert = !termsManager.state.allAccepted
     }
 }
 

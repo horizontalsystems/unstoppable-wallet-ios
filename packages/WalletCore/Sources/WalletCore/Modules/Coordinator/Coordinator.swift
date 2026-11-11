@@ -131,23 +131,6 @@ extension Coordinator {
         stat(page: page, section: section, event: .openCoin(coinUid: coin.uid))
     }
 
-    func performAfterAcceptTerms(onAccept: @escaping () -> Void) {
-        if Core.shared.termsManager.state.allAccepted {
-            onAccept()
-        } else {
-            Coordinator.shared.present { isPresented in
-                TermsView(isPresented: isPresented, onAccept: onAccept)
-            }
-        }
-    }
-
-    func presentAfterAcceptTerms(type: RouteType = .sheet, @ViewBuilder content: @escaping (Binding<Bool>) -> some View, onDismiss: (() -> Void)? = nil, onPresent: (() -> Void)? = nil) {
-        performAfterAcceptTerms {
-            Coordinator.shared.present(type: type, content: content, onDismiss: onDismiss)
-            onPresent?()
-        }
-    }
-
     func presentBalanceError(wallet: Wallet, state: AdapterState, showNotReachable: Bool = true) {
         if !Core.shared.reachabilityManager.isReachable {
             if showNotReachable {

@@ -12,11 +12,6 @@ struct NewWalletTypeView: View {
     var body: some View {
         ScrollableThemeView {
             ListSection {
-                row(icon: "list", title: "new_wallet.standard".localized, description: "new_wallet.standard.description".localized) {
-                    standardWalletPresented = true
-                }
-                .accessibilityIdentifier(TestTags.createTypeStandard)
-
                 row(icon: "face_id", title: "new_wallet.passkey".localized, description: "new_wallet.passkey.description".localized) {
                     if Core.shared.termsManager.passkeyTermsAccepted {
                         passkeyWalletPresented = true
@@ -25,6 +20,11 @@ struct NewWalletTypeView: View {
                     }
                 }
                 .accessibilityIdentifier(TestTags.createTypePasskey)
+
+                row(icon: "list", title: "new_wallet.standard".localized, description: "new_wallet.standard.description".localized) {
+                    standardWalletPresented = true
+                }
+                .accessibilityIdentifier(TestTags.createTypeStandard)
             }
             .padding(EdgeInsets(top: 12, leading: 16, bottom: 32, trailing: 16))
         }

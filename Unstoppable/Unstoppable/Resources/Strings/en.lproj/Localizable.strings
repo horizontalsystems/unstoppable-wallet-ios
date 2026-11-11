@@ -2059,6 +2059,7 @@
 "intro.caption" = "Private by principle. Independent by design";
 "intro.create_new_wallet" = "Create New Wallet";
 "intro.add_existing_wallet" = "Add Existing Wallet";
+"intro.create_wallet.title" = "Create Wallet";
 "intro.agreement" = "By continuing, I agree to the %@ and consent to the %@";
 "intro.agreement.terms_of_use" = "Terms of Use";
 "intro.agreement.privacy_policy" = "Privacy Policy";
@@ -2714,8 +2715,8 @@
 "add_wallet.new_wallet.description" = "Create a new wallet to get started or add a new one.";
 "add_wallet.existing_wallet" = "Existing Wallet";
 "add_wallet.existing_wallet.description" = "Import your wallet if you already have one to continue using it.";
-"add_wallet.watch_wallet" = "View-Only Wallet";
-"add_wallet.watch_wallet.description" = "View a wallet by address without access to funds.";
+"add_wallet.watch_wallet" = "View Only Wallet";
+"add_wallet.watch_wallet.description" = "Add a wallet to track balances and activity without access to funds.";
 
 // New Wallet
 
@@ -2723,7 +2724,7 @@
 "new_wallet.standard" = "Standard";
 "new_wallet.standard.description" = "A wallet with a recovery phrase that requires manual backup.";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "A wallet with a recovery phrase saved and protected by your device and iCloud.";
+"new_wallet.passkey.description" = "A wallet with a recovery phrase saved and protected by your iCloud.";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Passkey-backed wallet with gas sponsorship.";
 

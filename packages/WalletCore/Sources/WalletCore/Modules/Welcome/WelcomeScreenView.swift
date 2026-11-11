@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct WelcomeScreenView: View {
-    private let onCreateWallet: () -> Void
-    private let onAddExistingWallet: () -> Void
+    @StateObject private var viewModel = WelcomeViewModel()
+    private let onFinish: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -11,23 +11,65 @@ struct WelcomeScreenView: View {
     @State private var isFinishing = false
     @State private var screenOpacity: Double = 1
 
-    init(onCreateWallet: @escaping () -> Void, onAddExistingWallet: @escaping () -> Void) {
-        self.onCreateWallet = onCreateWallet
-        self.onAddExistingWallet = onAddExistingWallet
+    init(onFinish: @escaping () -> Void) {
+        self.onFinish = onFinish
     }
 
     var body: some View {
-        ZStack {
-            WelcomeGlowView(start: start)
+        ThemeNavigationStack {
+            ZStack {
+                WelcomeGlowView(start: start)
 
-            logo
+                logo
 
-            content
+                content
+            }
+            .toolbar(.hidden, for: .navigationBar)
+            .navigationDestination(item: $viewModel.flow) { flow in
+                flowView(flow: flow)
+            }
         }
         .opacity(screenOpacity)
         .allowsHitTesting(!isFinishing)
         .task {
             await runTimeline()
+        }
+        .onChange(of: viewModel.finishRequested) { _, requested in
+            if requested {
+                finish()
+            }
+        }
+    }
+
+    private var flowBinding: Binding<Bool> {
+        Binding(
+            get: { !viewModel.finishRequested },
+            set: { presented in
+                if !presented {
+                    viewModel.handleFlowFinished()
+                }
+            }
+        )
+    }
+
+    @ViewBuilder private func flowView(flow: WelcomeViewModel.Flow) -> some View {
+        switch flow {
+        case .createStandard:
+            CreateAccountView(walletType: .regular, isPresented: flowBinding)
+        case .createPasskey:
+            CreateAccountView(walletType: .passkey, isPresented: flowBinding)
+        case .passkeyTerms:
+            PasskeyTermsView(isPresented: flowBinding)
+        case .restoreMnemonic:
+            RestoreMnemonicView(isParentPresented: flowBinding)
+        case .restorePrivateKey:
+            RestorePrivateKeyView(isParentPresented: flowBinding)
+        case let .restoreCoins(login):
+            RestoreCoinsView(accountName: login.accountName, accountType: login.accountType, isParentPresented: flowBinding)
+        case .restoreBackup:
+            RestoreBackupListView(isParentPresented: flowBinding, showClose: false)
+        case .watch:
+            WatchView(isPresented: flowBinding, showClose: false)
         }
     }
 
@@ -109,13 +151,13 @@ struct WelcomeScreenView: View {
         VStack(spacing: 0) {
             VStack(spacing: .margin12) {
                 ThemeButton(text: "intro.create_new_wallet".localized) {
-                    finish(onCreateWallet)
+                    viewModel.showCreateSheet()
                 }
                 .accessibilityIdentifier(TestTags.introCreateWallet)
                 .modifier(WelcomeReveal(isRevealed: step >= .tail, dy: Self.buttonRevealOffset, blur: 0, animated: !reduceMotion))
 
                 ThemeButton(text: "intro.add_existing_wallet".localized, style: .secondary) {
-                    finish(onAddExistingWallet)
+                    viewModel.showImportSheet()
                 }
                 .accessibilityIdentifier(TestTags.introAddExistingWallet)
                 .modifier(WelcomeReveal(isRevealed: step >= .secondButton, dy: Self.buttonRevealOffset, blur: 0, animated: !reduceMotion))
@@ -206,14 +248,16 @@ struct WelcomeScreenView: View {
         }
     }
 
-    private func finish(_ action: @escaping () -> Void) {
+    private func finish() {
         guard !isFinishing else { return }
         isFinishing = true
+
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
 
         withAnimation(.easeInOut(duration: Self.finishDuration)) {
             screenOpacity = 0
         } completion: {
-            action()
+            onFinish()
         }
     }
 }

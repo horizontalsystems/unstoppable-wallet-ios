@@ -19,13 +19,12 @@ struct BackupManagerView: View {
                             Image.disclosureIcon
                         },
                         action: {
-                            Coordinator.shared.presentAfterAcceptTerms { isPresented in
+                            Coordinator.shared.present { isPresented in
                                 ThemeNavigationStack {
                                     RestoreBackupListView(isParentPresented: isPresented, showClose: true)
                                 }
-                            } onPresent: {
-                                stat(page: .backupManager, event: .open(page: .importWallet))
                             }
+                            stat(page: .backupManager, event: .open(page: .importWallet))
                         }
                     )
                     Cell(

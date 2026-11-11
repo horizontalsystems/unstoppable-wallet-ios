@@ -5,7 +5,6 @@ enum AboutModule {
         let releaseNotesService = Core.shared.releaseNotesService
 
         let viewModel = AboutViewModel(
-            termsManager: Core.shared.termsManager,
             systemInfoManager: Core.shared.systemInfoManager,
             releaseNotesService: releaseNotesService
         )

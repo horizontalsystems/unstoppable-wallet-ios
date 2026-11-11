@@ -130,15 +130,13 @@ extension ManageAccountsView {
         }
 
         func perform(parentPresented: Binding<Bool>?) {
-            Coordinator.shared.performAfterAcceptTerms {
-                if case .watchWallet = self {
-                    stat(page: .addWallet, event: .open(page: .watchWallet))
-                }
+            if case .watchWallet = self {
+                stat(page: .addWallet, event: .open(page: .watchWallet))
+            }
 
-                Coordinator.shared.present { ownPresented in
-                    ThemeNavigationStack {
-                        destination(isPresented: ownPresented, parentPresented: parentPresented)
-                    }
+            Coordinator.shared.present { ownPresented in
+                ThemeNavigationStack {
+                    destination(isPresented: ownPresented, parentPresented: parentPresented)
                 }
             }
         }
