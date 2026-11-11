@@ -29,16 +29,6 @@ enum WelcomeTimeline {
             }
         }
 
-        /// Strength of the glow "inhale" fired at this step, if any.
-        var pulseStrength: Double? {
-            switch self {
-            case .logoGone: return 0.45
-            case .line1, .line2, .line3: return 0.30
-            case .tail: return 0.90
-            case .initial, .logoShown, .secondButton, .legal: return nil
-            }
-        }
-
         static func < (lhs: Step, rhs: Step) -> Bool {
             lhs.rawValue < rhs.rawValue
         }

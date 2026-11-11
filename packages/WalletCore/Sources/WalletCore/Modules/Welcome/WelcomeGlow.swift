@@ -26,7 +26,7 @@ enum WelcomeGlow {
         let driftPeriod: Double
         /// Phase lag of this layer inside the breath (rad).
         let phase: Double
-        /// How strongly the layer answers a pulse.
+        /// How strongly the layer answers the opening pulse.
         let pulseGain: Double
         /// Alpha profile of the blurred circle from the centre to `outerRadius`.
         let gradient: Gradient
@@ -75,23 +75,22 @@ enum WelcomeGlow {
         ),
     ]
 
-    /// Moments when content appears and the glow "inhales", taken from the welcome timeline.
-    private static let pulses: [(at: Double, strength: Double)] = WelcomeTimeline.Step.allCases.compactMap { step in
-        step.pulseStrength.map { (at: step.time, strength: $0) }
-    }
+    /// The one opening pulse: the glow swells high as it rises, then settles back to the bottom.
+    /// It does not depend on the content timeline.
+    private static let pulseStart: Double = 0.1
+    private static let pulseStrength: Double = 2.0
+    private static let pulseAttack: Double = 0.6
+    private static let pulseRelease: Double = 1.4
 
-    /// Pulse energy at time `t`: each pulse has a soft attack (0.18 s) and a slow release (0.8 s).
+    /// Pulse energy at time `t`: a soft attack followed by a slow release back to zero.
     private static func pulseEnergy(at t: Double) -> Double {
-        let release = 0.8
-        let attack = 0.18
-        var energy = 0.0
-
-        for pulse in pulses where t > pulse.at {
-            let d = t - pulse.at
-            energy += pulse.strength * release / (release - attack) * (exp(-d / release) - exp(-d / attack))
+        guard t > pulseStart else {
+            return 0
         }
 
-        return energy
+        let d = t - pulseStart
+
+        return pulseStrength * pulseRelease / (pulseRelease - pulseAttack) * (exp(-d / pulseRelease) - exp(-d / pulseAttack))
     }
 
     fileprivate static func draw(in context: inout GraphicsContext, size: CGSize, time t: Double) {
