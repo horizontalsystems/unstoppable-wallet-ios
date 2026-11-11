@@ -2052,16 +2052,16 @@
 
 // Intro
 
-"intro.unwatched" = "Unwatched";
-"intro.unrestricted" = "Unrestricted";
-"intro.uncompromised" = "Uncompromised";
-"intro.be_unstoppable" = "Be Unstoppable!";
-"intro.caption" = "Private by principle. Independent by design";
-"intro.create_new_wallet" = "Create New Wallet";
-"intro.add_existing_wallet" = "Add Existing Wallet";
-"intro.agreement" = "By continuing, I agree to the %@ and consent to the %@";
-"intro.agreement.terms_of_use" = "Terms of Use";
-"intro.agreement.privacy_policy" = "Privacy Policy";
+"intro.unwatched" = "无人监视";
+"intro.unrestricted" = "不受限制";
+"intro.uncompromised" = "绝不妥协";
+"intro.be_unstoppable" = "势不可挡！";
+"intro.caption" = "以隐私为原则，以独立为设计";
+"intro.create_new_wallet" = "创建新钱包";
+"intro.add_existing_wallet" = "添加已有钱包";
+"intro.agreement" = "继续即表示我同意%@并接受%@";
+"intro.agreement.terms_of_use" = "使用条款";
+"intro.agreement.privacy_policy" = "隐私政策";
 
 // Add Token
 

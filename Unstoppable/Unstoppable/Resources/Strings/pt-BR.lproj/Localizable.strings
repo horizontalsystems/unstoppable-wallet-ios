@@ -2052,16 +2052,16 @@
 
 // Intro
 
-"intro.unwatched" = "Unwatched";
-"intro.unrestricted" = "Unrestricted";
-"intro.uncompromised" = "Uncompromised";
-"intro.be_unstoppable" = "Be Unstoppable!";
-"intro.caption" = "Private by principle. Independent by design";
-"intro.create_new_wallet" = "Create New Wallet";
-"intro.add_existing_wallet" = "Add Existing Wallet";
-"intro.agreement" = "By continuing, I agree to the %@ and consent to the %@";
-"intro.agreement.terms_of_use" = "Terms of Use";
-"intro.agreement.privacy_policy" = "Privacy Policy";
+"intro.unwatched" = "Sem vigilância";
+"intro.unrestricted" = "Sem restrições";
+"intro.uncompromised" = "Sem concessões";
+"intro.be_unstoppable" = "Seja imparável!";
+"intro.caption" = "Privado por princípio. Independente por design";
+"intro.create_new_wallet" = "Criar nova carteira";
+"intro.add_existing_wallet" = "Adicionar carteira existente";
+"intro.agreement" = "Ao continuar, concordo com os %@ e aceito a %@";
+"intro.agreement.terms_of_use" = "Termos de Uso";
+"intro.agreement.privacy_policy" = "Política de Privacidade";
 
 // Add Token
 

@@ -2052,16 +2052,16 @@
 
 // Intro
 
-"intro.unwatched" = "Unwatched";
-"intro.unrestricted" = "Unrestricted";
-"intro.uncompromised" = "Uncompromised";
-"intro.be_unstoppable" = "Be Unstoppable!";
-"intro.caption" = "Private by principle. Independent by design";
-"intro.create_new_wallet" = "Create New Wallet";
-"intro.add_existing_wallet" = "Add Existing Wallet";
-"intro.agreement" = "By continuing, I agree to the %@ and consent to the %@";
-"intro.agreement.terms_of_use" = "Terms of Use";
-"intro.agreement.privacy_policy" = "Privacy Policy";
+"intro.unwatched" = "감시 없이";
+"intro.unrestricted" = "제한 없이";
+"intro.uncompromised" = "타협 없이";
+"intro.be_unstoppable" = "멈출 수 없는 존재가 되세요!";
+"intro.caption" = "원칙으로 지키는 프라이버시. 설계로 지키는 독립성";
+"intro.create_new_wallet" = "새 지갑 만들기";
+"intro.add_existing_wallet" = "기존 지갑 추가";
+"intro.agreement" = "계속하면 %@ 및 %@에 동의하게 됩니다";
+"intro.agreement.terms_of_use" = "이용약관";
+"intro.agreement.privacy_policy" = "개인정보 처리방침";
 
 // Add Token
 
