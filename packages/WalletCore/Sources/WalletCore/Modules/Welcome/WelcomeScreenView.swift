@@ -151,7 +151,7 @@ struct WelcomeScreenView: View {
         if !components[0].isEmpty {
             result.append(agreementTextPart(string: components[0]))
         }
-        result.append(agreementTextPart(string: "intro.agreement.terms_of_use".localized, url: AppConfig.appleTermsOfServiceLink))
+        result.append(agreementTextPart(string: "intro.agreement.terms_of_use".localized, url: AppConfig.termsOfUseLink))
         if !components[1].isEmpty {
             result.append(agreementTextPart(string: components[1]))
         }

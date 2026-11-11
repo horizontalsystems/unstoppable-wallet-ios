@@ -14,6 +14,7 @@ enum AppConfig {
     // PasskeyManager — see Stable's AppConfig.passkeyDomain for the stable app's value.
     static let passkeyDomain = "unstoppable.money"
     static let privacyPolicyLink = "https://unstoppable.money/privacy-policy"
+    static let termsOfUseLink = "https://unstoppable.money/tos"
     static let appleTermsOfServiceLink = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula"
     static let nymVpnLink = "https://nymtechnologies.pxf.io/N9vnr1"
     static let appGitHubAccount = "horizontalsystems"
