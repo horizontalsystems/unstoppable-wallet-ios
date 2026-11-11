@@ -8,6 +8,8 @@ struct ThemeInput<Content: View>: View {
     private let buttons: [ThemeInputButton]
     private let content: Content
 
+    @State private var focusRequest = 0
+
     init(
         kind: ThemeInputKind = .field,
         state: ThemeInputState = .normal,
@@ -61,6 +63,12 @@ struct ThemeInput<Content: View>: View {
     var body: some View {
         VStack(spacing: .margin8) {
             form
+                // sits behind the content, so it only gets the taps that miss the field and the buttons
+                .background {
+                    Color.clear
+                        .contentShape(Rectangle())
+                        .onTapGesture { focusRequest += 1 }
+                }
                 .overlay(
                     RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous)
                         .stroke(state.borderColor, lineWidth: .heightOneDp)
@@ -95,7 +103,9 @@ struct ThemeInput<Content: View>: View {
     }
 
     private var inputContent: some View {
-        content.environment(\.isInsideThemeInput, true)
+        content
+            .environment(\.isInsideThemeInput, true)
+            .environment(\.themeInputFocusRequest, focusRequest)
     }
 
     private var buttonsGroup: some View {
@@ -175,9 +185,37 @@ private struct IsInsideThemeInputKey: EnvironmentKey {
     static let defaultValue = false
 }
 
+private struct ThemeInputFocusRequestKey: EnvironmentKey {
+    static let defaultValue = 0
+}
+
 extension EnvironmentValues {
     var isInsideThemeInput: Bool {
         get { self[IsInsideThemeInputKey.self] }
         set { self[IsInsideThemeInputKey.self] = newValue }
+    }
+
+    /// Changes each time the enclosing `ThemeInput` is tapped outside its field and buttons
+    var themeInputFocusRequest: Int {
+        get { self[ThemeInputFocusRequestKey.self] }
+        set { self[ThemeInputFocusRequestKey.self] = newValue }
+    }
+}
+
+private struct ThemeInputFocusRequestModifier: ViewModifier {
+    @Environment(\.themeInputFocusRequest) private var focusRequest
+    let action: () -> Void
+
+    func body(content: Content) -> some View {
+        content.onChange(of: focusRequest) {
+            action()
+        }
+    }
+}
+
+extension View {
+    /// Runs `action` when the enclosing `ThemeInput` is tapped on its paddings, so the field inside can take focus
+    func onThemeInputFocusRequest(_ action: @escaping () -> Void) -> some View {
+        modifier(ThemeInputFocusRequestModifier(action: action))
     }
 }

@@ -13,6 +13,8 @@ struct MaskedInputTextFieldView: UIViewRepresentable {
     var identifier: String?
     /// Mirrors the text field's first-responder state; `@FocusState` does not track a representable's UITextField
     var isFocused: Binding<Bool>?
+    /// A change of this value asks the field to take focus, e.g. after a tap on the paddings around it
+    var focusRequest = 0
 
     func makeCoordinator() -> Coordinator {
         Coordinator(text: text.wrappedValue)
@@ -42,6 +44,7 @@ struct MaskedInputTextFieldView: UIViewRepresentable {
 
         context.coordinator.onChangeText = { text.wrappedValue = $0 }
         context.coordinator.onChangeFocus = focusHandler()
+        context.coordinator.handledFocusRequest = focusRequest
         context.coordinator.apply(textField: textField, text: text.wrappedValue, secured: secured)
 
         return textField
@@ -59,6 +62,15 @@ struct MaskedInputTextFieldView: UIViewRepresentable {
         context.coordinator.onChangeText = { text.wrappedValue = $0 }
         context.coordinator.onChangeFocus = focusHandler()
         context.coordinator.apply(textField: textField, text: text.wrappedValue, secured: secured)
+
+        if context.coordinator.handledFocusRequest != focusRequest {
+            context.coordinator.handledFocusRequest = focusRequest
+
+            // taking focus marks a focus report as pending, so `reconcileFocus` below leaves it alone
+            if isEnabled, !textField.isFirstResponder, textField.window != nil {
+                textField.becomeFirstResponder()
+            }
+        }
 
         reconcileFocus(textField: textField, coordinator: context.coordinator)
     }
@@ -131,6 +143,7 @@ struct MaskedInputTextFieldView: UIViewRepresentable {
         var onChangeText: ((String) -> Void)?
         var onChangeFocus: ((Bool) -> Void)?
         var isFocusRetryScheduled = false
+        var handledFocusRequest = 0
         private var pendingFocusSyncs = 0
 
         var isFocusSyncPending: Bool {

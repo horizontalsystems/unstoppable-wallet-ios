@@ -42,6 +42,9 @@ struct MnemonicInputView: View {
 
                 MnemonicTextView(value: $value, invalidRanges: invalidRanges, isFocused: $isFocused, identifier: identifier)
             }
+            .onThemeInputFocusRequest {
+                isFocused = true
+            }
         }
         .animation(.default, value: value.text.isEmpty)
     }

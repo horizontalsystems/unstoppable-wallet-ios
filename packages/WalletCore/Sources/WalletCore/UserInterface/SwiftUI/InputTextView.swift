@@ -9,6 +9,8 @@ struct InputTextView: View {
 
     @Environment(\.isEnabled) private var isEnabled
     @Environment(\.isInsideThemeInput) private var isInsideThemeInput
+    @Environment(\.themeInputFocusRequest) private var focusRequest
+    @FocusState private var isFocused: Bool
     @Binding var secured: Bool
     var secureToggleEnabled = false
     var secureIdentifier: String?
@@ -34,6 +36,13 @@ struct InputTextView: View {
             .font(font)
             .tint(.themeInputFieldTintColor)
             .accentColor(.themeLeah)
+            .focused($isFocused)
+            .onThemeInputFocusRequest {
+                // the masked field is a UITextField, which `@FocusState` cannot reach: it gets the request itself
+                if isEnabled, !secureToggleEnabled {
+                    isFocused = true
+                }
+            }
 
         if let isValidText {
             view.modifier(Validated(text: text, isValidText: isValidText))
@@ -52,7 +61,8 @@ struct InputTextView: View {
                 isEnabled: isEnabled,
                 placeholderColor: isInsideThemeInput ? .themeAndy : .themeGray50,
                 identifier: secureIdentifier,
-                isFocused: secureFocused
+                isFocused: secureFocused,
+                focusRequest: focusRequest
             )
             .frame(height: 20) // TODO: How to remove this? (When change from Secure to TextField it's change height)
         } else if isInsideThemeInput {
