@@ -160,6 +160,19 @@ struct MaskedInputTextFieldView: UIViewRepresentable {
             updateDisplayedText(textField: textField, cursorOffset: cursorOffset)
         }
 
+        /// UIKit flips `isFirstResponder` before it calls the did-begin/did-end delegate methods, and SwiftUI can run
+        /// `updateUIView` in between. Marking the report as pending here keeps `reconcileFocus` from undoing the
+        /// change in that window.
+        func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+            syncFocus(textField)
+            return true
+        }
+
+        func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+            syncFocus(textField)
+            return true
+        }
+
         func textFieldDidBeginEditing(_ textField: UITextField) {
             syncFocus(textField)
         }
