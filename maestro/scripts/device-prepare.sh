@@ -1,8 +1,11 @@
 #!/bin/bash
-# Prepares a booted iOS simulator for a test run by setting its locale and
-# languages to English (US). The flows assert English text and formatted
-# amounts such as "€0", while a new simulator takes the host's locale and
-# region and shows e.g. "€0,00".
+# Prepares a booted iOS simulator for a test run by setting its locale to
+# English (US) and its preferred languages to English (US), then German. The
+# flows assert English text and formatted amounts such as "€0", while a new
+# simulator takes the host's locale and region and shows e.g. "€0,00". The
+# second language is there because iOS shows an app's Language row in
+# Settings only while the device has more than one preferred language, and
+# the flow that changes the app's language goes through it.
 #
 # The values reach only processes launched afterwards, so this hook must
 # return before the app's first launch. It never reboots the simulator and
@@ -15,7 +18,8 @@ set -euo pipefail
 DEVICE_TYPE="com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro"
 RUNTIME="com.apple.CoreSimulator.SimRuntime.iOS-27-2"
 LOCALE="en_US"
-LANGUAGE="en-US"
+LANGUAGES=(en-US de)
+EXPECTED_LANGUAGES="($(IFS=,; echo "${LANGUAGES[*]}"))"
 
 if [ "${1:-}" = "--requirements" ]; then
   printf '{"device_type":"%s","runtime":"%s"}\n' "$DEVICE_TYPE" "$RUNTIME"
@@ -45,14 +49,14 @@ read_languages() {
 if [ "$(read_locale)" != "$LOCALE" ]; then
   xcrun simctl spawn "$UDID" defaults write -g AppleLocale -string "$LOCALE"
 fi
-if [ "$(read_languages)" != "($LANGUAGE)" ]; then
-  xcrun simctl spawn "$UDID" defaults write -g AppleLanguages -array "$LANGUAGE"
+if [ "$(read_languages)" != "$EXPECTED_LANGUAGES" ]; then
+  xcrun simctl spawn "$UDID" defaults write -g AppleLanguages -array "${LANGUAGES[@]}"
 fi
 
 got_locale="$(read_locale)"
 got_languages="$(read_languages)"
-if [ "$got_locale" != "$LOCALE" ] || [ "$got_languages" != "($LANGUAGE)" ]; then
-  echo "$UDID locale is ${got_locale:-unset}, languages ${got_languages:-unset}; expected $LOCALE, ($LANGUAGE)" >&2
+if [ "$got_locale" != "$LOCALE" ] || [ "$got_languages" != "$EXPECTED_LANGUAGES" ]; then
+  echo "$UDID locale is ${got_locale:-unset}, languages ${got_languages:-unset}; expected $LOCALE, $EXPECTED_LANGUAGES" >&2
   exit 1
 fi
 
