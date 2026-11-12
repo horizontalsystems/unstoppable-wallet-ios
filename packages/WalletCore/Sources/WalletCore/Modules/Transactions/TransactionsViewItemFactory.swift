@@ -122,14 +122,10 @@ class TransactionsViewItemFactory {
         }
     }
 
-    /// The completed subtitle of a contract call by its transfers: `noTransferSubtitle` when it moved nothing,
-    /// `typeTitle` ("Contract Call", "External Call") for one transfer, "Completed" for several
-    private func contractCallSubtitle(transfers: Transfers, typeTitle: String, noTransferSubtitle: String) -> String {
-        switch transfers.count {
-        case 0: return noTransferSubtitle
-        case 1: return typeTitle
-        default: return "transactions.completed".localized
-        }
+    /// The completed subtitle of a contract call: `typeTitle` ("Contract Call", "External Call") when it moved exactly
+    /// one value, as the row is then titled by that coin; "Completed" otherwise, as the title already names the type
+    private func contractCallSubtitle(transfers: Transfers, typeTitle: String) -> String {
+        transfers.count == 1 ? typeTitle : "transactions.completed".localized
     }
 
     /// In, then out; a side the record does not know reads as the unknown token
@@ -179,14 +175,14 @@ class TransactionsViewItemFactory {
         case let record as SwapTransactionRecord:
             kind = .swap
             tokens = swapTokens(valueIn: record.valueIn, valueOut: record.valueOut)
-            completedSubtitle = mapped(address: record.exchangeAddress, blockchainType: blockchainType)
+            completedSubtitle = "transactions.swap".localized
 
             (primaryValue, secondaryValue) = swapValues(valueIn: record.valueIn, valueOut: record.valueOut, outType: record.recipient != nil ? .secondary : .incoming)
 
         case let record as UnknownSwapTransactionRecord:
             kind = .swap
             tokens = swapTokens(valueIn: record.valueIn, valueOut: record.valueOut)
-            completedSubtitle = mapped(address: record.exchangeAddress, blockchainType: blockchainType)
+            completedSubtitle = "transactions.swap".localized
 
             (primaryValue, secondaryValue) = swapValues(valueIn: record.valueIn, valueOut: record.valueOut)
 
@@ -209,7 +205,7 @@ class TransactionsViewItemFactory {
 
             kind = .contract(direction: moved.direction)
             tokens = moved.tokens
-            completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.contract_call".localized, noTransferSubtitle: mapped(address: record.contractAddress, blockchainType: blockchainType))
+            completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.contract_call".localized)
             (primaryValue, secondaryValue) = (moved.primaryValue, moved.secondaryValue)
 
         case let record as ExternalContractCallTransactionRecord:
@@ -229,7 +225,7 @@ class TransactionsViewItemFactory {
                 completedSubtitle = externalReceiveSubtitle(addresses: record.incomingEvents.map(\.address), blockchainType: blockchainType)
             } else {
                 kind = .contract(direction: moved.direction)
-                completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.external_call".localized, noTransferSubtitle: "transactions.to_unknown".localized)
+                completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.external_call".localized)
             }
 
             tokens = moved.tokens
@@ -238,7 +234,7 @@ class TransactionsViewItemFactory {
         case let record as ContractCreationTransactionRecord:
             kind = .contract(direction: nil)
             tokens = [chainToken(source: record.source, text: "transactions.contract_creation".localized)]
-            completedSubtitle = "transactions.to_unknown".localized
+            completedSubtitle = "transactions.completed".localized
 
         case let record as BitcoinIncomingTransactionRecord:
             kind = .receive
@@ -325,7 +321,7 @@ class TransactionsViewItemFactory {
 
             kind = .contract(direction: moved.direction)
             tokens = moved.tokens
-            completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.contract_call".localized, noTransferSubtitle: mapped(address: record.contractAddress, blockchainType: blockchainType))
+            completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.contract_call".localized)
             (primaryValue, secondaryValue) = (moved.primaryValue, moved.secondaryValue)
 
         case let record as TronExternalContractCallTransactionRecord:
@@ -345,7 +341,7 @@ class TransactionsViewItemFactory {
                 completedSubtitle = externalReceiveSubtitle(addresses: record.incomingEvents.map(\.address), blockchainType: blockchainType)
             } else {
                 kind = .contract(direction: moved.direction)
-                completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.external_call".localized, noTransferSubtitle: "transactions.to_unknown".localized)
+                completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.external_call".localized)
             }
 
             tokens = moved.tokens
@@ -402,15 +398,15 @@ class TransactionsViewItemFactory {
                     completedSubtitle = "transactions.mint".localized
                     primaryValue = incomingValue(value)
                     secondaryValue = fiatValue
-                case let .swap(routerName, routerAddress, valueIn, valueOut):
+                case let .swap(_, _, valueIn, valueOut):
                     kind = .swap
                     tokens = swapTokens(valueIn: valueIn, valueOut: valueOut)
-                    completedSubtitle = routerName ?? routerAddress.shortened
+                    completedSubtitle = "transactions.swap".localized
                     (primaryValue, secondaryValue) = swapValues(valueIn: valueIn, valueOut: valueOut)
-                case let .contractDeploy(interfaces):
+                case .contractDeploy:
                     kind = .contract(direction: nil)
                     tokens = [chainToken(source: record.source, text: "transactions.contract_deploy".localized)]
-                    completedSubtitle = interfaces.joined(separator: ", ")
+                    completedSubtitle = "transactions.completed".localized
                 case let .contractCall(_, value, _):
                     kind = .contract(direction: .outgoing)
                     tokens = [token(value: value)]
@@ -425,7 +421,7 @@ class TransactionsViewItemFactory {
             } else {
                 kind = .contract(direction: nil)
                 tokens = [chainToken(source: record.source, text: "transactions.ton_transaction.title".localized)]
-                completedSubtitle = "transactions.multiple".localized
+                completedSubtitle = "transactions.completed".localized
             }
 
         case let record as StellarTransactionRecord:
@@ -510,7 +506,7 @@ class TransactionsViewItemFactory {
                 completedSubtitle = "transactions.from".localized(mapped(address: from, blockchainType: blockchainType))
                 primaryValue = incomingValue(value)
                 secondaryValue = fiatValue
-            case let .contractCall(contractId, method, incoming, outgoing):
+            case let .contractCall(_, method, incoming, outgoing):
                 // a swap or a wrap lists each asset it moved, as an EVM contract call does
                 let incomingValues = incoming.map(\.value)
                 let outgoingValues = outgoing.map(\.value)
@@ -525,7 +521,7 @@ class TransactionsViewItemFactory {
 
                 kind = .contract(direction: moved.direction)
                 tokens = moved.tokens
-                completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.contract_call".localized, noTransferSubtitle: method.map { "\($0) · \(contractId.shortened)" } ?? contractId.shortened)
+                completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.contract_call".localized)
                 (primaryValue, secondaryValue) = (moved.primaryValue, moved.secondaryValue)
             }
 
@@ -568,7 +564,7 @@ class TransactionsViewItemFactory {
         case let record as SolanaSwapTransactionRecord:
             kind = .swap
             tokens = swapTokens(valueIn: record.valueIn, valueOut: record.valueOut)
-            completedSubtitle = record.exchangeName
+            completedSubtitle = "transactions.swap".localized
 
             (primaryValue, secondaryValue) = swapValues(valueIn: record.valueIn, valueOut: record.valueOut)
 
@@ -652,7 +648,7 @@ class TransactionsViewItemFactory {
         if addresses.count == 1 {
             return "transactions.from".localized(mapped(address: addresses[0], blockchainType: blockchainType))
         } else {
-            return "transactions.multiple".localized
+            return "transactions.completed".localized
         }
     }
 }

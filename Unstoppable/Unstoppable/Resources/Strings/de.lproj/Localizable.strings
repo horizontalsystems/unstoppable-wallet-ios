@@ -1503,7 +1503,7 @@
 "transactions.burn" = "Verbrannt";
 "transactions.mint" = "Geprägt";
 "transactions.approve" = "Bestätigt";
-"transactions.swap" = "Swapped";
+"transactions.swap" = "Getauscht";
 "transactions.shield" = "Proteger";
 "transactions.unshield" = "Unshield";
 "transactions.transfer" = "Überweisung";
@@ -1518,7 +1518,6 @@
 "transactions.to_unknown" = "an unbekannt";
 "transactions.from_unknown" = "von unbekannt";
 
-"transactions.multiple" = "Mehrere";
 
 "transactions.value.unlimited" = "Unbegrenzt";
 

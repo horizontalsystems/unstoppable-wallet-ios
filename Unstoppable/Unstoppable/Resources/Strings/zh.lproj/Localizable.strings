@@ -1518,7 +1518,6 @@
 "transactions.to_unknown" = "接收人未知";
 "transactions.from_unknown" = "发送人未知";
 
-"transactions.multiple" = "多种";
 
 "transactions.value.unlimited" = "无限";
 

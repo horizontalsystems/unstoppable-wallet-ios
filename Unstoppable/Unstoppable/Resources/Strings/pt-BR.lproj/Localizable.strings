@@ -1518,7 +1518,6 @@
 "transactions.to_unknown" = "para desconhecido";
 "transactions.from_unknown" = "de desconhecido";
 
-"transactions.multiple" = "Múltiplo";
 
 "transactions.value.unlimited" = "Ilimitado";
 

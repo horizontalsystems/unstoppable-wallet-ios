@@ -1518,7 +1518,6 @@
 "transactions.to_unknown" = "알 수 없는 수신자";
 "transactions.from_unknown" = "알 수 없는 발신자";
 
-"transactions.multiple" = "다수";
 
 "transactions.value.unlimited" = "무제한";
 

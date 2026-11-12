@@ -1518,7 +1518,6 @@
 "transactions.to_unknown" = "to unknown";
 "transactions.from_unknown" = "from unknown";
 
-"transactions.multiple" = "Multiple";
 
 "transactions.value.unlimited" = "Unlimited";
 
@@ -1544,8 +1543,8 @@
 "transactions.failed.approval" = "Approval failed";
 "transactions.failed.swap" = "Swap failed";
 "transactions.failed.transaction" = "Transaction failed";
-"transactions.failed.shielding" = "Shielding failed";
-"transactions.failed.unshielding" = "Unshielding failed";
+"transactions.failed.shielding" = "Shield failed";
+"transactions.failed.unshielding" = "Unshield failed";
 "transactions.to_yourself" = "To yourself";
 "transactions.shielded" = "Shielded";
 "transactions.unshielded" = "Unshielded";
