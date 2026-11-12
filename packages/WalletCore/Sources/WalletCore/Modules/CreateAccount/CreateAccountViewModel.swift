@@ -33,15 +33,18 @@ class CreateAccountViewModel: ObservableObject {
         name = accountFactory.generatedAccountName
     }
 
-    private func activateDefaultWallets(account: Account) throws {
-        let tokenQueries = [
-            TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84)), // TODO: make derivation supports accountType
-            TokenQuery(blockchainType: .ethereum, tokenType: .native),
-        ]
+    // Wallets a newly created account starts with, by phrase or by passkey; the same list as Android
+    static let defaultTokenQueries = [
+        TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84)), // TODO: make derivation supports accountType
+        TokenQuery(blockchainType: .ethereum, tokenType: .native),
+        TokenQuery(blockchainType: .zcash, tokenType: .native),
+        TokenQuery(blockchainType: .monero, tokenType: .native),
+    ]
 
+    private func activateDefaultWallets(account: Account) throws {
         var wallets = [Wallet]()
 
-        for token in try marketKit.tokens(queries: tokenQueries) {
+        for token in try marketKit.tokens(queries: Self.defaultTokenQueries) {
             predefinedBlockchainService.prepareNew(account: account, blockchainType: token.blockchainType)
             wallets.append(Wallet(token: token, account: account))
         }
