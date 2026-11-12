@@ -37,11 +37,16 @@ struct TransactionInfoView: View {
 
     @ViewBuilder private func rowView(_ viewItem: TransactionInfoModule.ViewItem) -> some View {
         switch viewItem {
-        case let .actionTitle(iconName, iconDimmed, title, subTitle):
+        case let .actionTitle(icon, title, subTitle):
             Cell(
                 left: {
-                    if let iconName {
-                        ThemeImage(iconName, size: .iconSize24, colorStyle: iconDimmed ? .secondary : .primary)
+                    switch icon {
+                    case let .image(name):
+                        ThemeImage(name, size: .iconSize24, colorStyle: .primary)
+                    case let .blockchain(blockchainType):
+                        BlockchainIcon(blockchainType: blockchainType, size: .iconSize24)
+                    case nil:
+                        EmptyView()
                     }
                 },
                 middle: {

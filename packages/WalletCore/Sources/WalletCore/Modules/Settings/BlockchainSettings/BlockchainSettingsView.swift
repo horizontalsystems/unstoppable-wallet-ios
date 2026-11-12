@@ -39,7 +39,7 @@ struct BlockchainSettingsView: View {
 
         var body: some View {
             Cell(
-                left: { BlockchainIcon(blockchain: item.blockchain) },
+                left: { BlockchainIcon(blockchainType: item.blockchain.type) },
                 middle: { MultiText(title: item.blockchain.name, subtitle: item.title) },
                 right: { Image.disclosureIcon },
                 action: {
@@ -98,13 +98,17 @@ struct BlockchainSettingsView: View {
 }
 
 struct BlockchainIcon: View {
-    let blockchain: Blockchain
+    let blockchainType: BlockchainType
+    var size: CGFloat = .iconSize32
 
     var body: some View {
-        KFImage.url(URL(string: blockchain.type.imageUrl))
+        // the corners keep their proportion to the icon: 8 at the default 32
+        let shape = RoundedRectangle(cornerRadius: size / 4)
+
+        KFImage.url(URL(string: blockchainType.imageUrl))
             .resizable()
-            .placeholder { RoundedRectangle(cornerRadius: 8).fill(Color.themeBlade) }
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-            .frame(size: .iconSize32)
+            .placeholder { shape.fill(Color.themeBlade) }
+            .clipShape(shape)
+            .frame(size: size)
     }
 }

@@ -61,7 +61,7 @@ struct RestoreCoinsView: View {
     private func cell(item: RestoreCoinsViewModel.Item) -> some View {
         Cell(
             left: {
-                BlockchainIcon(blockchain: item.blockchain)
+                BlockchainIcon(blockchainType: item.blockchain.type)
             },
             middle: {
                 MultiText(

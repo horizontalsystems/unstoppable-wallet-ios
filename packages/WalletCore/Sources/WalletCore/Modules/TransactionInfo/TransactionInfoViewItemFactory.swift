@@ -316,7 +316,7 @@ class TransactionInfoViewItemFactory {
         switch record {
         case let record as ContractCreationTransactionRecord:
             sections.append(.init([
-                .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: "transactions.contract_creation".localized, subTitle: nil),
+                .actionTitle(icon: .blockchain(record.source.blockchainType), title: "transactions.contract_creation".localized, subTitle: nil),
             ]))
 
         case let record as EvmOutgoingTransactionRecord:
@@ -426,7 +426,7 @@ class TransactionInfoViewItemFactory {
 
         case let record as ContractCallTransactionRecord:
             sections.append(.init([
-                .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress)),
+                .actionTitle(icon: .blockchain(record.source.blockchainType), title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress)),
             ]))
 
             for event in record.outgoingEvents {
@@ -477,7 +477,7 @@ class TransactionInfoViewItemFactory {
 
         case let record as TronContractCallTransactionRecord:
             sections.append(.init([
-                .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress)),
+                .actionTitle(icon: .blockchain(record.source.blockchainType), title: record.method ?? "transactions.contract_call".localized, subTitle: evmLabelManager.mapped(address: record.contractAddress)),
             ]))
 
             for event in record.outgoingEvents {
@@ -499,7 +499,7 @@ class TransactionInfoViewItemFactory {
 
         case let record as TronTransactionRecord:
             sections.append(.init([
-                .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: record.transaction.contract?.label ?? "transactions.contract_call".localized, subTitle: ""),
+                .actionTitle(icon: .blockchain(record.source.blockchainType), title: record.transaction.contract?.label ?? "transactions.contract_call".localized, subTitle: ""),
             ]))
 
         case let record as ThorChainIncomingTransactionRecord:
@@ -519,7 +519,7 @@ class TransactionInfoViewItemFactory {
 
         case let record as ThorChainTransactionRecord:
             sections.append(.init([
-                .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: record.transaction.type.capitalized, subTitle: ""),
+                .actionTitle(icon: .blockchain(record.source.blockchainType), title: record.transaction.type.capitalized, subTitle: ""),
             ]))
 
             if let fee = record.fee {
@@ -656,12 +656,12 @@ class TransactionInfoViewItemFactory {
 
                 case let .contractDeploy(interfaces):
                     viewItems = [
-                        .actionTitle(iconName: nil, iconDimmed: false, title: "transactions.contract_deploy".localized, subTitle: interfaces.joined(separator: ", ")),
+                        .actionTitle(icon: nil, title: "transactions.contract_deploy".localized, subTitle: interfaces.joined(separator: ", ")),
                     ]
 
                 case let .contractCall(address, value, operation):
                     viewItems = [
-                        .actionTitle(iconName: record.source.blockchainType.iconPlain32, iconDimmed: false, title: "transactions.contract_call".localized, subTitle: operation),
+                        .actionTitle(icon: .blockchain(record.source.blockchainType), title: "transactions.contract_call".localized, subTitle: operation),
                         .to(value: address, valueTitle: nil, contactAddress: nil),
                     ]
 
@@ -823,7 +823,7 @@ class TransactionInfoViewItemFactory {
             feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(appValue: $0, rate: _rate($0.coin))) }
 
         case let record as ZcashShieldingTransactionRecord:
-            sections.append(.init([.actionTitle(iconName: record.direction.txIconName, iconDimmed: false, title: record.direction.txTitle, subTitle: nil)]))
+            sections.append(.init([.actionTitle(icon: .image(name: record.direction.txIconName), title: record.direction.txTitle, subTitle: nil)]))
 
             sections.append(.init(sendSection(appValue: record.value, to: nil, rates: item.rates, sentToSelf: true, balanceHidden: balanceHidden)))
 

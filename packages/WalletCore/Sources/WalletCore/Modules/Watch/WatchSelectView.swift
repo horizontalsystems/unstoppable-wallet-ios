@@ -15,7 +15,7 @@ struct WatchSelectView: View {
                     ThemeList(blockchains, bottomSpacing: 16) { blockchain in
                         Cell(
                             left: {
-                                BlockchainIcon(blockchain: blockchain)
+                                BlockchainIcon(blockchainType: blockchain.type)
                             },
                             middle: {
                                 MultiText(

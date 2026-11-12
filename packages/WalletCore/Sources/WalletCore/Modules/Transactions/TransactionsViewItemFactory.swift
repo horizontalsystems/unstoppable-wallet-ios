@@ -98,7 +98,7 @@ class TransactionsViewItemFactory {
     }
 
     private func chainToken(source: TransactionSource, text: String) -> Token {
-        Token(icon: .local(name: source.blockchainType.iconPlain32), text: text)
+        Token(icon: .blockchain(source.blockchainType), text: text)
     }
 
     /// What a contract interaction moved. Exactly one transfer reads as that coin and its amount; none or several

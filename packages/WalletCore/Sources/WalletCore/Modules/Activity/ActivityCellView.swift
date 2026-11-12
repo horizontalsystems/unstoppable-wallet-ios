@@ -108,9 +108,8 @@ struct ActivityCellView: View {
         switch icon {
         case let .remote(url, alternativeUrl, placeholder, type):
             IconView(url: url, alternativeUrl: alternativeUrl, placeholderImage: placeholder, type: type, size: .iconSize16)
-        case let .local(name):
-            // the chain glyphs are single-colour PNGs, tinted as the row's former chain icon was
-            ThemeImage(name, size: .iconSize16, colorStyle: .primary)
+        case let .blockchain(blockchainType):
+            BlockchainIcon(blockchainType: blockchainType, size: .iconSize16)
         case .unknown:
             // the Blade circle `IconView` shows for a coin without a logo
             ThemeImage(ComponentImage(image: "placeholder_circle", contentMode: .fit), size: .size16)

@@ -96,10 +96,10 @@ struct MoneroNetworkView: View {
                 }
 
                 if #available(iOS 26, *) {
-                    ToolbarItem(placement: .topBarTrailing) { BlockchainIcon(blockchain: viewModel.blockchain) }
+                    ToolbarItem(placement: .topBarTrailing) { BlockchainIcon(blockchainType: viewModel.blockchain.type) }
                         .sharedBackgroundVisibility(.hidden)
                 } else {
-                    ToolbarItem(placement: .topBarTrailing) { BlockchainIcon(blockchain: viewModel.blockchain) }
+                    ToolbarItem(placement: .topBarTrailing) { BlockchainIcon(blockchainType: viewModel.blockchain.type) }
                 }
 
                 ToolbarItem(placement: .cancellationAction) {

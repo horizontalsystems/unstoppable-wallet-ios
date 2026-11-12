@@ -29,7 +29,7 @@ struct TransactionBlockchainSelectView: View {
 
                 ForEach(viewModel.blockchains, id: \.uid) { blockchain in
                     Cell(
-                        left: { BlockchainIcon(blockchain: blockchain) },
+                        left: { BlockchainIcon(blockchainType: blockchain.type) },
                         middle: { ThemeText(blockchain.name, style: .headline2) },
                         right: {
                             if viewModel.currentBlockchain == blockchain {

@@ -35,10 +35,6 @@ extension BlockchainType {
         .solana,
     ]
 
-    var iconPlain32: String {
-        "\(uid)_trx_32"
-    }
-
     var imageUrl: String {
         let scale = Int(UIScreen.main.scale)
         return "https://cdn.blocksdecoded.com/blockchain-icons/32px/\(uid)@\(scale)x.png"

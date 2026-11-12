@@ -30,7 +30,7 @@ struct BtcBlockchainSettingsView: View {
                                             case .hybrid:
                                                 Image("api_placeholder_32")
                                             case .blockchain:
-                                                BlockchainIcon(blockchain: viewModel.blockchain)
+                                                BlockchainIcon(blockchainType: viewModel.blockchain.type)
                                             }
                                         },
                                         middle: {
@@ -66,10 +66,10 @@ struct BtcBlockchainSettingsView: View {
             .navigationTitle(viewModel.blockchain.name)
             .toolbar {
                 if #available(iOS 26, *) {
-                    ToolbarItem(placement: .topBarTrailing) { BlockchainIcon(blockchain: viewModel.blockchain) }
+                    ToolbarItem(placement: .topBarTrailing) { BlockchainIcon(blockchainType: viewModel.blockchain.type) }
                         .sharedBackgroundVisibility(.hidden)
                 } else {
-                    ToolbarItem(placement: .topBarTrailing) { BlockchainIcon(blockchain: viewModel.blockchain) }
+                    ToolbarItem(placement: .topBarTrailing) { BlockchainIcon(blockchainType: viewModel.blockchain.type) }
                 }
 
                 ToolbarItem(placement: .cancellationAction) {

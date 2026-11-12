@@ -34,7 +34,7 @@ struct ContactBookContactView: View {
                         ListSection {
                             ForEach(viewModel.addressItems) { item in
                                 Cell(
-                                    left: { BlockchainIcon(blockchain: item.blockchain) },
+                                    left: { BlockchainIcon(blockchainType: item.blockchain.type) },
                                     middle: { MultiText(title: item.blockchain.name, subtitle: item.address) },
                                     right: { ThemeImage("pen", size: .iconSize20, colorStyle: item.edited ? .brand : .secondary) },
                                     action: {

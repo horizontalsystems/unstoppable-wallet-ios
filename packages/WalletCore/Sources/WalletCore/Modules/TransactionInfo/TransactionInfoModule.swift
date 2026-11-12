@@ -64,8 +64,15 @@ extension TransactionInfoModule {
         }
     }
 
+    enum ActionIcon {
+        /// a glyph from the asset catalog
+        case image(name: String)
+        /// the icon of a chain, for actions titled by their chain
+        case blockchain(BlockchainType)
+    }
+
     enum ViewItem {
-        case actionTitle(iconName: String?, iconDimmed: Bool, title: String, subTitle: String?)
+        case actionTitle(icon: ActionIcon?, title: String, subTitle: String?)
         case amount(title: String, subtitle: String?, iconUrl: String?, iconAlternativeUrl: String?, iconPlaceholderImageName: String, coinAmount: String, currencyAmount: String?, type: AmountType, coin: Coin?)
         /// notProcessed: failed without reaching the chain, which is not an error to show as one.
         case status(status: TransactionStatus, notProcessed: Bool = false)

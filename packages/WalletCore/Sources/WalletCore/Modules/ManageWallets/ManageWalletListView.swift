@@ -115,7 +115,7 @@ struct ManageWalletListView: View {
     private func contractRow(token: Token, value: String, explorerUrl: String?) -> some View {
         Cell(
             left: {
-                BlockchainIcon(blockchain: token.blockchain)
+                BlockchainIcon(blockchainType: token.blockchain.type)
             },
             middle: {
                 MiddleTextIcon(text: value)

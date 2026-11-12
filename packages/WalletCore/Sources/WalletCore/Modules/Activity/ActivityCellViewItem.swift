@@ -1,4 +1,5 @@
 import Foundation
+import MarketKit
 
 /// What a row of the Activity lists shows, shared by the transactions and the swap history lists
 struct ActivityCellViewItem: Hashable {
@@ -102,8 +103,8 @@ extension ActivityCellViewItem {
 extension ActivityCellViewItem.Token {
     enum Icon: Hashable {
         case remote(url: String?, alternativeUrl: String?, placeholder: String, type: IconView.IconType)
-        /// a single-colour chain glyph from the asset catalog, e.g. `BlockchainType.iconPlain32`
-        case local(name: String)
+        /// the icon of a chain, for rows titled by their chain
+        case blockchain(BlockchainType)
         /// the placeholder circle of a token the row does not know
         case unknown
     }
