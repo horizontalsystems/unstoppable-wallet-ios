@@ -3,7 +3,6 @@ import SwiftUI
 struct WelcomeWalletSheetView: View {
     let title: String
     let groups: [[WelcomeViewModel.Option]]
-    let bottomPadding: CGFloat
     @Binding var isPresented: Bool
     let onSelect: (WelcomeViewModel.Option) -> Void
 
@@ -26,7 +25,7 @@ struct WelcomeWalletSheetView: View {
             items.append(.customList(views: rows(options: group)))
         }
 
-        items.append(spacer(height: bottomPadding))
+        items.append(spacer(height: .margin64))
 
         return items
     }

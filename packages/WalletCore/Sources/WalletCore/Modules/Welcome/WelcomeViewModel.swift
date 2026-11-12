@@ -13,11 +13,11 @@ class WelcomeViewModel: ObservableObject {
     @Published private(set) var finishRequested = false
 
     func showCreateSheet() {
-        showSheet(title: "intro.create_wallet.title".localized, groups: [Self.createOptions], bottomPadding: .margin32)
+        showSheet(title: "intro.create_wallet.title".localized, groups: [Self.createOptions])
     }
 
     func showImportSheet() {
-        showSheet(title: "restore.title".localized, groups: [Self.importOptions, Self.watchOptions], bottomPadding: .margin32)
+        showSheet(title: "restore.title".localized, groups: [Self.importOptions, Self.watchOptions])
     }
 
     func handleFlowFinished() {
@@ -32,7 +32,7 @@ class WelcomeViewModel: ObservableObject {
         !pushPending && flow == nil && !finishRequested && passkeyTask == nil
     }
 
-    private func showSheet(title: String, groups: [[Option]], bottomPadding: CGFloat) {
+    private func showSheet(title: String, groups: [[Option]]) {
         guard !sheetPresented, isIdle else {
             return
         }
@@ -40,7 +40,7 @@ class WelcomeViewModel: ObservableObject {
         sheetPresented = true
 
         Coordinator.shared.present(type: .bottomSheet) { [weak self] isPresented in
-            WelcomeWalletSheetView(title: title, groups: groups, bottomPadding: bottomPadding, isPresented: isPresented) { option in
+            WelcomeWalletSheetView(title: title, groups: groups, isPresented: isPresented) { option in
                 self?.select(option, isPresented: isPresented)
             }
         } onDismiss: { [weak self] in

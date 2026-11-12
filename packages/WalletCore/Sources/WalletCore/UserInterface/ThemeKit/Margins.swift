@@ -35,6 +35,7 @@ public extension CGFloat {
     static let margin32: CGFloat = 32
     static let margin40: CGFloat = 40
     static let margin48: CGFloat = 48
+    static let margin64: CGFloat = 64
 
     static let marginTextSide: CGFloat = 44
 
