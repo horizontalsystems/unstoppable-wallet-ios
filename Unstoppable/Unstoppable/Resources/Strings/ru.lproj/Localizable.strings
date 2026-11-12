@@ -166,20 +166,20 @@
 
 // Restore Type
 
-"restore_type.recovery.title" = "Фраза восстановления";
-"restore_type.private_key.title" = "из Приватного Ключа";
-"restore_type.passkey.title" = "Через Passkey";
+"restore_type.recovery.title" = "из фразы восстановления";
+"restore_type.private_key.title" = "из приватного ключа";
+"restore_type.passkey.title" = "через Passkey";
 "restore_type.passkey_smart.title" = "из Passkey (Smart Account)";
 "send.fee.transfer" = "Комиссия за перевод";
 "send.fee.activation" = "Комиссия за активацию";
 "send.fee.includes_activation" = "Первая отправка активирует кошелёк GasFree в сети.";
 "restore_type.backup.title" = "из резервной копии";
 
-"restore_type.recovery.description" = "Импортировать кошелёк с помощью фразы восстановления.";
-"restore_type.private_key.description" = "Импортировать кошелёк с помощью приватного ключа.";
-"restore_type.passkey.description" = "Восстановите кошелёк с помощью устройства и учётной записи iCloud.";
+"restore_type.recovery.description" = "Восстановление по набору слов";
+"restore_type.private_key.description" = "Импорт с помощью приватного ключа";
+"restore_type.passkey.description" = "Восстановление через устройство и iCloud";
 "restore_type.passkey_smart.description" = "Восстановите кошелёк Smart Account с помощью вашего passkey.";
-"restore_type.backup.description" = "Восстановите кошелёк из файла резервной копии на вашем устройстве или в облаке.";
+"restore_type.backup.description" = "Резервная копия на устройстве или в облаке";
 
 // Restore Cloud
 
@@ -340,6 +340,7 @@
 
 "balance.add_wallet" = "Добавить кошелёк";
 "balance.no_tokens" = "Здесь нет токенов. Добавьте один, чтобы начать.";
+"balance.no_wallets" = "Нет кошельков. Добавьте ниже.";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Осталось блоков - %@";
@@ -405,7 +406,7 @@
 
 "switch_account.title" = "Переключить кошелек";
 "switch_account.wallets" = "Кошельки";
-"switch_account.watch_wallets" = "Просмотр кошелька";
+"switch_account.watch_wallets" = "Кошельки наблюдения";
 
 // Release notes
 
@@ -1814,11 +1815,11 @@
 
 "manage_accounts.migration_required" = "Требуется миграция";
 "manage_accounts.migration_recommended" = "Рекомендуется миграция";
-"manage_accounts.backup_required" = "Необходима резерв. копия";
+"manage_accounts.backup_required" = "Требуется резервная копия";
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Кошельки";
+"settings_manage_keys.title" = "Управление кошельками";
 "settings_manage_keys.delete" = "Удалить";
 "settings_manage_keys.backup" = "Резервная копия";
 "settings_manage_keys.delete.title" = "Удалить кошелек";
@@ -2711,19 +2712,17 @@
 
 "add_wallet.title" = "Добавить кошелёк";
 "add_wallet.new_wallet" = "Новый кошелёк";
-"add_wallet.new_wallet.description" = "Создайте новый кошелёк, чтобы начать, или добавьте ещё один.";
 "add_wallet.existing_wallet" = "Существующий кошелёк";
-"add_wallet.existing_wallet.description" = "Импортируйте кошелёк, если он у вас уже есть, чтобы продолжить его использование.";
 "add_wallet.watch_wallet" = "Кошелёк только для просмотра";
-"add_wallet.watch_wallet.description" = "Добавьте кошелёк, чтобы отслеживать балансы и активность без доступа к средствам.";
+"add_wallet.watch_wallet.description" = "Только баланс и активность";
 
 // New Wallet
 
 "new_wallet.title" = "Новый кошелёк";
 "new_wallet.standard" = "Стандартный";
-"new_wallet.standard.description" = "Кошелёк с фразой восстановления, требующей ручного резервного копирования.";
+"new_wallet.standard.description" = "Ручная резервная копия фразы";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "Кошелёк с фразой восстановления, сохранённой и защищённой вашим iCloud.";
+"new_wallet.passkey.description" = "Фраза защищена в iCloud";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Кошелёк на основе passkey со спонсированием газа.";
 

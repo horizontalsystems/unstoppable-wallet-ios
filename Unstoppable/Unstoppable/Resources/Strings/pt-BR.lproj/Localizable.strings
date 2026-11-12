@@ -168,18 +168,18 @@
 
 "restore_type.recovery.title" = "da Frase de Recuperação";
 "restore_type.private_key.title" = "da Chave Privada";
-"restore_type.passkey.title" = "Via Passkey";
+"restore_type.passkey.title" = "via Passkey";
 "restore_type.passkey_smart.title" = "de Passkey (Smart Account)";
 "send.fee.transfer" = "Taxa de transferência";
 "send.fee.activation" = "Taxa de ativação";
 "send.fee.includes_activation" = "O primeiro envio ativa a carteira GasFree on-chain.";
 "restore_type.backup.title" = "do Backup";
 
-"restore_type.recovery.description" = "Importar uma carteira usando uma frase de recuperação.";
-"restore_type.private_key.description" = "Importar uma carteira usando uma chave privada.";
-"restore_type.passkey.description" = "Restaure sua carteira usando seu dispositivo e conta do iCloud.";
+"restore_type.recovery.description" = "Recuperação com uma sequência de palavras";
+"restore_type.private_key.description" = "Importação com uma chave privada";
+"restore_type.passkey.description" = "Recuperação com dispositivo e iCloud";
 "restore_type.passkey_smart.description" = "Restaure uma carteira Smart Account a partir da sua passkey.";
-"restore_type.backup.description" = "Restaure sua wallet usando um arquivo de backup do seu dispositivo ou da nuvem.";
+"restore_type.backup.description" = "Arquivo de backup no dispositivo ou na nuvem";
 
 // Restore Cloud
 
@@ -336,10 +336,11 @@
 "balance.stopped" = "Parado";
 "balance.downloading_sapling" = "Baixando...";
 "balance.watch_wallet" = "Monitorar Carteira";
-"balance.watch_wallet.typed" = "Wallet de Observação %@";
+"balance.watch_wallet.typed" = "Carteira de observação %@";
 
 "balance.add_wallet" = "Adicionar carteira";
 "balance.no_tokens" = "Nenhum token aqui. Adicione um para começar.";
+"balance.no_wallets" = "Nenhuma carteira. Adicione uma abaixo.";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Blocos Restantes – %@";
@@ -405,7 +406,7 @@
 
 "switch_account.title" = "Trocar carteira";
 "switch_account.wallets" = "Carteiras";
-"switch_account.watch_wallets" = "Ver Endereço";
+"switch_account.watch_wallets" = "Carteiras de observação";
 
 // Release notes
 
@@ -1614,7 +1615,7 @@
 
 "manage_wallets.title" = "Gerente de Moedas";
 "manage_wallets.not_found" = "Nenhum resultado encontrado. Tente adicionar token manualmente.";
-"manage_wallets.empty" = "Nenhuma Wallet Ativa";
+"manage_wallets.empty" = "Nenhuma carteira ativa";
 "manage_accounts.not_found" = "Nenhum resultado encontrado.";
 "manage_wallets.search_placeholder" = "Nome, código ou endereço do contrato";
 "manage_wallets.derivation_description" = "Existem 4 formatos de endereço que %@ carteiras podem usar para receber pagamentos recebidos:\n\n- BIP44 (mais antigo)\n- BIP49\n- BIP84 (recomendado)\n- BIP86 (mais recente)\n\nEnquanto a Carteira %@ suporta todos os 4, ele recomenda usar uma carteira %@ operando no formato BIP84.";
@@ -2711,19 +2712,17 @@
 
 "add_wallet.title" = "Adicionar carteira";
 "add_wallet.new_wallet" = "Nova carteira";
-"add_wallet.new_wallet.description" = "Crie uma nova carteira para começar ou adicione uma nova.";
 "add_wallet.existing_wallet" = "Carteira existente";
-"add_wallet.existing_wallet.description" = "Importe sua carteira se já tiver uma para continuar usando.";
 "add_wallet.watch_wallet" = "Carteira somente leitura";
-"add_wallet.watch_wallet.description" = "Adicione uma carteira para acompanhar saldos e atividades sem acesso aos fundos.";
+"add_wallet.watch_wallet.description" = "Apenas saldo e atividade";
 
 // New Wallet
 
 "new_wallet.title" = "Nova carteira";
 "new_wallet.standard" = "Padrão";
-"new_wallet.standard.description" = "Uma carteira com uma frase de recuperação que requer backup manual.";
+"new_wallet.standard.description" = "Backup manual da frase de recuperação";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "Uma carteira com uma frase de recuperação salva e protegida pelo seu iCloud.";
+"new_wallet.passkey.description" = "Frase protegida pelo iCloud";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Carteira com passkey e patrocínio de gas.";
 

@@ -279,6 +279,10 @@ enum TestTags {
         "account_options_\(index)"
     }
 
+    static let accountAdd = "account_add"
+    static let accountAddNewWallet = "account_add_new_wallet"
+    static let accountAddExistingWallet = "account_add_existing_wallet"
+
     static let accountManualBackup = "account_manual_backup"
     static let accountUnlink = "account_unlink"
     static let accountNameInput = "account_name_input"

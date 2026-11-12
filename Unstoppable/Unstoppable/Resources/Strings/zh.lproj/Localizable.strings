@@ -90,7 +90,7 @@
 "alert_card.title.critical" = "警告!";
 "alert_card.title.caution" = "注意!";
 
-"placeholder.search" = "搜索​​​​";
+"placeholder.search" = "搜索";
 
 "status" = "状态";
 "connecting" = "正在连接...";
@@ -142,7 +142,7 @@
 
 // Restore
 
-"restore.title" = "恢复自";
+"restore.title" = "导入钱包";
 "restore.advanced" = "高级";
 "restore.suggestions" = "助记词建议将显示在此处";
 "restore.mnemonic.placeholder" = "输入12、15、18、21或24个单词";
@@ -166,20 +166,20 @@
 
 // Restore Type
 
-"restore_type.recovery.title" = "恢复短语";
-"restore_type.private_key.title" = "通过私钥导入";
+"restore_type.recovery.title" = "通过恢复短语";
+"restore_type.private_key.title" = "通过私钥";
 "restore_type.passkey.title" = "通过 Passkey";
 "restore_type.passkey_smart.title" = "从 Passkey（智能账户）";
 "send.fee.transfer" = "转账手续费";
 "send.fee.activation" = "激活费用";
 "send.fee.includes_activation" = "首次发送将在链上激活 GasFree 钱包。";
-"restore_type.backup.title" = "从备份恢复";
+"restore_type.backup.title" = "通过备份";
 
-"restore_type.recovery.description" = "使用恢复短语导入钱包。";
-"restore_type.private_key.description" = "使用私钥导入钱包。";
-"restore_type.passkey.description" = "使用您的设备和 iCloud 账户恢复钱包。";
+"restore_type.recovery.description" = "通过一组单词恢复";
+"restore_type.private_key.description" = "通过私钥导入";
+"restore_type.passkey.description" = "通过设备和 iCloud 恢复";
 "restore_type.passkey_smart.description" = "通过 Passkey 恢复智能账户钱包。";
-"restore_type.backup.description" = "使用设备或云端的备份文件恢复您的钱包。";
+"restore_type.backup.description" = "设备或云端的备份文件";
 
 // Restore Cloud
 
@@ -340,6 +340,7 @@
 
 "balance.add_wallet" = "添加钱包";
 "balance.no_tokens" = "这里没有代币。添加一个以开始。";
+"balance.no_wallets" = "没有钱包。请在下方添加。";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "剩余区块数 - %@";
@@ -405,7 +406,7 @@
 
 "switch_account.title" = "切换钱包";
 "switch_account.wallets" = "钱包";
-"switch_account.watch_wallets" = "观察地址";
+"switch_account.watch_wallets" = "观察钱包";
 
 // Release notes
 
@@ -1814,7 +1815,7 @@
 
 "manage_accounts.migration_required" = "需要迁移";
 "manage_accounts.migration_recommended" = "推荐迁移";
-"manage_accounts.backup_required" = "必须备份";
+"manage_accounts.backup_required" = "需要备份";
 
 // Manage Keys
 
@@ -2303,7 +2304,7 @@
 // Manage Accounts
 
 "manage_accounts.n_words" = "%@ 个单词";
-"manage_accounts.n_words_with_passphrase" = "%@ 个单词的密码";
+"manage_accounts.n_words_with_passphrase" = "%@ 个单词（含密码短语）";
 
 // Manage Account
 
@@ -2711,19 +2712,17 @@
 
 "add_wallet.title" = "添加钱包";
 "add_wallet.new_wallet" = "新钱包";
-"add_wallet.new_wallet.description" = "创建一个新钱包以开始使用，或添加一个新钱包。";
 "add_wallet.existing_wallet" = "已有钱包";
-"add_wallet.existing_wallet.description" = "如果您已有钱包，请导入以继续使用。";
 "add_wallet.watch_wallet" = "仅观察钱包";
-"add_wallet.watch_wallet.description" = "添加钱包以跟踪余额和活动，无法访问资金。";
+"add_wallet.watch_wallet.description" = "仅查看余额和活动";
 
 // New Wallet
 
 "new_wallet.title" = "新钱包";
 "new_wallet.standard" = "标准";
-"new_wallet.standard.description" = "带有恢复短语的钱包，需要手动备份。";
+"new_wallet.standard.description" = "手动备份恢复短语";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "带有恢复短语的钱包，由您的 iCloud 保存并保护。";
+"new_wallet.passkey.description" = "恢复短语由 iCloud 保护";
 "new_wallet.smart_account" = "智能账户";
 "new_wallet.smart_account.description" = "基于 Passkey 的钱包，支持 Gas 赞助。";
 

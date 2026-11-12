@@ -90,7 +90,7 @@
 "alert_card.title.critical" = "Avertissement!";
 "alert_card.title.caution" = "Attention!";
 
-"placeholder.search" = "Chercher";
+"placeholder.search" = "Rechercher";
 
 "status" = "Statut";
 "connecting" = "Connexion en cours...";
@@ -142,7 +142,7 @@
 
 // Restore
 
-"restore.title" = "Importer le porte-monnaie";
+"restore.title" = "Importer le portefeuille";
 "restore.advanced" = "Avancé";
 "restore.suggestions" = "Les suggestions de mots apparaîtront ici";
 "restore.mnemonic.placeholder" = "Entrez 12, 15, 18, 21 ou 24 mots";
@@ -166,20 +166,20 @@
 
 // Restore Type
 
-"restore_type.recovery.title" = "Voir la phase de récupération";
-"restore_type.private_key.title" = "depuis une Clé Privée";
-"restore_type.passkey.title" = "Depuis Passkey";
+"restore_type.recovery.title" = "depuis une phrase de récupération";
+"restore_type.private_key.title" = "depuis une clé privée";
+"restore_type.passkey.title" = "depuis Passkey";
 "restore_type.passkey_smart.title" = "depuis Passkey (Smart Account)";
 "send.fee.transfer" = "Frais de transfert";
 "send.fee.activation" = "Frais d'activation";
 "send.fee.includes_activation" = "Le premier envoi active le portefeuille GasFree on-chain.";
 "restore_type.backup.title" = "depuis une sauvegarde";
 
-"restore_type.recovery.description" = "Importer un wallet à l'aide d'une phrase de récupération.";
-"restore_type.private_key.description" = "Importer un wallet à l'aide d'une clé privée.";
-"restore_type.passkey.description" = "Restaurez votre wallet à l'aide de votre appareil et de votre compte iCloud.";
+"restore_type.recovery.description" = "Récupération avec une suite de mots";
+"restore_type.private_key.description" = "Importation avec une clé privée";
+"restore_type.passkey.description" = "Récupération avec l'appareil et iCloud";
 "restore_type.passkey_smart.description" = "Restaurez un portefeuille Smart Account à partir de votre passkey.";
-"restore_type.backup.description" = "Restaurez votre wallet à l'aide d'un fichier de sauvegarde depuis votre appareil ou le cloud.";
+"restore_type.backup.description" = "Fichier de sauvegarde sur l'appareil ou le cloud";
 
 // Restore Cloud
 
@@ -336,10 +336,11 @@
 "balance.stopped" = "Arrêté";
 "balance.downloading_sapling" = "Téléchargement en cours...";
 "balance.watch_wallet" = "Regarder les portefeuilles";
-"balance.watch_wallet.typed" = "Wallet d'observation %@";
+"balance.watch_wallet.typed" = "Portefeuille d'observation %@";
 
 "balance.add_wallet" = "Ajouter un wallet";
 "balance.no_tokens" = "Aucun token ici. Ajoutez-en un pour commencer.";
+"balance.no_wallets" = "Aucun portefeuille. Ajoutez-en un ci-dessous.";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Blocs restants - %@";
@@ -405,7 +406,7 @@
 
 "switch_account.title" = "Changer de portefeuille";
 "switch_account.wallets" = "Portefeuilles";
-"switch_account.watch_wallets" = "Regarder les portefeuilles";
+"switch_account.watch_wallets" = "Portefeuilles d'observation";
 
 // Release notes
 
@@ -1614,7 +1615,7 @@
 
 "manage_wallets.title" = "Portefeuilles";
 "manage_wallets.not_found" = "Aucun résultat trouvé. Essayez d'ajouter le token manuellement.";
-"manage_wallets.empty" = "Aucun wallet actif";
+"manage_wallets.empty" = "Aucun portefeuille actif";
 "manage_accounts.not_found" = "Aucun résultat trouvé.";
 "manage_wallets.search_placeholder" = "Nom, code ou adresse du contrat";
 "manage_wallets.derivation_description" = "Les portefeuilles %@ peuvent utiliser 4 formats d'adresse courants pour recevoir des paiements : \n\n- BIP44 (plus ancien)\n- BIP49\n- BIP84 (recommandé)\n- BIP86 (plus récent)\n\n. Bien que le portefeuille %@ prenne en charge ces 4 formats, il est recommandé d'utiliser un portefeuille %@ opérant au format BIP84.";
@@ -2711,19 +2712,17 @@
 
 "add_wallet.title" = "Ajouter un wallet";
 "add_wallet.new_wallet" = "Nouveau wallet";
-"add_wallet.new_wallet.description" = "Créez un nouveau wallet pour commencer ou en ajouter un nouveau.";
 "add_wallet.existing_wallet" = "Wallet existant";
-"add_wallet.existing_wallet.description" = "Importez votre wallet si vous en avez déjà un pour continuer à l'utiliser.";
 "add_wallet.watch_wallet" = "Wallet en lecture seule";
-"add_wallet.watch_wallet.description" = "Ajoutez un wallet pour suivre les soldes et l'activité sans accès aux fonds.";
+"add_wallet.watch_wallet.description" = "Solde et activité uniquement";
 
 // New Wallet
 
 "new_wallet.title" = "Nouveau wallet";
 "new_wallet.standard" = "Standard";
-"new_wallet.standard.description" = "Un portefeuille avec une phrase de récupération nécessitant une sauvegarde manuelle.";
+"new_wallet.standard.description" = "Sauvegarde manuelle de la phrase";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "Un portefeuille avec une phrase de récupération enregistrée et protégée par votre iCloud.";
+"new_wallet.passkey.description" = "Phrase protégée par iCloud";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Portefeuille sécurisé par passkey avec sponsoring des frais de gas.";
 

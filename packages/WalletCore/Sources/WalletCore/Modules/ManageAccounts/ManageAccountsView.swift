@@ -35,12 +35,26 @@ struct ManageAccountsView: View {
             .navigationBarTitle("settings_manage_keys.title".localized)
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Menu {
-                        ForEach(AddWalletOption.allCases, id: \.self) { option in
-                            menuButton(option: option)
-                        }
-                    } label: {
+                    // A toolbar Menu does not take .glassProminent on iOS 26, so a styled Button draws
+                    // the control and an invisible native Menu on top of it takes the taps.
+                    Button(action: {}) {
                         Image("wallet_add")
+                    }
+                    .modifier(ConfirmationButtonStyle())
+                    .accessibilityHidden(true)
+                    .overlay {
+                        Menu {
+                            ForEach(AddWalletOption.allCases, id: \.self) { option in
+                                menuButton(option: option)
+                            }
+                        } label: {
+                            Color.clear
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel("add_wallet.title".localized)
+                        .accessibilityIdentifier(TestTags.accountAdd)
                     }
                 }
 
@@ -61,6 +75,7 @@ struct ManageAccountsView: View {
         Button(option.label) {
             option.perform(parentPresented: parentPresented)
         }
+        .accessibilityIdentifier(option.accessibilityIdentifier)
     }
 
     private func itemView(item: ManageAccountsViewModel.Item, index: Int) -> some View {
@@ -119,21 +134,22 @@ extension ManageAccountsView {
     enum AddWalletOption: CaseIterable {
         case newWallet
         case existingWallet
-        case watchWallet
 
         var label: String {
             switch self {
             case .newWallet: return "add_wallet.new_wallet".localized
             case .existingWallet: return "add_wallet.existing_wallet".localized
-            case .watchWallet: return "add_wallet.watch_wallet".localized
+            }
+        }
+
+        var accessibilityIdentifier: String {
+            switch self {
+            case .newWallet: return TestTags.accountAddNewWallet
+            case .existingWallet: return TestTags.accountAddExistingWallet
             }
         }
 
         func perform(parentPresented: Binding<Bool>?) {
-            if case .watchWallet = self {
-                stat(page: .addWallet, event: .open(page: .watchWallet))
-            }
-
             Coordinator.shared.present { ownPresented in
                 ThemeNavigationStack {
                     destination(isPresented: ownPresented, parentPresented: parentPresented)
@@ -145,7 +161,6 @@ extension ManageAccountsView {
             switch self {
             case .newWallet: NewWalletTypeView(isPresented: isPresented, parentPresented: parentPresented, showClose: true)
             case .existingWallet: RestoreTypeView(isPresented: isPresented, parentPresented: parentPresented, showClose: true)
-            case .watchWallet: WatchView(isPresented: isPresented, parentPresented: parentPresented, showClose: true)
             }
         }
     }

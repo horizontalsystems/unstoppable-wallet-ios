@@ -10,18 +10,33 @@ struct RestoreTypeView: View {
     @State private var recoveryPhrasePresented = false
     @State private var privateKeyPresented = false
     @State private var backupPresented = false
+    @State private var watchPresented = false
 
     @State private var passkeyLogin: RestoreTypeViewModel.PasskeyLogin?
     @State private var restoreSelectPresented = false
 
     var body: some View {
         ScrollableThemeView {
-            ListSection {
-                ForEach(RestoreType.allCases) {
-                    row(restoreType: $0)
+            VStack(spacing: .margin16) {
+                ListSection {
+                    ForEach(RestoreType.allCases) {
+                        row(restoreType: $0)
+                    }
+                }
+
+                ListSection {
+                    row(
+                        icon: "eye_on",
+                        title: "add_wallet.watch_wallet".localized,
+                        subtitle: "add_wallet.watch_wallet.description".localized,
+                        accessibilityIdentifier: TestTags.onboardingWatchWallet
+                    ) {
+                        watchPresented = true
+                        stat(page: .addWallet, event: .open(page: .watchWallet))
+                    }
                 }
             }
-            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+            .padding(EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
         .navigationTitle("restore.title".localized)
         .navigationDestination(isPresented: $recoveryPhrasePresented) {
@@ -32,6 +47,9 @@ struct RestoreTypeView: View {
         }
         .navigationDestination(isPresented: $backupPresented) {
             RestoreBackupListView(isParentPresented: parentPresented ?? $isPresented)
+        }
+        .navigationDestination(isPresented: $watchPresented) {
+            WatchView(isPresented: $isPresented, parentPresented: parentPresented)
         }
         .navigationDestination(isPresented: $restoreSelectPresented) {
             if let passkeyLogin {
@@ -56,21 +74,30 @@ struct RestoreTypeView: View {
     }
 
     private func row(restoreType: RestoreType) -> some View {
+        row(
+            icon: restoreType.icon,
+            title: restoreType.title,
+            subtitle: restoreType.description,
+            accessibilityIdentifier: restoreType.accessibilityIdentifier
+        ) {
+            handleSelect(restoreType: restoreType)
+        }
+    }
+
+    private func row(icon: String, title: String, subtitle: String, accessibilityIdentifier: String, action: @escaping () -> Void) -> some View {
         Cell(
             left: {
-                ThemeImage(restoreType.icon, size: .iconSize24)
+                ThemeImage(icon, size: .iconSize24)
             },
             middle: {
-                MultiText(title: restoreType.title, subtitle: restoreType.description)
+                MultiText(title: title, subtitle: subtitle)
             },
             right: {
                 Image.disclosureIcon
             },
-            action: {
-                handleSelect(restoreType: restoreType)
-            }
+            action: action
         )
-        .accessibilityIdentifier(restoreType.accessibilityIdentifier)
+        .accessibilityIdentifier(accessibilityIdentifier)
     }
 
     private func handleSelect(restoreType: RestoreType) {

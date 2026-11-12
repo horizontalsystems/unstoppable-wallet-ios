@@ -16,36 +16,31 @@ struct WalletView: View {
                 }
             } else {
                 ThemeView {
-                    PlaceholderWrapperViewNew {
+                    PlaceholderWrapperViewNew(layoutType: .middle) {
                         VStack(spacing: .margin24) {
-                            Image("wallet_add").icon(size: .iconSize72).padding(16)
+                            ErrorMessage(icon: "wallet_add", subtitle: "balance.no_wallets".localized)
 
-                            AddWalletRowsView(
-                                onNewWallet: {
+                            VStack(spacing: .margin12) {
+                                ThemeButton(text: "add_wallet.new_wallet".localized) {
                                     Coordinator.shared.present { isPresented in
                                         ThemeNavigationStack {
                                             NewWalletTypeView(isPresented: isPresented, showClose: true)
                                         }
                                     }
-                                },
-                                onExistingWallet: {
+                                }
+                                .accessibilityIdentifier(TestTags.onboardingNewWallet)
+
+                                ThemeButton(text: "add_wallet.existing_wallet".localized, style: .secondary) {
                                     Coordinator.shared.present { isPresented in
                                         ThemeNavigationStack {
                                             RestoreTypeView(isPresented: isPresented, showClose: true)
                                         }
                                     }
-                                },
-                                onWatchWallet: {
-                                    Coordinator.shared.present { isPresented in
-                                        ThemeNavigationStack {
-                                            WatchView(isPresented: isPresented, showClose: true)
-                                        }
-                                    }
-                                    stat(page: .addWallet, event: .open(page: .watchWallet))
                                 }
-                            )
-                            .padding(.horizontal, .margin16)
+                                .accessibilityIdentifier(TestTags.onboardingExistingWallet)
+                            }
                         }
+                        .padding(.horizontal, .margin24)
                     }
                 }
             }

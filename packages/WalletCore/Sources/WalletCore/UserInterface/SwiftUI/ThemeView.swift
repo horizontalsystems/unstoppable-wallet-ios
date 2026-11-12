@@ -182,7 +182,7 @@ struct ConfirmationButtonStyle: ViewModifier {
                 content
                     .buttonStyle(.glassProminent)
                     .tint(.themeBrand)
-                    .foregroundStyle(Color.themeLawrence)
+                    .foregroundStyle(Color.themeWhite)
             } else {
                 content
                     .foregroundStyle(Color.themeBrand)

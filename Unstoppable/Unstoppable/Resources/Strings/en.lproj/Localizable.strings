@@ -175,11 +175,11 @@
 "send.fee.includes_activation" = "First send activates the GasFree wallet on-chain.";
 "restore_type.backup.title" = "from Backup";
 
-"restore_type.recovery.description" = "Import a wallet using a recovery phrase.";
-"restore_type.private_key.description" = "Import a wallet using a private key.";
-"restore_type.passkey.description" = "Restore your wallet using your device and iCloud account.";
+"restore_type.recovery.description" = "Recovery with a word sequence";
+"restore_type.private_key.description" = "Import with a private key";
+"restore_type.passkey.description" = "Recovery with device and iCloud";
 "restore_type.passkey_smart.description" = "Restore a Smart Account wallet from your passkey.";
-"restore_type.backup.description" = "Restore your wallet using a backup file from your device or cloud.";
+"restore_type.backup.description" = "Backup file on device or in cloud";
 
 // Restore Cloud
 
@@ -340,6 +340,7 @@
 
 "balance.add_wallet" = "Add Wallet";
 "balance.no_tokens" = "No tokens here. Add one to begin.";
+"balance.no_wallets" = "No wallets. Add one below.";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Blocks Remaining - %@";
@@ -2711,19 +2712,17 @@
 
 "add_wallet.title" = "Add Wallet";
 "add_wallet.new_wallet" = "New Wallet";
-"add_wallet.new_wallet.description" = "Create a new wallet to get started or add a new one.";
 "add_wallet.existing_wallet" = "Existing Wallet";
-"add_wallet.existing_wallet.description" = "Import your wallet if you already have one to continue using it.";
-"add_wallet.watch_wallet" = "View Only Wallet";
-"add_wallet.watch_wallet.description" = "Add a wallet to track balances and activity without access to funds.";
+"add_wallet.watch_wallet" = "View-Only Wallet";
+"add_wallet.watch_wallet.description" = "Balance and activity only";
 
 // New Wallet
 
 "new_wallet.title" = "New Wallet";
 "new_wallet.standard" = "Standard";
-"new_wallet.standard.description" = "A wallet with a recovery phrase that requires manual backup.";
+"new_wallet.standard.description" = "Manual recovery phrase backup";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "A wallet with a recovery phrase saved and protected by your iCloud.";
+"new_wallet.passkey.description" = "Phrase protected by iCloud";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Passkey-backed wallet with gas sponsorship.";
 

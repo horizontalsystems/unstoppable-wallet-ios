@@ -142,7 +142,7 @@
 
 // Restore
 
-"restore.title" = "Cuzdan Yükle";
+"restore.title" = "Cüzdanı İçe Aktar";
 "restore.advanced" = "İleri düzey";
 "restore.suggestions" = "Kelime önerileri burada görünecek";
 "restore.mnemonic.placeholder" = "12, 15, 18, 21 veya 24 kelime girin";
@@ -175,11 +175,11 @@
 "send.fee.includes_activation" = "İlk gönderim, GasFree cüzdanını zincir üzerinde etkinleştirir.";
 "restore_type.backup.title" = "Yedekten";
 
-"restore_type.recovery.description" = "Kurtarma ifadesi kullanarak bir cüzdan içe aktarın.";
-"restore_type.private_key.description" = "Özel anahtar kullanarak bir cüzdan içe aktarın.";
-"restore_type.passkey.description" = "Cüzdanınızı cihazınız ve iCloud hesabınızı kullanarak geri yükleyin.";
+"restore_type.recovery.description" = "Kelime dizisi ile kurtarma";
+"restore_type.private_key.description" = "Özel anahtar ile içe aktarma";
+"restore_type.passkey.description" = "Cihaz ve iCloud ile kurtarma";
 "restore_type.passkey_smart.description" = "Passkey'inizden bir Smart Account cüzdanını geri yükleyin.";
-"restore_type.backup.description" = "Cihazınızdaki veya buluttaki bir yedekleme dosyasını kullanarak cüzdanınızı geri yükleyin.";
+"restore_type.backup.description" = "Cihazdaki veya buluttaki yedek dosyası";
 
 // Restore Cloud
 
@@ -319,7 +319,7 @@
 
 // Balance
 
-"balance.title" = "Cüzdanı";
+"balance.title" = "Cüzdan";
 "balance.send" = "Gönder";
 "balance.swap" = "Takas";
 "balance.receive" = "Al";
@@ -340,6 +340,7 @@
 
 "balance.add_wallet" = "Cüzdan Ekle";
 "balance.no_tokens" = "Burada token yok. Başlamak için bir tane ekleyin.";
+"balance.no_wallets" = "Cüzdan yok. Aşağıdan bir tane ekleyin.";
 
 "balance.searching.count" = "%@ işlem";
 "balance.remaining" = "Kalan Bloklar - %@";
@@ -405,7 +406,7 @@
 
 "switch_account.title" = "Cüzdan Değiştir";
 "switch_account.wallets" = "Cüzdanlar";
-"switch_account.watch_wallets" = "Cüzdan İzle";
+"switch_account.watch_wallets" = "İzleme Cüzdanları";
 
 // Release notes
 
@@ -1818,7 +1819,7 @@
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Cüzdanları yönet";
+"settings_manage_keys.title" = "Cüzdanları Yönet";
 "settings_manage_keys.delete" = "Sil";
 "settings_manage_keys.backup" = "Yedekle";
 "settings_manage_keys.delete.title" = "Cüzdanı Sil";
@@ -2303,7 +2304,7 @@
 // Manage Accounts
 
 "manage_accounts.n_words" = "%@ kelime";
-"manage_accounts.n_words_with_passphrase" = "%@ parolalı kelime";
+"manage_accounts.n_words_with_passphrase" = "%@ kelime, parolalı";
 
 // Manage Account
 
@@ -2711,19 +2712,17 @@
 
 "add_wallet.title" = "Cüzdan Ekle";
 "add_wallet.new_wallet" = "Yeni Cüzdan";
-"add_wallet.new_wallet.description" = "Başlamak için yeni bir cüzdan oluşturun veya yeni bir tane ekleyin.";
 "add_wallet.existing_wallet" = "Mevcut Cüzdan";
-"add_wallet.existing_wallet.description" = "Zaten bir cüzdanınız varsa kullanmaya devam etmek için içe aktarın.";
 "add_wallet.watch_wallet" = "Salt Okunur Cüzdan";
-"add_wallet.watch_wallet.description" = "Fonlara erişim olmadan bakiyeleri ve etkinliği takip etmek için bir cüzdan ekleyin.";
+"add_wallet.watch_wallet.description" = "Yalnızca bakiye ve etkinlik";
 
 // New Wallet
 
 "new_wallet.title" = "Yeni Cüzdan";
 "new_wallet.standard" = "Standart";
-"new_wallet.standard.description" = "Manuel yedekleme gerektiren bir kurtarma ifadesine sahip cüzdan.";
+"new_wallet.standard.description" = "Kurtarma ifadesinin manuel yedeği";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "Kurtarma ifadesi iCloud'unuz tarafından kaydedilen ve korunan bir cüzdan.";
+"new_wallet.passkey.description" = "İfade iCloud ile korunur";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Gas sponsorluğu ile passkey destekli cüzdan.";
 

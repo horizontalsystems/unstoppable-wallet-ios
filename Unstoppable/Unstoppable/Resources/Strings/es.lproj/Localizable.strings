@@ -166,20 +166,20 @@
 
 // Restore Type
 
-"restore_type.recovery.title" = "de Frase de Recuperación";
-"restore_type.private_key.title" = "desde Clave Privada";
-"restore_type.passkey.title" = "Desde Passkey";
+"restore_type.recovery.title" = "desde frase de recuperación";
+"restore_type.private_key.title" = "desde clave privada";
+"restore_type.passkey.title" = "desde Passkey";
 "restore_type.passkey_smart.title" = "desde Passkey (Smart Account)";
 "send.fee.transfer" = "Comisión de transferencia";
 "send.fee.activation" = "Comisión de activación";
 "send.fee.includes_activation" = "El primer envío activa la wallet GasFree en la cadena.";
 "restore_type.backup.title" = "desde copia de seguridad";
 
-"restore_type.recovery.description" = "Importar un wallet usando una frase de recuperación.";
-"restore_type.private_key.description" = "Importar un wallet usando una clave privada.";
-"restore_type.passkey.description" = "Restaura tu wallet usando tu dispositivo y cuenta de iCloud.";
+"restore_type.recovery.description" = "Recuperación con una secuencia de palabras";
+"restore_type.private_key.description" = "Importación con una clave privada";
+"restore_type.passkey.description" = "Recuperación con dispositivo e iCloud";
 "restore_type.passkey_smart.description" = "Restaura una wallet Smart Account desde tu passkey.";
-"restore_type.backup.description" = "Restaura tu wallet usando un archivo de respaldo de tu dispositivo o la nube.";
+"restore_type.backup.description" = "Archivo de copia en el dispositivo o en la nube";
 
 // Restore Cloud
 
@@ -340,6 +340,7 @@
 
 "balance.add_wallet" = "Añadir wallet";
 "balance.no_tokens" = "No hay tokens aquí. Añade uno para comenzar.";
+"balance.no_wallets" = "No hay carteras. Añade una abajo.";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Bloques restantes - %@";
@@ -405,7 +406,7 @@
 
 "switch_account.title" = "Cambiar cartera";
 "switch_account.wallets" = "Carteras";
-"switch_account.watch_wallets" = "Ver carteras";
+"switch_account.watch_wallets" = "Carteras de observación";
 
 // Release notes
 
@@ -2711,19 +2712,17 @@
 
 "add_wallet.title" = "Añadir wallet";
 "add_wallet.new_wallet" = "Nueva wallet";
-"add_wallet.new_wallet.description" = "Crea una nueva wallet para comenzar o añade una nueva.";
 "add_wallet.existing_wallet" = "Wallet existente";
-"add_wallet.existing_wallet.description" = "Importa tu wallet si ya tienes una para seguir usándola.";
 "add_wallet.watch_wallet" = "Wallet de solo lectura";
-"add_wallet.watch_wallet.description" = "Añade una wallet para seguir saldos y actividad sin acceso a los fondos.";
+"add_wallet.watch_wallet.description" = "Solo saldo y actividad";
 
 // New Wallet
 
 "new_wallet.title" = "Nueva wallet";
 "new_wallet.standard" = "Estándar";
-"new_wallet.standard.description" = "Una wallet con una frase de recuperación que requiere una copia de seguridad manual.";
+"new_wallet.standard.description" = "Copia manual de la frase de recuperación";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "Una wallet con una frase de recuperación guardada y protegida por tu iCloud.";
+"new_wallet.passkey.description" = "Frase protegida por iCloud";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Wallet respaldada por passkey con patrocinio de gas.";
 

@@ -142,7 +142,7 @@
 
 // Restore
 
-"restore.title" = "다음에서 복원하기";
+"restore.title" = "지갑 가져오기";
 "restore.advanced" = "고급의";
 "restore.suggestions" = "단어 추천이 여기에 표시됩니다";
 "restore.mnemonic.placeholder" = "12, 15, 18, 21 또는 24단어 입력";
@@ -168,18 +168,18 @@
 
 "restore_type.recovery.title" = "복구 문구에서";
 "restore_type.private_key.title" = "프라이빗 키에서";
-"restore_type.passkey.title" = "패스키로 복원";
+"restore_type.passkey.title" = "패스키에서";
 "restore_type.passkey_smart.title" = "패스키에서 복원 (스마트 계정)";
 "send.fee.transfer" = "전송 수수료";
 "send.fee.activation" = "활성화 수수료";
 "send.fee.includes_activation" = "첫 번째 전송 시 GasFree 지갑이 온체인에서 활성화됩니다.";
 "restore_type.backup.title" = "백업에서";
 
-"restore_type.recovery.description" = "복구 문구를 사용하여 지갑을 가져옵니다.";
-"restore_type.private_key.description" = "프라이빗 키를 사용하여 지갑을 가져옵니다.";
-"restore_type.passkey.description" = "기기와 iCloud 계정을 사용하여 지갑을 복원합니다.";
+"restore_type.recovery.description" = "일련의 단어로 복구";
+"restore_type.private_key.description" = "프라이빗 키로 가져오기";
+"restore_type.passkey.description" = "기기와 iCloud로 복구";
 "restore_type.passkey_smart.description" = "패스키를 사용하여 스마트 계정 지갑을 복원합니다.";
-"restore_type.backup.description" = "기기 또는 클라우드의 백업 파일을 사용하여 지갑을 복원하세요.";
+"restore_type.backup.description" = "기기 또는 클라우드의 백업 파일";
 
 // Restore Cloud
 
@@ -336,10 +336,11 @@
 "balance.stopped" = "은행 정지";
 "balance.downloading_sapling" = "다운로드 중...";
 "balance.watch_wallet" = "조회 전용 지갑";
-"balance.watch_wallet.typed" = "%@ 감시 지갑";
+"balance.watch_wallet.typed" = "%@ 조회 전용 지갑";
 
 "balance.add_wallet" = "지갑 추가";
 "balance.no_tokens" = "토큰이 없습니다. 하나를 추가하여 시작하세요.";
+"balance.no_wallets" = "지갑이 없습니다. 아래에서 추가하세요.";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "남은 블록 수 - %@";
@@ -405,7 +406,7 @@
 
 "switch_account.title" = "지갑 변경";
 "switch_account.wallets" = "지갑";
-"switch_account.watch_wallets" = "관찰 주소";
+"switch_account.watch_wallets" = "조회 전용 지갑";
 
 // Release notes
 
@@ -1814,7 +1815,7 @@
 
 "manage_accounts.migration_required" = "마이그레이션 필요함";
 "manage_accounts.migration_recommended" = "마이그레이션 권장";
-"manage_accounts.backup_required" = "백업이 필요합니다";
+"manage_accounts.backup_required" = "백업 필요";
 
 // Manage Keys
 
@@ -2303,7 +2304,7 @@
 // Manage Accounts
 
 "manage_accounts.n_words" = "%@ 단어";
-"manage_accounts.n_words_with_passphrase" = "암호 문구로 이루어진 %@ 단어";
+"manage_accounts.n_words_with_passphrase" = "%@ 단어 (암호 문구 포함)";
 
 // Manage Account
 
@@ -2711,19 +2712,17 @@
 
 "add_wallet.title" = "지갑 추가";
 "add_wallet.new_wallet" = "새 지갑";
-"add_wallet.new_wallet.description" = "새 지갑을 생성하여 시작하거나 새 지갑을 추가하세요.";
 "add_wallet.existing_wallet" = "기존 지갑";
-"add_wallet.existing_wallet.description" = "이미 지갑이 있다면 가져와서 계속 사용하세요.";
 "add_wallet.watch_wallet" = "조회 전용 지갑";
-"add_wallet.watch_wallet.description" = "자금에 대한 접근 없이 잔액과 활동을 추적할 지갑을 추가합니다.";
+"add_wallet.watch_wallet.description" = "잔액 및 활동만 조회";
 
 // New Wallet
 
 "new_wallet.title" = "새 지갑";
 "new_wallet.standard" = "표준";
-"new_wallet.standard.description" = "수동 백업이 필요한 복구 문구가 포함된 지갑입니다.";
+"new_wallet.standard.description" = "복구 문구 수동 백업";
 "new_wallet.passkey" = "패스키";
-"new_wallet.passkey.description" = "복구 문구가 iCloud에 의해 저장되고 보호되는 지갑입니다.";
+"new_wallet.passkey.description" = "iCloud로 보호되는 복구 문구";
 "new_wallet.smart_account" = "스마트 계정";
 "new_wallet.smart_account.description" = "가스 스폰서십을 지원하는 패스키 기반 지갑.";
 

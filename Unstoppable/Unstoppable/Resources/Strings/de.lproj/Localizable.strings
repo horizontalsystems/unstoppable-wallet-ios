@@ -166,20 +166,20 @@
 
 // Restore Type
 
-"restore_type.recovery.title" = "von Wiederherstellungsphrase";
+"restore_type.recovery.title" = "aus Wiederherstellungsphrase";
 "restore_type.private_key.title" = "aus Private Key";
-"restore_type.passkey.title" = "Über Passkey";
+"restore_type.passkey.title" = "über Passkey";
 "restore_type.passkey_smart.title" = "von Passkey (Smart Account)";
 "send.fee.transfer" = "Überweisungsgebühr";
 "send.fee.activation" = "Aktivierungsgebühr";
 "send.fee.includes_activation" = "Der erste Versand aktiviert das GasFree-Wallet on-chain.";
 "restore_type.backup.title" = "aus Backup";
 
-"restore_type.recovery.description" = "Wallet mit einer Wiederherstellungsphrase importieren.";
-"restore_type.private_key.description" = "Wallet mit einem Private Key importieren.";
-"restore_type.passkey.description" = "Stelle deine Wallet mit deinem Gerät und iCloud-Konto wieder her.";
+"restore_type.recovery.description" = "Wiederherstellung mit einer Wortfolge";
+"restore_type.private_key.description" = "Import mit einem Private Key";
+"restore_type.passkey.description" = "Wiederherstellung mit Gerät und iCloud";
 "restore_type.passkey_smart.description" = "Stellen Sie ein Smart-Account-Wallet mit Ihrem Passkey wieder her.";
-"restore_type.backup.description" = "Stellen Sie Ihr Wallet mithilfe einer Sicherungsdatei von Ihrem Gerät oder der Cloud wieder her.";
+"restore_type.backup.description" = "Backup-Datei auf dem Gerät oder in der Cloud";
 
 // Restore Cloud
 
@@ -340,6 +340,7 @@
 
 "balance.add_wallet" = "Wallet hinzufügen";
 "balance.no_tokens" = "Keine Token vorhanden. Fügen Sie einen hinzu, um zu beginnen.";
+"balance.no_wallets" = "Keine Wallets. Unten hinzufügen.";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Verbleibende Blöcke – %@";
@@ -405,7 +406,7 @@
 
 "switch_account.title" = "Wallet wechseln";
 "switch_account.wallets" = "Wallets";
-"switch_account.watch_wallets" = "Watch-Adresse";
+"switch_account.watch_wallets" = "Watch-Wallets";
 
 // Release notes
 
@@ -1814,7 +1815,7 @@
 
 "manage_accounts.migration_required" = "Migration erforderlich";
 "manage_accounts.migration_recommended" = "Migration empfohlen";
-"manage_accounts.backup_required" = "Sicherung erforderlich";
+"manage_accounts.backup_required" = "Backup erforderlich";
 
 // Manage Keys
 
@@ -2711,19 +2712,17 @@
 
 "add_wallet.title" = "Wallet hinzufügen";
 "add_wallet.new_wallet" = "Neue Wallet";
-"add_wallet.new_wallet.description" = "Erstelle eine neue Wallet, um loszulegen oder eine weitere hinzuzufügen.";
 "add_wallet.existing_wallet" = "Vorhandene Wallet";
-"add_wallet.existing_wallet.description" = "Importiere deine Wallet, wenn du bereits eine hast, um sie weiter zu nutzen.";
 "add_wallet.watch_wallet" = "Nur-Ansicht-Wallet";
-"add_wallet.watch_wallet.description" = "Eine Wallet hinzufügen, um Kontostände und Aktivitäten zu verfolgen, ohne Zugriff auf das Guthaben.";
+"add_wallet.watch_wallet.description" = "Nur Kontostand und Aktivität";
 
 // New Wallet
 
 "new_wallet.title" = "Neue Wallet";
 "new_wallet.standard" = "Standard";
-"new_wallet.standard.description" = "Ein Wallet mit einer Wiederherstellungsphrase, die manuell gesichert werden muss.";
+"new_wallet.standard.description" = "Manuelles Backup der Phrase";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "Ein Wallet mit einer Wiederherstellungsphrase, die in Ihrer iCloud gespeichert und geschützt wird.";
+"new_wallet.passkey.description" = "Phrase durch iCloud geschützt";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Passkey-gesichertes Wallet mit Gas-Sponsoring.";
 
