@@ -233,13 +233,37 @@ class CheckTestTagsTest(unittest.TestCase):
         self.assertIn("::notice", out)
         self.assertIn("branch_tag", out)
 
-    def test_inline_mapping_selector_is_unquoted(self):
+    def test_inline_mapping_selector_is_read(self):
         self.tags('enum TestTags {\n    static let kept = "kept"\n}\n')
-        self.flow("a", '- tapOn: {id: "kept"}\n')
+        for body in ('- tapOn: {id: kept}\n', '- tapOn: {id: "kept"}\n'):
+            self.flow("a", body)
+            code, out = self.run_main("flows")
+            self.assertEqual(code, 0)
+            self.assertNotIn("::notice", out)
+            self.assertIn("1 id selectors", out)
+            os.remove("flows/a.yaml")
+
+    def test_variable_selector_removed_literal_fails(self):
+        self.tags(
+            'enum TestTags {\n    static let sendButton = "send_button"\n'
+            '    static let kept = "kept"\n}\n'
+        )
+        self.flow("a", '- tapOn:\n    id: send_${KIND}\n')
+        self.git_base()
+        self.tags('enum TestTags {\n    static let kept = "kept"\n}\n')
+        code, out = self.run_main("--base", "HEAD", "flows")
+        self.assertEqual(code, 1)
+        self.assertIn(
+            "::error file=flows/a.yaml,line=4::Test tag 'send_${KIND}' was declared by the base",
+            out,
+        )
+
+    def test_empty_selector_value_does_not_crash(self):
+        self.tags('enum TestTags {\n    static let kept = "kept"\n}\n')
+        self.flow("a", '- tapOn:\n    id: \n')
         code, out = self.run_main("flows")
         self.assertEqual(code, 0)
-        self.assertNotIn("::notice", out)
-        self.assertIn("1 id selectors", out)
+        self.assertNotIn("::error", out)
 
     def test_empty_platform_is_shared(self):
         self.tags('enum TestTags {\n    static let known = "known"\n}\n')

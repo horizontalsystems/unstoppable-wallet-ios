@@ -73,6 +73,25 @@ def unquote(value: str) -> str:
     return value
 
 
+def selector_value(text: str) -> str:
+    """A selector's value with its inline-mapping tail removed.
+
+    A trailing `}` belongs to an inline mapping only when the value's braces are
+    unbalanced, and a flow variable's own `}` balances its `${`.
+    """
+    value = COMMENT.sub("", text).strip()
+    if value.startswith(('"', "'")):
+        quote = value[0]
+        while len(value) > 1 and not value.endswith(quote) and value[-1] in ",}":
+            value = value[:-1].rstrip()
+        return unquote(value)
+    while value and value[-1] in ",}":
+        if value[-1] == "}" and value.count("}") <= value.count("{"):
+            break
+        value = value[:-1].rstrip()
+    return unquote(value)
+
+
 def parse_declarations(source: str) -> Declarations:
     literals = LET.findall(source)
     patterns = [re.compile(re.escape(value)) for value in literals]
@@ -168,8 +187,7 @@ def selectors(path: str):
         match = SELECTOR.search(line)
         if not match:
             continue
-        value = unquote(COMMENT.sub("", match.group(1)).strip().rstrip(",}").strip())
-        yield index + 1, value
+        yield index + 1, selector_value(match.group(1))
 
 
 def drives_wallet(path: str) -> bool:
