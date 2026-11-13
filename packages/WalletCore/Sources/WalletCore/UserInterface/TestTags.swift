@@ -117,6 +117,7 @@ enum TestTags {
     }
 
     static let balanceTotal = "balance_total"
+    static let balanceConverted = "balance_converted"
 
     static let balanceScan = "balance_scan"
     static let balanceReceive = "balance_receive"
@@ -141,6 +142,7 @@ enum TestTags {
     }
 
     static let tokenBalance = "token_balance"
+    static let tokenConverted = "token_converted"
     static let tokenChart = "token_chart"
     static let tokenReceive = "token_receive"
     static let tokenSend = "token_send"

@@ -6,25 +6,18 @@ struct WalletTokenTopView<Content: View, Status: View>: View {
     @ViewBuilder let content: () -> Content
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
-            VStack(alignment: .leading, spacing: 0) {
-                ThemeText(primaryValue, style: .title2)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        viewModel.onTapAmount()
-                        HapticGenerator.instance.notification(.feedback(.soft))
-                    }
-
-                PrimarySizedHStack(spacing: .margin8) {
-                    ThemeText(secondaryValue, style: .body, colorStyle: .secondary)
-                } trailing: {
-                    status()
-                }
-            }
-            .accessibilityElement(children: .contain)
-            .accessibilityIdentifier(TestTags.tokenBalance)
-            .padding(.horizontal, 16)
+        VStack(alignment: .leading, spacing: 0) {
+            AmountText(
+                title: primaryValue,
+                subtitle: secondaryValue,
+                identifier: TestTags.tokenBalance,
+                subtitleIdentifier: TestTags.tokenConverted,
+                onTapTitle: {
+                    viewModel.onTapAmount()
+                    HapticGenerator.instance.notification(.feedback(.soft))
+                },
+                subtitleTrailing: status
+            )
 
             VStack(spacing: 0) {
                 if !viewModel.wallet.account.watchAccount {
@@ -58,7 +51,6 @@ struct WalletTokenTopView<Content: View, Status: View>: View {
                 content()
             }
         }
-        .padding(.top, 24)
         .background(Color.themeTyler)
         .listRowBackground(Color.clear)
         .listRowInsets(EdgeInsets())

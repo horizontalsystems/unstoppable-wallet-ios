@@ -102,25 +102,20 @@ struct WalletView: View {
 
     private func topView(account: Account) -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            VStack(alignment: .leading, spacing: 0) {
-                ThemeText(primaryValue, style: .title2)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        viewModel.onTapAmount()
-                        HapticGenerator.instance.notification(.feedback(.soft))
-                    }
-
-                ThemeText(secondaryValue, style: .body, colorStyle: .secondary)
-                    .onTapGesture {
-                        viewModel.onTapConvertedAmount()
-                        HapticGenerator.instance.notification(.feedback(.soft))
-                    }
-            }
-            .accessibilityElement(children: .contain)
-            .accessibilityIdentifier(TestTags.balanceTotal)
-            .padding(.vertical, 24)
-            .padding(.horizontal, 16)
+            AmountText(
+                title: primaryValue,
+                subtitle: secondaryValue,
+                identifier: TestTags.balanceTotal,
+                subtitleIdentifier: TestTags.balanceConverted,
+                onTapTitle: {
+                    viewModel.onTapAmount()
+                    HapticGenerator.instance.notification(.feedback(.soft))
+                },
+                onTapSubtitle: {
+                    viewModel.onTapConvertedAmount()
+                    HapticGenerator.instance.notification(.feedback(.soft))
+                }
+            )
 
             if account.watchAccount, let address = account.type.watchAddress {
                 Cell(
@@ -355,7 +350,7 @@ struct WalletView: View {
 //        }
 
         return ComponentText(
-            text: viewModel.totalItem.convertedValue.flatMap { $0.formattedWith(rounding: viewModel.amountRounding) }.map { "≈ \($0)" } ?? String.placeholder,
+            text: viewModel.totalItem.convertedValue.flatMap { $0.formattedWith(rounding: viewModel.amountRounding) }.map { "≈\($0)" } ?? String.placeholder,
             dimmed: false
         )
     }
