@@ -10,7 +10,10 @@ What it reads: every `*.yaml` under the given directories, line by line, with
 no YAML library. A flow whose header `appId` is another app is skipped, and so
 are the `when: platform` branches of any platform but iOS. A name built by a
 function in TestTags.swift is checked only up to its variable part: the
-interpolation matches any text, so a typo inside it passes.
+interpolation matches any text, so a typo inside it passes. A selector holding
+a flow variable or a regex wildcard is matched both ways: as a sample against
+every declaration, and as a pattern against the literal names. So it selects a
+literal name its pattern covers.
 
 Outcomes:
   ::error  (exit 1)  with --base: an id the base declared and the tree no
@@ -31,6 +34,7 @@ import os
 import re
 import subprocess
 import sys
+from typing import NamedTuple
 
 TEST_TAGS = "packages/WalletCore/Sources/WalletCore/UserInterface/TestTags.swift"
 DEFAULT_FLOWS = ["maestro/appkb/flows"]
@@ -45,10 +49,12 @@ SWIFT_INTERPOLATION = re.compile(r"\\\((?:[^()]|\([^()]*\))*\)")
 
 SELECTOR = re.compile(r"(?<![\w-])id:\s*(.+)$")
 RUN_FLOW = re.compile(r"^(\s*)- runFlow:")
-PLATFORM = re.compile(r"^\s*platform:\s*(\w+)")
+PLATFORM = re.compile(r"^\s*platform:\s*(.*)$")
+COMMENT = re.compile(r"\s+#.*$")
 APP_ID = re.compile(r"^appId:\s*(.*)$")
 # ${expression} in a flow, or a regex wildcard: Maestro matches id as a regex
 FLOW_VARIABLE = re.compile(r"\$\{.*?\}|\.[*+]")
+FLOW_EXPRESSION = re.compile(r"\$\{.*?\}")
 SAMPLE = "x1"
 
 
@@ -56,27 +62,39 @@ class SetupError(Exception):
     """The check cannot run; main reports it and returns 2."""
 
 
-def parse_declarations(source: str) -> list[re.Pattern]:
-    patterns = [re.compile(re.escape(value)) for value in LET.findall(source)]
+class Declarations(NamedTuple):
+    literals: list[str]
+    patterns: list[re.Pattern]
+
+
+def unquote(value: str) -> str:
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+        return value[1:-1]
+    return value
+
+
+def parse_declarations(source: str) -> Declarations:
+    literals = LET.findall(source)
+    patterns = [re.compile(re.escape(value)) for value in literals]
     for template in FUNCTION.findall(source):
         parts = SWIFT_INTERPOLATION.split(template)
         patterns.append(re.compile(".+".join(re.escape(part) for part in parts)))
-    return patterns
+    return Declarations(literals, patterns)
 
 
-def tree_declarations() -> list[re.Pattern]:
+def tree_declarations() -> Declarations:
     try:
         with open(TEST_TAGS, encoding="utf-8") as file:
             source = file.read()
     except OSError as error:
         raise SetupError(f"cannot read {TEST_TAGS}: {error}")
-    patterns = parse_declarations(source)
-    if not patterns:
+    declarations = parse_declarations(source)
+    if not declarations.patterns:
         raise SetupError(f"{TEST_TAGS} declares no test tag")
-    return patterns
+    return declarations
 
 
-def base_declarations(ref: str) -> list[re.Pattern]:
+def base_declarations(ref: str) -> Declarations:
     try:
         verify = subprocess.run(
             ["git", "rev-parse", "--verify", "--quiet", f"{ref}^{{commit}}"],
@@ -91,35 +109,67 @@ def base_declarations(ref: str) -> list[re.Pattern]:
         ["git", "show", f"{ref}:{TEST_TAGS}"], capture_output=True, text=True
     )
     if show.returncode != 0:
-        return []
+        return Declarations([], [])
     return parse_declarations(show.stdout)
 
 
+def platform_of(line: str) -> str | None:
+    """The platform a `platform:` line names, or None when it names none."""
+    match = PLATFORM.match(line)
+    if not match:
+        return None
+    return unquote(COMMENT.sub("", match.group(1)).strip()) or None
+
+
+def run_flow_platforms(lines: list[str]) -> dict[int, str | None]:
+    """The platform of each `- runFlow:` block, keyed by its line index.
+
+    A block's platform is its first non-empty `platform:` line, so it is known
+    before any selector inside the block is judged, whatever the order of keys.
+    """
+    platforms: dict[int, str | None] = {}
+    # (indent of the "- runFlow:" line, index of that line)
+    stack: list[tuple[int, int]] = []
+    for index, line in enumerate(lines):
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        indent = len(line) - len(line.lstrip())
+        while stack and indent <= stack[-1][0]:
+            stack.pop()
+        if match := RUN_FLOW.match(line):
+            platforms[index] = None
+            stack.append((len(match.group(1)), index))
+            continue
+        if stack and platforms[stack[-1][1]] is None:
+            platforms[stack[-1][1]] = platform_of(line)
+    return platforms
+
+
 def selectors(path: str):
-    # (indent of the "- runFlow:" line, platform its when names, or None)
-    run_flows: list[list] = []
     with open(path, encoding="utf-8") as file:
-        for number, line in enumerate(file, start=1):
-            if not line.strip() or line.lstrip().startswith("#"):
-                continue
-            indent = len(line) - len(line.lstrip())
-            while run_flows and indent <= run_flows[-1][0]:
-                run_flows.pop()
-            if match := RUN_FLOW.match(line):
-                run_flows.append([len(match.group(1)), None])
-                continue
-            if run_flows and (match := PLATFORM.match(line)):
-                run_flows[-1][1] = match.group(1)
-                continue
-            if any(platform not in (None, "iOS") for _, platform in run_flows):
-                continue
-            match = SELECTOR.search(line)
-            if not match:
-                continue
-            value = re.sub(r"\s+#.*$", "", match.group(1)).strip().rstrip(",}").strip()
-            if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
-                value = value[1:-1]
-            yield number, value
+        lines = file.readlines()
+    platforms = run_flow_platforms(lines)
+    # (indent of the "- runFlow:" line, platform its when names, or None); a
+    # branch is skipped as a whole, so its commands may precede its when
+    run_flows: list[tuple[int, str | None]] = []
+    for index, line in enumerate(lines):
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        indent = len(line) - len(line.lstrip())
+        while run_flows and indent <= run_flows[-1][0]:
+            run_flows.pop()
+        if match := RUN_FLOW.match(line):
+            run_flows.append((len(match.group(1)), platforms[index]))
+            continue
+        if run_flows and PLATFORM.match(line):
+            continue
+        if any(platform not in (None, "iOS") for _, platform in run_flows):
+            continue
+        match = SELECTOR.search(line)
+        if not match:
+            continue
+        value = unquote(COMMENT.sub("", match.group(1)).strip().rstrip(",}").strip())
+        yield index + 1, value
 
 
 def drives_wallet(path: str) -> bool:
@@ -133,9 +183,7 @@ def drives_wallet(path: str) -> bool:
             if line.strip() == "---":
                 break
             if match := APP_ID.match(line):
-                value = re.sub(r"\s+#.*$", "", match.group(1)).strip()
-                if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
-                    value = value[1:-1]
+                value = unquote(COMMENT.sub("", match.group(1)).strip())
                 return "APP_ID" in value or value.startswith("io.horizontalsystems.")
     return False
 
@@ -152,6 +200,28 @@ def collect_flows(dirs: list[str]) -> list[str]:
 
 def matches(patterns: list[re.Pattern], sample: str) -> bool:
     return any(pattern.fullmatch(sample) for pattern in patterns)
+
+
+def selector_pattern(value: str) -> re.Pattern | None:
+    """The selector read as a regular expression, or None for a plain id.
+
+    Maestro reads `id` as a regular expression, so the text is kept as written
+    and each `${...}` stands for any text.
+    """
+    if not FLOW_VARIABLE.search(value):
+        return None
+    try:
+        return re.compile(".*".join(FLOW_EXPRESSION.split(value)))
+    except re.error:
+        return None
+
+
+def selects(declarations: Declarations, sample: str, pattern: re.Pattern | None) -> bool:
+    if matches(declarations.patterns, sample):
+        return True
+    return pattern is not None and any(
+        pattern.fullmatch(literal) for literal in declarations.literals
+    )
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -173,7 +243,7 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         tree = tree_declarations()
-        base = base_declarations(args.base) if args.base else []
+        base = base_declarations(args.base) if args.base else Declarations([], [])
         paths = collect_flows(args.flows)
     except SetupError as error:
         print(error, file=sys.stderr)
@@ -189,9 +259,10 @@ def main(argv: list[str] | None = None) -> int:
             if sample.replace(SAMPLE, "") == "":
                 continue
             checked += 1
-            if matches(tree, sample):
+            pattern = selector_pattern(value)
+            if selects(tree, sample, pattern):
                 continue
-            if args.base and matches(base, sample):
+            if args.base and selects(base, sample, pattern):
                 print(
                     f"::error file={path},line={number}::Test tag '{value}' was "
                     "declared by the base and the pull request removed it from TestTags.swift"
@@ -205,7 +276,7 @@ def main(argv: list[str] | None = None) -> int:
                 notices += 1
 
     print(
-        f"{checked} id selectors in {flows_read} flows checked against {len(tree)} "
+        f"{checked} id selectors in {flows_read} flows checked against {len(tree.patterns)} "
         f"test tags: {errors} removed by the pull request, {notices} undeclared"
     )
     return 1 if errors else 0

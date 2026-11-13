@@ -188,5 +188,118 @@ class CheckTestTagsTest(unittest.TestCase):
         self.assertEqual(out.count("::notice"), 2)
 
 
+    def test_quoted_platform_branches(self):
+        self.tags('enum TestTags {\n    static let known = "known"\n}\n')
+        branch = """\
+            - runFlow:
+                when:
+                  platform: {platform}
+                commands:
+                  - tapOn:
+                      id: branch_tag
+            """
+        for platform in ('"Android"', "'Android'"):
+            self.flow("quoted", branch.format(platform=platform))
+            code, out = self.run_main("flows")
+            self.assertEqual(code, 0)
+            self.assertNotIn("branch_tag", out)
+            os.remove("flows/quoted.yaml")
+
+        self.flow("quoted", branch.format(platform='"iOS"'))
+        code, out = self.run_main("flows")
+        self.assertEqual(code, 0)
+        self.assertIn("::notice", out)
+        self.assertIn("branch_tag", out)
+
+    def test_platform_after_commands(self):
+        self.tags('enum TestTags {\n    static let known = "known"\n}\n')
+        branch = """\
+            - runFlow:
+                commands:
+                  - tapOn:
+                      id: branch_tag
+                when:
+                  platform: {platform}
+            """
+        self.flow("android", branch.format(platform="Android"))
+        code, out = self.run_main("flows")
+        self.assertEqual(code, 0)
+        self.assertNotIn("branch_tag", out)
+
+        os.remove("flows/android.yaml")
+        self.flow("ios", branch.format(platform="iOS"))
+        code, out = self.run_main("flows")
+        self.assertEqual(code, 0)
+        self.assertIn("::notice", out)
+        self.assertIn("branch_tag", out)
+
+    def test_inline_mapping_selector_is_unquoted(self):
+        self.tags('enum TestTags {\n    static let kept = "kept"\n}\n')
+        self.flow("a", '- tapOn: {id: "kept"}\n')
+        code, out = self.run_main("flows")
+        self.assertEqual(code, 0)
+        self.assertNotIn("::notice", out)
+        self.assertIn("1 id selectors", out)
+
+    def test_empty_platform_is_shared(self):
+        self.tags('enum TestTags {\n    static let known = "known"\n}\n')
+        self.flow(
+            "a",
+            """\
+            - runFlow:
+                when:
+                  platform:
+                commands:
+                  - tapOn:
+                      id: branch_tag
+            """,
+        )
+        code, out = self.run_main("flows")
+        self.assertEqual(code, 0)
+        self.assertIn("::notice", out)
+        self.assertIn("branch_tag", out)
+
+    def test_regex_selector_removed_literal_fails(self):
+        self.tags(
+            'enum TestTags {\n    static let sendButton = "send_button"\n'
+            '    static let kept = "kept"\n}\n'
+        )
+        self.flow("a", '- tapOn:\n    id: "send_.*"\n')
+        self.git_base()
+        self.tags('enum TestTags {\n    static let kept = "kept"\n}\n')
+        code, out = self.run_main("--base", "HEAD", "flows")
+        self.assertEqual(code, 1)
+        self.assertIn(
+            "::error file=flows/a.yaml,line=4::Test tag 'send_.*' was declared by the base",
+            out,
+        )
+
+    def test_regex_selector_never_declared_is_a_notice(self):
+        self.tags('enum TestTags {\n    static let kept = "kept"\n}\n')
+        self.flow("a", '- tapOn:\n    id: "send_.*"\n')
+        self.git_base()
+        code, out = self.run_main("--base", "HEAD", "flows")
+        self.assertEqual(code, 0)
+        self.assertIn("::notice", out)
+        self.assertNotIn("::error", out)
+
+    def test_regex_selector_matches_function_template(self):
+        self.tags(
+            '''\
+            enum TestTags {
+                static func txItem(_ uid: String) -> String {
+                    "tx_item_\\(uid.prefix(8))"
+                }
+            }
+            '''
+        )
+        self.flow("a", '- tapOn:\n    id: "tx_item_.*"\n')
+        self.git_base()
+        code, out = self.run_main("--base", "HEAD", "flows")
+        self.assertEqual(code, 0)
+        self.assertNotIn("::notice", out)
+        self.assertNotIn("::error", out)
+
+
 if __name__ == "__main__":
     unittest.main()
