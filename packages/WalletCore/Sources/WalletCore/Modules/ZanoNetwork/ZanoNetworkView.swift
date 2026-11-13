@@ -56,10 +56,10 @@ struct ZanoNetworkView: View {
                             ListSection {
                                 Cell(
                                     left: {
-                                        ThemeImage("plus", size: 24, colorStyle: .brand)
+                                        ThemeImage("plus", size: 24)
                                     },
                                     middle: {
-                                        ThemeText("zano_network.add_new".localized, style: .body, colorStyle: .brand)
+                                        ThemeText("zano_network.add_new".localized, style: .body)
                                     },
                                     action: {
                                         Coordinator.shared.present { isPresented in

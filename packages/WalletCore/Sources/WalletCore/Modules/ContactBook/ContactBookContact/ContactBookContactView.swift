@@ -49,8 +49,8 @@ struct ContactBookContactView: View {
                         ListSection {
                             if !viewModel.allBlockchainsUsed {
                                 Cell(
-                                    left: { ThemeImage("plus", size: .iconSize24, colorStyle: .brand) },
-                                    middle: { ThemeText("contacts.contact.add_address".localized, style: .headline2, colorStyle: .brand) },
+                                    left: { ThemeImage("plus", size: .iconSize24) },
+                                    middle: { ThemeText("contacts.contact.add_address".localized, style: .headline2) },
                                     action: {
                                         openAddress(item: nil)
                                     }

@@ -17,8 +17,8 @@ struct ContactBookSettingsView: View {
                 VStack(spacing: .margin24) {
                     ListSection {
                         Cell(
-                            left: { ThemeImage("arrow_in", size: .iconSize24, colorStyle: .brand) },
-                            middle: { ThemeText("contacts.settings.restore_contacts".localized, style: .headline2, colorStyle: .brand) },
+                            left: { ThemeImage("arrow_in", size: .iconSize24) },
+                            middle: { ThemeText("contacts.settings.restore_contacts".localized, style: .headline2) },
                             action: {
                                 restorePickerPresented = true
                             }
@@ -26,8 +26,8 @@ struct ContactBookSettingsView: View {
 
                         if viewModel.hasContacts {
                             Cell(
-                                left: { ThemeImage("cloud", size: .iconSize24, colorStyle: .brand) },
-                                middle: { ThemeText("contacts.settings.backup_contacts".localized, style: .headline2, colorStyle: .brand) },
+                                left: { ThemeImage("cloud", size: .iconSize24) },
+                                middle: { ThemeText("contacts.settings.backup_contacts".localized, style: .headline2) },
                                 action: {
                                     backup()
                                 }

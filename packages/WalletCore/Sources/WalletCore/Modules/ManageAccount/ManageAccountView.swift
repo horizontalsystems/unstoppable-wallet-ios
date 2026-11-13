@@ -88,8 +88,8 @@ struct ManageAccountView: View {
                     ) {
                         if viewModel.account.canBeBackedUp {
                             Cell(
-                                left: { ThemeImage("pen", size: .iconSize24, colorStyle: .brand) },
-                                middle: { ThemeText("manage_account.backup_recovery_phrase".localized, style: .headline2, colorStyle: .brand) },
+                                left: { ThemeImage("pen", size: .iconSize24) },
+                                middle: { ThemeText("manage_account.backup_recovery_phrase".localized, style: .headline2) },
                                 right: {
                                     if viewModel.account.backedUp {
                                         ThemeImage("check", size: .iconSize20, colorStyle: .green)
@@ -125,8 +125,8 @@ struct ManageAccountView: View {
                                 )
                             } else {
                                 Cell(
-                                    left: { ThemeImage("cloud", size: .iconSize24, colorStyle: .brand) },
-                                    middle: { ThemeText("manage_account.cloud_backup_recovery_phrase".localized, style: .headline2, colorStyle: .brand) },
+                                    left: { ThemeImage("cloud", size: .iconSize24) },
+                                    middle: { ThemeText("manage_account.cloud_backup_recovery_phrase".localized, style: .headline2) },
                                     right: {
                                         if !viewModel.account.backedUp {
                                             ThemeImage("warning", size: .iconSize20, colorStyle: .red)

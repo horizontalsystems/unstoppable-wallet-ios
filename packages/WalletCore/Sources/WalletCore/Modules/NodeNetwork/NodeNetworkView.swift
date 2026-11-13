@@ -71,10 +71,10 @@ struct NodeNetworkView: View {
                                 ListSection {
                                     Cell(
                                         left: {
-                                            ThemeImage("plus", size: 24, colorStyle: .brand)
+                                            ThemeImage("plus", size: 24)
                                         },
                                         middle: {
-                                            ThemeText("\(keyPrefix).add_new".localized, style: .body, colorStyle: .brand)
+                                            ThemeText("\(keyPrefix).add_new".localized, style: .body)
                                         },
                                         action: {
                                             viewModel.addNode()

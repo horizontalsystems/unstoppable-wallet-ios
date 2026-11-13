@@ -49,7 +49,7 @@ struct PurchaseListView: View {
             )
 
             Cell(
-                middle: { ThemeText("subscription.restore".localized, style: .headline2, colorStyle: .brand) },
+                middle: { ThemeText("subscription.restore".localized, style: .headline2) },
                 action: {
                     viewModel.restorePurchases()
                 }

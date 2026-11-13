@@ -215,17 +215,17 @@ struct TransactionInfoView: View {
         )
     }
 
-    private func optionItem(option: TransactionInfoModule.Option) -> (icon: String, title: String, colorStyle: ColorStyle, action: () -> Void) {
+    private func optionItem(option: TransactionInfoModule.Option) -> (icon: String, title: String, colorStyle: ColorStyle?, action: () -> Void) {
         switch option {
         case let .resend(type):
             let action = { viewModel.resend(type: type) }
 
             switch type {
-            case .speedUp: return ("arrow_m_up", "tx_info.options.speed_up".localized, .brand, action)
+            case .speedUp: return ("arrow_m_up", "tx_info.options.speed_up".localized, nil, action)
             case .cancel: return ("outgoingraw", "tx_info.options.cancel".localized, .red, action)
             }
         case .zcashResend:
-            return ("arrow_m_up", "button.resend".localized, .brand, { viewModel.zcashResend() })
+            return ("arrow_m_up", "button.resend".localized, nil, { viewModel.zcashResend() })
         }
     }
 

@@ -52,10 +52,10 @@ struct EvmNetworkView: View {
                             ListSection {
                                 Cell(
                                     left: {
-                                        ThemeImage("plus", size: 24, colorStyle: .brand)
+                                        ThemeImage("plus", size: 24)
                                     },
                                     middle: {
-                                        ThemeText("evm_network.add_new".localized, style: .body, colorStyle: .brand)
+                                        ThemeText("evm_network.add_new".localized, style: .body)
                                     },
                                     action: {
                                         Coordinator.shared.present { isPresented in
