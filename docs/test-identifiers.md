@@ -4,19 +4,21 @@
 
 ## The protocol
 
-The Maestro flows live in appkb's root `flows/` on its branch `flows` and select controls by name. Both apps use the same names, so a flow written for one runs on the other.
+The Maestro flows live in appkb's root `flows/` on its branch `main` and select controls by name. Both apps use the same names, so a flow written for one runs on the other.
+
+The test lab writes the flows and repairs them when a change breaks them. A developer, and the developer's agent, declares a control's name in code with the change and writes or edits no flow.
 
 - `TestTags` is a name's one declared home in each app. No app is the source of truth: a name belongs to whichever app declares it first, and both use the same string.
-- A flow uses only declared names. A name a new flow needs is declared with the flow.
+- A name is declared with the change that writes its control, never with a flow.
 - A shared flow that selects `id: X` binds both apps to carry `X`. When an app runs it, a missing name fails there, and that app declares the same name.
-- A name is renamed or removed only together with every flow that selects it, in the app's repository and in appkb.
-- A check runs in each app's CI on each PR and by hand, and fails a PR that removes or renames a name a flow selects. A name a flow selects that no declaration has held yet is reported, not failed. It exists because an undeclared name in a conditional step, `when: visible` or `optional: true`, is skipped silently, where in a plain step it fails the run.
+- A name a flow selects is kept, and a control that replaces it takes the same name. When a change removes a control whose name a flow selects, the test lab updates the flows.
+- The test lab's station checks each pull request of the app against the flows and comments on it. A name that the pull request's base declares, that a flow selects, and that is missing at the pull request's head is what it reports as a break. It reads only the flows that drive the wallet itself, a flow whose `appId` is another app is not read, and it skips the other platform's `when: platform` branches. It exists because an undeclared name in a conditional step, `when: visible` or `optional: true`, is skipped silently, where in a plain step it fails the run.
 
 ## Looking for a name
 
 Before declaring a name, look in this order, and reuse what is found. A new name is declared only when none exists.
 
-1. The shared flows, appkb's `flows/`. A name a flow selects is the contract, and an app that differs renames.
+1. The shared flows, appkb's root `flows/` on `main`. A name a flow selects is the contract, and an app that differs renames.
 2. Android's `TestTags`, `walletkit/src/main/java/io/horizontalsystems/walletkit/uiv3/TestTags.kt` in `horizontalsystems/unstoppable-wallet-android`.
 3. iOS's `TestTags`, `packages/WalletCore/Sources/WalletCore/UserInterface/TestTags.swift`.
 
@@ -40,5 +42,5 @@ Every control the user interacts with, and every value a test checks, gets its n
 
 ## Names one platform has
 
-- A control only iOS has takes a name by the same convention, and the case is recorded in the [platform divergences](platform-divergences.md).
+- A control only iOS has takes a name by the same convention, and the case is recorded in the [platform divergences](https://github.com/horizontalsystems/appkb/blob/main/flows/platform-divergences.md).
 - A platform's own identifier is allowed in a flow only inside that platform's `when: platform` branch. `BackButton`, the system's identifier on the navigation back button, is iOS's own.
