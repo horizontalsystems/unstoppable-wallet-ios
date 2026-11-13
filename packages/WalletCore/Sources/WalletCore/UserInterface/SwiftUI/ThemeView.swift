@@ -174,10 +174,12 @@ struct EmptyThemeNavigationStack<Content: View>: View {
 }
 
 struct ConfirmationButtonStyle: ViewModifier {
+    @Environment(\.isEnabled) private var isEnabled
+
     var isActive: Bool = true
 
     func body(content: Content) -> some View {
-        if isActive {
+        if isActive, isEnabled {
             if #available(iOS 26, *) {
                 content
                     .buttonStyle(.glassProminent)
