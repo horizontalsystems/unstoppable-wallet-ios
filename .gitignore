@@ -22,6 +22,7 @@ Pods/*
 /screenshot_*.png
 .build/
 .xcodebuildmcp/
+__pycache__/
 
 history_bash.txt
 
