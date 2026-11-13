@@ -33,7 +33,7 @@ class CreateAccountViewModel: ObservableObject {
         name = accountFactory.generatedAccountName
     }
 
-    // Wallets a newly created account starts with, by phrase or by passkey; the same list as Android
+    /// Wallets a newly created account starts with, by phrase or by passkey; the same list as Android
     static let defaultTokenQueries = [
         TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84)), // TODO: make derivation supports accountType
         TokenQuery(blockchainType: .ethereum, tokenType: .native),

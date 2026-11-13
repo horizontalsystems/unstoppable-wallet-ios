@@ -2,56 +2,65 @@ import SwiftUI
 
 public struct SlideButtonStyling {
     public init(
-        indicatorSize: CGFloat = .heightButton,
-        indicatorColor: Color = .themeBrand,
+        indicatorSize: CGFloat = .buttonSize64,
+        indicatorColorStyle: ColorStyle = .brand,
         indicatorBrightness: Double = 0.0,
         backgroundColor: Color = .themeBlade,
         start: String = "",
         end: String = "",
         success: String = "",
-        textColor: Color = .themeGray,
-        textFont: Font = .themeHeadline2,
+        textColorStyle: ColorStyle = .secondary,
+        textStyle: TextStyle = .headlineB,
         indicator: String = "arrow_m_right",
         indicatorSuccess: String = "check",
-        indicatorDisabled: String = "arrow_m_right",
+        indicatorIconColorStyle: ColorStyle = .white,
         textHiddenBehindIndicator: Bool = true,
-        textShimmers: Bool = true
+        textShimmers: Bool = true,
+        fillOpacity: Double = 0.8,
+        disabledColorStyle: ColorStyle = .andy,
+        disabledIconColorStyle: ColorStyle = .secondary
     ) {
         self.indicatorSize = indicatorSize
         self.indicatorBrightness = indicatorBrightness
 
-        self.indicatorColor = indicatorColor
+        self.indicatorColorStyle = indicatorColorStyle
         self.backgroundColor = backgroundColor
         startText = start
         endText = end
         successText = success
-        self.textColor = textColor
-        self.textFont = textFont
+        self.textColorStyle = textColorStyle
+        self.textStyle = textStyle
 
         self.indicator = indicator
         self.indicatorSuccess = indicatorSuccess
-        self.indicatorDisabled = indicatorDisabled
+        self.indicatorIconColorStyle = indicatorIconColorStyle
         self.textHiddenBehindIndicator = textHiddenBehindIndicator
         self.textShimmers = textShimmers
+        self.fillOpacity = fillOpacity
+        self.disabledColorStyle = disabledColorStyle
+        self.disabledIconColorStyle = disabledIconColorStyle
     }
 
     var indicatorSize: CGFloat
     var indicatorBrightness: Double
 
-    var indicatorColor: Color
+    var indicatorColorStyle: ColorStyle
     var backgroundColor: Color
     var startText: String
     var endText: String
     var successText: String
-    var textColor: Color
-    var textFont: Font
+    var textColorStyle: ColorStyle
+    var textStyle: TextStyle
 
     var indicator: String
     var indicatorSuccess: String
-    var indicatorDisabled: String
+    var indicatorIconColorStyle: ColorStyle
 
     var textHiddenBehindIndicator: Bool
     var textShimmers: Bool
+    var fillOpacity: Double
+    var disabledColorStyle: ColorStyle
+    var disabledIconColorStyle: ColorStyle
 
     public static var `default`: Self {
         .init()
