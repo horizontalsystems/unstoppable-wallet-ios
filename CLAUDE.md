@@ -13,7 +13,7 @@ Unstoppable Wallet iOS is the iOS app of Unstoppable, a non-custodial multi-bloc
 
 ## Screens and tests
 
-The Maestro flows live in appkb's root `flows/` on its branch `flows` and select controls by the names in `TestTags`. A new or changed control gets its `TestTags` name in the same change, per [`docs/test-identifiers.md`](docs/test-identifiers.md).
+The Maestro flows live in appkb's root `flows/` on its branch `main` and are the test lab's; they select controls by the names in `TestTags`. A new or changed control gets its `TestTags` name in the same change, per [`docs/test-identifiers.md`](docs/test-identifiers.md).
 
 ## Documentation
 
@@ -21,7 +21,7 @@ The Maestro flows live in appkb's root `flows/` on its branch `flows` and select
 |---|---|
 | [`docs/test-identifiers.md`](docs/test-identifiers.md) | The names protocol, and how the app names the controls Maestro flows select: which controls get a name, its form, and where it sits |
 | [`docs/e2e-build.md`](docs/e2e-build.md) | What the E2E build is: its configuration and flag, what the flag changes, the command that builds it for a simulator, and the conditions of a run |
-| [`docs/platform-divergences.md`](docs/platform-divergences.md) | Where the iOS and Android wallets differ, element by element, with the reason |
+| [`platform-divergences.md`](https://github.com/horizontalsystems/appkb/blob/main/flows/platform-divergences.md) | Where the iOS and Android wallets differ, element by element, with the reason |
 | [`docs/CRYPTO_GUIDELINES.md`](docs/CRYPTO_GUIDELINES.md) | Review guidelines for a crypto wallet: secret material, randomness, and the iOS architecture conventions |
 | [`appkb`](https://github.com/horizontalsystems/appkb) | The foundation of existing behaviour: what both apps do now, generated per release from the code. A task that changes behaviour says so, and its spec is then the foundation. Looked up as set out below the table |
 
