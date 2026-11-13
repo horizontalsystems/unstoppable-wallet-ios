@@ -1,0 +1,47 @@
+name: Check Test Tags
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check-test-tags:
+    runs-on: ubuntu-latest
+    steps:
+      # The script reads TestTags.swift from the pull request's own tree, not
+      # the default merge commit, and needs the base commit in the history
+      - name: Checkout the pull request head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      # The flows live in the private appkb repository. Pull requests from
+      # forks get no secrets, so they skip the check instead of failing it
+      - name: Check for the appkb token
+        id: token
+        env:
+          HAS_APPKB_TOKEN: ${{ secrets.APPKB_TOKEN != '' }}
+        run: |
+          echo "available=$HAS_APPKB_TOKEN" >> "$GITHUB_OUTPUT"
+          if [ "$HAS_APPKB_TOKEN" != "true" ]; then
+            echo "::warning::No APPKB_TOKEN; the test tags were not checked"
+          fi
+
+      - name: Checkout the shared flows
+        if: steps.token.outputs.available == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: horizontalsystems/appkb
+          ref: main
+          token: ${{ secrets.APPKB_TOKEN }}
+          path: maestro/appkb
+          sparse-checkout: flows
+          persist-credentials: false
+
+      - name: Verify every test tag a Maestro flow selects is declared in TestTags
+        if: steps.token.outputs.available == 'true'
+        run: python3 .github/scripts/check_test_tags.py --base ${{ github.event.pull_request.base.sha }}
