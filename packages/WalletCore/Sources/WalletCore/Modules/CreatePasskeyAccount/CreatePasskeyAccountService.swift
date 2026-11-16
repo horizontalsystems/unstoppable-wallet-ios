@@ -20,6 +20,14 @@ public protocol IAccountProvisioner {
     // Builds the account type from the credential the ceremony produced. nil only if construction fails.
     func accountType(abstract: AccountType.Abstract, credentialID: Data, mnemonic: [String]) -> AccountType?
     func provision(account: Account, seed: Data, credentials: ProvisioningCredentials) throws -> [Token]
+    /// The account this device already has for the credential, which a restore returns instead of making a second one.
+    func existingAccount(credentialID: Data, accounts: [Account]) -> Account?
+}
+
+public extension IAccountProvisioner {
+    func existingAccount(credentialID _: Data, accounts _: [Account]) -> Account? {
+        nil
+    }
 }
 
 public class CreatePasskeyAccountService {
@@ -71,6 +79,9 @@ public extension CreatePasskeyAccountService {
         let ceremony = PasskeyManager(domain: provisioner.domain)
 
         let passkey = try await ceremony.login()
+        if let existing = provisioner.existingAccount(credentialID: passkey.credentialID, accounts: accountManager.accounts) {
+            return existing
+        }
         // Restore must not fail on a missing/odd display name — the credential's userID is outside our
         // control. Fall back to a default; wallet identity comes from the credential, not the name.
         let trimmed = passkey.name.trimmingCharacters(in: .whitespacesAndNewlines)

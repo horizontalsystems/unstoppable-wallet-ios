@@ -107,7 +107,7 @@ extension AccountManager {
         accountUpdatedSubject.send(account)
     }
 
-    func save(account: Account) {
+    public func save(account: Account) {
         storage.save(account: account)
 
         accountsSubject.send(storage.accounts)
