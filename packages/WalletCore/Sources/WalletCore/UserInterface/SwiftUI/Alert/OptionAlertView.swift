@@ -42,44 +42,35 @@ public struct OptionAlertView: View {
     }
 
     private var view: some View {
-        ListSection {
-            Text(title)
-                .textSubhead1()
-                .frame(alignment: .center)
-                .padding(.horizontal, .margin16)
-                .padding(.vertical, .margin12)
+        VStack(spacing: 0) {
+            ThemeText(title, style: .subheadSB, colorStyle: .secondary)
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
 
             ForEach(Array(viewItems.enumerated()), id: \.offset) { index, viewItem in
-                let cell = Cell(
-                    middle: {
-                        VStack(spacing: 1) {
-                            ThemeText(viewItem.text, style: .body, colorStyle: viewItem.selected ? .brand : .primary, dimmed: viewItem.disabled)
-
-                            if let description = viewItem.description {
-                                ThemeText(description, style: .subhead, dimmed: viewItem.disabled)
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
-                    },
-                    action: {
-                        animate(isShown: false) {
-                            onSelect(index)
-                        }
-                    }
-                )
-
-                if let identifier = viewItem.identifier {
-                    cell
-                        .accessibilityIdentifier(identifier)
-                        .disabled(viewItem.disabled)
-                } else {
-                    cell
-                        .disabled(viewItem.disabled)
-                }
+                HorizontalDivider()
+                row(index: index, viewItem: viewItem)
             }
         }
+        .padding(.vertical, .margin8)
         .background(Color.themeLawrence)
-        .cornerRadius(.cornerRadius16)
+        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous))
+    }
+
+    private func row(index: Int, viewItem: AlertViewItem) -> some View {
+        Button(action: {
+            animate(isShown: false) {
+                onSelect(index)
+            }
+        }) {
+            ThemeText(viewItem.text, style: viewItem.selected ? .headline2 : .body, colorStyle: viewItem.selected ? .brand : .primary)
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
+        }
+        .buttonStyle(CellButtonStyle())
+        .withIdentifier(viewItem.identifier)
     }
 
     private var dimView: some View {
