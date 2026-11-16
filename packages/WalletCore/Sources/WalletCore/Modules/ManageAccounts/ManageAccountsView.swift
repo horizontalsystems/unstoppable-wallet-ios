@@ -32,7 +32,7 @@ struct ManageAccountsView: View {
                     .searchBar(text: $viewModel.filter, prompt: "placeholder.search".localized)
                 }
             }
-            .navigationBarTitle("settings_manage_keys.title".localized)
+            .navigationBarTitle("settings.manage_accounts".localized)
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     // A toolbar Menu does not take .glassProminent on iOS 26, so a styled Button draws

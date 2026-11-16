@@ -50,6 +50,6 @@ struct BackupManagerView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .navigationTitle("backup_app.backup_manager.title".localized)
+        .navigationTitle("settings.backup_manager".localized)
     }
 }

@@ -1641,11 +1641,9 @@
 
 // Settings -> Blockchain Settings
 
-"blockchain_settings.title" = "区块链设置";
 
 // Settings -> Backup Manager
 
-"backup_app.backup_manager.title" = "备份管理器";
 "backup_app.backup_manager.restore" = "还原备份";
 "backup_app.backup_manager.restore.description" = "从备份文件恢复您的钱包和应用数据。";
 "backup_app.backup_manager.create" = "创建新备份";
@@ -1718,7 +1716,6 @@
 
 // Settings -> Security
 
-"settings_security.title" = "安全中心";
 "settings_security.enable_passcode" = "启用密码";
 "settings_security.edit_passcode" = "编辑密码";
 "settings_security.disable_passcode" = "禁用密码";
@@ -1817,7 +1814,6 @@
 
 // Manage Keys
 
-"settings_manage_keys.title" = "管理钱包";
 "settings_manage_keys.delete" = "删除";
 "settings_manage_keys.backup" = "备份";
 "settings_manage_keys.delete.title" = "删除钱包";
@@ -1849,7 +1845,6 @@
 
 // Settings -> Appearance
 
-"appearance.title" = "应用设置";
 
 "appearance.theme" = "主题";
 "appearance.theme.system" = "系统";
@@ -2250,7 +2245,6 @@
 
 "wallet_connect.send.transaction" = "发送交易";
 
-"wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "没有活跃会话";
 
 "wallet_connect_list.new_connection" = "新连接";
@@ -2285,7 +2279,6 @@
 
 // FAQ
 
-"faq.title" = "常见问题";
 
 // Status Info
 

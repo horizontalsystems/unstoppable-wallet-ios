@@ -1641,11 +1641,9 @@
 
 // Settings -> Blockchain Settings
 
-"blockchain_settings.title" = "Настройки блокчейна";
 
 // Settings -> Backup Manager
 
-"backup_app.backup_manager.title" = "Резерв.копирование";
 "backup_app.backup_manager.restore" = "Восстановить резервную копию";
 "backup_app.backup_manager.restore.description" = "Восстановите кошелёк и данные приложения из файла резервной копии.";
 "backup_app.backup_manager.create" = "Создать новую резерв. копию";
@@ -1718,7 +1716,6 @@
 
 // Settings -> Security
 
-"settings_security.title" = "Безопасность";
 "settings_security.enable_passcode" = "Включить код доступа";
 "settings_security.edit_passcode" = "Изменить код";
 "settings_security.disable_passcode" = "Отключить код доступа";
@@ -1817,7 +1814,6 @@
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Управление кошельками";
 "settings_manage_keys.delete" = "Удалить";
 "settings_manage_keys.backup" = "Резервная копия";
 "settings_manage_keys.delete.title" = "Удалить кошелек";
@@ -1849,7 +1845,6 @@
 
 // Settings -> Appearance
 
-"appearance.title" = "Настройки приложения";
 
 "appearance.theme" = "Тема";
 "appearance.theme.system" = "Системная";
@@ -2250,7 +2245,6 @@
 
 "wallet_connect.send.transaction" = "Отправить транзакцию";
 
-"wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Нет активных сессий";
 
 "wallet_connect_list.new_connection" = "Новое соединение";
@@ -2285,7 +2279,6 @@
 
 // FAQ
 
-"faq.title" = "FAQ";
 
 // Status Info
 

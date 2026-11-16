@@ -117,7 +117,7 @@ struct SecuritySettingsView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .navigationTitle("settings_security.title".localized)
+        .navigationTitle("settings.security".localized)
     }
 
     private func presentCreatePasscode(reason: CreatePasscodeModule.CreatePasscodeReason) {

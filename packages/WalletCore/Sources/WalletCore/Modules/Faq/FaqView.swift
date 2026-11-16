@@ -33,7 +33,7 @@ struct FaqView: View {
                 }
             }
         }
-        .navigationTitle("faq.title".localized)
+        .navigationTitle("settings.faq".localized)
     }
 }
 

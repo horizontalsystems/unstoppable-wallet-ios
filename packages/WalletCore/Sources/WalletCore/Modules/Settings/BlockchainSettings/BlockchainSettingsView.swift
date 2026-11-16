@@ -31,7 +31,7 @@ struct BlockchainSettingsView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .navigationTitle("blockchain_settings.title".localized)
+        .navigationTitle("settings.blockchain_settings".localized)
     }
 
     struct ItemView: View {

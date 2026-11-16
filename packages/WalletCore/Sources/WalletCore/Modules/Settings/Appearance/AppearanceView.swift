@@ -211,7 +211,7 @@ struct AppearanceView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .navigationTitle("appearance.title".localized)
+        .navigationTitle("settings.appearance".localized)
         .navigationBarTitleDisplayMode(.inline)
     }
 

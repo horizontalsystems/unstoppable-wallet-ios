@@ -1641,11 +1641,9 @@
 
 // Settings -> Blockchain Settings
 
-"blockchain_settings.title" = "Blockchain Einstellungen";
 
 // Settings -> Backup Manager
 
-"backup_app.backup_manager.title" = "Backup-Manager";
 "backup_app.backup_manager.restore" = "Backup wiederherstellen";
 "backup_app.backup_manager.restore.description" = "Stellen Sie Ihr Wallet und Ihre App-Daten aus einer Sicherungsdatei wieder her.";
 "backup_app.backup_manager.create" = "Neue Sicherung erstellen";
@@ -1718,7 +1716,6 @@
 
 // Settings -> Security
 
-"settings_security.title" = "Sicherheit";
 "settings_security.enable_passcode" = "Code aktivieren";
 "settings_security.edit_passcode" = "Code bearbeiten";
 "settings_security.disable_passcode" = "Code deaktivieren";
@@ -1817,7 +1814,6 @@
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Wallets verwalten";
 "settings_manage_keys.delete" = "Löschen";
 "settings_manage_keys.backup" = "Sicherung";
 "settings_manage_keys.delete.title" = "Wallet löschen";
@@ -1849,7 +1845,6 @@
 
 // Settings -> Appearance
 
-"appearance.title" = "App-Einstellungen";
 
 "appearance.theme" = "Design";
 "appearance.theme.system" = "System";
@@ -2250,7 +2245,6 @@
 
 "wallet_connect.send.transaction" = "Transaktion senden";
 
-"wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Keine aktiven Sitzungen";
 
 "wallet_connect_list.new_connection" = "Neue Verbindung";
@@ -2285,7 +2279,6 @@
 
 // FAQ
 
-"faq.title" = "FAQ";
 
 // Status Info
 

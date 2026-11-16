@@ -48,6 +48,7 @@ struct MoneroOutputSelectorView: View {
                     }
                     .disabled(viewModel.allSelected)
                 }
+                .padding(.horizontal, .margin16)
                 .padding(.top, .margin12)
                 .padding(.bottom, CGFloat(43))
             }

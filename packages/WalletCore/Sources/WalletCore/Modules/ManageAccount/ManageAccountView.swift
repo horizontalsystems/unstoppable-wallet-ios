@@ -125,7 +125,7 @@ struct ManageAccountView: View {
                                 )
                             } else {
                                 Cell(
-                                    left: { ThemeImage("cloud", size: .iconSize24) },
+                                    left: { ThemeImage("cloud_in", size: .iconSize24) },
                                     middle: { ThemeText("manage_account.cloud_backup_recovery_phrase".localized, style: .headline2) },
                                     right: {
                                         if !viewModel.account.backedUp {

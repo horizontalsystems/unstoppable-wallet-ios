@@ -54,7 +54,7 @@ struct WCSessionsView: View {
             }
         }
         .onAppear { viewModel.refresh() }
-        .navigationTitle("wallet_connect_list.title".localized)
+        .navigationTitle("settings.dapp_connection".localized)
         .navigationBarTitleDisplayMode(.inline)
     }
 

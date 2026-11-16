@@ -1641,11 +1641,9 @@
 
 // Settings -> Blockchain Settings
 
-"blockchain_settings.title" = "Blockchain Ayarları";
 
 // Settings -> Backup Manager
 
-"backup_app.backup_manager.title" = "Yedekleme yöneticisi";
 "backup_app.backup_manager.restore" = "Yedeği Geri Yükle";
 "backup_app.backup_manager.restore.description" = "Cüzdanınızı ve uygulama verilerinizi bir yedekleme dosyasından geri yükleyin.";
 "backup_app.backup_manager.create" = "Yeni Yedek Oluştur";
@@ -1718,7 +1716,6 @@
 
 // Settings -> Security
 
-"settings_security.title" = "Güvenlik";
 "settings_security.enable_passcode" = "Giriş kodunu etkinleştir";
 "settings_security.edit_passcode" = "Kod Değiştir";
 "settings_security.disable_passcode" = "Şifre Kodunu Devre Dışı Bırak";
@@ -1817,7 +1814,6 @@
 
 // Manage Keys
 
-"settings_manage_keys.title" = "Cüzdanları Yönet";
 "settings_manage_keys.delete" = "Sil";
 "settings_manage_keys.backup" = "Yedekle";
 "settings_manage_keys.delete.title" = "Cüzdanı Sil";
@@ -1849,7 +1845,6 @@
 
 // Settings -> Appearance
 
-"appearance.title" = "Uygulama Ayarları";
 
 "appearance.theme" = "Tema";
 "appearance.theme.system" = "Sistem";
@@ -2250,7 +2245,6 @@
 
 "wallet_connect.send.transaction" = "İşlem Gönder";
 
-"wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "Başka bir aktif oturum yok";
 
 "wallet_connect_list.new_connection" = "Yeni bağlantı";
@@ -2285,7 +2279,6 @@
 
 // FAQ
 
-"faq.title" = "FAQ";
 
 // Status Info
 
