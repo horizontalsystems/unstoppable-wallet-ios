@@ -456,14 +456,6 @@ extension PurchaseManager {
             default: self = .discount
             }
         }
-
-        var title: String? {
-            switch self {
-            case .none: return nil
-            case .trial: return "premium.cell.try".localized
-            case .discount: return "premium.cell.discount".localized
-            }
-        }
     }
 
     struct ProductData {

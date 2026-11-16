@@ -1595,11 +1595,9 @@
 "settings.base_currency" = "Devise de Base";
 "settings.language" = "Langue";
 "settings.faq" = "FAQ";
-"settings.info_subtitle" = "application décentralisée";
 "settings.donate.title" = "Faire un don";
 "settings.rate_us" = "Evaluez-nous";
 "settings.tell_friends" = "Partager avec ami";
-"settings.social_networks.label" = "Soyez Unstoppable";
 "settings.dapp_connection" = "Connexion DApp";
 "settings.appearance" = "Apparence";
 
@@ -2585,10 +2583,8 @@
 
 // Purchases
 
-"premium.cell.title" = "Premium";
 "premium.cell.description" = "Améliorez votre expérience avec les fonctionnalités %@ !";
 "premium.cell.description.key" = "Premium";
-"premium.cell.try" = "Essayer gratuitement";
 
 "mini_app.cell.title" = "MiniApp";
 "mini_app.cell.description" = "Passez des tests, accomplissez des tâches et gagnez des jetons!";

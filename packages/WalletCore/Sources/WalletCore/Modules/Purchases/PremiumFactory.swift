@@ -7,11 +7,6 @@ enum PremiumFactory {
         PremiumHeaderView()
     }
 
-    /// MainSettings banner view
-    static func slide(offer: String?) -> some View {
-        PremiumSlideView(introductoryOffer: offer)
-    }
-
     /// Purchase main+success views Background
     static func radialView(@ViewBuilder _ content: () -> some View) -> some View {
         ThemeRadialView(content: content)
@@ -28,9 +23,5 @@ enum PremiumFactory {
             isSelected: isSelected,
             action: action
         )
-    }
-
-    static var forceShowingPremium: Bool {
-        false
     }
 }

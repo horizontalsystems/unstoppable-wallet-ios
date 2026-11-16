@@ -1595,11 +1595,9 @@
 "settings.base_currency" = "基本货币";
 "settings.language" = "语言";
 "settings.faq" = "常见问题";
-"settings.info_subtitle" = "分布式应用程序";
 "settings.donate.title" = "捐助";
 "settings.rate_us" = "评价我们";
 "settings.tell_friends" = "分享给好友";
-"settings.social_networks.label" = "Be Unstoppable";
 "settings.dapp_connection" = "dApp 连接";
 "settings.appearance" = "外观";
 
@@ -2585,10 +2583,8 @@
 
 // Purchases
 
-"premium.cell.title" = "高級版";
 "premium.cell.description" = "使用 %@ 功能升级您的体验！";
 "premium.cell.description.key" = "高級版";
-"premium.cell.try" = "免費試用";
 
 "mini_app.cell.title" = "小程序";
 "mini_app.cell.description" = "通過測驗、完成任務並獲取代幣！";

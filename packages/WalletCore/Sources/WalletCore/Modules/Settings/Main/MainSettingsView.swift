@@ -6,139 +6,54 @@ struct MainSettingsView: View {
 
     @Binding var walletConnectPresented: Bool
 
-    @State private var currentSlideIndex: Int = 0
-    @State private var isFirstAppear = true
-
     var body: some View {
         ScrollableThemeView {
-            VStack(spacing: .margin12) {
-                if !viewModel.slides.isEmpty {
-                    slider()
+            VStack(spacing: .margin16) {
+                ListSection {
+                    manageWallets()
                 }
 
-                VStack(spacing: 0) {
-                    ListSection {
-                        manageWallets()
-                        blockchainSettings()
-                        security()
-                        privacy()
-                        dAppConnection()
-                        // tonConnect()
-                    }
-
-                    Spacer().frame(height: .margin32)
-
-                    ListSection {
-                        contacts()
-                    }
-
-                    Spacer().frame(height: .margin32)
-
-                    ListSection {
-                        appSettings()
-                        subscription()
-                        backupManager()
-                    }
-
-                    Spacer().frame(height: .margin24)
-
-                    VStack(spacing: 0) {
-                        SectionHeader(image: Image.premiumIcon, text: ComponentText(text: "subscription.premium.label".localized, colorStyle: .brand), horizontalInsets: .margin16)
-
-                        ListSection {
-                            vipSupport()
-                            addressChecker()
-                        }
-                        .modifier(ThemeListStyleModifier(themeListStyle: .borderedPremium, selected: true))
-                    }
-
-                    Spacer().frame(height: .margin32)
-
-                    ListSection {
-                        aboutApp()
-                        rateUs()
-                        tellFriend()
-                        faq()
-                    }
-
-                    Spacer().frame(height: .margin24)
-
-                    VStack(spacing: 0) {
-                        ListSectionHeader(text: "settings.social_networks.label".localized)
-
-                        ListSection {
-                            telegram()
-                            twitter()
-                        }
-                    }
-
-                    // Spacer().frame(height: .margin32)
-
-                    // ListSection {
-                    //     donate()
-                    // }
-
-                    Spacer().frame(height: .margin32)
-
-                    footer()
-
-                    if viewModel.showDevTools {
-                        Spacer().frame(height: .margin32)
-                        testSwitchersSection()
-                    }
+                ListSection {
+                    security()
+                    privacy()
+                    appSettings()
+                    blockchainSettings()
+                    dAppConnection()
+                    backupManager()
                 }
-                .padding(.padding16)
-            }
-            .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin32, trailing: 0))
-        }
-    }
 
-    private func slider() -> some View {
-        VStack(spacing: 0) {
-            let hasIndicators = viewModel.slides.count > 1
-            TabView(selection: $currentSlideIndex) {
-                ForEach(0 ..< viewModel.slides.count, id: \.self) { index in
-                    ZStack {
-                        slide(slide: viewModel.slides[index])
-                            .frame(height: 130)
-                            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous))
-                    }
-                    .padding(.horizontal, .margin16)
-                    .tag(index)
+                ListSection {
+                    contacts()
+                }
+
+                ListSection {
+                    subscription()
+                }
+
+                ListSection {
+                    aboutApp()
+                    rateUs()
+                    tellFriend()
+                    faq()
+                }
+
+                ListSection {
+                    vipSupport()
+                }
+                .modifier(ThemeListStyleModifier(themeListStyle: .borderedPremium, selected: true))
+
+                ListSection {
+                    telegram()
+                    twitter()
+                }
+
+                footer()
+
+                if viewModel.showDevTools {
+                    testSwitchersSection()
                 }
             }
-            .frame(height: 130)
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-            .padding(.bottom, hasIndicators ? 0 : 12)
-
-            if hasIndicators { // show indicator only when has more than 1 banner.
-                HStack(spacing: .margin4) {
-                    ForEach(0 ..< viewModel.slides.count, id: \.self) { index in
-                        Capsule()
-                            .fill(currentSlideIndex == index ? Color.themeBrand : Color.themeBlade)
-                            .frame(width: 20, height: 4)
-                    }
-                }
-                .frame(height: .margin32)
-            }
-        }
-        .onAppear {
-            guard !isFirstAppear else {
-                isFirstAppear = false
-                return
-            }
-
-            currentSlideIndex = PremiumFactory.forceShowingPremium ? 0 : (currentSlideIndex + 1) % viewModel.slides.count
-        }
-    }
-
-    @ViewBuilder private func slide(slide: MainSettingsViewModel.Slide) -> some View {
-        switch slide {
-        case .premium:
-            PremiumFactory.slide(offer: viewModel.introductoryOffer)
-                .onTapGesture {
-                    Coordinator.shared.presentPurchase(page: .settings, trigger: .banner)
-                }
+            .padding(EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
     }
 
@@ -215,11 +130,9 @@ struct MainSettingsView: View {
             left: { ThemeImage("link", size: .iconSize24) },
             middle: { ThemeText("settings.dapp_connection".localized, style: .headline2) },
             right: {
-                HStack(spacing: .margin8) {
+                HStack(spacing: .margin12) {
                     if viewModel.walletConnectPendingRequestCount > 0 {
-                        BadgeViewNew("\(viewModel.walletConnectPendingRequestCount)", mode: .solidWith(colorStyle: .red), colorStyle: .bright)
-                    } else if viewModel.walletConnectSessionCount > 0 {
-                        ThemeText("\(viewModel.walletConnectSessionCount)", style: .subheadSB)
+                        ThemeText("\(viewModel.walletConnectPendingRequestCount)", style: .subheadSB, colorStyle: .red)
                     }
 
                     Image.disclosureIcon
@@ -229,6 +142,7 @@ struct MainSettingsView: View {
                 walletConnectPresented = true
             }
         )
+        .accessibilityIdentifier(TestTags.settingsDappConnection)
     }
 
     private func tonConnect() -> some View {
@@ -275,6 +189,7 @@ struct MainSettingsView: View {
             )
         }
         .buttonStyle(CellButtonStyle())
+        .accessibilityIdentifier(TestTags.settingsSubscription)
     }
 
     private func contacts() -> some View {
@@ -331,6 +246,7 @@ struct MainSettingsView: View {
                 }
             }
         )
+        .accessibilityIdentifier(TestTags.settingsPrioritySupport)
     }
 
     private func addressChecker() -> some View {
@@ -378,6 +294,7 @@ struct MainSettingsView: View {
                 stat(page: .settings, event: .open(page: .rateUs))
             }
         )
+        .accessibilityIdentifier(TestTags.settingsRateUs)
     }
 
     private func tellFriend() -> some View {
@@ -392,6 +309,7 @@ struct MainSettingsView: View {
                 stat(page: .settings, event: .open(page: .tellFriends))
             }
         )
+        .accessibilityIdentifier(TestTags.settingsTellFriends)
     }
 
     private func faq() -> some View {
@@ -408,6 +326,7 @@ struct MainSettingsView: View {
             )
         }
         .buttonStyle(CellButtonStyle())
+        .accessibilityIdentifier(TestTags.settingsFaq)
     }
 
     private func telegram() -> some View {
@@ -428,12 +347,13 @@ struct MainSettingsView: View {
                 stat(page: .settings, event: .open(page: .externalTelegram))
             }
         )
+        .accessibilityIdentifier(TestTags.settingsTelegram)
     }
 
     private func twitter() -> some View {
         Cell(
             left: { ThemeImage("x_logo", size: .iconSize24) },
-            middle: { ThemeText("Twitter", style: .headline2) },
+            middle: { ThemeText("X.com", style: .headline2) },
             right: { Image.disclosureIcon },
             action: {
                 let account = AppConfig.appTwitterAccount
@@ -447,6 +367,7 @@ struct MainSettingsView: View {
                 stat(page: .settings, event: .open(page: .externalTwitter))
             }
         )
+        .accessibilityIdentifier(TestTags.settingsTwitter)
     }
 
     private func donate() -> some View {
@@ -464,25 +385,21 @@ struct MainSettingsView: View {
     }
 
     private func footer() -> some View {
-        VStack(spacing: .margin32) {
-            VStack(spacing: 0) {
-                Text("\(AppConfig.appName.uppercased()) \(viewModel.appVersion)")
-                    .textCaption()
-                    .padding(.bottom, .margin8)
+        VStack(spacing: 0) {
+            ThemeText("\(AppConfig.appName) \(viewModel.appVersion)\n\("purchases.wallet_description.approved".localized)", style: .caption)
+                .multilineTextAlignment(.center)
+                .padding(.margin16)
 
-                HorizontalDivider()
-
-                Text("settings.info_subtitle".localized)
-                    .textMicro()
-                    .padding(.top, .margin4)
-            }
-            .fixedSize(horizontal: true, vertical: false)
-
-            Image("HS Logo Image")
-                .onTapGesture {
-                    Coordinator.shared.present(url: AppConfig.companyWebPageLink)
-                    stat(page: .settings, event: .open(page: .externalCompanyWebsite))
+            HStack(spacing: .margin8) {
+                ForEach(viewModel.approvedIcons, id: \.self) { icon in
+                    Image(icon)
+                        .renderingMode(.template)
+                        .foregroundColor(.themeGray)
+                        .frame(maxWidth: .infinity)
                 }
+            }
+            .frame(height: .heightCell48)
+            .padding(.horizontal, .margin8)
         }
     }
 

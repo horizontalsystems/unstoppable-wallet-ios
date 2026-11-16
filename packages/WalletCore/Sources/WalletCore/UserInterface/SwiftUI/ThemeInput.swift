@@ -90,6 +90,7 @@ struct ThemeInput<Content: View>: View {
                 buttonsGroup
             }
             .padding(.margin16)
+            .frame(minHeight: .heightInput64)
         case .area:
             VStack(alignment: .trailing, spacing: .margin16) {
                 inputContent.frame(maxWidth: .infinity, alignment: .topLeading)
@@ -99,6 +100,7 @@ struct ThemeInput<Content: View>: View {
                 }
             }
             .padding(.margin16)
+            .frame(minHeight: .heightInput64, alignment: .top)
         }
     }
 

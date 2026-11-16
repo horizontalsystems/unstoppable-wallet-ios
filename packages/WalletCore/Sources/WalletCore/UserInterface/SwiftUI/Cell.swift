@@ -42,6 +42,7 @@ public struct Cell<Left: View, Middle: View, Right: View>: View {
             right
         }
         .padding(style.insets)
+        .frame(minHeight: style.minHeight)
     }
 
     public enum Style {
@@ -52,6 +53,13 @@ public struct Cell<Left: View, Middle: View, Right: View>: View {
             switch self {
             case .primary: return EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin16, trailing: .margin16)
             case .secondary: return EdgeInsets(top: .margin8, leading: .margin16, bottom: .margin8, trailing: .margin16)
+            }
+        }
+
+        var minHeight: CGFloat? {
+            switch self {
+            case .primary: return .heightCell64
+            case .secondary: return nil
             }
         }
     }

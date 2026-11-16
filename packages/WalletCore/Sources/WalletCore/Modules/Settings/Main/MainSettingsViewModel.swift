@@ -23,16 +23,14 @@ class MainSettingsViewModel: ObservableObject {
     private let appStateManager = AppStateManager.instance
 
     @Published var manageWalletsAlert: Bool = false
-    @Published var walletConnectSessionCount: Int = 0
     @Published var walletConnectPendingRequestCount: Int = 0
     @Published var securityAlert: Bool = false
     @Published var iCloudUnavailable: Bool = false
-    @Published var slides: [Slide] = [.premium]
-    @Published var introductoryOffer: String?
 
     @Published var debu: String?
 
     let showDevTools: Bool
+    let approvedIcons: [String] = ["bitcoin", "wallet_scrutiny", "certik"]
 
     @Published var forceEnableSwap: Bool {
         didSet {
@@ -107,7 +105,6 @@ class MainSettingsViewModel: ObservableObject {
 
         subscribe(MainScheduler.instance, disposeBag, backupManager.allBackedUpObservable) { [weak self] _ in self?.syncManageWalletsAlert() }
         if let walletConnect {
-            subscribe(&cancellables, walletConnect.sessionCountPublisher) { [weak self] _ in self?.syncWalletConnectSessionCount() }
             subscribe(&cancellables, walletConnect.pendingRequestCountPublisher) { [weak self] _ in self?.syncWalletConnectPendingRequestCount() }
         }
         subscribe(&cancellables, contactManager.iCloudErrorPublisher) { [weak self] error in
@@ -121,46 +118,13 @@ class MainSettingsViewModel: ObservableObject {
         subscribe(&cancellables, accountRestoreWarningManager.hasNonStandardPublisher) { [weak self] _ in self?.syncManageWalletsAlert() }
         subscribe(&cancellables, passcodeManager.$isPasscodeSet) { [weak self] _ in self?.syncSecurityAlert() }
 
-        Publishers.Merge3(
-            purchaseManager.$purchaseData.map { _ in () },
-            purchaseManager.$productData.map { _ in () },
-            purchaseManager.$usedOfferProductIds.map { _ in () }
-        )
-        .receive(on: DispatchQueue.main)
-        .sink { [weak self] in
-            self?.syncIntroductoryOffer()
-            self?.syncSlides()
-        }
-        .store(in: &cancellables)
-
-        syncSlides()
-        syncIntroductoryOffer()
         syncManageWalletsAlert()
-        syncWalletConnectSessionCount()
         syncWalletConnectPendingRequestCount()
         syncSecurityAlert()
     }
 
-    private func syncSlides() {
-        var slides: [Slide] = []
-
-        if !purchaseManager.hasActivePurchase {
-            slides.insert(.premium, at: 0)
-        }
-
-        self.slides = slides
-    }
-
-    private func syncIntroductoryOffer() {
-        introductoryOffer = purchaseManager.introductoryOfferType.title
-    }
-
     private func syncManageWalletsAlert() {
         manageWalletsAlert = !backupManager.allBackedUp || accountRestoreWarningManager.hasNonStandard
-    }
-
-    private func syncWalletConnectSessionCount() {
-        walletConnectSessionCount = walletConnect?.sessionCount ?? 0
     }
 
     private func syncWalletConnectPendingRequestCount() {
@@ -188,9 +152,5 @@ extension MainSettingsViewModel {
         case backedUp
         case nonSupportedAccountType(accountType: AccountType)
         case unBackedUpAccount(account: Account)
-    }
-
-    enum Slide {
-        case premium
     }
 }

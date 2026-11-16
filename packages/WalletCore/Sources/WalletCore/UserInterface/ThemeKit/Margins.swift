@@ -45,6 +45,8 @@ public extension CGFloat {
     static let heightGrid38: CGFloat = 38
     static let heightCell48: CGFloat = 48
     static let heightCell56: CGFloat = 56
+    static let heightCell64: CGFloat = 64
+    static let heightInput64: CGFloat = 64
     static let heightDoubleLineCell: CGFloat = 62
     static let heightButton: CGFloat = 56
     static let heightBottomWrapperBar: CGFloat = 98

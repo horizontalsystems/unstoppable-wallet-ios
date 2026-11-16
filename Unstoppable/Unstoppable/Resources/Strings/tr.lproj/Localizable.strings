@@ -1595,11 +1595,9 @@
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
 "settings.faq" = "FAQ";
-"settings.info_subtitle" = "decentralized uygulama";
 "settings.donate.title" = "Bağış yapmak";
 "settings.rate_us" = "Bizi Değerlendirin";
 "settings.tell_friends" = "Arkadaşlarına bahset";
-"settings.social_networks.label" = "Be Unstoppable";
 "settings.dapp_connection" = "DApp Bağlantısı";
 "settings.appearance" = "Görünüm";
 
@@ -2585,10 +2583,8 @@
 
 // Purchases
 
-"premium.cell.title" = "Premium";
 "premium.cell.description" = "Deneyiminizi %@ özellikleriyle geliştirin!";
 "premium.cell.description.key" = "Premium";
-"premium.cell.try" = "ÜCRETSİZ Deneyin";
 
 "mini_app.cell.title" = "MiniApp";
 "mini_app.cell.description" = "Testleri geçin, görevleri tamamlayın ve token kazanın!";

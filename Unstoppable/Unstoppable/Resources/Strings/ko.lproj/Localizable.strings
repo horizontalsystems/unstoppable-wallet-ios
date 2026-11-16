@@ -1595,11 +1595,9 @@
 "settings.base_currency" = "기초 통화";
 "settings.language" = "언어";
 "settings.faq" = "FAQ";
-"settings.info_subtitle" = "분산형 앱";
 "settings.donate.title" = "후원하기";
 "settings.rate_us" = "앱 평가";
 "settings.tell_friends" = "친구에게 추천하기";
-"settings.social_networks.label" = "Be Unstoppable";
 "settings.dapp_connection" = "디앱 연결";
 "settings.appearance" = "디자인";
 
@@ -2585,10 +2583,8 @@
 
 // Purchases
 
-"premium.cell.title" = "프리미엄";
 "premium.cell.description" = "%@ 기능으로 경험을 업그레이드하세요!";
 "premium.cell.description.key" = "프리미엄";
-"premium.cell.try" = "무료 체험하기";
 
 "mini_app.cell.title" = "미니앱";
 "mini_app.cell.description" = "테스트를 통과하고 과제를 완료하여 토큰을 획득하세요!";

@@ -27,9 +27,9 @@ extension Image {
     }
 
     static func disclosure(alert: Bool) -> some View {
-        HStack(spacing: .margin8) {
+        HStack(spacing: .margin12) {
             if alert {
-                Image.warningIcon
+                ThemeImage("warning_filled", size: .iconSize20, colorStyle: .red)
             }
 
             Image.disclosureIcon
@@ -58,10 +58,6 @@ extension Image {
 
     static var defenseIcon: CustomStringConvertible {
         ComponentImage(image: "defense_filled", size: .size20)
-    }
-
-    static var premiumIcon: CustomStringConvertible {
-        ComponentImage(image: "premium_filled", size: .size20)
     }
 }
 

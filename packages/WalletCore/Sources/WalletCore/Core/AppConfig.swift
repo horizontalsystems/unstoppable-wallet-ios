@@ -7,7 +7,6 @@ enum AppConfig {
 
     static let companyName = "Horizontal Systems"
     static let reportEmail = "support.unstoppable@protonmail.com"
-    static let companyWebPageLink = "https://horizontalsystems.io"
     static let appWebPageLink = "https://unstoppable.money"
 
     // Relying-party domain (WebAuthn RP ID) for passkey wallets in this app. Passed explicitly to every
