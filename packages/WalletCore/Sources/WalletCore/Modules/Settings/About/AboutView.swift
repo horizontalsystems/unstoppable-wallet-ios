@@ -16,7 +16,7 @@ struct AboutView: View {
                                 left: { ThemeImage("information", size: .iconSize24) },
                                 middle: { ThemeText("settings.about_app.app_version".localized, style: .headline2) },
                                 right: {
-                                    ThemeText(viewModel.appVersion, style: .subheadSB).arrow(style: .disclosure)
+                                    ThemeText(viewModel.appVersion, style: .subheadSB).disclosure()
                                 }
                             )
                         }

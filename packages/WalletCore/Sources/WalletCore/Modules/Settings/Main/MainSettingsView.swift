@@ -502,6 +502,7 @@ struct MainSettingsView: View {
                 title: "Simulate Fail Swap",
                 subtitle: "none / server / local",
                 value: viewModel.simulateFailSwap.rawValue,
+                identifier: TestTags.settingsDebugSimulateFailSwap,
                 action: {
                     Coordinator.shared.present(type: .alert) { isPresented in
                         OptionAlertView(
@@ -517,7 +518,6 @@ struct MainSettingsView: View {
                     }
                 }
             )
-            .accessibilityIdentifier(TestTags.settingsDebugSimulateFailSwap)
 
             Cell(
                 middle: { ThemeText("Emulate Purchase", style: .headline2) },
@@ -563,6 +563,7 @@ struct MainSettingsView: View {
                 title: "Brand Color",
                 subtitle: BrandColor.allCases.map(\.rawValue).joined(separator: " / "),
                 value: viewModel.brandColor.rawValue,
+                identifier: TestTags.settingsDebugBrandColor,
                 action: {
                     Coordinator.shared.present(type: .alert) { isPresented in
                         OptionAlertView(
@@ -578,28 +579,18 @@ struct MainSettingsView: View {
                     }
                 }
             )
-            .accessibilityIdentifier(TestTags.settingsDebugBrandColor)
         }
     }
 
-    @ViewBuilder private func row(title: String, subtitle: String, value: String, action: (() -> Void)?) -> some View {
-        let enabled = action != nil
+    private func row(title: String, subtitle: String, value: String, identifier: String? = nil, action: @escaping () -> Void) -> some View {
         Cell(
             middle: {
                 MultiText(title: title, subtitle: subtitle)
             },
             right: {
-                ThemeText(
-                    value,
-                    style: .subheadSB,
-                    colorStyle: enabled ? .primary : .secondary
-                )
-                .arrow(
-                    style: .dropdown,
-                    colorStyle: enabled ? .primary : .secondary
-                )
-            },
-            action: action
+                DropdownButton(text: value, mode: .transparent, action: action)
+                    .withIdentifier(identifier)
+            }
         )
     }
 }

@@ -26,4 +26,19 @@ extension View {
             self
         }
     }
+
+    @ViewBuilder func withIdentifier(_ identifier: String?) -> some View {
+        if let identifier {
+            accessibilityIdentifier(identifier)
+        } else {
+            self
+        }
+    }
+
+    func disclosure() -> some View {
+        HStack(spacing: .margin8) {
+            self
+            Image.disclosure(colorStyle: .secondary)
+        }
+    }
 }

@@ -36,7 +36,7 @@ struct WCSessionsView: View {
                                             middle: { ThemeText("wallet_connect.list.requests".localized, style: .subhead) },
                                             right: {
                                                 ThemeText(request.label, style: .subheadSB)
-                                                    .arrow(style: .disclosure)
+                                                    .disclosure()
                                             },
                                             action: { viewModel.open(request: request) }
                                         )

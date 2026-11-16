@@ -21,18 +21,17 @@ struct MoneroKeyView: View {
                             ThemeText("monero.key_types".localized, style: .body)
                         },
                         right: {
-                            ThemeText(viewModel.keyType.title, style: .subhead, colorStyle: .secondary).arrow(style: .dropdown)
-                        },
-                        action: {
-                            Coordinator.shared.present(type: .alert) { isPresented in
-                                OptionAlertView(
-                                    title: "monero.key_types".localized,
-                                    viewItems: viewModel.keyTypeViewItems,
-                                    onSelect: { index in
-                                        viewModel.onSelectKeyType(index: index)
-                                    },
-                                    isPresented: isPresented
-                                )
+                            DropdownButton(text: viewModel.keyType.title, mode: .transparent) {
+                                Coordinator.shared.present(type: .alert) { isPresented in
+                                    OptionAlertView(
+                                        title: "monero.key_types".localized,
+                                        viewItems: viewModel.keyTypeViewItems,
+                                        onSelect: { index in
+                                            viewModel.onSelectKeyType(index: index)
+                                        },
+                                        isPresented: isPresented
+                                    )
+                                }
                             }
                         }
                     )

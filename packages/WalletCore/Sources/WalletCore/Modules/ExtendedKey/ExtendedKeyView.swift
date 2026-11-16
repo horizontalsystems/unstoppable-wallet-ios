@@ -88,15 +88,12 @@ struct ExtendedKeyView: View {
                 }
             },
             right: {
-                let text = ThemeText(value, style: .subhead, colorStyle: .secondary)
-
                 if switchable {
-                    text.arrow(style: .dropdown)
+                    DropdownButton(text: value, mode: .transparent, action: onSelect)
                 } else {
-                    text
+                    ThemeText(value, style: .subhead, colorStyle: .secondary)
                 }
-            },
-            action: switchable ? onSelect : nil
+            }
         )
     }
 

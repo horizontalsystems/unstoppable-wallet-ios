@@ -26,15 +26,7 @@ struct MoneroSendSettingsView: View {
                                     MultiText(title: "send.unspent_outputs".localized, subtitle: "send.unspent_outputs.description".localized)
                                 },
                                 right: {
-                                    ThemeText(
-                                        viewModel.utxos,
-                                        style: .subheadSB,
-                                        colorStyle: .primary
-                                    )
-                                    .arrow(
-                                        style: .dropdown,
-                                        colorStyle: .primary
-                                    )
+                                    ThemeText(viewModel.utxos, style: .subheadSB).disclosure()
                                 },
                                 action: {
                                     path.append(Route.outputSelector)

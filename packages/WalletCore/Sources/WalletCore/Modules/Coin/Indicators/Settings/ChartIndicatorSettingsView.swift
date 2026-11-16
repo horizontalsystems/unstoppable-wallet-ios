@@ -30,7 +30,7 @@ struct ChartIndicatorSettingsView: View {
                                         MiddleTextIcon(text: "chart_indicators.settings.ma.type_title".localized)
                                     },
                                     right: {
-                                        RightButtonText(text: maType.rawValue.uppercased(), icon: "arrow_s_down") {
+                                        DropdownButton(text: maType.rawValue.uppercased(), mode: .transparent) {
                                             Coordinator.shared.present(type: .alert) { isPresented in
                                                 OptionAlertView(
                                                     title: "chart_indicators.settings.ma.type_title".localized,

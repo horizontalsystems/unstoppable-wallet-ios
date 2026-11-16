@@ -88,10 +88,8 @@ struct TransactionFilterView: View {
         Cell(
             middle: { ThemeText(title, style: .headline2) },
             right: {
-                ThemeText(value ?? defaultValue, style: .subheadSB, colorStyle: value == nil ? .secondary : .primary)
-                    .arrow(style: .dropdown)
-            },
-            action: action
+                DropdownButton(text: value ?? defaultValue, mode: .transparent, action: action)
+            }
         )
     }
 }

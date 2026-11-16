@@ -137,21 +137,17 @@ struct RestoreMnemonicView: View {
                         MultiText(subtitle: "create_wallet.word_list".localized)
                     },
                     right: {
-                        ThemeText(
-                            viewModel.wordListLanguage,
-                            style: .subheadSB
-                        ).arrow(style: .dropdown)
-                    },
-                    action: {
-                        Coordinator.shared.present(type: .alert) { isPresented in
-                            OptionAlertView(
-                                title: "create_wallet.word_list".localized,
-                                viewItems: viewModel.wordListViewItems,
-                                onSelect: { index in
-                                    viewModel.onSelectWordList(index: index)
-                                },
-                                isPresented: isPresented
-                            )
+                        DropdownButton(text: viewModel.wordListLanguage, mode: .transparent) {
+                            Coordinator.shared.present(type: .alert) { isPresented in
+                                OptionAlertView(
+                                    title: "create_wallet.word_list".localized,
+                                    viewItems: viewModel.wordListViewItems,
+                                    onSelect: { index in
+                                        viewModel.onSelectWordList(index: index)
+                                    },
+                                    isPresented: isPresented
+                                )
+                            }
                         }
                     }
                 )

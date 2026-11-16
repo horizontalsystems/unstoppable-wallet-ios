@@ -15,18 +15,17 @@ struct AppearanceView: View {
                             ThemeText("appearance.theme".localized, style: .headline2)
                         },
                         right: {
-                            ThemeText(title(themeMode: viewModel.themeMode), style: .subheadSB).arrow(style: .dropdown)
-                        },
-                        action: {
-                            Coordinator.shared.present(type: .alert) { isPresented in
-                                OptionAlertView(
-                                    title: "appearance.theme".localized,
-                                    viewItems: viewModel.themeModes.map { .init(text: title(themeMode: $0), selected: viewModel.themeMode == $0) },
-                                    onSelect: { index in
-                                        viewModel.themeMode = viewModel.themeModes[index]
-                                    },
-                                    isPresented: isPresented
-                                )
+                            DropdownButton(text: title(themeMode: viewModel.themeMode), mode: .transparent) {
+                                Coordinator.shared.present(type: .alert) { isPresented in
+                                    OptionAlertView(
+                                        title: "appearance.theme".localized,
+                                        viewItems: viewModel.themeModes.map { .init(text: title(themeMode: $0), selected: viewModel.themeMode == $0) },
+                                        onSelect: { index in
+                                            viewModel.themeMode = viewModel.themeModes[index]
+                                        },
+                                        isPresented: isPresented
+                                    )
+                                }
                             }
                         }
                     )
@@ -64,7 +63,7 @@ struct AppearanceView: View {
                                 ThemeText("settings.base_currency".localized, style: .headline2)
                             },
                             right: {
-                                ThemeText(viewModel.baseCurrencyCode, style: .subheadSB).arrow(style: .disclosure)
+                                ThemeText(viewModel.baseCurrencyCode, style: .subheadSB).disclosure()
                             }
                         )
                     }
@@ -89,18 +88,17 @@ struct AppearanceView: View {
                                 MultiText(title: "appearance.price_change".localized, subtitle: "appearance.price_change.description".localized)
                             },
                             right: {
-                                ThemeText(title(priceChangeMode: viewModel.priceChangeMode), style: .subheadSB).arrow(style: .dropdown)
-                            },
-                            action: {
-                                Coordinator.shared.present(type: .alert) { isPresented in
-                                    OptionAlertView(
-                                        title: "appearance.price_change".localized,
-                                        viewItems: PriceChangeMode.allCases.map { .init(text: title(priceChangeMode: $0), selected: viewModel.priceChangeMode == $0) },
-                                        onSelect: { index in
-                                            viewModel.priceChangeMode = PriceChangeMode.allCases[index]
-                                        },
-                                        isPresented: isPresented
-                                    )
+                                DropdownButton(text: title(priceChangeMode: viewModel.priceChangeMode), mode: .transparent) {
+                                    Coordinator.shared.present(type: .alert) { isPresented in
+                                        OptionAlertView(
+                                            title: "appearance.price_change".localized,
+                                            viewItems: PriceChangeMode.allCases.map { .init(text: title(priceChangeMode: $0), selected: viewModel.priceChangeMode == $0) },
+                                            onSelect: { index in
+                                                viewModel.priceChangeMode = PriceChangeMode.allCases[index]
+                                            },
+                                            isPresented: isPresented
+                                        )
+                                    }
                                 }
                             }
                         )
@@ -114,18 +112,17 @@ struct AppearanceView: View {
                                 MultiText(title: "appearance.launch_screen".localized, subtitle: "appearance.launch_screen.description".localized)
                             },
                             right: {
-                                ThemeText(viewModel.launchScreen.title, style: .subheadSB).arrow(style: .dropdown)
-                            },
-                            action: {
-                                Coordinator.shared.present(type: .alert) { isPresented in
-                                    OptionAlertView(
-                                        title: "appearance.launch_screen".localized,
-                                        viewItems: LaunchScreen.allCases.map { .init(text: $0.title, selected: viewModel.launchScreen == $0) },
-                                        onSelect: { index in
-                                            viewModel.launchScreen = LaunchScreen.allCases[index]
-                                        },
-                                        isPresented: isPresented
-                                    )
+                                DropdownButton(text: viewModel.launchScreen.title, mode: .transparent) {
+                                    Coordinator.shared.present(type: .alert) { isPresented in
+                                        OptionAlertView(
+                                            title: "appearance.launch_screen".localized,
+                                            viewItems: LaunchScreen.allCases.map { .init(text: $0.title, selected: viewModel.launchScreen == $0) },
+                                            onSelect: { index in
+                                                viewModel.launchScreen = LaunchScreen.allCases[index]
+                                            },
+                                            isPresented: isPresented
+                                        )
+                                    }
                                 }
                             }
                         )
@@ -157,18 +154,17 @@ struct AppearanceView: View {
                                 MultiText(title: "appearance.balance_value".localized, subtitle: "appearance.balance_value.description".localized)
                             },
                             right: {
-                                ThemeText(title(balancePrimaryValue: viewModel.balancePrimaryValue), style: .subheadSB).arrow(style: .dropdown)
-                            },
-                            action: {
-                                Coordinator.shared.present(type: .alert) { isPresented in
-                                    OptionAlertView(
-                                        title: "appearance.balance_value".localized,
-                                        viewItems: BalancePrimaryValue.allCases.map { .init(text: title(balancePrimaryValue: $0), selected: viewModel.balancePrimaryValue == $0) },
-                                        onSelect: { index in
-                                            viewModel.balancePrimaryValue = BalancePrimaryValue.allCases[index]
-                                        },
-                                        isPresented: isPresented
-                                    )
+                                DropdownButton(text: title(balancePrimaryValue: viewModel.balancePrimaryValue), mode: .transparent) {
+                                    Coordinator.shared.present(type: .alert) { isPresented in
+                                        OptionAlertView(
+                                            title: "appearance.balance_value".localized,
+                                            viewItems: BalancePrimaryValue.allCases.map { .init(text: title(balancePrimaryValue: $0), selected: viewModel.balancePrimaryValue == $0) },
+                                            onSelect: { index in
+                                                viewModel.balancePrimaryValue = BalancePrimaryValue.allCases[index]
+                                            },
+                                            isPresented: isPresented
+                                        )
+                                    }
                                 }
                             }
                         )

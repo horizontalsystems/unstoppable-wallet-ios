@@ -40,10 +40,6 @@ extension Image {
         Image("arrow_b_right").icon(size: .iconSize20, colorStyle: colorStyle)
     }
 
-    static func dropdown(colorStyle: ColorStyle) -> some View {
-        Image("arrow_s_down").icon(size: .iconSize20, colorStyle: colorStyle)
-    }
-
     static var checkIcon: some View {
         ThemeImage("check", size: .iconSize20, colorStyle: .brand)
     }

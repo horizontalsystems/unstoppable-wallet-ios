@@ -32,7 +32,7 @@ struct PurchaseListView: View {
             middle: { ThemeText("subscription.plan".localized, style: .headline2) },
             right: {
                 ThemeText(value, style: .subheadSB, colorStyle: .brand)
-                    .arrow(style: .disclosure)
+                    .disclosure()
             },
             action: action
         )

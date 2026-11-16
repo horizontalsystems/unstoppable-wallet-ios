@@ -35,19 +35,17 @@ struct TonConnectConnectView: View {
                                     Cell(
                                         middle: { ThemeText("ton_connect.connect.wallet".localized, style: .subhead) },
                                         right: {
-                                            ThemeText(account.name, style: .subheadSB)
-                                                .arrow(style: .dropdown)
-                                        },
-                                        action: {
-                                            Coordinator.shared.present(type: .alert) { isPresented in
-                                                OptionAlertView(
-                                                    title: "ton_connect.connect.wallet".localized,
-                                                    viewItems: viewModel.eligibleAccounts.map { .init(text: $0.name, selected: viewModel.account == $0) },
-                                                    onSelect: { index in
-                                                        viewModel.account = viewModel.eligibleAccounts[index]
-                                                    },
-                                                    isPresented: isPresented
-                                                )
+                                            DropdownButton(text: account.name, mode: .transparent) {
+                                                Coordinator.shared.present(type: .alert) { isPresented in
+                                                    OptionAlertView(
+                                                        title: "ton_connect.connect.wallet".localized,
+                                                        viewItems: viewModel.eligibleAccounts.map { .init(text: $0.name, selected: viewModel.account == $0) },
+                                                        onSelect: { index in
+                                                            viewModel.account = viewModel.eligibleAccounts[index]
+                                                        },
+                                                        isPresented: isPresented
+                                                    )
+                                                }
                                             }
                                         }
                                     )

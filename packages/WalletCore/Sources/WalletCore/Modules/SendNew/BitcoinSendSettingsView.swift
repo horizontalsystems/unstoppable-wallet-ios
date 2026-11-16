@@ -21,7 +21,7 @@ struct BitcoinSendSettingsView: View {
                 VStack(spacing: .margin32) {
                     VStack(spacing: 0) {
                         ListSection {
-                            row(
+                            disclosureRow(
                                 title: "send.unspent_outputs".localized,
                                 subtitle: "send.unspent_outputs.description".localized,
                                 value: viewModel.utxos,
@@ -30,7 +30,7 @@ struct BitcoinSendSettingsView: View {
                                 }
                             )
 
-                            row(
+                            dropdownRow(
                                 title: "fee_settings.inputs_outputs".localized,
                                 subtitle: "fee_settings.inputs_outputs.description".localized,
                                 value: viewModel.sortMode.title,
@@ -49,7 +49,7 @@ struct BitcoinSendSettingsView: View {
                             )
 
                             if viewModel.lockTimeSupported {
-                                row(
+                                dropdownRow(
                                     title: "fee_settings.time_lock".localized,
                                     subtitle: timeLockSubtitle,
                                     value: viewModel.lockTimeIntervalTitle,
@@ -124,23 +124,24 @@ struct BitcoinSendSettingsView: View {
         return AttibutedComponentText(text: description + warning)
     }
 
-    @ViewBuilder private func row(title: String, subtitle: CustomStringConvertible, value: String, action: (() -> Void)?) -> some View {
-        let enabled = action != nil
-
+    private func dropdownRow(title: String, subtitle: CustomStringConvertible, value: String, action: @escaping () -> Void) -> some View {
         Cell(
             middle: {
                 MultiText(title: title, subtitle: subtitle)
             },
             right: {
-                ThemeText(
-                    value,
-                    style: .subheadSB,
-                    colorStyle: enabled ? .primary : .secondary
-                )
-                .arrow(
-                    style: .dropdown,
-                    colorStyle: enabled ? .primary : .secondary
-                )
+                DropdownButton(text: value, mode: .transparent, action: action)
+            }
+        )
+    }
+
+    private func disclosureRow(title: String, subtitle: CustomStringConvertible, value: String, action: @escaping () -> Void) -> some View {
+        Cell(
+            middle: {
+                MultiText(title: title, subtitle: subtitle)
+            },
+            right: {
+                ThemeText(value, style: .subheadSB).disclosure()
             },
             action: action
         )

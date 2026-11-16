@@ -61,23 +61,19 @@ struct CreateAccountView: View {
                                             MultiText(subtitle: "create_wallet.phrase_count".localized)
                                         },
                                         right: {
-                                            ThemeText(
-                                                "create_wallet.n_words".localized("\(viewModel.wordCount.rawValue)"),
-                                                style: .subheadSB
-                                            ).arrow(style: .dropdown)
-                                        },
-                                        action: {
-                                            Coordinator.shared.present(type: .alert) { isPresented in
-                                                OptionAlertView(
-                                                    title: "create_wallet.phrase_count".localized,
-                                                    viewItems: Mnemonic.WordCount.allCases.map {
-                                                        .init(text: title(wordCount: $0), selected: $0 == viewModel.wordCount)
-                                                    },
-                                                    onSelect: { index in
-                                                        viewModel.wordCount = Mnemonic.WordCount.allCases[index]
-                                                    },
-                                                    isPresented: isPresented
-                                                )
+                                            DropdownButton(text: "create_wallet.n_words".localized("\(viewModel.wordCount.rawValue)"), mode: .transparent) {
+                                                Coordinator.shared.present(type: .alert) { isPresented in
+                                                    OptionAlertView(
+                                                        title: "create_wallet.phrase_count".localized,
+                                                        viewItems: Mnemonic.WordCount.allCases.map {
+                                                            .init(text: title(wordCount: $0), selected: $0 == viewModel.wordCount)
+                                                        },
+                                                        onSelect: { index in
+                                                            viewModel.wordCount = Mnemonic.WordCount.allCases[index]
+                                                        },
+                                                        isPresented: isPresented
+                                                    )
+                                                }
                                             }
                                         }
                                     )

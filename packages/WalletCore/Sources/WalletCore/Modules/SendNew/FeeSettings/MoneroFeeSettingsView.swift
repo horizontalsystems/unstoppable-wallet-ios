@@ -44,7 +44,7 @@ struct MoneroFeeSettingsView: View {
                                         MiddleTextIcon(text: "monero.priority".localized)
                                     },
                                     right: {
-                                        RightButtonText(text: viewModel.priority.description, icon: "arrow_s_down") {
+                                        DropdownButton(text: viewModel.priority.description, mode: .transparent) {
                                             Coordinator.shared.present(type: .alert) { isPresented in
                                                 OptionAlertView(
                                                     title: "monero.priority".localized,

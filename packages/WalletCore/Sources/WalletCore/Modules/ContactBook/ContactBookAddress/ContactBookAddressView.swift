@@ -106,15 +106,14 @@ struct ContactBookAddressView: View {
         Cell(
             middle: { ThemeText("contacts.contact.address.blockchain".localized, style: .headline2) },
             right: {
-                let value = ThemeText(viewModel.selectedBlockchain.name, style: .subheadSB, colorStyle: editable ? .primary : .secondary)
-
                 if editable {
-                    value.arrow(style: .dropdown)
+                    DropdownButton(text: viewModel.selectedBlockchain.name, mode: .transparent) {
+                        presentBlockchainSelect()
+                    }
                 } else {
-                    value
+                    ThemeText(viewModel.selectedBlockchain.name, style: .subheadSB, colorStyle: .secondary)
                 }
-            },
-            action: editable ? { presentBlockchainSelect() } : nil
+            }
         )
     }
 

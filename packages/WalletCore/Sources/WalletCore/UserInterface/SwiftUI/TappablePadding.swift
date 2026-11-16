@@ -6,12 +6,10 @@ struct TappablePadding: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .padding(insets)
-            .contentShape(Rectangle())
+            .tapAreaPadding(insets)
             .onTapGesture {
                 onTap()
             }
-            .padding(insets.inverted)
     }
 }
 
@@ -22,6 +20,16 @@ extension View {
 
     func tappablePadding(_ inset: CGFloat, onTap: @escaping () -> Void) -> some View {
         modifier(TappablePadding(insets: EdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset), onTap: onTap))
+    }
+
+    func tapAreaPadding(_ insets: EdgeInsets) -> some View {
+        padding(insets)
+            .contentShape(Rectangle())
+            .padding(insets.inverted)
+    }
+
+    func tapAreaPadding(_ inset: CGFloat) -> some View {
+        tapAreaPadding(EdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset))
     }
 }
 

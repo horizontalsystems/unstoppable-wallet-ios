@@ -91,12 +91,4 @@ private extension View {
             self
         }
     }
-
-    @ViewBuilder func withIdentifier(_ identifier: String?) -> some View {
-        if let identifier {
-            accessibilityIdentifier(identifier)
-        } else {
-            self
-        }
-    }
 }

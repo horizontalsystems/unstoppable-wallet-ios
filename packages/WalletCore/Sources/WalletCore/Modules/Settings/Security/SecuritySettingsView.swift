@@ -56,24 +56,23 @@ struct SecuritySettingsView: View {
                                 MultiText(title: biometryType.title)
                             },
                             right: {
-                                ThemeText(viewModel.biometryEnabledType.title, style: .subheadSB).arrow(style: .dropdown)
-                            },
-                            action: {
-                                Coordinator.shared.present(type: .alert) { isPresented in
-                                    OptionAlertView(
-                                        title: biometryType.title,
-                                        viewItems: BiometryManager.BiometryEnabledType.allCases.map {
-                                            .init(text: $0.title, selected: $0 == viewModel.biometryEnabledType)
-                                        },
-                                        onSelect: { index in
-                                            viewModel.biometryEnabledType = BiometryManager.BiometryEnabledType.allCases[index]
-                                        },
-                                        isPresented: isPresented
-                                    )
+                                DropdownButton(text: viewModel.biometryEnabledType.title, mode: .transparent) {
+                                    Coordinator.shared.present(type: .alert) { isPresented in
+                                        OptionAlertView(
+                                            title: biometryType.title,
+                                            viewItems: BiometryManager.BiometryEnabledType.allCases.map {
+                                                .init(text: $0.title, selected: $0 == viewModel.biometryEnabledType)
+                                            },
+                                            onSelect: { index in
+                                                viewModel.biometryEnabledType = BiometryManager.BiometryEnabledType.allCases[index]
+                                            },
+                                            isPresented: isPresented
+                                        )
+                                    }
                                 }
+                                .accessibilityIdentifier(TestTags.securityBiometrics)
                             }
                         )
-                        .accessibilityIdentifier(TestTags.securityBiometrics)
                         .onChange(of: viewModel.biometryEnabledType) { type in
                             if !viewModel.isPasscodeSet, type.isEnabled {
                                 presentCreatePasscode(reason: .biometry(enabledType: type, type: biometryType))
@@ -89,22 +88,21 @@ struct SecuritySettingsView: View {
                                 MultiText(title: "settings_security.auto_lock".localized, subtitle: "settings_security.auto_lock.description".localized)
                             },
                             right: {
-                                ThemeText(viewModel.autoLockPeriod.title, style: .subheadSB).arrow(style: .dropdown)
-                            },
-                            action: {
-                                Coordinator.shared.present(type: .alert) { isPresented in
-                                    OptionAlertView(
-                                        title: "settings_security.auto_lock".localized,
-                                        viewItems: AutoLockPeriod.allCases.map { .init(text: $0.title, selected: viewModel.autoLockPeriod == $0, identifier: TestTags.autolockInterval($0.identifierRaw)) },
-                                        onSelect: { index in
-                                            viewModel.autoLockPeriod = AutoLockPeriod.allCases[index]
-                                        },
-                                        isPresented: isPresented
-                                    )
+                                DropdownButton(text: viewModel.autoLockPeriod.title, mode: .transparent) {
+                                    Coordinator.shared.present(type: .alert) { isPresented in
+                                        OptionAlertView(
+                                            title: "settings_security.auto_lock".localized,
+                                            viewItems: AutoLockPeriod.allCases.map { .init(text: $0.title, selected: viewModel.autoLockPeriod == $0, identifier: TestTags.autolockInterval($0.identifierRaw)) },
+                                            onSelect: { index in
+                                                viewModel.autoLockPeriod = AutoLockPeriod.allCases[index]
+                                            },
+                                            isPresented: isPresented
+                                        )
+                                    }
                                 }
+                                .accessibilityIdentifier(TestTags.securityAutolock)
                             }
                         )
-                        .accessibilityIdentifier(TestTags.securityAutolock)
                     }
                     toggledRow(title: "settings_security.balance_auto_hide".localized, subtitle: "settings_security.balance_auto_hide.description".localized, isOn: $viewModel.balanceAutoHide)
 

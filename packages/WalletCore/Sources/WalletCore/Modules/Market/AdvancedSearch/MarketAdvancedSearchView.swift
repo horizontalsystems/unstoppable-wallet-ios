@@ -137,7 +137,7 @@ struct MarketAdvancedSearchView: View {
     }
 
     private func volumeRow() -> some View {
-        dropdownRow(title: "market.advanced_search.volume".localized, value: viewModel.volume.title, colorStyle: colorStyle(valueFilter: viewModel.volume)) {
+        dropdownRow(title: "market.advanced_search.volume".localized, value: viewModel.volume.title) {
             Coordinator.shared.present(type: .bottomSheet) { isPresented in
                 ListSection {
                     ForEach(viewModel.valueFilters) { filter in
@@ -154,7 +154,7 @@ struct MarketAdvancedSearchView: View {
     }
 
     private func categoriesRow() -> some View {
-        dropdownRow(title: "market.advanced_search.categories".localized, value: viewModel.categories.title, colorStyle: colorStyle(categoriesFilter: viewModel.categories)) {
+        dropdownRow(title: "market.advanced_search.categories".localized, value: viewModel.categories.title) {
             Coordinator.shared.presentAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .sectors) { isPresented in
                 MarketAdvancedSearchCategoriesView(viewModel: viewModel, isPresented: isPresented)
             }
@@ -173,31 +173,28 @@ struct MarketAdvancedSearchView: View {
         )
     }
 
-    @ViewBuilder private func blockchainsRow() -> some View {
-        let value = blockchainsValue
-
-        dropdownRow(title: "market.advanced_search.blockchains".localized, value: value.text, colorStyle: value.colorStyle) {
+    private func blockchainsRow() -> some View {
+        dropdownRow(title: "market.advanced_search.blockchains".localized, value: blockchainsValue) {
             Coordinator.shared.present { isPresented in
                 MarketAdvancedSearchBlockchainsView(viewModel: viewModel, isPresented: isPresented)
             }
         }
     }
 
-    private var blockchainsValue: (text: String, colorStyle: ColorStyle) {
+    private var blockchainsValue: String {
         if viewModel.blockchains.isEmpty {
-            return ("selector.any".localized, .secondary)
+            return "selector.any".localized
         } else if viewModel.blockchains.count == 1, let blockchain = viewModel.blockchains.first {
-            return (blockchain.name, .primary)
+            return blockchain.name
         } else {
-            return ("\(viewModel.blockchains.count)", .primary)
+            return "\(viewModel.blockchains.count)"
         }
     }
 
     private func signalRow() -> some View {
         dropdownRow(
             title: "market.advanced_search.signal".localized,
-            value: viewModel.signal?.title ?? "selector.any".localized,
-            colorStyle: viewModel.signal == nil ? .secondary : .primary
+            value: viewModel.signal?.title ?? "selector.any".localized
         ) {
             Coordinator.shared.performAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .tradingSignal) {
                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
@@ -222,7 +219,7 @@ struct MarketAdvancedSearchView: View {
     }
 
     private func priceChangeRow() -> some View {
-        dropdownRow(title: "market.advanced_search.price_change".localized, value: viewModel.priceChange.title, colorStyle: colorStyle(priceChangeFilter: viewModel.priceChange)) {
+        dropdownRow(title: "market.advanced_search.price_change".localized, value: viewModel.priceChange.title) {
             Coordinator.shared.performAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .priceChange) {
                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
                     ListSection {
@@ -260,7 +257,7 @@ struct MarketAdvancedSearchView: View {
     }
 
     private func priceCloseToRow() -> some View {
-        dropdownRow(title: "market.advanced_search.price_close_to".localized, value: viewModel.priceCloseTo.title, colorStyle: colorStyle(closeToFilter: viewModel.priceCloseTo)) {
+        dropdownRow(title: "market.advanced_search.price_close_to".localized, value: viewModel.priceCloseTo.title) {
             Coordinator.shared.performAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .priceCloseTo) {
                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
                     ListSection {
@@ -278,14 +275,12 @@ struct MarketAdvancedSearchView: View {
         }
     }
 
-    private func dropdownRow(title: String, value: String, colorStyle: ColorStyle = .primary, action: @escaping () -> Void) -> some View {
+    private func dropdownRow(title: String, value: String, action: @escaping () -> Void) -> some View {
         Cell(
             middle: { ThemeText(title, style: .headline2) },
             right: {
-                ThemeText(value, style: .subheadSB, colorStyle: colorStyle)
-                    .arrow(style: .dropdown)
-            },
-            action: action
+                DropdownButton(text: value, mode: .transparent, action: action)
+            }
         )
     }
 
@@ -304,13 +299,6 @@ struct MarketAdvancedSearchView: View {
     private func colorStyle(valueFilter: MarketAdvancedSearchViewModel.ValueFilter) -> ColorStyle {
         switch valueFilter {
         case .none: return .secondary
-        default: return .primary
-        }
-    }
-
-    private func colorStyle(categoriesFilter: MarketAdvancedSearchViewModel.CategoryFilter) -> ColorStyle {
-        switch categoriesFilter {
-        case .any: return .secondary
         default: return .primary
         }
     }

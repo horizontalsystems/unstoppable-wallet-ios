@@ -57,10 +57,9 @@ struct AddTokenView: View {
                     MultiText(title: "add_token.blockchain".localized)
                 },
                 right: {
-                    RightTextIcon(text: viewModel.currentBlockchainItem.blockchain.name).arrow(style: .dropdown)
-                },
-                action: {
-                    openBlockchainSelector()
+                    DropdownButton(text: viewModel.currentBlockchainItem.blockchain.name, mode: .transparent) {
+                        openBlockchainSelector()
+                    }
                 }
             )
         }
