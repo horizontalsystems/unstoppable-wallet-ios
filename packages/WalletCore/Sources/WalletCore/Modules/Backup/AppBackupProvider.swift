@@ -324,7 +324,7 @@ extension AppBackupProvider {
             balanceConversionManager.set(tokenQueryId: raw.settings.conversionTokenQueryId)
             balanceHiddenManager.set(balanceAutoHide: raw.settings.balanceAutoHide)
             let appIcon = AppIconManager.appIcon(title: raw.settings.appIcon)
-            if appIconManager.appIcon != appIcon {
+            if appIconManager.appIcon != appIcon || appIconManager.isSystemIconOutOfSync {
                 appIconManager.appIcon = appIcon
             }
         }

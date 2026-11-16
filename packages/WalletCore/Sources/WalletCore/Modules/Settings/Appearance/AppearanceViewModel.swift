@@ -101,7 +101,7 @@ class AppearanceViewModel: ObservableObject {
 
     @Published var appIcon: AppIcon {
         didSet {
-            guard appIconManager.appIcon != appIcon else {
+            guard appIconManager.appIcon != appIcon || appIconManager.isSystemIconOutOfSync else {
                 return
             }
             stat(page: .appearance, event: .selectAppIcon(iconUid: appIcon.title.lowercased()))

@@ -15,18 +15,8 @@ ICONS_DIR="$ROOT/Unstoppable/Unstoppable/Resources/Assets.xcassets/AppIcon"
 MAPPING=(
     "AppIcon:app_icon_main"
     "AppIconOrange:app_icon_orange"
-    "AppIconMono:app_icon_mono"
+    "AppIconLight:app_icon_light"
     "AppIcon8ball:app_icon_8ball"
-    "AppIconMonero:app_icon_monero"
-    "AppIconZcash:app_icon_zcash"
-    "AppIconPepe:app_icon_pepe"
-    "AppIconDoge:app_icon_doge"
-    "AppIconPunk:app_icon_punk"
-    "AppIcon1874:app_icon_1874"
-    "AppIconPlFlag:app_icon_pl_flag"
-    "AppIconYS:app_icon_ys"
-    "AppIconYesChad:app_icon_yes_chad"
-    "AppIconGigaChad:app_icon_giga_chad"
 )
 
 SIZE_2X=120
