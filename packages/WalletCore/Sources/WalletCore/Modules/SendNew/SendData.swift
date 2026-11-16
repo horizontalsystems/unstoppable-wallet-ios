@@ -51,7 +51,13 @@ public enum SendData {
     // Same shape as .privateSend, for the cross-asset exact-output payment: the deposit is the
     // commit's answer, so the inner ZEC send is built inside the handler.
     case crossPay(request: CrossPayRequest)
+    // An operation the host app defines and handles with its own registered SendHandler (e.g. a
+    // smart-wallet setting with no transfer); WalletCore only carries it to the confirmation screen.
+    case appDefined(request: IAppSendRequest)
 }
+
+/// A send request whose meaning belongs to the host app; see `SendData.appDefined`.
+public protocol IAppSendRequest {}
 
 /// App-agnostic display + reporting payload attached to a merchant payment send. Carried through the
 /// neutral send flow so a Stable-side decorator handler (registered via SendHandlerFactory) can render
