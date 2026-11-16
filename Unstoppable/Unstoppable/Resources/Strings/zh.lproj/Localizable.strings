@@ -2006,21 +2006,6 @@
 "create_wallet.error.forbidden_symbols" = "请只使用支持的符号：A-Z a-z 0-9 ' \" & / ? , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "密码短语不匹配";
 
-// Passkey Wallet Terms
-
-"passkey_terms.title" = "Passkey 钱包条款";
-
-"passkey_terms.device_icloud.title" = "设备与 iCloud 依赖";
-"passkey_terms.device_icloud.description" = "访问需要您的设备和 iCloud。失去访问权限可能导致资金损失。";
-
-"passkey_terms.cross_platform.title" = "有限的跨平台访问";
-"passkey_terms.cross_platform.description" = "可能无法在非 Apple 设备上使用。";
-
-"passkey_terms.responsibility.title" = "责任";
-"passkey_terms.responsibility.description" = "您需对设备和 iCloud 的访问负责。如果访问丢失，Unstoppable 无法恢复此钱包。";
-
-"passkey_terms.button" = "我已了解并继续";
-
 // Restore Select
 
 "restore_select.title" = "选择区块链";

@@ -2006,21 +2006,6 @@
 "create_wallet.error.forbidden_symbols" = "지원되는 기호만 사용하세요: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "패스프레이즈가 일치하지 않습니다";
 
-// Passkey Wallet Terms
-
-"passkey_terms.title" = "Passkey 지갑 이용약관";
-
-"passkey_terms.device_icloud.title" = "기기 및 iCloud 의존성";
-"passkey_terms.device_icloud.description" = "접근하려면 기기와 iCloud가 필요합니다. 접근 권한을 잃으면 자금 손실이 발생할 수 있습니다.";
-
-"passkey_terms.cross_platform.title" = "제한된 크로스 플랫폼 접근";
-"passkey_terms.cross_platform.description" = "Apple 이외의 기기에서는 작동하지 않을 수 있습니다.";
-
-"passkey_terms.responsibility.title" = "책임";
-"passkey_terms.responsibility.description" = "기기 및 iCloud 접근에 대한 책임은 사용자에게 있습니다. 접근 권한을 잃을 경우 Unstoppable은 이 지갑을 복구할 수 없습니다.";
-
-"passkey_terms.button" = "이해했으며 계속합니다";
-
 // Restore Select
 
 "restore_select.title" = "블록체인 선택";

@@ -2006,21 +2006,6 @@
 "create_wallet.error.forbidden_symbols" = "Lütfen yalnızca desteklenen sembolleri kullanın:  A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Parola eşleşmiyor";
 
-// Passkey Wallet Terms
-
-"passkey_terms.title" = "Passkey Cüzdan Koşulları";
-
-"passkey_terms.device_icloud.title" = "Cihaz ve iCloud bağımlılığı";
-"passkey_terms.device_icloud.description" = "Erişim, cihazınızı ve iCloud'u gerektirir. Erişimi kaybetmek, fonların kaybına neden olabilir.";
-
-"passkey_terms.cross_platform.title" = "Sınırlı platformlar arası erişim";
-"passkey_terms.cross_platform.description" = "Apple dışı cihazlarda çalışmayabilir.";
-
-"passkey_terms.responsibility.title" = "Sorumluluk";
-"passkey_terms.responsibility.description" = "Cihazınıza ve iCloud'a erişimden siz sorumlusunuz. Erişim kaybedilirse Unstoppable bu cüzdanı kurtaramaz.";
-
-"passkey_terms.button" = "Anlıyorum ve Devam Et";
-
 // Restore Select
 
 "restore_select.title" = "Blockchain Seç";

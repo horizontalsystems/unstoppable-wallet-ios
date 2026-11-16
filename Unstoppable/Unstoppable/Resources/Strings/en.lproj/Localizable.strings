@@ -2006,21 +2006,6 @@
 "create_wallet.error.forbidden_symbols" = "Please use only supported symbols:A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Passphrase doesn’t match";
 
-// Passkey Wallet Terms
-
-"passkey_terms.title" = "Passkey Wallet Terms";
-
-"passkey_terms.device_icloud.title" = "Device & iCloud dependency";
-"passkey_terms.device_icloud.description" = "Access requires your device and iCloud. Losing access may result in loss of funds.";
-
-"passkey_terms.cross_platform.title" = "Limited cross-platform access";
-"passkey_terms.cross_platform.description" = "May not work on non-Apple devices.";
-
-"passkey_terms.responsibility.title" = "Responsibility";
-"passkey_terms.responsibility.description" = "You are responsible for access to your device and iCloud. Unstoppable cannot recover this wallet if access is lost.";
-
-"passkey_terms.button" = "I Understand and Continue";
-
 // Restore Select
 
 "restore_select.title" = "Choose Blockchains";

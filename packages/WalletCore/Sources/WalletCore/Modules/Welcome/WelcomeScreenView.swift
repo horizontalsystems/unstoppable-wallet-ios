@@ -58,8 +58,6 @@ struct WelcomeScreenView: View {
             CreateAccountView(walletType: .regular, isPresented: flowBinding)
         case .createPasskey:
             CreateAccountView(walletType: .passkey, isPresented: flowBinding)
-        case .passkeyTerms:
-            PasskeyTermsView(isPresented: flowBinding)
         case .restoreMnemonic:
             RestoreMnemonicView(isParentPresented: flowBinding)
         case .restorePrivateKey:

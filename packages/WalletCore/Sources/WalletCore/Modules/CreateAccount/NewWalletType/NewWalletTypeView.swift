@@ -7,7 +7,6 @@ struct NewWalletTypeView: View {
 
     @State private var standardWalletPresented = false
     @State private var passkeyWalletPresented = false
-    @State private var passkeyTermsPresented = false
 
     var body: some View {
         ScrollableThemeView {
@@ -18,11 +17,7 @@ struct NewWalletTypeView: View {
                     subtitle: "new_wallet.passkey.description".localized,
                     accessibilityIdentifier: TestTags.createTypePasskey
                 ) {
-                    if Core.shared.termsManager.passkeyTermsAccepted {
-                        passkeyWalletPresented = true
-                    } else {
-                        passkeyTermsPresented = true
-                    }
+                    passkeyWalletPresented = true
                 }
 
                 row(
@@ -53,9 +48,6 @@ struct NewWalletTypeView: View {
         }
         .navigationDestination(isPresented: $passkeyWalletPresented) {
             CreateAccountView(walletType: .passkey, isPresented: parentPresented ?? $isPresented)
-        }
-        .navigationDestination(isPresented: $passkeyTermsPresented) {
-            PasskeyTermsView(isPresented: parentPresented ?? $isPresented)
         }
     }
 

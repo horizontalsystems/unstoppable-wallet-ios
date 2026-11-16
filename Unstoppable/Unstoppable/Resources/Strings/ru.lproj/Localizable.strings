@@ -2006,21 +2006,6 @@
 "create_wallet.error.forbidden_symbols" = "Hold on there, cowboy! Let's stick to the symbols we know and love::A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Пароль-фраза не совпадает";
 
-// Passkey Wallet Terms
-
-"passkey_terms.title" = "Условия Passkey-кошелька";
-
-"passkey_terms.device_icloud.title" = "Зависимость от устройства и iCloud";
-"passkey_terms.device_icloud.description" = "Для доступа требуется ваше устройство и iCloud. Потеря доступа может привести к потере средств.";
-
-"passkey_terms.cross_platform.title" = "Ограниченный кросс-платформенный доступ";
-"passkey_terms.cross_platform.description" = "Может не работать на устройствах, отличных от Apple.";
-
-"passkey_terms.responsibility.title" = "Ответственность";
-"passkey_terms.responsibility.description" = "Вы несёте ответственность за доступ к своему устройству и iCloud. Unstoppable не сможет восстановить этот кошелёк в случае потери доступа.";
-
-"passkey_terms.button" = "Я понимаю и продолжаю";
-
 // Restore Select
 
 "restore_select.title" = "Выберите блокчейны";

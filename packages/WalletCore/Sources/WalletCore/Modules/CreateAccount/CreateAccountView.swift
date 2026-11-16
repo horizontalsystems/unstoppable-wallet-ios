@@ -5,7 +5,6 @@ struct CreateAccountView: View {
     @StateObject private var viewModel: CreateAccountViewModel
 
     @Binding var isPresented: Bool
-    var onCreate: (() -> Void)?
 
     @State private var secureLock = true
     @State private var passphraseCaution: CautionState = .none
@@ -16,10 +15,9 @@ struct CreateAccountView: View {
     @State private var passphraseFocused = false
     @State private var passphraseConfirmationFocused = false
 
-    init(walletType: CreateAccountViewModel.WalletType, isPresented: Binding<Bool>, onCreate: (() -> Void)? = nil) {
+    init(walletType: CreateAccountViewModel.WalletType, isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: CreateAccountViewModel(walletType: walletType))
         _isPresented = isPresented
-        self.onCreate = onCreate
     }
 
     var body: some View {
@@ -185,11 +183,7 @@ struct CreateAccountView: View {
     private func handleSuccess() {
         HudHelper.instance.show(banner: .created)
 
-        if let onCreate {
-            onCreate()
-        } else {
-            isPresented = false
-        }
+        isPresented = false
     }
 
     private func handleError(_ error: Error) {
@@ -208,91 +202,5 @@ struct CreateAccountView: View {
 extension CreateAccountView {
     enum Field {
         case name
-    }
-}
-
-struct PasskeyTermsView: View {
-    @Binding var isPresented: Bool
-    var walletType: CreateAccountViewModel.WalletType = .passkey
-    var onCreate: (() -> Void)?
-
-    @State private var checkedIds = Set<String>()
-    @State private var createAccountPresented = false
-
-    private let terms = PasskeyTermsView.Term.allCases
-
-    var body: some View {
-        ThemeView {
-            BottomGradientWrapper {
-                ScrollView {
-                    ListSection {
-                        ForEach(terms, id: \.id) { term in
-                            row(term: term, checked: checkedIds.contains(term.id))
-                        }
-                    }
-                    .padding(EdgeInsets(top: 12, leading: 16, bottom: 32, trailing: 16))
-                }
-            } bottomContent: {
-                ThemeButton(text: "passkey_terms.button".localized) {
-                    Core.shared.termsManager.setPasskeyTermsAccepted()
-                    createAccountPresented = true
-                }
-                .disabled(checkedIds.count < terms.count)
-            }
-        }
-        .navigationTitle("passkey_terms.title".localized)
-        .navigationDestination(isPresented: $createAccountPresented) {
-            CreateAccountView(walletType: walletType, isPresented: $isPresented, onCreate: onCreate)
-        }
-    }
-
-    private func row(term: Term, checked: Bool) -> some View {
-        Cell(
-            left: {
-                CheckBoxView(checked: checked)
-            },
-            middle: {
-                MultiText(title: term.title, subtitle: term.description)
-            },
-            action: {
-                toggle(term)
-            }
-        )
-    }
-
-    private func toggle(_ term: Term) {
-        if checkedIds.contains(term.id) {
-            checkedIds.remove(term.id)
-        } else {
-            checkedIds.insert(term.id)
-        }
-    }
-}
-
-extension PasskeyTermsView {
-    enum Term: String, CaseIterable {
-        case deviceIcloud
-        case crossPlatform
-        case responsibility
-
-        var id: String {
-            rawValue
-        }
-
-        var title: String {
-            switch self {
-            case .deviceIcloud: return "passkey_terms.device_icloud.title".localized
-            case .crossPlatform: return "passkey_terms.cross_platform.title".localized
-            case .responsibility: return "passkey_terms.responsibility.title".localized
-            }
-        }
-
-        var description: String {
-            switch self {
-            case .deviceIcloud: return "passkey_terms.device_icloud.description".localized
-            case .crossPlatform: return "passkey_terms.cross_platform.description".localized
-            case .responsibility: return "passkey_terms.responsibility.description".localized
-            }
-        }
     }
 }

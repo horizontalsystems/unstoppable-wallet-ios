@@ -5,7 +5,6 @@ import HsExtensions
 class TermsManager {
     private static let keyTermsAccepted = "key_terms_accepted"
     private static let keyTermsState = "key_terms_state"
-    private static let keyPasskeyTermsAccepted = "key_passkey_terms_accepted"
     private let userDefaultsStorage: UserDefaultsStorage
 
     @DistinctPublished var state: TermsState
@@ -14,14 +13,6 @@ class TermsManager {
         self.userDefaultsStorage = userDefaultsStorage
 
         state = TermsManager.migrateIfNeeded(storage: userDefaultsStorage)
-    }
-
-    var passkeyTermsAccepted: Bool {
-        userDefaultsStorage.value(for: Self.keyPasskeyTermsAccepted) ?? false
-    }
-
-    func setPasskeyTermsAccepted() {
-        userDefaultsStorage.set(value: true, for: Self.keyPasskeyTermsAccepted)
     }
 }
 

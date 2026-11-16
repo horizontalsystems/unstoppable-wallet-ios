@@ -2006,21 +2006,6 @@
 "create_wallet.error.forbidden_symbols" = "Veuillez utiliser uniquement les symboles pris en charge : A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "La phrase secrète ne correspond pas";
 
-// Passkey Wallet Terms
-
-"passkey_terms.title" = "Conditions du Wallet Passkey";
-
-"passkey_terms.device_icloud.title" = "Dépendance à l'appareil et à iCloud";
-"passkey_terms.device_icloud.description" = "L'accès nécessite votre appareil et iCloud. La perte d'accès peut entraîner la perte de fonds.";
-
-"passkey_terms.cross_platform.title" = "Accès multiplateforme limité";
-"passkey_terms.cross_platform.description" = "Peut ne pas fonctionner sur les appareils non Apple.";
-
-"passkey_terms.responsibility.title" = "Responsabilité";
-"passkey_terms.responsibility.description" = "Vous êtes responsable de l'accès à votre appareil et à iCloud. Unstoppable ne peut pas récupérer ce wallet en cas de perte d'accès.";
-
-"passkey_terms.button" = "Je comprends et je continue";
-
 // Restore Select
 
 "restore_select.title" = "Choisir la blockchain";

@@ -2,7 +2,6 @@ import Combine
 import SwiftUI
 
 class WelcomeViewModel: ObservableObject {
-    private let termsManager = Core.shared.termsManager
     private lazy var restoreTypeViewModel = RestoreTypeViewModel()
 
     private var sheetPresented = false
@@ -60,7 +59,7 @@ class WelcomeViewModel: ObservableObject {
         case .createStandard:
             push(.createStandard)
         case .createPasskey:
-            push(termsManager.passkeyTermsAccepted ? .createPasskey : .passkeyTerms)
+            push(.createPasskey)
         case .restore(.recoveryPhrase):
             push(.restoreMnemonic)
             stat(page: .importWallet, event: .open(page: .importWalletFromKey))
@@ -182,7 +181,6 @@ extension WelcomeViewModel {
     enum Flow: Hashable {
         case createStandard
         case createPasskey
-        case passkeyTerms
         case restoreMnemonic
         case restorePrivateKey
         case restoreCoins(RestoreTypeViewModel.PasskeyLogin)
