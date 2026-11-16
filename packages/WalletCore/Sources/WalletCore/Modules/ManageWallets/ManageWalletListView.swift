@@ -28,9 +28,12 @@ struct ManageWalletListView: View {
             right: {
                 HStack(spacing: .margin12) {
                     if item.hasInfo {
-                        IconButton(icon: "information", style: .secondary, mode: .transparent, size: .small) {
-                            showInfo(item: item)
-                        }
+                        ThemeImage("info_filled", size: .iconSize20)
+                            .tappablePadding(.margin12) {
+                                showInfo(item: item)
+                            }
+                            .accessibilityAddTraits(.isButton)
+                            .accessibilityIdentifier(TestTags.manageCoinsInfo(item.token.coin.code, item.token.blockchainType.uid))
                     }
 
                     ThemeToggle(isOn: Binding(get: {

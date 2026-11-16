@@ -165,6 +165,12 @@ enum TestTags {
         "manage_coin_\(coinCode)_\(blockchainUid)"
     }
 
+    static let manageCoinsAddToken = "manage_coins_add_token"
+
+    static func manageCoinsInfo(_ coinCode: String, _ blockchainUid: String) -> String {
+        "manage_coins_info_\(coinCode)_\(blockchainUid)"
+    }
+
     static let sendAmountInput = "send_amount_input"
     static let sendRecipientRow = "send_recipient_row"
     static let sendNext = "send_next"

@@ -57,6 +57,8 @@ struct ManageWalletsView: View {
                         }) {
                             Image("plus")
                         }
+                        .modifier(ConfirmationButtonStyle())
+                        .accessibilityIdentifier(TestTags.manageCoinsAddToken)
                     }
                 }
             }
