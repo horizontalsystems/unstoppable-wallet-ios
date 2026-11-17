@@ -30,10 +30,16 @@ public class CurrencyManager {
         Currency(code: "BNB", symbol: "BNB", decimal: 8),
     ]
 
+    static let defaultCurrencyCode = "USD"
+
     private let keyBaseCurrencyCode = "base_currency_code"
     private let storage: SharedLocalStorage
 
     var currencies: [Currency] = CurrencyManager.supportedCurrencies
+
+    var defaultCurrency: Currency {
+        currencies.first(where: { $0.code == Self.defaultCurrencyCode }) ?? currencies[0]
+    }
 
     @PostPublished var baseCurrency: Currency {
         didSet {
@@ -48,7 +54,7 @@ public class CurrencyManager {
         if let storedCode: String = storage.value(for: keyBaseCurrencyCode), let currency = currencies.first(where: { $0.code == storedCode }) {
             baseCurrency = currency
         } else {
-            baseCurrency = currencies.first(where: { $0.code == "USD" }) ?? currencies[0]
+            baseCurrency = currencies.first(where: { $0.code == Self.defaultCurrencyCode }) ?? currencies[0]
         }
     }
 }

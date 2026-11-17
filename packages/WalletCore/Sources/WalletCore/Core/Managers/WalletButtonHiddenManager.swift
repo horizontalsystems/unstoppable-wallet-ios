@@ -2,6 +2,8 @@ import RxRelay
 import RxSwift
 
 class WalletButtonHiddenManager {
+    static let defaultButtonHidden = false
+
     private let keyButtonHidden = "wallet-button-hidden"
 
     private let userDefaultsStorage: UserDefaultsStorage
@@ -9,7 +11,7 @@ class WalletButtonHiddenManager {
     private let buttonHiddenRelay = PublishRelay<Bool>()
     var buttonHidden: Bool {
         get {
-            userDefaultsStorage.value(for: keyButtonHidden) ?? false
+            userDefaultsStorage.value(for: keyButtonHidden) ?? Self.defaultButtonHidden
         }
         set {
             guard buttonHidden != newValue else { return }

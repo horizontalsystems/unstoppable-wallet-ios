@@ -272,6 +272,7 @@ enum TestTags {
     static let settingsDebugBrandColor = "settings_debug_brand_color"
 
     static let appearanceBaseCurrency = "appearance_base_currency"
+    static let appearanceReset = "appearance_reset"
     static func currency(_ code: String) -> String {
         "currency_\(code)"
     }

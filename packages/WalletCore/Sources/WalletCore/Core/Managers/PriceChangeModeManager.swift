@@ -2,6 +2,8 @@ import Combine
 import HsExtensions
 
 class PriceChangeModeManager {
+    static let defaultPriceChangeMode: PriceChangeMode = .hour24
+
     private let keyPriceChangeMode = "price-change-mode"
 
     private let storage: SharedLocalStorage
@@ -25,7 +27,7 @@ class PriceChangeModeManager {
         if let rawValue: String = storage.value(for: keyPriceChangeMode), let value = PriceChangeMode(rawValue: rawValue) {
             priceChangeMode = value
         } else {
-            priceChangeMode = .hour24
+            priceChangeMode = Self.defaultPriceChangeMode
         }
     }
 

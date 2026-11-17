@@ -2,6 +2,8 @@ import Combine
 import HsExtensions
 
 class AmountRoundingManager {
+    static let defaultUseAmountRounding = true
+
     private let storage: LocalStorage
 
     private let amountRoundingSubject = PassthroughSubject<Bool, Never>()

@@ -3,6 +3,8 @@ import RxSwift
 import UIKit
 
 final class AppIconManager {
+    static let defaultAppIcon: AppIcon = .main
+
     static let allAppIcons: [AppIcon] = [
         .main,
         .alternate(name: "AppIconOrange", imageName: "app_icon_orange", title: "Orange"),
@@ -41,15 +43,15 @@ extension AppIconManager {
 
     private static func appIcon(alternateIconName: String?) -> AppIcon {
         guard let alternateIconName else {
-            return .main
+            return defaultAppIcon
         }
 
         let name = legacyNames[alternateIconName] ?? alternateIconName
-        return allAppIcons.first { $0.name == name } ?? .main
+        return allAppIcons.first { $0.name == name } ?? defaultAppIcon
     }
 
     static func appIcon(title: String) -> AppIcon {
         let title = legacyTitles[title] ?? title
-        return allAppIcons.first { $0.title == title } ?? .main
+        return allAppIcons.first { $0.title == title } ?? defaultAppIcon
     }
 }

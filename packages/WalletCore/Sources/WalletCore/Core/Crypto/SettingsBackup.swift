@@ -114,16 +114,16 @@ class SettingsBackup: Codable {
         chartIndicators = (try? container.decode(ChartIndicatorsRepository.BackupIndicators.self, forKey: .chartIndicators)) ?? .init(ma: [], rsi: [], macd: [])
         indicatorsShown = (try? container.decode(Bool.self, forKey: .indicatorsShown)) ?? true
         currentLanguage = (try? container.decode(String.self, forKey: .currentLanguage)) ?? "en"
-        baseCurrency = (try? container.decode(String.self, forKey: .baseCurrency)) ?? "USD"
-        mode = (try? container.decode(ThemeMode.self, forKey: .mode)) ?? .system
-        showMarketTab = (try? container.decode(Bool.self, forKey: .showMarketTab)) ?? true
-        priceChangeMode = (try? container.decode(PriceChangeMode.self, forKey: .priceChangeMode)) ?? .hour24
-        launchScreen = (try? container.decode(LaunchScreen.self, forKey: .launchScreen)) ?? .auto
+        baseCurrency = (try? container.decode(String.self, forKey: .baseCurrency)) ?? CurrencyManager.defaultCurrencyCode
+        mode = (try? container.decode(ThemeMode.self, forKey: .mode)) ?? ThemeManager.defaultThemeMode
+        showMarketTab = (try? container.decode(Bool.self, forKey: .showMarketTab)) ?? LaunchScreenManager.defaultShowMarket
+        priceChangeMode = (try? container.decode(PriceChangeMode.self, forKey: .priceChangeMode)) ?? PriceChangeModeManager.defaultPriceChangeMode
+        launchScreen = (try? container.decode(LaunchScreen.self, forKey: .launchScreen)) ?? LaunchScreenManager.defaultLaunchScreen
         conversionTokenQueryId = try container.decodeIfPresent(String.self, forKey: .conversionTokenQueryId)
-        balanceHideButtons = (try? container.decode(Bool.self, forKey: .balanceHideButtons)) ?? false
-        balancePrimaryValue = (try? container.decode(BalancePrimaryValue.self, forKey: .balancePrimaryValue)) ?? .coin
+        balanceHideButtons = (try? container.decode(Bool.self, forKey: .balanceHideButtons)) ?? WalletButtonHiddenManager.defaultButtonHidden
+        balancePrimaryValue = (try? container.decode(BalancePrimaryValue.self, forKey: .balancePrimaryValue)) ?? AppSettingManager.defaultBalancePrimaryValue
         balanceAutoHide = (try? container.decode(Bool.self, forKey: .balanceAutoHide)) ?? false
-        appIcon = (try? container.decode(String.self, forKey: .appIcon)) ?? "Main"
+        appIcon = (try? container.decode(String.self, forKey: .appIcon)) ?? AppIconManager.defaultAppIcon.title
     }
 
     func encode(to encoder: Encoder) throws {

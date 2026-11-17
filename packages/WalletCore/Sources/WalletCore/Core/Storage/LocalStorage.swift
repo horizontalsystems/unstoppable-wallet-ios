@@ -168,12 +168,12 @@ extension LocalStorage {
     }
 
     var useAmountRounding: Bool {
-        get { userDefaultsStorage.value(for: keyAmountRounding) ?? true }
+        get { userDefaultsStorage.value(for: keyAmountRounding) ?? AmountRoundingManager.defaultUseAmountRounding }
         set { userDefaultsStorage.set(value: newValue, for: keyAmountRounding) }
     }
 
     var recentlySent: Bool {
-        get { userDefaultsStorage.value(for: keyRecentlySent) ?? false }
+        get { userDefaultsStorage.value(for: keyRecentlySent) ?? RecentlySentManager.defaultRecentlySent }
         set { userDefaultsStorage.set(value: newValue, for: keyRecentlySent) }
     }
 

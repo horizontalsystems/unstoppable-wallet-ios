@@ -2,6 +2,9 @@ import RxRelay
 import RxSwift
 
 class LaunchScreenManager {
+    static let defaultLaunchScreen: LaunchScreen = .auto
+    static let defaultShowMarket = true
+
     private let keyLaunchScreen = "launch-screen"
     private let keyShowMarket = "show-market-screen"
 
@@ -15,13 +18,13 @@ class LaunchScreenManager {
             if let rawValue: String = userDefaultsStorage.value(for: keyLaunchScreen), let launchScreen = LaunchScreen(rawValue: rawValue) {
                 // check if market hidden
                 if !showMarket {
-                    return .auto
+                    return Self.defaultLaunchScreen
                 }
 
                 return launchScreen
             }
 
-            return .auto
+            return Self.defaultLaunchScreen
         }
         set {
             userDefaultsStorage.set(value: newValue.rawValue, for: keyLaunchScreen)
@@ -31,7 +34,7 @@ class LaunchScreenManager {
 
     var showMarket: Bool {
         get {
-            userDefaultsStorage.value(for: keyShowMarket) ?? true
+            userDefaultsStorage.value(for: keyShowMarket) ?? Self.defaultShowMarket
         }
         set {
             userDefaultsStorage.set(value: newValue, for: keyShowMarket)

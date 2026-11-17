@@ -4,7 +4,7 @@ import SwiftUI
 import UIKit
 
 public class ThemeManager {
-    private static let defaultLightMode: ThemeMode = .system
+    static let defaultThemeMode: ThemeMode = .system
     private static let userDefaultsKey = "theme_mode"
 
     public static var shared = ThemeManager()
@@ -30,7 +30,7 @@ public class ThemeManager {
             storedThemeMode = ThemeMode(rawValue: newLightMode)
         }
 
-        let themeMode = storedThemeMode ?? ThemeManager.defaultLightMode
+        let themeMode = storedThemeMode ?? ThemeManager.defaultThemeMode
         currentTheme = ThemeManager.theme(mode: themeMode)
 
         self.themeMode = themeMode

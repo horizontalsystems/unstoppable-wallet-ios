@@ -213,6 +213,20 @@ struct AppearanceView: View {
         }
         .navigationTitle("settings.appearance".localized)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if viewModel.canReset {
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: {
+                        withAnimation {
+                            viewModel.reset()
+                        }
+                    }) {
+                        Text("button.reset".localized)
+                    }
+                    .accessibilityIdentifier(TestTags.appearanceReset)
+                }
+            }
+        }
     }
 
     func title(themeMode: ThemeMode) -> String {

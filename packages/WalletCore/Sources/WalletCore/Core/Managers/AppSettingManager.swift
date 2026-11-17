@@ -3,6 +3,8 @@ import RxRelay
 import RxSwift
 
 class AppSettingManager {
+    static let defaultBalancePrimaryValue: BalancePrimaryValue = .coin
+
     private static let keyBalancePrimaryValue = "balance-primary-value"
 
     private let userDefaultsStorage: UserDefaultsStorage
@@ -21,7 +23,7 @@ class AppSettingManager {
         if let rawValue: String = userDefaultsStorage.value(for: Self.keyBalancePrimaryValue), let value = BalancePrimaryValue(rawValue: rawValue) {
             balancePrimaryValue = value
         } else {
-            balancePrimaryValue = .coin
+            balancePrimaryValue = Self.defaultBalancePrimaryValue
         }
     }
 }

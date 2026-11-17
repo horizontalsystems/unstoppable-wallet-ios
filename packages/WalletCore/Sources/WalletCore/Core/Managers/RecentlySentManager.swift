@@ -2,6 +2,8 @@ import Combine
 import HsExtensions
 
 class RecentlySentManager {
+    static let defaultRecentlySent = false
+
     private let storage: LocalStorage
 
     private let recentlySentSubject = PassthroughSubject<Bool, Never>()

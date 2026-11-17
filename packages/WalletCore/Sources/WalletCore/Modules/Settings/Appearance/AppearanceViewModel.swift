@@ -3,6 +3,8 @@ import MarketKit
 import SwiftUI
 
 class AppearanceViewModel: ObservableObject {
+    private static let defaultHideMarkets = !LaunchScreenManager.defaultShowMarket
+
     private let themeManager = Core.shared.themeManager
     private let launchScreenManager = Core.shared.launchScreenManager
     private let appIconManager = Core.shared.appIconManager
@@ -36,6 +38,7 @@ class AppearanceViewModel: ObservableObject {
             }
             stat(page: .appearance, event: .showMarketsTab(shown: !hideMarkets))
             launchScreenManager.showMarket = !hideMarkets
+            launchScreen = launchScreenManager.launchScreen
         }
     }
 
@@ -127,5 +130,42 @@ class AppearanceViewModel: ObservableObject {
 
     private func syncBaseCurrencyCode() {
         baseCurrencyCode = currencyManager.baseCurrency.code
+    }
+}
+
+extension AppearanceViewModel {
+    var canReset: Bool {
+        themeMode != ThemeManager.defaultThemeMode
+            || baseCurrencyCode != currencyManager.defaultCurrency.code
+            || hideMarkets != Self.defaultHideMarkets
+            || priceChangeMode != PriceChangeModeManager.defaultPriceChangeMode
+            || launchScreen != LaunchScreenManager.defaultLaunchScreen
+            || useAmountRounding != AmountRoundingManager.defaultUseAmountRounding
+            || showRecentlySent != RecentlySentManager.defaultRecentlySent
+            || hideBalanceButtons != WalletButtonHiddenManager.defaultButtonHidden
+            || balancePrimaryValue != AppSettingManager.defaultBalancePrimaryValue
+            || appIcon != AppIconManager.defaultAppIcon
+    }
+
+    func reset() {
+        // `hideMarkets` must be reset before `launchScreen`: while markets are hidden the manager reports `.auto` for the launch screen
+        hideMarkets = Self.defaultHideMarkets
+        launchScreen = LaunchScreenManager.defaultLaunchScreen
+        themeMode = ThemeManager.defaultThemeMode
+        priceChangeMode = PriceChangeModeManager.defaultPriceChangeMode
+        hideBalanceButtons = WalletButtonHiddenManager.defaultButtonHidden
+        useAmountRounding = AmountRoundingManager.defaultUseAmountRounding
+        balancePrimaryValue = AppSettingManager.defaultBalancePrimaryValue
+        showRecentlySent = RecentlySentManager.defaultRecentlySent
+
+        let defaultCurrency = currencyManager.defaultCurrency
+        if currencyManager.baseCurrency.code != defaultCurrency.code {
+            stat(page: .appearance, event: .switchBaseCurrency(code: defaultCurrency.code))
+            currencyManager.baseCurrency = defaultCurrency
+            syncBaseCurrencyCode()
+        }
+
+        // last, as changing the app icon may show a system alert
+        appIcon = AppIconManager.defaultAppIcon
     }
 }
