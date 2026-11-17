@@ -4,11 +4,11 @@ import ReownWalletKit
 /// Bug-bounty #3: the badge is derived from the SDK-attested origin, never from dApp metadata
 class WCVerifyService {
     private let whitelist: IWCDappWhitelist?
-    private let premiumGate: IWCPremiumGate?
+    private let scamProtectionGate: IWCScamProtectionGate?
 
-    init(whitelist: IWCDappWhitelist? = nil, premiumGate: IWCPremiumGate? = nil) {
+    init(whitelist: IWCDappWhitelist? = nil, scamProtectionGate: IWCScamProtectionGate? = nil) {
         self.whitelist = whitelist
-        self.premiumGate = premiumGate
+        self.scamProtectionGate = scamProtectionGate
     }
 
     func state(context: VerifyContext?) -> WCVerifyState {
@@ -39,7 +39,7 @@ class WCVerifyService {
     }
 
     private func whitelistDefenseState(trusted: Bool) -> WCDefenseState {
-        guard premiumGate?.scamProtectionEnabled == true, let whitelist else {
+        guard scamProtectionGate?.scamProtectionEnabled == true, let whitelist else {
             return .disabled
         }
         switch whitelist.state {
@@ -50,7 +50,7 @@ class WCVerifyService {
     }
 
     private func isTrusted(origin: String) -> Bool {
-        guard premiumGate?.scamProtectionEnabled == true, let whitelist,
+        guard scamProtectionGate?.scamProtectionEnabled == true, let whitelist,
               let host = URLComponents(string: origin)?.host?.lowercased(),
               host.allSatisfy(\.isASCII)
         else {

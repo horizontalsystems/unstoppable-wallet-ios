@@ -11,21 +11,11 @@ class MevProtectionHelper {
 
         let binding = Binding<Bool>(
             get: { [weak self] in
-                if Core.shared.purchaseManager.activated(.swapProtection) {
-                    self?.isActive ?? false
-                } else {
-                    false
-                }
+                self?.isActive ?? false
             },
             set: { [weak self] newValue in
-                let successBlock = { [weak self] in
-                    self?.isActive = newValue
-                    self?.securityManager.setSwapProtection(enabled: newValue)
-                }
-
-                Coordinator.shared.performAfterPurchase(premiumFeature: .swapProtection, page: .swap, trigger: .mevProtection) {
-                    successBlock()
-                }
+                self?.isActive = newValue
+                self?.securityManager.setSwapProtection(enabled: newValue)
             }
         )
 

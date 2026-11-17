@@ -8,11 +8,10 @@ import WalletConnectUtils
 /// so this view model only ever describes a pending proposal.
 class WCConnectViewModel: ObservableObject {
     enum DAppCheck {
-        case locked // scam protection off: tapping the row opens the purchase flow
         case secure
         case risky
         case unavailable
-        case hidden // still loading, nothing to show yet
+        case hidden // still loading or scam protection off, nothing to show
     }
 
     private let item: WCProposalItem
@@ -28,7 +27,7 @@ class WCConnectViewModel: ObservableObject {
     /// protocol origin attestation shown on top (Android VerificationAlert); nil = nothing to report
     let verificationCaution: CautionNew?
 
-    @Published private(set) var defenseState: WCDefenseState = .disabled
+    let defenseState: WCDefenseState
     @Published private(set) var connecting = false
 
     private let finishSubject = PassthroughSubject<Void, Never>()
@@ -86,26 +85,25 @@ class WCConnectViewModel: ObservableObject {
 
     var dAppCheck: DAppCheck {
         switch defenseState {
-        case .disabled: return .locked
-        case .loading: return .hidden
+        case .disabled, .loading: return .hidden
         case .notAvailable: return .unavailable
         case .safe: return .secure
         case .danger, .scam: return .risky
         }
     }
 
-    /// the premium "Danger!" plaque; scam is surfaced by the top alert instead, so it is never doubled here
+    /// the "Danger!" plaque; scam is surfaced by the top alert instead, so it is never doubled here
     var showDanger: Bool {
         defenseState == .danger
     }
 
-    var connectEnabled: Bool {
-        !unsupported && defenseState != .scam && !connecting
+    /// scam protection turned off in Security settings: the whole block is hidden
+    var showScamProtection: Bool {
+        defenseState != .disabled
     }
 
-    func refreshDefense() {
-        guard let kit = try? manager?.kit() else { return }
-        defenseState = kit.defenseState(context: item.context)
+    var connectEnabled: Bool {
+        !unsupported && defenseState != .scam && !connecting
     }
 
     func connect() {

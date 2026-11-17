@@ -287,6 +287,10 @@ enum TestTags {
         "autolock_\(raw)"
     }
 
+    static let securitySecureSend = "security_secure_send"
+    static let securityScamProtection = "security_scam_protection"
+    static let securitySwapProtection = "security_swap_protection"
+
     static func accountRow(_ index: Int) -> String {
         "account_row_\(index)"
     }

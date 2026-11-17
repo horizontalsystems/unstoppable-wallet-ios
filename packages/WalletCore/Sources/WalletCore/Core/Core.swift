@@ -528,7 +528,6 @@ public class Core {
                 lockManager: lockManager,
                 appManager: appManager,
                 securityManager: securityManager,
-                purchaseManager: purchaseManager,
                 networkManager: networkManager,
                 logger: logger
             )

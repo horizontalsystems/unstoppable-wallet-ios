@@ -2,14 +2,11 @@ import Combine
 import Foundation
 
 class SecuritySettingsViewModel: ObservableObject {
-    var premiumFeatures: [PremiumFeature] = PremiumCategory.defenseSystem.features
-
     private let passcodeManager = Core.shared.passcodeManager
     private let biometryManager = Core.shared.biometryManager
     private let lockManager = Core.shared.lockManager
     private let balanceHiddenManager = Core.shared.balanceHiddenManager
     private let securityManager = Core.shared.securityManager
-    private let purchaseManager = Core.shared.purchaseManager
     private let appStateManager = AppStateManager.instance
 
     private var cancellables = Set<AnyCancellable>()
@@ -45,8 +42,9 @@ class SecuritySettingsViewModel: ObservableObject {
         }
     }
 
-    @Published var featureEnabled: [PremiumFeature: Bool]
-    @Published private(set) var premiumEnabled: Bool
+    @Published private(set) var secureSendEnabled: Bool
+    @Published private(set) var scamProtectionEnabled: Bool
+    @Published private(set) var swapProtectionEnabled: Bool
     @Published private(set) var swapEnabled: Bool
 
     init() {
@@ -60,12 +58,9 @@ class SecuritySettingsViewModel: ObservableObject {
         balanceAutoHide = balanceHiddenManager.balanceAutoHide
         spamFilterEnabled = securityManager.spamFilterEnabled
 
-        featureEnabled = [
-            .secureSend: securityManager.secureSendEnabled,
-            .swapProtection: securityManager.swapProtectionEnabled,
-            .scamProtection: securityManager.scamProtectionEnabled,
-        ]
-        premiumEnabled = purchaseManager.hasActivePurchase
+        secureSendEnabled = securityManager.secureSendEnabled
+        scamProtectionEnabled = securityManager.scamProtectionEnabled
+        swapProtectionEnabled = securityManager.swapProtectionEnabled
         swapEnabled = appStateManager.swapEnabled
 
         passcodeManager.$currentPasscodeLevel
@@ -86,28 +81,21 @@ class SecuritySettingsViewModel: ObservableObject {
 
         securityManager.$secureSendEnabled
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.featureEnabled[.secureSend] = $0 }
+            .sink { [weak self] in self?.secureSendEnabled = $0 }
             .store(in: &cancellables)
         securityManager.$swapProtectionEnabled
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.featureEnabled[.swapProtection] = $0 }
+            .sink { [weak self] in self?.swapProtectionEnabled = $0 }
             .store(in: &cancellables)
         securityManager.$scamProtectionEnabled
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.featureEnabled[.scamProtection] = $0 }
+            .sink { [weak self] in self?.scamProtectionEnabled = $0 }
             .store(in: &cancellables)
         securityManager.$spamFilterEnabled
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.spamFilterEnabled = $0 }
             .store(in: &cancellables)
 
-        purchaseManager.$activeFeatures
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] features in
-                guard let self else { return }
-                premiumEnabled = premiumFeatures.allSatisfy { features.contains($0) }
-            }
-            .store(in: &cancellables)
         appStateManager.$swapEnabled
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.swapEnabled = $0 }
@@ -133,22 +121,12 @@ class SecuritySettingsViewModel: ObservableObject {
     func set(biometryEnabledType: BiometryManager.BiometryEnabledType) {
         biometryManager.biometryEnabledType = biometryEnabledType
     }
-}
 
-/// Premium Features
-extension SecuritySettingsViewModel {
-    func isEnabled(_ feature: PremiumFeature) -> Bool {
-        featureEnabled[feature] ?? false
+    func setScamProtection(enabled: Bool) {
+        securityManager.setScamProtection(enabled: enabled)
     }
 
-    func set(_ feature: PremiumFeature, enabled: Bool) {
-        switch feature {
-        case .swapProtection:
-            securityManager.setSwapProtection(enabled: enabled)
-        case .scamProtection:
-            securityManager.setScamProtection(enabled: enabled)
-        default:
-            break
-        }
+    func setSwapProtection(enabled: Bool) {
+        securityManager.setSwapProtection(enabled: enabled)
     }
 }

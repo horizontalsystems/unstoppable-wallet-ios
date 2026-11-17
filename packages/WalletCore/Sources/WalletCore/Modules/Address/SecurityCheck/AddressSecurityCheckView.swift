@@ -2,7 +2,6 @@ import SwiftUI
 
 struct AddressSecurityCheckView: View {
     @ObservedObject var viewModel: AddressSecurityCheckViewModel
-    let sourceStatPage: StatPage
 
     var body: some View {
         if !viewModel.issueTypes.isEmpty {
@@ -47,21 +46,14 @@ struct AddressSecurityCheckView: View {
                     RightTextIcon(text: ComponentText(text: "send.address.check.detected".localized, colorStyle: .red))
                 case .notAvailable:
                     RightTextIcon(text: ComponentText(text: "n/a".localized, colorStyle: .primary))
-                case .locked:
-                    Image.lockIcon
                 case .disabled:
                     RightTextIcon(text: ComponentText(text: "send.address.check.disabled".localized, colorStyle: .primary))
                 }
             }
         )
         .tapIntercept(active: true) {
-            switch state {
-            case .locked:
-                Coordinator.shared.presentPurchase(premiumFeature: .secureSend, page: sourceStatPage, trigger: .addressChecker)
-            default:
-                Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                    SecureSendBottomSheetView(isPresented: isPresented)
-                }
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                SecureSendBottomSheetView(isPresented: isPresented)
             }
         }
     }

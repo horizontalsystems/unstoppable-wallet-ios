@@ -109,7 +109,7 @@ struct SecuritySettingsView: View {
                     toggledRow(title: "transaction_filter.hide_suspicious_txs".localized, subtitle: "transaction_filter.hide_suspicious_txs.description".localized, isOn: $viewModel.spamFilterEnabled)
                 }
 
-                premiumSection()
+                defenseSection()
 
                 ListSection {
                     robberyRow()
@@ -153,35 +153,34 @@ struct SecuritySettingsView: View {
         }
     }
 
-    private func premiumSection() -> some View {
+    private func defenseSection() -> some View {
         VStack(spacing: 0) {
             SectionHeader(image: Image.defenseIcon, text: "purchases.defense_system".localized, horizontalInsets: .margin16)
 
             ListSection {
-                toggledRow(title: "purchases.secure_send".localized, subtitle: "purchases.secure_send.description".localized, isOn: viewModel.isEnabled(.secureSend))
+                toggledRow(title: "purchases.secure_send".localized, subtitle: "purchases.secure_send.description".localized, isOn: viewModel.secureSendEnabled)
                     .tapIntercept(active: true) {
-                        Coordinator.shared.performAfterPurchase(premiumFeature: .secureSend, page: .security, trigger: .getPremium) {
-                            presentSecureSendSheet()
-                        }
+                        presentSecureSendSheet()
                     }
+                    .accessibilityIdentifier(TestTags.securitySecureSend)
 
-                toggledRow(title: "purchases.scam_protection".localized, subtitle: "purchases.scam_protection.description".localized, isOn: binding(feature: .scamProtection))
-                    .tapIntercept(active: !viewModel.premiumEnabled) {
-                        Coordinator.shared.performAfterPurchase(premiumFeature: .scamProtection, page: .security, trigger: .getPremium) {
-                            viewModel.set(.scamProtection, enabled: !viewModel.isEnabled(.scamProtection))
-                        }
-                    }
+                toggledRow(
+                    title: "purchases.scam_protection".localized,
+                    subtitle: "purchases.scam_protection.description".localized,
+                    isOn: Binding(get: { viewModel.scamProtectionEnabled }, set: { viewModel.setScamProtection(enabled: $0) }),
+                    identifier: TestTags.securityScamProtection
+                )
 
                 if viewModel.swapEnabled {
-                    toggledRow(title: "purchases.swap_protection".localized, subtitle: "purchases.swap_protection.description".localized, isOn: binding(feature: .swapProtection))
-                        .tapIntercept(active: !viewModel.premiumEnabled) {
-                            Coordinator.shared.performAfterPurchase(premiumFeature: .swapProtection, page: .security, trigger: .getPremium) {
-                                viewModel.set(.swapProtection, enabled: !viewModel.isEnabled(.swapProtection))
-                            }
-                        }
+                    toggledRow(
+                        title: "purchases.swap_protection".localized,
+                        subtitle: "purchases.swap_protection.description".localized,
+                        isOn: Binding(get: { viewModel.swapProtectionEnabled }, set: { viewModel.setSwapProtection(enabled: $0) }),
+                        identifier: TestTags.securitySwapProtection
+                    )
                 }
             }
-            .themeListStyle(.borderedPremium)
+            .themeListStyle(.bordered)
         }
     }
 
@@ -191,20 +190,14 @@ struct SecuritySettingsView: View {
         }
     }
 
-    private func binding(feature: PremiumFeature) -> Binding<Bool> {
-        Binding(
-            get: { viewModel.isEnabled(feature) },
-            set: { viewModel.set(feature, enabled: $0) }
-        )
-    }
-
-    private func toggledRow(title: CustomStringConvertible, subtitle: CustomStringConvertible, isOn: Binding<Bool>) -> some View {
+    private func toggledRow(title: CustomStringConvertible, subtitle: CustomStringConvertible, isOn: Binding<Bool>, identifier: String? = nil) -> some View {
         Cell(
             middle: {
                 MultiText(title: title, subtitle: subtitle)
             },
             right: {
                 ThemeToggle(isOn: isOn)
+                    .withIdentifier(identifier)
             }
         )
     }

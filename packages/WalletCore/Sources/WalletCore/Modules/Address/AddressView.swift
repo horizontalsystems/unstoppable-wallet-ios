@@ -83,10 +83,7 @@ struct AddressView: View {
                                 .themeListStyle(.bordered)
                             }
                         case .checking, .valid:
-                            AddressSecurityCheckView(
-                                viewModel: viewModel.securityCheckViewModel,
-                                sourceStatPage: viewModel.destination.sourceStatPage
-                            )
+                            AddressSecurityCheckView(viewModel: viewModel.securityCheckViewModel)
                         }
                     }
                 }

@@ -14,11 +14,10 @@ class WCKitFactory: IWCKitFactory {
     private let lockManager: LockManager
     private let appManager: AppManager
     private let securityManager: SecurityManager
-    private let purchaseManager: PurchaseManager
     private let networkManager: NetworkManager
     private let logger: Logger
 
-    init(signClient: WCSignClient, responder: WCResponder, storage: WCSessionStorage, parsers: WCParserRegistry, verifiers: WCVerifierRegistry, chainSupports: WCChainSupportRegistry, directHandlers: WCDirectHandlerRegistry, accountManager: AccountManager, lockManager: LockManager, appManager: AppManager, securityManager: SecurityManager, purchaseManager: PurchaseManager, networkManager: NetworkManager, logger: Logger) {
+    init(signClient: WCSignClient, responder: WCResponder, storage: WCSessionStorage, parsers: WCParserRegistry, verifiers: WCVerifierRegistry, chainSupports: WCChainSupportRegistry, directHandlers: WCDirectHandlerRegistry, accountManager: AccountManager, lockManager: LockManager, appManager: AppManager, securityManager: SecurityManager, networkManager: NetworkManager, logger: Logger) {
         self.signClient = signClient
         self.responder = responder
         self.storage = storage
@@ -30,7 +29,6 @@ class WCKitFactory: IWCKitFactory {
         self.lockManager = lockManager
         self.appManager = appManager
         self.securityManager = securityManager
-        self.purchaseManager = purchaseManager
         self.networkManager = networkManager
         self.logger = logger
     }
@@ -48,7 +46,7 @@ class WCKitFactory: IWCKitFactory {
 
         let verifyService = WCVerifyService(
             whitelist: WCDappWhitelist(provider: WhitelistDappProvider(networkManager: networkManager)),
-            premiumGate: WCPremiumGate(securityManager: securityManager, purchaseManager: purchaseManager)
+            scamProtectionGate: WCScamProtectionGate(securityManager: securityManager)
         )
 
         return WCKit(

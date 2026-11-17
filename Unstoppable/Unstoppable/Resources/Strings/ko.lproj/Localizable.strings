@@ -2074,17 +2074,11 @@
 "wallet_connect.list.pending_requests" = "보류 중인 요청";
 "wallet_connect.main.connect" = "%@에 연결";
 "wallet_connect.main.connected" = "%@에 연결됨";
-"wallet_connect.main.premium_alert.title.risky" = "위험!";
-"wallet_connect.main.premium_alert.subtitle.deactivated" = "스캠 보호가 비활성화되었습니다. 프리미엄으로 업그레이드하여 검증되지 않은 사이트와 피싱으로부터 자산을 안전하게 지키세요.";
-"wallet_connect.main.premium_alert.subtitle.risky" = "이 사이트는 검증되지 않았습니다. 연결 시 피싱이나 자산 손실 위험에 노출될 수 있습니다.";
-"wallet_connect.main.premium_alert.subtitle.not_available" = "스캠 보호 검사 실패. 연결은 가능하지만, 도메인이 안전하지 않을 수 있습니다.";
 "wallet_connect.scam_protection" = "스캠 보호";
 "wallet_connect.dapp_check" = "dApp 검사";
-"wallet_connect.scam_protection.deactivated" = "비활성화됨";
 "wallet_connect.scam_protection.risky" = "위험";
 "wallet_connect.scam_protection.secure" = "보안됨";
 "wallet_connect.scam_protection.not_available" = "해당 없음 ";
-"wallet_connect.scam_protection.disabled" = "비활성화됨";
 "wallet_connect.networks" = "네트워크";
 
 "wallet_connect.main.no_any_supported_chains" = "지원되는 체인이 없습니다!";
@@ -2197,17 +2191,10 @@
 "wallet_connect.connect.wallet" = "지갑";
 "wallet_connect.connect.description" = "연결하면 이 앱이 귀하의 공개 주소를 볼 수 있도록 허용합니다.";
 "wallet_connect.connect.unsupported" = "이 dApp은 이 지갑이 지원하지 않는 네트워크 또는 메서드를 필요로 합니다";
-"wallet_connect.defense.safe.title" = "안전";
-"wallet_connect.defense.safe.text" = "확인했습니다. 이 dApp은 연결해도 안전합니다.";
 "wallet_connect.defense.danger.title" = "위험!";
 "wallet_connect.defense.danger.text" = "이 dApp은 인증되지 않았습니다. 연결하면 자금이 위험해질 수 있습니다.";
 "wallet_connect.defense.scam.title" = "알려진 사기!";
 "wallet_connect.defense.scam.text" = "이 사이트는 알려진 악성 도메인 목록에 있습니다. 연결하면 자금을 잃을 가능성이 매우 높습니다.";
-"wallet_connect.defense.attention.title" = "주의!";
-"wallet_connect.defense.attention.text" = "가짜 사이트에 연결하여 자금을 잃을 수 있습니다. 보호 기능을 활성화하세요.";
-"wallet_connect.defense.activate" = "활성화";
-"wallet_connect.defense.loading" = "이 dApp을 확인 중…";
-"wallet_connect.defense.not_available" = "현재 dApp 검사를 이용할 수 없습니다";
 "wallet_connect.sign.request_type" = "요청 유형";
 "wallet_connect.sign.contract" = "컨트랙트";
 "wallet_connect.sign.network" = "네트워크";
@@ -2576,13 +2563,10 @@
 "purchases.defense_system" = "방어 시스템";
 "purchases.secure_send" = "안전 전송";
 "purchases.secure_send.description" = "위험하거나 피싱으로 의심되는 주소로의 자금 전송을 방지합니다.";
-"purchases.secure_send.info" = "수신 지갑을 피싱 또는 사기 위험이 있는지 검사하고, 위험한 주소로 전송하기 전에 경고합니다.";
 "purchases.scam_protection" = "스캠 보호";
 "purchases.scam_protection.description" = "가짜 또는 악성 dApps에 연결하려 할 때 경고합니다.";
-"purchases.scam_protection.info" = "연결 전에 위조되거나 악성 dApp을 감지하여 피싱을 방지하고 자산을 보호합니다.";
 "purchases.swap_protection" = "스왑 보호";
 "purchases.swap_protection.description" = "스왑 중 봇 및 MEV 공격을 방지합니다.";
-"purchases.swap_protection.info" = "스왑 중 봇 및 프런트 러닝 공격을 차단하여 트랜잭션을 공정하고 안전하게 유지합니다.";
 "purchases.robbery_protection" = "강제 상황 보호";
 "purchases.robbery_protection.description" = "강제로 앱을 잠금 해제해야 하는 상황에서도 자금을 보호합니다.";
 

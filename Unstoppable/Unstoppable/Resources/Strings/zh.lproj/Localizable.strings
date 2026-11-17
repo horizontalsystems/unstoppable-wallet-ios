@@ -2074,17 +2074,11 @@
 "wallet_connect.list.pending_requests" = "待处理请求";
 "wallet_connect.main.connect" = "连接到 %@";
 "wallet_connect.main.connected" = "已连接到 %@";
-"wallet_connect.main.premium_alert.title.risky" = "危险!";
-"wallet_connect.main.premium_alert.subtitle.deactivated" = "防骗保护已停用。升级至高级版以防止资金因未验证或钓鱼网站而受损。";
-"wallet_connect.main.premium_alert.subtitle.risky" = "此网站未经验证。连接可能导致钓鱼攻击和资金损失。";
-"wallet_connect.main.premium_alert.subtitle.not_available" = "防骗检查失败。允许连接，但该域名可能不安全。";
 "wallet_connect.scam_protection" = "防骗保护";
 "wallet_connect.dapp_check" = "dApp 检查";
-"wallet_connect.scam_protection.deactivated" = "已停用";
 "wallet_connect.scam_protection.risky" = "有风险";
 "wallet_connect.scam_protection.secure" = "安全";
 "wallet_connect.scam_protection.not_available" = "不可用";
-"wallet_connect.scam_protection.disabled" = "已禁用";
 "wallet_connect.networks" = "网络";
 
 "wallet_connect.main.no_any_supported_chains" = "没有任何支持的链！";
@@ -2197,17 +2191,10 @@
 "wallet_connect.connect.wallet" = "钱包";
 "wallet_connect.connect.description" = "连接后，您允许此应用查看您的公共地址。";
 "wallet_connect.connect.unsupported" = "此 dApp 需要的网络或方法不受此钱包支持";
-"wallet_connect.defense.safe.title" = "安全";
-"wallet_connect.defense.safe.text" = "我已检查。此 dApp 连接是安全的。";
 "wallet_connect.defense.danger.title" = "危险！";
 "wallet_connect.defense.danger.text" = "此 dApp 未经验证。连接可能会使您的资金面临风险。";
 "wallet_connect.defense.scam.title" = "已知诈骗！";
 "wallet_connect.defense.scam.text" = "此网站在已知恶意域名列表中。连接极有可能导致资金损失。";
-"wallet_connect.defense.attention.title" = "注意！";
-"wallet_connect.defense.attention.text" = "您可能连接到假冒网站并损失资金。请启用我以保持保护。";
-"wallet_connect.defense.activate" = "启用";
-"wallet_connect.defense.loading" = "正在检查此 dApp…";
-"wallet_connect.defense.not_available" = "dApp 检查目前不可用";
 "wallet_connect.sign.request_type" = "请求类型";
 "wallet_connect.sign.contract" = "合约";
 "wallet_connect.sign.network" = "网络";
@@ -2576,13 +2563,10 @@
 "purchases.defense_system" = "防御系统";
 "purchases.secure_send" = "安全发送";
 "purchases.secure_send.description" = "防止将资金发送至高风险或钓鱼地址。";
-"purchases.secure_send.info" = "检查收款钱包是否存在钓鱼或欺诈风险，并在您向高风险地址转账前发出提醒。";
 "purchases.scam_protection" = "防骗保护";
 "purchases.scam_protection.description" = "在连接到虚假或恶意 dApps 时向您发出警告。";
-"purchases.scam_protection.info" = "在连接前检测伪造或恶意的 dApp，防止钓鱼攻击，保障您的资产安全。";
 "purchases.swap_protection" = "兑换保护";
 "purchases.swap_protection.description" = "在兑换过程中防止 bots 和 MEV 攻击。";
-"purchases.swap_protection.info" = "在兑换过程中阻止 bots 和抢跑（front-running）攻击，确保您的交易公平且安全。";
 "purchases.robbery_protection" = "抢劫保护";
 "purchases.robbery_protection.description" = "在您被迫解锁应用的情况下保护您的资金安全。";
 

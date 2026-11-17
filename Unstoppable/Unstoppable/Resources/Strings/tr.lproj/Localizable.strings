@@ -2074,17 +2074,11 @@
 "wallet_connect.list.pending_requests" = "Bekleyen Talepler";
 "wallet_connect.main.connect" = "%@’ya bağlan";
 "wallet_connect.main.connected" = "%@’ya bağlandı";
-"wallet_connect.main.premium_alert.title.risky" = "Tehlike!";
-"wallet_connect.main.premium_alert.subtitle.deactivated" = "Dolandırıcılık Koruması devre dışı. Fonlarınızı doğrulanmamış ve oltalama sitelerinden korumak için Premium’a geçin.";
-"wallet_connect.main.premium_alert.subtitle.risky" = "Bu site doğrulanmamış. Bağlanmak, oltalama saldırılarına ve fon kaybına yol açabilir.";
-"wallet_connect.main.premium_alert.subtitle.not_available" = "Dolandırıcılık Koruması kontrolü başarısız. Bağlantıya izin verildi, ancak alan adı güvenli olmayabilir.";
 "wallet_connect.scam_protection" = "Dolandırıcılık Koruması";
 "wallet_connect.dapp_check" = "dApp Kontrolü";
-"wallet_connect.scam_protection.deactivated" = "Devre Dışı";
 "wallet_connect.scam_protection.risky" = "Riskli";
 "wallet_connect.scam_protection.secure" = "Güvenli";
 "wallet_connect.scam_protection.not_available" = "N/A";
-"wallet_connect.scam_protection.disabled" = "Devre dışı";
 "wallet_connect.networks" = "Ağlar";
 
 "wallet_connect.main.no_any_supported_chains" = "Desteklenen zincir yok!";
@@ -2197,17 +2191,10 @@
 "wallet_connect.connect.wallet" = "Cüzdan";
 "wallet_connect.connect.description" = "Bağlanarak, bu uygulamanın genel adresinizi görüntülemesine izin vermiş olursunuz.";
 "wallet_connect.connect.unsupported" = "Bu dApp, bu cüzdanın desteklemediği ağlar veya yöntemler gerektiriyor";
-"wallet_connect.defense.safe.title" = "Güvenli";
-"wallet_connect.defense.safe.text" = "Kontrol ettim. Bu dApp bağlanmak için güvenli.";
 "wallet_connect.defense.danger.title" = "Tehlike!";
 "wallet_connect.defense.danger.text" = "Bu dApp doğrulanmamış. Bağlanmak fonlarınızı riske atabilir.";
 "wallet_connect.defense.scam.title" = "Bilinen Dolandırıcılık!";
 "wallet_connect.defense.scam.text" = "Bu site bilinen kötü amaçlı alan adları listesindedir. Bağlanmak büyük olasılıkla fon kaybına neden olacaktır.";
-"wallet_connect.defense.attention.title" = "Dikkat!";
-"wallet_connect.defense.attention.text" = "Sahte bir siteye bağlanıp fon kaybedebilirsiniz. Korunmak için beni etkinleştirin.";
-"wallet_connect.defense.activate" = "Etkinleştir";
-"wallet_connect.defense.loading" = "Bu dApp kontrol ediliyor…";
-"wallet_connect.defense.not_available" = "dApp kontrolü şu anda kullanılamıyor";
 "wallet_connect.sign.request_type" = "İstek Türü";
 "wallet_connect.sign.contract" = "Sözleşme";
 "wallet_connect.sign.network" = "Ağ";
@@ -2576,13 +2563,10 @@
 "purchases.defense_system" = "Savunma Sistemi";
 "purchases.secure_send" = "Güvenli Gönderim";
 "purchases.secure_send.description" = "Riskli veya phishing amaçlı adreslere fon gönderilmesini engeller.";
-"purchases.secure_send.info" = "Alıcı cüzdanları oltalama veya dolandırıcılık açısından kontrol eder. Riskli adreslere göndermeden önce sizi uyarır.";
 "purchases.scam_protection" = "Dolandırıcılık Koruması";
 "purchases.scam_protection.description" = "Sahte veya kötü amaçlı dApp’lere bağlanırken sizi uyarır.";
-"purchases.scam_protection.info" = "Bağlanmadan önce sahte veya kötü amaçlı dApp’leri tespit eder. Oltalama saldırılarını önler ve varlıklarınızı korur.";
 "purchases.swap_protection" = "Swap Protection";
 "purchases.swap_protection.description" = "Swap işlemleri sırasında botları ve MEV saldırılarını engeller.";
-"purchases.swap_protection.info" = "Swap işlemleri sırasında botları ve front-running saldırılarını durdurur. İşlemlerinizin adil ve güvenli kalmasını sağlar.";
 "purchases.robbery_protection" = "Zorla Açtırma Koruması";
 "purchases.robbery_protection.description" = "Uygulamayı zorla kilidini açmanız durumunda fonlarınızı korur.";
 

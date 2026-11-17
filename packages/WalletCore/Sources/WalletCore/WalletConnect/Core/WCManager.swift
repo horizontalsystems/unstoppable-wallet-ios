@@ -96,7 +96,7 @@ class WCManager {
 }
 
 extension WCManager {
-    static func instance(dbPool: DatabasePool, evmBlockchainManager: EvmBlockchainManager, stellarKitManager: StellarKitManager, solanaKitManager: SolanaKitManager, accountManager: AccountManager, coinManager: CoinManager, lockManager: LockManager, appManager: AppManager, securityManager: SecurityManager, purchaseManager: PurchaseManager, networkManager: NetworkManager, logger: Logger) throws -> WCManager {
+    static func instance(dbPool: DatabasePool, evmBlockchainManager: EvmBlockchainManager, stellarKitManager: StellarKitManager, solanaKitManager: SolanaKitManager, accountManager: AccountManager, coinManager: CoinManager, lockManager: LockManager, appManager: AppManager, securityManager: SecurityManager, networkManager: NetworkManager, logger: Logger) throws -> WCManager {
         let logger = logger.scoped(with: "WC")
         let storage = try WCSessionStorage(dbPool: dbPool)
         let signClient = WCSignClient()
@@ -150,7 +150,6 @@ extension WCManager {
             lockManager: lockManager,
             appManager: appManager,
             securityManager: securityManager,
-            purchaseManager: purchaseManager,
             networkManager: networkManager,
             logger: logger
         )

@@ -41,24 +41,25 @@ struct WCConnectView: View {
                 .padding(.top, .margin16)
         }
 
-        DefenseSystemHeader(icon: Image.defenseIcon, title: "wallet_connect.scam_protection".localized)
-            .padding(.horizontal, .margin16)
-            .padding(.top, .margin24)
+        if viewModel.showScamProtection {
+            DefenseSystemHeader(icon: Image.defenseIcon, title: "wallet_connect.scam_protection".localized)
+                .padding(.horizontal, .margin16)
+                .padding(.top, .margin24)
 
-        ListSection {
-            Cell(
-                middle: {
-                    MiddleTextIcon(text: "wallet_connect.dapp_check".localized)
-                },
-                right: {
-                    dAppCheckValue
-                },
-                action: viewModel.dAppCheck == .locked ? { activateScamProtection() } : nil
-            )
+            ListSection {
+                Cell(
+                    middle: {
+                        MiddleTextIcon(text: "wallet_connect.dapp_check".localized)
+                    },
+                    right: {
+                        dAppCheckValue
+                    }
+                )
+            }
+            .themeListStyle(.bordered)
+            .padding(.horizontal, .margin16)
+            .padding(.top, .margin12)
         }
-        .themeListStyle(.bordered)
-        .padding(.horizontal, .margin16)
-        .padding(.top, .margin12)
 
         ListSection {
             Cell(
@@ -104,8 +105,6 @@ struct WCConnectView: View {
 
     @ViewBuilder private var dAppCheckValue: some View {
         switch viewModel.dAppCheck {
-        case .locked:
-            Image("lock").themeIcon()
         case .secure:
             RightTextIcon(text: ComponentText(text: "wallet_connect.scam_protection.secure".localized, colorStyle: .green))
         case .risky:
@@ -137,12 +136,6 @@ struct WCConnectView: View {
             ForEach(Array(viewModel.blockchainTypes.prefix(6)), id: \.self) { type in
                 IconView(url: type.imageUrl, placeholderImage: "rectangle_placeholder", type: .circle, size: .iconSize24)
             }
-        }
-    }
-
-    private func activateScamProtection() {
-        Coordinator.shared.performAfterPurchase(premiumFeature: .scamProtection, page: .walletConnect, trigger: .getPremium) {
-            viewModel.refreshDefense()
         }
     }
 }

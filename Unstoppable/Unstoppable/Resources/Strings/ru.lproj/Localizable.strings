@@ -2074,17 +2074,11 @@
 "wallet_connect.list.pending_requests" = "Ожидающие запросы";
 "wallet_connect.main.connect" = "Подключиться к %@";
 "wallet_connect.main.connected" = "Подключено к %@";
-"wallet_connect.main.premium_alert.title.risky" = "Опасность!";
-"wallet_connect.main.premium_alert.subtitle.deactivated" = "Защита от скамов отключена. Подключите Premium, чтобы защитить средства от непроверенных и фишинговых сайтов.";
-"wallet_connect.main.premium_alert.subtitle.risky" = "Сайт не проверен. Подключение может привести к фишингу и потере средств.";
-"wallet_connect.main.premium_alert.subtitle.not_available" = "Проверка защиты от скамов не удалась. Подключение разрешено, но домен может быть небезопасен.";
 "wallet_connect.scam_protection" = "Scam-защита";
 "wallet_connect.dapp_check" = "Проверка dApp";
-"wallet_connect.scam_protection.deactivated" = "Отключено";
 "wallet_connect.scam_protection.risky" = "Рискованно";
 "wallet_connect.scam_protection.secure" = "Безопасно";
 "wallet_connect.scam_protection.not_available" = "Нет данных";
-"wallet_connect.scam_protection.disabled" = "Отключено";
 "wallet_connect.networks" = "Сети";
 
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
@@ -2197,17 +2191,10 @@
 "wallet_connect.connect.wallet" = "Кошелёк";
 "wallet_connect.connect.description" = "Подключаясь, вы разрешаете этому приложению просматривать ваш публичный адрес.";
 "wallet_connect.connect.unsupported" = "Этот dApp требует сети или методы, которые этот кошелёк не поддерживает";
-"wallet_connect.defense.safe.title" = "Безопасно";
-"wallet_connect.defense.safe.text" = "Я проверил. Этот dApp безопасен для подключения.";
 "wallet_connect.defense.danger.title" = "Опасность!";
 "wallet_connect.defense.danger.text" = "Этот dApp не верифицирован. Подключение может подвергнуть ваши средства риску.";
 "wallet_connect.defense.scam.title" = "Известное мошенничество!";
 "wallet_connect.defense.scam.text" = "Этот сайт находится в списке известных вредоносных доменов. Подключение с большой вероятностью приведёт к потере средств.";
-"wallet_connect.defense.attention.title" = "Внимание!";
-"wallet_connect.defense.attention.text" = "Вы можете подключиться к поддельному сайту и потерять средства. Активируйте меня для защиты.";
-"wallet_connect.defense.activate" = "Активировать";
-"wallet_connect.defense.loading" = "Проверка этого dApp…";
-"wallet_connect.defense.not_available" = "Проверка dApp сейчас недоступна";
 "wallet_connect.sign.request_type" = "Тип запроса";
 "wallet_connect.sign.contract" = "Контракт";
 "wallet_connect.sign.network" = "Сеть";
@@ -2576,13 +2563,10 @@
 "purchases.defense_system" = "Система защиты";
 "purchases.secure_send" = "Безопасная отправка";
 "purchases.secure_send.description" = "Предупреждает и защищает от отправки средств на опасные адреса.";
-"purchases.secure_send.info" = "Проверяет адрес получателя и предупреждает о риске перед отправкой средств.";
 "purchases.scam_protection" = "Скам-защита";
 "purchases.scam_protection.description" = "Обнаруживает поддельные и вредоносные dApps перед подключением.";
-"purchases.scam_protection.info" = "Обнаруживает поддельные dApp до подключения. Предотвращает фишинг и защищает активы.";
 "purchases.swap_protection" = "Защита обмена";
 "purchases.swap_protection.description" = "Предотвращает атаки ботов и MEV во время swap-операций.";
-"purchases.swap_protection.info" = "Защищает от ботов и front-running атак при обмене.";
 "purchases.robbery_protection" = "Защита при ограблении";
 "purchases.robbery_protection.description" = "Защищает ваши средства, если вас вынуждают разблокировать приложение.";
 

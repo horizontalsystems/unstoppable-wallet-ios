@@ -9,6 +9,6 @@ protocol IWCDappWhitelist: AnyObject {
     func isTrusted(host: String) -> Bool
 }
 
-protocol IWCPremiumGate: AnyObject {
+protocol IWCScamProtectionGate: AnyObject {
     var scamProtectionEnabled: Bool { get }
 }

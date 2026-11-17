@@ -2074,17 +2074,11 @@
 "wallet_connect.list.pending_requests" = "Solicitudes Pendientes";
 "wallet_connect.main.connect" = "%@에 연결";
 "wallet_connect.main.connected" = "Conectado a %@";
-"wallet_connect.main.premium_alert.title.risky" = "위험!";
-"wallet_connect.main.premium_alert.subtitle.deactivated" = "La Protección contra estafas está desactivada. Obtén Premium para mantener tus fondos protegidos frente a sitios no verificados y phishing.";
-"wallet_connect.main.premium_alert.subtitle.risky" = "Este sitio no está verificado. Conectarse podría exponerte a phishing y a la pérdida de fondos.";
-"wallet_connect.main.premium_alert.subtitle.not_available" = "La verificación de Protección contra estafas falló. La conexión está permitida, pero el dominio puede no ser seguro.";
 "wallet_connect.scam_protection" = "Protección contra estafas";
 "wallet_connect.dapp_check" = "Verificación de dApp";
-"wallet_connect.scam_protection.deactivated" = "Desactivada";
 "wallet_connect.scam_protection.risky" = "Arriesgado";
 "wallet_connect.scam_protection.secure" = "Segura";
 "wallet_connect.scam_protection.not_available" = "N/A";
-"wallet_connect.scam_protection.disabled" = "Desactivado";
 "wallet_connect.networks" = "Redes";
 
 "wallet_connect.main.no_any_supported_chains" = "¡No hay cadenas compatibles!";
@@ -2197,17 +2191,10 @@
 "wallet_connect.connect.wallet" = "Wallet";
 "wallet_connect.connect.description" = "Al conectarte, permites que esta app vea tu dirección pública.";
 "wallet_connect.connect.unsupported" = "Esta dApp requiere redes o métodos que esta wallet no soporta";
-"wallet_connect.defense.safe.title" = "Seguro";
-"wallet_connect.defense.safe.text" = "Lo he verificado. Esta dApp es segura para conectarse.";
 "wallet_connect.defense.danger.title" = "¡Peligro!";
 "wallet_connect.defense.danger.text" = "Esta dApp no está verificada. Conectarse puede poner en riesgo tus fondos.";
 "wallet_connect.defense.scam.title" = "¡Estafa conocida!";
 "wallet_connect.defense.scam.text" = "Este sitio está en una lista de dominios maliciosos conocidos. Conectarse muy probablemente te hará perder fondos.";
-"wallet_connect.defense.attention.title" = "¡Atención!";
-"wallet_connect.defense.attention.text" = "Podrías conectarte a un sitio falso y perder fondos. Actívame para estar protegido.";
-"wallet_connect.defense.activate" = "Activar";
-"wallet_connect.defense.loading" = "Verificando esta dApp…";
-"wallet_connect.defense.not_available" = "La verificación de dApp no está disponible en este momento";
 "wallet_connect.sign.request_type" = "Tipo de solicitud";
 "wallet_connect.sign.contract" = "Contrato";
 "wallet_connect.sign.network" = "Red";
@@ -2576,13 +2563,10 @@
 "purchases.defense_system" = "Sistema de defensa";
 "purchases.secure_send" = "Envío seguro";
 "purchases.secure_send.description" = "Evita el envío de fondos a direcciones de riesgo o de phishing.";
-"purchases.secure_send.info" = "Verifica las wallets del destinatario en busca de phishing o fraude. Te alerta antes de enviar a direcciones de alto riesgo.";
 "purchases.scam_protection" = "Protección contra estafas";
 "purchases.scam_protection.description" = "Te advierte cuando te conectas a dApps falsas o maliciosas.";
-"purchases.scam_protection.info" = "Detecta dApps falsas o maliciosas antes de la conexión. Previene el phishing y mantiene tus activos seguros.";
 "purchases.swap_protection" = "Protección de swap";
 "purchases.swap_protection.description" = "Previene bots y ataques MEV durante los swaps.";
-"purchases.swap_protection.info" = "Detiene bots y ataques de front-running durante los swaps. Mantiene tus transacciones justas y seguras.";
 "purchases.robbery_protection" = "Protección contra robo";
 "purchases.robbery_protection.description" = "Protege tus fondos si te ves obligado a desbloquear la app.";
 

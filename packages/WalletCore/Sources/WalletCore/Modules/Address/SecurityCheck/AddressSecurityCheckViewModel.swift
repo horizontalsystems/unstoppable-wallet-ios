@@ -3,14 +3,13 @@ import Foundation
 import MarketKit
 
 class AddressSecurityCheckViewModel: ObservableObject {
-    private let purchaseManager = Core.shared.purchaseManager
     private let securityManager = Core.shared.securityManager
 
     let token: Token
     let issueTypes: [AddressSecurityIssueType]
     private var cancellables = Set<AnyCancellable>()
-
-    private var premiumEnabled: Bool
+    private var checkTasks = [Task<Void, Never>]()
+    private var generation = 0
 
     @Published private(set) var checkStates = [AddressSecurityIssueType: CheckState]()
 
@@ -19,55 +18,50 @@ class AddressSecurityCheckViewModel: ObservableObject {
     init(token: Token) {
         self.token = token
         issueTypes = AddressSecurityIssueType.issueTypes(token: token)
-        premiumEnabled = purchaseManager.activated(.secureSend)
-
-        purchaseManager.$activeFeatures
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] features in
-                self?.premiumEnabled = features.contains(.secureSend)
-                self?.sync()
-            }
-            .store(in: &cancellables)
-
         securityManager.$securityChecks
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.sync() }
             .store(in: &cancellables)
     }
 
+    deinit {
+        cancelChecks()
+    }
+
+    private func cancelChecks() {
+        for task in checkTasks {
+            task.cancel()
+        }
+        checkTasks = []
+    }
+
     private func sync() {
+        cancelChecks()
+        generation += 1
+
         guard let address = currentAddress else {
             checkStates = [:]
             state = .idle
             return
         }
 
-        if premiumEnabled {
-            var states = [AddressSecurityIssueType: CheckState]()
-            var hasEnabledChecks = false
+        var states = [AddressSecurityIssueType: CheckState]()
+        var hasEnabledChecks = false
 
-            for type in issueTypes {
-                if securityManager.isCheckEnabled(type) {
-                    hasEnabledChecks = true
-                    states[type] = .checking
-                } else {
-                    states[type] = .disabled
-                }
-            }
-
-            checkStates = states
-
-            if hasEnabledChecks {
-                check(address: address)
+        for type in issueTypes {
+            if securityManager.isCheckEnabled(type) {
+                hasEnabledChecks = true
+                states[type] = .checking
             } else {
-                state = .completed(address: address, detectedTypes: [])
+                states[type] = .disabled
             }
+        }
+
+        checkStates = states
+
+        if hasEnabledChecks {
+            check(address: address)
         } else {
-            var states = [AddressSecurityIssueType: CheckState]()
-            for type in issueTypes {
-                states[type] = .locked
-            }
-            checkStates = states
             state = .completed(address: address, detectedTypes: [])
         }
     }
@@ -77,10 +71,12 @@ class AddressSecurityCheckViewModel: ObservableObject {
 
         state = .checking
 
-        for type in enabledTypes {
+        let generation = generation
+
+        checkTasks = enabledTypes.map { type in
             let checker = AddressSecurityCheckerFactory.addressSecurityChecker(type: type)
 
-            Task { [weak self, token] in
+            return Task { [weak self, token] in
                 let result: CheckState
                 do {
                     let isClear = try await checker.isClear(address: address, token: token)
@@ -89,14 +85,16 @@ class AddressSecurityCheckViewModel: ObservableObject {
                     result = .notAvailable
                 }
 
-                await self?.applyResult(result, type: type, for: address)
+                guard !Task.isCancelled else { return }
+
+                await self?.applyResult(result, type: type, for: address, generation: generation)
             }
         }
     }
 
     @MainActor
-    private func applyResult(_ result: CheckState, type: AddressSecurityIssueType, for address: Address) {
-        guard currentAddress?.raw == address.raw else { return }
+    private func applyResult(_ result: CheckState, type: AddressSecurityIssueType, for address: Address, generation: Int) {
+        guard generation == self.generation, currentAddress?.raw == address.raw, checkStates[type] == .checking else { return }
 
         checkStates[type] = result
         syncCompleted(address: address)
@@ -133,7 +131,6 @@ extension AddressSecurityCheckViewModel {
         case clear
         case detected
         case notAvailable
-        case locked
         case disabled
     }
 }

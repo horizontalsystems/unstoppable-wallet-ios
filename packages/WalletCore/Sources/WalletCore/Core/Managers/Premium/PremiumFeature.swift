@@ -1,11 +1,9 @@
 enum PremiumCategory: Int, CaseIterable, Identifiable, Hashable {
-    case defenseSystem
     case advancedControls
     case marketInsights
 
     var id: String {
         switch self {
-        case .defenseSystem: return "defense_system"
         case .advancedControls: return "advanced_controls"
         case .marketInsights: return "market_insights"
         }
@@ -13,11 +11,6 @@ enum PremiumCategory: Int, CaseIterable, Identifiable, Hashable {
 }
 
 enum PremiumFeature: String, Identifiable {
-    // defense system
-    case secureSend = "secure_send"
-    case scamProtection = "scam_protection"
-    case swapProtection = "swap_protection"
-
     // advanced controls
     case swapControl = "swap_control"
     case prioritySupport = "priority_support"
@@ -36,15 +29,13 @@ enum PremiumFeature: String, Identifiable {
     }
 
     static var allCases: [PremiumFeature] {
-        [.secureSend, .scamProtection] + (AppStateManager.instance.swapEnabled ? [.swapProtection] : []) +
-            (AppStateManager.instance.swapEnabled ? [.swapControl] : []) + [.prioritySupport, .tokenInsights, .advancedSearch, .tradeSignals]
+        (AppStateManager.instance.swapEnabled ? [.swapControl] : []) + [.prioritySupport, .tokenInsights, .advancedSearch, .tradeSignals]
     }
 }
 
 extension PremiumCategory {
     var features: [PremiumFeature] {
         switch self {
-        case .defenseSystem: return [.secureSend, .scamProtection] + (AppStateManager.instance.swapEnabled ? [.swapProtection] : [])
         case .advancedControls: return (AppStateManager.instance.swapEnabled ? [.swapControl] : []) + [.prioritySupport]
         case .marketInsights: return [.tokenInsights, .advancedSearch, .tradeSignals]
         }
@@ -56,9 +47,6 @@ extension PremiumCategory {
 extension PremiumFeature {
     var icon: String {
         switch self {
-        case .secureSend: return "wallet_in"
-        case .scamProtection: return "radar"
-        case .swapProtection: return "usd"
         case .swapControl: return "swap_e"
         case .prioritySupport: return "message"
         case .tokenInsights: return "binocular"
@@ -83,7 +71,6 @@ extension PremiumFeature {
 extension PremiumCategory {
     var icon: String {
         switch self {
-        case .defenseSystem: return "defense_filled"
         case .advancedControls: return "plus_e_filled"
         case .marketInsights: return "market_filled"
         }

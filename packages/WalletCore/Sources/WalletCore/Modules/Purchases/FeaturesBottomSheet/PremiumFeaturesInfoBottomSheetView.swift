@@ -36,8 +36,7 @@ struct PremiumFeaturesInfoBottomSheetView: View {
                             let feature = features[index]
                             VStack(spacing: 0) {
                                 Image("premium_\(feature.rawValue)")
-                                    .padding(.top, feature.topPadding)
-                                    .padding(.bottom, feature.bottomPadding)
+                                    .padding(.top, .margin24)
                                     .frame(height: 360)
 
                                 BSModule.view(for: .title2(text: feature.title))
@@ -83,18 +82,5 @@ struct PremiumFeaturesInfoBottomSheetView: View {
                 ])))
             }
         }
-    }
-}
-
-private extension PremiumFeature {
-    var topPadding: CGFloat {
-        switch self {
-        case .secureSend, .tokenInsights, .advancedSearch, .tradeSignals, .prioritySupport, .swapControl: return .margin24
-        default: return 0
-        }
-    }
-
-    var bottomPadding: CGFloat {
-        .margin24 - topPadding
     }
 }

@@ -255,13 +255,11 @@ struct MainSettingsView: View {
             middle: { ThemeText("address_checker.title".localized, style: .headline2) },
             right: { Image.disclosureIcon },
             action: {
-                Coordinator.shared.performAfterPurchase(premiumFeature: .scamProtection, page: .settings, trigger: .vipSupport) {
-                    Coordinator.shared.present { isPresented in
-                        CheckAddressView(isPresented: isPresented)
-                            .onFirstAppear {
-                                stat(page: .settings, event: .open(page: .addressChecker))
-                            }
-                    }
+                Coordinator.shared.present { isPresented in
+                    CheckAddressView(isPresented: isPresented)
+                        .onFirstAppear {
+                            stat(page: .settings, event: .open(page: .addressChecker))
+                        }
                 }
             }
         )
