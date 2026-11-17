@@ -5,8 +5,15 @@ struct AddressSecurityTypeContentView: View {
 
     var body: some View {
         let types = AddressSecurityIssueType.allCases
-        ForEach(types) { type in
-            row(title: type.checkTitle, subtitle: type.checkSubtitle, isOn: binding(type))
+
+        VStack(spacing: 0) {
+            ForEach(types) { type in
+                row(title: type.checkTitle, subtitle: type.checkSubtitle, isOn: binding(type), identifier: identifier(type))
+
+                if type != types.last {
+                    HorizontalDivider()
+                }
+            }
         }
     }
 
@@ -17,7 +24,15 @@ struct AddressSecurityTypeContentView: View {
         )
     }
 
-    private func row(title: CustomStringConvertible, subtitle: CustomStringConvertible, isOn: Binding<Bool>) -> some View {
+    private func identifier(_ type: AddressSecurityIssueType) -> String {
+        switch type {
+        case .phishing: return TestTags.secureSendPhishing
+        case .blacklisted: return TestTags.secureSendBlacklist
+        case .sanctioned: return TestTags.secureSendSanctions
+        }
+    }
+
+    private func row(title: CustomStringConvertible, subtitle: CustomStringConvertible, isOn: Binding<Bool>, identifier: String) -> some View {
         Cell(
             style: .secondary,
             middle: {
@@ -25,6 +40,7 @@ struct AddressSecurityTypeContentView: View {
             },
             right: {
                 ThemeToggle(isOn: isOn)
+                    .accessibilityIdentifier(identifier)
             }
         )
     }

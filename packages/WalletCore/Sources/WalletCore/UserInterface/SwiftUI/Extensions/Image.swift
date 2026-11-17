@@ -57,7 +57,7 @@ extension Image {
     }
 
     static var defenseIcon: CustomStringConvertible {
-        ComponentImage(image: "defense_filled", size: .size20)
+        ComponentImage("defense_filled", size: .size20, colorStyle: .brand)
     }
 }
 

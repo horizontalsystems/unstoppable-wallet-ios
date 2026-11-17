@@ -647,7 +647,7 @@
 "send.address.phishing.description" = "Girilen hedef adresi olası phishing (oltalama) riskleri açısından analiz eder.\n\nTemiz: Şüpheli bir etkinlik tespit edilmedi.\n\nTespit edildi: Görünüşe göre biri sizi yanlış adrese fon göndermeye ikna etmeye çalışıyor olabilir. Adresin doğruluğundan kesin olarak emin olmadıkça devam etmeyin. Öncelikle küçük bir test işlemi göndermeyi düşünün.";
 "send.address.phishing.caution.title" = "Oltalama Adresi Tespit Edildi!";
 "send.address.phishing.caution.description" = "Girdiğiniz adres sahte olabilir. Dolandırıcılar genellikle ilk ve son karakterleri değiştirirler. Kayıpları önlemek için devam etmeden önce tam adresi dikkatlice doğrulayın.";
-"send.address.sanction_check" = "Sanction Check";
+"send.address.sanction_check" = "Sanctions Check";
 "send.address.sanction_check.subtitle" = "Adresin yaptırım kısıtlamalarına tabi olup olmadığını doğrular.";
 "send.address.sanction.description" = "Alıcının adresinin uluslararası yaptırımlara tabi olup olmadığını Chainalysis.com verileriyle doğrular.\n\nTemiz: Herhangi bir yaptırım tespit edilmedi.\n\nTespit edildi: Olası yasal risk. Bu adrese yapılan işlemler bazı yargı bölgelerinde kısıtlanabilir veya yasa dışı olabilir.";
 "send.address.sanction.caution.title" = "Yaptırım Uygulanan Adres!";
@@ -1716,9 +1716,7 @@
 
 // Settings -> Security
 
-"settings_security.enable_passcode" = "Giriş kodunu etkinleştir";
-"settings_security.edit_passcode" = "Kod Değiştir";
-"settings_security.disable_passcode" = "Şifre Kodunu Devre Dışı Bırak";
+"settings_security.passcode" = "Giriş kodu";
 "settings_security.auto_lock" = "Otomatik kilit";
 "settings_security.auto_lock.description" = "Seçilen süre sonunda uygulamayı otomatik olarak kilitler.";
 "settings_security.balance_auto_hide" = "Denge Otomatik Gizleme";

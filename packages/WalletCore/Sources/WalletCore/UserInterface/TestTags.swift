@@ -280,7 +280,6 @@ enum TestTags {
     static let aboutTerms = "about_terms"
 
     static let securityPasscode = "security_passcode"
-    static let securityDisablePasscode = "security_disable_passcode"
     static let securityBiometrics = "security_biometrics"
     static let securityAutolock = "security_autolock"
     static func autolockInterval(_ raw: String) -> String {
@@ -290,6 +289,10 @@ enum TestTags {
     static let securitySecureSend = "security_secure_send"
     static let securityScamProtection = "security_scam_protection"
     static let securitySwapProtection = "security_swap_protection"
+    static let secureSendPhishing = "secure_send_phishing"
+    static let secureSendBlacklist = "secure_send_blacklist"
+    static let secureSendSanctions = "secure_send_sanctions"
+    static let secureSendDone = "secure_send_done"
 
     static func accountRow(_ index: Int) -> String {
         "account_row_\(index)"

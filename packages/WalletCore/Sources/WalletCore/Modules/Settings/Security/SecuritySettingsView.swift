@@ -5,119 +5,110 @@ struct SecuritySettingsView: View {
 
     var body: some View {
         ScrollableThemeView {
-            VStack(spacing: .margin32) {
-                ListSection {
-                    if viewModel.isPasscodeSet {
-                        Cell(
-                            middle: {
-                                MultiText(title: "settings_security.edit_passcode".localized)
-                            },
-                            right: {
-                                Image.disclosureIcon
-                            },
-                            action: {
-                                Coordinator.shared.presentAfterUnlock(biometryAllowed: false) { isPresented in
-                                    ThemeNavigationStack { EditPasscodeModule.editPasscodeView(showParentSheet: isPresented) }
-                                }
-                            }
-                        )
-                        .accessibilityIdentifier(TestTags.securityPasscode)
-                        Cell(
-                            middle: {
-                                MultiText(title: ComponentText(text: "settings_security.disable_passcode".localized, colorStyle: .red))
-                            },
-                            action: {
-                                Coordinator.shared.performAfterUnlock(biometryAllowed: false) {
-                                    viewModel.removePasscode()
-                                }
-                            }
-                        )
-                        .accessibilityIdentifier(TestTags.securityDisablePasscode)
-                    } else {
-                        Cell(
-                            middle: {
-                                MultiText(title: "settings_security.enable_passcode".localized)
-                            },
-                            right: {
-                                Image.warningIcon
-                            },
-                            action: {
-                                presentCreatePasscode(reason: .regular)
-                            }
-                        )
-                        .accessibilityIdentifier(TestTags.securityPasscode)
-                    }
-                }
-
-                if let biometryType = viewModel.biometryType {
+            VStack(spacing: 0) {
+                VStack(spacing: .margin16) {
                     ListSection {
-                        Cell(
-                            middle: {
-                                MultiText(title: biometryType.title)
-                            },
-                            right: {
-                                DropdownButton(text: viewModel.biometryEnabledType.title, mode: .transparent) {
-                                    Coordinator.shared.present(type: .alert) { isPresented in
-                                        OptionAlertView(
-                                            title: biometryType.title,
-                                            viewItems: BiometryManager.BiometryEnabledType.allCases.map {
-                                                .init(text: $0.title, selected: $0 == viewModel.biometryEnabledType)
-                                            },
-                                            onSelect: { index in
-                                                viewModel.biometryEnabledType = BiometryManager.BiometryEnabledType.allCases[index]
-                                            },
-                                            isPresented: isPresented
-                                        )
+                        passcodeRow()
+
+                        if let biometryType = viewModel.biometryType {
+                            Cell(
+                                middle: {
+                                    MultiText(title: biometryType.title)
+                                },
+                                right: {
+                                    DropdownButton(text: viewModel.biometryEnabledType.title, mode: .transparent) {
+                                        Coordinator.shared.present(type: .alert) { isPresented in
+                                            OptionAlertView(
+                                                title: biometryType.title,
+                                                viewItems: BiometryManager.BiometryEnabledType.allCases.map {
+                                                    .init(text: $0.title, selected: $0 == viewModel.biometryEnabledType)
+                                                },
+                                                onSelect: { index in
+                                                    viewModel.biometryEnabledType = BiometryManager.BiometryEnabledType.allCases[index]
+                                                },
+                                                isPresented: isPresented
+                                            )
+                                        }
                                     }
+                                    .accessibilityIdentifier(TestTags.securityBiometrics)
                                 }
-                                .accessibilityIdentifier(TestTags.securityBiometrics)
-                            }
-                        )
-                        .onChange(of: viewModel.biometryEnabledType) { type in
-                            if !viewModel.isPasscodeSet, type.isEnabled {
-                                presentCreatePasscode(reason: .biometry(enabledType: type, type: biometryType))
+                            )
+                            .onChange(of: viewModel.biometryEnabledType) { type in
+                                if !viewModel.isPasscodeSet, type.isEnabled {
+                                    presentCreatePasscode(reason: .biometry(enabledType: type, type: biometryType))
+                                }
                             }
                         }
-                    }
-                }
 
-                ListSection {
-                    if viewModel.isPasscodeSet {
-                        Cell(
-                            middle: {
-                                MultiText(title: "settings_security.auto_lock".localized, subtitle: "settings_security.auto_lock.description".localized)
-                            },
-                            right: {
-                                DropdownButton(text: viewModel.autoLockPeriod.title, mode: .transparent) {
-                                    Coordinator.shared.present(type: .alert) { isPresented in
-                                        OptionAlertView(
-                                            title: "settings_security.auto_lock".localized,
-                                            viewItems: AutoLockPeriod.allCases.map { .init(text: $0.title, selected: viewModel.autoLockPeriod == $0, identifier: TestTags.autolockInterval($0.identifierRaw)) },
-                                            onSelect: { index in
-                                                viewModel.autoLockPeriod = AutoLockPeriod.allCases[index]
-                                            },
-                                            isPresented: isPresented
-                                        )
+                        if viewModel.isPasscodeSet {
+                            Cell(
+                                middle: {
+                                    MultiText(title: "settings_security.auto_lock".localized, subtitle: "settings_security.auto_lock.description".localized)
+                                },
+                                right: {
+                                    DropdownButton(text: viewModel.autoLockPeriod.title, mode: .transparent) {
+                                        Coordinator.shared.present(type: .alert) { isPresented in
+                                            OptionAlertView(
+                                                title: "settings_security.auto_lock".localized,
+                                                viewItems: AutoLockPeriod.allCases.map { .init(text: $0.title, selected: viewModel.autoLockPeriod == $0, identifier: TestTags.autolockInterval($0.identifierRaw)) },
+                                                onSelect: { index in
+                                                    viewModel.autoLockPeriod = AutoLockPeriod.allCases[index]
+                                                },
+                                                isPresented: isPresented
+                                            )
+                                        }
                                     }
+                                    .accessibilityIdentifier(TestTags.securityAutolock)
                                 }
-                                .accessibilityIdentifier(TestTags.securityAutolock)
-                            }
-                        )
+                            )
+                        }
                     }
-                    toggledRow(title: "settings_security.balance_auto_hide".localized, subtitle: "settings_security.balance_auto_hide.description".localized, isOn: $viewModel.balanceAutoHide)
 
-                    toggledRow(title: "transaction_filter.hide_suspicious_txs".localized, subtitle: "transaction_filter.hide_suspicious_txs.description".localized, isOn: $viewModel.spamFilterEnabled)
+                    ListSection {
+                        toggledRow(title: "settings_security.balance_auto_hide".localized, subtitle: "settings_security.balance_auto_hide.description".localized, isOn: $viewModel.balanceAutoHide)
+
+                        toggledRow(title: "transaction_filter.hide_suspicious_txs".localized, subtitle: "transaction_filter.hide_suspicious_txs.description".localized, isOn: $viewModel.spamFilterEnabled)
+                    }
                 }
 
                 defenseSection()
-
-                ListSection {
-                    robberyRow()
-                }
             }
-            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+            .padding(EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
         .navigationTitle("settings.security".localized)
+    }
+
+    private func passcodeRow() -> some View {
+        Cell(
+            middle: {
+                MultiText(title: "settings_security.passcode".localized)
+            },
+            right: {
+                HStack(spacing: .margin12) {
+                    if !viewModel.isPasscodeSet {
+                        ThemeImage("warning_filled", size: .iconSize20, colorStyle: .red)
+                    }
+
+                    interceptedToggle(
+                        isOn: viewModel.isPasscodeSet,
+                        title: "settings_security.passcode".localized,
+                        identifier: TestTags.securityPasscode
+                    ) {
+                        togglePasscode()
+                    }
+                }
+            }
+        )
+    }
+
+    private func togglePasscode() {
+        if viewModel.isPasscodeSet {
+            Coordinator.shared.performAfterUnlock(biometryAllowed: false) {
+                viewModel.removePasscode()
+            }
+        } else {
+            presentCreatePasscode(reason: .regular)
+        }
     }
 
     private func presentCreatePasscode(reason: CreatePasscodeModule.CreatePasscodeReason) {
@@ -156,13 +147,23 @@ struct SecuritySettingsView: View {
     private func defenseSection() -> some View {
         VStack(spacing: 0) {
             SectionHeader(image: Image.defenseIcon, text: "purchases.defense_system".localized, horizontalInsets: .margin16)
+                .padding(.top, .margin8)
 
             ListSection {
-                toggledRow(title: "purchases.secure_send".localized, subtitle: "purchases.secure_send.description".localized, isOn: viewModel.secureSendEnabled)
-                    .tapIntercept(active: true) {
-                        presentSecureSendSheet()
+                Cell(
+                    middle: {
+                        MultiText(title: "purchases.secure_send".localized, subtitle: "purchases.secure_send.description".localized)
+                    },
+                    right: {
+                        interceptedToggle(
+                            isOn: viewModel.secureSendEnabled,
+                            title: "purchases.secure_send".localized,
+                            identifier: TestTags.securitySecureSend
+                        ) {
+                            presentSecureSendSheet()
+                        }
                     }
-                    .accessibilityIdentifier(TestTags.securitySecureSend)
+                )
 
                 toggledRow(
                     title: "purchases.scam_protection".localized,
@@ -179,8 +180,9 @@ struct SecuritySettingsView: View {
                         identifier: TestTags.securitySwapProtection
                     )
                 }
+
+                robberyRow()
             }
-            .themeListStyle(.bordered)
         }
     }
 
@@ -188,6 +190,17 @@ struct SecuritySettingsView: View {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
             SecureSendBottomSheetView(isPresented: isPresented)
         }
+    }
+
+    private func interceptedToggle(isOn: Bool, title: String, identifier: String, action: @escaping () -> Void) -> some View {
+        ThemeToggle(isOn: .constant(isOn))
+            .tapIntercept(active: true, action: action)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(title)
+            .accessibilityValue(isOn ? "biometry.on".localized : "biometry.off".localized)
+            .accessibilityAddTraits(.isToggle)
+            .accessibilityAction { action() }
+            .accessibilityIdentifier(identifier)
     }
 
     private func toggledRow(title: CustomStringConvertible, subtitle: CustomStringConvertible, isOn: Binding<Bool>, identifier: String? = nil) -> some View {
@@ -198,17 +211,6 @@ struct SecuritySettingsView: View {
             right: {
                 ThemeToggle(isOn: isOn)
                     .withIdentifier(identifier)
-            }
-        )
-    }
-
-    private func toggledRow(title: CustomStringConvertible, subtitle: CustomStringConvertible, isOn: Bool) -> some View {
-        Cell(
-            middle: {
-                MultiText(title: title, subtitle: subtitle)
-            },
-            right: {
-                ThemeToggle(isOn: .constant(isOn))
             }
         )
     }

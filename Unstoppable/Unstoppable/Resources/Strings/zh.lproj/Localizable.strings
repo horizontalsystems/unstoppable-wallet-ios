@@ -1716,9 +1716,7 @@
 
 // Settings -> Security
 
-"settings_security.enable_passcode" = "启用密码";
-"settings_security.edit_passcode" = "编辑密码";
-"settings_security.disable_passcode" = "禁用密码";
+"settings_security.passcode" = "密码";
 "settings_security.auto_lock" = "自动锁定";
 "settings_security.auto_lock.description" = "在选定的时间后自动锁定应用。";
 "settings_security.balance_auto_hide" = "自动隐藏余额";

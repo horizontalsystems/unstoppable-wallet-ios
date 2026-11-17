@@ -1716,9 +1716,7 @@
 
 // Settings -> Security
 
-"settings_security.enable_passcode" = "비밀번호 활성화";
-"settings_security.edit_passcode" = "비밀번호 변경";
-"settings_security.disable_passcode" = "비밀번호 비활성화";
+"settings_security.passcode" = "비밀번호";
 "settings_security.auto_lock" = "자동 잠금";
 "settings_security.auto_lock.description" = "선택한 시간이 지나면 앱을 자동으로 잠급니다.";
 "settings_security.balance_auto_hide" = "밸런스 자동 숨기기";

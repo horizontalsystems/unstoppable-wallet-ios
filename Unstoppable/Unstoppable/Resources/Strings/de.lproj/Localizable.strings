@@ -1716,9 +1716,7 @@
 
 // Settings -> Security
 
-"settings_security.enable_passcode" = "Code aktivieren";
-"settings_security.edit_passcode" = "Code bearbeiten";
-"settings_security.disable_passcode" = "Code deaktivieren";
+"settings_security.passcode" = "Code";
 "settings_security.auto_lock" = "Auto-Sperren";
 "settings_security.auto_lock.description" = "Sperrt die App automatisch nach einer ausgewählten Zeit.";
 "settings_security.balance_auto_hide" = "Auto-Ausblenden ausgleichen";

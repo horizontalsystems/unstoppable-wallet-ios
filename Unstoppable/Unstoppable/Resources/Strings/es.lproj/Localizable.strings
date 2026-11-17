@@ -1716,9 +1716,7 @@
 
 // Settings -> Security
 
-"settings_security.enable_passcode" = "Activar contraseña";
-"settings_security.edit_passcode" = "Editar el código";
-"settings_security.disable_passcode" = "Desactivar bloqueo con código";
+"settings_security.passcode" = "Código de acceso";
 "settings_security.auto_lock" = "Bloqueo automático";
 "settings_security.auto_lock.description" = "Bloquea automáticamente la app después de un tiempo seleccionado.";
 "settings_security.balance_auto_hide" = "Saldo Auto Ocultar";

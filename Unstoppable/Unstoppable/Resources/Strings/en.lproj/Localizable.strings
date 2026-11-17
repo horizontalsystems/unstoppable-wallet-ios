@@ -647,7 +647,7 @@
 "send.address.phishing.description" = "Analyzes the provided destination address for potential phishing risks.\n\nClear: No suspicious activity detected.\n\nDetected: It appears that someone may be trying to trick you into sending funds to an incorrect address. Do not proceed unless absolutely certain that the address is correct. Consider sending a small test transaction first.";
 "send.address.phishing.caution.title" = "Phishing Address Detected!";
 "send.address.phishing.caution.description" = "The address you entered may be fraudulent. Scammers often alter the first and last characters. Verify the full address carefully before proceeding to avoid loss.";
-"send.address.sanction_check" = "Sanction Check";
+"send.address.sanction_check" = "Sanctions Check";
 "send.address.sanction_check.subtitle" = "Verifies whether the address is subject to sanctions restrictions.";
 "send.address.sanction.description" = "Verifies whether the recipient’s address is subject to international sanctions, using data from Chainalysis.com.\n\nClear: No sanctions detected.\n\n Detected: Potential legal risk. Transactions with this address may be restricted or illegal in certain jurisdictions.";
 "send.address.sanction.caution.title" = "Sanctioned Address!";
@@ -1716,9 +1716,7 @@
 
 // Settings -> Security
 
-"settings_security.enable_passcode" = "Enable Passcode";
-"settings_security.edit_passcode" = "Edit Passcode";
-"settings_security.disable_passcode" = "Disable Passcode";
+"settings_security.passcode" = "Passcode";
 "settings_security.auto_lock" = "Auto-Lock";
 "settings_security.auto_lock.description" = "Automatically locks the app after a selected time.";
 "settings_security.balance_auto_hide" = "Balance Auto Hide";

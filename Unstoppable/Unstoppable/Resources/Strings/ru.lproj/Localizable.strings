@@ -647,7 +647,7 @@
 "send.address.phishing.description" = "Анализирует указанный адрес назначения на предмет потенциальных рисков фишинга.\n\nЧисто: Подозрительная активность не обнаружена.\n\nОбнаружено: Похоже, кто-то пытается обманом заставить вас отправить средства на неверный адрес. Не продолжайте, если вы не полностью уверены в правильности адреса. Рассмотрите возможность сначала отправить небольшую тестовую транзакцию.";
 "send.address.phishing.caution.title" = "Обнаружен фишинговый адрес!";
 "send.address.phishing.caution.description" = "Введенный вами адрес может быть мошенническим. Мошенники часто изменяют первые и последние символы. Внимательно проверьте полный адрес перед отправкой во избежание потерь.";
-"send.address.sanction_check" = "Sanction Check";
+"send.address.sanction_check" = "Sanctions Check";
 "send.address.sanction_check.subtitle" = "Проверяет, подпадает ли адрес под санкционные ограничения.";
 "send.address.sanction.description" = "Проверяет, подпадает ли адрес получателя под международные санкции, используя данные Chainalysis.com.\n\nЧисто: Санкции не обнаружены.\n\nОбнаружено: Потенциальный юридический риск. Транзакции с этим адресом могут быть ограничены или незаконны в определенных юрисдикциях.";
 "send.address.sanction.caution.title" = "Санкционный адрес!";
@@ -1716,9 +1716,7 @@
 
 // Settings -> Security
 
-"settings_security.enable_passcode" = "Включить код доступа";
-"settings_security.edit_passcode" = "Изменить код";
-"settings_security.disable_passcode" = "Отключить код доступа";
+"settings_security.passcode" = "Код доступа";
 "settings_security.auto_lock" = "Автоблокировка";
 "settings_security.auto_lock.description" = "Автоматически блокирует приложение по истечении выбранного времени.";
 "settings_security.balance_auto_hide" = "Автоскрытие баланса";

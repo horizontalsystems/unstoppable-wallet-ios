@@ -1716,9 +1716,7 @@
 
 // Settings -> Security
 
-"settings_security.enable_passcode" = "Activer le code d'accès";
-"settings_security.edit_passcode" = "Modifier le code";
-"settings_security.disable_passcode" = "Désactiver le code d'accès";
+"settings_security.passcode" = "Code d'accès";
 "settings_security.auto_lock" = "Verrouillage automatique";
 "settings_security.auto_lock.description" = "Verrouille automatiquement l'application après un délai sélectionné.";
 "settings_security.balance_auto_hide" = "Masquage automatique du solde";
