@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import ReownWalletKit
 
@@ -31,6 +32,11 @@ class WCVerifyService {
             return whitelistDefenseState(trusted: true)
         }
         return whitelistDefenseState(trusted: false)
+    }
+
+    /// the whitelist finished loading (or failed), so a defense state read earlier may be stale
+    var defenseStateChangedPublisher: AnyPublisher<Void, Never> {
+        whitelist?.statePublisher.map { _ in () }.eraseToAnyPublisher() ?? Empty().eraseToAnyPublisher()
     }
 
     /// an approved session has no attestation any more: the check runs against the peer url, as Android does

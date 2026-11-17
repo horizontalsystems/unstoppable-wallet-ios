@@ -7,6 +7,7 @@ class WCDappWhitelist: IWCDappWhitelist {
     private var domains = [String]()
     private var loadState = WCWhitelistState.loading
     private var cancellable: AnyCancellable?
+    private let stateSubject = PassthroughSubject<WCWhitelistState, Never>()
 
     init(provider: WhitelistDappProvider) {
         self.provider = provider
@@ -29,12 +30,17 @@ class WCDappWhitelist: IWCDappWhitelist {
         self.domains = domains
         loadState = state
         lock.unlock()
+        stateSubject.send(state)
     }
 
     var state: WCWhitelistState {
         lock.lock()
         defer { lock.unlock() }
         return loadState
+    }
+
+    var statePublisher: AnyPublisher<WCWhitelistState, Never> {
+        stateSubject.eraseToAnyPublisher()
     }
 
     func isTrusted(host: String) -> Bool {

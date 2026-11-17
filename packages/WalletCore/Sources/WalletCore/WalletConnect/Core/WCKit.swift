@@ -154,6 +154,10 @@ class WCKit {
         verifyService.defenseState(peerUrl: peerUrl)
     }
 
+    var defenseStateChangedPublisher: AnyPublisher<Void, Never> {
+        verifyService.defenseStateChangedPublisher
+    }
+
     private var unexpiredPendingRequests: [(request: Request, context: VerifyContext?)] {
         signClient.pendingRequests.filter { !WCRequest.isExpired(expiryTimestamp: $0.request.expiryTimestamp) }
     }

@@ -27,12 +27,13 @@ class WCConnectViewModel: ObservableObject {
     /// protocol origin attestation shown on top (Android VerificationAlert); nil = nothing to report
     let verificationCaution: CautionNew?
 
-    let defenseState: WCDefenseState
+    @Published private(set) var defenseState: WCDefenseState
     @Published private(set) var connecting = false
 
     private let finishSubject = PassthroughSubject<Void, Never>()
     private let errorSubject = PassthroughSubject<String, Never>()
     private(set) var finished = false
+    private var cancellables = Set<AnyCancellable>()
 
     init(item: WCProposalItem) {
         self.item = item
@@ -57,6 +58,15 @@ class WCConnectViewModel: ObservableObject {
         unsupported = item.blockchainProposals.isEmpty || kit?.validationError(for: item.proposal) != nil
         defenseState = kit?.defenseState(context: item.context) ?? .disabled
         verificationCaution = Self.verificationCaution(for: item.verifyState, origin: item.context?.origin)
+
+        // the whitelist may still be loading when the proposal arrives: re-read once it settles,
+        // otherwise the dApp check stays empty and a non-whitelisted origin never gets its warning
+        if let kit {
+            subscribe(&cancellables, kit.defenseStateChangedPublisher) { [weak self] in
+                self?.defenseState = kit.defenseState(context: item.context)
+            }
+            defenseState = kit.defenseState(context: item.context)
+        }
     }
 
     /// scam and mismatch are red, an unverified origin is a yellow caution; a valid origin shows nothing

@@ -1,3 +1,4 @@
+import Combine
 import ReownWalletKit
 import Testing
 @testable import WalletCore
@@ -79,6 +80,7 @@ struct WCVerifyServiceTests {
 private final class StubWhitelist: IWCDappWhitelist {
     private let domains: [String]
     var state: WCWhitelistState
+    let statePublisher: AnyPublisher<WCWhitelistState, Never> = Empty().eraseToAnyPublisher()
 
     init(domains: [String], state: WCWhitelistState = .loaded) {
         self.domains = domains
