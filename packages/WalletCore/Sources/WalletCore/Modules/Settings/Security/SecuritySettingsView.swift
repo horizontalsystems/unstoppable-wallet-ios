@@ -193,6 +193,8 @@ struct SecuritySettingsView: View {
     }
 
     private func presentDisableRobberyProtectionSheet() {
+        let passcodeLevel = viewModel.currentPasscodeLevel
+
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
             BottomSheetView(
                 items: [
@@ -201,11 +203,23 @@ struct SecuritySettingsView: View {
                     .buttonGroup(.init(buttons: [
                         .init(style: .secondary, title: "settings_security.disable_robbery_protection.button".localized, identifier: TestTags.robberyProtectionDisableConfirm) {
                             isPresented.wrappedValue = false
+
+                            guard viewModel.currentPasscodeLevel == passcodeLevel else {
+                                return
+                            }
+
                             viewModel.removeDuressPasscode()
                         },
                     ])),
                 ]
             )
+            // The lock screen is a separate window, so the sheet would survive a lock and
+            // could be confirmed at another passcode level: close it as soon as the app locks.
+            .onReceive(Core.shared.lockManager.$isLocked) { isLocked in
+                if isLocked {
+                    isPresented.wrappedValue = false
+                }
+            }
         }
     }
 
