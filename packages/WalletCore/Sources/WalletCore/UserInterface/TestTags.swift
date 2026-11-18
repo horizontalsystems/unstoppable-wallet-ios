@@ -1,6 +1,5 @@
-/// Identifiers the Maestro flows select by. The names are shared with the Android app's `TestTags`:
-/// the same strings, in snake_case on purpose. Renaming or removing one breaks the flows that select by it.
-/// The flows live in appkb. The rules for naming and adding a control are in `docs/test-identifiers.md`.
+/// Identifiers UI tests select by. The names are shared with the Android app's `TestTags`:
+/// the same strings, in snake_case on purpose. The rules for naming and adding a control are in `docs/test-identifiers.md`.
 enum TestTags {
     static let introCreateWallet = "intro_create_wallet"
     static let introAddExistingWallet = "intro_add_existing_wallet"
