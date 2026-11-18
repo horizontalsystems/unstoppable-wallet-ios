@@ -1988,6 +1988,8 @@
 
 "create_wallet.title" = "Nova Carteira";
 "create_wallet.name" = "Nome da Carteira";
+"wallet_name.default" = "Carteira %d";
+"wallet_name.watch_default" = "Carteira de observação %d";
 "create_wallet.advanced_setup" = "Avançado";
 "create_wallet.create" = "Criar";
 "create_wallet.advanced_options" = "Opções Avançadas";

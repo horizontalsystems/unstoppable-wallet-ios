@@ -96,7 +96,7 @@ class WatchViewModel: ObservableObject {
     let successSubject = PassthroughSubject<Void, Never>()
 
     init() {
-        name = accountFactory.generatedAccountName
+        name = accountFactory.nextWatchAccountName
 
         addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .ethereum, withEns: true))
         addressParserChain.append(handlers: BtcBlockchainManager.blockchainTypes.flatMap { AddressParserFactory.parserChainHandlers(blockchainType: $0, withEns: false) })

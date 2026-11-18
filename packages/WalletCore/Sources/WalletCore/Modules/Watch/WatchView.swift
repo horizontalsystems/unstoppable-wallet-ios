@@ -20,11 +20,14 @@ struct WatchView: View {
                             ListSectionHeader(text: "watch_address.name".localized, uppercased: false)
 
                             ThemeInput(
-                                buttons: [
-                                    .icon("swap_e", identifier: TestTags.watchNameRandom) {
-                                        viewModel.refreshName()
-                                    },
-                                ]
+                                buttons: ThemeInputButton.nameShortcuts(
+                                    isFocused: focusedField == .name,
+                                    isEmpty: viewModel.name.isEmpty,
+                                    magicIdentifier: TestTags.watchNameRandom,
+                                    deleteIdentifier: TestTags.watchNameClear,
+                                    onMagic: { viewModel.refreshName() },
+                                    onDelete: { viewModel.name = "" }
+                                )
                             ) {
                                 InputTextView(text: $viewModel.name)
                                     .autocapitalization(.words)

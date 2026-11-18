@@ -1988,6 +1988,8 @@
 
 "create_wallet.title" = "Новый кошелек";
 "create_wallet.name" = "Имя кошелька";
+"wallet_name.default" = "Кошелёк %d";
+"wallet_name.watch_default" = "Кошелёк наблюдения %d";
 "create_wallet.advanced_setup" = "Доп. настройки";
 "create_wallet.create" = "Создать";
 "create_wallet.advanced_options" = "Расширенные настройки";

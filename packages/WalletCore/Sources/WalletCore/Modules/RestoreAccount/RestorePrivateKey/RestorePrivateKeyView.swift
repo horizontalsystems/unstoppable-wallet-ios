@@ -79,11 +79,14 @@ struct RestorePrivateKeyView: View {
             ListSectionHeader(text: "create_wallet.name".localized, uppercased: false)
 
             ThemeInput(
-                buttons: [
-                    .icon("swap_e", identifier: TestTags.restoreKeyNameRandom) {
-                        viewModel.refreshName()
-                    },
-                ]
+                buttons: ThemeInputButton.nameShortcuts(
+                    isFocused: focusedField == .name,
+                    isEmpty: viewModel.name.isEmpty,
+                    magicIdentifier: TestTags.restoreKeyNameRandom,
+                    deleteIdentifier: TestTags.restoreKeyNameClear,
+                    onMagic: { viewModel.refreshName() },
+                    onDelete: { viewModel.name = "" }
+                )
             ) {
                 InputTextView(text: $viewModel.name)
                     .autocapitalization(.words)

@@ -30,7 +30,7 @@ class CreateAccountViewModel: ObservableObject {
 
     init(walletType: WalletType) {
         self.walletType = walletType
-        name = accountFactory.generatedAccountName
+        name = accountFactory.nextAccountName
     }
 
     /// Wallets a newly created account starts with, by phrase or by passkey; the same list as Android

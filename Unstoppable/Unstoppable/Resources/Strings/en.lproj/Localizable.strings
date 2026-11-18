@@ -1988,6 +1988,8 @@
 
 "create_wallet.title" = "New Wallet";
 "create_wallet.name" = "Wallet Name";
+"wallet_name.default" = "Wallet %d";
+"wallet_name.watch_default" = "Watch Wallet %d";
 "create_wallet.advanced_setup" = "Advanced";
 "create_wallet.create" = "Create";
 "create_wallet.advanced_options" = "Advanced Options";

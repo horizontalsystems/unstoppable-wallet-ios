@@ -1988,6 +1988,8 @@
 
 "create_wallet.title" = "Nouveau porte-monnaie";
 "create_wallet.name" = "Nom du Wallet";
+"wallet_name.default" = "Portefeuille %d";
+"wallet_name.watch_default" = "Portefeuille d'observation %d";
 "create_wallet.advanced_setup" = "Avancé";
 "create_wallet.create" = "Créer";
 "create_wallet.advanced_options" = "Options Avancées";

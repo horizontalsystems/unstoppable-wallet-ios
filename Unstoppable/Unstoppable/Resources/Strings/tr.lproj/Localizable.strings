@@ -1988,6 +1988,8 @@
 
 "create_wallet.title" = "Yeni Cüzdan";
 "create_wallet.name" = "Cüzdan Adı";
+"wallet_name.default" = "Cüzdan %d";
+"wallet_name.watch_default" = "İzleme Cüzdanı %d";
 "create_wallet.advanced_setup" = "İleri düzey";
 "create_wallet.create" = "Oluştur";
 "create_wallet.advanced_options" = "Gelişmiş Seçenekler";

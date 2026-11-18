@@ -15,6 +15,14 @@ public extension AccountFactory {
         return NSLocalizedString("wallet_name.\(index)", bundle: .module, comment: "")
     }
 
+    var nextAccountName: String {
+        nextName(key: "wallet_name.default")
+    }
+
+    var nextWatchAccountName: String {
+        nextName(key: "wallet_name.watch_default")
+    }
+
     func account(type: AccountType, origin: AccountOrigin, backedUp: Bool, fileBackedUp: Bool, name: String) -> Account {
         Account(
             id: UUID().uuidString,
@@ -37,5 +45,14 @@ public extension AccountFactory {
             backedUp: true,
             fileBackedUp: false
         )
+    }
+}
+
+private extension AccountFactory {
+    func nextName(key: String) -> String {
+        let taken = Set(accountManager.accounts.map(\.name))
+
+        // taken.count + 1 numbers always include a free one, as long as the template formats the number
+        return (1 ... taken.count + 1).lazy.map { key.localized($0) }.first { !taken.contains($0) } ?? key.localized(1)
     }
 }

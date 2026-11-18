@@ -80,11 +80,14 @@ struct RestoreMnemonicView: View {
             ListSectionHeader(text: "create_wallet.name".localized, uppercased: false)
 
             ThemeInput(
-                buttons: [
-                    .icon("swap_e", identifier: TestTags.restoreNameRandom) {
-                        viewModel.refreshName()
-                    },
-                ]
+                buttons: ThemeInputButton.nameShortcuts(
+                    isFocused: focusedField == .name,
+                    isEmpty: viewModel.name.isEmpty,
+                    magicIdentifier: TestTags.restoreNameRandom,
+                    deleteIdentifier: TestTags.restoreNameClear,
+                    onMagic: { viewModel.refreshName() },
+                    onDelete: { viewModel.name = "" }
+                )
             ) {
                 InputTextView(text: $viewModel.name)
                     .autocapitalization(.words)

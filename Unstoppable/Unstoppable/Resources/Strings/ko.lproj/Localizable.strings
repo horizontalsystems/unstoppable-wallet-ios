@@ -1988,6 +1988,8 @@
 
 "create_wallet.title" = "새 지갑";
 "create_wallet.name" = "지갑 이름";
+"wallet_name.default" = "지갑 %d";
+"wallet_name.watch_default" = "조회 전용 지갑 %d";
 "create_wallet.advanced_setup" = "고급의";
 "create_wallet.create" = "생성하기";
 "create_wallet.advanced_options" = "고급 옵션";

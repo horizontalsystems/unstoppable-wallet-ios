@@ -29,11 +29,14 @@ struct CreateAccountView: View {
                             ListSectionHeader(text: "create_wallet.name".localized, uppercased: false)
 
                             ThemeInput(
-                                buttons: [
-                                    .icon("swap_e", identifier: TestTags.createNameRandom) {
-                                        viewModel.refreshName()
-                                    },
-                                ]
+                                buttons: ThemeInputButton.nameShortcuts(
+                                    isFocused: focusedField == .name,
+                                    isEmpty: viewModel.name.isEmpty,
+                                    magicIdentifier: TestTags.createNameRandom,
+                                    deleteIdentifier: TestTags.createNameClear,
+                                    onMagic: { viewModel.refreshName() },
+                                    onDelete: { viewModel.name = "" }
+                                )
                             ) {
                                 InputTextView(text: $viewModel.name)
                                     .autocapitalization(.words)

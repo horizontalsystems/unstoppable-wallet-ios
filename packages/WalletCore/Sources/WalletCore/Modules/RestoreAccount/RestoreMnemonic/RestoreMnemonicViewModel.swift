@@ -40,7 +40,7 @@ class RestoreMnemonicViewModel: ObservableObject {
     private let proceedSubject = PassthroughSubject<(String, AccountType), Never>()
 
     init() {
-        name = accountFactory.generatedAccountName
+        name = accountFactory.nextAccountName
         wordListLanguage = displayName(language: selectedLanguage)
 
         let defaultWords = AppConfig.defaultWords

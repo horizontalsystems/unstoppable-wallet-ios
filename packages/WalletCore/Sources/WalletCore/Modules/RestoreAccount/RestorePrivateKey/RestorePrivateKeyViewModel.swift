@@ -23,7 +23,7 @@ class RestorePrivateKeyViewModel: ObservableObject {
     private var text = ""
 
     init() {
-        name = accountFactory.generatedAccountName
+        name = accountFactory.nextAccountName
     }
 
     private var resolvedName: String {

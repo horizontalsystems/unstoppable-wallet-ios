@@ -64,6 +64,26 @@ struct ThemeInputButton: Identifiable {
         isEmpty ? whenEmpty : [.delete(identifier: deleteIdentifier, action: onDelete)]
     }
 
+    static func magic(identifier: String? = nil, action: @escaping @MainActor () -> Void) -> ThemeInputButton {
+        .icon("magic", identifier: identifier, action: action)
+    }
+
+    static func nameShortcuts(
+        isFocused: Bool,
+        isEmpty: Bool,
+        magicIdentifier: String? = nil,
+        deleteIdentifier: String? = nil,
+        onMagic: @escaping @MainActor () -> Void,
+        onDelete: @escaping @MainActor () -> Void
+    ) -> [ThemeInputButton] {
+        shortcuts(
+            isEmpty: !isFocused || isEmpty,
+            whenEmpty: [.magic(identifier: magicIdentifier, action: onMagic)],
+            deleteIdentifier: deleteIdentifier,
+            onDelete: onDelete
+        )
+    }
+
     static func steps(minusIdentifier: String? = nil, plusIdentifier: String? = nil, onTap: @escaping @MainActor (StepChangeButtonsViewDirection) -> Void) -> [ThemeInputButton] {
         [
             .icon("minus", identifier: minusIdentifier) { onTap(.down) },

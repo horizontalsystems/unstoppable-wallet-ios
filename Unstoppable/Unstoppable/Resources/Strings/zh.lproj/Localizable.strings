@@ -1988,6 +1988,8 @@
 
 "create_wallet.title" = "新钱包";
 "create_wallet.name" = "钱包名称";
+"wallet_name.default" = "钱包 %d";
+"wallet_name.watch_default" = "观察钱包 %d";
 "create_wallet.advanced_setup" = "高级";
 "create_wallet.create" = "创建";
 "create_wallet.advanced_options" = "高级选项";
