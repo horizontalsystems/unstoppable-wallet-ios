@@ -271,6 +271,22 @@ enum TestTags {
     static let settingsDebugSimulateFailSwap = "settings_debug_simulate_fail_swap"
     static let settingsDebugBrandColor = "settings_debug_brand_color"
 
+    static let premiumClose = "premium_close"
+    /// The button under the feature list; it opens the list of plans
+    static let premiumSubscribe = "premium_subscribe"
+
+    static func premiumPlan(_ id: String) -> String {
+        "premium_plan_\(id)"
+    }
+
+    static let premiumPlansPromoCode = "premium_plans_promo_code"
+    /// One text holding both links, Terms and Privacy
+    static let premiumPlansAgreement = "premium_plans_agreement"
+    static let premiumPlansSubscribe = "premium_plans_subscribe"
+    /// The page shown after a purchase
+    static let premiumSubscribedClose = "premium_subscribed_close"
+    static let premiumSubscribedGoToApp = "premium_subscribed_go_to_app"
+
     static let appearanceBaseCurrency = "appearance_base_currency"
     static let appearanceReset = "appearance_reset"
     static func currency(_ code: String) -> String {

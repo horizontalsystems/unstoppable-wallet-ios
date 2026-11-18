@@ -5,7 +5,7 @@ class PurchaseProductItemFactory {
         var title: String
         var discountBadge: String?
 
-        let price = product.priceFormatted
+        var price = product.priceFormatted
         var priceDescription: String?
         var priceDescripionAccented: Bool
 
@@ -21,6 +21,8 @@ class PurchaseProductItemFactory {
             title = "purchase.period.onetime".localized
             discountBadge = nil
 
+            // one string, so each language can place the price where its word order needs it
+            price = "purchase.period.onetime.price".localized(product.priceFormatted)
             priceDescription = nil
             priceDescripionAccented = false
         case .subscription:
@@ -42,7 +44,7 @@ class PurchaseProductItemFactory {
                     let discountPrecentage = ((monthlyPrice - realMonthlyPrice) / monthlyPrice) * 100
                     discountBadge = ["purchase.period.save".localized.uppercased(), "\(discountPrecentage.rounded(decimal: 0))%"].joined(separator: " ")
 
-                    priceDescription = "(\([realMonthlyPrice.rounded(decimal: 2).description, "purchase.period.month".localized].joined(separator: "/")))"
+                    priceDescription = "(\(realMonthlyPrice.formatted(product.priceFormatStyle)) / \("purchase.period.month".localized))"
                     priceDescripionAccented = true
                 } else {
                     discountBadge = nil

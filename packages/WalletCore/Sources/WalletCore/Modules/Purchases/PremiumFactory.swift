@@ -1,15 +1,17 @@
-import Foundation
 import SwiftUI
 
 enum PremiumFactory {
-    /// Purchase main view
-    static var header: some View {
-        PremiumHeaderView()
+    /// Purchase main+success views header
+    static func header(title: AttributedString) -> some View {
+        PremiumHeaderView(title: title)
     }
 
-    /// Purchase main+success views Background
-    static func radialView(@ViewBuilder _ content: () -> some View) -> some View {
-        ThemeRadialView(content: content)
+    /// Purchase main+success views background
+    static func background(@ViewBuilder _ content: () -> some View) -> some View {
+        ZStack {
+            WelcomeGlowView(start: nil)
+            content()
+        }
     }
 
     /// Purchase select type bottom sheet

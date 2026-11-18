@@ -11,7 +11,7 @@ class PurchaseListViewModel: ObservableObject {
     init() {
         activePurchase = purchaseManager.activePurchase
 
-        purchaseManager.$purchaseData
+        purchaseManager.purchaseDataPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.syncActivePurchase() }
             .store(in: &cancellables)

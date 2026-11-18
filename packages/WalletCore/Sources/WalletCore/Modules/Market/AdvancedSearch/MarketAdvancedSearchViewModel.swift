@@ -182,7 +182,7 @@ class MarketAdvancedSearchViewModel: ObservableObject {
             .store(in: &cancellables)
 
         advancedSearchEnabled = purchaseManager.activated(.advancedSearch)
-        purchaseManager.$activeFeatures
+        purchaseManager.activeFeaturesPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] activeFeatures in
                 self?.advancedSearchEnabled = activeFeatures.contains(.advancedSearch)

@@ -1,35 +1,44 @@
-import Foundation
 import SwiftUI
 
 struct PremiumHeaderView: View {
-    var body: some View {
-        VStack(spacing: 0) {
-            Image("box_2")
-                .padding(.vertical, .margin24)
+    let title: AttributedString
 
-            Text(title)
-                .frame(maxWidth: .infinity, alignment: .center)
+    var body: some View {
+        VStack(spacing: .margin16) {
+            ZStack {
+                ThemeImage("polistar", size: 54, colorStyle: .brand)
+            }
+            .frame(size: 96)
+
+            ThemeText(title, style: .title3)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 52)
-                .padding(.bottom, .margin24)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.horizontal, .margin64)
         }
     }
+}
 
-    private var title: AttributedString {
-        let text = "premium.cell.description".localized("premium.cell.description.key".localized)
+extension PremiumHeaderView {
+    static var premiumTitle: AttributedString {
+        let key = "premium.cell.description.key".localized
+        let text = "premium.cell.description".localized(key)
         var attributedString = AttributedString(text)
-        attributedString.font = .headline1
         attributedString.foregroundColor = .themeLeah
 
-        for range in text.ranges(of: "premium.cell.description.key".localized) {
+        for range in text.ranges(of: key) {
             if let lowerBound = AttributedString.Index(range.lowerBound, within: attributedString),
                let upperBound = AttributedString.Index(range.upperBound, within: attributedString)
             {
-                let attrRange = lowerBound ..< upperBound
-                attributedString[attrRange].foregroundColor = .themeBrand
+                attributedString[lowerBound ..< upperBound].foregroundColor = .themeBrand
             }
         }
 
+        return attributedString
+    }
+
+    static func plainTitle(_ text: String) -> AttributedString {
+        var attributedString = AttributedString(text)
+        attributedString.foregroundColor = .themeLeah
         return attributedString
     }
 }

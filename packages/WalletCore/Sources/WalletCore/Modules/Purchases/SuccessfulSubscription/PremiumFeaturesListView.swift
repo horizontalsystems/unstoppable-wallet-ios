@@ -1,66 +1,22 @@
 import SwiftUI
 
 struct PremiumFeaturesListView: View {
-    let categories: [PremiumCategory]
-    let onPurchase: () -> Void
+    let features: [PremiumFeature]
 
     var body: some View {
-        ForEach(categories) { category in
-            SectionHeader(image: {
-                Image(category.icon)
-                    .resizable()
-                    .renderingMode(.template)
-                    .frame(size: .iconSize20)
-                    .foregroundStyle(
-                        LinearGradient(
-                            gradient: Gradient(colors: [
-                                Color(hex: 0xFFAA00),
-                                Color(hex: 0xFE4A11),
-                            ]),
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                    )
-            }, text: category.title)
-
-            ListSection {
-                ForEach(category.features) { feature in
-                    row(
-                        title: feature.title,
-                        description: feature.description,
-                        icon: feature.icon,
-                        action: {
-                            Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                                PremiumFeaturesInfoBottomSheetView(
-                                    isPresented: isPresented,
-                                    currentSlideIndex: feature.index,
-                                    buttonTitle: "purchases.button.try".localized
-                                ) {
-                                    isPresented.wrappedValue = false
-
-                                    DispatchQueue.main.async {
-                                        onPurchase()
-                                    }
-                                }
-                            }
-                        }
-                    )
-                }
+        ListSection {
+            ForEach(features) { feature in
+                Cell(
+                    left: {
+                        ThemeImage(feature.icon, size: .iconSize24, colorStyle: .brand)
+                    },
+                    middle: {
+                        MultiText(title: feature.title, subtitle: feature.description)
+                    }
+                )
             }
-            .themeListStyle(.lawrence)
-            .padding(.horizontal, .margin16)
         }
-    }
-
-    private func row(title: String, description: String, icon: String, action: @escaping () -> Void) -> some View {
-        Cell(
-            left: {
-                Image(icon).icon(colorStyle: .brand)
-            },
-            middle: {
-                MultiText(eyebrow: ComponentText(text: title, colorStyle: .primary), description: description)
-            },
-            action: action
-        )
+        .themeListStyle(.lawrence)
+        .padding(.horizontal, .margin16)
     }
 }

@@ -65,7 +65,7 @@ class MarketWatchlistViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
-        purchaseManager.$activeFeatures
+        purchaseManager.activeFeaturesPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] activeFeatures in
                 self?.tradeSignalsEnabled = activeFeatures.contains(.tradeSignals)

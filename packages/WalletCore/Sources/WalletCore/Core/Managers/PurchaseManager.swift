@@ -1,10 +1,12 @@
+import Combine
 import HsExtensions
 import StoreKit
 
 class PurchaseManager: NSObject {
     private let localStorage: LocalStorage
 
-    private let offerUpdateQueue = DispatchQueue(label: "\(AppConfig.label).unstoppable-wallet.offer-update", qos: .userInitiated)
+    /// Guards all purchase state below: every read and write of it goes through this queue. The `...Locked`
+    /// members expect to run on it already and are never called from outside it.
     private let dataAccessQueue = DispatchQueue(label: "\(AppConfig.label).data-access", qos: .userInitiated)
 
     static let productName = "premium"
@@ -14,17 +16,17 @@ class PurchaseManager: NSObject {
         [f, s].joined(separator: "_")
     }
 
-    @PostPublished private(set) var products: [Product] = []
-    @PostPublished private(set) var purchasedProducts = [String: Transaction]()
+    private var products: [Product] = []
+    private var purchasedProducts = [String: Transaction]()
 
-    @PostPublished private(set) var productData = [ProductData]()
-    @PostPublished private(set) var purchaseData = [PurchaseData]()
-
-    @PostPublished private(set) var activeFeatures = [PremiumFeature]()
-    @PostPublished private(set) var usedOfferProductIds = Set<String>()
+    @PostPublished private var productDataValue = [ProductData]()
+    @PostPublished private var purchaseDataValue = [PurchaseData]()
+    @PostPublished private var activeFeaturesValue = [PremiumFeature]()
+    @PostPublished private var usedOfferProductIdsValue = Set<String>()
 
     private var updatesTask: Task<Void, Never>?
     private var currentUsedOfferUpdateTask: Task<Void, Never>?
+    private var usedOffersGeneration = 0
 
     init(localStorage: LocalStorage) {
         self.localStorage = localStorage
@@ -38,6 +40,11 @@ class PurchaseManager: NSObject {
         SKPaymentQueue.default().add(self)
     }
 
+    /// The debug "emulate purchase" switch, honoured only in builds that show the dev tools
+    private var isEmulating: Bool {
+        localStorage.emulatePurchase && AppConfig.showDevTools
+    }
+
     func loadProducts() {
         Task { [weak self] in
             guard let self else { return }
@@ -45,17 +52,17 @@ class PurchaseManager: NSObject {
 
             dataAccessQueue.sync {
                 self.products = products.sorted(by: { $0.price > $1.price })
-                //             print(products.sorted(by: { $0.price > $1.price }))
-
-                self.syncProducts()
+                self.syncProductsLocked()
+                // the used-offer check needs the products, and a run made before they loaded returned early
+                self.syncUsedOffersLocked()
             }
         }
     }
 
     func loadPurchases() {
-        if localStorage.emulatePurchase {
-            dataAccessQueue.sync { [weak self] in
-                self?.syncPurchases()
+        if isEmulating {
+            dataAccessQueue.sync {
+                syncPurchasesLocked()
             }
         }
 
@@ -64,42 +71,63 @@ class PurchaseManager: NSObject {
         }
     }
 
+    /// Adds or updates recorded purchases from the current entitlements. It never removes an entry the list lacks:
+    /// right after a purchase the list can lag behind it. Expiry is checked when a purchase is read.
     private func updatePurchasedProducts() async {
+        var entitlements = [Transaction]()
+
         for await verificationResult in Transaction.currentEntitlements {
-            handle(verificationResult: verificationResult)
+            if case let .verified(transaction) = verificationResult {
+                entitlements.append(transaction)
+            }
+        }
+
+        dataAccessQueue.sync {
+            for transaction in entitlements {
+                applyLocked(transaction)
+            }
+
+            syncPurchasesLocked()
         }
     }
 
     private func observeTransactionUpdates() {
         updatesTask = Task(priority: .background) { [weak self] in
             for await verificationResult in Transaction.updates {
-                self?.handle(verificationResult: verificationResult)
+                self?.record(verificationResult: verificationResult)
             }
         }
     }
 
-    private func handle(verificationResult: VerificationResult<Transaction>) {
+    private func record(verificationResult: VerificationResult<Transaction>) {
         guard case let .verified(transaction) = verificationResult else {
             return
         }
 
         dataAccessQueue.sync {
-            if transaction.revocationDate == nil {
-                purchasedProducts[transaction.productID] = transaction
-            } else {
-                purchasedProducts[transaction.productID] = nil
-            }
-            syncPurchases()
+            applyLocked(transaction)
+            syncPurchasesLocked()
         }
     }
 
-    private func syncProducts() {
-        guard !localStorage.emulatePurchase else {
-            productData = ProductData.testProducts
+    private func applyLocked(_ transaction: Transaction) {
+        let applied = PurchaseEntitlements.applying(transaction, to: purchasedProducts)
+        purchasedProducts = applied.recorded
+
+        if applied.cleared {
+            // the revoked transaction was the recorded one: the current list may hold another valid one for the product
+            Task { [weak self] in
+                await self?.updatePurchasedProducts()
+            }
+        }
+    }
+
+    private func syncProductsLocked() {
+        guard !isEmulating else {
+            productDataValue = ProductData.testProducts
             return
         }
-        productData = products.compactMap { ProductData(product: $0) }
-        //        print(productData)
+        productDataValue = products.compactMap { ProductData(product: $0) }
     }
 
     private func checkTrialHistoryUsage() async -> Bool {
@@ -116,37 +144,31 @@ class PurchaseManager: NSObject {
         return false
     }
 
-    private func syncPurchases() {
-        if localStorage.emulatePurchase {
-            purchaseData = [localStorage.purchase].compactMap { $0 }
+    private func syncPurchasesLocked() {
+        if isEmulating {
+            purchaseDataValue = [localStorage.purchase].compactMap { $0 }
         } else {
-            purchaseData = purchasedProducts
+            purchaseDataValue = purchasedProducts
                 .values
                 .compactMap { PurchaseData(transaction: $0) }
                 .sorted { $0.type.order < $1.type.order }
         }
-//        print(purchaseData)
 
-        activeFeatures = activePurchase != nil ? PremiumFeature.allCases : []
+        activeFeaturesValue = activePurchaseLocked != nil ? PremiumFeature.allCases : []
 
-        syncUsedOffers()
+        syncUsedOffersLocked()
     }
 
-    private func syncUsedOffers() {
+    /// The cancel, the new run and its generation are all set on `dataAccessQueue`, and a run writes its result
+    /// only while it is still the latest, so an older run can never overwrite a newer one
+    private func syncUsedOffersLocked() {
         currentUsedOfferUpdateTask?.cancel()
 
-        offerUpdateQueue.async { [weak self] in
-            guard let self else { return }
+        usedOffersGeneration += 1
+        let generation = usedOffersGeneration
 
-            currentUsedOfferUpdateTask = Task(priority: .background) { [weak self] in
-                await self?.updateUsedOffers()
-            }
-
-            if let task = currentUsedOfferUpdateTask {
-                Task {
-                    await task.value
-                }
-            }
+        currentUsedOfferUpdateTask = Task(priority: .background) { [weak self] in
+            await self?.updateUsedOffers(generation: generation)
         }
     }
 
@@ -167,62 +189,122 @@ class PurchaseManager: NSObject {
 }
 
 extension PurchaseManager {
+    var productData: [ProductData] {
+        dataAccessQueue.sync { productDataValue }
+    }
+
+    var purchaseData: [PurchaseData] {
+        dataAccessQueue.sync { purchaseDataValue }
+    }
+
+    var usedOfferProductIds: Set<String> {
+        dataAccessQueue.sync { usedOfferProductIdsValue }
+    }
+
+    // Values are sent on `dataAccessQueue`: a subscriber must hop off it (e.g. `.receive(on: DispatchQueue.main)`)
+    // before it reads any of the accessors above, which would otherwise sync on the queue it is already on
+
+    var productDataPublisher: AnyPublisher<[ProductData], Never> {
+        $productDataValue
+    }
+
+    var purchaseDataPublisher: AnyPublisher<[PurchaseData], Never> {
+        $purchaseDataValue
+    }
+
+    var activeFeaturesPublisher: AnyPublisher<[PremiumFeature], Never> {
+        $activeFeaturesValue
+    }
+
+    var usedOfferProductIdsPublisher: AnyPublisher<Set<String>, Never> {
+        $usedOfferProductIdsValue
+    }
+}
+
+extension PurchaseManager {
     func restorePurchases() {
         Task {
             try await AppStore.sync()
         }
     }
 
-    func purchase(product: ProductData) async throws {
-        guard !localStorage.emulatePurchase else { // emulate subscription
+    /// Returns `.purchased` only for a verified purchase that is already recorded. A `.pending` purchase
+    /// (Ask to Buy, SCA) is recorded later from `Transaction.updates` and published through `purchaseData`.
+    @discardableResult
+    func purchase(product: ProductData) async throws -> PurchaseOutcome {
+        guard !isEmulating else { // emulate subscription
             localStorage.purchaseCancelled = false
             localStorage.purchase = PurchaseData(product: product)
 
-            dataAccessQueue.sync { [weak self] in
-                self?.syncPurchases()
+            dataAccessQueue.sync {
+                syncPurchasesLocked()
             }
-            return
+            return .purchased
         }
 
-        if let product = products.first(where: { $0.id == product.id }) {
-            try await purchase(product: product)
+        let storeProduct = dataAccessQueue.sync { products.first(where: { $0.id == product.id }) }
+
+        if let storeProduct {
+            return try await purchase(product: storeProduct)
         } else {
             throw SubscribeError.cantFoundProduct
         }
     }
 
     @MainActor
-    private func purchase(product: Product) async throws {
+    private func purchase(product: Product) async throws -> PurchaseOutcome {
         let result = try await product.purchase()
 
         switch result {
         case let .success(verificationResult):
             switch verificationResult {
             case let .verified(transaction):
+                // Record the purchase from the transaction itself: right after a purchase
+                // `Transaction.currentEntitlements` is not guaranteed to contain it yet
+                record(verificationResult: verificationResult)
                 await transaction.finish()
                 await updatePurchasedProducts()
+                return .purchased
             case .unverified:
-                print("UNVERIFIED")
                 // Successful purchase but transaction/receipt can't be verified
                 // Could be a jailbroken phone
+                throw SubscribeError.unverified
             }
         case .pending:
-            print("PENDING")
-        // Transaction waiting on SCA (Strong Customer Authentication) or
-        // approval from Ask to Buy
+            // Transaction waiting on SCA (Strong Customer Authentication) or
+            // approval from Ask to Buy
+            return .pending
         case .userCancelled:
-            print("USER CANCELLED")
             throw SubscribeError.userCancelled
         @unknown default:
-            print("UNKNOWN")
+            throw SubscribeError.unknownResult
         }
     }
 }
 
 extension PurchaseManager {
     var activePurchase: PurchaseData? {
-        var purchases = purchaseData
-        if localStorage.emulatePurchase { // emulate purchase from localStorage
+        dataAccessQueue.sync { activePurchaseLocked }
+    }
+
+    var hasActivePurchase: Bool {
+        activePurchase != nil
+    }
+
+    var introductoryOfferType: IntroductoryOfferType {
+        dataAccessQueue.sync { introductoryOfferTypeLocked }
+    }
+
+    /// Re-checks expiry on every call: a subscription that expires while the app runs stops unlocking features
+    func activated(_ premiumFeature: PremiumFeature) -> Bool {
+        dataAccessQueue.sync {
+            activePurchaseLocked != nil && activeFeaturesValue.contains(premiumFeature)
+        }
+    }
+
+    private var activePurchaseLocked: PurchaseData? {
+        var purchases = purchaseDataValue
+        if isEmulating { // emulate purchase from localStorage
             purchases = [localStorage.purchase].compactMap { $0 }
         }
 
@@ -234,19 +316,15 @@ extension PurchaseManager {
         }
     }
 
-    var hasActivePurchase: Bool {
-        activePurchase != nil
-    }
-
-    var introductoryOfferType: IntroductoryOfferType {
+    private var introductoryOfferTypeLocked: IntroductoryOfferType {
         var offers: [IntroductoryOfferType] = []
 
-        if localStorage.emulatePurchase {
+        if isEmulating {
             return localStorage.purchaseCancelled ? .none : .trial
         }
 
-        for product in productData {
-            if usedOfferProductIds.contains(product.id) {
+        for product in productDataValue {
+            if usedOfferProductIdsValue.contains(product.id) {
                 offers.append(.none)
                 continue
             }
@@ -255,26 +333,27 @@ extension PurchaseManager {
         return offers.sorted(by: <).first ?? .none
     }
 
-    func activated(_ premiumFeature: PremiumFeature) -> Bool {
-        activeFeatures.contains(premiumFeature)
-    }
-
-    private func updateUsedOffers() async {
-        var usedOfferProductIds = Set<String>()
-        offerUpdateQueue.sync {
-            usedOfferProductIds = self.usedOfferProductIds
+    private func updateUsedOffers(generation: Int) async {
+        let (known, productData, products, emulating, purchaseCancelled) = dataAccessQueue.sync {
+            (usedOfferProductIdsValue, productDataValue, self.products, isEmulating, localStorage.purchaseCancelled)
         }
 
         if productData.isEmpty {
             return
         }
 
-        if localStorage.emulatePurchase { // if emulate and cancelled - all product must ignore trial period
-            usedOfferProductIds = localStorage.purchaseCancelled ? Set(productData.map(\.id)) : Set()
+        var usedIds = known
+
+        if emulating { // if emulate and cancelled - all product must ignore trial period
+            usedIds = purchaseCancelled ? Set(productData.map(\.id)) : Set()
         } else {
             for product in productData {
+                guard !Task.isCancelled else {
+                    return
+                }
+
                 // if product already in list, nothing can changes
-                guard !usedOfferProductIds.contains(product.id) else {
+                guard !usedIds.contains(product.id) else {
                     continue
                 }
 
@@ -295,20 +374,28 @@ extension PurchaseManager {
                    let subscription = product.subscription,
                    await subscription.isEligibleForIntroOffer == false
                 {
-                    usedOfferProductIds.insert(productId)
+                    usedIds.insert(productId)
                     continue
                 }
 
                 // if previous was not corrected
                 if await hasUsedIntroOffer(for: productId) {
-                    usedOfferProductIds.insert(productId)
+                    usedIds.insert(productId)
                 }
             }
         }
 
-        offerUpdateQueue.sync {
-            // print("Used Products: \(usedOfferProductIds)")
-            self.usedOfferProductIds = usedOfferProductIds
+        guard !Task.isCancelled else {
+            return
+        }
+
+        dataAccessQueue.sync {
+            // a newer run started meanwhile: only its result is written
+            guard generation == usedOffersGeneration else {
+                return
+            }
+
+            usedOfferProductIdsValue = usedIds
         }
     }
 
@@ -423,6 +510,13 @@ extension PurchaseManager {
     enum SubscribeError: Error {
         case cantFoundProduct
         case userCancelled
+        case unverified
+        case unknownResult
+    }
+
+    enum PurchaseOutcome {
+        case purchased
+        case pending
     }
 
     struct ExpiresData: Codable {

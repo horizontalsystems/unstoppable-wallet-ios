@@ -2546,13 +2546,12 @@
 
 // Purchases
 
-"premium.cell.description" = "使用 %@ 功能升级您的体验！";
-"premium.cell.description.key" = "高級版";
+"premium.cell.description" = "%@功能";
+"premium.cell.description.key" = "高级版";
 
 "mini_app.cell.title" = "小程序";
 "mini_app.cell.description" = "通過測驗、完成任務並獲取代幣！";
 
-"purchases.title" = "高級版";
 "purchases.description" = "選擇方案";
 "purchases.type.pro" = "专业版";
 "purchases.type.vip" = "尊享版 / VIP";
@@ -2568,66 +2567,49 @@
 "purchases.robbery_protection" = "抢劫保护";
 "purchases.robbery_protection.description" = "在您被迫解锁应用的情况下保护您的资金安全。";
 
-// Advanced Controls
-"purchases.advanced_controls" = "高级控制";
-"purchases.swap_control" = "兑换控制";
-"purchases.swap_control.description" = "用于控制兑换如何以及通过何处执行的高级设置。";
-"purchases.swap_control.info" = "默认情况下，我们会选择最佳可用报价。使用 Premium，您可以选择不同的路由。";
+// Features listed on the Premium page
 "purchases.priority_support" = "优先支持";
 "purchases.priority_support.description" = "直接联系支持团队。";
-"purchases.priority_support.info" = "为您提供优先级支持的直接通道，获得来自 Unstoppable 团队快速且个性化的帮助。";
+"purchases.advanced_search" = "高级搜索";
+"purchases.advanced_search.description" = "筛选代币，缩小搜索范围。";
+"purchases.trade_signals" = "信号与趋势";
+"purchases.trade_signals.description" = "接收交易信号提醒。";
 
-// Market Insights
-"purchases.market_insights" = "市场洞察";
-"purchases.token_insights" = "分析";
-"purchases.token_insights.description" = "深入的分析和代币数据。";
-"purchases.token_insights.info" = "显示代币的详细数据—包括交易量、流动性和趋势，帮助您做出更明智的投资决策。";
-"purchases.advanced_search" = "進階搜尋";
-"purchases.advanced_search.description" = "强大的筛选功能，助您更智能地发现代币。";
-"purchases.advanced_search.info" = "通过交易量、链或板块筛选器查找代币。包含 CEX/DEX 活动和上市指标。";
-"purchases.trade_signals" = "信號與趨勢";
-"purchases.trade_signals.description" = "可执行的信号，帮助您更自信地进行交易。";
-"purchases.trade_signals.info" = "实时推送交易机会提醒，及时提示潜在盈利机会或市场风险。";
-
-"purchase.bottom_sheet.description" = "购买即可解锁所有高级功能。";
-
-"purchases.wallet_description.title" = "高評價的安全性、卓越的隱私性和真正的非託管錢包。";
 "purchases.wallet_description.approved" = "經以下機構批准和審核：";
 
-"purchases.button.try" = "免費試用";
+"purchases.button.try" = "免费试用";
 "purchases.button.activated" = "已激活";
-"purchases.button.upgrade" = "升級";
+"purchases.button.upgrade" = "升级";
 
-"purchase.period.title" = "選擇訂閱";
+"purchase.period.title" = "选择订阅";
 "purchase.period.annually" = "年度";
 "purchase.period.monthly" = "月度";
 "purchase.period.onetime" = "一次性";
-"purchase.period.onetime.description" = "终身访问";
+"purchase.period.onetime.price" = "%@，终身访问";
 "purchase.period.save" = "省下";
 "purchase.period.year" = "年";
 "purchase.period.month" = "月";
-"purchase.period.description1" = "畅享前 7 天免费体验";
-"purchase.period.description1.1" = "首月享有優惠折扣。";
-"purchase.period.description2" = "您可随时在 App Store 取消订阅";
-"purchase.lifetime.description" = "您可以購買無任何限制的一次性訂閱";
-"purchase.agree" = "通过升级账户，您同意 %@ 和 %@。";
-"purchase.agree.terms_of_service" = "使用条款";
-"purchase.agree.privacy_policy" = "隐私政策";
+"purchase.period.description1" = "免费畅享 7 天。";
+"purchase.period.description1.1" = "首月享受优惠折扣。";
+"purchase.period.description2" = "可随时取消。";
+"purchase.lifetime.description" = "一次付款，永久拥有。";
+"purchase.agree" = "继续即表示您同意%@和%@。";
+"purchase.agree.terms_of_service" = "条款";
+"purchase.agree.privacy_policy" = "隐私";
 
 "purchases.period.button.try" = "获取 7 天免费试用";
-"purchases.period.button.subscribe" = "訂閱";
+"purchases.period.button.subscribe" = "订阅";
 "purchases.period.button.buy" = "立即购买";
-"purchases.period.button.promo" = "添加優惠碼";
+"purchases.period.button.promo" = "添加优惠码";
 
 "purchases.promocode.title" = "输入优惠码";
 "purchases.promocode.placeholder" = "";
 "purchases.promocode.button.invalid" = "无效的优惠码";
 "purchases.promocode.button.already_used" = "优惠码已被使用";
 
-"purchases.successful_subscription.title" = "高級版";
-"purchases.successful_subscription.description" = "感謝您的訂閱！";
-"purchases.successful_subscription.subscribed" = "盡享應用程式的全部功能。";
-"purchases.successful_subscription.button.go_app" = "前往應用程式";
+"purchases.successful_subscription.description" = "感谢您的订阅！";
+"purchases.successful_subscription.subscribed" = "尽享高级版功能。";
+"purchases.successful_subscription.button.go_app" = "前往应用";
 
 // Address Checker
 

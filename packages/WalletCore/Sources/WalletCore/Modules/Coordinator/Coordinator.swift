@@ -89,14 +89,10 @@ extension Coordinator {
 }
 
 extension Coordinator {
-    func presentPurchase(premiumFeature: PremiumFeature? = nil, page: StatPage, trigger: StatPremiumTrigger) {
-        present(type: premiumFeature != nil ? .bottomSheet : .sheet) { isPresented in
-            if let premiumFeature {
-                PremiumFeaturesWrapper(isPresented: isPresented, feature: premiumFeature)
-            } else {
-                PurchasesView(isPresented: isPresented)
-            }
-        }
+    func presentPurchase(page: StatPage, trigger: StatPremiumTrigger, onDismiss: (() -> Void)? = nil) {
+        present(content: { isPresented in
+            PurchasesView(isPresented: isPresented)
+        }, onDismiss: onDismiss)
 
         stat(page: page, event: .openPremium(from: trigger))
     }
@@ -110,15 +106,11 @@ extension Coordinator {
 
     func performAfterPurchase(premiumFeature: PremiumFeature, page: StatPage, trigger: StatPremiumTrigger, onPurchase: @escaping () -> Void) {
         if !Core.shared.purchaseManager.activated(premiumFeature) {
-            present(type: .bottomSheet) { isPresented in
-                PremiumFeaturesWrapper(isPresented: isPresented, feature: premiumFeature)
-            } onDismiss: {
+            presentPurchase(page: page, trigger: trigger) {
                 if Core.shared.purchaseManager.activated(premiumFeature) {
                     onPurchase()
                 }
             }
-
-            stat(page: page, event: .openPremium(from: trigger))
         } else {
             onPurchase()
         }

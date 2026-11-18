@@ -2546,13 +2546,12 @@
 
 // Purchases
 
-"premium.cell.description" = "Deneyiminizi %@ özellikleriyle geliştirin!";
+"premium.cell.description" = "%@ özellikleri";
 "premium.cell.description.key" = "Premium";
 
 "mini_app.cell.title" = "MiniApp";
 "mini_app.cell.description" = "Testleri geçin, görevleri tamamlayın ve token kazanın!";
 
-"purchases.title" = "Premium";
 "purchases.description" = "Planı seçin";
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "Vip";
@@ -2568,51 +2567,35 @@
 "purchases.robbery_protection" = "Zorla Açtırma Koruması";
 "purchases.robbery_protection.description" = "Uygulamayı zorla kilidini açmanız durumunda fonlarınızı korur.";
 
-// Advanced Controls
-"purchases.advanced_controls" = "Gelişmiş Kontroller";
-"purchases.swap_control" = "Swap Kontrolü";
-"purchases.swap_control.description" = "Swap işlemlerinin nasıl ve nerede gerçekleştirileceğini kontrol etmenizi sağlayan gelişmiş ayarlar.";
-"purchases.swap_control.info" = "Varsayılan olarak mevcut en iyi teklifi seçiyoruz. Premium ile farklı bir rota seçebilirsiniz.";
+// Features listed on the Premium page
 "purchases.priority_support" = "Öncelikli destek";
 "purchases.priority_support.description" = "Destek ekibimize doğrudan erişim.";
-"purchases.priority_support.info" = "Öncelikli destek ekibimize doğrudan erişim sağlar. Unstoppable ekibinden hızlı ve kişisel destek alırsınız.";
-
-// Market Insights
-"purchases.market_insights" = "Piyasa İçgörüleri";
-"purchases.token_insights" = "Analitik";
-"purchases.token_insights.description" = "Detaylı analizler ve token verileri.";
-"purchases.token_insights.info" = "Token için ayrıntılı veriler gösterir - hacim, likidite ve trendler. Daha akıllı yatırım kararları almanıza yardımcı olur.";
 "purchases.advanced_search" = "Gelişmiş Arama";
-"purchases.advanced_search.description" = "Daha akıllı token keşfi için güçlü filtreler.";
-"purchases.advanced_search.info" = "Hacim, zincir veya sektör filtrelerini kullanarak token bulun. CEX/DEX aktivitesi ve listeleme metrikleri içerir.";
+"purchases.advanced_search.description" = "Aramanızı daraltmak için tokenları filtreleyin.";
 "purchases.trade_signals" = "Sinyaller ve Trendler";
-"purchases.trade_signals.description" = "Daha güvenli ve bilinçli işlem yapmanıza yardımcı olan aksiyon alınabilir sinyaller.";
-"purchases.trade_signals.info" = "Alım-satım fırsatları için gerçek zamanlı bildirimler gönderir. Kâr fırsatlarını veya piyasa risklerini anında vurgular.";
+"purchases.trade_signals.description" = "İşlem sinyalleri için uyarılar alın.";
 
-"purchase.bottom_sheet.description" = "Tek bir satın alım tüm Premium özelliklerin kilidini açar.";
-
-"purchases.wallet_description.title" = "Yüksek güvenlik derecesi, olağanüstü gizlilik ve gerçek anlamda emanet edilmeyen bir cüzdan.";
 "purchases.wallet_description.approved" = "Tarafından Onaylanmış ve Denetlenmiş:";
 
-"purchases.button.try" = "ÜCRETSİZ Deneyin";
+"purchases.button.try" = "Ücretsiz Deneyin";
 "purchases.button.activated" = "Etkinleştirildi";
 "purchases.button.upgrade" = "Yükselt";
 
-"purchase.period.title" = "Abonelik Seçin";
+"purchase.period.title" = "Abonelik seçin";
 "purchase.period.annually" = "Yıllık";
 "purchase.period.monthly" = "Aylık";
 "purchase.period.onetime" = "Tek Seferlik";
-"purchase.period.onetime.description" = "ömür boyu erişim için";
+"purchase.period.onetime.price" = "Ömür boyu erişim için %@";
 "purchase.period.save" = "tasarruf et";
 "purchase.period.year" = "yıl";
 "purchase.period.month" = "ay";
-"purchase.period.description1" = "İlk 7 günü ÜCRETSİZ deneyin.";
+"purchase.period.description1" = "7 günü ÜCRETSİZ deneyin.";
 "purchase.period.description1.1" = "İlk ay indiriminden yararlanın.";
-"purchase.period.description2" = "App Store aboneliğinizi dilediğiniz zaman iptal edebilirsiniz.";
-"purchase.lifetime.description" = "Kısıtlama olmadan tek seferlik abonelik satın alabilirsiniz";
-"purchase.agree" = "Hesabınızı yükselterek %@ ve %@ nı kabul etmiş olursunuz.";
-"purchase.agree.terms_of_service" = "Kullanım Şartları";
-"purchase.agree.privacy_policy" = "Gizlilik Politikası";
+"purchase.period.description2" = "İstediğiniz zaman iptal edin.";
+"purchase.lifetime.description" = "Bir kez ödeyin, sonsuza dek sizin olsun.";
+"purchase.agree" = "Devam ederek %@ ve %@ metinlerini kabul etmiş olursunuz.";
+"purchase.agree.terms_of_service" = "Şartlar";
+"purchase.agree.privacy_policy" = "Gizlilik";
 
 "purchases.period.button.try" = "7 gün ÜCRETSİZ alın";
 "purchases.period.button.subscribe" = "Abone Ol";
@@ -2624,9 +2607,8 @@
 "purchases.promocode.button.invalid" = "Geçersiz Promosyon Kodu";
 "purchases.promocode.button.already_used" = "Promosyon Kodu Zaten Kullanılmış";
 
-"purchases.successful_subscription.title" = "Premium";
 "purchases.successful_subscription.description" = "Aboneliğiniz için teşekkürler!";
-"purchases.successful_subscription.subscribed" = "Uygulamanın tüm gücünün keyfini çıkarın.";
+"purchases.successful_subscription.subscribed" = "Premium özelliklerinizin keyfini çıkarın.";
 "purchases.successful_subscription.button.go_app" = "Uygulamaya Git";
 
 // Address Checker

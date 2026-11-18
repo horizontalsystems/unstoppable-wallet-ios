@@ -1,21 +1,7 @@
-enum PremiumCategory: Int, CaseIterable, Identifiable, Hashable {
-    case advancedControls
-    case marketInsights
-
-    var id: String {
-        switch self {
-        case .advancedControls: return "advanced_controls"
-        case .marketInsights: return "market_insights"
-        }
-    }
-}
-
 enum PremiumFeature: String, Identifiable {
-    // advanced controls
     case swapControl = "swap_control"
     case prioritySupport = "priority_support"
 
-    // market insights
     case tokenInsights = "token_insights"
     case advancedSearch = "advanced_search"
     case tradeSignals = "trade_signals"
@@ -24,22 +10,12 @@ enum PremiumFeature: String, Identifiable {
         rawValue
     }
 
-    var index: Int {
-        Self.allCases.firstIndex(of: self) ?? 0
-    }
-
     static var allCases: [PremiumFeature] {
         (AppStateManager.instance.swapEnabled ? [.swapControl] : []) + [.prioritySupport, .tokenInsights, .advancedSearch, .tradeSignals]
     }
-}
 
-extension PremiumCategory {
-    var features: [PremiumFeature] {
-        switch self {
-        case .advancedControls: return (AppStateManager.instance.swapEnabled ? [.swapControl] : []) + [.prioritySupport]
-        case .marketInsights: return [.tokenInsights, .advancedSearch, .tradeSignals]
-        }
-    }
+    /// The features the Premium page lists. Every case in `allCases` stays Premium-gated.
+    static let listed: [PremiumFeature] = [.prioritySupport, .advancedSearch, .tradeSignals]
 }
 
 // UI extensions
@@ -55,28 +31,13 @@ extension PremiumFeature {
         }
     }
 
+    /// Localized only for the features in `PremiumFeature.listed`.
     var title: String {
         "purchases.\(rawValue)".localized
     }
 
+    /// Localized only for the features in `PremiumFeature.listed`.
     var description: String {
         "purchases.\(rawValue).description".localized
-    }
-
-    var info: String {
-        "purchases.\(rawValue).info".localized
-    }
-}
-
-extension PremiumCategory {
-    var icon: String {
-        switch self {
-        case .advancedControls: return "plus_e_filled"
-        case .marketInsights: return "market_filled"
-        }
-    }
-
-    var title: String {
-        "purchases.\(id)".localized
     }
 }

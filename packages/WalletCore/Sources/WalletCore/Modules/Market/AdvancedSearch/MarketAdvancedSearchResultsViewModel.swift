@@ -30,7 +30,7 @@ class MarketAdvancedSearchResultsViewModel: ObservableObject {
         showSignals = premiumEnabled && watchlistManager.showSignals
         self.premiumEnabled = premiumEnabled
 
-        purchaseManager.$activeFeatures
+        purchaseManager.activeFeaturesPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] activeFeatures in
                 self?.premiumEnabled = activeFeatures.contains(.advancedSearch)

@@ -6,36 +6,20 @@ struct SubscribePeriodView: View {
     let action: () -> Void
 
     var body: some View {
-        VStack(spacing: .heightOneDp) {
-            HStack(spacing: .margin8) {
-                ThemeText(item.title, style: .headline1)
-                if let badge = item.discountBadge {
-                    Text(badge)
-                        .textMicroSB(color: .themeClaude)
-                        .padding(.horizontal, .margin6)
-                        .padding(.vertical, .margin2)
-                        .background(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(Color.themeRemus))
-                        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous))
-                }
-                Spacer()
-            }
-            HStack(spacing: .margin4) {
-                ThemeText(item.price, style: .subheadR, colorStyle: .brand)
-
-                if let priceDescription = item.priceDescription {
-                    ThemeText(priceDescription, style: .subheadR, colorStyle: .green)
-                }
-                Spacer()
-            }
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, .margin16)
-        .padding(.vertical, .margin12)
-        .overlay(
-            RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous)
-                .strokeBorder(isSelected ? Color.themeBrand : Color.themeBlade, lineWidth: 1)
+        Cell(
+            left: {
+                CheckBoxView(checked: isSelected)
+            },
+            middle: {
+                MultiText(
+                    title: item.title,
+                    badge: item.discountBadge.map { ComponentBadge(text: $0, mode: .solidWith(colorStyle: .green), colorStyle: .lawrence) },
+                    subtitle: ComponentText(text: item.price.description, colorStyle: .secondary),
+                    subtitle2: item.priceDescription.map { ComponentText(text: $0.description, colorStyle: item.priceDescripionAccented ? .green : .secondary) }
+                )
+            },
+            action: action
         )
-        .contentShape(Rectangle())
-        .onTapGesture(perform: action)
+        .accessibilityIdentifier(TestTags.premiumPlan(item.product.id))
     }
 }

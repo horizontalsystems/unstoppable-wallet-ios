@@ -158,7 +158,7 @@ extension MarketVaultsViewModel {
             .sink { [weak self] in self?.syncVaults() }
             .store(in: &cancellables)
 
-        purchaseManager.$activeFeatures
+        purchaseManager.activeFeaturesPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] activeFeatures in
                 self?.premiumEnabled = activeFeatures.contains(.tokenInsights)

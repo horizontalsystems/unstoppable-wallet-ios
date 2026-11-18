@@ -1,39 +1,27 @@
 import SwiftUI
 
 struct SuccessfulSubscriptionView: View {
-    @StateObject var viewModel: PurchasesViewModel
     @Binding var isPresented: Bool
 
     var body: some View {
-        PremiumFactory.radialView {
+        PremiumFactory.background {
             VStack(spacing: 0) {
-                Image("box_2")
+                PremiumFactory.header(title: PremiumHeaderView.plainTitle("purchases.successful_subscription.description".localized))
 
-                Text("purchases.successful_subscription.description".localized)
-                    .textHeadline1(color: .themeLeah)
+                ThemeText("purchases.successful_subscription.subscribed".localized, style: .subhead)
                     .multilineTextAlignment(.center)
-                    .padding(.top, .margin24)
-                    .padding(.horizontal, 52)
+                    .padding(EdgeInsets(top: .margin12, leading: .margin32, bottom: .margin24, trailing: .margin32))
 
-                activatedDescription()
                 Spacer()
-
-                VStack(spacing: .margin8) {
-                    ThemeButton(text: "purchases.successful_subscription.button.go_app".localized) {
+            }
+            .safeAreaInset(edge: .bottom) {
+                PremiumBottomContent {
+                    ThemeButton(text: "purchases.successful_subscription.button.go_app".localized, style: .secondary) {
                         isPresented = false
                     }
+                    .accessibilityIdentifier(TestTags.premiumSubscribedGoToApp)
                 }
             }
-            .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin12, trailing: .margin24))
         }
-    }
-
-    private func activatedDescription() -> some View {
-        Text("purchases.successful_subscription.subscribed".localized)
-            .textSubhead2(color: .themeBrand)
-            .multilineTextAlignment(.center)
-            .padding(.horizontal, .margin32)
-            .padding(.top, .margin12)
-            .padding(.bottom, .margin32)
     }
 }

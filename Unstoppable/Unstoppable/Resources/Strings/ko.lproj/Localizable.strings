@@ -2546,13 +2546,12 @@
 
 // Purchases
 
-"premium.cell.description" = "%@ 기능으로 경험을 업그레이드하세요!";
+"premium.cell.description" = "%@ 기능";
 "premium.cell.description.key" = "프리미엄";
 
 "mini_app.cell.title" = "미니앱";
 "mini_app.cell.description" = "테스트를 통과하고 과제를 완료하여 토큰을 획득하세요!";
 
-"purchases.title" = "프리미엄";
 "purchases.description" = "플랜 선택";
 "purchases.type.pro" = "프로";
 "purchases.type.vip" = "VIP";
@@ -2568,30 +2567,14 @@
 "purchases.robbery_protection" = "강제 상황 보호";
 "purchases.robbery_protection.description" = "강제로 앱을 잠금 해제해야 하는 상황에서도 자금을 보호합니다.";
 
-// Advanced Controls
-"purchases.advanced_controls" = "고급 제어";
-"purchases.swap_control" = "스왑 제어";
-"purchases.swap_control.description" = "스왑이 실행되는 방식과 위치를 제어하기 위한 고급 설정입니다.";
-"purchases.swap_control.info" = "기본적으로 최적의 오퍼를 선택합니다. 프리미엄을 사용하면 다른 경로를 선택할 수 있습니다.";
+// Features listed on the Premium page
 "purchases.priority_support" = "우선 지원";
 "purchases.priority_support.description" = "지원팀에 직접 접근할 수 있습니다.";
-"purchases.priority_support.info" = "우선 지원에 직접 접근할 수 있습니다. Unstoppable 팀으로부터 빠르고 개인화된 도움을 받으세요.";
-
-// Market Insights
-"purchases.market_insights" = "시장 인사이트";
-"purchases.token_insights" = "분석";
-"purchases.token_insights.description" = "심층적인 분석 및 토큰 데이터.";
-"purchases.token_insights.info" = "거래량, 유동성, 트렌드 등 토큰의 세부 데이터를 보여주어 더 현명한 투자 결정을 내릴 수 있도록 돕습니다.";
 "purchases.advanced_search" = "고급 검색";
-"purchases.advanced_search.description" = "더 스마트한 토큰 탐색을 위한 강력한 필터.";
-"purchases.advanced_search.info" = "거래량, 체인 또는 섹터별 필터로 토큰을 찾으세요. CEX/DEX 활동 및 상장 메트릭이 포함됩니다.";
+"purchases.advanced_search.description" = "토큰을 필터링해 검색 범위를 좁히세요.";
 "purchases.trade_signals" = "신호 및 트렌드";
-"purchases.trade_signals.description" = "보다 자신감 있는 거래를 위한 실행 가능한 신호.";
-"purchases.trade_signals.info" = "실시간으로 거래 기회를 알림으로 제공합니다. 수익 가능성이나 시장 위험을 즉시 파악할 수 있습니다.";
+"purchases.trade_signals.description" = "거래 신호 알림을 받아보세요.";
 
-"purchase.bottom_sheet.description" = "한 번의 결제로 모든 프리미엄 기능을 이용할 수 있습니다.";
-
-"purchases.wallet_description.title" = "높은 평가를 받는 보안, 탁월한 개인 정보 보호, 그리고 진정한 비수탁형 지갑.";
 "purchases.wallet_description.approved" = "다음 기관에서 승인 및 감사:";
 
 "purchases.button.try" = "무료 체험하기";
@@ -2602,17 +2585,17 @@
 "purchase.period.annually" = "연간";
 "purchase.period.monthly" = "월간";
 "purchase.period.onetime" = "일회성 결제";
-"purchase.period.onetime.description" = "평생 이용 가능";
+"purchase.period.onetime.price" = "%@, 평생 이용 가능";
 "purchase.period.save" = "절약";
 "purchase.period.year" = "년";
 "purchase.period.month" = "월";
-"purchase.period.description1" = "처음 7일 무료 체험 제공.";
+"purchase.period.description1" = "7일간 무료로 이용하세요.";
 "purchase.period.description1.1" = "첫 달 할인 혜택을 누려보세요.";
-"purchase.period.description2" = "언제든 App Store에서 구독을 취소할 수 있습니다.";
-"purchase.lifetime.description" = "제한 없이 일회성 구독을 구매할 수";
-"purchase.agree" = "계정을 업그레이드하면 %@ 및 %@ 에 동의하게 됩니다.";
-"purchase.agree.terms_of_service" = "이용 약관";
-"purchase.agree.privacy_policy" = "개인정보 보호정책";
+"purchase.period.description2" = "언제든지 취소할 수 있습니다.";
+"purchase.lifetime.description" = "한 번 결제로 평생 이용하세요.";
+"purchase.agree" = "계속하면 %@ 및 %@에 동의하게 됩니다.";
+"purchase.agree.terms_of_service" = "약관";
+"purchase.agree.privacy_policy" = "개인정보 처리방침";
 
 "purchases.period.button.try" = "7일 무료 이용하기";
 "purchases.period.button.subscribe" = "구독하기";
@@ -2624,9 +2607,8 @@
 "purchases.promocode.button.invalid" = "잘못된 코드입니다";
 "purchases.promocode.button.already_used" = "이미 사용된 코드입니다";
 
-"purchases.successful_subscription.title" = "프리미엄";
 "purchases.successful_subscription.description" = "구독해 주셔서 감사합니다!";
-"purchases.successful_subscription.subscribed" = "앱의 모든 기능을 마음껏 즐기세요.";
+"purchases.successful_subscription.subscribed" = "프리미엄 기능을 즐겨보세요.";
 "purchases.successful_subscription.button.go_app" = "앱으로 이동";
 
 // Address Checker

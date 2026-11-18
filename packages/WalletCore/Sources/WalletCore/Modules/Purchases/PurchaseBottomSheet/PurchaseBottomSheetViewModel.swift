@@ -1,6 +1,8 @@
 import Combine
 import Foundation
+import StoreKit
 
+@MainActor
 class PurchaseBottomSheetViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var waitTask: Task<Void, Never>?
@@ -13,31 +15,31 @@ class PurchaseBottomSheetViewModel: ObservableObject {
     private let purchaseManager = Core.shared.purchaseManager
 
     private let finishSubject = PassthroughSubject<Void, Never>()
-    private let onSubscribe: (PurchaseManager.ProductData) -> Void
+    private let onSubscribe: @MainActor (PurchaseManager.ProductData) -> Void
 
     private var monthlyPrice: Decimal? {
         purchaseManager.productData.first { $0.type == .subscription && $0.period == .monthly }?.price
     }
 
-    init(onSubscribe: @escaping ((PurchaseManager.ProductData) -> Void)) {
+    init(onSubscribe: @escaping @MainActor (PurchaseManager.ProductData) -> Void) {
         self.onSubscribe = onSubscribe
 
         updateItems(data: purchaseManager.productData)
 
-        purchaseManager.$purchaseData
+        purchaseManager.purchaseDataPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.handle(purchases: $0)
             }
             .store(in: &cancellables)
 
-        purchaseManager.$productData
+        purchaseManager.productDataPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] products in
                 self?.updateItems(data: products)
             }
             .store(in: &cancellables)
 
-        purchaseManager.$usedOfferProductIds
+        purchaseManager.usedOfferProductIdsPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.updateItems(data: self?.purchaseManager.productData ?? [])
@@ -54,35 +56,26 @@ class PurchaseBottomSheetViewModel: ObservableObject {
                 return PremiumFactory.productItemFactory.item(product: $0, offerWasUsed: used, monthlyPrice: monthlyPrice)
             }
 
-        selectedItem = selectedItem ?? items.first
-    }
-
-    @MainActor private func update(state: ButtonState) async {
-        await MainActor.run { [weak self] in
-            self?.buttonState = state
-        }
+        selectedItem = items.first { $0 == selectedItem } ?? items.first
     }
 
     private func waitTransaction() {
         waitTask?.cancel()
+        buttonState = .loading
 
         waitTask = Task { [weak self] in
-            await self?.update(state: .loading)
-
             do {
                 try await Task.sleep(seconds: 5)
-
-                if !Task.isCancelled {
-                    await self?.update(state: .idle)
-                }
             } catch {
-                await self?.update(state: .idle)
+                // cancelled: the purchase arrived, or a newer wait took over
+                return
             }
+
+            self?.buttonState = .idle
         }
     }
 
-    @MainActor
-    private func handleSuccessSubscription(_ product: PurchaseManager.ProductData) async {
+    private func handleSuccessSubscription(_ product: PurchaseManager.ProductData) {
         onSubscribe(product)
         finishSubject.send()
     }
@@ -92,40 +85,58 @@ class PurchaseBottomSheetViewModel: ObservableObject {
             waitTask?.cancel()
             waitTask = nil
 
-            Task {
-                await handleSuccessSubscription(product)
-            }
+            handleSuccessSubscription(product)
         }
     }
 
     func subscribe() {
+        // Checked and set synchronously, so a second tap cannot start a second purchase
+        guard buttonState != .loading, let product = selectedItem?.product else {
+            return
+        }
+
+        buttonState = .loading
+
         Task { [weak self] in
-            await self?.update(state: .loading)
-
             do {
-                guard let selectedItem = self?.selectedItem else {
-                    return
+                let outcome = try await self?.purchaseManager.purchase(product: product)
+
+                self?.buttonState = .idle
+
+                // a pending purchase reaches success later, through the `purchaseData` sink, once it is approved
+                if outcome == .purchased {
+                    self?.handleSuccessSubscription(product)
                 }
-
-                try await self?.purchaseManager.purchase(product: selectedItem.product)
-
-                await self?.update(state: .idle)
-                await self?.handleSuccessSubscription(selectedItem.product)
             } catch {
-                print("ERROR: \(error)") // TODO: Handle error
-                await self?.update(state: .idle)
+                self?.buttonState = .idle
+
+                if !Self.isCancellation(error) {
+                    HudHelper.instance.show(banner: .error(string: Self.message(for: error)))
+                }
             }
         }
+    }
+
+    private static func isCancellation(_ error: Error) -> Bool {
+        if case PurchaseManager.SubscribeError.userCancelled = error {
+            return true
+        }
+
+        if case StoreKitError.userCancelled = error {
+            return true
+        }
+
+        return false
+    }
+
+    private static func message(for error: Error) -> String {
+        error is LocalizedError ? error.localizedDescription : "alert.unknown_error".localized
     }
 }
 
 extension PurchaseBottomSheetViewModel {
     var finishPublisher: AnyPublisher<Void, Never> {
         finishSubject.eraseToAnyPublisher()
-    }
-
-    func set(item: PurchaseProductItemFactory.Item) {
-        selectedItem = item
     }
 
     func handleRedeemCode(result: Result<Void, any Error>) {

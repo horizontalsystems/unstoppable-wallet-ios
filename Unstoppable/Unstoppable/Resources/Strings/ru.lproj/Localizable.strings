@@ -2546,13 +2546,12 @@
 
 // Purchases
 
-"premium.cell.description" = "Улучшите свой опыт с %@ функциями!";
+"premium.cell.description" = "%@-функции";
 "premium.cell.description.key" = "Премиум";
 
 "mini_app.cell.title" = "Мини Апп";
 "mini_app.cell.description" = "Проходите тесты, выполняйте задания и зарабатывайте токены!";
 
-"purchases.title" = "Премиум";
 "purchases.description" = "Выберите план";
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "VIP";
@@ -2568,33 +2567,17 @@
 "purchases.robbery_protection" = "Защита при ограблении";
 "purchases.robbery_protection.description" = "Защищает ваши средства, если вас вынуждают разблокировать приложение.";
 
-// Advanced Controls
-"purchases.advanced_controls" = "Расширенные настройки";
-"purchases.swap_control" = "Управление обменом";
-"purchases.swap_control.description" = "Расширенные настройки для управления тем, как и где выполняются swap-операции.";
-"purchases.swap_control.info" = "По умолчанию мы выбираем лучшее доступное предложение. С Premium вы можете выбрать другой маршрут.";
+// Features listed on the Premium page
 "purchases.priority_support" = "Поддержка Premium";
 "purchases.priority_support.description" = "Прямой доступ к нашей службе поддержки.";
-"purchases.priority_support.info" = "Прямой доступ к приоритетной поддержке от команды Unstoppable.";
-
-// Market Insights
-"purchases.market_insights" = "Аналитика рынка";
-"purchases.token_insights" = "Аналитика";
-"purchases.token_insights.description" = "Расширенная аналитика и данные по токенам.";
-"purchases.token_insights.info" = "Показывает подробные данные о токене - объём, ликвидность и тренды. Помогает принимать более разумные инвестиционные решения.";
 "purchases.advanced_search" = "Расширенный поиск";
-"purchases.advanced_search.description" = "Расширенные фильтры для удобного поиска токенов.";
-"purchases.advanced_search.info" = "Находите токены с помощью фильтров по объёму, сети или сектору. Включает метрики активности на CEX/DEX и листинги.";
+"purchases.advanced_search.description" = "Фильтруйте токены, чтобы сузить поиск.";
 "purchases.trade_signals" = "Сигналы и тренды";
-"purchases.trade_signals.description" = "Практические сигналы для более уверенной торговли.";
-"purchases.trade_signals.info" = "Уведомления в реальном времени о торговых возможностях и рисках.";
+"purchases.trade_signals.description" = "Получайте уведомления о торговых сигналах.";
 
-"purchase.bottom_sheet.description" = "Одна покупка открывает все функции Premium.";
-
-"purchases.wallet_description.title" = "Надёжная безопасность, высокий уровень конфиденциальности и полностью некастодиальный кошелёк.";
 "purchases.wallet_description.approved" = "Одобрено и проверено:";
 
-"purchases.button.try" = "Попробовать БЕСПЛАТНО";
+"purchases.button.try" = "Попробовать бесплатно";
 "purchases.button.activated" = "Активировано";
 "purchases.button.upgrade" = "Обновить";
 
@@ -2602,17 +2585,17 @@
 "purchase.period.annually" = "Ежегодно";
 "purchase.period.monthly" = "Ежемесячно";
 "purchase.period.onetime" = "Разовая";
-"purchase.period.onetime.description" = "для пожизненного доступа";
+"purchase.period.onetime.price" = "%@ за пожизненный доступ";
 "purchase.period.save" = "экономия";
 "purchase.period.year" = "год";
 "purchase.period.month" = "месяц";
-"purchase.period.description1" = "Пользуйтесь первые 7 дней БЕСПЛАТНО";
+"purchase.period.description1" = "7 дней БЕСПЛАТНО.";
 "purchase.period.description1.1" = "Скидка на первый месяц.";
-"purchase.period.description2" = "Вы можете отменить подписку App Store в любое время.";
-"purchase.lifetime.description" = "-";
-"purchase.agree" = "Оформляя подписку, вы соглашаетесь с %@ и %@.";
-"purchase.agree.terms_of_service" = "Условия использования";
-"purchase.agree.privacy_policy" = "Политика конфиденциальности";
+"purchase.period.description2" = "Отмена в любое время.";
+"purchase.lifetime.description" = "Заплатите один раз и пользуйтесь всегда.";
+"purchase.agree" = "Продолжая, вы принимаете %@ и %@.";
+"purchase.agree.terms_of_service" = "Условия";
+"purchase.agree.privacy_policy" = "Конфиденциальность";
 
 "purchases.period.button.try" = "Получите 7 дней БЕСПЛАТНО";
 "purchases.period.button.subscribe" = "Подписаться";
@@ -2624,9 +2607,8 @@
 "purchases.promocode.button.invalid" = "Неверный промокод";
 "purchases.promocode.button.already_used" = "Промокод уже использован";
 
-"purchases.successful_subscription.title" = "Премиум";
 "purchases.successful_subscription.description" = "Спасибо за подписку!";
-"purchases.successful_subscription.subscribed" = "Наслаждайтесь полным функционалом приложения.";
+"purchases.successful_subscription.subscribed" = "Пользуйтесь Премиум-функциями.";
 "purchases.successful_subscription.button.go_app" = "Перейти в приложение";
 
 // Address Checker

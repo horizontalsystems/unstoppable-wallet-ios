@@ -13,13 +13,12 @@ struct PurchasesView: View {
                     .opacity(viewModel.isSubscriptionSuccessful ? 0 : 1)
                     .scaleEffect(viewModel.isSubscriptionSuccessful ? Self.startScale : 1.0)
                     .overlay(
-                        SuccessfulSubscriptionView(viewModel: viewModel, isPresented: $isPresented)
+                        SuccessfulSubscriptionView(isPresented: $isPresented)
                             .opacity(viewModel.isSubscriptionSuccessful ? 1 : 0)
                             .scaleEffect(viewModel.isSubscriptionSuccessful ? 1.0 : Self.startScale)
                     )
                     .animation(.easeInOut(duration: 0.5), value: viewModel.isSubscriptionSuccessful)
             }
-            .navigationTitle(viewModel.isSubscriptionSuccessful ? "purchases.successful_subscription.title".localized : "purchases.title".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -28,6 +27,7 @@ struct PurchasesView: View {
                     }) {
                         Image("close")
                     }
+                    .accessibilityIdentifier(viewModel.isSubscriptionSuccessful ? TestTags.premiumSubscribedClose : TestTags.premiumClose)
                 }
             }
         }

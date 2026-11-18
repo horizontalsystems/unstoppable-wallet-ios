@@ -168,7 +168,7 @@ struct MarketAdvancedSearchView: View {
             middle: { MultiText(title: title, subtitle: subtitle) },
             right: { ThemeToggle(isOn: isOn).disabled(!enabled) },
             action: enabled ? nil : {
-                Coordinator.shared.presentPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: statPremiumKey)
+                Coordinator.shared.presentPurchase(page: .advancedSearch, trigger: statPremiumKey)
             }
         )
     }

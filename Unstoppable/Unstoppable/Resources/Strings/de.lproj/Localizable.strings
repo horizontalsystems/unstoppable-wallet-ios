@@ -1880,7 +1880,7 @@
 
 // Settings -> Subsription
 
-"subscription.premium.label" = "Prämie";
+"subscription.premium.label" = "Premium";
 "subscription.title" = "Abonnement";
 "subscription.get" = "Premium erhalten";
 "subscription.restore" = "Kauf wiederherstellen";
@@ -2546,13 +2546,12 @@
 
 // Purchases
 
-"premium.cell.description" = "Erweitern Sie Ihr Erlebnis mit %@ Funktionen!";
-"premium.cell.description.key" = "Prämie";
+"premium.cell.description" = "%@-Funktionen";
+"premium.cell.description.key" = "Premium";
 
 "mini_app.cell.title" = "MiniApp";
 "mini_app.cell.description" = "Führe Tests durch, erledige Aufgaben und verdiene Token!";
 
-"purchases.title" = "Prämie";
 "purchases.description" = "Plan auswählen";
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "VIP";
@@ -2568,30 +2567,14 @@
 "purchases.robbery_protection" = "Raubschutz";
 "purchases.robbery_protection.description" = "Schützt deine Gelder, falls du gezwungen bist, die App zu entsperren.";
 
-// Advanced Controls
-"purchases.advanced_controls" = "Erweiterte Steuerungen";
-"purchases.swap_control" = "Swap Control";
-"purchases.swap_control.description" = "Erweiterte Einstellungen zur Steuerung, wie und wo Swaps ausgeführt werden.";
-"purchases.swap_control.info" = "Standardmäßig wählen wir das beste verfügbare Angebot. Mit Premium können Sie eine andere Route wählen.";
+// Features listed on the Premium page
 "purchases.priority_support" = "Prioritäts-Support";
 "purchases.priority_support.description" = "Direkter Zugang zu unserem Support-Team.";
-"purchases.priority_support.info" = "Ermöglicht dir direkten Zugang zum Priority Support. Erhalte schnelle, persönliche Unterstützung vom Unstoppable-Team.";
-
-// Market Insights
-"purchases.market_insights" = "Markteinblicke";
-"purchases.token_insights" = "Analytik";
-"purchases.token_insights.description" = "Detaillierte Analysen und Token-Daten.";
-"purchases.token_insights.info" = "Zeigt detaillierte Token-Daten wie Volumen, Liquidität und Trends an. Hilft Ihnen, fundiertere Anlageentscheidungen zu treffen.";
 "purchases.advanced_search" = "Erweiterte Suche";
-"purchases.advanced_search.description" = "Leistungsstarke Filter für eine intelligentere Token-Entdeckung.";
-"purchases.advanced_search.info" = "Finden Sie Token mit Filtern nach Volumen, Chain oder Sektor. Enthält Metriken für CEX/DEX-Aktivität und Listings.";
+"purchases.advanced_search.description" = "Filtern Sie Token, um Ihre Suche einzugrenzen.";
 "purchases.trade_signals" = "Signale und Trends";
-"purchases.trade_signals.description" = "Handlungsrelevante Signale für sichereres Trading.";
-"purchases.trade_signals.info" = "Sendet Echtzeitbenachrichtigungen über Handelsmöglichkeiten und weist sofort auf Gewinnchancen oder Marktrisiken hin.";
+"purchases.trade_signals.description" = "Erhalten Sie Benachrichtigungen zu Handelssignalen.";
 
-"purchase.bottom_sheet.description" = "Ein einziger Kauf schaltet alle Premium-Funktionen frei.";
-
-"purchases.wallet_description.title" = "Hochbewertete Sicherheit, außergewöhnliche Privatsphäre und eine wirklich nicht-verwaltete Wallet.";
 "purchases.wallet_description.approved" = "Genehmigt und geprüft von:";
 
 "purchases.button.try" = "Kostenlos ausprobieren";
@@ -2602,17 +2585,17 @@
 "purchase.period.annually" = "Jährlich";
 "purchase.period.monthly" = "Monatlich";
 "purchase.period.onetime" = "Einmalig";
-"purchase.period.onetime.description" = "für lebenslangen Zugang";
+"purchase.period.onetime.price" = "%@ für lebenslangen Zugang";
 "purchase.period.save" = "sparen";
 "purchase.period.year" = "jahr";
 "purchase.period.month" = "monate";
-"purchase.period.description1" = "Genießen Sie die ersten 7 Tage kostenlos.";
+"purchase.period.description1" = "Genießen Sie 7 Tage KOSTENLOS.";
 "purchase.period.description1.1" = "Rabatt im ersten Monat genießen.";
-"purchase.period.description2" = "Sie können Ihr App-Store-Abonnement jederzeit kündigen.";
-"purchase.lifetime.description" = "Du kannst ein einmaliges Abonnement ohne Einschränkungen erwerben";
-"purchase.agree" = "Mit dem Upgrade Ihres Kontos stimmen Sie den %@ und der %@ zu.";
-"purchase.agree.terms_of_service" = "Nutzungsbedingungen";
-"purchase.agree.privacy_policy" = "Datenschutzrichtlinie";
+"purchase.period.description2" = "Jederzeit kündbar.";
+"purchase.lifetime.description" = "Einmal bezahlen, für immer behalten.";
+"purchase.agree" = "Wenn Sie fortfahren, stimmen Sie den %@ & dem %@ zu.";
+"purchase.agree.terms_of_service" = "Bedingungen";
+"purchase.agree.privacy_policy" = "Datenschutz";
 
 "purchases.period.button.try" = "7 Tage kostenlos erhalten";
 "purchases.period.button.subscribe" = "Abonnieren";
@@ -2624,9 +2607,8 @@
 "purchases.promocode.button.invalid" = "Ungültiger Promo-Code";
 "purchases.promocode.button.already_used" = "Promo-Code bereits verwendet";
 
-"purchases.successful_subscription.title" = "Prämie";
 "purchases.successful_subscription.description" = "Vielen Dank für Ihr Abonnement!";
-"purchases.successful_subscription.subscribed" = "Genießen Sie die volle Leistung der App.";
+"purchases.successful_subscription.subscribed" = "Genießen Sie Ihre Premium-Funktionen.";
 "purchases.successful_subscription.button.go_app" = "Zur App";
 
 // Address Checker

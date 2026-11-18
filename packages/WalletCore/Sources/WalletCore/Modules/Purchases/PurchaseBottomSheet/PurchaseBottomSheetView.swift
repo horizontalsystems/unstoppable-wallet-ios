@@ -1,5 +1,3 @@
-import Chart
-import MarketKit
 import SwiftUI
 
 struct PurchaseBottomSheetView: View {
@@ -8,60 +6,34 @@ struct PurchaseBottomSheetView: View {
     @Binding private var isPresented: Bool
     @State private var redeemSheetPresented = false
 
-    init(isPresented: Binding<Bool>, onSubscribe: @escaping (PurchaseManager.ProductData) -> Void) {
+    init(isPresented: Binding<Bool>, onSubscribe: @escaping @MainActor (PurchaseManager.ProductData) -> Void) {
         _viewModel = StateObject(wrappedValue: PurchaseBottomSheetViewModel(onSubscribe: onSubscribe))
         _isPresented = isPresented
     }
 
     var body: some View {
         VStack(spacing: 0) {
-            HStack(spacing: .margin16) {
-                ThemeImage("clock", size: .iconSize24, colorStyle: .brand)
-                Text("purchase.period.title".localized).themeHeadline2()
+            BSModule.view(for: .title(icon: nil, title: "purchase.period.title".localized))
 
-                IconButton(icon: "close", style: .secondary, mode: .transparent, size: .small) {
-                    isPresented = false
-                }
+            SubscribePeriodSegmentView(items: viewModel.items, selection: $viewModel.selectedItem) {
+                redeemSheetPresented = true
             }
-            .padding(.horizontal, .margin32)
-            .padding(.top, .margin24)
-            .padding(.bottom, .margin12)
+            .disabled(viewModel.buttonState == .loading)
+            .padding(.horizontal, .margin16)
+            .padding(.vertical, .margin8)
 
-            SubscribePeriodSegmentView(items: $viewModel.items, selection: $viewModel.selectedItem)
-                .onChange(of: viewModel.selectedItem) { newValue in
-                    if let newValue {
-                        viewModel.set(item: newValue)
-                    }
-                }
-                .padding(.top, .margin12)
-                .padding(.horizontal, .margin16)
+            ThemeText(footnote(), style: .subhead)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
+                .accessibilityIdentifier(TestTags.premiumPlansAgreement)
+                .padding(EdgeInsets(top: .margin12, leading: .margin32, bottom: .margin24, trailing: .margin32))
 
-            VStack(spacing: 0) {
-                subscribedDescription().multilineTextAlignment(.center)
-                Spacer()
+            ThemeButton(text: buttonTitle, spinner: viewModel.buttonState == .loading) {
+                viewModel.subscribe()
             }
-            .frame(height: 64)
-            .padding(.top, .margin12)
-            .padding(.horizontal, .margin32)
-
-            VStack(spacing: .margin12) {
-                ThemeButton(text: buttonTitle, spinner: viewModel.buttonState == .loading) {
-                    viewModel.subscribe()
-                }
-                .disabled(viewModel.buttonState == .loading)
-
-                ThemeButton(text: "purchases.period.button.promo".localized, style: .secondary, mode: .transparent) {
-                    redeemSheetPresented = true
-                }
-                .disabled(viewModel.buttonState == .loading)
-            }
-            .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: 0, trailing: .margin24))
-
-            VStack(spacing: 0) {
-                ThemeText(termsText(), style: .subhead)
-                    .multilineTextAlignment(.center)
-            }
-            .padding(EdgeInsets(top: .margin12, leading: .margin32, bottom: .margin12, trailing: .margin32))
+            .disabled(viewModel.buttonState == .loading)
+            .accessibilityIdentifier(TestTags.premiumPlansSubscribe)
+            .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin16, trailing: .margin24))
         }
         .onReceive(viewModel.finishPublisher) {
             isPresented = false
@@ -96,22 +68,28 @@ struct PurchaseBottomSheetView: View {
         }
     }
 
-    @ViewBuilder private func subscribedDescription() -> some View {
+    private func footnote() -> AttributedString {
+        var result = AttributedString()
+
         switch subscriptionState {
         case .lifetime:
-            Text("purchase.lifetime.description").foregroundColor(.themeGray).font(.themeSubhead2)
-
+            result.append(textPart("purchase.lifetime.description".localized))
         case .freeTrial:
-            Text("purchase.period.description1".localized + " ").foregroundColor(.themeRemus).font(.themeSubhead2) +
-                Text("purchase.period.description2".localized).foregroundColor(.themeGray).font(.themeSubhead2)
-
+            result.append(textPart("purchase.period.description1".localized, color: .themeRemus))
+            result.append(textPart(" "))
+            result.append(textPart("purchase.period.description2".localized))
         case .discount:
-            Text("purchase.period.description1.1".localized + " ").foregroundColor(.themeRemus).font(.themeSubhead2) +
-                Text("purchase.period.description2".localized).foregroundColor(.themeGray).font(.themeSubhead2)
-
+            result.append(textPart("purchase.period.description1.1".localized, color: .themeRemus))
+            result.append(textPart(" "))
+            result.append(textPart("purchase.period.description2".localized))
         case .subscribe:
-            Text("purchase.period.description2".localized).foregroundColor(.themeGray).font(.themeSubhead2)
+            result.append(textPart("purchase.period.description2".localized))
         }
+
+        result.append(textPart(" "))
+        result.append(termsText())
+
+        return result
     }
 
     private func termsText() -> AttributedString {
@@ -119,32 +97,32 @@ struct PurchaseBottomSheetView: View {
         let components = string.components(separatedBy: "%@")
 
         guard components.count == 3 else {
-            return AttributedString(string)
+            return textPart(string)
         }
 
         var result = AttributedString("")
 
         if !components[0].isEmpty {
-            result.append(termsTextPart(string: components[0]))
+            result.append(textPart(components[0]))
         }
-        result.append(termsTextPart(string: "purchase.agree.terms_of_service".localized, url: AppConfig.appleTermsOfServiceLink))
+        result.append(textPart("purchase.agree.terms_of_service".localized, url: AppConfig.appleTermsOfServiceLink))
         if !components[1].isEmpty {
-            result.append(termsTextPart(string: components[1]))
+            result.append(textPart(components[1]))
         }
-        result.append(termsTextPart(string: "purchase.agree.privacy_policy".localized, url: AppConfig.privacyPolicyLink))
+        result.append(textPart("purchase.agree.privacy_policy".localized, url: AppConfig.privacyPolicyLink))
         if !components[2].isEmpty {
-            result.append(termsTextPart(string: components[2]))
+            result.append(textPart(components[2]))
         }
 
         return result
     }
 
-    private func termsTextPart(string: String, url: String? = nil) -> AttributedString {
+    private func textPart(_ string: String, color: Color = .themeGray, url: String? = nil) -> AttributedString {
         var part = AttributedString(string)
+        part.foregroundColor = color
 
         if let url {
             part.link = URL(string: url)
-            part.foregroundColor = .themeGray
             part.underlineStyle = .single
         }
 
