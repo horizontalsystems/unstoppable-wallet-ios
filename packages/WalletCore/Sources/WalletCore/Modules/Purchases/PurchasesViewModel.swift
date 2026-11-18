@@ -13,8 +13,6 @@ class PurchasesViewModel: ObservableObject {
     @Published var isSubscriptionSuccessful = false
 
     init() {
-        syncButtonState()
-
         Publishers.Merge3(
             purchaseManager.purchaseDataPublisher.map { _ in () },
             purchaseManager.productDataPublisher.map { _ in () },
@@ -23,6 +21,8 @@ class PurchasesViewModel: ObservableObject {
         .receive(on: DispatchQueue.main)
         .sink { [weak self] in self?.syncButtonState() }
         .store(in: &cancellables)
+
+        syncButtonState()
     }
 
     private func syncButtonState() {

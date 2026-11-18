@@ -9,12 +9,12 @@ class PurchaseListViewModel: ObservableObject {
     @Published var activePurchase: PurchaseManager.PurchaseData?
 
     init() {
-        activePurchase = purchaseManager.activePurchase
-
         purchaseManager.purchaseDataPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.syncActivePurchase() }
             .store(in: &cancellables)
+
+        syncActivePurchase()
     }
 
     private func syncActivePurchase() {

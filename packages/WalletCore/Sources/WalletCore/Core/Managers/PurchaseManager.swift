@@ -18,6 +18,8 @@ class PurchaseManager: NSObject {
 
     private var products: [Product] = []
     private var purchasedProducts = [String: Transaction]()
+    /// Ids of transactions seen revoked: a stale entitlements snapshot must not record them again
+    private var revokedTransactionIds = Set<UInt64>()
 
     @PostPublished private var productDataValue = [ProductData]()
     @PostPublished private var purchaseDataValue = [PurchaseData]()
@@ -111,8 +113,9 @@ class PurchaseManager: NSObject {
     }
 
     private func applyLocked(_ transaction: Transaction) {
-        let applied = PurchaseEntitlements.applying(transaction, to: purchasedProducts)
+        let applied = PurchaseEntitlements.applying(transaction, to: purchasedProducts, revokedIds: revokedTransactionIds)
         purchasedProducts = applied.recorded
+        revokedTransactionIds = applied.revokedIds
 
         if applied.cleared {
             // the revoked transaction was the recorded one: the current list may hold another valid one for the product
