@@ -23,7 +23,11 @@ struct ManageAccountView: View {
                     VStack(spacing: 0) {
                         ListSectionHeader(text: "manage_account.name".localized)
 
-                        ThemeInput {
+                        ThemeInput(
+                            buttons: isNameFocused && !viewModel.name.isEmpty
+                                ? [.delete(identifier: TestTags.accountNameClear) { viewModel.name = "" }]
+                                : []
+                        ) {
                             InputTextView(
                                 placeholder: viewModel.account.name,
                                 text: $viewModel.name

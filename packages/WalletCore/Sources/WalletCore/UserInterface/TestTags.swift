@@ -330,6 +330,7 @@ enum TestTags {
     static let accountManualBackup = "account_manual_backup"
     static let accountUnlink = "account_unlink"
     static let accountNameInput = "account_name_input"
+    static let accountNameClear = "account_name_clear"
     static let accountSave = "account_save"
     static func unlinkConfirm(_ index: Int) -> String {
         "unlink_confirm_\(index)"
