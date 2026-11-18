@@ -113,6 +113,7 @@ class SecuritySettingsViewModel: ObservableObject {
     func removeDuressPasscode() {
         do {
             try passcodeManager.removeDuressPasscode()
+            HudHelper.instance.show(banner: .disabled)
         } catch {
             print("Remove Duress Passcode Error: \(error)")
         }

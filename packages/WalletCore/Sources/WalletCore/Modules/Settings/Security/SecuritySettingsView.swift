@@ -192,6 +192,23 @@ struct SecuritySettingsView: View {
         }
     }
 
+    private func presentDisableRobberyProtectionSheet() {
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            BottomSheetView(
+                items: [
+                    .title(icon: ThemeImage.trash, title: "settings_security.disable_robbery_protection.title".localized),
+                    .text(text: "settings_security.disable_robbery_protection.description".localized),
+                    .buttonGroup(.init(buttons: [
+                        .init(style: .secondary, title: "settings_security.disable_robbery_protection.button".localized, identifier: TestTags.robberyProtectionDisableConfirm) {
+                            isPresented.wrappedValue = false
+                            viewModel.removeDuressPasscode()
+                        },
+                    ])),
+                ]
+            )
+        }
+    }
+
     private func interceptedToggle(isOn: Bool, title: String, identifier: String, action: @escaping () -> Void) -> some View {
         ThemeToggle(isOn: .constant(isOn))
             .tapIntercept(active: true, action: action)
@@ -228,12 +245,14 @@ struct SecuritySettingsView: View {
                                 ThemeNavigationStack { EditPasscodeModule.editDuressPasscodeView(showParentSheet: isPresented) }
                             }
                         }
+                        .accessibilityIdentifier(TestTags.securityRobberyProtectionEdit)
 
                         IconButton(icon: "trash", style: .secondary, size: .small) {
                             Coordinator.shared.performAfterUnlock {
-                                viewModel.removeDuressPasscode()
+                                presentDisableRobberyProtectionSheet()
                             }
                         }
+                        .accessibilityIdentifier(TestTags.securityRobberyProtectionDisable)
                     }
                 } else {
                     ThemeButton(text: "button.add".localized, style: .secondary, size: .small) {
@@ -245,6 +264,7 @@ struct SecuritySettingsView: View {
                             presentCreatePasscode(reason: .duress)
                         }
                     }
+                    .accessibilityIdentifier(TestTags.securityRobberyProtectionAdd)
                 }
             }
         )

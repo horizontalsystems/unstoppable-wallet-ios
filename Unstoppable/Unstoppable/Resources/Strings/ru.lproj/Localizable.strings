@@ -60,6 +60,8 @@
 "alert.imported" = "Импортировано";
 "alert.wallet_added" = "Кошелек добавлен";
 "alert.deleted" = "Удалено";
+"alert.disabled" = "Отключено";
+"alert.updated" = "Обновлено";
 "alert.waiting_for_session" = "Ожидание cессии";
 "alert.try_again" = "Попробовать ещё раз";
 "alert.disconnecting" = "Отсоединение";
@@ -1725,6 +1727,9 @@
 "settings_security.edit_duress_passcode" = "Изменить Duress код";
 "settings_security.disable_duress_mode" = "Отключить Duress код";
 "settings_security.duress_mode.description" = "Специализированный режим, разработанный для обеспечения безопасности выбранных кошельков в условиях принуждения.";
+"settings_security.disable_robbery_protection.title" = "Отключить защиту при ограблении";
+"settings_security.disable_robbery_protection.description" = "Эта защита будет отключена. Все кошельки, добавленные в этом режиме, останутся в основном кошельке, где была создана защита при ограблении.";
+"settings_security.disable_robbery_protection.button" = "Отключить защиту";
 
 "biometry.off" = "Выкл.";
 "biometry.manual" = "Вручную";

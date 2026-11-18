@@ -60,6 +60,8 @@
 "alert.imported" = "Restaurado ";
 "alert.wallet_added" = "Cartera añadida";
 "alert.deleted" = "Eliminado";
+"alert.disabled" = "Desactivado";
+"alert.updated" = "Actualizado";
 "alert.waiting_for_session" = "Esperando a la sesión";
 "alert.try_again" = "Inténtalo de nuevo";
 "alert.disconnecting" = "Desconectando";
@@ -1725,6 +1727,9 @@
 "settings_security.edit_duress_passcode" = "Editar contraseña de Duración";
 "settings_security.disable_duress_mode" = "Desactivar Duress Passcode";
 "settings_security.duress_mode.description" = "Un modo especializado diseñado para mantener seguras las carteras seleccionadas bajo coacción.";
+"settings_security.disable_robbery_protection.title" = "Desactivar Protección contra robo";
+"settings_security.disable_robbery_protection.description" = "Esta protección se desactivará. Todas las billeteras añadidas en este modo permanecerán en la billetera principal donde se creó la Protección contra robo.";
+"settings_security.disable_robbery_protection.button" = "Desactivar protección";
 
 "biometry.off" = "Apagado";
 "biometry.manual" = "Manualmente";

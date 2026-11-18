@@ -21,6 +21,7 @@ class EditDuressPasscodeViewModel: SetPasscodeViewModel {
         do {
             try passcodeManager.set(duressPasscode: passcode)
             finishSubject.send()
+            HudHelper.instance.show(banner: .updated)
         } catch {
             print("Edit Duress Passcode Error: \(error)")
         }

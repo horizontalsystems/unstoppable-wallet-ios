@@ -60,6 +60,8 @@
 "alert.imported" = "Wiederherstellen";
 "alert.wallet_added" = "Wallet hinzugefügt";
 "alert.deleted" = "Gelöscht";
+"alert.disabled" = "Deaktiviert";
+"alert.updated" = "Aktualisiert";
 "alert.waiting_for_session" = "Warte auf Sitzung";
 "alert.try_again" = "Nochmals versuchen";
 "alert.disconnecting" = "Verbindung wird getrennt";
@@ -1725,6 +1727,9 @@
 "settings_security.edit_duress_passcode" = "Duress Code bearbeiten";
 "settings_security.disable_duress_mode" = "Duress Code deaktivieren";
 "settings_security.duress_mode.description" = "Ein spezialisierter Modus, der entworfen wurde, um ausgewählte Brieftaschen unter Zwang zu schützen.";
+"settings_security.disable_robbery_protection.title" = "Raubschutz deaktivieren";
+"settings_security.disable_robbery_protection.description" = "Dieser Schutz wird deaktiviert. Alle in diesem Modus hinzugefügten Wallets bleiben im Haupt-Wallet, in dem der Raubschutz erstellt wurde.";
+"settings_security.disable_robbery_protection.button" = "Schutz deaktivieren";
 
 "biometry.off" = "Aus";
 "biometry.manual" = "Manuell";

@@ -28,6 +28,8 @@ extension HudHelper {
         case imported
         case walletAdded
         case deleted
+        case disabled
+        case updated
         case noInternet
         case disconnectingWalletConnect
         case disconnectedWalletConnect
@@ -67,6 +69,8 @@ extension HudHelper {
             case .imported: image = UIImage(named: "wallet_in")
             case .walletAdded: image = UIImage(named: "binocular")
             case .deleted: image = UIImage(named: "trash")
+            case .disabled: image = UIImage(named: "trash")
+            case .updated: image = UIImage(named: "done_e_filled")
             case .noInternet: image = UIImage(named: "cloud_off")
             case .waitingForSession: image = UIImage(named: "disconnecting_2")
             case .disconnectingWalletConnect, .disconnectedWalletConnect: image = UIImage(named: "disconnecting_2")
@@ -87,8 +91,8 @@ extension HudHelper {
         var color: UIColor {
             switch self {
             case .addedToWatchlist, .alreadyAddedToWallet, .notSupportedYet, .sent, .swapped, .approved, .revoked, .attention: return .themeBrand
-            case .removedFromWallet, .removedFromWatchlist, .deleted, .noInternet, .disconnectedWalletConnect, .error: return .themeLucian
-            case .addedToWallet, .copied, .saved, .savedToCloud, .done, .restored, .created, .imported, .walletAdded, .enabled, .success, .connectedWalletConnect, .passwordFromKeychain: return .themeRemus
+            case .removedFromWallet, .removedFromWatchlist, .deleted, .disabled, .noInternet, .disconnectedWalletConnect, .error: return .themeLucian
+            case .addedToWallet, .copied, .saved, .savedToCloud, .done, .updated, .restored, .created, .imported, .walletAdded, .enabled, .success, .connectedWalletConnect, .passwordFromKeychain: return .themeRemus
             case .waitingForSession, .disconnectingWalletConnect, .enabling, .preparing, .sending, .swapping, .approving, .revoking: return .themeGray
             }
         }
@@ -111,6 +115,8 @@ extension HudHelper {
             case .imported: return "alert.imported".localized
             case .walletAdded: return "alert.wallet_added".localized
             case .deleted: return "alert.deleted".localized
+            case .disabled: return "alert.disabled".localized
+            case .updated: return "alert.updated".localized
             case .noInternet: return "alert.no_internet".localized
             case .waitingForSession: return "alert.waiting_for_session".localized
             case .disconnectingWalletConnect: return "alert.disconnecting".localized

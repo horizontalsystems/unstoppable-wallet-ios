@@ -60,6 +60,8 @@
 "alert.imported" = "Imported";
 "alert.wallet_added" = "Wallet Added";
 "alert.deleted" = "Deleted";
+"alert.disabled" = "Disabled";
+"alert.updated" = "Updated";
 "alert.waiting_for_session" = "Waiting for Session";
 "alert.try_again" = "Try Again";
 "alert.disconnecting" = "Disconnecting";
@@ -1725,6 +1727,9 @@
 "settings_security.edit_duress_passcode" = "Edit Duress Passcode";
 "settings_security.disable_duress_mode" = "Disable Duress Passcode";
 "settings_security.duress_mode.description" = "A special mode that protects selected wallets in case of coercion.";
+"settings_security.disable_robbery_protection.title" = "Disable Robbery Protection";
+"settings_security.disable_robbery_protection.description" = "This protection will be disabled. All wallets added in this mode will remain in the main wallet where Robbery Protection was created.";
+"settings_security.disable_robbery_protection.button" = "Disable Protection";
 
 "biometry.off" = "Off";
 "biometry.manual" = "Manually";

@@ -60,6 +60,8 @@
 "alert.imported" = "Geri yüklendi";
 "alert.wallet_added" = "Cüzdan Eklendi";
 "alert.deleted" = "Sil";
+"alert.disabled" = "Devre Dışı";
+"alert.updated" = "Güncellendi";
 "alert.waiting_for_session" = "Oturum bekleniyor";
 "alert.try_again" = "Tekrar deneyin";
 "alert.disconnecting" = "Bağlantı kesiliyor";
@@ -1725,6 +1727,9 @@
 "settings_security.edit_duress_passcode" = "Duress Şifresini Düzenle";
 "settings_security.disable_duress_mode" = "Zorlama Şifresini Devre Dışı Bırak";
 "settings_security.duress_mode.description" = "Seçilen cüzdanları zorlama altında güvende tutmak için tasarlanmış özel bir mod.";
+"settings_security.disable_robbery_protection.title" = "Zorla Açtırma Korumasını Devre Dışı Bırak";
+"settings_security.disable_robbery_protection.description" = "Bu koruma devre dışı bırakılacak. Bu modda eklenen tüm cüzdanlar, Zorla Açtırma Korumasının oluşturulduğu ana cüzdanda kalacak.";
+"settings_security.disable_robbery_protection.button" = "Korumayı Devre Dışı Bırak";
 
 "biometry.off" = "Kapat";
 "biometry.manual" = "Manuel";

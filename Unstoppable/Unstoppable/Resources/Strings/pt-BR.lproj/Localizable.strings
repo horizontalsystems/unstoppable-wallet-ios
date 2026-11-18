@@ -60,6 +60,8 @@
 "alert.imported" = "Importado";
 "alert.wallet_added" = "Carteira Adicionada";
 "alert.deleted" = "Excluído";
+"alert.disabled" = "Desativado";
+"alert.updated" = "Atualizado";
 "alert.waiting_for_session" = "Aguardando sessão";
 "alert.try_again" = "Tentar novamente";
 "alert.disconnecting" = "Desconectando";
@@ -1725,6 +1727,9 @@
 "settings_security.edit_duress_passcode" = "Editar Senha do Modo Coação";
 "settings_security.disable_duress_mode" = "Desabilitar senha de cobrança";
 "settings_security.duress_mode.description" = "Um modo especializado projetado para manter as carteiras selecionadas seguras sob coação.";
+"settings_security.disable_robbery_protection.title" = "Desativar Proteção contra Roubo";
+"settings_security.disable_robbery_protection.description" = "Esta proteção será desativada. Todas as carteiras adicionadas neste modo permanecerão na carteira principal onde a Proteção contra Roubo foi criada.";
+"settings_security.disable_robbery_protection.button" = "Desativar proteção";
 
 "biometry.off" = "Desligado";
 "biometry.manual" = "Manualmente";

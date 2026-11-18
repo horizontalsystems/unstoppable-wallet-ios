@@ -60,6 +60,8 @@
 "alert.imported" = "복구됨";
 "alert.wallet_added" = "지갑이 추가됨";
 "alert.deleted" = "삭제";
+"alert.disabled" = "비활성화됨";
+"alert.updated" = "업데이트됨";
 "alert.waiting_for_session" = "세션을 기다리는 중";
 "alert.try_again" = "다시 시도하십시오.";
 "alert.disconnecting" = "연결을 끊는 중...";
@@ -1725,6 +1727,9 @@
 "settings_security.edit_duress_passcode" = "긴급 상황 비밀번호 편집";
 "settings_security.disable_duress_mode" = "협박 비밀번호를 비활성화합니다.";
 "settings_security.duress_mode.description" = "강요 상황에서 선택한 지갑을 안전하게 보관하기 위해 디자인된 특별한 모드입니다.";
+"settings_security.disable_robbery_protection.title" = "강제 상황 보호 비활성화";
+"settings_security.disable_robbery_protection.description" = "이 보호 기능이 비활성화됩니다. 이 모드에서 추가한 모든 지갑은 강제 상황 보호가 생성된 메인 지갑에 남습니다.";
+"settings_security.disable_robbery_protection.button" = "보호 비활성화";
 
 "biometry.off" = "끄기";
 "biometry.manual" = "수동";

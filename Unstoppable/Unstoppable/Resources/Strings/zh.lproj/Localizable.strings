@@ -60,6 +60,8 @@
 "alert.imported" = "已恢复";
 "alert.wallet_added" = "钱包已添加";
 "alert.deleted" = "已删除";
+"alert.disabled" = "已禁用";
+"alert.updated" = "已更新";
 "alert.waiting_for_session" = "等待会话";
 "alert.try_again" = "再试一次";
 "alert.disconnecting" = "正在断开连接";
@@ -1725,6 +1727,9 @@
 "settings_security.edit_duress_passcode" = "编辑货币密码";
 "settings_security.disable_duress_mode" = "禁用冒险密码";
 "settings_security.duress_mode.description" = "专用模式用于在胁迫下使选定的钱包安全。";
+"settings_security.disable_robbery_protection.title" = "禁用抢劫保护";
+"settings_security.disable_robbery_protection.description" = "此保护将被禁用。在此模式下添加的所有钱包将保留在创建抢劫保护的主钱包中。";
+"settings_security.disable_robbery_protection.button" = "禁用保护";
 
 "biometry.off" = "关";
 "biometry.manual" = "手动";
