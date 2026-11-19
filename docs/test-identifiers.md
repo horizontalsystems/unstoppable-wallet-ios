@@ -15,7 +15,7 @@ UI tests select controls by name, and both apps use the same names. A developer,
 Before declaring a name, look in both apps' `TestTags` and reuse what is found. A new name is declared only when none exists.
 
 - iOS's `TestTags`: `packages/WalletCore/Sources/WalletCore/UserInterface/TestTags.swift`.
-- Android's `TestTags`: `walletkit/src/main/java/io/horizontalsystems/walletkit/uiv3/TestTags.kt` in `horizontalsystems/unstoppable-wallet-android`, read from GitHub at its default branch with `gh api repos/horizontalsystems/unstoppable-wallet-android/contents/<path>`, adding `?ref=<branch>` for a branch not merged yet. It is never read from a local checkout, which may be stale.
+- Android's `TestTags`: `walletkit/src/main/java/io/horizontalsystems/walletkit/uiv3/TestTags.kt` in `horizontalsystems/unstoppable-wallet-android`, read from GitHub at its default branch with `gh api -H 'Accept: application/vnd.github.raw+json' 'repos/horizontalsystems/unstoppable-wallet-android/contents/<path>'`, which prints the file itself, adding `?ref=<branch>` inside the quotes for a branch not merged yet. It is never read from a local checkout, which may be stale.
 
 One control has one name. Where the two apps named a control differently, the older name wins.
 
