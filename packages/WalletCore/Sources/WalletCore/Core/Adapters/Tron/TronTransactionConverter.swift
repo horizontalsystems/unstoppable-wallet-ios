@@ -179,7 +179,8 @@ extension TronTransactionConverter {
                     transaction: transaction,
                     baseToken: baseToken,
                     incomingEvents: incomingEvents,
-                    outgoingEvents: outgoingEvents
+                    outgoingEvents: outgoingEvents,
+                    data: decoration.data
                 )
             }
 

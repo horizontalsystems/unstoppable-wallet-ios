@@ -5,10 +5,13 @@ import TronKit
 public class TronExternalContractCallTransactionRecord: TronTransactionRecord, TransferEventsProvider {
     public let incomingEvents: [TransferEvent]
     public let outgoingEvents: [TransferEvent]
+    // the call's input, for overlays that read what was called
+    public let data: Data?
 
-    init(source: TransactionSource, transaction: Transaction, baseToken: Token, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent], spam: Bool = false) {
+    init(source: TransactionSource, transaction: Transaction, baseToken: Token, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent], data: Data? = nil, spam: Bool = false) {
         self.incomingEvents = incomingEvents
         self.outgoingEvents = outgoingEvents
+        self.data = data
 
         super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: false, spam: spam)
     }
