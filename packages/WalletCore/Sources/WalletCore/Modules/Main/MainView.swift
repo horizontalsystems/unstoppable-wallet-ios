@@ -80,6 +80,7 @@ struct MainView: View {
             }
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarRole(toolbarRole)
             .toolbar { toolbar() }
         }
     }
@@ -170,6 +171,10 @@ struct MainView: View {
         case .settings:
             return "settings.title".localized
         }
+    }
+
+    private var toolbarRole: ToolbarRole {
+        viewModel.selectedTab == .wallet ? .editor : .automatic
     }
 }
 
