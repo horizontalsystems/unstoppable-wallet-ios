@@ -4,16 +4,12 @@ import MarketKit
 import RxSwift
 
 public class WalletListViewModel: ObservableObject {
-    private let keySortType = "wallet-sort-type"
-
     private let walletServiceFactory = WalletServiceFactory()
     let coinPriceService = WalletCoinPriceService()
-    private let sorter = WalletSorter()
     let balanceHiddenManager = Core.shared.balanceHiddenManager
     let accountManager = Core.shared.accountManager
     private let walletManager = Core.shared.walletManager
     private let reachabilityManager = Core.shared.reachabilityManager
-    private let userDefaultsStorage = Core.shared.userDefaultsStorage
     private let cacheManager = Core.shared.enabledWalletCacheManager
     private let feeCoinProvider = Core.shared.feeCoinProvider
     private let appSettingManager = Core.shared.appSettingManager
@@ -26,13 +22,6 @@ public class WalletListViewModel: ObservableObject {
     @Published private(set) var balancePrimaryValue: BalancePrimaryValue
     @Published public private(set) var balanceHidden: Bool
     @Published private(set) var amountRounding: Bool
-
-    @Published var sortType: WalletSorter.SortType {
-        didSet {
-            handleUpdateSortType()
-            userDefaultsStorage.set(value: sortType.rawValue, for: keySortType)
-        }
-    }
 
     @Published public private(set) var items: [Item] = []
     @Published public private(set) var noTokens: Bool = false
@@ -48,12 +37,6 @@ public class WalletListViewModel: ObservableObject {
     private var lastReportUptime: TimeInterval?
 
     public init() {
-        if let rawValue: String = userDefaultsStorage.value(for: keySortType), let sortType = WalletSorter.SortType(rawValue: rawValue) {
-            self.sortType = sortType
-        } else {
-            sortType = .balance
-        }
-
         account = accountManager.activeAccount
         balancePrimaryValue = appSettingManager.balancePrimaryValue
         balanceHidden = balanceHiddenManager.balanceHidden
@@ -115,15 +98,8 @@ public class WalletListViewModel: ObservableObject {
         }
     }
 
-    private func handleUpdateSortType() {
-        queue.async {
-            self._sortItems()
-            self._reportItems(immediately: true)
-        }
-    }
-
     private func _sortItems() {
-        __items = sorter.sort(items: __items, sortType: sortType)
+        __items = __items.sorted(by: SortCriterion.walletBalance)
     }
 
     /// Coalesces item, noTokens and subclass publications into a single main-thread hop,
@@ -312,7 +288,7 @@ extension WalletListViewModel: IWalletServiceDelegate {
 
             self.__items[index].balanceData = balanceData
 
-            if self.sortType == .balance, self.__items.allSatisfy(\.state.isSynced) {
+            if self.__items.allSatisfy(\.state.isSynced) {
                 self._sortItems()
             }
 
@@ -332,7 +308,7 @@ extension WalletListViewModel: IWalletServiceDelegate {
             let oldState = self.__items[index].state
             self.__items[index].state = state
 
-            if self.sortType == .balance, self.__items.allSatisfy(\.state.isSynced) {
+            if self.__items.allSatisfy(\.state.isSynced) {
                 self._sortItems()
             }
 
@@ -386,7 +362,7 @@ extension WalletListViewModel: IWalletCoinPriceServiceDelegate {
 }
 
 public extension WalletListViewModel {
-    struct Item: Identifiable, Hashable, ISortableWalletItem {
+    struct Item: Identifiable, Hashable {
         public let wallet: Wallet
         var isMainNet: Bool
         var balanceData: BalanceData
@@ -400,14 +376,6 @@ public extension WalletListViewModel {
 
         public var balance: Decimal {
             balanceData.available
-        }
-
-        var name: String {
-            wallet.coin.name
-        }
-
-        var diff: Decimal? {
-            priceItem?.diff
         }
     }
 }

@@ -347,10 +347,6 @@
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Blocs restants - %@";
 "balance.synced_through" = "jusqu'à: %@";
-"balance.sort.header" = "Trier par";
-"balance.sort.valueHighToLow" = "Solde";
-"balance.sort.az" = "Nom";
-"balance.sort.price_change" = "Variation de prix";
 
 "balance_error.change_source" = "Changer la Source";
 "balance_error.sync_error" = "Erreur de synchronisation";

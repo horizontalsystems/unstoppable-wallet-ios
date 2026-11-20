@@ -131,6 +131,7 @@ enum TestTags {
     static let balanceManageAccounts = "balance_manage_accounts"
     static let balanceManageCoins = "balance_manage_coins"
     static let balanceSyncIndicator = "balance_sync_indicator"
+    static let balanceNoInternet = "balance_no_internet"
 
     static func balanceItem(_ coinCode: String) -> String {
         "balance_item_\(coinCode)"

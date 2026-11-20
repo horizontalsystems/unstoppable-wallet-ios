@@ -55,8 +55,8 @@ struct WalletView: View {
 
     private func listView(account: Account) -> some View {
         ThemeView(style: .list) {
-            ScrollViewReader { proxy in
-                ThemeList(bottomSpacing: .margin16) {
+            FloatingButtonListView(isContentReady: !viewModel.items.isEmpty) {
+                ThemeList(bottomSpacing: ThemeButton.Size.small.size + 2 * .margin16) {
                     topView(account: account)
                         .listRowBackground(Color.themeTyler)
                         .listRowInsets(EdgeInsets())
@@ -71,32 +71,38 @@ struct WalletView: View {
                         .padding(.top, .margin8)
                         .padding(.bottom, .margin12)
 
-                    Section {
-                        itemsView()
-                    } header: {
-                        headerView(account: account)
-                    }
-
-                    VStack {
-                        ThemeButton(text: "button.add".localized, icon: "plus", spinner: false, style: .secondary, mode: .solid, size: .small) {
-                            onTapManage()
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
-                    .padding(.horizontal, .margin16)
-                    .padding(.top, .margin24)
+                    itemsView()
                 }
                 .animation(.default, value: accountWarningViewModel.item)
-                .refreshable {
-                    viewModel.refresh()
-                    await Task { try? await Task.sleep(seconds: 1) }.value
-                }
-                .onChange(of: viewModel.sortType) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
-                .themeListScrollHeader()
+            } button: {
+                addButton
             }
+            .refreshable {
+                viewModel.refresh()
+                await Task { try? await Task.sleep(seconds: 1) }.value
+            }
+            .themeListScrollHeader()
+        }
+    }
+
+    private var addButton: some View {
+        ThemeButton(text: "button.add".localized, icon: "plus", style: .secondary, mode: .solid, size: .small) {
+            onTapManage()
+        }
+        .accessibilityIdentifier(TestTags.balanceManageCoins)
+    }
+
+    @ViewBuilder private var statusView: some View {
+        if !viewModel.isReachable {
+            ThemeImage("globe_error", size: .iconSize20, colorStyle: .red)
+                .accessibilityLabel("alert.no_internet".localized)
+                .accessibilityIdentifier(TestTags.balanceNoInternet)
+        } else if viewModel.totalItem.state == .syncing {
+            ProgressView(value: 0.6)
+                .progressViewStyle(DeterminiteSpinnerStyle())
+                .frame(size: .iconSize20)
+                .spinning()
+                .accessibilityIdentifier(TestTags.balanceSyncIndicator)
         }
     }
 
@@ -114,7 +120,8 @@ struct WalletView: View {
                 onTapSubtitle: {
                     viewModel.onTapConvertedAmount()
                     HapticGenerator.instance.notification(.feedback(.soft))
-                }
+                },
+                subtitleTrailing: { statusView }
             )
 
             if account.watchAccount, let address = account.type.watchAddress {
@@ -143,10 +150,11 @@ struct WalletView: View {
                         }
                     }
                 }
-                .padding(.bottom, 24)
-                .padding(.horizontal, 16)
+                .padding(.bottom, .margin24)
+                .padding(.horizontal, .margin16)
             }
         }
+        .padding(.bottom, .margin8)
     }
 
     private func emptyView(account: Account) -> some View {
@@ -155,9 +163,10 @@ struct WalletView: View {
                 topView(account: account)
 
                 PlaceholderViewNew(icon: "wallet_in", subtitle: "balance.no_tokens".localized) {
-                    ThemeButton(text: "add_token.title".localized, mode: .transparent, size: .small) {
+                    ThemeButton(text: "button.add".localized, icon: "plus", style: .secondary, mode: .transparent, size: .small) {
                         onTapManage()
                     }
+                    .accessibilityIdentifier(TestTags.balanceManageCoins)
                 }
                 .background(Color.themeLawrence)
             }
@@ -230,40 +239,6 @@ struct WalletView: View {
 
     private func copyAddressIfBackedUp(address: String) {
         CopyHelper.copyAndNotify(value: address)
-    }
-
-    private func headerView(account _: Account) -> some View {
-        ListHeader {
-            DropdownButton(text: viewModel.sortType.title) {
-                Coordinator.shared.present(type: .alert) { isPresented in
-                    OptionAlertView(
-                        title: "balance.sort.header".localized,
-                        viewItems: WalletSorter.SortType.allCases.map { .init(text: $0.title, selected: viewModel.sortType == $0) },
-                        onSelect: { index in
-                            viewModel.sortType = WalletSorter.SortType.allCases[index]
-                        },
-                        isPresented: isPresented
-                    )
-                }
-            }
-
-            IconButton(icon: "manage", style: .secondary, size: .small) {
-                onTapManage()
-            }
-            .accessibilityIdentifier(TestTags.balanceManageCoins)
-
-            Spacer()
-
-            if !viewModel.isReachable {
-                ThemeText("alert.no_internet".localized, style: .subheadSB, colorStyle: .red)
-            } else if viewModel.totalItem.state == .syncing {
-                ProgressView(value: 0.6)
-                    .progressViewStyle(DeterminiteSpinnerStyle())
-                    .frame(size: 20)
-                    .spinning()
-                    .accessibilityIdentifier(TestTags.balanceSyncIndicator)
-            }
-        }
     }
 
     private func onTapManage() {
@@ -353,5 +328,31 @@ struct WalletView: View {
             text: viewModel.totalItem.convertedValue.flatMap { $0.formattedWith(rounding: viewModel.amountRounding) }.map { "≈\($0)" } ?? String.placeholder,
             dimmed: false
         )
+    }
+}
+
+/// Owns the floating button's visibility, so it lives and resets with the list: a list built after the empty state
+/// or without an account starts undetermined, while returning from a pushed page or another tab keeps it.
+private struct FloatingButtonListView<Content: View, FloatingButton: View>: View {
+    let isContentReady: Bool
+    @ViewBuilder let content: () -> Content
+    @ViewBuilder let button: () -> FloatingButton
+
+    /// `nil` until the list's geometry decides it; drawn as hidden
+    @State private var isButtonVisible: Bool?
+
+    var body: some View {
+        content()
+            .floatingButtonVisibility($isButtonVisible, isContentReady: isContentReady)
+            .overlay(alignment: .bottom) {
+                ZStack {
+                    if isButtonVisible == true {
+                        button()
+                            .padding(.bottom, .margin16)
+                            .transition(.opacity)
+                    }
+                }
+                .animation(.easeInOut(duration: 0.2), value: isButtonVisible)
+            }
     }
 }

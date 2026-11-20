@@ -8,16 +8,13 @@ struct WalletButtonView: View {
     let action: () -> Void
 
     var body: some View {
-        VStack(spacing: .margin8) {
-            let button = IconButton(icon: icon, style: accent ? .primary : .secondary, action: action)
+        let button = IconButton(icon: icon, style: accent ? .primary : .secondary, action: action)
+            .accessibilityLabel(title)
 
-            if let identifier {
-                button.accessibilityIdentifier(identifier)
-            } else {
-                button
-            }
-
-            Text(title).textCaption()
+        if let identifier {
+            button.accessibilityIdentifier(identifier)
+        } else {
+            button
         }
     }
 }

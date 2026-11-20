@@ -12,6 +12,20 @@ struct ThemeButton: View {
     var size: ThemeButton.Size = .medium
     let action: () -> Void
 
+    @Environment(\.layoutDirection) var layoutDirection
+
+    /// with an icon, the icon + text block sits this far toward the leading edge; the paddings stay symmetric
+    private static let iconContentShift: CGFloat = .margin4
+
+    /// `offset(x:)` is not mirrored in right-to-left layouts, so the sign follows the layout direction
+    private var contentOffset: CGFloat {
+        guard icon != nil else {
+            return 0
+        }
+
+        return layoutDirection == .rightToLeft ? Self.iconContentShift : -Self.iconContentShift
+    }
+
     var body: some View {
         Button(action: action) {
             HStack(spacing: size.iconSpacing) {
@@ -34,6 +48,7 @@ struct ThemeButton: View {
                     .minimumScaleFactor(0.8)
                     .offset(x: 0, y: size.textOffset)
             }
+            .offset(x: contentOffset)
         }
         .buttonStyle(ThemeButtonStyle(style: style, mode: mode, size: size))
     }
