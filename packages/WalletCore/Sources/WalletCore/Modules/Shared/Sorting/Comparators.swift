@@ -32,15 +32,6 @@ enum Comparators {
         return .orderedSame
     }
 
-    static func optionalDecimalDescending(_ lhs: Decimal?, _ rhs: Decimal?) -> ComparisonResult {
-        switch (lhs, rhs) {
-        case (nil, nil): return .orderedSame
-        case (nil, _): return .orderedDescending
-        case (_, nil): return .orderedAscending
-        case let (l?, r?): return decimalDescending(l, r)
-        }
-    }
-
     static func stringAscending(_ lhs: String, _ rhs: String) -> ComparisonResult {
         lhs.caseInsensitiveCompare(rhs)
     }

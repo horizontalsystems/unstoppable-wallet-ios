@@ -7,19 +7,19 @@ struct WalletTokenTopView<Content: View, Status: View>: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            AmountText(
-                title: primaryValue,
-                subtitle: secondaryValue,
-                identifier: TestTags.tokenBalance,
-                subtitleIdentifier: TestTags.tokenConverted,
-                onTapTitle: {
-                    viewModel.onTapAmount()
-                    HapticGenerator.instance.notification(.feedback(.soft))
-                },
-                subtitleTrailing: status
-            )
+            VStack(alignment: .leading, spacing: 0) {
+                AmountText(
+                    title: primaryValue,
+                    subtitle: secondaryValue,
+                    identifier: TestTags.tokenBalance,
+                    subtitleIdentifier: TestTags.tokenConverted,
+                    onTapTitle: {
+                        viewModel.onTapAmount()
+                        HapticGenerator.instance.notification(.feedback(.soft))
+                    },
+                    subtitleTrailing: status
+                )
 
-            VStack(spacing: 0) {
                 if !viewModel.wallet.account.watchAccount {
                     let buttons = viewModel.buttons
 
@@ -32,8 +32,8 @@ struct WalletTokenTopView<Content: View, Status: View>: View {
                             }
                         }
                     }
-                    .padding(.bottom, 24)
-                    .padding(.horizontal, 16)
+                    .padding(.bottom, .margin24)
+                    .padding(.horizontal, .margin16)
                 } else if let address = viewModel.wallet.account.type.watchAddress {
                     Cell(
                         middle: {
@@ -47,9 +47,10 @@ struct WalletTokenTopView<Content: View, Status: View>: View {
                         }
                     )
                 }
-
-                content()
             }
+            .padding(.bottom, .margin8)
+
+            content()
         }
         .background(Color.themeTyler)
         .listRowBackground(Color.clear)

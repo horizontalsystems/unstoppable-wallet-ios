@@ -136,11 +136,6 @@ extension Token: IComposableSortable {
                 context.fiatValues[rhs.tokenQuery.id] != nil
             )
 
-        // Not needed by Token in current modules. No module sorts tokens by 24h price change at the
-        // token level — TokenSortContext doesn't carry a priceChanges dictionary.
-        case .percentGrowthDescending:
-            return .orderedSame
-
         // spec tie-break for the default swap source: ETH -> TRON -> BSC, others fall through to .blockchainOrder
         case .swapNetworkPriority:
             return Comparators.intAscending(
@@ -231,7 +226,7 @@ extension FullCoin: IComposableSortable {
 
         // Not exposed for FullCoin: per-token balance fields live outside this context and the
         // aggregated fiat value is already available via fiatValues above.
-        case .balanceDescending, .percentGrowthDescending, .nonZeroBalanceFirst:
+        case .balanceDescending, .nonZeroBalanceFirst:
             return .orderedSame
         }
     }
@@ -247,8 +242,10 @@ extension FullCoin: IComposableSortable {
     }
 }
 
-extension ISortableWalletItem {
-    static func compare(_ lhs: Self, _ rhs: Self, by criterion: SortCriterion, context _: Void) -> ComparisonResult {
+extension WalletListViewModel.Item: IComposableSortable {
+    typealias Context = Void
+
+    static func compare(_ lhs: WalletListViewModel.Item, _ rhs: WalletListViewModel.Item, by criterion: SortCriterion, context _: Void) -> ComparisonResult {
         switch criterion {
         case .nonZeroBalanceFirst:
             return Comparators.booleanFirst(!lhs.balance.isZero, !rhs.balance.isZero)
@@ -264,18 +261,12 @@ extension ISortableWalletItem {
         case .balanceDescending:
             return Comparators.decimalDescending(lhs.balance, rhs.balance)
 
-        case .nameAscending:
-            return Comparators.stringAscending(lhs.name, rhs.name)
-
-        case .percentGrowthDescending:
-            return Comparators.optionalDecimalDescending(lhs.diff, rhs.diff)
-
         // Wallet items are always in active wallets by definition.
         case .enabled:
             return .orderedSame
 
-        // Not exposed by ISortableWalletItem protocol.
-        case .filterRelevance, .sameBlockchainFirst, .marketCapRank,
+        // Wallet items are only sorted by SortCriterion.walletBalance; other criteria do not apply.
+        case .filterRelevance, .sameBlockchainFirst, .marketCapRank, .nameAscending,
              .blockchainOrder, .tokenTypeOrder, .badge, .codeAscending, .codeNativeFirst, .swapNetworkPriority:
             return .orderedSame
         }

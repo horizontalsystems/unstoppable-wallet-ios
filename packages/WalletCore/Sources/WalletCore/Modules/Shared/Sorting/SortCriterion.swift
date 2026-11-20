@@ -11,7 +11,6 @@ enum SortCriterion {
     // Value
     case fiatBalanceDescending
     case balanceDescending
-    case percentGrowthDescending
 
     // Metadata
     case marketCapRank
@@ -31,11 +30,9 @@ enum SortCriterion {
 }
 
 extension SortCriterion {
-    // Wallet Screen & Send-List Screen. Sort-options
+    // Wallet screen, Send list and swap token lists: balance order
 
     static let walletBalance: [SortCriterion] = [.nonZeroBalanceFirst, .hasPriceFirst, .fiatBalanceDescending, .balanceDescending]
-    static let walletName: [SortCriterion] = [.nameAscending]
-    static let walletPercentGrowth: [SortCriterion] = [.percentGrowthDescending]
 
     // Legacy code
     static let coinSelect: [SortCriterion] = [.balanceDescending, .enabled, .marketCapRank, .nameAscending]
