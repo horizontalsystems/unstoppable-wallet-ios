@@ -347,10 +347,6 @@
 "balance.searching.count" = "%@ işlem";
 "balance.remaining" = "Kalan Bloklar - %@";
 "balance.synced_through" = "%@ kadar";
-"balance.sort.header" = "Sıralama şekli";
-"balance.sort.valueHighToLow" = "Bakiye";
-"balance.sort.az" = "İsim";
-"balance.sort.price_change" = "Fiyat Değişimi";
 
 "balance_error.change_source" = "Kaynağı Değiştir";
 "balance_error.sync_error" = "Senk. hatası";

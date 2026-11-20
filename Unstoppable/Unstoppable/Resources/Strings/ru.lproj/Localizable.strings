@@ -347,10 +347,6 @@
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Осталось блоков - %@";
 "balance.synced_through" = "до %@";
-"balance.sort.header" = "Сортировка";
-"balance.sort.valueHighToLow" = "Баланс";
-"balance.sort.az" = "Название";
-"balance.sort.price_change" = "по изменению цены (%)";
 
 "balance_error.change_source" = "Изменить источник";
 "balance_error.sync_error" = "Ошибка синхронизации";
