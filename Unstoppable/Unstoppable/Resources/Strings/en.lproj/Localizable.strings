@@ -749,8 +749,8 @@
 "swap.select_token_out" = "Select Token Out";
 "swap.no_providers" = "No Routes";
 "swap.suggested_path.no_quotes_available" = "No quotes available";
-"swap.suggested_path.text" = "You can %@ first, then %@ to %@.";
-"swap.suggested_path.text.part" = "swap %@ to %@";
+"swap.suggested_path.text" = "You may try %@ first, then %@ to %@.";
+"swap.suggested_path.text.part" = "swapping %@ to %@";
 "swap.enter_amount" = "Enter Amount";
 "swap.no_quotes" = "No Quotes";
 "swap.deposit_address" = "Deposit Address";
