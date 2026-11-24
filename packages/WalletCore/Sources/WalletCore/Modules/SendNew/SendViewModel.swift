@@ -220,7 +220,9 @@ public extension SendViewModel {
             do {
                 try await transactionService?.sync()
 
-                let _sendData = try await handler.sendData(transactionSettings: transactionService?.transactionSettings)
+                // Read on the main actor, where the transaction services commit and the UI edits them.
+                let transactionSettings = await MainActor.run { transactionService?.transactionSettings }
+                let _sendData = try await handler.sendData(transactionSettings: transactionSettings)
 
                 await self?.syncRates(coins: [handler.baseToken.coin] + _sendData.rateCoins)
 

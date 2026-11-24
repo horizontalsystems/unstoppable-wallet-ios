@@ -57,7 +57,14 @@ extension UtxoTransactionService: ITransactionService {
     }
 
     func sync() async throws {
-        actualFeeRates = try await feeRateProvider?.feeRates()
+        let feeRates = try await feeRateProvider?.feeRates()
+
+        try Task.checkCancellation()
+
+        // Syncs can overlap and run off the main actor, while the UI reads this on it.
+        await MainActor.run {
+            actualFeeRates = feeRates
+        }
     }
 }
 

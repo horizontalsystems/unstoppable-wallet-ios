@@ -129,6 +129,8 @@ extension EvmTransactionService: ITransactionService {
     }
 
     func sync() async throws {
+        let networkGasPrice: GasPrice
+
         if isEIP1559Supported {
             networkGasPrice = try await EIP1559GasPriceProvider.gasPrice(networkManager: networkManager, rpcSource: rpcSource, priority: Self.eip1559Priority(feePriority: feePriority))
         } else {
@@ -136,12 +138,29 @@ extension EvmTransactionService: ITransactionService {
             networkGasPrice = Self.prioritizedLegacy(gasPrice: gasPrice, feePriority: feePriority)
         }
 
-        if let previousTransaction {
-            nextNonce = previousTransaction.nonce
-            validateGasPrice()
-        } else {
+        var minimumNonce: Int?
+        var nextNonce: Int?
+
+        if previousTransaction == nil {
             minimumNonce = try await evmKit.nonce(defaultBlockParameter: .latest)
             nextNonce = try await evmKit.nonce(defaultBlockParameter: .pending)
+        }
+
+        // A superseded sync must not land its (older) results over a newer one.
+        try Task.checkCancellation()
+
+        // Syncs can overlap (SendViewModel does not wait for a cancelled one) and run off the main
+        // actor, while the UI reads this state on it: commit everything in a single main-actor turn.
+        await MainActor.run { [minimumNonce, nextNonce] in
+            self.networkGasPrice = networkGasPrice
+
+            if let previousTransaction {
+                self.nextNonce = previousTransaction.nonce
+                validateGasPrice()
+            } else {
+                self.minimumNonce = minimumNonce
+                self.nextNonce = nextNonce
+            }
         }
     }
 }
