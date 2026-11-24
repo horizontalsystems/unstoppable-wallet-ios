@@ -62,7 +62,8 @@ struct SwapDepositDetailsTests {
     }
 
     @Test func doesNotLabelSignedTransactionAsDeposit() async throws {
-        let quote = try await Self.confirmation(execution: .signedTransaction(chain: "ethereum", transactions: [], approval: nil))
+        // Sold from an EVM chain: a UTXO sell chain cannot follow a signed-transaction instruction.
+        let quote = try await Self.confirmation(execution: .signedTransaction(chain: "ethereum", transactions: [], approval: nil), sellChain: .ethereum)
         #expect(quote.depositAddress == nil)
         #expect(quote.depositMemo == nil)
     }
@@ -97,7 +98,7 @@ struct SwapDepositDetailsTests {
         .thorchainDeposit(chain: "bitcoin", inboundAddress: "vault", memo: memo, delivery: .init(kind: "transfer", router: nil, approval: nil, shieldedMemoAddress: nil, unsignedTx: nil))
     }
 
-    private static func confirmation(execution: USwapMultiSwapApi.Execution, rejectBuild: Bool = false) async throws -> SwapFinalQuote {
+    private static func confirmation(execution: USwapMultiSwapApi.Execution, sellChain: BlockchainType = .bitcoin, rejectBuild: Bool = false) async throws -> SwapFinalQuote {
         let response = USwapMultiSwapApi.SwapResponse(expectedBuyAmount: 1, minBuyAmount: nil, buyAsset: nil, estimatedTime: nil, execution: execution, uuid: nil, approvalSpender: nil, previewToken: "preview-token")
         let request = USwapMultiSwapApi.SwapRequest(
             sellAsset: "BTC.BTC",
@@ -115,7 +116,7 @@ struct SwapDepositDetailsTests {
             response: response,
             request: request,
             venueId: "THORCHAIN",
-            tokenIn: token(.bitcoin),
+            tokenIn: token(sellChain),
             tokenOut: token(.ethereum),
             amountIn: 1,
             slippage: 1,
