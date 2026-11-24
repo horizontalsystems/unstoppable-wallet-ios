@@ -59,10 +59,11 @@ extension UtxoTransactionService: ITransactionService {
     func sync() async throws {
         let feeRates = try await feeRateProvider?.feeRates()
 
-        try Task.checkCancellation()
-
         // Syncs can overlap and run off the main actor, while the UI reads this on it.
-        await MainActor.run {
+        try await MainActor.run {
+            // Checked in the same turn as the commit, so a superseded sync cannot overwrite a newer one.
+            try Task.checkCancellation()
+
             actualFeeRates = feeRates
         }
     }

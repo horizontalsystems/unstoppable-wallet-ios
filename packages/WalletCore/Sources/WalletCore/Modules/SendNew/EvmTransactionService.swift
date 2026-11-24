@@ -146,12 +146,13 @@ extension EvmTransactionService: ITransactionService {
             nextNonce = try await evmKit.nonce(defaultBlockParameter: .pending)
         }
 
-        // A superseded sync must not land its (older) results over a newer one.
-        try Task.checkCancellation()
-
         // Syncs can overlap (SendViewModel does not wait for a cancelled one) and run off the main
         // actor, while the UI reads this state on it: commit everything in a single main-actor turn.
-        await MainActor.run { [minimumNonce, nextNonce] in
+        try await MainActor.run { [minimumNonce, nextNonce] in
+            // A superseded sync must not land its (older) results over a newer one. Checked here, in the
+            // same turn as the commit: SendViewModel cancels on the main actor, so nothing can interleave.
+            try Task.checkCancellation()
+
             self.networkGasPrice = networkGasPrice
 
             if let previousTransaction {
