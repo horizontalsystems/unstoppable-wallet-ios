@@ -57,7 +57,12 @@ class BitcoinFeeRateProvider: IFeeRateProvider {
 
     func feeRates() async throws -> FeeRateProvider.FeeRates {
         let rates = try await feeRateProvider.bitcoinFeeRate()
-        return .init(recommended: rates.halfHourFee, minimum: rates.minimumFee)
+        return .init(recommended: Self.recommendedRate(fastest: rates.fastestFee, halfHour: rates.halfHourFee), minimum: rates.minimumFee)
+    }
+
+    /// FeeRateKit maps a missing `fastestFee` to 0, so the half-hour rate is the floor.
+    static func recommendedRate(fastest: Int, halfHour: Int) -> Int {
+        max(fastest, halfHour)
     }
 }
 

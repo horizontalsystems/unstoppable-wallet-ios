@@ -19,7 +19,7 @@ struct MultiSwapRevokeView: View {
 
     var body: some View {
         if let sendData = viewModel.sendData {
-            RegularSendView(sendData: sendData) {
+            RegularSendView(sendData: sendData, feePriority: .priority) {
                 onSuccess()
                 isPresented = false
             }

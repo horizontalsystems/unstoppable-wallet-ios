@@ -8,8 +8,8 @@ struct RegularSendView: View {
     private let title: String?
     private let onSuccess: () -> Void
 
-    init(sendData: SendData, address: String? = nil, title: String? = nil, onSuccess: @escaping () -> Void) {
-        _sendViewModel = .init(wrappedValue: SendViewModel(sendData: sendData, address: address))
+    init(sendData: SendData, address: String? = nil, title: String? = nil, feePriority: FeePriority? = nil, onSuccess: @escaping () -> Void) {
+        _sendViewModel = .init(wrappedValue: SendViewModel(sendData: sendData, address: address, feePriority: feePriority))
         self.title = title
         self.onSuccess = onSuccess
     }

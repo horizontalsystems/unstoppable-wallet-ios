@@ -21,6 +21,8 @@ class EvmTransactionService: TransactionService {
     private static let tipsSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))
     private static let legacyGasPriceSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))
 
+    static let priorityLegacyGasPricePercent = 120
+
     private let evmKit: EvmKit.Kit
     private let blockchainType: BlockchainType
     private let chain: Chain
@@ -31,6 +33,7 @@ class EvmTransactionService: TransactionService {
 
     private let updateSubject = PassthroughSubject<Void, Never>()
 
+    private var feePriority: FeePriority = .standard
     private var networkGasPrice: GasPrice?
     var recommendedGasPrice: GasPrice? {
         gasPriceData?.recommended
@@ -127,9 +130,10 @@ extension EvmTransactionService: ITransactionService {
 
     func sync() async throws {
         if isEIP1559Supported {
-            networkGasPrice = try await EIP1559GasPriceProvider.gasPrice(networkManager: networkManager, rpcSource: rpcSource)
+            networkGasPrice = try await EIP1559GasPriceProvider.gasPrice(networkManager: networkManager, rpcSource: rpcSource, priority: Self.eip1559Priority(feePriority: feePriority))
         } else {
-            networkGasPrice = try await LegacyGasPriceProvider.gasPrice(networkManager: networkManager, rpcSource: rpcSource)
+            let gasPrice = try await LegacyGasPriceProvider.gasPrice(networkManager: networkManager, rpcSource: rpcSource)
+            networkGasPrice = Self.prioritizedLegacy(gasPrice: gasPrice, feePriority: feePriority)
         }
 
         if let previousTransaction {
@@ -175,7 +179,37 @@ extension EvmTransactionService {
     }
 }
 
+extension EvmTransactionService: IFeePriorityConfigurable {
+    /// No update is emitted: the value is set before the first sync.
+    func set(feePriority: FeePriority) {
+        self.feePriority = feePriority
+    }
+}
+
 extension EvmTransactionService {
+    static func eip1559Priority(feePriority: FeePriority) -> EIP1559GasPriceProvider.Priority {
+        switch feePriority {
+        case .standard: return .standard
+        case .priority: return .high
+        }
+    }
+
+    static func prioritizedLegacy(gasPrice: GasPrice, feePriority: FeePriority) -> GasPrice {
+        guard feePriority == .priority, case let .legacy(legacyGasPrice) = gasPrice else {
+            return gasPrice
+        }
+
+        // A node-supplied price that would overflow when scaled is used as it is.
+        let (scaled, multiplyOverflow) = legacyGasPrice.multipliedReportingOverflow(by: priorityLegacyGasPricePercent)
+        let (roundedUp, addOverflow) = scaled.addingReportingOverflow(99)
+
+        guard !multiplyOverflow, !addOverflow else {
+            return gasPrice
+        }
+
+        return .legacy(gasPrice: roundedUp / 100)
+    }
+
     static func gasPriceData(network: GasPrice, previousTransaction: EvmKit.Transaction?, custom: GasPrice?) -> GasPriceData {
         let recommended: GasPrice
         let defaultPrice: GasPrice

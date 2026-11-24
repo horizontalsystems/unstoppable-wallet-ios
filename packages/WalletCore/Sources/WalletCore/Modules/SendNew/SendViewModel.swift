@@ -75,13 +75,18 @@ public class SendViewModel: ObservableObject {
         }
     }
 
-    public init(sendData: SendData, address: String? = nil) {
+    public init(sendData: SendData, address: String? = nil, feePriority: FeePriority? = nil) {
         handler = SendHandlerFactory.handler(sendData: sendData)
         currency = currencyManager.baseCurrency
         self.address = address
 
         if let handler {
-            transactionService = TransactionServiceFactory.transactionService(sendData: sendData, baseToken: handler.baseToken, initialTransactionSettings: handler.initialTransactionSettings)
+            transactionService = TransactionServiceFactory.transactionService(
+                sendData: sendData,
+                baseToken: handler.baseToken,
+                initialTransactionSettings: handler.initialTransactionSettings,
+                feePriority: feePriority ?? sendData.feePriority
+            )
         } else {
             transactionService = nil
         }

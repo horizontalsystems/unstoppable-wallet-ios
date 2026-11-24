@@ -51,7 +51,7 @@ struct MultiSwapApproveView: View {
         .navigationTitle("swap.unlock.title".localized)
         .navigationDestination(isPresented: $unlockPresented) {
             if let sendData = viewModel.sendData {
-                RegularSendView(sendData: sendData) {
+                RegularSendView(sendData: sendData, feePriority: .priority) {
                     onSuccess()
                     isPresented = false
                 }

@@ -11,9 +11,10 @@ public enum TransactionServiceFactory {
         providers.insert(provider, at: 0)
     }
 
-    static func transactionService(sendData: SendData, baseToken: Token, initialTransactionSettings: InitialTransactionSettings?) -> ITransactionService? {
+    static func transactionService(sendData: SendData, baseToken: Token, initialTransactionSettings: InitialTransactionSettings?, feePriority: FeePriority = .standard) -> ITransactionService? {
         for provider in providers {
             if let service = provider.instance(sendData: sendData, baseToken: baseToken, initialTransactionSettings: initialTransactionSettings) {
+                (service as? IFeePriorityConfigurable)?.set(feePriority: feePriority)
                 return service
             }
         }

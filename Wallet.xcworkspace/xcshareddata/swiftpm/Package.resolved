@@ -1,5 +1,5 @@
 {
-  "originHash" : "8fa43d25a3231c9ab6c1424fa41832794e536ff394489d4241baff1e88c064a4",
+  "originHash" : "e4b10c6561797ba50d5f705c3d04f0e8fd106f25cb3709903d9a8d903a33e231",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -141,8 +141,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/horizontalsystems/EvmKit.Swift",
       "state" : {
-        "revision" : "0d31c0a77eddecad543fecc25b25435e8aa130f0",
-        "version" : "2.7.1"
+        "revision" : "29a7d05205e37a9366ae1a24a159ba66278b9702",
+        "version" : "2.8.0"
       }
     },
     {
