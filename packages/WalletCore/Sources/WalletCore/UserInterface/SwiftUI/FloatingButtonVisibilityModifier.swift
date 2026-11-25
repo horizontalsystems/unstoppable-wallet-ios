@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// Drives the visibility of a button floating over a scroll view: visible while the content fits,
-/// hidden at the top of content that does not fit, shown when scrolling down and hidden when scrolling up.
+/// Drives the visibility of a button floating over a scroll view: visible while the content fits;
+/// when it does not fit, visible only while scrolled away from the top, regardless of scroll direction.
 /// `nil` means not determined yet and is shown as hidden, so the first determination never hides a drawn button.
 /// The first determination waits for `isContentReady` and is made from scroll geometry laid out with that content;
 /// "fits" is confirmed only once that geometry has settled, since a list sizes its rows over several layout passes.
@@ -22,8 +22,8 @@ struct FloatingButtonVisibilityModifier: ViewModifier {
                     let state = ScrollState(geometry: geometry, isContentReady: isContentReady)
                     latestState.value = state
                     return state
-                } action: { oldState, newState in
-                    update(oldState: oldState, newState: newState)
+                } action: { _, newState in
+                    update(state: newState)
                 }
                 // the scroll action is not called for the initial value, so a list whose geometry never changes after
                 // its first layout is resolved from the container's geometry action, using the latest scroll geometry
@@ -53,28 +53,17 @@ struct FloatingButtonVisibilityModifier: ViewModifier {
         }
     }
 
-    private func update(oldState: ScrollState, newState: ScrollState) {
+    private func update(state: ScrollState) {
         guard isVisible != nil else {
-            determineFirst(state: newState)
+            determineFirst(state: state)
             return
         }
 
-        guard newState.isLaidOut else {
+        guard state.isLaidOut else {
             return
         }
 
-        if newState.maxOffset <= 0 {
-            set(visible: true)
-        } else if newState.offset <= 0 {
-            set(visible: false)
-        } else if newState.maxOffset != oldState.maxOffset {
-            // content size changed without a scroll: the offset change is not a direction
-            return
-        } else if newState.offset > oldState.offset {
-            set(visible: true)
-        } else if newState.offset < oldState.offset {
-            set(visible: false)
-        }
+        set(visible: state.showsButton)
     }
 
     /// Guaranteed first evaluation when no scroll action fires. When no usable geometry is stored yet,
@@ -94,7 +83,7 @@ struct FloatingButtonVisibilityModifier: ViewModifier {
     }
 
     /// The first determination. Every new geometry while undetermined cancels a pending confirmation.
-    /// Content that does not fit resolves to hidden at once, which changes nothing on screen.
+    /// Content that does not fit resolves at once from the scroll position (hidden at the top, which changes nothing on screen).
     /// Content that fits starts a settle period; the button is shown only if no newer geometry arrived meanwhile
     /// and the latest geometry still fits, so a geometry measured before the rows settled cannot draw a button that then hides.
     private func determineFirst(state: ScrollState) {
@@ -109,7 +98,7 @@ struct FloatingButtonVisibilityModifier: ViewModifier {
         }
 
         guard state.maxOffset <= 0 else {
-            set(visible: false)
+            set(visible: state.showsButton)
             return
         }
 
@@ -126,7 +115,7 @@ struct FloatingButtonVisibilityModifier: ViewModifier {
                 return
             }
 
-            set(visible: latest.maxOffset <= 0)
+            set(visible: latest.showsButton)
         }
     }
 
@@ -152,6 +141,11 @@ private extension FloatingButtonVisibilityModifier {
 
         var isUsableForFirstDetermination: Bool {
             isLaidOut && isContentReady
+        }
+
+        /// content that fits always shows the button; content that does not fit shows it only away from the top
+        var showsButton: Bool {
+            maxOffset <= 0 || offset > 0
         }
 
         @available(iOS 18.0, *)
