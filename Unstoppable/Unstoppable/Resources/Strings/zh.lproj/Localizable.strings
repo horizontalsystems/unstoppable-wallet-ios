@@ -1734,9 +1734,9 @@
 // Create Passcode
 
 "create_passcode.title" = "创建密码";
-"create_passcode.description" = "您的密码将用于解锁钱包和发送资金";
+"create_passcode.description" = "密码将用于解锁";
 "create_passcode.description.biometry" = "设置密码以启用 %@";
-"create_passcode.description.duress_mode" = "设置密码以启用压力模式";
+"create_passcode.description.duress_mode" = "设置密码以启用抢劫保护";
 "create_passcode.confirm_passcode" = "确认";
 
 // Enable Duress Mode
@@ -1755,8 +1755,8 @@
 "enable_duress_mode.select.wallets" = "钱包";
 "enable_duress_mode.select.watch_wallets" = "观察地址";
 
-"enable_duress_mode.passcode.title" = "密码错误";
-"enable_duress_mode.passcode.description" = "设置口令模式密码";
+"enable_duress_mode.passcode.title" = "创建密码";
+"enable_duress_mode.passcode.description" = "设置抢劫保护密码";
 "enable_duress_mode.passcode.confirm" = "确认";
 
 // Edit Passcode

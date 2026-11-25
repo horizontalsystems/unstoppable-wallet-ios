@@ -1733,10 +1733,10 @@
 
 // Create Passcode
 
-"create_passcode.title" = "Create Passcode";
-"create_passcode.description" = "Your passcode will be used to unlock your wallet";
+"create_passcode.title" = "Create passcode";
+"create_passcode.description" = "Passcode will be used to unlock";
 "create_passcode.description.biometry" = "Set a passcode to enable %@";
-"create_passcode.description.duress_mode" = "Set a passcode to enable Duress Mode";
+"create_passcode.description.duress_mode" = "Set a passcode to enable Robbery Protection";
 "create_passcode.confirm_passcode" = "Confirm";
 
 // Enable Duress Mode
@@ -1755,8 +1755,8 @@
 "enable_duress_mode.select.wallets" = "Wallets";
 "enable_duress_mode.select.watch_wallets" = "Watch Wallets";
 
-"enable_duress_mode.passcode.title" = "Duress Passcode";
-"enable_duress_mode.passcode.description" = "Set a passcode for Duress Mode";
+"enable_duress_mode.passcode.title" = "Create passcode";
+"enable_duress_mode.passcode.description" = "Set a passcode for Robbery Protection";
 "enable_duress_mode.passcode.confirm" = "Confirm";
 
 // Edit Passcode
@@ -1779,10 +1779,10 @@
 // Unlock
 
 "unlock.title" = "Unlock";
-"unlock.passcode" = "Enter Passcode";
+"unlock.passcode" = "Enter passcode";
 "unlock.biometry_reason" = "Unlock wallet";
 "unlock.attempts_left" = "Attempts left: %@";
-"unlock.disabled_until" = "Disabled until: %@";
+"unlock.disabled_until" = "Disabled Until: %@";
 "unlock.random" = "Random";
 
 "security_settings.delete_alert_button" = "Delete from Phone";

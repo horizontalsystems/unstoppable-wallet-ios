@@ -11,7 +11,6 @@ struct ModuleUnlockView: View {
 
     var body: some View {
         UnlockView(viewModel: viewModel)
-            .navigationTitle("unlock.title".localized)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {

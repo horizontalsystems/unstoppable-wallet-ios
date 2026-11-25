@@ -4,6 +4,7 @@ import UIKit
 class SetPasscodeViewModel: ObservableObject {
     let passcodeLength = 6
 
+    @Published var stepTitle: String = ""
     @Published var description: String = ""
     @Published var errorText: String = ""
     @Published var passcode: String = "" {
@@ -29,7 +30,7 @@ class SetPasscodeViewModel: ObservableObject {
 
     init(passcodeManager: PasscodeManager) {
         self.passcodeManager = passcodeManager
-        syncDescription()
+        syncStep()
     }
 
     var title: String {
@@ -58,7 +59,7 @@ class SetPasscodeViewModel: ObservableObject {
             } else {
                 self.enteredPasscode = nil
                 self.passcode = ""
-                syncDescription()
+                syncStep()
                 errorText = "set_passcode.invalid_confirmation".localized
             }
         } else if passcodeManager.has(passcode: passcode), !isCurrent(passcode: passcode) {
@@ -70,11 +71,17 @@ class SetPasscodeViewModel: ObservableObject {
         } else {
             enteredPasscode = passcode
             self.passcode = ""
-            syncDescription()
+            syncStep()
         }
     }
 
-    private func syncDescription() {
-        description = enteredPasscode == nil ? passcodeDescription : confirmDescription
+    private func syncStep() {
+        if enteredPasscode == nil {
+            stepTitle = title
+            description = passcodeDescription
+        } else {
+            stepTitle = confirmDescription
+            description = ""
+        }
     }
 }

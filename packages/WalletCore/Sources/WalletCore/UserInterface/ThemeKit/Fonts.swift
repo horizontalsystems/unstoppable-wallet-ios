@@ -14,7 +14,6 @@ public extension Font {
 
     static let themeTitle1: Font = .manRopeFont(size: 38, weight: .semibold)
     static let themeTitle2: Font = .manRopeFont(size: 36, weight: .medium)
-    static let themeTitle2R: Font = .manRopeFont(size: 32, weight: .regular)
     static let themeTitle3: Font = .manRopeFont(size: 24, weight: .semibold)
     static let themeHeadline1: Font = .manRopeFont(size: 20, weight: .semibold)
     static let themeHeadline2: Font = .manRopeFont(size: 16, weight: .semibold)
@@ -42,7 +41,6 @@ public extension UIFont {
 
     static let title1: UIFont = .manRopeFont(ofSize: 38, weight: .semibold)
     static let title2: UIFont = .manRopeFont(ofSize: 36, weight: .medium)
-    static let title2R: UIFont = .manRopeFont(ofSize: 32, weight: .regular)
     static let title3: UIFont = .manRopeFont(ofSize: 24, weight: .semibold)
     static let headline1: UIFont = .manRopeFont(ofSize: 20, weight: .semibold)
     static let headline2: UIFont = .manRopeFont(ofSize: 16, weight: .semibold)

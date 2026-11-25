@@ -6,7 +6,7 @@ import UIKit
 class BaseUnlockViewModel: ObservableObject {
     let passcodeLength = 6
 
-    @Published var description: String = "unlock.passcode".localized
+    @Published var title: String = "unlock.passcode".localized
     @Published var errorText: String = ""
     @Published var passcode: String = "" {
         didSet {
@@ -98,8 +98,8 @@ class BaseUnlockViewModel: ObservableObject {
         switch lockoutState {
         case let .unlocked(attemptsLeft, maxAttempts):
             errorText = attemptsLeft == maxAttempts ? "" : "unlock.attempts_left".localized(String(attemptsLeft))
-        default:
-            errorText = ""
+        case let .locked(unlockDate):
+            errorText = "unlock.disabled_until".localized(DateFormatter.cachedFormatter(format: "\(LanguageHourFormatter.hourFormat):mm:ss").string(from: unlockDate))
         }
     }
 

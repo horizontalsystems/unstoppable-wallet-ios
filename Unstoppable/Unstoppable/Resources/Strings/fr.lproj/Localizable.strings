@@ -1734,9 +1734,9 @@
 // Create Passcode
 
 "create_passcode.title" = "Créer un code d'accès";
-"create_passcode.description" = "Votre code secret sera utilisé pour déverrouiller votre porte-monnaie et envoyer de l’argent";
+"create_passcode.description" = "Le code d'accès sera utilisé pour déverrouiller";
 "create_passcode.description.biometry" = "Définir un code d'accès pour activer %@";
-"create_passcode.description.duress_mode" = "Définir un mot de passe pour activer le mode Duress";
+"create_passcode.description.duress_mode" = "Définir un code d'accès pour activer la Protection contre le vol";
 "create_passcode.confirm_passcode" = "Confirmer";
 
 // Enable Duress Mode
@@ -1755,8 +1755,8 @@
 "enable_duress_mode.select.wallets" = "Portefeuilles";
 "enable_duress_mode.select.watch_wallets" = "Regarder les portefeuilles";
 
-"enable_duress_mode.passcode.title" = "Code Duress";
-"enable_duress_mode.passcode.description" = "Définir un code d'accès pour le mode Duress";
+"enable_duress_mode.passcode.title" = "Créer un code d'accès";
+"enable_duress_mode.passcode.description" = "Définir un code d'accès pour la Protection contre le vol";
 "enable_duress_mode.passcode.confirm" = "Confirmer";
 
 // Edit Passcode

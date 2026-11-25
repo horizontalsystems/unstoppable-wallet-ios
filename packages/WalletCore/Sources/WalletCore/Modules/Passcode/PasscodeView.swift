@@ -3,109 +3,119 @@ import SwiftUI
 struct PasscodeView: View {
     let maxDigits: Int
 
-    @Binding var description: String
+    let title: String
+    let description: String
     @Binding var errorText: String
     let errorIdentifier: String
-    @Binding var passcode: String {
-        didSet {
-            backspaceVisible = !passcode.isEmpty
-        }
-    }
-
+    @Binding var passcode: String
     @Binding var biometryType: BiometryType?
     @Binding var lockoutState: LockoutState
     @Binding var shakeTrigger: Int
     let randomEnabled: Bool
+    let headerTopInset: CGFloat
     var onTapBiometry: (() -> Void)?
 
-    @State var digits: [Int] = (1 ... 9) + [0]
-    @State var backspaceVisible: Bool = false
-    @State var randomized: Bool = false {
-        didSet {
-            if randomized {
-                digits = (0 ... 9).shuffled()
-            } else {
-                digits = (1 ... 9) + [0]
+    @State private var digits: [Int] = (1 ... 9) + [0]
+    @State private var randomized: Bool = false
+
+    var body: some View {
+        VStack(spacing: 0) {
+            header
+                .padding(.top, headerTopInset)
+
+            // fills the space between the dots and the numpad; a message too long for it is truncated instead of pushing the numpad
+            ZStack(alignment: .top) {
+                message
+                    .multilineTextAlignment(.center)
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .padding(.horizontal, .margin64)
+            .padding(.vertical, .margin8)
+
+            NumPadView(
+                digits: $digits,
+                biometryType: $biometryType,
+                disabled: lockoutState.isLocked,
+                backspaceDisabled: passcode.isEmpty,
+                onTapDigit: { digit in
+                    guard passcode.count < maxDigits else {
+                        return
+                    }
+
+                    passcode = passcode + "\(digit)"
+                },
+                onTapBackspace: {
+                    passcode = String(passcode.dropLast())
+                },
+                onTapBiometry: onTapBiometry
+            )
+
+            ZStack {
+                if randomEnabled {
+                    ThemeButton(text: "unlock.random".localized, style: .secondary, mode: randomized ? .solid : .transparent, size: .small) {
+                        setRandomized(!randomized)
+                    }
+                    .disabled(lockoutState.isLocked)
+                    .accessibilityIdentifier(TestTags.pinRandom)
+                }
+            }
+            .frame(height: .buttonSize32)
+            .padding(.top, .margin24)
+            .padding(.bottom, .margin48)
+        }
+        .background {
+            WelcomeGlowView(start: nil)
         }
     }
 
-    var body: some View {
-        VStack {
-            VStack {
-                switch lockoutState {
-                case .unlocked:
-                    Text(description)
-                        .font(.themeSubhead2)
-                        .foregroundColor(.themeGray)
-                        .padding(.horizontal, .margin48)
-                        .multilineTextAlignment(.center)
-                        .frame(maxHeight: .infinity, alignment: .bottom)
-                        .transition(.opacity.animation(.easeOut))
-                        .id(description)
-                        .accessibilityIdentifier(TestTags.pinTitle)
+    private var header: some View {
+        VStack(spacing: 0) {
+            Image.lock(size: .iconSize48)
+                .padding(.margin24)
 
-                    HStack(spacing: .margin12) {
-                        ForEach(0 ..< maxDigits, id: \.self) { index in
-                            Circle()
-                                .fill(index < passcode.count ? Color.themeBrand : Color.themeBlade)
-                                .frame(width: .margin12, height: .margin12)
-                        }
-                    }
-                    .modifier(Shake(animatableData: CGFloat(shakeTrigger)))
-                    .padding(.vertical, .margin16)
-                    .animation(.linear(duration: 0.3), value: shakeTrigger)
-                    .animation(.easeOut(duration: 0.1), value: passcode)
+            // the ZStack lets the outgoing and incoming text overlap while they cross-fade
+            ZStack {
+                ThemeText(title, style: .title3)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .transition(.opacity.animation(.easeOut))
+                    .id(title)
+                    .accessibilityIdentifier(TestTags.pinTitle)
+            }
 
-                    Text(errorText)
-                        .font(.themeCaption)
-                        .foregroundColor(.themeLucian)
-                        .padding(.horizontal, .margin48)
-                        .multilineTextAlignment(.center)
-                        .frame(maxHeight: .infinity, alignment: .top)
-                        .transition(.opacity.animation(.easeOut))
-                        .id(errorText)
-                        .accessibilityIdentifier(errorIdentifier)
-                case let .locked(unlockDate):
-                    VStack(spacing: .margin16) {
-                        Image.lock(size: .iconSize48)
-                        Text("unlock.disabled_until".localized(DateFormatter.cachedFormatter(format: "\(LanguageHourFormatter.hourFormat):mm:ss").string(from: unlockDate)))
-                            .foregroundColor(.themeGray)
-                            .font(.themeSubhead2)
-                            .padding(.horizontal, .margin48)
-                            .multilineTextAlignment(.center)
-                    }
+            HStack(spacing: .margin12) {
+                ForEach(0 ..< maxDigits, id: \.self) { index in
+                    Circle()
+                        .fill(index < passcode.count ? Color.themeBrand : Color.themeBlade)
+                        .frame(width: .margin16, height: .margin16)
                 }
             }
-            .frame(maxHeight: .infinity)
-
-            VStack(spacing: .margin24) {
-                NumPadView(
-                    digits: $digits,
-                    biometryType: $biometryType,
-                    disabled: Binding(get: { lockoutState.isLocked }, set: { _ in }),
-                    onTapDigit: { digit in
-                        guard passcode.count < maxDigits else {
-                            return
-                        }
-
-                        passcode = passcode + "\(digit)"
-                    },
-                    onTapBackspace: {
-                        passcode = String(passcode.dropLast())
-                    },
-                    onTapBiometry: onTapBiometry
-                )
-
-                if randomEnabled {
-                    ThemeButton(text: "unlock.random".localized, style: randomized ? .primary : .secondary, size: .small) {
-                        randomized.toggle()
-                    }
-                    .disabled(lockoutState.isLocked)
-                }
-            }
-            .padding(.bottom, .margin32)
+            .modifier(Shake(animatableData: CGFloat(shakeTrigger)))
+            .padding(.margin16)
+            .animation(.linear(duration: 0.3), value: shakeTrigger)
+            .animation(.easeOut(duration: 0.1), value: passcode)
+            .padding(.top, .margin24)
         }
+        .padding(.horizontal, .margin64)
+    }
+
+    @ViewBuilder private var message: some View {
+        if !errorText.isEmpty {
+            ThemeText(errorText, style: .subhead, colorStyle: .red)
+                .transition(.opacity.animation(.easeOut))
+                .id(errorText)
+                .accessibilityIdentifier(errorIdentifier)
+        } else if !description.isEmpty {
+            ThemeText(description, style: .subhead)
+                .transition(.opacity.animation(.easeOut))
+                .id(description)
+                .accessibilityIdentifier(TestTags.pinDescription)
+        }
+    }
+
+    private func setRandomized(_ value: Bool) {
+        randomized = value
+        digits = value ? (0 ... 9).shuffled() : (1 ... 9) + [0]
     }
 
     private struct Shake: GeometryEffect {

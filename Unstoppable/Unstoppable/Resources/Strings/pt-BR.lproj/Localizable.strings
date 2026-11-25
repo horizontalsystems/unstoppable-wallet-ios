@@ -1734,9 +1734,9 @@
 // Create Passcode
 
 "create_passcode.title" = "Criar senha";
-"create_passcode.description" = "Sua senha será usada para desbloquear sua carteira";
+"create_passcode.description" = "A senha será usada para desbloquear";
 "create_passcode.description.biometry" = "Defina uma senha para ativar %@";
-"create_passcode.description.duress_mode" = "Defina uma senha para ativar o modo de Coação";
+"create_passcode.description.duress_mode" = "Defina uma senha para ativar a Proteção contra Roubo";
 "create_passcode.confirm_passcode" = "Confirmar";
 
 // Enable Duress Mode
@@ -1755,8 +1755,8 @@
 "enable_duress_mode.select.wallets" = "Carteiras";
 "enable_duress_mode.select.watch_wallets" = "Ver Endereço";
 
-"enable_duress_mode.passcode.title" = "Senha do Modo Coação";
-"enable_duress_mode.passcode.description" = "Defina uma senha para o modo de Coação";
+"enable_duress_mode.passcode.title" = "Criar senha";
+"enable_duress_mode.passcode.description" = "Defina uma senha para a Proteção contra Roubo";
 "enable_duress_mode.passcode.confirm" = "Confirmar";
 
 // Edit Passcode

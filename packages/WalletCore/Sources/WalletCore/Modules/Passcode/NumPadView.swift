@@ -3,38 +3,52 @@ import SwiftUI
 struct NumPadView: View {
     @Binding var digits: [Int]
     @Binding var biometryType: BiometryType?
-    @Binding var disabled: Bool
+    let disabled: Bool
+    var backspaceDisabled: Bool = false
 
     let onTapDigit: (Int) -> Void
     let onTapBackspace: () -> Void
     var onTapBiometry: (() -> Void)?
 
+    private static let backspaceIcon = "arrow_m_left"
+
     var body: some View {
-        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: .margin16) {
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 0), count: 3), spacing: 0) {
             ForEach(Array(digits.prefix(9).enumerated()), id: \.offset) { _, digit in
                 NumberView(digit: digit, disabled: disabled) { onTapDigit(digit) }
             }
 
             if let biometryType {
-                IconButton(icon: biometryType.iconName, style: .secondary, mode: .transparent, size: .medium) {
+                Button(action: {
                     onTapBiometry?()
+                }) {
+                    Color.clear
                 }
+                .buttonStyle(NumPadButtonStyle(kind: .icon(biometryType.iconName)))
+                .numPadCell()
+                .accessibilityLabel(biometryType.title)
+                .accessibilityIdentifier(TestTags.pinKeyBiometry)
                 .disabled(disabled)
             } else {
-                Text("")
+                Color.clear
+                    .numPadCell()
             }
 
             if let digit = digits.last {
                 NumberView(digit: digit, disabled: disabled) { onTapDigit(digit) }
             }
 
-            IconButton(icon: "backspace", style: .secondary, mode: .transparent, size: .medium) {
+            Button(action: {
                 onTapBackspace()
+            }) {
+                Color.clear
             }
-            .disabled(disabled)
+            .buttonStyle(NumPadButtonStyle(kind: .icon(Self.backspaceIcon)))
+            .numPadCell()
+            .accessibilityLabel("button.delete".localized)
             .accessibilityIdentifier(TestTags.pinKeyDelete)
+            .disabled(disabled || backspaceDisabled)
         }
-        .frame(width: 280)
     }
 
     struct NumberView: View {
@@ -46,11 +60,11 @@ struct NumPadView: View {
             Button(action: {
                 onTap()
             }) {
-                Text(String(digit))
-                    .font(.themeTitle2R)
-                    .frame(width: 72, height: 72)
+                Color.clear
             }
-            .buttonStyle(NumPadButtonStyle())
+            .buttonStyle(NumPadButtonStyle(kind: .text(String(digit))))
+            .numPadCell()
+            .accessibilityLabel(String(digit))
             .accessibilityIdentifier(TestTags.pinKey(digit))
             .disabled(disabled)
             .animation(.easeOut(duration: 0.2), value: digit)
@@ -58,15 +72,54 @@ struct NumPadView: View {
     }
 
     struct NumPadButtonStyle: ButtonStyle {
-        @Environment(\.isEnabled) var isEnabled
+        // pressed sizes from the design: digit 36 -> 48, icon 24 -> 36
+        private static let textPressedScale: CGFloat = 48 / 36
+        private static let iconPressedScale: CGFloat = 36 / 24
+        // the press-in tracks the finger; the release settles back smoothly
+        private static let pressAnimation: Animation = .easeOut(duration: 0.1)
+        private static let releaseAnimation: Animation = .easeOut(duration: 0.3)
+
+        let kind: Kind
+
+        @Environment(\.isEnabled) private var isEnabled
 
         func makeBody(configuration: Configuration) -> some View {
-            configuration.label
-                .foregroundColor(isEnabled ? .themeLeah : .themeBlade)
-                .background(configuration.isPressed ? Color.themeBlade : Color.themeTyler)
-                .clipShape(Circle())
-                .overlay(Circle().stroke(Color.themeBlade, lineWidth: .heightOneDp))
-                .animation(.easeOut(duration: 0.1), value: configuration.isPressed)
+            ZStack {
+                configuration.label
+
+                content(isPressed: configuration.isPressed)
+                    .animation(configuration.isPressed ? Self.pressAnimation : Self.releaseAnimation, value: configuration.isPressed)
+            }
         }
+
+        @ViewBuilder private func content(isPressed: Bool) -> some View {
+            switch kind {
+            case let .text(digit):
+                ZStack {
+                    ThemeText(digit, style: .title2R, colorStyle: .primary, dimmed: !isEnabled)
+                        .opacity(isPressed ? 0 : 1)
+
+                    ThemeText(digit, style: .title2, colorStyle: .primary, dimmed: !isEnabled)
+                        .opacity(isPressed ? 1 : 0)
+                }
+                .scaleEffect(isPressed ? Self.textPressedScale : 1)
+            case let .icon(name):
+                ThemeImage(name, size: .iconSize24, colorStyle: isEnabled ? .primary : .andy)
+                    .scaleEffect(isPressed ? Self.iconPressedScale : 1)
+            }
+        }
+
+        enum Kind {
+            case text(String)
+            case icon(String)
+        }
+    }
+}
+
+private extension View {
+    func numPadCell() -> some View {
+        frame(maxWidth: .infinity)
+            .frame(height: .margin64)
+            .contentShape(Rectangle())
     }
 }

@@ -111,9 +111,12 @@ enum TestTags {
     }
 
     static let pinKeyDelete = "pin_key_delete"
+    static let pinKeyBiometry = "pin_key_biometry"
     static let pinTitle = "pin_title"
     static let pinError = "pin_error"
     static let pinAttemptsLeft = "pin_attempts_left"
+    static let pinRandom = "pin_random"
+    static let pinDescription = "pin_description"
 
     static func tab(_ name: String) -> String {
         "tab_\(name.lowercased())"

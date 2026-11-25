@@ -1734,9 +1734,9 @@
 // Create Passcode
 
 "create_passcode.title" = "Code erstellen";
-"create_passcode.description" = "Dein Code wird verwendet werden, um deinen Wallet zu entsperren und Geld schicken";
+"create_passcode.description" = "Der Code wird zum Entsperren verwendet";
 "create_passcode.description.biometry" = "Code für %@ aktivieren";
-"create_passcode.description.duress_mode" = "Code zum Aktivieren des Duress Modus festlegen";
+"create_passcode.description.duress_mode" = "Code zum Aktivieren des Raubschutzes festlegen";
 "create_passcode.confirm_passcode" = "Bestätigen";
 
 // Enable Duress Mode
@@ -1755,8 +1755,8 @@
 "enable_duress_mode.select.wallets" = "Wallets";
 "enable_duress_mode.select.watch_wallets" = "Watch-Adresse";
 
-"enable_duress_mode.passcode.title" = "Duress Code";
-"enable_duress_mode.passcode.description" = "Code für Duress Modus festlegen";
+"enable_duress_mode.passcode.title" = "Code erstellen";
+"enable_duress_mode.passcode.description" = "Code für den Raubschutz festlegen";
 "enable_duress_mode.passcode.confirm" = "Bestätigen";
 
 // Edit Passcode

@@ -1734,9 +1734,9 @@
 // Create Passcode
 
 "create_passcode.title" = "비밀번호 만들기";
-"create_passcode.description" = "너의 비밀번호는 너의 지갑을 열어주고 돈을 보내는데 사용될 것입니다.";
+"create_passcode.description" = "비밀번호는 잠금 해제에 사용됩니다";
 "create_passcode.description.biometry" = "%@을(를) 활성화하려면 비밀번호를 설정하세요.";
-"create_passcode.description.duress_mode" = "긴급 상황 모드를 활성화하려면 비밀번호를 설정하세요.";
+"create_passcode.description.duress_mode" = "강제 상황 보호를 활성화하려면 비밀번호를 설정하세요";
 "create_passcode.confirm_passcode" = "확인";
 
 // Enable Duress Mode
@@ -1755,8 +1755,8 @@
 "enable_duress_mode.select.wallets" = "지갑";
 "enable_duress_mode.select.watch_wallets" = "관찰 주소";
 
-"enable_duress_mode.passcode.title" = "긴급 상황 비밀번호";
-"enable_duress_mode.passcode.description" = "긴급 상황 모드용 비밀번호를 설정하세요";
+"enable_duress_mode.passcode.title" = "비밀번호 만들기";
+"enable_duress_mode.passcode.description" = "강제 상황 보호용 비밀번호를 설정하세요";
 "enable_duress_mode.passcode.confirm" = "확인";
 
 // Edit Passcode

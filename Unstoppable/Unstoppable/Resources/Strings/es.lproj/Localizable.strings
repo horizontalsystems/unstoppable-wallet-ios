@@ -1734,9 +1734,9 @@
 // Create Passcode
 
 "create_passcode.title" = "Crear contraseña";
-"create_passcode.description" = "Tu código de acceso se utilizará para desbloquear tu cartera";
+"create_passcode.description" = "El código de acceso se utilizará para desbloquear";
 "create_passcode.description.biometry" = "Establecer un código de acceso para habilitar %@";
-"create_passcode.description.duress_mode" = "Establecer un código de acceso para activar el modo Duración";
+"create_passcode.description.duress_mode" = "Establecer un código de acceso para activar la Protección contra robo";
 "create_passcode.confirm_passcode" = "Confirmar";
 
 // Enable Duress Mode
@@ -1755,8 +1755,8 @@
 "enable_duress_mode.select.wallets" = "Carteras";
 "enable_duress_mode.select.watch_wallets" = "Ver carteras";
 
-"enable_duress_mode.passcode.title" = "Durar contraseña";
-"enable_duress_mode.passcode.description" = "Establecer un código de acceso para el modo Duress";
+"enable_duress_mode.passcode.title" = "Crear contraseña";
+"enable_duress_mode.passcode.description" = "Establecer un código de acceso para la Protección contra robo";
 "enable_duress_mode.passcode.confirm" = "Confirmar";
 
 // Edit Passcode

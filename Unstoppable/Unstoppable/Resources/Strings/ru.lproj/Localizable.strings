@@ -1734,9 +1734,9 @@
 // Create Passcode
 
 "create_passcode.title" = "Создать код доступа";
-"create_passcode.description" = "Ваш пароль будет использоваться для разблокировки вашего кошелька";
+"create_passcode.description" = "Код доступа будет использоваться для разблокировки";
 "create_passcode.description.biometry" = "Установите код доступа для включения %@";
-"create_passcode.description.duress_mode" = "Установите код для включения режима Duress";
+"create_passcode.description.duress_mode" = "Установите код доступа для включения защиты при ограблении";
 "create_passcode.confirm_passcode" = "Подтвердить";
 
 // Enable Duress Mode
@@ -1755,8 +1755,8 @@
 "enable_duress_mode.select.wallets" = "Кошельки";
 "enable_duress_mode.select.watch_wallets" = "Просмотр кошелька";
 
-"enable_duress_mode.passcode.title" = "Duress код";
-"enable_duress_mode.passcode.description" = "Установите код для режима Duress";
+"enable_duress_mode.passcode.title" = "Создать код доступа";
+"enable_duress_mode.passcode.description" = "Установите код доступа для защиты при ограблении";
 "enable_duress_mode.passcode.confirm" = "Подтвердить";
 
 // Edit Passcode

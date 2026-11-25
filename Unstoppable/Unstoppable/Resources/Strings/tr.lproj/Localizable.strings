@@ -1734,9 +1734,9 @@
 // Create Passcode
 
 "create_passcode.title" = "Şifre Kodu Oluştur";
-"create_passcode.description" = "Şifre, programı açmak ve para göndermek için kullanılacak";
+"create_passcode.description" = "Şifre kodu, kilidi açmak için kullanılacak";
 "create_passcode.description.biometry" = "%@ etkinleştirmek için bir şifre kodu ayarlayın";
-"create_passcode.description.duress_mode" = "Duress Modunu etkinleştirmek için bir şifre kodu ayarlayın";
+"create_passcode.description.duress_mode" = "Zorla Açtırma Korumasını etkinleştirmek için bir şifre kodu ayarlayın";
 "create_passcode.confirm_passcode" = "Onayla";
 
 // Enable Duress Mode
@@ -1755,8 +1755,8 @@
 "enable_duress_mode.select.wallets" = "Cüzdanlar";
 "enable_duress_mode.select.watch_wallets" = "Cüzdan İzle";
 
-"enable_duress_mode.passcode.title" = "Duress Şifre Kodu";
-"enable_duress_mode.passcode.description" = "Duress Modu için bir şifre kodu ayarlayın";
+"enable_duress_mode.passcode.title" = "Şifre Kodu Oluştur";
+"enable_duress_mode.passcode.description" = "Zorla Açtırma Koruması için bir şifre kodu ayarlayın";
 "enable_duress_mode.passcode.confirm" = "Onayla";
 
 // Edit Passcode

@@ -9,17 +9,18 @@ struct SetPasscodeView: View {
         ThemeView {
             PasscodeView(
                 maxDigits: viewModel.passcodeLength,
-                description: $viewModel.description,
+                title: viewModel.stepTitle,
+                description: viewModel.description,
                 errorText: $viewModel.errorText,
                 errorIdentifier: TestTags.pinError,
                 passcode: $viewModel.passcode,
                 biometryType: Binding(get: { nil }, set: { _ in }),
                 lockoutState: Binding(get: { .unlocked(attemptsLeft: Int.max, maxAttempts: Int.max) }, set: { _ in }),
                 shakeTrigger: $viewModel.shakeTrigger,
-                randomEnabled: false
+                randomEnabled: false,
+                headerTopInset: .margin32
             )
         }
-        .navigationTitle(viewModel.title)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 if showClose {

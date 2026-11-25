@@ -5,12 +5,23 @@ struct AppUnlockView: View {
     @StateObject private var viewModel = AppUnlockViewModel(biometryAllowed: true)
 
     var body: some View {
-        UnlockView(viewModel: viewModel)
+        ThemeNavigationStack {
+            UnlockView(viewModel: viewModel, headerTopInset: .margin48)
+                .toolbar(.visible, for: .navigationBar)
+                .toolbar {
+                    // an empty item gives the bar content, so the system shows it and reserves its height
+                    ToolbarItem(placement: .principal) {
+                        Color.clear
+                            .accessibilityHidden(true)
+                    }
+                }
+        }
     }
 }
 
 struct UnlockView: View {
     @ObservedObject var viewModel: BaseUnlockViewModel
+    var headerTopInset: CGFloat = .margin32
 
     @Environment(\.presentationMode) private var presentationMode
 
@@ -18,7 +29,8 @@ struct UnlockView: View {
         ThemeView {
             PasscodeView(
                 maxDigits: viewModel.passcodeLength,
-                description: $viewModel.description,
+                title: viewModel.title,
+                description: "",
                 errorText: $viewModel.errorText,
                 errorIdentifier: TestTags.pinAttemptsLeft,
                 passcode: $viewModel.passcode,
@@ -26,6 +38,7 @@ struct UnlockView: View {
                 lockoutState: $viewModel.lockoutState,
                 shakeTrigger: $viewModel.shakeTrigger,
                 randomEnabled: true,
+                headerTopInset: headerTopInset,
                 onTapBiometry: {
                     unlockWithBiometry()
                 }
