@@ -24,7 +24,8 @@ public struct Wallet {
     var transactionSource: TransactionSource {
         TransactionSource(
             blockchainType: token.blockchainType,
-            meta: token.type.meta
+            meta: token.type.meta,
+            accountId: account.id
         )
     }
 

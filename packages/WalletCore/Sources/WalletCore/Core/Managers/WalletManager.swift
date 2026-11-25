@@ -16,9 +16,14 @@ public class WalletManager {
 
     private var cachedActiveWalletData = WalletData(wallets: [], account: nil)
 
-    public init(accountManager: AccountManager, storage: WalletStorage) {
+    /// The accounts whose wallets are active along with the active account; an app that shows several accounts
+    /// as one wallet sets it and calls `reloadWallets()` when the set changes.
+    public var activeAccounts: (Account) -> [Account]
+
+    public init(accountManager: AccountManager, storage: WalletStorage, activeAccounts: @escaping (Account) -> [Account] = { [$0] }) {
         self.accountManager = accountManager
         self.storage = storage
+        self.activeAccounts = activeAccounts
 
         accountManager.activeAccountPublisher
             .sink { [weak self] _ in self?.reloadWallets() }
@@ -41,7 +46,7 @@ public class WalletManager {
     private func _reloadWallets() {
         if let activeAccount = accountManager.activeAccount {
             do {
-                cachedActiveWalletData = try WalletData(wallets: storage.wallets(account: activeAccount), account: activeAccount)
+                cachedActiveWalletData = try WalletData(wallets: activeAccounts(activeAccount).flatMap { try storage.wallets(account: $0) }, account: activeAccount)
             } catch {
                 // todo
                 cachedActiveWalletData = WalletData(wallets: [], account: activeAccount)
@@ -54,7 +59,7 @@ public class WalletManager {
         activeWalletDataSubject.send(cachedActiveWalletData)
     }
 
-    private func reloadWallets() {
+    public func reloadWallets() {
         queue.async { [weak self] in self?._reloadWallets() }
     }
 }

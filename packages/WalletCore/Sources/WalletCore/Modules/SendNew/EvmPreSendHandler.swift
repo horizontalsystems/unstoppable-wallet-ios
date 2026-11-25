@@ -8,10 +8,11 @@ import RxSwift
 class EvmPreSendHandler: PreSendHandler {
     override class func instance(wallet: Wallet, address _: ResolvedAddress?) -> IPreSendHandler? {
         guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? ISendEthereumAdapter & IBalanceAdapter else { return nil }
-        return EvmPreSendHandler(token: wallet.token, adapter: adapter)
+        return EvmPreSendHandler(token: wallet.token, account: wallet.account, adapter: adapter)
     }
 
     private let token: Token
+    private let account: Account
     private let adapter: ISendEthereumAdapter & IBalanceAdapter
 
     private let stateSubject = PassthroughSubject<AdapterState, Never>()
@@ -19,8 +20,9 @@ class EvmPreSendHandler: PreSendHandler {
 
     private let disposeBag = DisposeBag()
 
-    init(token: Token, adapter: ISendEthereumAdapter & IBalanceAdapter) {
+    init(token: Token, account: Account, adapter: ISendEthereumAdapter & IBalanceAdapter) {
         self.token = token
+        self.account = account
         self.adapter = adapter
 
         super.init()
@@ -65,6 +67,6 @@ extension EvmPreSendHandler: IPreSendHandler {
 
         let transactionData = adapter.transactionData(amount: evmAmount, address: evmAddress)
 
-        return .valid(sendData: .evm(blockchainType: token.blockchainType, transactionData: transactionData, token: token))
+        return .valid(sendData: .evm(blockchainType: token.blockchainType, transactionData: transactionData, token: token, account: account))
     }
 }

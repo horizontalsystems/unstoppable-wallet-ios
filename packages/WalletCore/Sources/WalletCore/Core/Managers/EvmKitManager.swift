@@ -13,11 +13,10 @@ public class EvmKitManager {
     private let syncSourceManager: EvmSyncSourceManager
     private let disposeBag = DisposeBag()
 
-    private weak var _evmKitWrapper: EvmKitWrapper?
+    private var _evmKitWrappers = [String: WeakEvmKitWrapper]()
 
-    private let evmKitCreatedRelay = PublishRelay<Void>()
+    private let evmKitCreatedRelay = PublishRelay<Account>()
     private let evmKitUpdatedRelay = PublishRelay<Void>()
-    private(set) var currentAccount: Account?
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).ethereum-kit-manager", qos: .userInitiated)
 
@@ -32,18 +31,18 @@ public class EvmKitManager {
 
     private func handleUpdatedSyncSource(blockchainType: BlockchainType) {
         queue.sync {
-            guard let _evmKitWrapper, _evmKitWrapper.blockchainType == blockchainType else {
+            guard _evmKitWrappers.values.contains(where: { $0.wrapper?.blockchainType == blockchainType }) else {
                 return
             }
 
-            self._evmKitWrapper = nil
+            _evmKitWrappers = [:]
             evmKitUpdatedRelay.accept(())
         }
     }
 
     private func _evmKitWrapper(account: Account, blockchainType: BlockchainType) throws -> EvmKitWrapper {
-        if let _evmKitWrapper, let currentAccount, currentAccount == account {
-            return _evmKitWrapper
+        if let wrapper = _evmKitWrappers[account.id]?.wrapper {
+            return wrapper
         }
 
         let syncSource = syncSourceManager.syncSource(blockchainType: blockchainType)
@@ -103,17 +102,16 @@ public class EvmKitManager {
             signer: signer
         )
 
-        _evmKitWrapper = wrapper
-        currentAccount = account
+        _evmKitWrappers[account.id] = WeakEvmKitWrapper(wrapper: wrapper)
 
-        evmKitCreatedRelay.accept(())
+        evmKitCreatedRelay.accept(account)
 
         return wrapper
     }
 }
 
 extension EvmKitManager {
-    var evmKitCreatedObservable: Observable<Void> {
+    var evmKitCreatedObservable: Observable<Account> {
         evmKitCreatedRelay.asObservable()
     }
 
@@ -121,9 +119,10 @@ extension EvmKitManager {
         evmKitUpdatedRelay.asObservable()
     }
 
-    var evmKitWrapper: EvmKitWrapper? {
+    /// The account's kit while something holds it; never creates one.
+    func existingEvmKitWrapper(account: Account) -> EvmKitWrapper? {
         queue.sync {
-            _evmKitWrapper
+            _evmKitWrappers[account.id]?.wrapper
         }
     }
 
@@ -196,6 +195,10 @@ public class EvmKitWrapper {
 }
 
 extension EvmKitManager {
+    private struct WeakEvmKitWrapper {
+        weak var wrapper: EvmKitWrapper?
+    }
+
     enum KitWrapperError: Error {
         case mnemonicNoSeed
     }

@@ -9,10 +9,10 @@ public protocol IEvmTransactionConverter {
 }
 
 /// Supplies the converter chain for one adapter instance. Only the truly per-wallet context is passed:
-/// singletons (coinManager, evmLabelManager) are resolved inside WalletCore; the record TransactionSource is
-/// reconstructed from `baseToken` (EVM token types carry no source meta). nil → try the next provider.
+/// singletons (coinManager, evmLabelManager) are resolved inside WalletCore; `source` is the record
+/// TransactionSource, its account the wallet's. nil → try the next provider.
 public protocol IEvmTransactionConverterProvider {
-    static func converters(baseToken: MarketKit.Token, userAddress: EvmKit.Address) -> [IEvmTransactionConverter]?
+    static func converters(source: TransactionSource, baseToken: MarketKit.Token, userAddress: EvmKit.Address) -> [IEvmTransactionConverter]?
 }
 
 /// Empty by default — every app registers a provider that supplies a converter chain for every EVM wallet,
@@ -28,9 +28,9 @@ public enum EvmTransactionConverterFactory {
         providers.insert(provider, at: 0)
     }
 
-    static func converters(baseToken: MarketKit.Token, userAddress: EvmKit.Address) -> [IEvmTransactionConverter] {
+    static func converters(source: TransactionSource, baseToken: MarketKit.Token, userAddress: EvmKit.Address) -> [IEvmTransactionConverter] {
         for provider in providers {
-            if let converters = provider.converters(baseToken: baseToken, userAddress: userAddress) {
+            if let converters = provider.converters(source: source, baseToken: baseToken, userAddress: userAddress) {
                 return converters
             }
         }
@@ -41,8 +41,9 @@ public enum EvmTransactionConverterFactory {
     }
 
     /// The stock converter wired with the shared managers — public so an app chain composes or reuses it.
-    public static func defaultConverter(baseToken: MarketKit.Token, userAddress: EvmKit.Address) -> EvmTransactionConverter {
+    public static func defaultConverter(source: TransactionSource, baseToken: MarketKit.Token, userAddress: EvmKit.Address) -> EvmTransactionConverter {
         EvmTransactionConverter(
+            source: source,
             baseToken: baseToken,
             coinManager: Core.shared.coinManager,
             userAddress: userAddress,
@@ -51,7 +52,7 @@ public enum EvmTransactionConverterFactory {
     }
 
     /// The default chain — total: converts every FullTransaction.
-    public static func defaultConverters(baseToken: MarketKit.Token, userAddress: EvmKit.Address) -> [IEvmTransactionConverter] {
-        [defaultConverter(baseToken: baseToken, userAddress: userAddress)]
+    public static func defaultConverters(source: TransactionSource, baseToken: MarketKit.Token, userAddress: EvmKit.Address) -> [IEvmTransactionConverter] {
+        [defaultConverter(source: source, baseToken: baseToken, userAddress: userAddress)]
     }
 }

@@ -194,7 +194,7 @@ extension StellarOperationConverterTests {
 
         let converter = StellarOperationConverter(
             accountId: Self.own,
-            source: TransactionSource(blockchainType: .stellar, meta: nil),
+            source: TransactionSource(blockchainType: .stellar, meta: nil, accountId: "account"),
             baseToken: Self.baseToken,
             coinManager: StubCoinManager(tokens: [TokenQuery(blockchainType: .stellar, tokenType: .native): Self.baseToken])
         )

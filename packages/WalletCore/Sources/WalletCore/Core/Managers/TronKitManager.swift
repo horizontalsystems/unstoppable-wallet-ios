@@ -13,12 +13,11 @@ public class TronKitManager {
     private let testNetManager: TestNetManager
     private let evmSyncSourceManager: EvmSyncSourceManager
 
-    private weak var _tronKitWrapper: TronKitWrapper?
+    private var _tronKitWrappers = [String: WeakTronKitWrapper]()
 
-    private let tronKitCreatedRelay = PublishRelay<Void>()
-    private let tronKitCreatedSubject = PassthroughSubject<Void, Never>()
+    private let tronKitCreatedRelay = PublishRelay<Account>()
+    private let tronKitCreatedSubject = PassthroughSubject<Account, Never>()
     private let tronKitUpdatedRelay = PublishRelay<Void>()
-    private var currentAccount: Account?
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).tron-kit-manager", qos: .userInitiated)
 
@@ -34,8 +33,8 @@ public class TronKitManager {
     private func handleUpdatedSyncSource(blockchainType: BlockchainType) {
         guard blockchainType == .tron else { return }
         queue.sync {
-            guard _tronKitWrapper != nil else { return }
-            _tronKitWrapper = nil
+            guard _tronKitWrappers.values.contains(where: { $0.wrapper != nil }) else { return }
+            _tronKitWrappers = [:]
             tronKitUpdatedRelay.accept(())
         }
     }
@@ -56,8 +55,8 @@ public class TronKitManager {
     }
 
     private func _tronKitWrapper(account: Account) throws -> TronKitWrapper {
-        if let _tronKitWrapper, let currentAccount, currentAccount == account {
-            return _tronKitWrapper
+        if let wrapper = _tronKitWrappers[account.id]?.wrapper {
+            return wrapper
         }
 
         let network: Network = testNetManager.testNetEnabled ? .nileTestnet : .mainNet
@@ -101,22 +100,21 @@ public class TronKitManager {
             gasTokenPayment: gaslessAccount
         )
 
-        _tronKitWrapper = wrapper
-        currentAccount = account
+        _tronKitWrappers[account.id] = WeakTronKitWrapper(wrapper: wrapper)
 
-        tronKitCreatedRelay.accept(())
-        tronKitCreatedSubject.send()
+        tronKitCreatedRelay.accept(account)
+        tronKitCreatedSubject.send(account)
 
         return wrapper
     }
 }
 
 extension TronKitManager {
-    public var tronKitCreatedPublisher: AnyPublisher<Void, Never> {
+    public var tronKitCreatedPublisher: AnyPublisher<Account, Never> {
         tronKitCreatedSubject.eraseToAnyPublisher()
     }
 
-    var tronKitCreatedObservable: Observable<Void> {
+    var tronKitCreatedObservable: Observable<Account> {
         tronKitCreatedRelay.asObservable()
     }
 
@@ -124,13 +122,14 @@ extension TronKitManager {
         tronKitUpdatedRelay.asObservable()
     }
 
-    public var tronKitWrapper: TronKitWrapper? {
+    /// The account's kit while something holds it; never creates one.
+    public func existingTronKitWrapper(account: Account) -> TronKitWrapper? {
         queue.sync {
-            _tronKitWrapper
+            _tronKitWrappers[account.id]?.wrapper
         }
     }
 
-    func tronKitWrapper(account: Account) throws -> TronKitWrapper {
+    public func tronKitWrapper(account: Account) throws -> TronKitWrapper {
         try queue.sync {
             try _tronKitWrapper(account: account)
         }
@@ -170,6 +169,10 @@ public class TronKitWrapper {
 }
 
 extension TronKitManager {
+    private struct WeakTronKitWrapper {
+        weak var wrapper: TronKitWrapper?
+    }
+
     enum KitWrapperError: Error {
         case mnemonicNoSeed
     }

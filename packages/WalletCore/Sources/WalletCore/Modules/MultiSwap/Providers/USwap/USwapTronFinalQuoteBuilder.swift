@@ -37,7 +37,7 @@ final class USwapTronFinalQuoteBuilder: USwapFinalQuoteBuilder {
         var fees: [TronKit.Fee] = []
         var transactionError: Error?
 
-        if let tronKitWrapper = tronKitManager.tronKitWrapper {
+        if let account = Core.shared.accountManager.activeAccount, let tronKitWrapper = try? tronKitManager.tronKitWrapper(account: account) {
             do {
                 let result = try await TronSendHelper.estimateFees(
                     createdTransaction: transaction,
@@ -76,8 +76,9 @@ final class USwapTronFinalQuoteBuilder: USwapFinalQuoteBuilder {
         // attachment would never reach the provider and the deposit would be unmatchable.
         let memo = try USwapMultiSwapApi.Attachment.memo(deposit.attachment, memoType: input.tokenIn.blockchainType.memoType)
 
-        guard let tronKitWrapper = tronKitManager.tronKitWrapper,
-              let adapter = adapterManager.adapter(for: input.tokenIn) as? ISendTronAdapter
+        guard let account = Core.shared.accountManager.activeAccount,
+              let tronKitWrapper = try? tronKitManager.tronKitWrapper(account: account),
+              let adapter = adapterManager.adapter(for: Wallet(token: input.tokenIn, account: account)) as? ISendTronAdapter
         else {
             throw USwapMultiSwapProvider.SwapError.noTronAdapter
         }

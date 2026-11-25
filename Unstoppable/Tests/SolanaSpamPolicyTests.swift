@@ -156,7 +156,7 @@ struct SpamCounterpartyFactoryTests {
     @Test func evmIncomingSenderIsCounterparty() {
         let token = Self.token(blockchainType: .ethereum, code: "ETH")
         let record = EvmIncomingTransactionRecord(
-            source: TransactionSource(blockchainType: .ethereum, meta: nil),
+            source: TransactionSource(blockchainType: .ethereum, meta: nil, accountId: "account"),
             transaction: EvmKit.Transaction(hash: Data([0x01]), timestamp: 1000, isFailed: false, blockNumber: 777),
             baseToken: token,
             from: "0xsender",
@@ -173,7 +173,7 @@ struct SpamCounterpartyFactoryTests {
     @Test func evmOutgoingRecipientStillWins() {
         let token = Self.token(blockchainType: .ethereum, code: "ETH")
         let record = EvmOutgoingTransactionRecord(
-            source: TransactionSource(blockchainType: .ethereum, meta: nil),
+            source: TransactionSource(blockchainType: .ethereum, meta: nil, accountId: "account"),
             transaction: EvmKit.Transaction(hash: Data([0x02]), timestamp: 1000, isFailed: false),
             baseToken: token,
             to: "0xrecipient",
@@ -188,7 +188,7 @@ struct SpamCounterpartyFactoryTests {
     @Test func tronIncomingSenderIsCounterparty() {
         let token = Self.token(blockchainType: .tron, code: "TRX")
         let record = TronIncomingTransactionRecord(
-            source: TransactionSource(blockchainType: .tron, meta: nil),
+            source: TransactionSource(blockchainType: .tron, meta: nil, accountId: "account"),
             transaction: TronKit.Transaction(hash: Data([0x03]), timestamp: 1000, isFailed: false, blockNumber: 55, confirmed: true),
             baseToken: token,
             from: "Tsender",
@@ -202,7 +202,7 @@ struct SpamCounterpartyFactoryTests {
     @Test func placeholderBlockHeightIsDropped() {
         let token = Self.token(blockchainType: .ethereum, code: "ETH")
         let record = EvmIncomingTransactionRecord(
-            source: TransactionSource(blockchainType: .ethereum, meta: nil),
+            source: TransactionSource(blockchainType: .ethereum, meta: nil, accountId: "account"),
             transaction: EvmKit.Transaction(hash: Data([0x04]), timestamp: 1000, isFailed: false, blockNumber: 0),
             baseToken: token,
             from: "0xsender",

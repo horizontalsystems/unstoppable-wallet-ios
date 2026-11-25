@@ -99,7 +99,7 @@ struct SpamCorrelationTests {
 
         for hash: UInt8 in [1, 2] {
             let record = EvmIncomingTransactionRecord(
-                source: TransactionSource(blockchainType: .ethereum, meta: nil),
+                source: TransactionSource(blockchainType: .ethereum, meta: nil, accountId: "account"),
                 transaction: EvmKit.Transaction(hash: Data([hash]), timestamp: Int(hash), isFailed: false),
                 baseToken: token,
                 from: Self.counterparty,
@@ -118,7 +118,7 @@ struct SpamCorrelationTests {
     @Test func externalContractCallIsScoredNotTrusted() {
         let token = Self.ethToken
         let record = ExternalContractCallTransactionRecord(
-            source: TransactionSource(blockchainType: .ethereum, meta: nil),
+            source: TransactionSource(blockchainType: .ethereum, meta: nil, accountId: "account"),
             transaction: EvmKit.Transaction(hash: Data([0x05]), timestamp: 1, isFailed: false),
             baseToken: token,
             incomingEvents: [TransferEvent(address: "0xsender", value: AppValue(token: token, value: 1))],
@@ -133,7 +133,7 @@ struct SpamCorrelationTests {
     @Test func ownContractCallWithoutSentLegIsTrustedAndCachesSender() {
         let token = Self.ethToken
         let record = ContractCallTransactionRecord(
-            source: TransactionSource(blockchainType: .ethereum, meta: nil),
+            source: TransactionSource(blockchainType: .ethereum, meta: nil, accountId: "account"),
             transaction: EvmKit.Transaction(hash: Data([0x06]), timestamp: 1, isFailed: false),
             baseToken: token,
             contractAddress: "0xcontract",

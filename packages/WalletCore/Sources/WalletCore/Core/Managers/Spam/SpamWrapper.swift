@@ -24,14 +24,12 @@ public class SpamWrapper {
 
     private let storage: ScannedTransactionStorage
     private let contactBookManager: ContactBookManager
-    private let accountManager: AccountManager
     private let logger: Logger?
     private var cancellables = Set<AnyCancellable>()
 
-    public init(storage: ScannedTransactionStorage, contactBookManager: ContactBookManager, accountManager: AccountManager, localStorage: LocalStorage, logger _: Logger? = nil) {
+    public init(storage: ScannedTransactionStorage, contactBookManager: ContactBookManager, localStorage: LocalStorage, logger _: Logger? = nil) {
         self.storage = storage
         self.contactBookManager = contactBookManager
-        self.accountManager = accountManager
         logger = Logger(minLogLevel: .debug)
 
         // Update saved verdicts before contact changes trigger a history reload.
@@ -50,10 +48,6 @@ public class SpamWrapper {
     }
 
     func spamManager(source: TransactionSource) -> SpamManager? {
-        guard let accountId = accountManager.activeAccount?.id else {
-            return nil
-        }
-
         let outputCache = OutputTransactionCache(storage: storage, logger: logger)
 
         let filterChain = SpamFilterChain(logger: logger)
@@ -98,7 +92,7 @@ public class SpamWrapper {
         }
 
         return SpamManager(
-            accountId: accountId,
+            accountId: source.accountId,
             blockchainType: source.blockchainType,
             storage: storage,
             filterChain: filterChain,

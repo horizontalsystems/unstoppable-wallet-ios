@@ -12,7 +12,7 @@ public class TronAccountManager {
     private let restoreStateManager: RestoreStateManager
 
     private let disposeBag = DisposeBag()
-    private var internalDisposeBag = DisposeBag()
+    private var internalDisposeBags = [String: DisposeBag]()
 
     init(accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, tronKitManager: TronKitManager, restoreStateManager: RestoreStateManager) {
         self.accountManager = accountManager
@@ -21,38 +21,35 @@ public class TronAccountManager {
         self.tronKitManager = tronKitManager
         self.restoreStateManager = restoreStateManager
 
-        subscribe(ConcurrentDispatchQueueScheduler(qos: .userInitiated), disposeBag, tronKitManager.tronKitCreatedObservable) { [weak self] in self?.handleTronKitCreated() }
+        subscribe(SerialDispatchQueueScheduler(qos: .userInitiated), disposeBag, tronKitManager.tronKitCreatedObservable) { [weak self] in self?.handleTronKitCreated(account: $0) }
     }
 
-    private func handleTronKitCreated() {
-        internalDisposeBag = DisposeBag()
+    private func handleTronKitCreated(account: Account) {
+        let disposeBag = DisposeBag()
+        internalDisposeBags[account.id] = disposeBag
 
-        subscribeToTransactions()
+        subscribeToTransactions(account: account, disposeBag: disposeBag)
     }
 
-    private func subscribeToTransactions() {
-        guard let tronKitWrapper = tronKitManager.tronKitWrapper else {
+    private func subscribeToTransactions(account: Account, disposeBag: DisposeBag) {
+        guard let tronKitWrapper = tronKitManager.existingTronKitWrapper(account: account) else {
             return
         }
 
         tronKitWrapper.tronKit.allTransactionsPublisher.asObservable()
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe(onNext: { [weak self] fullTransactions, initial in
-                self?.handle(fullTransactions: fullTransactions, initial: initial)
+            .subscribe(onNext: { [weak self, weak tronKitWrapper] fullTransactions, initial in
+                guard let tronKitWrapper else {
+                    return
+                }
+
+                self?.handle(fullTransactions: fullTransactions, initial: initial, account: account, tronKitWrapper: tronKitWrapper)
             })
-            .disposed(by: internalDisposeBag)
+            .disposed(by: disposeBag)
     }
 
-    private func handle(fullTransactions: [FullTransaction], initial: Bool) {
-        guard let account = accountManager.activeAccount else {
-            return
-        }
-
+    private func handle(fullTransactions: [FullTransaction], initial: Bool, account: Account, tronKitWrapper: TronKitWrapper) {
         if initial, account.origin == .restored, !account.watchAccount, !restoreStateManager.shouldRestore(account: account, blockchainType: blockchainType) {
-            return
-        }
-
-        guard let tronKitWrapper = tronKitManager.tronKitWrapper else {
             return
         }
 
@@ -147,7 +144,7 @@ public class TronAccountManager {
     }
 
     private func handle(tokenInfos: [TokenInfo], account: Account, tronKit: TronKit.Kit) {
-        let existingWallets = walletManager.activeWallets
+        let existingWallets = walletManager.wallets(account: account)
         let existingTokenTypeIds = existingWallets.map(\.token.type.id)
         let newTokenInfos = tokenInfos.filter { !existingTokenTypeIds.contains($0.type.id) }
 

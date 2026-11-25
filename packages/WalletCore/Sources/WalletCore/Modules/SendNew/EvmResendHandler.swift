@@ -21,7 +21,8 @@ class EvmResendHandler: SendHandler {
     override class func instance(sendData: SendData) -> ISendHandler? {
         guard case let .evmResend(blockchainType, transaction, type) = sendData,
               let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: blockchainType, tokenType: .native)),
-              let wrapper = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper,
+              let account = Core.shared.accountManager.activeAccount,
+              let wrapper = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper(account: account, blockchainType: blockchainType),
               transaction.from == wrapper.evmKit.receiveAddress
         else { return nil }
 

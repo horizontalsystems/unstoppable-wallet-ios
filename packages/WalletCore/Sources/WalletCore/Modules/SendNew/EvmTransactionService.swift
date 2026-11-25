@@ -7,7 +7,8 @@ import SwiftUI
 class EvmTransactionService: TransactionService {
     override class func instance(sendData: SendData, baseToken: Token, initialTransactionSettings: InitialTransactionSettings?) -> ITransactionService? {
         guard EvmBlockchainManager.blockchainTypes.contains(baseToken.blockchainType),
-              let evmKit = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: baseToken.blockchainType).evmKitWrapper?.evmKit
+              let account = account(sendData: sendData),
+              let evmKit = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: baseToken.blockchainType).evmKitWrapper(account: account, blockchainType: baseToken.blockchainType).evmKit
         else { return nil }
 
         if case let .evmResend(blockchainType, transaction, _) = sendData {
@@ -16,6 +17,15 @@ class EvmTransactionService: TransactionService {
         }
 
         return EvmTransactionService(blockchainType: baseToken.blockchainType, evmKit: evmKit, initialTransactionSettings: initialTransactionSettings)
+    }
+
+    /// The account the send is made from: named by an EVM send, the active one for any other.
+    private static func account(sendData: SendData) -> Account? {
+        if case let .evm(_, _, _, account) = sendData {
+            return account
+        }
+
+        return Core.shared.accountManager.activeAccount
     }
 
     private static let tipsSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))

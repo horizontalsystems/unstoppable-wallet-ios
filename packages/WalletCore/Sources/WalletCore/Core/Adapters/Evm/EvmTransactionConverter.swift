@@ -11,13 +11,10 @@ public class EvmTransactionConverter {
     public let userAddress: EvmKit.Address
     public let evmLabelManager: EvmLabelManager
     public let baseToken: MarketKit.Token
+    public let source: TransactionSource
 
-    /// EVM token types carry no source meta, so the record TransactionSource is fully defined by the base token.
-    public var source: TransactionSource {
-        TransactionSource(blockchainType: baseToken.blockchainType, meta: nil)
-    }
-
-    public init(baseToken: MarketKit.Token, coinManager: CoinManager, userAddress: EvmKit.Address, evmLabelManager: EvmLabelManager) {
+    public init(source: TransactionSource, baseToken: MarketKit.Token, coinManager: CoinManager, userAddress: EvmKit.Address, evmLabelManager: EvmLabelManager) {
+        self.source = source
         self.coinManager = coinManager
         self.userAddress = userAddress
         self.evmLabelManager = evmLabelManager

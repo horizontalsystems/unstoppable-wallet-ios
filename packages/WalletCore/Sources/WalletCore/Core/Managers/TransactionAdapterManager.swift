@@ -41,9 +41,9 @@ public class TransactionAdapterManager {
             let transactionsAdapter: ITransactionsAdapter?
 
             if evmBlockchainManager.allBlockchains.contains(where: { $0.type == source.blockchainType }) {
-                transactionsAdapter = adapterFactory.evmTransactionsAdapter(transactionSource: source)
+                transactionsAdapter = adapterFactory.evmTransactionsAdapter(transactionSource: source, account: wallet.account)
             } else if source.blockchainType == .tron {
-                transactionsAdapter = adapterFactory.tronTransactionsAdapter(transactionSource: source)
+                transactionsAdapter = adapterFactory.tronTransactionsAdapter(transactionSource: source, account: wallet.account)
             } else if source.blockchainType == .thorChain || source.blockchainType == .mayaChain {
                 transactionsAdapter = adapterFactory.thorChainTransactionsAdapter(transactionSource: source)
             } else if source.blockchainType == .ton {

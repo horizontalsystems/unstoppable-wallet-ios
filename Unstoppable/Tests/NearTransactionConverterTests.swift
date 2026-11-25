@@ -408,7 +408,7 @@ extension NearTransactionConverterTests {
 
         let converter = NearTransactionConverter(
             accountId: own,
-            source: TransactionSource(blockchainType: .near, meta: nil),
+            source: TransactionSource(blockchainType: .near, meta: nil, accountId: "account"),
             baseToken: nearToken,
             coinManager: StubCoinManager(tokens: tokens),
             ftMetadata: { _ in

@@ -97,8 +97,10 @@ class AppStatusViewModel: ObservableObject {
         }
 
         for blockchain in evmBlockchainManager.allBlockchains {
-            if let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchainType: blockchain.type).evmKitWrapper {
-                blockchainBlocks.append(block(blockchain: blockchain.name, statusInfo: evmKitWrapper.evmKit.statusInfo()))
+            for account in Set(walletManager.activeWallets.filter { $0.token.blockchainType == blockchain.type }.map(\.account)) {
+                if let evmKitWrapper = (try? evmBlockchainManager.evmKitManager(blockchainType: blockchain.type))?.existingEvmKitWrapper(account: account) {
+                    blockchainBlocks.append(block(blockchain: blockchain.name, statusInfo: evmKitWrapper.evmKit.statusInfo()))
+                }
             }
         }
 

@@ -24,7 +24,9 @@ class EvmHexBroadcaster: IOpenCryptoPayBroadcaster {
         guard let gasLimit = evmData.evmFeeData?.surchargedGasLimit else {
             throw OpenCryptoPayBroadcastError.missingField("gasLimit")
         }
-        guard let wrapper = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
+        guard let account = Core.shared.accountManager.activeAccount,
+              let wrapper = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper(account: account, blockchainType: blockchainType)
+        else {
             throw OpenCryptoPayBroadcastError.noWrapper
         }
         guard let signer = wrapper.signer else {

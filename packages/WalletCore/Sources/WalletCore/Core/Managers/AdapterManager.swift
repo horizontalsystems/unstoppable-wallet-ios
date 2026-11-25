@@ -285,15 +285,21 @@ extension AdapterManager {
 
     func refresh() {
         DispatchQueue.global(qos: .background).async {
+            let wallets = Array(self._adapterData.adapterMap.keys)
+
             for blockchain in self.evmBlockchainManager.allBlockchains {
-                try? self.evmBlockchainManager.evmKitManager(blockchainType: blockchain.type).evmKitWrapper?.evmKit.refresh()
+                for account in Set(wallets.filter { $0.token.blockchainType == blockchain.type }.map(\.account)) {
+                    (try? self.evmBlockchainManager.evmKitManager(blockchainType: blockchain.type))?.existingEvmKitWrapper(account: account)?.evmKit.refresh()
+                }
             }
 
             for (_, adapter) in self._adapterData.adapterMap {
                 adapter.refresh()
             }
 
-            self.tronKitManager.tronKitWrapper?.tronKit.refresh()
+            for account in Set(wallets.filter { $0.token.blockchainType == .tron }.map(\.account)) {
+                self.tronKitManager.existingTronKitWrapper(account: account)?.tronKit.refresh()
+            }
             self.tonKitManager.tonKit?.sync()
             self.stellarKitManager.stellarKit?.sync()
             self.zanoKitManager.kit?.refresh()
@@ -304,9 +310,9 @@ extension AdapterManager {
     func refresh(wallet: Wallet) {
         DispatchQueue.global(qos: .background).async {
             if let blockchainType = self.evmBlockchainManager.blockchain(token: wallet.token)?.type {
-                try? self.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit.refresh()
+                (try? self.evmBlockchainManager.evmKitManager(blockchainType: blockchainType))?.existingEvmKitWrapper(account: wallet.account)?.evmKit.refresh()
             } else if wallet.token.blockchainType == .tron {
-                self.tronKitManager.tronKitWrapper?.tronKit.refresh()
+                self.tronKitManager.existingTronKitWrapper(account: wallet.account)?.tronKit.refresh()
             } else if wallet.token.blockchainType == .ton {
                 self.tonKitManager.tonKit?.sync()
             } else if wallet.token.blockchainType == .stellar {

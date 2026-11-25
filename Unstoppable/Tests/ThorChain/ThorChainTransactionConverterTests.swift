@@ -220,7 +220,7 @@ struct ThorChainTransactionConverterTests {
         let kit = try ThorChainKit.Kit.instance(address: address, walletId: "converter-\(UUID().uuidString)", endpoints: endpoints)
 
         return ThorChainTransactionConverter(
-            source: TransactionSource(blockchainType: .thorChain, meta: nil),
+            source: TransactionSource(blockchainType: .thorChain, meta: nil, accountId: "account"),
             baseToken: token(),
             coinManager: StubCoinManager(tokens: knownTokens),
             thorChainKitWrapper: ThorChainKitWrapper(thorChainKit: kit, signer: nil)

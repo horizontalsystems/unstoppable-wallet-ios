@@ -40,9 +40,9 @@ class TronSwapBroadcaster: ISwapBroadcaster {
 }
 
 extension TronSwapBroadcaster: ISwapBroadcasterType {
-    static func make(blockchainType: BlockchainType, account _: Account) -> ISwapBroadcaster? {
+    static func make(blockchainType: BlockchainType, account: Account) -> ISwapBroadcaster? {
         guard blockchainType == .tron,
-              let tronKitWrapper = Core.shared.tronAccountManager.tronKitManager.tronKitWrapper,
+              let tronKitWrapper = try? Core.shared.tronAccountManager.tronKitManager.tronKitWrapper(account: account),
               tronKitWrapper.signer != nil
         else {
             return nil

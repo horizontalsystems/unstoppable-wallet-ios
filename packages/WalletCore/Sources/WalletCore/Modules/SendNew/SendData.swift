@@ -12,7 +12,7 @@ import XrpKit
 import ZODLSwiftWalletSDK
 
 public enum SendData {
-    case evm(blockchainType: BlockchainType, transactionData: TransactionData, token: Token)
+    case evm(blockchainType: BlockchainType, transactionData: TransactionData, token: Token, account: Account)
     case evmResend(blockchainType: BlockchainType, transaction: EvmKit.Transaction, type: ResendTransactionType)
     case bitcoinResend(BitcoinResendRequest)
     case bitcoin(token: Token, params: SendParameters)
@@ -21,7 +21,7 @@ public enum SendData {
     case zcashShield(amount: Decimal, recipient: Recipient?, memo: String?)
     case zcashMigration
     case tron(token: Token, contract: TronKit.Contract)
-    case tronGasFree(token: Token, receiver: TronKit.Address, value: BigUInt)
+    case tronGasFree(token: Token, receiver: TronKit.Address, value: BigUInt, account: Account)
     case ton(token: Token, amount: Decimal, address: FriendlyAddress, memo: String?)
     case stellar(data: StellarSendData, token: Token, memo: String?)
     case solana(token: Token, amount: Decimal, address: String, memo: String?)

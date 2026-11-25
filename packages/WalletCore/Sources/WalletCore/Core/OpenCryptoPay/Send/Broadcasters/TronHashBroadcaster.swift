@@ -20,7 +20,7 @@ class TronHashBroadcaster: IOpenCryptoPayBroadcaster {
         guard let totalFees = tronData.totalFees else {
             throw OpenCryptoPayBroadcastError.missingField("totalFees")
         }
-        guard let wrapper = Core.shared.tronAccountManager.tronKitManager.tronKitWrapper else {
+        guard let account = Core.shared.accountManager.activeAccount, let wrapper = try? Core.shared.tronAccountManager.tronKitManager.tronKitWrapper(account: account) else {
             throw OpenCryptoPayBroadcastError.noWrapper
         }
 

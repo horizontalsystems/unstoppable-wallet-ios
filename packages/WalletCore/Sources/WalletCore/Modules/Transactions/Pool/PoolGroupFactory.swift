@@ -21,6 +21,7 @@ public class PoolGroupFactory {
                 if Core.shared.evmBlockchainManager.allBlockchains.contains(where: { $0 == wallet.token.blockchain }) || wallet.token.blockchainType == .tron || wallet.token.blockchainType == .ton || wallet.token.blockchainType == .stellar || wallet.token.blockchainType == .xrp || wallet.token.blockchainType == .near {
                     poolSource = PoolSource(
                         token: nil,
+                        account: wallet.account,
                         blockchainType: wallet.token.blockchainType,
                         filter: filter,
                         address: address
@@ -28,6 +29,7 @@ public class PoolGroupFactory {
                 } else {
                     poolSource = PoolSource(
                         token: wallet.token,
+                        account: wallet.account,
                         blockchainType: wallet.token.blockchainType,
                         filter: filter,
                         address: address
@@ -52,16 +54,22 @@ public class PoolGroupFactory {
                 return []
             }
             if Core.shared.evmBlockchainManager.allBlockchains.contains(where: { $0.type == blockchainType }) || blockchainType == .tron || blockchainType == .ton || blockchainType == .stellar || blockchainType == .xrp || blockchainType == .near {
-                let poolSource = PoolSource(
-                    token: nil,
-                    blockchainType: blockchainType,
-                    filter: filter,
-                    address: address
-                )
+                let accounts = Set(wallets.filter { $0.token.blockchainType == blockchainType }.map(\.account))
 
-                if let adapter = Core.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
-                    let provider = PoolProvider(adapter: adapter, source: poolSource)
-                    return [provider]
+                return accounts.compactMap { account in
+                    let poolSource = PoolSource(
+                        token: nil,
+                        account: account,
+                        blockchainType: blockchainType,
+                        filter: filter,
+                        address: address
+                    )
+
+                    guard let adapter = Core.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) else {
+                        return nil
+                    }
+
+                    return PoolProvider(adapter: adapter, source: poolSource)
                 }
             } else {
                 var providers = [PoolProvider]()
@@ -72,6 +80,7 @@ public class PoolGroupFactory {
 
                     let poolSource = PoolSource(
                         token: wallet.token,
+                        account: wallet.account,
                         blockchainType: blockchainType,
                         filter: filter,
                         address: address
@@ -85,7 +94,7 @@ public class PoolGroupFactory {
                 return providers
             }
 
-        case let .tokens(tokens):
+        case let .tokens(tokens, accounts):
             var poolSources = Set<PoolSource>()
 
             for token in tokens {
@@ -95,14 +104,18 @@ public class PoolGroupFactory {
                     continue
                 }
 
-                let poolSource = PoolSource(
-                    token: token,
-                    blockchainType: token.blockchainType,
-                    filter: filter,
-                    address: address
-                )
+                // a token in an account without its wallet has no adapter and drops out below
+                for account in accounts {
+                    let poolSource = PoolSource(
+                        token: token,
+                        account: account,
+                        blockchainType: token.blockchainType,
+                        filter: filter,
+                        address: address
+                    )
 
-                poolSources.insert(poolSource)
+                    poolSources.insert(poolSource)
+                }
             }
 
             return poolSources.compactMap { poolSource in
@@ -132,6 +145,6 @@ public extension PoolGroupFactory {
     enum PoolGroupType {
         case all(wallets: [Wallet])
         case blockchain(blockchainType: BlockchainType, wallets: [Wallet])
-        case tokens(tokens: [Token])
+        case tokens(tokens: [Token], accounts: [Account])
     }
 }

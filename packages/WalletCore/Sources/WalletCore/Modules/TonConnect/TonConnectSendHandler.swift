@@ -277,7 +277,7 @@ extension TonConnectSendHandler {
             throw FactoryError.noBaseToken
         }
 
-        let transactionSource = TransactionSource(blockchainType: .ton, meta: nil)
+        let transactionSource = TransactionSource(blockchainType: .ton, meta: nil, accountId: account.id)
 
         return TonConnectSendHandler(
             request: request,

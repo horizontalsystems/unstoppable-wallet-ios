@@ -11,6 +11,7 @@ public class Eip20Adapter: BaseEvmAdapter {
     public let eip20Kit: Eip20Kit.Kit
     private let contractAddress: EvmKit.Address
     private let token: Token
+    private let account: Account
     private let converters: [IEvmTransactionConverter]
 
     init(evmKitWrapper: EvmKitWrapper, contractAddress: String, wallet: Wallet, baseToken: Token) throws {
@@ -18,8 +19,9 @@ public class Eip20Adapter: BaseEvmAdapter {
         eip20Kit = try Eip20Kit.Kit.instance(evmKit: evmKitWrapper.evmKit, contractAddress: address)
         self.contractAddress = address
         token = wallet.token
+        account = wallet.account
 
-        converters = EvmTransactionConverterFactory.converters(baseToken: baseToken, userAddress: evmKitWrapper.evmKit.address)
+        converters = EvmTransactionConverterFactory.converters(source: wallet.transactionSource, baseToken: baseToken, userAddress: evmKitWrapper.evmKit.address)
 
         super.init(evmKitWrapper: evmKitWrapper, decimals: wallet.decimals)
     }
@@ -100,7 +102,7 @@ extension Eip20Adapter: IApproveDataProvider {
         let address = try EvmKit.Address(hex: spenderAddress.raw)
         let transactionData = eip20Kit.approveTransactionData(spenderAddress: address, amount: amount)
 
-        return .evm(blockchainType: token.blockchainType, transactionData: transactionData, token: token)
+        return .evm(blockchainType: token.blockchainType, transactionData: transactionData, token: token, account: account)
     }
 }
 

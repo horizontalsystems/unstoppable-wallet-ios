@@ -50,8 +50,8 @@ class EvmSwapBroadcaster: ISwapBroadcaster {
 }
 
 extension EvmSwapBroadcaster: ISwapBroadcasterType {
-    static func make(blockchainType: BlockchainType, account _: Account) -> ISwapBroadcaster? {
-        guard let evmKitWrapper = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper,
+    static func make(blockchainType: BlockchainType, account: Account) -> ISwapBroadcaster? {
+        guard let evmKitWrapper = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper(account: account, blockchainType: blockchainType),
               evmKitWrapper.signer != nil
         else {
             return nil

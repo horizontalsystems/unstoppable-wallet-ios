@@ -94,7 +94,12 @@ final class USwapEvmFinalQuoteBuilder: USwapFinalQuoteBuilder {
         var evmFeeData: EvmFeeData?
         var transactionError: Error?
 
-        if let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: input.tokenIn.blockchainType).evmKitWrapper, let gasPrice {
+        let evmKitManager = try evmBlockchainManager.evmKitManager(blockchainType: input.tokenIn.blockchainType)
+
+        if let account = Core.shared.accountManager.activeAccount,
+           let evmKitWrapper = try? evmKitManager.evmKitWrapper(account: account, blockchainType: input.tokenIn.blockchainType),
+           let gasPrice
+        {
             let gasPriceData = GasPriceData(recommended: settingsGasPriceData?.recommended ?? gasPrice, userDefined: gasPrice)
 
             do {

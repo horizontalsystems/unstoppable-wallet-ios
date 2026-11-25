@@ -22,8 +22,8 @@ class EvmSendHandler: SendHandler {
     }
 
     override class func instance(sendData: SendData) -> ISendHandler? {
-        guard case let .evm(blockchainType, transactionData, token) = sendData else { return nil }
-        return instance(blockchainType: blockchainType, transactionData: transactionData, sendToken: token)
+        guard case let .evm(blockchainType, transactionData, token, account) = sendData else { return nil }
+        return instance(blockchainType: blockchainType, transactionData: transactionData, sendToken: token, account: account)
     }
 }
 
@@ -143,8 +143,8 @@ extension EvmSendHandler {
 }
 
 extension EvmSendHandler {
-    static func instance(blockchainType: BlockchainType, transactionData: TransactionData, sendToken: Token) -> EvmSendHandler? {
-        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: blockchainType, tokenType: .native)), let evmKitWrapper = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
+    static func instance(blockchainType: BlockchainType, transactionData: TransactionData, sendToken: Token, account: Account) -> EvmSendHandler? {
+        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: blockchainType, tokenType: .native)), let evmKitWrapper = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper(account: account, blockchainType: blockchainType) else {
             return nil
         }
 
@@ -153,7 +153,7 @@ extension EvmSendHandler {
             transactionData: transactionData,
             evmKitWrapper: evmKitWrapper,
             sendToken: sendToken,
-            balanceAdapter: Core.shared.adapterManager.adapter(for: sendToken) as? IBalanceAdapter
+            balanceAdapter: Core.shared.adapterManager.adapter(for: Wallet(token: sendToken, account: account)) as? IBalanceAdapter
         )
     }
 

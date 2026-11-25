@@ -15,7 +15,7 @@ enum UnstoppableEvmKitConfigProvider: IEvmKitConfigProvider {
 }
 
 enum UnstoppableEvmTransactionConverterProvider: IEvmTransactionConverterProvider {
-    static func converters(baseToken: MarketKit.Token, userAddress: EvmKit.Address) -> [IEvmTransactionConverter]? {
-        EvmTransactionConverterFactory.defaultConverters(baseToken: baseToken, userAddress: userAddress)
+    static func converters(source: TransactionSource, baseToken: MarketKit.Token, userAddress: EvmKit.Address) -> [IEvmTransactionConverter]? {
+        EvmTransactionConverterFactory.defaultConverters(source: source, baseToken: baseToken, userAddress: userAddress)
     }
 }

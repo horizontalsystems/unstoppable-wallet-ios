@@ -18,7 +18,7 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
         self.evmTransactionSource = evmTransactionSource
         spamManager = spamWrapper.spamManager(source: source)
 
-        converters = EvmTransactionConverterFactory.converters(baseToken: baseToken, userAddress: evmKitWrapper.evmKit.address)
+        converters = EvmTransactionConverterFactory.converters(source: source, baseToken: baseToken, userAddress: evmKitWrapper.evmKit.address)
         super.init(evmKitWrapper: evmKitWrapper, decimals: EvmAdapter.decimals)
 
         initializeSpamManager()

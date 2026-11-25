@@ -160,10 +160,10 @@ public class AdapterFactory {
 }
 
 extension AdapterFactory {
-    func evmTransactionsAdapter(transactionSource: TransactionSource) -> ITransactionsAdapter? {
+    func evmTransactionsAdapter(transactionSource: TransactionSource, account: Account) -> ITransactionsAdapter? {
         let blockchainType = transactionSource.blockchainType
 
-        if let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper,
+        if let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper(account: account, blockchainType: blockchainType),
            let baseToken = evmBlockchainManager.baseToken(blockchainType: blockchainType)
         {
             let syncSource = evmSyncSourceManager.syncSource(blockchainType: blockchainType)
@@ -180,10 +180,10 @@ extension AdapterFactory {
         return nil
     }
 
-    func tronTransactionsAdapter(transactionSource: TransactionSource) -> ITransactionsAdapter? {
+    func tronTransactionsAdapter(transactionSource: TransactionSource, account: Account) -> ITransactionsAdapter? {
         let query = TokenQuery(blockchainType: .tron, tokenType: .native)
 
-        if let tronKitWrapper = tronKitManager.tronKitWrapper, let baseToken = try? coinManager.token(query: query) {
+        if let tronKitWrapper = try? tronKitManager.tronKitWrapper(account: account), let baseToken = try? coinManager.token(query: query) {
             let adapter = TronTransactionsAdapter(
                 tronKitWrapper: tronKitWrapper,
                 source: transactionSource,

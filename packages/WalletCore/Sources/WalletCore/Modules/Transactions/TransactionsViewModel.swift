@@ -378,7 +378,8 @@ class TransactionsViewModel: ObservableObject {
 
     private var poolGroupType: PoolGroupFactory.PoolGroupType {
         if let token = transactionFilter.token {
-            return .tokens(tokens: [token])
+            let wallets = walletManager.activeWallets.filter { $0.token.blockchainType == token.blockchainType }
+            return .tokens(tokens: [token], accounts: Array(Set(wallets.map(\.account))))
         } else if let blockchain = transactionFilter.blockchain {
             return .blockchain(blockchainType: blockchain.type, wallets: walletManager.activeWallets)
         } else {
@@ -517,9 +518,9 @@ extension TransactionsViewModel {
     }
 
     /// Unique within the list: one transaction can reach it from two sources of a blockchain, such as
-    /// a transfer between two Bitcoin derivations of a wallet, with the same `uid` in each
+    /// a transfer between two Bitcoin derivations of a wallet, with the same `uid` in each, or between two accounts
     static func viewItemId(record: TransactionRecord) -> String {
-        "\(record.source.blockchainType.uid)|\(record.source.meta ?? "")|\(record.uid)"
+        "\(record.source.accountId)|\(record.source.blockchainType.uid)|\(record.source.meta ?? "")|\(record.uid)"
     }
 
     struct ViewItem: Identifiable, Equatable {

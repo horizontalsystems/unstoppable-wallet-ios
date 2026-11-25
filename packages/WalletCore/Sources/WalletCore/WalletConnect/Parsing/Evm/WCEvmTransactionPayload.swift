@@ -41,6 +41,10 @@ class WCEvmTransactionPayload: WCRequestPayload {
     }
 
     override func makeSendData() -> SendData? {
-        .evm(blockchainType: blockchainType, transactionData: transaction.transactionData, token: baseToken)
+        guard let account = Core.shared.accountManager.activeAccount else {
+            return nil
+        }
+
+        return .evm(blockchainType: blockchainType, transactionData: transaction.transactionData, token: baseToken, account: account)
     }
 }

@@ -19,8 +19,10 @@ class EvmAccountManager {
     private let restoreStateManager: RestoreStateManager
 
     private let disposeBag = DisposeBag()
-    private var cancellables = Set<AnyCancellable>()
-    private var tasks = Set<AnyTask>()
+    private var cancellables = [String: Set<AnyCancellable>]()
+    private var tasks = [String: Set<AnyTask>]()
+    // serial: kits of several accounts report at once, and each keeps its own subscriptions
+    private let queue = DispatchQueue(label: "\(AppConfig.label).evm-account-manager", qos: .userInitiated)
 
     init(blockchainType: BlockchainType, accountManager: AccountManager, walletManager: WalletManager, marketKit: MarketKit.Kit, evmKitManager: EvmKitManager, restoreStateManager: RestoreStateManager) {
         self.blockchainType = blockchainType
@@ -30,39 +32,35 @@ class EvmAccountManager {
         self.evmKitManager = evmKitManager
         self.restoreStateManager = restoreStateManager
 
-        subscribe(ConcurrentDispatchQueueScheduler(qos: .userInitiated), disposeBag, evmKitManager.evmKitCreatedObservable) { [weak self] in self?.handleEvmKitCreated() }
+        subscribe(SerialDispatchQueueScheduler(queue: queue, internalSerialQueueName: queue.label), disposeBag, evmKitManager.evmKitCreatedObservable) { [weak self] in self?.handleEvmKitCreated(account: $0) }
     }
 
-    private func handleEvmKitCreated() {
-        cancellables = Set([])
-        tasks = Set([])
+    private func handleEvmKitCreated(account: Account) {
+        cancellables[account.id] = Set([])
+        tasks[account.id] = Set([])
 
-        subscribeToTransactions()
+        subscribeToTransactions(account: account)
     }
 
-    private func subscribeToTransactions() {
-        guard let evmKitWrapper = evmKitManager.evmKitWrapper else {
+    private func subscribeToTransactions(account: Account) {
+        guard let evmKitWrapper = evmKitManager.existingEvmKitWrapper(account: account) else {
             return
         }
 
         evmKitWrapper.evmKit.allTransactionsPublisher
-            .receive(on: DispatchQueue.global(qos: .userInitiated))
-            .sink { [weak self] fullTransactions, initial in
-                self?.handle(fullTransactions: fullTransactions, initial: initial)
+            .receive(on: queue)
+            .sink { [weak self, weak evmKitWrapper] fullTransactions, initial in
+                guard let evmKitWrapper else {
+                    return
+                }
+
+                self?.handle(fullTransactions: fullTransactions, initial: initial, account: account, evmKitWrapper: evmKitWrapper)
             }
-            .store(in: &cancellables)
+            .store(in: &cancellables[account.id, default: []])
     }
 
-    private func handle(fullTransactions: [FullTransaction], initial: Bool) {
-        guard let account = accountManager.activeAccount else {
-            return
-        }
-
+    private func handle(fullTransactions: [FullTransaction], initial: Bool, account: Account, evmKitWrapper: EvmKitWrapper) {
         if initial, account.origin == .restored, !account.watchAccount, !restoreStateManager.shouldRestore(account: account, blockchainType: blockchainType) {
-            return
-        }
-
-        guard let evmKitWrapper = evmKitManager.evmKitWrapper else {
             return
         }
 
@@ -206,7 +204,7 @@ class EvmAccountManager {
     private func handle(tokenInfos: [TokenInfo], account: Account, evmKit: EvmKit.Kit) {
 //        print("Handle Tokens: \(tokenInfos.count)\n\(tokenInfos.map { $0.type.id }.joined(separator: " "))")
 
-        let existingWallets = walletManager.activeWallets
+        let existingWallets = walletManager.wallets(account: account)
         let existingTokenTypeIds = existingWallets.map(\.token.type.id)
         let newTokenInfos = tokenInfos.filter { !existingTokenTypeIds.contains($0.type.id) }
 
@@ -248,7 +246,7 @@ class EvmAccountManager {
             self?.handle(processedTokenInfos: nonZeroBalanceTokens, account: account)
         }
 
-        task.store(in: &tasks)
+        task.store(in: &tasks[account.id, default: []])
     }
 
     private func handle(processedTokenInfos infos: [TokenInfo], account: Account) {
