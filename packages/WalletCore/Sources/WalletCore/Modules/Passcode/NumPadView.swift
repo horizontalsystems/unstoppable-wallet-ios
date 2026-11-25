@@ -90,6 +90,8 @@ struct NumPadView: View {
                 content(isPressed: configuration.isPressed)
                     .animation(configuration.isPressed ? Self.pressAnimation : Self.releaseAnimation, value: configuration.isPressed)
             }
+            // the label is clear, so without a shape only the glyph takes touches; the whole cell is the button
+            .contentShape(Rectangle())
         }
 
         @ViewBuilder private func content(isPressed: Bool) -> some View {
@@ -120,6 +122,5 @@ private extension View {
     func numPadCell() -> some View {
         frame(maxWidth: .infinity)
             .frame(height: .margin64)
-            .contentShape(Rectangle())
     }
 }
