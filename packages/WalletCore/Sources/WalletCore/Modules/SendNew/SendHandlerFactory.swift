@@ -55,6 +55,17 @@ public enum SendHandlerFactory {
 
         return nil
     }
+
+    /// test seam: registry is global mutable state
+    static func snapshot() -> (handlers: [SendHandler.Type], preSendHandlers: [PreSendHandler.Type]) {
+        (handlers: providers, preSendHandlers: preSendProviders)
+    }
+
+    /// test seam: registry is global mutable state
+    static func restore(handlers: [SendHandler.Type], preSendHandlers: [PreSendHandler.Type]) {
+        providers = handlers
+        preSendProviders = preSendHandlers
+    }
 }
 
 public extension SendHandlerFactory {

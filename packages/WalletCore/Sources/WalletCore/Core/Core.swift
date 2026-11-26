@@ -10,13 +10,7 @@ public class Core {
         let core = try Core(config: config, widgetRefresher: widgetRefresher)
         instance = core
 
-        SendHandlerFactory.unstoppableHandlers.forEach { SendHandlerFactory.register($0) }
-        SendHandlerFactory.unstoppablePreSendHandlers.forEach { SendHandlerFactory.register($0) }
-        NodeNetworkHandlerFactory.unstoppableHandlers.forEach { NodeNetworkHandlerFactory.register($0) }
-        TransactionServiceFactory.unstoppableTransactionServices.forEach { TransactionServiceFactory.register($0) }
-        SwapBroadcasterFactory.register(SwapBroadcasterFactory.unstoppableBroadcasters)
-        RestoreSettingsHandlerFactory.unstoppableHandlers.forEach { RestoreSettingsHandlerFactory.register($0) }
-        SpendStepHandlerFactory.unstoppableHandlers.forEach { SpendStepHandlerFactory.register($0) }
+        HandlerRegistrations.builtIn().install()
         if let walletConnect = core.walletConnect {
             WCSendHandlerProvider.registry = walletConnect.sendHandlerRegistry
             SendHandlerFactory.register(WCSendHandlerProvider.self)

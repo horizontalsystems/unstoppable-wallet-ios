@@ -21,6 +21,16 @@ public enum TransactionServiceFactory {
 
         return nil
     }
+
+    /// test seam: registry is global mutable state
+    static func snapshot() -> [TransactionService.Type] {
+        providers
+    }
+
+    /// test seam: registry is global mutable state
+    static func restore(_ providers: [TransactionService.Type]) {
+        Self.providers = providers
+    }
 }
 
 public extension TransactionServiceFactory {
