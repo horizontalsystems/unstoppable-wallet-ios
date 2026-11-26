@@ -6,7 +6,8 @@ import MarketKit
 /// - `adapter(wallet:)` and `transactionsAdapter(source:walletAdapter:)` are called on background queues
 ///   (`AdapterManager`'s and `TransactionAdapterManager`'s init queues) and must be thread-safe.
 /// - A `nil` result is final for that wallet or source: the caller does not fall back to its legacy switch.
-/// - `adaptersInvalidated` emits the blockchain type whose adapters must be recreated, and may emit on any thread.
+/// - `adaptersInvalidated` emits the blockchain type whose adapters must be recreated, and may emit on any thread,
+///   but never from inside the plugin's own serial queues or locks.
 public protocol AdapterCapability: BlockchainPlugin {
     func adapter(wallet: Wallet) -> IAdapter?
     func transactionsAdapter(source: TransactionSource, walletAdapter: IAdapter) -> ITransactionsAdapter?

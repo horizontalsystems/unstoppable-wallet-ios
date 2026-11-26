@@ -1,4 +1,5 @@
 import Combine
+import Foundation
 import MarketKit
 
 final class NearPlugin: BlockchainPlugin, AdapterCapability, LifecycleCapability {
@@ -73,7 +74,10 @@ extension NearPlugin {
     }
 
     var adaptersInvalidated: AnyPublisher<BlockchainType, Never> {
-        kitManager.kitStoppedPublisher.map { _ in BlockchainType.near }.eraseToAnyPublisher()
+        kitManager.kitStoppedPublisher
+            .map { _ in BlockchainType.near }
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
+            .eraseToAnyPublisher()
     }
 }
 
