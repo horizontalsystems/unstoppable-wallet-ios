@@ -2,7 +2,7 @@ import Combine
 import MarketKit
 import SwiftUI
 
-extension NearPlugin {
+extension NearPlugin: NetworkSettingsCapability {
     func networkSettingsItems() -> [NetworkSettingsItem] {
         [
             NetworkSettingsItem(

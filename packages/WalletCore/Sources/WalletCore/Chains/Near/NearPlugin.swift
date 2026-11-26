@@ -2,7 +2,7 @@ import Combine
 import Foundation
 import MarketKit
 
-final class NearPlugin: BlockchainPlugin, AdapterCapability, LifecycleCapability, SendCapability, RestoreSettingsCapability, NetworkSettingsCapability, SwapCapability {
+final class NearPlugin: BlockchainPlugin, AdapterCapability, LifecycleCapability, SendCapability, RestoreSettingsCapability {
     private struct State {
         let nodeManager: NearNodeManager
         let kitManager: NearKitManager

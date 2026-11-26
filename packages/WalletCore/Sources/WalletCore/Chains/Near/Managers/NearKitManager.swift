@@ -74,7 +74,7 @@ public class NearKitManager {
             _nearKit.stop()
         }
 
-        let network = Self.network
+        let network = network
 
         let kit = try NearKit.Kit.instance(
             accountId: accountId,

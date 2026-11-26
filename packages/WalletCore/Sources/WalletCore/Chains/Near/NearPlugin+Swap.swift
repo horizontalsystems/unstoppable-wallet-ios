@@ -1,6 +1,6 @@
 import MarketKit
 
-extension NearPlugin {
+extension NearPlugin: SwapCapability {
     func uSwapFinalQuoteBuilders(adapterManager: AdapterManager) -> [USwapFinalQuoteBuilder] {
         [USwapNearFinalQuoteBuilder(adapterManager: adapterManager)]
     }
