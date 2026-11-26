@@ -1,7 +1,6 @@
 import Foundation
 import MarketKit
 import MoneroKit
-import NearKit
 import ZanoKit
 import ZODLSwiftWalletSDK
 
@@ -100,11 +99,5 @@ extension RestoreSettings {
     var birthdayHeight: Int? {
         // a negative value would trap in UInt64() when an adapter starts; treat it as absent
         self[.birthdayHeight].flatMap { Int($0) }.flatMap { $0 >= 0 ? $0 : nil }
-    }
-
-    /// The NEAR account a restored phrase opens instead of its implicit one. An id that is not a NEAR
-    /// account (a hand-edited backup) is ignored, so the wallet still opens on the implicit account.
-    var nearAccountId: String? {
-        self[.nearAccountId].flatMap { NearKit.Kit.isValid(accountId: $0) ? $0 : nil }
     }
 }

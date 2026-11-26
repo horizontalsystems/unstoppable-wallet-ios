@@ -395,10 +395,6 @@ enum TestTags {
     static let zcashNodeUrlPaste = "zcash_node_url_paste"
     static let zcashNodeUrlClear = "zcash_node_url_clear"
 
-    static let nearAccountNameInput = "near_account_name_input"
-    static let nearAccountNamePaste = "near_account_name_paste"
-    static let nearAccountNameClear = "near_account_name_clear"
-
     static let addTokenInput = "add_token_input"
     static let addTokenScan = "add_token_scan"
     static let addTokenPaste = "add_token_paste"
