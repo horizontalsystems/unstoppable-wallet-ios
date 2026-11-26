@@ -16,6 +16,7 @@ public class HapticGenerator: HUDFeedbackGenerator {
         case .success: notificationGenerator.notificationOccurred(.success)
         case .warning: notificationGenerator.notificationOccurred(.warning)
         case let .feedback(style): if impactStyle != style {
+                impactStyle = style
                 impactGenerator = UIImpactFeedbackGenerator(style: style)
             }
             impactGenerator.impactOccurred()
