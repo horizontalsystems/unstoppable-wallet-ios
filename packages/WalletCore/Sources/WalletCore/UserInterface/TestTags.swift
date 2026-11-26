@@ -412,4 +412,9 @@ enum TestTags {
     static let addTokenClear = "add_token_clear"
 
     static let moneroAccountNameInput = "monero_account_name_input"
+
+    static let showExtendedKeyPurpose = "show_extended_key_purpose"
+    static let showExtendedKeyBlockchain = "show_extended_key_blockchain"
+    static let showExtendedKeyAccount = "show_extended_key_account"
+    static let showMoneroKeyType = "show_monero_key_type"
 }

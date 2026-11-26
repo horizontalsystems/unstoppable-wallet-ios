@@ -33,6 +33,7 @@ struct MoneroKeyView: View {
                                     )
                                 }
                             }
+                            .accessibilityIdentifier(TestTags.showMoneroKeyType)
                         }
                     )
                 }

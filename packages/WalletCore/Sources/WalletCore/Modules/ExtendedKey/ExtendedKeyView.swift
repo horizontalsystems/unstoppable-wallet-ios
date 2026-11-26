@@ -26,7 +26,8 @@ struct ExtendedKeyView: View {
                     controlRow(
                         title: "extended_key.purpose".localized,
                         value: viewItem.derivation,
-                        switchable: viewItem.derivationSwitchable
+                        switchable: viewItem.derivationSwitchable,
+                        identifier: TestTags.showExtendedKeyPurpose
                     ) {
                         presentSelector(title: "extended_key.purpose".localized, viewItems: viewModel.derivationViewItems) { index in
                             viewModel.onSelectDerivation(index: index)
@@ -37,7 +38,8 @@ struct ExtendedKeyView: View {
                         controlRow(
                             title: "extended_key.blockchain".localized,
                             value: blockchain,
-                            switchable: viewItem.blockchainSwitchable
+                            switchable: viewItem.blockchainSwitchable,
+                            identifier: TestTags.showExtendedKeyBlockchain
                         ) {
                             presentSelector(title: "extended_key.blockchain".localized, viewItems: viewModel.blockchainViewItems) { index in
                                 viewModel.onSelectBlockchain(index: index)
@@ -50,6 +52,7 @@ struct ExtendedKeyView: View {
                             title: "extended_key.account".localized,
                             value: account,
                             switchable: true,
+                            identifier: TestTags.showExtendedKeyAccount,
                             infoDescription: "extended_key.account.description".localized
                         ) {
                             presentSelector(title: "extended_key.account".localized, viewItems: viewModel.accountViewItems) { index in
@@ -70,7 +73,7 @@ struct ExtendedKeyView: View {
         }
     }
 
-    private func controlRow(title: String, value: String, switchable: Bool, infoDescription: String? = nil, onSelect: @escaping () -> Void) -> some View {
+    private func controlRow(title: String, value: String, switchable: Bool, identifier: String, infoDescription: String? = nil, onSelect: @escaping () -> Void) -> some View {
         Cell(
             middle: {
                 if let infoDescription {
@@ -90,6 +93,7 @@ struct ExtendedKeyView: View {
             right: {
                 if switchable {
                     DropdownButton(text: value, mode: .transparent, action: onSelect)
+                        .accessibilityIdentifier(identifier)
                 } else {
                     ThemeText(value, style: .subhead, colorStyle: .secondary)
                 }
