@@ -30,6 +30,5 @@ enum RestoreSettingsHandlerFactory {
 extension RestoreSettingsHandlerFactory {
     static let unstoppableHandlers: [RestoreSettingsHandler.Type] = [
         BirthdayHeightRestoreSettingsHandler.self,
-        NearAccountRestoreSettingsHandler.self,
     ]
 }

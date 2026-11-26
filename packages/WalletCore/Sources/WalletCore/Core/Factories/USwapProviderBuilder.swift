@@ -10,6 +10,7 @@ enum USwapProviderBuilder {
         let accountManager: AccountManager
         let solanaKitManager: SolanaKitManager
         let localStorage: LocalStorage
+        let registry: BlockchainRegistry
     }
 
     static func make(
@@ -42,29 +43,29 @@ enum USwapProviderBuilder {
     private static func finalQuoteFactory(dependencies: Dependencies) -> USwapFinalQuoteFactory {
         let adapterManager = dependencies.adapterManager
 
-        return USwapFinalQuoteFactory(
-            builders: [
-                USwapEvmFinalQuoteBuilder(
-                    evmBlockchainManager: dependencies.evmBlockchainManager,
-                    evmFeeEstimator: EvmFeeEstimator(),
-                    adapterManager: adapterManager
-                ),
-                USwapUtxoFinalQuoteBuilder(adapterManager: adapterManager),
-                USwapTronFinalQuoteBuilder(
-                    tronKitManager: dependencies.tronKitManager,
-                    adapterManager: adapterManager
-                ),
-                USwapZcashFinalQuoteBuilder(adapterManager: adapterManager),
-                USwapTonFinalQuoteBuilder(accountManager: dependencies.accountManager, adapterManager: adapterManager),
-                USwapStellarFinalQuoteBuilder(adapterManager: adapterManager),
-                USwapMoneroFinalQuoteBuilder(adapterManager: adapterManager),
-                USwapZanoFinalQuoteBuilder(adapterManager: adapterManager),
-                USwapSolanaFinalQuoteBuilder(adapterManager: adapterManager, solanaKitManager: dependencies.solanaKitManager),
-                USwapXrpFinalQuoteBuilder(adapterManager: adapterManager),
-                USwapThorChainFinalQuoteBuilder(adapterManager: adapterManager),
-                USwapNearFinalQuoteBuilder(adapterManager: adapterManager),
-            ]
-        )
+        let legacyBuilders: [USwapFinalQuoteBuilder] = [
+            USwapEvmFinalQuoteBuilder(
+                evmBlockchainManager: dependencies.evmBlockchainManager,
+                evmFeeEstimator: EvmFeeEstimator(),
+                adapterManager: adapterManager
+            ),
+            USwapUtxoFinalQuoteBuilder(adapterManager: adapterManager),
+            USwapTronFinalQuoteBuilder(
+                tronKitManager: dependencies.tronKitManager,
+                adapterManager: adapterManager
+            ),
+            USwapZcashFinalQuoteBuilder(adapterManager: adapterManager),
+            USwapTonFinalQuoteBuilder(accountManager: dependencies.accountManager, adapterManager: adapterManager),
+            USwapStellarFinalQuoteBuilder(adapterManager: adapterManager),
+            USwapMoneroFinalQuoteBuilder(adapterManager: adapterManager),
+            USwapZanoFinalQuoteBuilder(adapterManager: adapterManager),
+            USwapSolanaFinalQuoteBuilder(adapterManager: adapterManager, solanaKitManager: dependencies.solanaKitManager),
+            USwapXrpFinalQuoteBuilder(adapterManager: adapterManager),
+            USwapThorChainFinalQuoteBuilder(adapterManager: adapterManager),
+        ]
+        let pluginBuilders = dependencies.registry.swapCapabilities.flatMap { $0.uSwapFinalQuoteBuilders(adapterManager: adapterManager) }
+
+        return USwapFinalQuoteFactory(builders: legacyBuilders + pluginBuilders)
     }
 
     private static func tracker(api: USwapMultiSwapApi, localStorage: LocalStorage) -> USwapTracker {

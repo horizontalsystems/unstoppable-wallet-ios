@@ -26,6 +26,5 @@ public extension NodeNetworkHandlerFactory {
     static let unstoppableHandlers: [NodeNetworkHandlerProvider.Type] = [
         ZcashNodeNetworkHandler.self,
         XrpNodeNetworkHandler.self,
-        NearNodeNetworkHandler.self,
     ]
 }

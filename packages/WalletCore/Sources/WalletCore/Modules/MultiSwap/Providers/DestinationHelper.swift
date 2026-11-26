@@ -142,6 +142,12 @@ public enum DestinationHelper {
             return temporary
         }
 
+        if let capability = Core.shared.registry.swapCapability(for: blockchainType),
+           let address = try capability.swapDestinationAddress(blockchainType: blockchainType, account: account)
+        {
+            return .init(address: address, type: .nonExisting)
+        }
+
         let address: String
         switch blockchainType {
         case .bitcoin:
@@ -171,8 +177,6 @@ public enum DestinationHelper {
             address = try SolanaKitManager.address(accountType: account.type)
         case .xrp:
             address = try XrpKitManager.address(accountType: account.type)
-        case .near:
-            address = try Core.shared.nearKitManager.address(account: account)
         case .thorChain:
             address = try AccountAddress.thorChainAddress(account: account, network: .mainnet).raw
         case .mayaChain:

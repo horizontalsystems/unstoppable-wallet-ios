@@ -6,6 +6,10 @@ public final class BlockchainRegistry {
 
     let adapterCapabilities: [AdapterCapability]
     let lifecycleCapabilities: [LifecycleCapability]
+    let sendCapabilities: [SendCapability]
+    let restoreSettingsCapabilities: [RestoreSettingsCapability]
+    let networkSettingsCapabilities: [NetworkSettingsCapability]
+    let swapCapabilities: [SwapCapability]
 
     private let descriptorsByType: [BlockchainType: BlockchainDescriptor]
     private let pluginsByType: [BlockchainType: BlockchainPlugin]
@@ -32,6 +36,10 @@ public final class BlockchainRegistry {
         self.pluginsByType = pluginsByType
         adapterCapabilities = accepted.compactMap { $0 as? AdapterCapability }
         lifecycleCapabilities = accepted.compactMap { $0 as? LifecycleCapability }
+        sendCapabilities = accepted.compactMap { $0 as? SendCapability }
+        restoreSettingsCapabilities = accepted.compactMap { $0 as? RestoreSettingsCapability }
+        networkSettingsCapabilities = accepted.compactMap { $0 as? NetworkSettingsCapability }
+        swapCapabilities = accepted.compactMap { $0 as? SwapCapability }
     }
 
     public func descriptor(for type: BlockchainType) -> BlockchainDescriptor? {
@@ -54,6 +62,10 @@ public final class BlockchainRegistry {
 
     func adapterCapability(for type: BlockchainType) -> AdapterCapability? {
         pluginsByType[type] as? AdapterCapability
+    }
+
+    func swapCapability(for type: BlockchainType) -> SwapCapability? {
+        pluginsByType[type] as? SwapCapability
     }
 
     func bootstrap(context: PluginContext) throws {

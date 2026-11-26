@@ -2,7 +2,7 @@ import Combine
 import Foundation
 import MarketKit
 
-final class NearPlugin: BlockchainPlugin, AdapterCapability, LifecycleCapability {
+final class NearPlugin: BlockchainPlugin, AdapterCapability, LifecycleCapability, SendCapability, RestoreSettingsCapability, NetworkSettingsCapability, SwapCapability {
     private struct State {
         let nodeManager: NearNodeManager
         let kitManager: NearKitManager
@@ -12,6 +12,13 @@ final class NearPlugin: BlockchainPlugin, AdapterCapability, LifecycleCapability
 
     let id = "near"
     let descriptors = [BlockchainDescriptor(type: .near, family: "near")]
+
+    // Handler lists are constants: `HandlerRegistrations` reads them from an un-bootstrapped instance.
+    let sendHandlers: [SendHandler.Type] = [NearSendHandler.self]
+    let preSendHandlers: [PreSendHandler.Type] = [NearPreSendHandler.self]
+    let restoreSettingsHandlers: [RestoreSettingsHandler.Type] = [NearAccountRestoreSettingsHandler.self]
+    let nodeNetworkHandlers: [NodeNetworkHandlerProvider.Type] = [NearNodeNetworkHandler.self]
+    let swapBroadcasters: [ISwapBroadcasterType.Type] = [NearSwapBroadcaster.self]
 
     private var state: State?
 

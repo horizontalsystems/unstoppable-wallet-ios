@@ -16,7 +16,7 @@ public class Core {
         let core = try Core(config: config, plugins: plugins, widgetRefresher: widgetRefresher)
         instance = core
 
-        HandlerRegistrations.builtIn().install()
+        HandlerRegistrations.builtIn(plugins: core.registry.plugins).install()
         if let walletConnect = core.walletConnect {
             WCSendHandlerProvider.registry = walletConnect.sendHandlerRegistry
             SendHandlerFactory.register(WCSendHandlerProvider.self)
@@ -572,7 +572,8 @@ public class Core {
                 tronKitManager: tronAccountManager.tronKitManager,
                 accountManager: accountManager,
                 solanaKitManager: solanaKitManager,
-                localStorage: localStorage
+                localStorage: localStorage,
+                registry: registry
             )
         )
         swapProviderInfoManager = SwapProviderInfoManager(networkManager: networkManager, apiKey: AppConfig.uswapApiKey)
