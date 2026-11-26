@@ -2,13 +2,14 @@
 
 ## Purpose
 
-Unstoppable Wallet iOS is the iOS app of Unstoppable, a non-custodial multi-blockchain wallet by Horizontal Systems: storage and transfer of crypto, on-chain and provider swaps, market analytics, and WalletConnect. It is written in Swift, with SwiftUI and some UIKit still in place. Its Android counterpart is the same app on the other platform; the two aim at identical behaviour.
+Unstoppable Wallet iOS is the iOS app of Unstoppable, a non-custodial multi-blockchain wallet by Horizontal Systems: storage and transfer of crypto, on-chain and provider swaps, market analytics, and WalletConnect. It is written in Swift, with SwiftUI and some UIKit still in place. Its Android counterpart is a separate app, in its own repository.
 
 ## Commands
 
 - Open `Wallet.xcworkspace`. It holds the app project `Unstoppable/Unstoppable.xcodeproj` and the local Swift package `packages/WalletCore`, where nearly all the code lives.
 - Before the first build, create `Unstoppable/Unstoppable/Configuration/Config.xcconfig` from `Config.template.xcconfig` in the same folder. The file holds API keys and is git-ignored.
 - Schemes: `Development` (the `Debug-Dev` and `Release-Dev` configurations, the `.dev` bundle ids), `Production` (the `Debug-Prod` and `Release-Prod` configurations) and `E2E` (the `Debug-E2E` configuration, described in [`docs/e2e-build.md`](docs/e2e-build.md)). The unit-test target is `AppTests`, in `Unstoppable/Tests`.
+- A change is checked to compile with `xcodebuild -workspace Wallet.xcworkspace -scheme Development -configuration Debug-Dev -destination 'platform=iOS Simulator,id=<udid>' build`, where `<udid>` is that of an available iPhone simulator from `xcrun simctl list devices available`. `packages/WalletCore` builds only for iOS, so `swift build`, which builds for macOS, does not apply. A build from a cold derived-data state runs longer than ten minutes, so it runs in the background.
 - fastlane, through Bundler (`Gemfile`, Ruby from `.ruby-version`): the lanes are `dev` (builds `Development`, ad hoc, uploads to Firebase), `release` (builds `Production`, uploads to TestFlight), `match_readonly` and `match_generate` (provisioning profiles). Run one as `bundle exec fastlane <lane>`. GitHub Actions runs `dev` on pushes to `develop` and `release` on pushes to `master`; the release steps are in [`RELEASE.md`](RELEASE.md).
 
 ## Screens and tests
