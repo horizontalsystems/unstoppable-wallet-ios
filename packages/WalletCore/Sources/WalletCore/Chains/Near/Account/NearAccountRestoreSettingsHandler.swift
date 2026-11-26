@@ -13,7 +13,7 @@ class NearAccountRestoreSettingsHandler: RestoreSettingsHandler {
     }
 
     override class func instance(blockchainType: BlockchainType, accountType: AccountType?) -> IRestoreSettingsHandler? {
-        guard blockchainType == .near, Core.shared.nearKitManager.network == .mainNet, case .mnemonic = accountType,
+        guard blockchainType == .near, NearPlugin.shared.kitManager.network == .mainNet, case .mnemonic = accountType,
               let seed = accountType?.mnemonicSeed, let publicKey = try? NearKit.Signer.publicKey(seed: seed)
         else {
             return nil

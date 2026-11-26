@@ -62,6 +62,16 @@ final class NearPlugin: BlockchainPlugin, AdapterCapability, LifecycleCapability
 }
 
 extension NearPlugin {
+    /// For the static handler factories and screens of this folder, which run after launch. Not for generic code.
+    static var shared: NearPlugin {
+        guard let plugin = Core.shared.registry.plugin(NearPlugin.self) else {
+            preconditionFailure("NearPlugin is not registered")
+        }
+        return plugin
+    }
+}
+
+extension NearPlugin {
     func adapter(wallet: Wallet) -> IAdapter? {
         let kitManager = kitManager
 

@@ -17,7 +17,7 @@ class NearNodeNetworkHandler: NodeNetworkHandlerProvider {
     }
 
     private let blockchain: Blockchain
-    private let nodeManager = Core.shared.nearNodeManager
+    private let nodeManager = NearPlugin.shared.nodeManager
 
     init(blockchain: Blockchain) {
         self.blockchain = blockchain

@@ -8,7 +8,7 @@ class NearAccountPickerViewModel: ObservableObject {
     private static let balanceDecimals = 8
 
     let publicKey: NearKit.PublicKey
-    private let network = Core.shared.nearKitManager.network
+    private let network = NearPlugin.shared.kitManager.network
     private let rpcUrls: [URL]
     private let onSelect: (String) -> Void
     private let onUseDefault: () -> Void
@@ -27,7 +27,7 @@ class NearAccountPickerViewModel: ObservableObject {
         self.publicKey = publicKey
         self.onSelect = onSelect
         self.onUseDefault = onUseDefault
-        rpcUrls = Core.shared.nearNodeManager.rpcUrls(network: network)
+        rpcUrls = NearPlugin.shared.nodeManager.rpcUrls(network: network)
     }
 
     private var implicitAccountId: String {

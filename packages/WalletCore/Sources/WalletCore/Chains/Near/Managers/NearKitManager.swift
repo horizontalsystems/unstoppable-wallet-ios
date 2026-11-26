@@ -143,7 +143,7 @@ extension NearKitManager {
     }
 
     static var network: NearKit.Network {
-        Core.shared.nearKitManager.network
+        NearPlugin.shared.kitManager.network
     }
 
     var nearKit: NearKit.Kit? {

@@ -10,8 +10,8 @@ public class Core {
         try initApp(config: config, plugins: BuiltInPlugins.all(), widgetRefresher: widgetRefresher)
     }
 
-    /// Until phase 1b is complete `plugins` must contain every plugin in `BuiltInPlugins.all()`:
-    /// generic code still reaches the built-in plugins' managers through `Core`.
+    /// Starts `Core` with `plugins`. Generic code reaches a chain only through the registry, so a list without
+    /// a plugin runs without that chain.
     static func initApp(config: Config, plugins: [BlockchainPlugin], widgetRefresher: IWidgetRefresher? = nil) throws {
         let core = try Core(config: config, plugins: plugins, widgetRefresher: widgetRefresher)
         instance = core

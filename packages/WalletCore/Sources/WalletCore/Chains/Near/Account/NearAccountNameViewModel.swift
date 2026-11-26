@@ -6,7 +6,7 @@ import NearKit
 /// `NearAccountNameViewModel`): it must exist and the phrase's key must have full access to it.
 class NearAccountNameViewModel: ObservableObject {
     private let publicKey: NearKit.PublicKey
-    private let network = Core.shared.nearKitManager.network
+    private let network = NearPlugin.shared.kitManager.network
     private let rpcUrls: [URL]
     private let onEnterAccountId: (String) -> Void
 
@@ -19,7 +19,7 @@ class NearAccountNameViewModel: ObservableObject {
     init(publicKey: NearKit.PublicKey, onEnterAccountId: @escaping (String) -> Void) {
         self.publicKey = publicKey
         self.onEnterAccountId = onEnterAccountId
-        rpcUrls = Core.shared.nearNodeManager.rpcUrls(network: network)
+        rpcUrls = NearPlugin.shared.nodeManager.rpcUrls(network: network)
 
         $name
             .removeDuplicates()
