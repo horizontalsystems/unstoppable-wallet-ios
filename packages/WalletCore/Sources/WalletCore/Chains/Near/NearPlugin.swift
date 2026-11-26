@@ -2,7 +2,7 @@ import Combine
 import Foundation
 import MarketKit
 
-final class NearPlugin: BlockchainPlugin, AdapterCapability, LifecycleCapability, SendCapability, RestoreSettingsCapability {
+final class NearPlugin: BlockchainPlugin, SendCapability, RestoreSettingsCapability {
     private struct State {
         let nodeManager: NearNodeManager
         let kitManager: NearKitManager
@@ -71,7 +71,7 @@ extension NearPlugin {
     }
 }
 
-extension NearPlugin {
+extension NearPlugin: AdapterCapability {
     func adapter(wallet: Wallet) -> IAdapter? {
         let kitManager = kitManager
 
@@ -111,7 +111,7 @@ extension NearPlugin {
     }
 }
 
-extension NearPlugin {
+extension NearPlugin: LifecycleCapability {
     func didEnterBackground() {
         kitManager.nearKit?.pause()
     }
