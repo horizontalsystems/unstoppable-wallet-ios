@@ -4,8 +4,8 @@ import NearKit
 
 class NearSendHandler: SendHandler {
     override class func instance(sendData: WalletCore.SendData) -> ISendHandler? {
-        guard case let .near(token, amount, address, memo) = sendData else { return nil }
-        return instance(token: token, amount: amount, address: address, memo: memo)
+        guard let payload = sendData.nearPayload else { return nil }
+        return instance(token: payload.token, amount: payload.amount, address: payload.address, memo: payload.memo)
     }
 
     private let signer: NearKit.Signer

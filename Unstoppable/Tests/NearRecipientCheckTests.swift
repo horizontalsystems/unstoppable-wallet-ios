@@ -121,10 +121,10 @@ extension NearRecipientCheckTests {
     }
 
     static func sendData(_ result: SendDataResult) -> (amount: Decimal, address: String, memo: String?)? {
-        guard case let .valid(sendData) = result, case let .near(_, amount, address, memo) = sendData else {
+        guard case let .valid(sendData) = result, let payload = sendData.nearPayload else {
             return nil
         }
-        return (amount, address, memo)
+        return (payload.amount, payload.address, payload.memo)
     }
 
     final class StubSendNearAdapter: ISendNearAdapter, IBalanceAdapter {
