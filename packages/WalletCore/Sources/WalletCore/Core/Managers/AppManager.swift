@@ -24,7 +24,7 @@ public class AppManager {
     private let stellarKitManager: StellarKitManager
     private let solanaKitManager: SolanaKitManager
     private let xrpKitManager: XrpKitManager
-    private let nearKitManager: NearKitManager
+    private let registry: BlockchainRegistry
     private let swapHistoryManager: SwapHistoryManager
     private let moneroNodeManager: MoneroNodeManager
     private let zcashNodeAutoSelector: NodeAutoSelector
@@ -45,7 +45,7 @@ public class AppManager {
          logRecordManager: LogRecordManager, deeplinkStorage: DeeplinkStorage,
          evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager, statManager: StatManager,
          tonKitManager: TonKitManager,
-         stellarKitManager: StellarKitManager, solanaKitManager: SolanaKitManager, xrpKitManager: XrpKitManager, nearKitManager: NearKitManager,
+         stellarKitManager: StellarKitManager, solanaKitManager: SolanaKitManager, xrpKitManager: XrpKitManager, registry: BlockchainRegistry,
          swapHistoryManager: SwapHistoryManager, moneroNodeManager: MoneroNodeManager, zcashNodeAutoSelector: NodeAutoSelector)
     {
         self.widgetRefresher = widgetRefresher
@@ -68,7 +68,7 @@ public class AppManager {
         self.stellarKitManager = stellarKitManager
         self.solanaKitManager = solanaKitManager
         self.xrpKitManager = xrpKitManager
-        self.nearKitManager = nearKitManager
+        self.registry = registry
         self.swapHistoryManager = swapHistoryManager
         self.moneroNodeManager = moneroNodeManager
         self.zcashNodeAutoSelector = zcashNodeAutoSelector
@@ -141,7 +141,7 @@ public extension AppManager {
         stellarKitManager.stellarKit?.stopListener()
         solanaKitManager.solanaKit?.pause()
         xrpKitManager.xrpKit?.pause()
-        nearKitManager.nearKit?.pause()
+        registry.lifecycleCapabilities.forEach { $0.didEnterBackground() }
     }
 
     func willEnterForeground() {
@@ -161,8 +161,7 @@ public extension AppManager {
         solanaKitManager.solanaKit?.refresh()
         xrpKitManager.xrpKit?.resume()
         xrpKitManager.xrpKit?.refresh()
-        nearKitManager.nearKit?.resume()
-        nearKitManager.nearKit?.refresh()
+        registry.lifecycleCapabilities.forEach { $0.willEnterForeground() }
 
         AppStateManager.instance.syncIfRequired()
 

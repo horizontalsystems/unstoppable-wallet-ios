@@ -2,15 +2,18 @@ import Foundation
 
 public class KitCleaner {
     private let accountManager: AccountManager
+    private let registry: BlockchainRegistry
 
-    public init(accountManager: AccountManager) {
+    public init(accountManager: AccountManager, registry: BlockchainRegistry) {
         self.accountManager = accountManager
+        self.registry = registry
     }
 }
 
 public extension KitCleaner {
     func clear() {
         let accountIds = accountManager.allAccounts.map(\.id)
+        let lifecycleCapabilities = registry.lifecycleCapabilities
 
         DispatchQueue.global(qos: .background).async {
             try? BitcoinAdapter.clear(except: accountIds)
@@ -23,7 +26,9 @@ public extension KitCleaner {
             try? MoneroAdapter.clear(except: accountIds)
             try? ZanoAdapter.clear(except: accountIds)
             try? XrpAdapter.clear(except: accountIds)
-            try? NearAdapter.clear(except: accountIds)
+            for capability in lifecycleCapabilities {
+                try? capability.clear(exceptAccountIds: accountIds)
+            }
         }
     }
 }

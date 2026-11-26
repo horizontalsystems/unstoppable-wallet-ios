@@ -40,7 +40,9 @@ public class TransactionAdapterManager {
 
             let transactionsAdapter: ITransactionsAdapter?
 
-            if evmBlockchainManager.allBlockchains.contains(where: { $0.type == source.blockchainType }) {
+            if let capability = adapterFactory.registry.adapterCapability(for: source.blockchainType) {
+                transactionsAdapter = capability.transactionsAdapter(source: source, walletAdapter: adapter)
+            } else if evmBlockchainManager.allBlockchains.contains(where: { $0.type == source.blockchainType }) {
                 transactionsAdapter = adapterFactory.evmTransactionsAdapter(transactionSource: source)
             } else if source.blockchainType == .tron {
                 transactionsAdapter = adapterFactory.tronTransactionsAdapter(transactionSource: source)
@@ -54,8 +56,6 @@ public class TransactionAdapterManager {
                 transactionsAdapter = adapterFactory.solanaTransactionsAdapter(transactionSource: source)
             } else if source.blockchainType == .xrp {
                 transactionsAdapter = adapterFactory.xrpTransactionAdapter(transactionSource: source)
-            } else if source.blockchainType == .near {
-                transactionsAdapter = adapterFactory.nearTransactionAdapter(transactionSource: source)
             } else {
                 transactionsAdapter = adapter as? ITransactionsAdapter
             }

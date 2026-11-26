@@ -2,8 +2,6 @@ import Combine
 import Foundation
 import MarketKit
 import NearKit
-import RxRelay
-import RxSwift
 
 public class NearKitManager {
     private let restoreStateManager: RestoreStateManager
@@ -22,7 +20,7 @@ public class NearKitManager {
     private var watchedContractIds = Set<String>()
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).near-kit-manager", qos: .userInitiated)
-    private let kitStoppedRelay = PublishRelay<Void>()
+    private let kitStoppedSubject = PassthroughSubject<Void, Never>()
 
     public init(
         restoreStateManager: RestoreStateManager, restoreSettingsManager: RestoreSettingsManager, marketKit: MarketKit.Kit, walletManager: WalletManager,
@@ -60,7 +58,7 @@ public class NearKitManager {
             watchedContractIds = []
             ftBalancesCancellable?.cancel()
             ftBalancesCancellable = nil
-            kitStoppedRelay.accept(())
+            kitStoppedSubject.send()
         }
     }
 
@@ -156,8 +154,8 @@ extension NearKitManager {
         try queue.sync { try _nearKit(account: account) }
     }
 
-    var kitStoppedObservable: Observable<Void> {
-        kitStoppedRelay.asObservable()
+    var kitStoppedPublisher: AnyPublisher<Void, Never> {
+        kitStoppedSubject.eraseToAnyPublisher()
     }
 
     /// an adapter of a dropped kit may stop after the new kit started; it must not touch the new kit's set

@@ -7,7 +7,13 @@ public class Core {
     public static var instance: Core?
 
     public static func initApp(config: Config, widgetRefresher: IWidgetRefresher? = nil) throws {
-        let core = try Core(config: config, widgetRefresher: widgetRefresher)
+        try initApp(config: config, plugins: BuiltInPlugins.all(), widgetRefresher: widgetRefresher)
+    }
+
+    /// Until phase 1b is complete `plugins` must contain every plugin in `BuiltInPlugins.all()`:
+    /// generic code still reaches the built-in plugins' managers through `Core`.
+    static func initApp(config: Config, plugins: [BlockchainPlugin], widgetRefresher: IWidgetRefresher? = nil) throws {
+        let core = try Core(config: config, plugins: plugins, widgetRefresher: widgetRefresher)
         instance = core
 
         HandlerRegistrations.builtIn().install()
@@ -107,7 +113,6 @@ public class Core {
     let zanoNodeManager: ZanoNodeManager
     let zcashNodeManager: ZcashNodeManager
     let xrpNodeManager: XrpNodeManager
-    let nearNodeManager: NearNodeManager
     let zcashNodeAutoSelector: NodeAutoSelector
     private let zcashNodeUpdateSignalProvider: ZcashNodeUpdateSignalProvider
     let thorChainEndpointManager: ThorChainEndpointManager
@@ -122,7 +127,6 @@ public class Core {
     let solanaRpcSourceManager: SolanaRpcSourceManager
     let solanaKitManager: SolanaKitManager
     let xrpKitManager: XrpKitManager
-    let nearKitManager: NearKitManager
 
     let restoreSettingsManager: RestoreSettingsManager
     let predefinedBlockchainService: PredefinedBlockchainService
@@ -132,6 +136,7 @@ public class Core {
 
     let walletConnect: WCManager?
 
+    public let registry: BlockchainRegistry
     public let adapterManager: AdapterManager
     public let transactionAdapterManager: TransactionAdapterManager
     let rateAppManager: RateAppManager
@@ -180,7 +185,7 @@ public class Core {
 
     public let createPasskeyAccountService: CreatePasskeyAccountService
 
-    init(config: Config, widgetRefresher: IWidgetRefresher?) throws {
+    init(config: Config, plugins: [BlockchainPlugin], widgetRefresher: IWidgetRefresher?) throws {
         self.config = config
 
         databaseDirectoryURL = try FileManager.default
@@ -277,7 +282,6 @@ public class Core {
         zcashNodeManager = ZcashNodeManager(testNetManager: testNetManager, blockchainSettingsStorage: blockchainSettingsStorage, zcashNodeStorage: zcashNodeStorage)
 
         xrpNodeManager = XrpNodeManager(blockchainSettingsStorage: blockchainSettingsStorage)
-        nearNodeManager = NearNodeManager(blockchainSettingsStorage: blockchainSettingsStorage)
 
         let restoreStateStorage = RestoreStateStorage(dbPool: dbPool)
         restoreStateManager = RestoreStateManager(storage: restoreStateStorage)
@@ -325,11 +329,6 @@ public class Core {
         let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)
         restoreSettingsManager = RestoreSettingsManager(storage: restoreSettingsStorage)
 
-        nearKitManager = NearKitManager(
-            restoreStateManager: restoreStateManager, restoreSettingsManager: restoreSettingsManager, marketKit: marketKit, walletManager: walletManager,
-            nodeManager: nearNodeManager, testNetManager: testNetManager
-        )
-
         zanoKitManager = ZanoKitManager(restoreSettingsManager: restoreSettingsManager, walletManager: walletManager, zanoNodeManager: zanoNodeManager)
         predefinedBlockchainService = PredefinedBlockchainService(restoreSettingsManager: restoreSettingsManager)
 
@@ -345,6 +344,20 @@ public class Core {
             logger: logger
         )
 
+        let pluginContext = PluginContext(
+            marketKit: marketKit,
+            walletManager: walletManager,
+            coinManager: coinManager,
+            restoreStateManager: restoreStateManager,
+            restoreSettingsManager: restoreSettingsManager,
+            testNetManager: testNetManager,
+            blockchainSettingsStorage: blockchainSettingsStorage,
+            spamWrapper: spamWrapper
+        )
+        let registry = BlockchainRegistry(plugins: plugins)
+        try registry.bootstrap(context: pluginContext)
+        self.registry = registry
+
         let adapterFactory = AdapterFactory(
             evmBlockchainManager: evmBlockchainManager,
             evmSyncSourceManager: evmSyncSourceManager,
@@ -359,7 +372,7 @@ public class Core {
             zanoKitManager: zanoKitManager,
             solanaKitManager: solanaKitManager,
             xrpKitManager: xrpKitManager,
-            nearKitManager: nearKitManager,
+            registry: registry,
             restoreSettingsManager: restoreSettingsManager,
             coinManager: coinManager,
             spamWrapper: spamWrapper,
@@ -375,7 +388,7 @@ public class Core {
             zanoKitManager: zanoKitManager,
             solanaKitManager: solanaKitManager,
             xrpKitManager: xrpKitManager,
-            nearKitManager: nearKitManager,
+            registry: registry,
             btcBlockchainManager: btcBlockchainManager,
             moneroNodeManager: moneroNodeManager,
             zanoNodeManager: zanoNodeManager,
@@ -434,7 +447,7 @@ public class Core {
         let tonConnectStorage = try TonConnectStorage(dbPool: dbPool)
         tonConnectManager = TonConnectManager(storage: tonConnectStorage, accountManager: accountManager)
 
-        kitCleaner = KitCleaner(accountManager: accountManager)
+        kitCleaner = KitCleaner(accountManager: accountManager, registry: registry)
 
         performanceDataManager = PerformanceDataManager(userDefaultsStorage: userDefaultsStorage)
         releaseNotesService = ReleaseNotesService(appVersionManager: appVersionManager)
@@ -505,7 +518,7 @@ public class Core {
             stellarKitManager: stellarKitManager,
             solanaKitManager: solanaKitManager,
             xrpKitManager: xrpKitManager,
-            nearKitManager: nearKitManager,
+            registry: registry,
             swapHistoryManager: swapHistoryManager,
             moneroNodeManager: moneroNodeManager,
             zcashNodeAutoSelector: zcashNodeAutoSelector
