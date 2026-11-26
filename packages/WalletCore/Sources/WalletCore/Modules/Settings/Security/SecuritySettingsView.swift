@@ -65,7 +65,7 @@ struct SecuritySettingsView: View {
                     }
 
                     ListSection {
-                        toggledRow(title: "settings_security.balance_auto_hide".localized, subtitle: "settings_security.balance_auto_hide.description".localized, isOn: $viewModel.balanceAutoHide)
+                        toggledRow(title: "settings_security.balance_auto_hide".localized, subtitle: "settings_security.balance_auto_hide.description".localized, isOn: $viewModel.balanceAutoHide, identifier: TestTags.securityBalanceAutoHide)
 
                         toggledRow(title: "transaction_filter.hide_suspicious_txs".localized, subtitle: "transaction_filter.hide_suspicious_txs.description".localized, isOn: $viewModel.spamFilterEnabled)
                     }

@@ -441,7 +441,10 @@ struct MainSettingsView: View {
 
             Cell(
                 middle: { ThemeText("TestNet Enabled", style: .headline2) },
-                right: { ThemeToggle(isOn: $viewModel.testNetEnabled) }
+                right: {
+                    ThemeToggle(isOn: $viewModel.testNetEnabled)
+                        .accessibilityIdentifier(TestTags.settingsDebugTestNet)
+                }
             )
 
             Cell(

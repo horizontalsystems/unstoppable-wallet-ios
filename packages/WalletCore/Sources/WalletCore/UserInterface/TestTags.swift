@@ -281,6 +281,7 @@ enum TestTags {
     static let settingsTwitter = "settings_twitter"
     static let settingsDebugSimulateFailSwap = "settings_debug_simulate_fail_swap"
     static let settingsDebugBrandColor = "settings_debug_brand_color"
+    static let settingsDebugTestNet = "settings_debug_test_net"
 
     static let premiumClose = "premium_close"
     /// The button under the feature list; it opens the list of plans
@@ -300,6 +301,11 @@ enum TestTags {
 
     static let appearanceBaseCurrency = "appearance_base_currency"
     static let appearanceReset = "appearance_reset"
+    static let appearanceTheme = "appearance_theme"
+    static let appearancePriceChange = "appearance_price_change"
+    static let appearanceLaunchScreen = "appearance_launch_screen"
+    static let appearanceBalanceValue = "appearance_balance_value"
+    static let appearanceLanguage = "appearance_language"
     static func currency(_ code: String) -> String {
         "currency_\(code)"
     }
@@ -315,6 +321,7 @@ enum TestTags {
     }
 
     static let securitySecureSend = "security_secure_send"
+    static let securityBalanceAutoHide = "security_balance_auto_hide"
     static let securityScamProtection = "security_scam_protection"
     static let securitySwapProtection = "security_swap_protection"
     static let securityRobberyProtectionAdd = "security_robbery_protection_add"

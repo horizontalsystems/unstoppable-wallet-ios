@@ -27,6 +27,7 @@ struct AppearanceView: View {
                                     )
                                 }
                             }
+                            .accessibilityIdentifier(TestTags.appearanceTheme)
                         }
                     )
                 }
@@ -51,6 +52,7 @@ struct AppearanceView: View {
                             }
                         }
                     )
+                    .accessibilityIdentifier(TestTags.appearanceLanguage)
 
                     NavigationLink(destination: {
                         BaseCurrencySettingsModule.view()
@@ -100,6 +102,7 @@ struct AppearanceView: View {
                                         )
                                     }
                                 }
+                                .accessibilityIdentifier(TestTags.appearancePriceChange)
                             }
                         )
                     }
@@ -124,6 +127,7 @@ struct AppearanceView: View {
                                         )
                                     }
                                 }
+                                .accessibilityIdentifier(TestTags.appearanceLaunchScreen)
                             }
                         )
                     }
@@ -166,6 +170,7 @@ struct AppearanceView: View {
                                         )
                                     }
                                 }
+                                .accessibilityIdentifier(TestTags.appearanceBalanceValue)
                             }
                         )
                     }
