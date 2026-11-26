@@ -12,6 +12,10 @@ struct NumPadView: View {
 
     private static let backspaceIcon = "arrow_m_left"
 
+    private static func playTapHaptic() {
+        HapticGenerator.instance.notification(.feedback(.soft))
+    }
+
     var body: some View {
         LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 0), count: 3), spacing: 0) {
             ForEach(Array(digits.prefix(9).enumerated()), id: \.offset) { _, digit in
@@ -20,6 +24,7 @@ struct NumPadView: View {
 
             if let biometryType {
                 Button(action: {
+                    Self.playTapHaptic()
                     onTapBiometry?()
                 }) {
                     Color.clear
@@ -39,6 +44,7 @@ struct NumPadView: View {
             }
 
             Button(action: {
+                Self.playTapHaptic()
                 onTapBackspace()
             }) {
                 Color.clear
@@ -58,6 +64,7 @@ struct NumPadView: View {
 
         var body: some View {
             Button(action: {
+                NumPadView.playTapHaptic()
                 onTap()
             }) {
                 Color.clear
