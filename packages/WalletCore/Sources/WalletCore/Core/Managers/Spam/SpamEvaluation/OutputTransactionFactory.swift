@@ -8,6 +8,10 @@ class OutputTransactionFactory {
     ///            empty array if it is but has no extractable addresses;
     ///            non-empty array with destination addresses
     static func outgoingAddresses(from record: TransactionRecord) -> [String]? {
+        if let summary = Core.instance?.registry.transactionSummary(record: record) {
+            return outgoingAddresses(summary: summary)
+        }
+
         switch record {
         case let r as EvmOutgoingTransactionRecord:
             return [r.to]
@@ -42,17 +46,6 @@ class OutputTransactionFactory {
             }
             return [to]
 
-        // anything the account signed is its own; a contract call gives the recipients of its legs
-        case let r as NearTransactionRecord:
-            guard r.signed else {
-                return nil
-            }
-            switch r.type {
-            case let .send(_, to, sentToSelf, _): return sentToSelf ? [] : [to]
-            case let .contractCall(_, _, _, outgoing): return outgoing.map(\.address)
-            case .receive: return []
-            }
-
         case let r as ContractCallTransactionRecord:
             return r.outgoingEvents.map(\.address)
 
@@ -68,6 +61,10 @@ class OutputTransactionFactory {
     /// of a received one. Poisoning routinely mimics whoever just paid the user, and a watch-only
     /// wallet has no outgoing history at all, so senders are correlation context too.
     static func counterpartyAddresses(from record: TransactionRecord) -> [String] {
+        if let summary = Core.instance?.registry.transactionSummary(record: record) {
+            return counterpartyAddresses(summary: summary)
+        }
+
         switch record {
         case let r as EvmIncomingTransactionRecord:
             return [r.from]
@@ -96,13 +93,6 @@ class OutputTransactionFactory {
         case let r as SolanaIncomingTransactionRecord:
             return r.from.map { [$0] } ?? []
 
-        case let r as NearTransactionRecord:
-            switch r.type {
-            case let .receive(_, from, _): return [from]
-            case let .contractCall(_, _, incoming, outgoing): return sentElseReceived(outgoing: filterZeroPoisoningEvents(outgoing), incoming: incoming)
-            case .send: return []
-            }
-
         case let r as SolanaUnknownTransactionRecord:
             let incoming = r.incomingTransfers.compactMap(\.address)
             return incoming.isEmpty ? r.outgoingTransfers.compactMap(\.address) : incoming
@@ -121,6 +111,29 @@ class OutputTransactionFactory {
 
         default:
             return []
+        }
+    }
+
+    /// The outgoing addresses of a plugin's transaction, by the rule of `outgoingAddresses(from:)`:
+    /// anything the account signed is its own; a contract call gives the recipients of its legs.
+    static func outgoingAddresses(summary: TransactionSummary) -> [String]? {
+        guard summary.signedByAccount else {
+            return nil
+        }
+
+        switch summary.kind {
+        case let .send(_, to, sentToSelf, _): return sentToSelf ? [] : [to]
+        case let .contractCall(_, _, _, outgoing): return outgoing.map(\.address)
+        case .receive: return []
+        }
+    }
+
+    /// The counterparties of a plugin's transaction, by the rule of `counterpartyAddresses(from:)`.
+    static func counterpartyAddresses(summary: TransactionSummary) -> [String] {
+        switch summary.kind {
+        case let .receive(_, from, _): return [from]
+        case let .contractCall(_, _, incoming, outgoing): return sentElseReceived(outgoing: filterZeroPoisoningEvents(outgoing), incoming: incoming)
+        case .send: return []
         }
     }
 

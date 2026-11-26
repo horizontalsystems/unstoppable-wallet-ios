@@ -18,12 +18,12 @@ enum TransactionInfoModule {
         }
         let rateService = HistoricalRateService(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager)
 
-        let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, currencyManager: Core.shared.currencyManager, rateService: rateService, balanceHiddenManager: Core.shared.balanceHiddenManager)
+        let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, currencyManager: Core.shared.currencyManager, rateService: rateService, balanceHiddenManager: Core.shared.balanceHiddenManager, registry: Core.shared.registry)
         let contactLabelService = ContactLabelService(contactManager: Core.shared.contactManager, blockchainType: transactionRecord.source.blockchainType)
         // speed up and cancel replace a pending transaction, which a watch account cannot sign
         let watchAccount = Core.shared.accountManager.activeAccount?.watchAccount ?? false
         let actionEnabled = transactionRecord.source.blockchainType.resendable && !watchAccount
-        let factory = TransactionInfoViewItemFactory(evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService, actionEnabled: actionEnabled, extraProviderFactory: Core.shared.transactionInfoExtraFactory)
+        let factory = TransactionInfoViewItemFactory(evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService, actionEnabled: actionEnabled, extraProviderFactory: Core.shared.transactionInfoExtraFactory, registry: Core.shared.registry)
 
         return TransactionInfoViewModel(service: service, factory: factory, contactLabelService: contactLabelService, adapter: adapter)
     }

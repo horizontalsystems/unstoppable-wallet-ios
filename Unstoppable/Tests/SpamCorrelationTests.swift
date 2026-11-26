@@ -146,6 +146,59 @@ struct SpamCorrelationTests {
         #expect(OutputTransactionFactory.outgoingAddresses(from: record) == [])
         #expect(OutputTransactionFactory().cachedOutputs(from: record).map(\.address) == ["0xpool"])
     }
+
+    // MARK: - A plugin's transaction summary
+
+    @Test func unsignedSummaryHasNoOutgoingAddresses() {
+        let send = summary(.send(value: value(1), to: "recipient", sentToSelf: false, memo: nil), signed: false)
+        let call = summary(.contractCall(contract: "contract", method: nil, incoming: [], outgoing: [event("recipient", 1)]), signed: false)
+
+        #expect(OutputTransactionFactory.outgoingAddresses(summary: send) == nil)
+        #expect(OutputTransactionFactory.outgoingAddresses(summary: call) == nil)
+    }
+
+    @Test func signedSendGivesItsRecipientUnlessSentToSelf() {
+        let send = summary(.send(value: value(1), to: "recipient", sentToSelf: false, memo: nil), signed: true)
+        let sendToSelf = summary(.send(value: value(1), to: "self", sentToSelf: true, memo: nil), signed: true)
+
+        #expect(OutputTransactionFactory.outgoingAddresses(summary: send) == ["recipient"])
+        #expect(OutputTransactionFactory.outgoingAddresses(summary: sendToSelf) == [])
+        #expect(OutputTransactionFactory.counterpartyAddresses(summary: send) == [])
+    }
+
+    @Test func signedContractCallGivesItsOutgoingLegs() {
+        let call = summary(.contractCall(contract: "contract", method: "swap", incoming: [event("pool", 2)], outgoing: [event("first", 1), event("second", 1)]), signed: true)
+
+        #expect(OutputTransactionFactory.outgoingAddresses(summary: call) == ["first", "second"])
+    }
+
+    @Test func receiveGivesItsSenderAsCounterparty() {
+        let receive = summary(.receive(value: value(1), from: "sender", memo: nil), signed: false)
+
+        #expect(OutputTransactionFactory.counterpartyAddresses(summary: receive) == ["sender"])
+        #expect(OutputTransactionFactory.outgoingAddresses(summary: receive) == nil)
+        #expect(OutputTransactionFactory.outgoingAddresses(summary: summary(receive.kind, signed: true)) == [])
+    }
+
+    @Test func contractCallCounterpartiesDropZeroValueOutgoingLegs() {
+        let zeroOnly = summary(.contractCall(contract: "contract", method: nil, incoming: [event("pool", 1)], outgoing: [event("poisoner", 0)]), signed: false)
+        let mixed = summary(.contractCall(contract: "contract", method: nil, incoming: [event("pool", 1)], outgoing: [event("poisoner", 0), event("recipient", 1)]), signed: false)
+
+        #expect(OutputTransactionFactory.counterpartyAddresses(summary: zeroOnly) == ["pool"])
+        #expect(OutputTransactionFactory.counterpartyAddresses(summary: mixed) == ["recipient"])
+    }
+
+    private func summary(_ kind: TransactionSummary.Kind, signed: Bool) -> TransactionSummary {
+        TransactionSummary(kind: kind, fee: nil, signedByAccount: signed, notProcessed: false)
+    }
+
+    private func value(_ amount: Decimal) -> AppValue {
+        AppValue(token: Self.ethToken, value: amount)
+    }
+
+    private func event(_ address: String, _ amount: Decimal) -> TransferEvent {
+        TransferEvent(address: address, value: value(amount))
+    }
 }
 
 extension SpamCorrelationTests {

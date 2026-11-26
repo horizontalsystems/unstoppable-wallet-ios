@@ -80,6 +80,10 @@ public final class BlockchainRegistry {
         pluginsByType[type] as? AccountCapability
     }
 
+    func transactionSummary(record: TransactionRecord) -> TransactionSummary? {
+        (pluginsByType[record.source.blockchainType] as? TransactionPresentationCapability)?.summary(record: record)
+    }
+
     func bootstrap(context: PluginContext) throws {
         try bootstrap { try $0.bootstrap(context: context) }
     }

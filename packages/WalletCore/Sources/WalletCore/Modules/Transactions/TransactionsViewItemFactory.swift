@@ -8,6 +8,7 @@ class TransactionsViewItemFactory {
 
     private let evmLabelManager = Core.shared.evmLabelManager
     private let amountRoundingManager = Core.shared.amountRoundingManager
+    private let registry = Core.shared.registry
     private let contactLabelService: TransactionsContactLabelService
 
     init(contactLabelService: TransactionsContactLabelService) {
@@ -157,343 +158,8 @@ class TransactionsViewItemFactory {
             return to.map { "transactions.to".localized(mapped(address: $0, blockchainType: blockchainType)) } ?? "transactions.to_unknown".localized
         }
 
-        switch item.record {
-        case let record as EvmIncomingTransactionRecord:
-            kind = .receive
-            tokens = [token(value: record.value)]
-            completedSubtitle = "transactions.from".localized(mapped(address: record.from, blockchainType: blockchainType))
-            primaryValue = incomingValue(record.value)
-            secondaryValue = fiatValue
-
-        case let record as EvmOutgoingTransactionRecord:
-            kind = sendKind(sentToSelf: record.sentToSelf)
-            tokens = [token(value: record.value)]
-            completedSubtitle = sendSubtitle(to: record.to, sentToSelf: record.sentToSelf)
-            primaryValue = outgoingValue(record.value, sentToSelf: record.sentToSelf)
-            secondaryValue = singleValueSecondaryValue(value: record.value, currencyValue: item.currencyValue)
-
-        case let record as SwapTransactionRecord:
-            kind = .swap
-            tokens = swapTokens(valueIn: record.valueIn, valueOut: record.valueOut)
-            completedSubtitle = "transactions.swap".localized
-
-            (primaryValue, secondaryValue) = swapValues(valueIn: record.valueIn, valueOut: record.valueOut, outType: record.recipient != nil ? .secondary : .incoming)
-
-        case let record as UnknownSwapTransactionRecord:
-            kind = .swap
-            tokens = swapTokens(valueIn: record.valueIn, valueOut: record.valueOut)
-            completedSubtitle = "transactions.swap".localized
-
-            (primaryValue, secondaryValue) = swapValues(valueIn: record.valueIn, valueOut: record.valueOut)
-
-        case let record as ApproveTransactionRecord:
-            kind = .approve
-            tokens = [token(value: record.value)]
-            completedSubtitle = "transactions.approve".localized
-            (primaryValue, secondaryValue) = allowanceValues(value: record.value, currencyValue: item.currencyValue)
-
-        case let record as ContractCallTransactionRecord:
-            let (incomingValues, outgoingValues) = record.combinedValues
-            let moved = transfers(
-                source: record.source,
-                incomingValues: incomingValues,
-                outgoingValues: outgoingValues,
-                currencyValue: item.currencyValue,
-                noTransferTitle: record.method ?? "transactions.contract_call".localized,
-                multipleTitle: "transactions.contract_call".localized
-            )
-
-            kind = .contract(direction: moved.direction)
-            tokens = moved.tokens
-            completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.contract_call".localized)
-            (primaryValue, secondaryValue) = (moved.primaryValue, moved.secondaryValue)
-
-        case let record as ExternalContractCallTransactionRecord:
-            let (incomingValues, outgoingValues) = record.combinedValues
-            // a single transfer someone else's call delivered reads as a plain receive
-            let isReceive = record.outgoingEvents.isEmpty && incomingValues.count == 1 && outgoingValues.isEmpty
-            let moved = transfers(
-                source: record.source,
-                incomingValues: incomingValues,
-                outgoingValues: outgoingValues,
-                currencyValue: item.currencyValue,
-                noTransferTitle: "transactions.external_call".localized
-            )
-
-            if isReceive {
-                kind = .receive
-                completedSubtitle = externalReceiveSubtitle(addresses: record.incomingEvents.map(\.address), blockchainType: blockchainType)
-            } else {
-                kind = .contract(direction: moved.direction)
-                completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.external_call".localized)
-            }
-
-            tokens = moved.tokens
-            (primaryValue, secondaryValue) = (moved.primaryValue, moved.secondaryValue)
-
-        case let record as ContractCreationTransactionRecord:
-            kind = .contract(direction: nil)
-            tokens = [chainToken(source: record.source, text: "transactions.contract_creation".localized)]
-            completedSubtitle = "transactions.completed".localized
-
-        case let record as BitcoinIncomingTransactionRecord:
-            kind = .receive
-            tokens = [token(value: record.value)]
-            completedSubtitle = receiveSubtitle(from: record.from, to: record.to, blockchainType: blockchainType)
-            primaryValue = incomingValue(record.value)
-            secondaryValue = fiatValue
-
-            doubleSpend = record.conflictingHash != nil
-            if let lockState = item.transactionItem.lockState {
-                locked = lockState.locked
-            }
-
-        case let record as BitcoinOutgoingTransactionRecord:
-            kind = sendKind(sentToSelf: record.sentToSelf)
-            tokens = [token(value: record.value)]
-            completedSubtitle = sendSubtitle(to: record.to, sentToSelf: record.sentToSelf)
-            primaryValue = outgoingValue(record.value, sentToSelf: record.sentToSelf)
-            secondaryValue = fiatValue
-
-            doubleSpend = record.conflictingHash != nil
-            if let lockState = item.transactionItem.lockState {
-                locked = lockState.locked
-            }
-
-        case let record as MoneroIncomingTransactionRecord:
-            kind = .receive
-            tokens = [token(value: record.value)]
-            completedSubtitle = receiveSubtitle(from: record.from, to: record.to, blockchainType: blockchainType)
-            primaryValue = incomingValue(record.value)
-            secondaryValue = fiatValue
-
-        case let record as MoneroOutgoingTransactionRecord:
-            kind = sendKind(sentToSelf: record.sentToSelf)
-            tokens = [token(value: record.value)]
-            completedSubtitle = sendSubtitle(to: record.to, sentToSelf: record.sentToSelf)
-            primaryValue = outgoingValue(record.value, sentToSelf: record.sentToSelf)
-            secondaryValue = fiatValue
-
-        case let record as ZanoIncomingTransactionRecord:
-            kind = .receive
-            tokens = [token(value: record.value)]
-            completedSubtitle = receiveSubtitle(from: record.from, to: record.to, blockchainType: blockchainType)
-            primaryValue = incomingValue(record.value)
-            secondaryValue = fiatValue
-
-        case let record as ZanoOutgoingTransactionRecord:
-            kind = sendKind(sentToSelf: record.sentToSelf)
-            tokens = [token(value: record.value)]
-            completedSubtitle = sendSubtitle(to: record.to, sentToSelf: record.sentToSelf)
-            primaryValue = outgoingValue(record.value, sentToSelf: record.sentToSelf)
-            secondaryValue = fiatValue
-
-        case let record as TronIncomingTransactionRecord:
-            kind = .receive
-            tokens = [token(value: record.value)]
-            completedSubtitle = "transactions.from".localized(mapped(address: record.from, blockchainType: blockchainType))
-            primaryValue = incomingValue(record.value)
-            secondaryValue = fiatValue
-
-        case let record as TronOutgoingTransactionRecord:
-            kind = sendKind(sentToSelf: record.sentToSelf)
-            tokens = [token(value: record.value)]
-            completedSubtitle = sendSubtitle(to: record.to, sentToSelf: record.sentToSelf)
-            primaryValue = outgoingValue(record.value, sentToSelf: record.sentToSelf)
-            secondaryValue = singleValueSecondaryValue(value: record.value, currencyValue: item.currencyValue)
-
-        case let record as TronApproveTransactionRecord:
-            kind = .approve
-            tokens = [token(value: record.value)]
-            completedSubtitle = "transactions.approve".localized
-            (primaryValue, secondaryValue) = allowanceValues(value: record.value, currencyValue: item.currencyValue)
-
-        case let record as TronContractCallTransactionRecord:
-            let (incomingValues, outgoingValues) = record.combinedValues
-            let moved = transfers(
-                source: record.source,
-                incomingValues: incomingValues,
-                outgoingValues: outgoingValues,
-                currencyValue: item.currencyValue,
-                noTransferTitle: record.method ?? "transactions.contract_call".localized,
-                multipleTitle: "transactions.contract_call".localized
-            )
-
-            kind = .contract(direction: moved.direction)
-            tokens = moved.tokens
-            completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.contract_call".localized)
-            (primaryValue, secondaryValue) = (moved.primaryValue, moved.secondaryValue)
-
-        case let record as TronExternalContractCallTransactionRecord:
-            let (incomingValues, outgoingValues) = record.combinedValues
-            // a single transfer someone else's call delivered reads as a plain receive
-            let isReceive = record.outgoingEvents.isEmpty && incomingValues.count == 1 && outgoingValues.isEmpty
-            let moved = transfers(
-                source: record.source,
-                incomingValues: incomingValues,
-                outgoingValues: outgoingValues,
-                currencyValue: item.currencyValue,
-                noTransferTitle: "transactions.external_call".localized
-            )
-
-            if isReceive {
-                kind = .receive
-                completedSubtitle = externalReceiveSubtitle(addresses: record.incomingEvents.map(\.address), blockchainType: blockchainType)
-            } else {
-                kind = .contract(direction: moved.direction)
-                completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.external_call".localized)
-            }
-
-            tokens = moved.tokens
-            (primaryValue, secondaryValue) = (moved.primaryValue, moved.secondaryValue)
-
-        case let record as TronTransactionRecord:
-            kind = .unknown
-            tokens = [chainToken(source: record.source, text: record.transaction.contract?.label ?? "transactions.unknown_transaction.title".localized)]
-            completedSubtitle = "transactions.unknown_transaction.description".localized()
-
-        case let record as ThorChainIncomingTransactionRecord:
-            kind = .receive
-            tokens = [token(value: record.value)]
-            completedSubtitle = record.from.flatMap { "transactions.from".localized(mapped(address: $0, blockchainType: blockchainType)) } ?? "transactions.from_unknown".localized
-            primaryValue = incomingValue(record.value)
-            secondaryValue = fiatValue
-
-        case let record as ThorChainOutgoingTransactionRecord:
-            kind = sendKind(sentToSelf: record.sentToSelf)
-            tokens = [token(value: record.value)]
-            completedSubtitle = sendSubtitle(to: record.to, sentToSelf: record.sentToSelf)
-            primaryValue = outgoingValue(record.value, sentToSelf: record.sentToSelf)
-            secondaryValue = fiatValue
-
-        case let record as ThorChainTransactionRecord:
-            kind = .contract(direction: nil)
-            tokens = [chainToken(source: record.source, text: record.transaction.type.capitalized)]
-            completedSubtitle = record.transaction.memo.flatMap { $0.isEmpty ? nil : $0 } ?? "transactions.unknown_transaction.description".localized()
-
-        case let record as TonTransactionRecord:
-            if record.actions.count == 1, let action = record.actions.first {
-                switch action.type {
-                case let .send(value, to, sentToSelf, _):
-                    kind = sendKind(sentToSelf: sentToSelf)
-                    tokens = [token(value: value)]
-                    completedSubtitle = sendSubtitle(to: to, sentToSelf: sentToSelf)
-                    primaryValue = outgoingValue(value, sentToSelf: sentToSelf)
-                    secondaryValue = fiatValue
-                case let .receive(value, from, _):
-                    kind = .receive
-                    tokens = [token(value: value)]
-                    completedSubtitle = "transactions.from".localized(mapped(address: from, blockchainType: blockchainType))
-                    primaryValue = incomingValue(value)
-                    secondaryValue = fiatValue
-                case let .burn(value):
-                    kind = .contract(direction: .outgoing)
-                    tokens = [token(value: value)]
-                    completedSubtitle = "transactions.burn".localized
-                    primaryValue = outgoingValue(value)
-                    secondaryValue = fiatValue
-                case let .mint(value):
-                    kind = .contract(direction: .incoming)
-                    tokens = [token(value: value)]
-                    completedSubtitle = "transactions.mint".localized
-                    primaryValue = incomingValue(value)
-                    secondaryValue = fiatValue
-                case let .swap(_, _, valueIn, valueOut):
-                    kind = .swap
-                    tokens = swapTokens(valueIn: valueIn, valueOut: valueOut)
-                    completedSubtitle = "transactions.swap".localized
-                    (primaryValue, secondaryValue) = swapValues(valueIn: valueIn, valueOut: valueOut)
-                case .contractDeploy:
-                    kind = .contract(direction: nil)
-                    tokens = [chainToken(source: record.source, text: "transactions.contract_deploy".localized)]
-                    completedSubtitle = "transactions.completed".localized
-                case let .contractCall(_, value, _):
-                    kind = .contract(direction: .outgoing)
-                    tokens = [token(value: value)]
-                    completedSubtitle = "transactions.contract_call".localized
-                    primaryValue = outgoingValue(value)
-                    secondaryValue = fiatValue
-                case let .unsupported(type):
-                    kind = .contract(direction: nil)
-                    tokens = [chainToken(source: record.source, text: "transactions.ton_transaction.title".localized)]
-                    completedSubtitle = type
-                }
-            } else {
-                kind = .contract(direction: nil)
-                tokens = [chainToken(source: record.source, text: "transactions.ton_transaction.title".localized)]
-                completedSubtitle = "transactions.completed".localized
-            }
-
-        case let record as StellarTransactionRecord:
-            switch record.type {
-            case let .accountCreated(startingBalance, _):
-                kind = .contract(direction: .incoming)
-                tokens = [token(value: startingBalance)]
-                completedSubtitle = "transactions.account_created".localized
-                primaryValue = incomingValue(startingBalance)
-                secondaryValue = fiatValue
-            case let .accountFunded(startingBalance, _):
-                kind = .contract(direction: .outgoing)
-                tokens = [token(value: startingBalance)]
-                completedSubtitle = "transactions.account_created".localized
-                primaryValue = outgoingValue(startingBalance)
-                secondaryValue = fiatValue
-            case let .sendPayment(value, to, sentToSelf):
-                kind = sendKind(sentToSelf: sentToSelf)
-                tokens = [token(value: value)]
-                completedSubtitle = sendSubtitle(to: to, sentToSelf: sentToSelf)
-                primaryValue = outgoingValue(value, sentToSelf: sentToSelf)
-                secondaryValue = fiatValue
-            case let .receivePayment(value, from):
-                kind = .receive
-                tokens = [token(value: value)]
-                completedSubtitle = "transactions.from".localized(mapped(address: from, blockchainType: blockchainType))
-                primaryValue = incomingValue(value)
-                secondaryValue = fiatValue
-            case let .swap(valueIn, valueOut):
-                kind = .swap
-                tokens = swapTokens(valueIn: valueIn, valueOut: valueOut)
-                completedSubtitle = "transactions.swap".localized
-                (primaryValue, secondaryValue) = swapValues(valueIn: valueIn, valueOut: valueOut)
-            case let .changeTrust(value, _, _, _):
-                kind = .contract(direction: nil)
-                tokens = [token(value: value)]
-                completedSubtitle = "transactions.change_trust".localized
-                (primaryValue, secondaryValue) = allowanceValues(value: value, currencyValue: item.currencyValue)
-            case let .unsupported(type):
-                kind = .contract(direction: nil)
-                tokens = [chainToken(source: record.source, text: "transactions.stellar_transaction.title".localized)]
-                completedSubtitle = type
-            }
-
-        case let record as XrpTransactionRecord:
-            switch record.type {
-            case let .send(value, to, sentToSelf):
-                kind = sendKind(sentToSelf: sentToSelf)
-                tokens = [token(value: value)]
-                completedSubtitle = sendSubtitle(to: to, sentToSelf: sentToSelf)
-                primaryValue = outgoingValue(value, sentToSelf: sentToSelf)
-                secondaryValue = fiatValue
-            case let .receive(value, from):
-                kind = .receive
-                tokens = [token(value: value)]
-                completedSubtitle = "transactions.from".localized(mapped(address: from, blockchainType: blockchainType))
-                primaryValue = incomingValue(value)
-                secondaryValue = fiatValue
-            case let .trustSet(value, issuer):
-                kind = .contract(direction: nil)
-                tokens = [token(value: value)]
-                completedSubtitle = mapped(address: issuer, blockchainType: blockchainType)
-                // the default limit means "no cap", as the Stellar unlimited trustline
-                (primaryValue, secondaryValue) = allowanceValues(value: value, currencyValue: item.currencyValue)
-            case let .unsupported(type):
-                kind = .contract(direction: nil)
-                tokens = [chainToken(source: record.source, text: "transactions.xrp_transaction.title".localized)]
-                completedSubtitle = type
-            }
-
-        case let record as NearTransactionRecord:
-            switch record.type {
+        if let summary = registry.transactionSummary(record: item.record) {
+            switch summary.kind {
             case let .send(value, to, sentToSelf, _):
                 kind = sendKind(sentToSelf: sentToSelf)
                 tokens = [token(value: value)]
@@ -511,7 +177,7 @@ class TransactionsViewItemFactory {
                 let incomingValues = incoming.map(\.value)
                 let outgoingValues = outgoing.map(\.value)
                 let moved = transfers(
-                    source: record.source,
+                    source: item.record.source,
                     incomingValues: incomingValues,
                     outgoingValues: outgoingValues,
                     currencyValue: item.currencyValue,
@@ -524,71 +190,407 @@ class TransactionsViewItemFactory {
                 completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.contract_call".localized)
                 (primaryValue, secondaryValue) = (moved.primaryValue, moved.secondaryValue)
             }
+        } else {
+            switch item.record {
+            case let record as EvmIncomingTransactionRecord:
+                kind = .receive
+                tokens = [token(value: record.value)]
+                completedSubtitle = "transactions.from".localized(mapped(address: record.from, blockchainType: blockchainType))
+                primaryValue = incomingValue(record.value)
+                secondaryValue = fiatValue
 
-        case let record as ZcashShieldingTransactionRecord:
-            switch record.direction {
-            case .shield:
-                kind = .shield
-                completedSubtitle = "transactions.shielded".localized
-            case .unshield:
-                kind = .unshield
-                completedSubtitle = "transactions.unshielded".localized
-            case .migrate:
-                kind = .migrate
-                completedSubtitle = "transactions.migrate.to_ironwood".localized
+            case let record as EvmOutgoingTransactionRecord:
+                kind = sendKind(sentToSelf: record.sentToSelf)
+                tokens = [token(value: record.value)]
+                completedSubtitle = sendSubtitle(to: record.to, sentToSelf: record.sentToSelf)
+                primaryValue = outgoingValue(record.value, sentToSelf: record.sentToSelf)
+                secondaryValue = singleValueSecondaryValue(value: record.value, currencyValue: item.currencyValue)
+
+            case let record as SwapTransactionRecord:
+                kind = .swap
+                tokens = swapTokens(valueIn: record.valueIn, valueOut: record.valueOut)
+                completedSubtitle = "transactions.swap".localized
+
+                (primaryValue, secondaryValue) = swapValues(valueIn: record.valueIn, valueOut: record.valueOut, outType: record.recipient != nil ? .secondary : .incoming)
+
+            case let record as UnknownSwapTransactionRecord:
+                kind = .swap
+                tokens = swapTokens(valueIn: record.valueIn, valueOut: record.valueOut)
+                completedSubtitle = "transactions.swap".localized
+
+                (primaryValue, secondaryValue) = swapValues(valueIn: record.valueIn, valueOut: record.valueOut)
+
+            case let record as ApproveTransactionRecord:
+                kind = .approve
+                tokens = [token(value: record.value)]
+                completedSubtitle = "transactions.approve".localized
+                (primaryValue, secondaryValue) = allowanceValues(value: record.value, currencyValue: item.currencyValue)
+
+            case let record as ContractCallTransactionRecord:
+                let (incomingValues, outgoingValues) = record.combinedValues
+                let moved = transfers(
+                    source: record.source,
+                    incomingValues: incomingValues,
+                    outgoingValues: outgoingValues,
+                    currencyValue: item.currencyValue,
+                    noTransferTitle: record.method ?? "transactions.contract_call".localized,
+                    multipleTitle: "transactions.contract_call".localized
+                )
+
+                kind = .contract(direction: moved.direction)
+                tokens = moved.tokens
+                completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.contract_call".localized)
+                (primaryValue, secondaryValue) = (moved.primaryValue, moved.secondaryValue)
+
+            case let record as ExternalContractCallTransactionRecord:
+                let (incomingValues, outgoingValues) = record.combinedValues
+                // a single transfer someone else's call delivered reads as a plain receive
+                let isReceive = record.outgoingEvents.isEmpty && incomingValues.count == 1 && outgoingValues.isEmpty
+                let moved = transfers(
+                    source: record.source,
+                    incomingValues: incomingValues,
+                    outgoingValues: outgoingValues,
+                    currencyValue: item.currencyValue,
+                    noTransferTitle: "transactions.external_call".localized
+                )
+
+                if isReceive {
+                    kind = .receive
+                    completedSubtitle = externalReceiveSubtitle(addresses: record.incomingEvents.map(\.address), blockchainType: blockchainType)
+                } else {
+                    kind = .contract(direction: moved.direction)
+                    completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.external_call".localized)
+                }
+
+                tokens = moved.tokens
+                (primaryValue, secondaryValue) = (moved.primaryValue, moved.secondaryValue)
+
+            case let record as ContractCreationTransactionRecord:
+                kind = .contract(direction: nil)
+                tokens = [chainToken(source: record.source, text: "transactions.contract_creation".localized)]
+                completedSubtitle = "transactions.completed".localized
+
+            case let record as BitcoinIncomingTransactionRecord:
+                kind = .receive
+                tokens = [token(value: record.value)]
+                completedSubtitle = receiveSubtitle(from: record.from, to: record.to, blockchainType: blockchainType)
+                primaryValue = incomingValue(record.value)
+                secondaryValue = fiatValue
+
+                doubleSpend = record.conflictingHash != nil
+                if let lockState = item.transactionItem.lockState {
+                    locked = lockState.locked
+                }
+
+            case let record as BitcoinOutgoingTransactionRecord:
+                kind = sendKind(sentToSelf: record.sentToSelf)
+                tokens = [token(value: record.value)]
+                completedSubtitle = sendSubtitle(to: record.to, sentToSelf: record.sentToSelf)
+                primaryValue = outgoingValue(record.value, sentToSelf: record.sentToSelf)
+                secondaryValue = fiatValue
+
+                doubleSpend = record.conflictingHash != nil
+                if let lockState = item.transactionItem.lockState {
+                    locked = lockState.locked
+                }
+
+            case let record as MoneroIncomingTransactionRecord:
+                kind = .receive
+                tokens = [token(value: record.value)]
+                completedSubtitle = receiveSubtitle(from: record.from, to: record.to, blockchainType: blockchainType)
+                primaryValue = incomingValue(record.value)
+                secondaryValue = fiatValue
+
+            case let record as MoneroOutgoingTransactionRecord:
+                kind = sendKind(sentToSelf: record.sentToSelf)
+                tokens = [token(value: record.value)]
+                completedSubtitle = sendSubtitle(to: record.to, sentToSelf: record.sentToSelf)
+                primaryValue = outgoingValue(record.value, sentToSelf: record.sentToSelf)
+                secondaryValue = fiatValue
+
+            case let record as ZanoIncomingTransactionRecord:
+                kind = .receive
+                tokens = [token(value: record.value)]
+                completedSubtitle = receiveSubtitle(from: record.from, to: record.to, blockchainType: blockchainType)
+                primaryValue = incomingValue(record.value)
+                secondaryValue = fiatValue
+
+            case let record as ZanoOutgoingTransactionRecord:
+                kind = sendKind(sentToSelf: record.sentToSelf)
+                tokens = [token(value: record.value)]
+                completedSubtitle = sendSubtitle(to: record.to, sentToSelf: record.sentToSelf)
+                primaryValue = outgoingValue(record.value, sentToSelf: record.sentToSelf)
+                secondaryValue = fiatValue
+
+            case let record as TronIncomingTransactionRecord:
+                kind = .receive
+                tokens = [token(value: record.value)]
+                completedSubtitle = "transactions.from".localized(mapped(address: record.from, blockchainType: blockchainType))
+                primaryValue = incomingValue(record.value)
+                secondaryValue = fiatValue
+
+            case let record as TronOutgoingTransactionRecord:
+                kind = sendKind(sentToSelf: record.sentToSelf)
+                tokens = [token(value: record.value)]
+                completedSubtitle = sendSubtitle(to: record.to, sentToSelf: record.sentToSelf)
+                primaryValue = outgoingValue(record.value, sentToSelf: record.sentToSelf)
+                secondaryValue = singleValueSecondaryValue(value: record.value, currencyValue: item.currencyValue)
+
+            case let record as TronApproveTransactionRecord:
+                kind = .approve
+                tokens = [token(value: record.value)]
+                completedSubtitle = "transactions.approve".localized
+                (primaryValue, secondaryValue) = allowanceValues(value: record.value, currencyValue: item.currencyValue)
+
+            case let record as TronContractCallTransactionRecord:
+                let (incomingValues, outgoingValues) = record.combinedValues
+                let moved = transfers(
+                    source: record.source,
+                    incomingValues: incomingValues,
+                    outgoingValues: outgoingValues,
+                    currencyValue: item.currencyValue,
+                    noTransferTitle: record.method ?? "transactions.contract_call".localized,
+                    multipleTitle: "transactions.contract_call".localized
+                )
+
+                kind = .contract(direction: moved.direction)
+                tokens = moved.tokens
+                completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.contract_call".localized)
+                (primaryValue, secondaryValue) = (moved.primaryValue, moved.secondaryValue)
+
+            case let record as TronExternalContractCallTransactionRecord:
+                let (incomingValues, outgoingValues) = record.combinedValues
+                // a single transfer someone else's call delivered reads as a plain receive
+                let isReceive = record.outgoingEvents.isEmpty && incomingValues.count == 1 && outgoingValues.isEmpty
+                let moved = transfers(
+                    source: record.source,
+                    incomingValues: incomingValues,
+                    outgoingValues: outgoingValues,
+                    currencyValue: item.currencyValue,
+                    noTransferTitle: "transactions.external_call".localized
+                )
+
+                if isReceive {
+                    kind = .receive
+                    completedSubtitle = externalReceiveSubtitle(addresses: record.incomingEvents.map(\.address), blockchainType: blockchainType)
+                } else {
+                    kind = .contract(direction: moved.direction)
+                    completedSubtitle = contractCallSubtitle(transfers: moved, typeTitle: "transactions.external_call".localized)
+                }
+
+                tokens = moved.tokens
+                (primaryValue, secondaryValue) = (moved.primaryValue, moved.secondaryValue)
+
+            case let record as TronTransactionRecord:
+                kind = .unknown
+                tokens = [chainToken(source: record.source, text: record.transaction.contract?.label ?? "transactions.unknown_transaction.title".localized)]
+                completedSubtitle = "transactions.unknown_transaction.description".localized()
+
+            case let record as ThorChainIncomingTransactionRecord:
+                kind = .receive
+                tokens = [token(value: record.value)]
+                completedSubtitle = record.from.flatMap { "transactions.from".localized(mapped(address: $0, blockchainType: blockchainType)) } ?? "transactions.from_unknown".localized
+                primaryValue = incomingValue(record.value)
+                secondaryValue = fiatValue
+
+            case let record as ThorChainOutgoingTransactionRecord:
+                kind = sendKind(sentToSelf: record.sentToSelf)
+                tokens = [token(value: record.value)]
+                completedSubtitle = sendSubtitle(to: record.to, sentToSelf: record.sentToSelf)
+                primaryValue = outgoingValue(record.value, sentToSelf: record.sentToSelf)
+                secondaryValue = fiatValue
+
+            case let record as ThorChainTransactionRecord:
+                kind = .contract(direction: nil)
+                tokens = [chainToken(source: record.source, text: record.transaction.type.capitalized)]
+                completedSubtitle = record.transaction.memo.flatMap { $0.isEmpty ? nil : $0 } ?? "transactions.unknown_transaction.description".localized()
+
+            case let record as TonTransactionRecord:
+                if record.actions.count == 1, let action = record.actions.first {
+                    switch action.type {
+                    case let .send(value, to, sentToSelf, _):
+                        kind = sendKind(sentToSelf: sentToSelf)
+                        tokens = [token(value: value)]
+                        completedSubtitle = sendSubtitle(to: to, sentToSelf: sentToSelf)
+                        primaryValue = outgoingValue(value, sentToSelf: sentToSelf)
+                        secondaryValue = fiatValue
+                    case let .receive(value, from, _):
+                        kind = .receive
+                        tokens = [token(value: value)]
+                        completedSubtitle = "transactions.from".localized(mapped(address: from, blockchainType: blockchainType))
+                        primaryValue = incomingValue(value)
+                        secondaryValue = fiatValue
+                    case let .burn(value):
+                        kind = .contract(direction: .outgoing)
+                        tokens = [token(value: value)]
+                        completedSubtitle = "transactions.burn".localized
+                        primaryValue = outgoingValue(value)
+                        secondaryValue = fiatValue
+                    case let .mint(value):
+                        kind = .contract(direction: .incoming)
+                        tokens = [token(value: value)]
+                        completedSubtitle = "transactions.mint".localized
+                        primaryValue = incomingValue(value)
+                        secondaryValue = fiatValue
+                    case let .swap(_, _, valueIn, valueOut):
+                        kind = .swap
+                        tokens = swapTokens(valueIn: valueIn, valueOut: valueOut)
+                        completedSubtitle = "transactions.swap".localized
+                        (primaryValue, secondaryValue) = swapValues(valueIn: valueIn, valueOut: valueOut)
+                    case .contractDeploy:
+                        kind = .contract(direction: nil)
+                        tokens = [chainToken(source: record.source, text: "transactions.contract_deploy".localized)]
+                        completedSubtitle = "transactions.completed".localized
+                    case let .contractCall(_, value, _):
+                        kind = .contract(direction: .outgoing)
+                        tokens = [token(value: value)]
+                        completedSubtitle = "transactions.contract_call".localized
+                        primaryValue = outgoingValue(value)
+                        secondaryValue = fiatValue
+                    case let .unsupported(type):
+                        kind = .contract(direction: nil)
+                        tokens = [chainToken(source: record.source, text: "transactions.ton_transaction.title".localized)]
+                        completedSubtitle = type
+                    }
+                } else {
+                    kind = .contract(direction: nil)
+                    tokens = [chainToken(source: record.source, text: "transactions.ton_transaction.title".localized)]
+                    completedSubtitle = "transactions.completed".localized
+                }
+
+            case let record as StellarTransactionRecord:
+                switch record.type {
+                case let .accountCreated(startingBalance, _):
+                    kind = .contract(direction: .incoming)
+                    tokens = [token(value: startingBalance)]
+                    completedSubtitle = "transactions.account_created".localized
+                    primaryValue = incomingValue(startingBalance)
+                    secondaryValue = fiatValue
+                case let .accountFunded(startingBalance, _):
+                    kind = .contract(direction: .outgoing)
+                    tokens = [token(value: startingBalance)]
+                    completedSubtitle = "transactions.account_created".localized
+                    primaryValue = outgoingValue(startingBalance)
+                    secondaryValue = fiatValue
+                case let .sendPayment(value, to, sentToSelf):
+                    kind = sendKind(sentToSelf: sentToSelf)
+                    tokens = [token(value: value)]
+                    completedSubtitle = sendSubtitle(to: to, sentToSelf: sentToSelf)
+                    primaryValue = outgoingValue(value, sentToSelf: sentToSelf)
+                    secondaryValue = fiatValue
+                case let .receivePayment(value, from):
+                    kind = .receive
+                    tokens = [token(value: value)]
+                    completedSubtitle = "transactions.from".localized(mapped(address: from, blockchainType: blockchainType))
+                    primaryValue = incomingValue(value)
+                    secondaryValue = fiatValue
+                case let .swap(valueIn, valueOut):
+                    kind = .swap
+                    tokens = swapTokens(valueIn: valueIn, valueOut: valueOut)
+                    completedSubtitle = "transactions.swap".localized
+                    (primaryValue, secondaryValue) = swapValues(valueIn: valueIn, valueOut: valueOut)
+                case let .changeTrust(value, _, _, _):
+                    kind = .contract(direction: nil)
+                    tokens = [token(value: value)]
+                    completedSubtitle = "transactions.change_trust".localized
+                    (primaryValue, secondaryValue) = allowanceValues(value: value, currencyValue: item.currencyValue)
+                case let .unsupported(type):
+                    kind = .contract(direction: nil)
+                    tokens = [chainToken(source: record.source, text: "transactions.stellar_transaction.title".localized)]
+                    completedSubtitle = type
+                }
+
+            case let record as XrpTransactionRecord:
+                switch record.type {
+                case let .send(value, to, sentToSelf):
+                    kind = sendKind(sentToSelf: sentToSelf)
+                    tokens = [token(value: value)]
+                    completedSubtitle = sendSubtitle(to: to, sentToSelf: sentToSelf)
+                    primaryValue = outgoingValue(value, sentToSelf: sentToSelf)
+                    secondaryValue = fiatValue
+                case let .receive(value, from):
+                    kind = .receive
+                    tokens = [token(value: value)]
+                    completedSubtitle = "transactions.from".localized(mapped(address: from, blockchainType: blockchainType))
+                    primaryValue = incomingValue(value)
+                    secondaryValue = fiatValue
+                case let .trustSet(value, issuer):
+                    kind = .contract(direction: nil)
+                    tokens = [token(value: value)]
+                    completedSubtitle = mapped(address: issuer, blockchainType: blockchainType)
+                    // the default limit means "no cap", as the Stellar unlimited trustline
+                    (primaryValue, secondaryValue) = allowanceValues(value: value, currencyValue: item.currencyValue)
+                case let .unsupported(type):
+                    kind = .contract(direction: nil)
+                    tokens = [chainToken(source: record.source, text: "transactions.xrp_transaction.title".localized)]
+                    completedSubtitle = type
+                }
+
+            case let record as ZcashShieldingTransactionRecord:
+                switch record.direction {
+                case .shield:
+                    kind = .shield
+                    completedSubtitle = "transactions.shielded".localized
+                case .unshield:
+                    kind = .unshield
+                    completedSubtitle = "transactions.unshielded".localized
+                case .migrate:
+                    kind = .migrate
+                    completedSubtitle = "transactions.migrate.to_ironwood".localized
+                }
+
+                tokens = [token(value: record.value)]
+                primaryValue = Value(text: coinString(from: record.value, signType: .never), type: .neutral)
+                secondaryValue = fiatValue
+
+                doubleSpend = record.conflictingHash != nil
+                if let lockState = item.transactionItem.lockState {
+                    locked = lockState.locked
+                }
+
+            case let record as SolanaIncomingTransactionRecord:
+                kind = .receive
+                tokens = [token(value: record.value)]
+                completedSubtitle = record.from.flatMap { "transactions.from".localized(mapped(address: $0, blockchainType: blockchainType)) } ?? "transactions.from_unknown".localized
+                primaryValue = incomingValue(record.value)
+                secondaryValue = fiatValue
+
+            case let record as SolanaOutgoingTransactionRecord:
+                kind = sendKind(sentToSelf: record.sentToSelf)
+                tokens = [token(value: record.value)]
+                completedSubtitle = sendSubtitle(to: record.to, sentToSelf: record.sentToSelf)
+                primaryValue = outgoingValue(record.value, sentToSelf: record.sentToSelf)
+                secondaryValue = singleValueSecondaryValue(value: record.value, currencyValue: item.currencyValue)
+
+            case let record as SolanaSwapTransactionRecord:
+                kind = .swap
+                tokens = swapTokens(valueIn: record.valueIn, valueOut: record.valueOut)
+                completedSubtitle = "transactions.swap".localized
+
+                (primaryValue, secondaryValue) = swapValues(valueIn: record.valueIn, valueOut: record.valueOut)
+
+            case let record as SolanaUnknownTransactionRecord:
+                let incomingValues = record.incomingTransfers.map(\.value)
+                let outgoingValues = record.outgoingTransfers.map(\.value)
+
+                let moved = transfers(
+                    source: record.source,
+                    incomingValues: incomingValues,
+                    outgoingValues: outgoingValues,
+                    currencyValue: item.currencyValue,
+                    noTransferTitle: "transactions.unknown_transaction.title".localized
+                )
+
+                kind = .unknown
+                tokens = moved.tokens
+                completedSubtitle = "transactions.unknown_transaction.description".localized()
+                (primaryValue, secondaryValue) = (moved.primaryValue, moved.secondaryValue)
+
+            default:
+                kind = .unknown
+                tokens = [chainToken(source: item.record.source, text: "transactions.unknown_transaction.title".localized)]
+                completedSubtitle = "transactions.unknown_transaction.description".localized()
             }
-
-            tokens = [token(value: record.value)]
-            primaryValue = Value(text: coinString(from: record.value, signType: .never), type: .neutral)
-            secondaryValue = fiatValue
-
-            doubleSpend = record.conflictingHash != nil
-            if let lockState = item.transactionItem.lockState {
-                locked = lockState.locked
-            }
-
-        case let record as SolanaIncomingTransactionRecord:
-            kind = .receive
-            tokens = [token(value: record.value)]
-            completedSubtitle = record.from.flatMap { "transactions.from".localized(mapped(address: $0, blockchainType: blockchainType)) } ?? "transactions.from_unknown".localized
-            primaryValue = incomingValue(record.value)
-            secondaryValue = fiatValue
-
-        case let record as SolanaOutgoingTransactionRecord:
-            kind = sendKind(sentToSelf: record.sentToSelf)
-            tokens = [token(value: record.value)]
-            completedSubtitle = sendSubtitle(to: record.to, sentToSelf: record.sentToSelf)
-            primaryValue = outgoingValue(record.value, sentToSelf: record.sentToSelf)
-            secondaryValue = singleValueSecondaryValue(value: record.value, currencyValue: item.currencyValue)
-
-        case let record as SolanaSwapTransactionRecord:
-            kind = .swap
-            tokens = swapTokens(valueIn: record.valueIn, valueOut: record.valueOut)
-            completedSubtitle = "transactions.swap".localized
-
-            (primaryValue, secondaryValue) = swapValues(valueIn: record.valueIn, valueOut: record.valueOut)
-
-        case let record as SolanaUnknownTransactionRecord:
-            let incomingValues = record.incomingTransfers.map(\.value)
-            let outgoingValues = record.outgoingTransfers.map(\.value)
-
-            let moved = transfers(
-                source: record.source,
-                incomingValues: incomingValues,
-                outgoingValues: outgoingValues,
-                currencyValue: item.currencyValue,
-                noTransferTitle: "transactions.unknown_transaction.title".localized
-            )
-
-            kind = .unknown
-            tokens = moved.tokens
-            completedSubtitle = "transactions.unknown_transaction.description".localized()
-            (primaryValue, secondaryValue) = (moved.primaryValue, moved.secondaryValue)
-
-        default:
-            kind = .unknown
-            tokens = [chainToken(source: item.record.source, text: "transactions.unknown_transaction.title".localized)]
-            completedSubtitle = "transactions.unknown_transaction.description".localized()
         }
 
         let state: ActivityCellViewItem.State
