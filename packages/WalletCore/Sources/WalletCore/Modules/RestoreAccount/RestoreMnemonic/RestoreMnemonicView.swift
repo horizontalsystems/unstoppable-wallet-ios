@@ -125,6 +125,7 @@ struct RestoreMnemonicView: View {
                 },
                 right: {
                     ThemeToggle(isOn: $viewModel.advanced)
+                        .accessibilityIdentifier(TestTags.restoreAdvancedOptions)
                 }
             )
         }
@@ -152,6 +153,7 @@ struct RestoreMnemonicView: View {
                                 )
                             }
                         }
+                        .accessibilityIdentifier(TestTags.restoreWordlist)
                     }
                 )
             }

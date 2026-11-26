@@ -27,6 +27,8 @@ enum TestTags {
     static let createPassphraseEye = "create_passphrase_eye"
     static let createPassphraseConfirmInput = "create_passphrase_confirm_input"
     static let createPassphraseConfirmEye = "create_passphrase_confirm_eye"
+    static let createAdvancedOptions = "create_advanced_options"
+    static let createMnemonicKind = "create_mnemonic_kind"
     static let createSubmit = "create_submit"
 
     static let importRecoveryPhrase = "import_recovery_phrase"
@@ -45,6 +47,8 @@ enum TestTags {
     static let restorePhraseClear = "restore_phrase_clear"
     static let restorePassphraseInput = "restore_passphrase_input"
     static let restorePassphraseEye = "restore_passphrase_eye"
+    static let restoreAdvancedOptions = "restore_advanced_options"
+    static let restoreWordlist = "restore_wordlist"
     static let restoreKeyNameInput = "restore_key_name_input"
     static let restoreKeyNameRandom = "restore_key_name_random"
     static let restoreKeyNameClear = "restore_key_name_clear"

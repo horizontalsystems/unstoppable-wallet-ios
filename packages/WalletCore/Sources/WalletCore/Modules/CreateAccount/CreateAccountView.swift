@@ -51,7 +51,7 @@ struct CreateAccountView: View {
                             ListSection {
                                 Cell(
                                     middle: { ThemeText("create_wallet.advanced_options".localized, style: .headline2) },
-                                    right: { ThemeToggle(isOn: $viewModel.advanced) }
+                                    right: { ThemeToggle(isOn: $viewModel.advanced).accessibilityIdentifier(TestTags.createAdvancedOptions) }
                                 )
                             }
 
@@ -76,6 +76,7 @@ struct CreateAccountView: View {
                                                     )
                                                 }
                                             }
+                                            .accessibilityIdentifier(TestTags.createMnemonicKind)
                                         }
                                     )
                                 }
