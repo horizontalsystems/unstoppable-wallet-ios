@@ -188,6 +188,26 @@ struct SpamCorrelationTests {
         #expect(OutputTransactionFactory.counterpartyAddresses(summary: mixed) == ["recipient"])
     }
 
+    /// A NEAR record reaches the summary rules through the registry
+    @Test func signedNearSendRecordGivesItsRecipient() throws {
+        try #require(Core.instance != nil)
+
+        let record = NearTransactionRecord(
+            source: TransactionSource(blockchainType: .near, meta: nil),
+            hash: "hash",
+            blockHeight: 1,
+            timestamp: 1,
+            pending: false,
+            failed: false,
+            expired: false,
+            signed: true,
+            type: .send(value: value(1), to: "recipient.near", sentToSelf: false, memo: nil),
+            fee: nil
+        )
+
+        #expect(OutputTransactionFactory.outgoingAddresses(from: record) == ["recipient.near"])
+    }
+
     private func summary(_ kind: TransactionSummary.Kind, signed: Bool) -> TransactionSummary {
         TransactionSummary(kind: kind, fee: nil, signedByAccount: signed, notProcessed: false)
     }

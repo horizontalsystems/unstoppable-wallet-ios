@@ -37,7 +37,10 @@ class TransactionInfoService {
         if let summary = registry.transactionSummary(record: transactionRecord) {
             tokens.append(transactionRecord.mainValue?.token)
             tokens.append(summary.fee?.token)
-            if case let .contractCall(_, _, incoming, outgoing) = summary.kind {
+            switch summary.kind {
+            case let .send(value, _, _, _), let .receive(value, _, _):
+                tokens.append(value.token)
+            case let .contractCall(_, _, incoming, outgoing):
                 tokens.append(contentsOf: (incoming + outgoing).map(\.value.token))
             }
         } else {
