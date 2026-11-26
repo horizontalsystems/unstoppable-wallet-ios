@@ -9,16 +9,18 @@ public class TransactionAdapterManager {
     private let adapterManager: AdapterManager
     private let evmBlockchainManager: EvmBlockchainManager
     private let adapterFactory: AdapterFactory
+    private let registry: BlockchainRegistry
 
     private let adaptersReadySubject = PassthroughSubject<Void, Never>()
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).transactions_adapter_manager", qos: .userInitiated)
     private var _adapterMap = [TransactionSource: ITransactionsAdapter]()
 
-    public init(adapterManager: AdapterManager, evmBlockchainManager: EvmBlockchainManager, adapterFactory: AdapterFactory) {
+    public init(adapterManager: AdapterManager, evmBlockchainManager: EvmBlockchainManager, adapterFactory: AdapterFactory, registry: BlockchainRegistry) {
         self.adapterManager = adapterManager
         self.evmBlockchainManager = evmBlockchainManager
         self.adapterFactory = adapterFactory
+        self.registry = registry
 
         adapterManager.adapterDataReadyPublisher
             .receive(on: initQueue)
@@ -40,7 +42,7 @@ public class TransactionAdapterManager {
 
             let transactionsAdapter: ITransactionsAdapter?
 
-            if let capability = adapterFactory.registry.adapterCapability(for: source.blockchainType) {
+            if let capability = registry.adapterCapability(for: source.blockchainType) {
                 transactionsAdapter = capability.transactionsAdapter(source: source, walletAdapter: adapter)
             } else if evmBlockchainManager.allBlockchains.contains(where: { $0.type == source.blockchainType }) {
                 transactionsAdapter = adapterFactory.evmTransactionsAdapter(transactionSource: source)

@@ -399,7 +399,8 @@ public class Core {
         transactionAdapterManager = TransactionAdapterManager(
             adapterManager: adapterManager,
             evmBlockchainManager: evmBlockchainManager,
-            adapterFactory: adapterFactory
+            adapterFactory: adapterFactory,
+            registry: registry
         )
 
         rateAppManager = RateAppManager(walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)

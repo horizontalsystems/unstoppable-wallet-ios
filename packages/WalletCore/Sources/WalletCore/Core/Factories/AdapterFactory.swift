@@ -21,7 +21,7 @@ public class AdapterFactory {
     private let zanoKitManager: ZanoKitManager
     private let solanaKitManager: SolanaKitManager
     private let xrpKitManager: XrpKitManager
-    let registry: BlockchainRegistry
+    private let registry: BlockchainRegistry
     private let restoreSettingsManager: RestoreSettingsManager
     private let coinManager: CoinManager
     private let spamWrapper: SpamWrapper
