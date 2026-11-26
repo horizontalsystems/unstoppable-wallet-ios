@@ -38,7 +38,11 @@ public extension BlockchainType {
     // The switch is deliberately exhaustive: a chain added to MarketKit must be classified here
     // rather than silently inherit someone else's answer.
     var memoType: MemoType {
-        switch self {
+        if let descriptor {
+            return descriptor.memo.type
+        }
+
+        return switch self {
         // A memo becomes an OP_RETURN output, broadcast in the clear (BitcoinCore OutputSetter).
         case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash: .onChainPublic
         // Shielded memos are encrypted to the recipient; transparent addresses carry no memo at all.
@@ -60,9 +64,8 @@ public extension BlockchainType {
         // provider's tag there: USwapXrpFinalQuoteBuilder, XrpPreSendHandler's attachment
         // overload, and Attachment.validate below.
         case .xrp: .none
-        // only a NEP-141 ft_transfer carries a memo; a NEAR transfer and a deposit have no field for it (Android memoDelivery = None)
-        case .near: .none
-        case .unsupported: .none
+        // a chain a plugin describes answers from its descriptor
+        case .near, .unsupported: .none
         }
     }
 
@@ -70,16 +73,19 @@ public extension BlockchainType {
     /// OP_RETURN relays 80 bytes of data on Bitcoin, Litecoin and Dash and 220 on Bitcoin Cash and eCash,
     /// a Zcash memo field holds 512. TON stays within one comment cell; Monero's 120 is a local note.
     var memoMaxBytes: Int? {
-        switch self {
+        if let descriptor {
+            return descriptor.memo.maxBytes
+        }
+
+        return switch self {
         case .bitcoin, .litecoin, .dash: 80
         case .bitcoinCash, .ecash: 220
         case .stellar: 28
         case .zcash: 512
         case .ton, .monero, .zano: 120
         case .thorChain, .mayaChain: 250
-        case .near: 256
         case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne,
-             .gnosis, .fantom, .base, .zkSync, .robinhood, .arc, .tron, .solana, .xrp, .unsupported: nil
+             .gnosis, .fantom, .base, .zkSync, .robinhood, .arc, .tron, .solana, .xrp, .near, .unsupported: nil
         }
     }
 
@@ -88,7 +94,11 @@ public extension BlockchainType {
     /// cannot name a unified Zcash address. TON and Stellar memos are short too, but no vault route sells
     /// them into ZEC.
     var memoRidesOpReturn: Bool {
-        switch self {
+        if let descriptor {
+            return descriptor.memo.ridesOpReturn
+        }
+
+        return switch self {
         case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash: true
         case .zcash, .monero, .zano, .ton, .stellar, .thorChain, .mayaChain, .near, .xrp,
              .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne,

@@ -63,6 +63,10 @@ extension Token {
     }
 
     var sendToSelfAllowed: Bool {
+        if let descriptor = blockchainType.descriptor {
+            return descriptor.sendToSelfAllowed
+        }
+
         if case .native = type, blockchainType == .zcash {
             return false
         }
@@ -71,10 +75,6 @@ extension Token {
         }
         // the ledger rejects a payment to the sending account itself (temREDUNDANT)
         if blockchainType == .xrp {
-            return false
-        }
-        // Android NearAddressValidator refuses the account's own id as the receiver
-        if blockchainType == .near {
             return false
         }
 

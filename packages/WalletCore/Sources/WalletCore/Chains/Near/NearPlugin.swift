@@ -11,7 +11,20 @@ final class NearPlugin: BlockchainPlugin, AdapterCapability, LifecycleCapability
     }
 
     let id = "near"
-    let descriptors = [BlockchainDescriptor(type: .near, family: "near")]
+    let descriptors = [
+        BlockchainDescriptor(
+            type: .near,
+            family: "near",
+            order: 16,
+            restoreSettingTypes: [.nearAccountId],
+            // only a NEP-141 ft_transfer carries a memo; a NEAR transfer and a deposit have no field for it (Android memoDelivery = None)
+            memo: MemoPolicy(type: .none, maxBytes: 256, ridesOpReturn: false),
+            blockTime: 1,
+            description: "NEAR, NEP-141 tokens",
+            // Android NearAddressValidator refuses the account's own id as the receiver
+            sendToSelfAllowed: false
+        ),
+    ]
 
     // Handler lists are constants: `HandlerRegistrations` reads them from an un-bootstrapped instance.
     let sendHandlers: [SendHandler.Type] = [NearSendHandler.self]

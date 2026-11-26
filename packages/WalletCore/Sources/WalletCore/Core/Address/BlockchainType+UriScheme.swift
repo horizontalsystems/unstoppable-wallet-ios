@@ -2,6 +2,10 @@ import MarketKit
 
 extension BlockchainType {
     var uriScheme: String? {
+        if let descriptor {
+            return descriptor.uriScheme
+        }
+
         if isEvm {
             return "ethereum"
         }

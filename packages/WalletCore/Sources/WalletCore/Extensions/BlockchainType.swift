@@ -41,14 +41,21 @@ extension BlockchainType {
     }
 
     var restoreSettingTypes: [RestoreSettingType] {
+        if let descriptor {
+            return descriptor.restoreSettingTypes
+        }
+
         switch self {
         case .zcash, .monero, .zano: return [.birthdayHeight]
-        case .near: return [.nearAccountId]
         default: return []
         }
     }
 
     var order: Int {
+        if let descriptor {
+            return descriptor.order
+        }
+
         let blockchainTypes: [BlockchainType] = [
             .bitcoin,
             .ethereum,
@@ -66,6 +73,7 @@ extension BlockchainType {
             .optimism,
             .stellar,
             .xrp,
+            // the slot keeps the other chains' indices; NEAR's value comes from its descriptor
             .near,
             .dash,
             .litecoin,
@@ -84,6 +92,10 @@ extension BlockchainType {
     }
 
     var resendable: Bool {
+        if let descriptor {
+            return descriptor.resendable
+        }
+
         switch self {
         // sequencer-run chains where replacing a pending transaction by nonce does not apply,
         // the same set Android refuses speed-up and cancel on
@@ -102,6 +114,10 @@ extension BlockchainType {
 
     /// used for EVM blockchains only
     var feePriceScale: FeePriceScale {
+        if let descriptor {
+            return descriptor.feePriceScale
+        }
+
         switch self {
         case .bitcoin, .bitcoinCash, .dash, .litecoin, .ecash: return .satoshi
         case .avalanche: return .nAvax
@@ -214,6 +230,10 @@ extension BlockchainType {
     }
 
     var description: String {
+        if let descriptor {
+            return descriptor.description
+        }
+
         switch self {
         case .bitcoin: return "BTC (BIP44, BIP49, BIP84, BIP86)"
         case .ethereum: return "ETH, ERC20 tokens"
@@ -239,7 +259,6 @@ extension BlockchainType {
         case .ton: return "TON"
         case .stellar: return "Stellar"
         case .xrp: return "XRP, XRPL tokens"
-        case .near: return "NEAR, NEP-141 tokens"
         case .thorChain: return "RUNE, THORChain assets"
         case .mayaChain: return "CACAO"
         case .solana: return "SOL, SPL tokens"
@@ -276,6 +295,10 @@ extension BlockchainType {
     }
 
     var defaultTokenQuery: TokenQuery {
+        if let descriptor {
+            return descriptor.defaultTokenQuery
+        }
+
         switch self {
         case .bitcoin, .litecoin:
             return TokenQuery(
@@ -293,6 +316,10 @@ extension BlockchainType {
     }
 
     var nativeTokenQueries: [TokenQuery] {
+        if let descriptor {
+            return descriptor.nativeTokenQueries
+        }
+
         switch self {
         case .bitcoin, .litecoin:
             return TokenType.Derivation.allCases.map {
@@ -321,6 +348,10 @@ extension BlockchainType {
     }
 
     public var blockTime: TimeInterval? {
+        if let descriptor {
+            return descriptor.blockTime
+        }
+
         switch self {
         case .ethereum: return 12
         case .tron: return 3
@@ -331,10 +362,10 @@ extension BlockchainType {
         case .zcash: return 75
         case .monero: return 120
         case .zano: return 60
-        case .binanceSmartChain, .arbitrumOne, .arc, .near: return 1
+        case .binanceSmartChain, .arbitrumOne, .arc: return 1
         case .thorChain, .mayaChain: return nil
         case .xrp: return 4
-        case .solana, .unsupported: return nil
+        case .solana, .near, .unsupported: return nil
         }
     }
 }
