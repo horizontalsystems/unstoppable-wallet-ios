@@ -101,6 +101,18 @@ struct BlockchainRegistryTests {
         #expect(failingLog == ["a", "b"])
     }
 
+    @Test func watchParserOrderEqualsLegacyOrder() {
+        let btcTypes = BtcBlockchainManager.blockchainTypes.map { WatchViewModel.WatchParserEntry(blockchainType: $0, withEns: false) }
+        let head = [WatchViewModel.WatchParserEntry(blockchainType: .ethereum, withEns: true)] + btcTypes
+        let middle: [BlockchainType] = [.tron, .ton, .thorChain, .mayaChain, .solana, .stellar, .xrp]
+
+        let withNear = WatchViewModel.watchParserEntries(pluginSupports: [WatchAddressSupport(blockchainType: .near, priority: 1000)])
+        let withoutNear = WatchViewModel.watchParserEntries(pluginSupports: [])
+
+        #expect(withNear == head + (middle + [.near, .monero]).map { WatchViewModel.WatchParserEntry(blockchainType: $0, withEns: true) })
+        #expect(withoutNear == head + (middle + [.monero]).map { WatchViewModel.WatchParserEntry(blockchainType: $0, withEns: true) })
+    }
+
     private func ids(_ plugins: [BlockchainPlugin]) -> [String] {
         plugins.map(\.id)
     }

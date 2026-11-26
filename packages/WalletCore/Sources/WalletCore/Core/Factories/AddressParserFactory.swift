@@ -13,6 +13,10 @@ enum AddressParserFactory {
     }
 
     static func parserChainHandlers(blockchainType: BlockchainType, filter: ParserFilter? = nil, withEns: Bool = true) -> [IAddressParserItem] {
+        if let capability = Core.instance?.registry.addressCapability(for: blockchainType) {
+            return capability.addressParserItems(blockchainType: blockchainType, withEns: withEns)
+        }
+
         switch blockchainType {
         case .bitcoin, .dash, .litecoin, .bitcoinCash, .ecash:
             let scriptConverter = ScriptConverter()
@@ -114,9 +118,7 @@ enum AddressParserFactory {
             return handlers
         case .xrp:
             return [XrpAddressParserItem()]
-        case .near:
-            return [NearAddressParserItem(rpcUrls: Core.shared.nearNodeManager.rpcUrls(network: Core.shared.nearKitManager.network))]
-        case .unsupported: return []
+        case .near, .unsupported: return []
         }
     }
 

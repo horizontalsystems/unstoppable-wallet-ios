@@ -80,12 +80,14 @@ struct BlockchainSettingsView: View {
                         }
 
                         stat(page: .blockchainSettings, event: .openBlockchainSettingsXrp)
-                    case .near:
+                    case let .plugin(pluginItem):
                         Coordinator.shared.present { isPresented in
-                            NodeNetworkView(blockchain: item.blockchain, isPresented: isPresented)
+                            pluginItem.destination(item.blockchain, isPresented)
                         }
 
-                        stat(page: .blockchainSettings, event: .openBlockchainSettingsNear)
+                        if let event = pluginItem.openStatEvent {
+                            stat(page: .blockchainSettings, event: event)
+                        }
                     case .thorChain:
                         Coordinator.shared.present { isPresented in
                             ThorChainNetworkView(blockchain: item.blockchain, isPresented: isPresented)

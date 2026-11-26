@@ -60,13 +60,14 @@ enum AddTokenModule {
             items.append(item)
         }
 
-        if let blockchain = try? Core.shared.marketKit.blockchain(uid: BlockchainType.near.uid), blockchain.type.supports(accountType: account.type) {
-            let service: IAddTokenBlockchainService = AddNearTokenBlockchainService(
-                blockchain: blockchain,
-                rpcUrls: Core.shared.nearNodeManager.rpcUrls(network: Core.shared.nearKitManager.network)
-            )
-            let item = Item(blockchain: blockchain, service: service)
-            items.append(item)
+        for capability in Core.shared.registry.tokenCapabilities {
+            for descriptor in capability.descriptors {
+                if let blockchain = try? Core.shared.marketKit.blockchain(uid: descriptor.type.uid), blockchain.type.supports(accountType: account.type),
+                   let service = capability.addTokenService(blockchain: blockchain)
+                {
+                    items.append(Item(blockchain: blockchain, service: service))
+                }
+            }
         }
 
         if let blockchain = try? Core.shared.marketKit.blockchain(uid: BlockchainType.zano.uid), blockchain.type.supports(accountType: account.type) {

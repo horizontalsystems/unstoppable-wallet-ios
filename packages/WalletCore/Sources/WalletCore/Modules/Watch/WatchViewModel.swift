@@ -16,6 +16,7 @@ class WatchViewModel: ObservableObject {
     private let marketKit = Core.shared.marketKit
     private let accountFactory = Core.shared.accountFactory
     private let restoreSettingsManager = Core.shared.restoreSettingsManager
+    private let registry = Core.shared.registry
     private let moneroParser = MoneroWatchWalletParser()
     private let addressUriParser = AddressParserFactory.parser(blockchainType: nil, tokenType: nil)
     private let addressParserChain = AddressParserChain()
@@ -98,19 +99,9 @@ class WatchViewModel: ObservableObject {
     init() {
         name = accountFactory.nextWatchAccountName
 
-        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .ethereum, withEns: true))
-        addressParserChain.append(handlers: BtcBlockchainManager.blockchainTypes.flatMap { AddressParserFactory.parserChainHandlers(blockchainType: $0, withEns: false) })
-        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .tron))
-        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .ton))
-        // bech32 with a checksum goes before Solana: its base58-to-32-bytes check alone accepts about
-        // one in twelve thor1/maya1 addresses (Android WatchAddressModule keeps Solana last too)
-        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .thorChain))
-        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .mayaChain))
-        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .solana))
-        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .stellar))
-        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .xrp))
-        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .near))
-        addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: .monero))
+        for entry in Self.watchParserEntries(pluginSupports: registry.accountCapabilities.flatMap(\.watchAddressSupports)) {
+            addressParserChain.append(handlers: AddressParserFactory.parserChainHandlers(blockchainType: entry.blockchainType, withEns: entry.withEns))
+        }
     }
 
     private func parse(text: String) {
@@ -194,6 +185,8 @@ class WatchViewModel: ObservableObject {
             let accountType: AccountType
             if let bitcoinAddress = address as? BitcoinAddress, let blockchainType = bitcoinAddress.blockchainType {
                 accountType = .btcAddress(address: bitcoinAddress.raw, blockchainType: blockchainType, tokenType: bitcoinAddress.tokenType)
+            } else if let type = address.blockchainType, let pluginAccountType = try registry.accountCapability(for: type)?.watchAccountType(address: address) {
+                accountType = pluginAccountType
             } else {
                 switch address.blockchainType {
                 case let evmAddress where EvmBlockchainManager.blockchainTypes.contains(where: { $0 == evmAddress }):
@@ -209,8 +202,6 @@ class WatchViewModel: ObservableObject {
                 case .xrp:
                     // an X-address watches the account behind it; the tag is a payment detail, not an identity
                     accountType = .xrpAddress(address: XrpKit.Kit.decode(xAddress: address.raw)?.classicAddress ?? address.raw)
-                case .near:
-                    accountType = .nearAddress(address: address.raw)
                 case .thorChain:
                     // the parser passes the input through; an all-uppercase QR form must not become a second account
                     accountType = try .thorChainAddress(address: ThorChainKit.Address(address.raw, network: .mainnet).raw)
@@ -409,6 +400,39 @@ extension WatchViewModel {
 }
 
 extension WatchViewModel {
+    struct WatchParserEntry: Equatable {
+        let blockchainType: BlockchainType
+        let withEns: Bool
+    }
+
+    private static let legacyWatchParsers: [(priority: Int, entries: [WatchParserEntry])] = [
+        (100, [WatchParserEntry(blockchainType: .ethereum, withEns: true)]),
+        (200, BtcBlockchainManager.blockchainTypes.map { WatchParserEntry(blockchainType: $0, withEns: false) }),
+        (300, [WatchParserEntry(blockchainType: .tron, withEns: true)]),
+        (400, [WatchParserEntry(blockchainType: .ton, withEns: true)]),
+        // bech32 with a checksum goes before Solana: its base58-to-32-bytes check alone accepts about
+        // one in twelve thor1/maya1 addresses (Android WatchAddressModule keeps Solana last too)
+        (500, [WatchParserEntry(blockchainType: .thorChain, withEns: true)]),
+        (600, [WatchParserEntry(blockchainType: .mayaChain, withEns: true)]),
+        (700, [WatchParserEntry(blockchainType: .solana, withEns: true)]),
+        (800, [WatchParserEntry(blockchainType: .stellar, withEns: true)]),
+        (900, [WatchParserEntry(blockchainType: .xrp, withEns: true)]),
+        (1100, [WatchParserEntry(blockchainType: .monero, withEns: true)]),
+    ]
+
+    /// The order the watch screen tries its address parsers in: the legacy chains at fixed priorities and the
+    /// plugins' chains at theirs, lower first; on a tie legacy chains go first, then plugins in registry order.
+    static func watchParserEntries(pluginSupports: [WatchAddressSupport]) -> [WatchParserEntry] {
+        let legacy = legacyWatchParsers.flatMap { group in group.entries.map { (priority: group.priority, entry: $0) } }
+        let plugins = pluginSupports.map { (priority: $0.priority, entry: WatchParserEntry(blockchainType: $0.blockchainType, withEns: true)) }
+
+        // the position in `legacy + plugins` breaks ties, so the sort is stable
+        return (legacy + plugins)
+            .enumerated()
+            .sorted { ($0.element.priority, $0.offset) < ($1.element.priority, $1.offset) }
+            .map(\.element.entry)
+    }
+
     enum State {
         case ready(accountType: AccountType)
         case incomplete

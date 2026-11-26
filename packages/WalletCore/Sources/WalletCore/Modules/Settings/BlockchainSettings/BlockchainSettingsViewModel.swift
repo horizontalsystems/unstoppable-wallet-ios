@@ -2,7 +2,6 @@ import BitcoinCore
 import Combine
 import Foundation
 import MarketKit
-import NearKit
 import RxRelay
 import RxSwift
 import ThorChainKit
@@ -16,7 +15,7 @@ class BlockchainSettingsViewModel: ObservableObject {
     private let zanoNodeManager: ZanoNodeManager
     private let zcashNodeManager: ZcashNodeManager
     private let xrpNodeManager: XrpNodeManager
-    private let nearNodeManager: NearNodeManager
+    private let registry: BlockchainRegistry
     private let thorChainEndpointManager: ThorChainEndpointManager
     private let mayaChainEndpointManager: ThorChainEndpointManager
     private let marketKit: MarketKit.Kit
@@ -29,7 +28,7 @@ class BlockchainSettingsViewModel: ObservableObject {
     @Published var thorChainItem: Item?
     @Published var mayaChainItem: Item?
 
-    init(btcBlockchainManager: BtcBlockchainManager, evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zanoNodeManager: ZanoNodeManager, zcashNodeManager: ZcashNodeManager, xrpNodeManager: XrpNodeManager, nearNodeManager: NearNodeManager, thorChainEndpointManager: ThorChainEndpointManager, mayaChainEndpointManager: ThorChainEndpointManager, marketKit: MarketKit.Kit) {
+    init(btcBlockchainManager: BtcBlockchainManager, evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zanoNodeManager: ZanoNodeManager, zcashNodeManager: ZcashNodeManager, xrpNodeManager: XrpNodeManager, registry: BlockchainRegistry, thorChainEndpointManager: ThorChainEndpointManager, mayaChainEndpointManager: ThorChainEndpointManager, marketKit: MarketKit.Kit) {
         self.btcBlockchainManager = btcBlockchainManager
         self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager
@@ -37,7 +36,7 @@ class BlockchainSettingsViewModel: ObservableObject {
         self.zanoNodeManager = zanoNodeManager
         self.zcashNodeManager = zcashNodeManager
         self.xrpNodeManager = xrpNodeManager
-        self.nearNodeManager = nearNodeManager
+        self.registry = registry
         self.thorChainEndpointManager = thorChainEndpointManager
         self.mayaChainEndpointManager = mayaChainEndpointManager
         self.marketKit = marketKit
@@ -64,12 +63,14 @@ class BlockchainSettingsViewModel: ObservableObject {
                 self?.syncBtcItems()
             }
             .store(in: &cancellables)
-        nearNodeManager.nodeUpdatedPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.syncBtcItems()
-            }
-            .store(in: &cancellables)
+        for capability in registry.networkSettingsCapabilities {
+            capability.networkSettingsUpdated
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    self?.syncBtcItems()
+                }
+                .store(in: &cancellables)
+        }
         subscribe(MainScheduler.instance, disposeBag, thorChainEndpointManager.endpointObservable) { [weak self] in self?.syncThorChainItem() }
         subscribe(MainScheduler.instance, disposeBag, mayaChainEndpointManager.endpointObservable) { [weak self] in self?.syncMayaChainItem() }
 
@@ -107,9 +108,12 @@ class BlockchainSettingsViewModel: ObservableObject {
             items.append(.init(blockchain: blockchain, type: .xrp(node: xrpNode)))
         }
 
-        if let blockchain = try? marketKit.blockchain(uid: BlockchainType.near.uid) {
-            let nearNode = nearNodeManager.node(network: NearKitManager.network)
-            items.append(.init(blockchain: blockchain, type: .near(node: nearNode)))
+        for capability in registry.networkSettingsCapabilities {
+            for item in capability.networkSettingsItems() {
+                if let blockchain = try? marketKit.blockchain(uid: item.blockchainType.uid) {
+                    items.append(.init(blockchain: blockchain, type: .plugin(item)))
+                }
+            }
         }
 
         btcItems = items.sorted { $0.blockchain.type.order < $1.blockchain.type.order }
@@ -168,7 +172,7 @@ extension BlockchainSettingsViewModel {
             case let .zano(node): return node.name
             case let .zcash(node): return node.name
             case let .xrp(node): return node.name
-            case let .near(node): return node.name
+            case let .plugin(item): return item.title
             case let .thorChain(endpointFamily): return endpointFamily.id
             }
         }
@@ -181,7 +185,7 @@ extension BlockchainSettingsViewModel {
         case zano(node: ZanoNode)
         case zcash(node: ZcashNode)
         case xrp(node: XrpNode)
-        case near(node: NearNode)
+        case plugin(NetworkSettingsItem)
         case thorChain(endpointFamily: ThorChainKit.EndpointFamilyDescriptor)
     }
 }

@@ -112,6 +112,10 @@ public enum AccountType: Identifiable {
     }
 
     func supports(token: Token) -> Bool {
+        if let supported = Core.instance?.registry.accountCapability(for: token.blockchainType)?.supports(accountType: self, token: token) {
+            return supported
+        }
+
         switch self {
         case .mnemonic:
             switch (token.blockchainType, token.type) {
@@ -143,7 +147,6 @@ public enum AccountType: Identifiable {
             case (.stellar, .native), (.stellar, .stellar): return true
             case (.solana, .native), (.solana, .spl): return true
             case (.xrp, .native), (.xrp, .xrpAsset): return true
-            case (.near, .native), (.near, .nep141): return true
             default: return false
             }
         case let .hdExtendedKey(key):
@@ -207,10 +210,7 @@ public enum AccountType: Identifiable {
             default: return false
             }
         case .nearAddress:
-            switch (token.blockchainType, token.type) {
-            case (.near, .native), (.near, .nep141): return true
-            default: return false
-            }
+            return false
         case .thorChainAddress:
             switch (token.blockchainType, token.type) {
             case (.thorChain, .native), (.thorChain, .thorChainAsset): return true
