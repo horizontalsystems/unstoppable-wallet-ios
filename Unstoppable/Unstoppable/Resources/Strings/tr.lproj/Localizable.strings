@@ -2039,12 +2039,11 @@
 "intro.uncompromised" = "Ödün vermeden";
 "intro.be_unstoppable" = "Durdurulamaz ol!";
 "intro.caption" = "İlke gereği gizli. Tasarım gereği bağımsız";
-"intro.create_new_wallet" = "Yeni Cüzdan Oluştur";
-"intro.add_existing_wallet" = "Mevcut Cüzdanı Ekle";
+"intro.create_wallet" = "Cüzdan Oluştur";
+"intro.import_wallet" = "Cüzdanı İçe Aktar";
 "intro.create_wallet.title" = "Cüzdan Oluştur";
-"intro.agreement" = "Devam ederek %@ ile %@ metinlerini kabul ediyorum";
-"intro.agreement.terms_of_use" = "Kullanım Koşulları";
-"intro.agreement.privacy_policy" = "Gizlilik Politikası";
+"intro.agreement" = "Devam ederek %@ metnini kabul ediyorum.";
+"intro.agreement.terms_and_privacy_policy" = "Koşullar ve Gizlilik Politikası";
 
 // Add Token
 

@@ -2039,12 +2039,11 @@
 "intro.uncompromised" = "绝不妥协";
 "intro.be_unstoppable" = "势不可挡！";
 "intro.caption" = "以隐私为原则，以独立为设计";
-"intro.create_new_wallet" = "创建新钱包";
-"intro.add_existing_wallet" = "添加已有钱包";
+"intro.create_wallet" = "创建钱包";
+"intro.import_wallet" = "导入钱包";
 "intro.create_wallet.title" = "创建钱包";
-"intro.agreement" = "继续即表示我同意%@并接受%@";
-"intro.agreement.terms_of_use" = "使用条款";
-"intro.agreement.privacy_policy" = "隐私政策";
+"intro.agreement" = "继续即表示我同意%@。";
+"intro.agreement.terms_and_privacy_policy" = "条款和隐私政策";
 
 // Add Token
 

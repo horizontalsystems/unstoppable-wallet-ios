@@ -5,8 +5,6 @@ enum WelcomeTimeline {
 
     enum Step: Int, CaseIterable, Comparable {
         case initial
-        case logoShown
-        case logoGone
         case line1
         case line2
         case line3
@@ -18,8 +16,6 @@ enum WelcomeTimeline {
         var time: Double {
             switch self {
             case .initial: return 0
-            case .logoShown: return 0.35
-            case .logoGone: return 2.10
             case .line1: return 2.45
             case .line2: return 2.63
             case .line3: return 2.81

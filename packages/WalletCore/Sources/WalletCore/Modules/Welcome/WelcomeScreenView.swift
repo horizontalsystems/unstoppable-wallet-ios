@@ -16,18 +16,21 @@ struct WelcomeScreenView: View {
     }
 
     var body: some View {
-        ThemeNavigationStack {
-            ZStack {
-                WelcomeGlowView(start: start)
+        ZStack {
+            ThemeNavigationStack {
+                ZStack {
+                    WelcomeGlowView(start: start)
 
-                logo
+                    content
+                }
+                .toolbar(.hidden, for: .navigationBar)
+                .navigationDestination(item: $viewModel.flow) { flow in
+                    flowView(flow: flow)
+                }
+            }
 
-                content
-            }
-            .toolbar(.hidden, for: .navigationBar)
-            .navigationDestination(item: $viewModel.flow) { flow in
-                flowView(flow: flow)
-            }
+            // Outside the navigation stack, so its full-screen centring does not follow the stack's settling safe area.
+            logo
         }
         .opacity(screenOpacity)
         .allowsHitTesting(!isFinishing)
@@ -71,50 +74,36 @@ struct WelcomeScreenView: View {
         }
     }
 
-    private var logoPhase: LogoPhase {
-        switch step {
-        case .initial: return .hidden
-        case .logoShown: return .shown
-        default: return .gone
-        }
+    /// Shown from the first frame without animation; leaves when the first headline line starts to reveal. Never shown with Reduce Motion.
+    private var isLogoShown: Bool {
+        !reduceMotion && step < .line1
     }
 
     private var logo: some View {
-        WelcomeLogoView()
-            .opacity(logoPhase == .shown ? 1 : 0)
-            .animation(logoAnimation(appearDuration: Self.logoFadeDuration), value: logoPhase)
-            .scaleEffect(logoScale)
-            .offset(y: logoPhase == .gone ? Self.logoGoneOffset : 0)
-            .animation(logoAnimation(appearDuration: Self.logoScaleDuration), value: logoPhase)
-            .accessibilityHidden(true)
-    }
-
-    private var logoScale: CGFloat {
-        switch logoPhase {
-        case .hidden: return Self.logoHiddenScale
-        case .shown: return 1
-        case .gone: return Self.logoGoneScale
+        WelcomeLogoView { image in
+            image
+                .opacity(isLogoShown ? 1 : 0)
+                .scaleEffect(isLogoShown ? 1 : Self.logoGoneScale)
+                .offset(y: isLogoShown ? 0 : Self.logoGoneOffset)
+                .animation(reduceMotion ? nil : .timingCurve(0.4, 0, 1, 1, duration: Self.logoLeaveDuration), value: isLogoShown)
         }
-    }
-
-    private func logoAnimation(appearDuration: Double) -> Animation? {
-        guard !reduceMotion else {
-            return nil
-        }
-
-        if logoPhase == .gone {
-            return .timingCurve(0.4, 0, 1, 1, duration: Self.logoLeaveDuration)
-        }
-
-        return WelcomeReveal.curve(duration: appearDuration)
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
     }
 
     private var content: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Spacer(minLength: 0)
+        GeometryReader { proxy in
+            WelcomeContentLayout(safeAreaInsets: proxy.safeAreaInsets) {
+                textBlock
+                buttons
+            }
+        }
+    }
 
+    private var textBlock: some View {
+        VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading, spacing: .margin24) {
-                VStack(alignment: .leading, spacing: Self.headlineLineSpacing) {
+                VStack(alignment: .leading, spacing: .margin2) {
                     headline("intro.unwatched".localized, step: .line1)
                     headline("intro.unrestricted".localized, step: .line2)
                     headline("intro.uncompromised".localized, step: .line3)
@@ -131,11 +120,8 @@ struct WelcomeScreenView: View {
                 .padding(.horizontal, .margin32)
                 .padding(.vertical, .margin16)
                 .modifier(WelcomeReveal(isRevealed: step >= .tail, animated: !reduceMotion))
-
-            Spacer().frame(height: Self.textToButtonsSpacing)
-
-            buttons
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private func headline(_ text: String, step lineStep: WelcomeTimeline.Step) -> some View {
@@ -148,13 +134,13 @@ struct WelcomeScreenView: View {
     private var buttons: some View {
         VStack(spacing: 0) {
             VStack(spacing: .margin12) {
-                ThemeButton(text: "intro.create_new_wallet".localized) {
+                ThemeButton(text: "intro.create_wallet".localized) {
                     viewModel.showCreateSheet()
                 }
                 .accessibilityIdentifier(TestTags.introCreateWallet)
                 .modifier(WelcomeReveal(isRevealed: step >= .tail, dy: Self.buttonRevealOffset, blur: 0, animated: !reduceMotion))
 
-                ThemeButton(text: "intro.add_existing_wallet".localized, style: .secondary) {
+                ThemeButton(text: "intro.import_wallet".localized, style: .secondary) {
                     viewModel.showImportSheet()
                 }
                 .accessibilityIdentifier(TestTags.introAddExistingWallet)
@@ -182,7 +168,7 @@ struct WelcomeScreenView: View {
         let string = "intro.agreement".localized
         let components = string.components(separatedBy: "%@")
 
-        guard components.count == 3 else {
+        guard components.count == 2 else {
             return AttributedString(string)
         }
 
@@ -191,13 +177,9 @@ struct WelcomeScreenView: View {
         if !components[0].isEmpty {
             result.append(agreementTextPart(string: components[0]))
         }
-        result.append(agreementTextPart(string: "intro.agreement.terms_of_use".localized, url: AppConfig.termsOfUseLink))
+        result.append(agreementTextPart(string: "intro.agreement.terms_and_privacy_policy".localized, url: AppConfig.termsOfUseLink))
         if !components[1].isEmpty {
             result.append(agreementTextPart(string: components[1]))
-        }
-        result.append(agreementTextPart(string: "intro.agreement.privacy_policy".localized, url: AppConfig.privacyPolicyLink))
-        if !components[2].isEmpty {
-            result.append(agreementTextPart(string: components[2]))
         }
 
         return result
@@ -261,22 +243,12 @@ struct WelcomeScreenView: View {
 }
 
 extension WelcomeScreenView {
-    private enum LogoPhase {
-        case hidden
-        case shown
-        case gone
-    }
-
-    private static let logoHiddenScale: CGFloat = 0.86
     private static let logoGoneScale: CGFloat = 0.92
-    private static let logoGoneOffset: CGFloat = -14
-    private static let logoFadeDuration: Double = 0.7
-    private static let logoScaleDuration: Double = 0.9
+    /// Figma frame 6633:172018: the leaving logo sits 131pt above its centred position.
+    private static let logoGoneOffset: CGFloat = -131
     private static let logoLeaveDuration: Double = 0.45
 
-    private static let headlineLineSpacing: CGFloat = -4
     private static let captionOpacity: Double = 0.5
-    private static let textToButtonsSpacing: CGFloat = 20
     private static let buttonRevealOffset: CGFloat = 40
     private static let buttonsFadeDuration: Double = 0.5
     private static let finishDuration: Double = 0.3

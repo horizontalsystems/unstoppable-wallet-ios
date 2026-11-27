@@ -2039,12 +2039,11 @@
 "intro.uncompromised" = "Без компромиссов";
 "intro.be_unstoppable" = "Будьте неудержимы!";
 "intro.caption" = "Приватность как принцип. Независимость по замыслу";
-"intro.create_new_wallet" = "Создать новый кошелек";
-"intro.add_existing_wallet" = "Добавить существующий кошелек";
+"intro.create_wallet" = "Создать кошелек";
+"intro.import_wallet" = "Импортировать кошелек";
 "intro.create_wallet.title" = "Создать кошелек";
-"intro.agreement" = "Продолжая, я принимаю %@ и соглашаюсь с %@";
-"intro.agreement.terms_of_use" = "Условия использования";
-"intro.agreement.privacy_policy" = "Политикой конфиденциальности";
+"intro.agreement" = "Продолжая, я принимаю %@.";
+"intro.agreement.terms_and_privacy_policy" = "Условия и Политику конфиденциальности";
 
 // Add Token
 

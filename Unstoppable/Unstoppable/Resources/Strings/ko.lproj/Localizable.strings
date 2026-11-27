@@ -2039,12 +2039,11 @@
 "intro.uncompromised" = "타협 없이";
 "intro.be_unstoppable" = "멈출 수 없는 존재가 되세요!";
 "intro.caption" = "원칙으로 지키는 프라이버시. 설계로 지키는 독립성";
-"intro.create_new_wallet" = "새 지갑 만들기";
-"intro.add_existing_wallet" = "기존 지갑 추가";
+"intro.create_wallet" = "지갑 만들기";
+"intro.import_wallet" = "지갑 가져오기";
 "intro.create_wallet.title" = "지갑 만들기";
-"intro.agreement" = "계속하면 %@ 및 %@에 동의하게 됩니다";
-"intro.agreement.terms_of_use" = "이용약관";
-"intro.agreement.privacy_policy" = "개인정보 처리방침";
+"intro.agreement" = "계속하면 %@에 동의하게 됩니다.";
+"intro.agreement.terms_and_privacy_policy" = "이용약관 및 개인정보 처리방침";
 
 // Add Token
 

@@ -2039,12 +2039,11 @@
 "intro.uncompromised" = "Sin concesiones";
 "intro.be_unstoppable" = "¡Sé imparable!";
 "intro.caption" = "Privado por principio. Independiente por diseño";
-"intro.create_new_wallet" = "Crear cartera nueva";
-"intro.add_existing_wallet" = "Añadir cartera existente";
+"intro.create_wallet" = "Crear cartera";
+"intro.import_wallet" = "Importar cartera";
 "intro.create_wallet.title" = "Crear cartera";
-"intro.agreement" = "Al continuar, acepto los %@ y doy mi consentimiento a la %@";
-"intro.agreement.terms_of_use" = "Términos de uso";
-"intro.agreement.privacy_policy" = "Política de privacidad";
+"intro.agreement" = "Al continuar, acepto los %@.";
+"intro.agreement.terms_and_privacy_policy" = "Términos y Política de privacidad";
 
 // Add Token
 

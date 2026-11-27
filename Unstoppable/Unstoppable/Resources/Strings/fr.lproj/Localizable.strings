@@ -2039,12 +2039,11 @@
 "intro.uncompromised" = "Sans compromis";
 "intro.be_unstoppable" = "Soyez inarrêtable !";
 "intro.caption" = "Privé par principe. Indépendant par conception";
-"intro.create_new_wallet" = "Créer un nouveau porte-monnaie";
-"intro.add_existing_wallet" = "Ajouter un porte-monnaie existant";
+"intro.create_wallet" = "Créer un porte-monnaie";
+"intro.import_wallet" = "Importer un porte-monnaie";
 "intro.create_wallet.title" = "Créer un porte-monnaie";
-"intro.agreement" = "En continuant, j'accepte les %@ et je consens à la %@";
-"intro.agreement.terms_of_use" = "Conditions d'utilisation";
-"intro.agreement.privacy_policy" = "Politique de confidentialité";
+"intro.agreement" = "En continuant, j'accepte les %@.";
+"intro.agreement.terms_and_privacy_policy" = "Conditions et Politique de confidentialité";
 
 // Add Token
 
