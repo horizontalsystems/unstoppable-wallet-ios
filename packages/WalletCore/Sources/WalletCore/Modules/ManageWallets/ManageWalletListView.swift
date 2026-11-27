@@ -32,6 +32,8 @@ struct ManageWalletListView: View {
                             .tappablePadding(.margin12) {
                                 showInfo(item: item)
                             }
+                            .accessibilityElement()
+                            .accessibilityLabel("button.info".localized)
                             .accessibilityAddTraits(.isButton)
                             .accessibilityIdentifier(TestTags.manageCoinsInfo(item.token.coin.code, item.token.blockchainType.uid))
                     }

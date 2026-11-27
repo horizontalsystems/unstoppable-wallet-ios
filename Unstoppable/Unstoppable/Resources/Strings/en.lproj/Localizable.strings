@@ -34,6 +34,9 @@
 "button.select" = "Select";
 "button.later" = "Later";
 "button.test" = "Test";
+"button.add_to_favorites" = "Add to Favorites";
+"button.remove_from_favorites" = "Remove from Favorites";
+"button.info" = "Info";
 
 "alert" = "Alert";
 "alert.copied" = "Copied";

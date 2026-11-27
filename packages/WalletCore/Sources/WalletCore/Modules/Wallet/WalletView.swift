@@ -95,6 +95,7 @@ struct WalletView: View {
     @ViewBuilder private var statusView: some View {
         if !viewModel.isReachable {
             ThemeImage("globe_error", size: .iconSize20, colorStyle: .red)
+                .accessibilityElement()
                 .accessibilityLabel("alert.no_internet".localized)
                 .accessibilityIdentifier(TestTags.balanceNoInternet)
         } else if viewModel.totalItem.state == .syncing {

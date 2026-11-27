@@ -33,8 +33,8 @@ struct ReleaseNotesView: View {
             HorizontalDivider()
 
             HStack(spacing: .margin8) {
-                socialButton(icon: "x_logo", urlString: "https://twitter.com/\(AppConfig.appTwitterAccount)")
-                socialButton(icon: "telegram_logo", urlString: "https://t.me/\(AppConfig.appTelegramAccount)")
+                socialButton(icon: "x_logo", name: "X", urlString: "https://twitter.com/\(AppConfig.appTwitterAccount)")
+                socialButton(icon: "telegram_logo", name: "Telegram", urlString: "https://t.me/\(AppConfig.appTelegramAccount)")
 
                 Spacer()
 
@@ -47,7 +47,7 @@ struct ReleaseNotesView: View {
         .background(Color.themeTyler)
     }
 
-    private func socialButton(icon: String, urlString: String) -> some View {
+    private func socialButton(icon: String, name: String, urlString: String) -> some View {
         // Plain Button: IconButton/ThemeButton force a fixed 56/32 pt (circular) frame, this needs a 52x82 tap area
         Button {
             if let url = URL(string: urlString) {
@@ -58,5 +58,6 @@ struct ReleaseNotesView: View {
                 .frame(width: 52, height: 82)
                 .contentShape(Rectangle())
         }
+        .accessibilityLabel(name)
     }
 }

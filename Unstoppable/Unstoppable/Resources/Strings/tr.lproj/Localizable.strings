@@ -34,6 +34,9 @@
 "button.select" = "Seç";
 "button.later" = "Sonra";
 "button.test" = "Test";
+"button.add_to_favorites" = "Favorilere ekle";
+"button.remove_from_favorites" = "Favorilerden kaldır";
+"button.info" = "Bilgi";
 
 "alert" = "Uyarı";
 "alert.copied" = "Kopyalandı";

@@ -34,6 +34,9 @@
 "button.select" = "선택";
 "button.later" = "나중에";
 "button.test" = "테스트";
+"button.add_to_favorites" = "즐겨찾기에 추가";
+"button.remove_from_favorites" = "즐겨찾기에서 제거";
+"button.info" = "정보";
 
 "alert" = "알림";
 "alert.copied" = "복사됨";

@@ -34,6 +34,9 @@
 "button.select" = "Выбрать";
 "button.later" = "Позже";
 "button.test" = "Тест";
+"button.add_to_favorites" = "Добавить в избранное";
+"button.remove_from_favorites" = "Удалить из избранного";
+"button.info" = "Информация";
 
 "alert" = "Предупреждение";
 "alert.copied" = "Скопировано";

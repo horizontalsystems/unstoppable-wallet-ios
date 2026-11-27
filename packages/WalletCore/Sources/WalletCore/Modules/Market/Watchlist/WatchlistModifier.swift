@@ -40,6 +40,7 @@ enum WatchlistView {
             } label: {
                 ThemeImage("heart_filled", size: .iconSize20, colorStyle: .brand)
             }
+            .accessibilityLabel("button.remove_from_favorites".localized)
             .tappablePadding(.margin12, onTap: {
                 viewModel.remove(coinUid: coinUid)
             })
@@ -49,6 +50,7 @@ enum WatchlistView {
             } label: {
                 ThemeImage("heart", size: .iconSize20, colorStyle: .secondary)
             }
+            .accessibilityLabel("button.add_to_favorites".localized)
             .tappablePadding(.margin12, onTap: {
                 viewModel.add(coinUid: coinUid)
             })

@@ -34,6 +34,9 @@
 "button.select" = "选择";
 "button.later" = "稍后";
 "button.test" = "测试";
+"button.add_to_favorites" = "添加到收藏";
+"button.remove_from_favorites" = "从收藏中移除";
+"button.info" = "信息";
 
 "alert" = "警报";
 "alert.copied" = "已复制";

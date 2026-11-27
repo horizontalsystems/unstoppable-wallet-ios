@@ -41,26 +41,26 @@ public struct ThemeImage: View {
     public var body: some View {
         switch image {
         case let .icon(name):
-            Image(name)
+            Image(decorative: name)
                 .renderingMode(.template)
                 .resizable()
                 .foregroundColor(colorStyle.color)
                 .applyFrame(size: size ?? .size24)
         case let .image(name: name, contentMode: contentMode):
             if let size {
-                Image(name)
+                Image(decorative: name)
                     .resizable()
                     .aspectRatio(contentMode: contentMode)
                     .applyFrame(size: size)
             } else {
-                Image(name)
+                Image(decorative: name)
             }
         case let .remote(url, placeholder):
             KFImage.url(URL(string: url))
                 .resizable()
                 .placeholder {
                     if let placeholder {
-                        Image(placeholder)
+                        Image(decorative: placeholder)
                     } else {
                         RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous)
                             .fill(Color.themeBlade)
