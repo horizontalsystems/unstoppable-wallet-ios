@@ -118,7 +118,12 @@ struct MarketWatchlistView: View {
                     Button(role: .destructive) {
                         viewModel.remove(coinUid: coin.uid)
                     } label: {
-                        Image("heart_off").renderingMode(.template)
+                        Label {
+                            Text("button.remove_from_favorites".localized)
+                        } icon: {
+                            Image("heart_off").renderingMode(.template)
+                        }
+                        .labelStyle(.iconOnly)
                     }
                     .tint(.themeLucian)
                 }
