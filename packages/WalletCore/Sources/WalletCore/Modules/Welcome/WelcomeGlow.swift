@@ -1,12 +1,10 @@
 import SwiftUI
 
-/// The breathing bottom glow of the welcome and the cover. A pure function of the time since the start,
-/// drawn in a `Canvas`. No blur filters: every blurred circle of the design is baked into a radial gradient.
+/// The breathing bottom glow of the welcome and the cover. A pure function of the time since the start
+/// (or the static design state), drawn in a `Canvas`. No blur filters: every blurred circle of the design is baked into a radial gradient.
 enum WelcomeGlow {
     /// Seconds per breath in the idle state.
     private static let breath: Double = 5.2
-    /// A moment where everything has settled; used for the static glow.
-    fileprivate static let restTime: Double = 10.4
 
     /// Reference artboard the blob numbers were measured in.
     private static let refWidth: Double = 393
@@ -93,13 +91,26 @@ enum WelcomeGlow {
         return pulseStrength * pulseRelease / (pulseRelease - pulseAttack) * (exp(-d / pulseRelease) - exp(-d / pulseAttack))
     }
 
-    fileprivate static func draw(in context: inout GraphicsContext, size: CGSize, time t: Double) {
-        let k = Double(size.width) / refWidth
+    /// Where and how strongly a blob is drawn: scale of its radius, offsets in artboard points, layer alpha.
+    private struct BlobState {
+        let scale: Double
+        let dx: Double
+        let dy: Double
+        let alpha: Double
+
+        /// The design state: scale 1, no lift or drift, alpha equal to the layer opacity.
+        static func rest(_ blob: Blob) -> BlobState {
+            BlobState(scale: 1, dx: 0, dy: 0, alpha: blob.opacity)
+        }
+    }
+
+    /// The animated state of every blob at time `t` since the start: ignite, breathing and the opening pulse.
+    private static func animatedStates(at t: Double) -> [BlobState] {
         let x01 = min(max((t - 0.1) / 1.8, 0), 1)
         let ignite = 1 - pow(1 - x01, 3)
         let energy = pulseEnergy(at: t)
 
-        for blob in blobs {
+        return blobs.map { blob in
             let w = sin(2 * .pi * t / breath - blob.phase)
             let scale = (0.55 + 0.45 * ignite)
                 * (1 + blob.scaleAmp * w * ignite)
@@ -108,15 +119,25 @@ enum WelcomeGlow {
             let dx = blob.drift * sin(2 * .pi * t / blob.driftPeriod + 2 * blob.phase) * ignite
             let alpha = min(1, blob.opacity * ignite * (1 - 0.10 * (1 - w) / 2))
 
+            return BlobState(scale: scale, dx: dx, dy: dy, alpha: alpha)
+        }
+    }
+
+    /// Draws the glow at time `t` since the start, or in the static design state when `t` is `nil`.
+    fileprivate static func draw(in context: inout GraphicsContext, size: CGSize, time t: Double?) {
+        let k = Double(size.width) / refWidth
+        let states = t.map { animatedStates(at: $0) } ?? blobs.map { BlobState.rest($0) }
+
+        for (blob, state) in zip(blobs, states) {
             let center = CGPoint(
-                x: Double(size.width) / 2 + dx * k,
-                y: Double(size.height) - (refHeight - blob.centerY - dy) * k
+                x: Double(size.width) / 2 + state.dx * k,
+                y: Double(size.height) - (refHeight - blob.centerY - state.dy) * k
             )
-            let r = CGFloat(blob.outerRadius * scale * k)
+            let r = CGFloat(blob.outerRadius * state.scale * k)
             let rect = CGRect(x: center.x - r, y: center.y - r, width: 2 * r, height: 2 * r)
 
             var layer = context
-            layer.opacity = alpha
+            layer.opacity = state.alpha
             layer.fill(
                 Path(ellipseIn: rect),
                 with: .radialGradient(blob.gradient, center: center, startRadius: 0, endRadius: r)
@@ -143,7 +164,7 @@ struct WelcomeGlowView: View {
                 }
             } else {
                 Canvas { context, size in
-                    WelcomeGlow.draw(in: &context, size: size, time: WelcomeGlow.restTime)
+                    WelcomeGlow.draw(in: &context, size: size, time: nil)
                 }
             }
         }
