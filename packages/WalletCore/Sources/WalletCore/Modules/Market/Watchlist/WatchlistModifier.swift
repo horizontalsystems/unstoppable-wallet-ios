@@ -11,14 +11,24 @@ struct WatchlistModifier: ViewModifier {
                     Button {
                         viewModel.remove(coinUid: coinUid)
                     } label: {
-                        Image("heart_off").renderingMode(.template)
+                        Label {
+                            Text("button.remove_from_favorites".localized)
+                        } icon: {
+                            Image("heart_off").renderingMode(.template)
+                        }
+                        .labelStyle(.iconOnly)
                     }
                     .tint(.themeLucian)
                 } else {
                     Button {
                         viewModel.add(coinUid: coinUid)
                     } label: {
-                        Image("heart").renderingMode(.template)
+                        Label {
+                            Text("button.add_to_favorites".localized)
+                        } icon: {
+                            Image("heart").renderingMode(.template)
+                        }
+                        .labelStyle(.iconOnly)
                     }
                     .tint(.themeBrand)
                 }
